@@ -12,13 +12,18 @@ export default {
       // with hot-reload because the reloaded component
       // preserves its current state and we are modifying
       // its initial state.
-      msg: 'Hello Vue!'
+      msg: 'Hello Vue!',
     }
+  },
+  ready(){
+    $('body').css({color:'blue'});
+  },
+  components:{
   }
 }
 </script>
 
-<style>
+<style lang='sass'>
 body {
   font-family: Helvetica, sans-serif;
 }
