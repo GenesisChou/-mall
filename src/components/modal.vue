@@ -64,7 +64,7 @@ export default {
   	},
   	footer:{
   		type:Boolean,
-  		default:true
+  		default:false
   	},
   	title:{
   		type:String,

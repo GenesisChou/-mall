@@ -10,6 +10,7 @@
     "babel-runtime": "^6.0.0",
     "cssnext-loader": "^1.0.1",
     "extract-text-webpack-plugin": "^1.0.1",
+    "mint-ui": "^0.2.9",
     "node-sass": "^3.10.0",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",

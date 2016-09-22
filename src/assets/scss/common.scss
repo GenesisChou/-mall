@@ -1,0 +1,79 @@
+@import './variable.scss';
+#app{
+	height:100%;
+}
+.flex{
+	display:flex;
+}
+.flex-item{
+	flex:1;
+}
+.flex-center-v{
+	align-items:center;
+}
+flex-center-h{
+	justify-content:center;
+}
+.pull-left{
+	float:left;
+}
+.pull-right{
+	float:right;
+}
+
+
+.clearfix{
+	overflow:hidden;_zoom:1;
+}
+.text-left{
+	text-align:left;
+}
+.text-right{
+	text-align:right;
+}
+.text-center{
+	text-align:center;
+}
+.img-circle{
+	border-radius:50%;
+}
+
+/**********间距***********/
+
+.mg5-l{
+	margin-left:$gap;
+}
+
+.mg5-r{
+	margin-right:$gap;
+}
+.mg5-b{
+	margin-bottom:$gap;
+}
+
+
+.mg5-t{
+	margin-top:$gap;
+}
+.mg10-b{
+	margin-bottom:$gap*2;
+}
+.mg10-t{
+	margin-top:$gap*2;
+}
+
+.pd5-t{
+	padding-top:$gap;
+}
+.pd10-t{
+	padding-top:$gap*2;
+}
+
+/************颜色********/
+
+.bg-white{
+	background:$white;
+}
+.bg-gray{
+	background:$gray;
+}
