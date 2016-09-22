@@ -1,8 +1,22 @@
-var path = require('path')
-var webpack = require('webpack')
+var path = require('path');
+var webpack = require('webpack');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var plugins = [
+    // 使用 ProvidePlugin 加载使用率高的依赖库
+    new webpack.ProvidePlugin({
+        $: 'webpack-zepto'
+    }),
+    //将样式统一发布到style.css中
+    new ExtractTextPlugin("style.css", {
+        allChunks: true,
+        disable: false
+    })
+];
 
 module.exports = {
-    entry: './src/main.js',
+    entry:{
+        app: './src/main.js'
+    },
     output: {
         path: path.resolve(__dirname, './dist'),
         publicPath: '/dist/',
@@ -25,6 +39,14 @@ module.exports = {
             test: /\.vue$/,
             loader: 'vue'
         }, {
+            test: /\.scss$/,
+            loader: ExtractTextPlugin.extract(
+                "style-loader", 'css-loader?sourceMap!sass-loader!cssnext-loader')
+        }, {
+            test: /\.css$/,
+            loader: ExtractTextPlugin.extract(
+                "style-loader", "css-loader?sourceMap!cssnext-loader")
+        }, {
             test: /\.js$/,
             loader: 'babel',
             exclude: /node_modules/
@@ -41,13 +63,26 @@ module.exports = {
                 limit: 10000,
                 name: '[name].[ext]?[hash]'
             }
+        }, {
+            test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+            loader: "url-loader?limit=10000&minetype=application/font-woff"
+        }, {
+            test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+            loader: "file-loader"
+        }, {
+            test: /\.json$/,
+            loader: 'json'
+        }, {
+            test: /\.(html|tpl)$/,
+            loader: 'html-loader'
         }]
     },
     devServer: {
         historyApiFallback: true,
         noInfo: true
     },
-    devtool: '#eval-source-map'
+    devtool: '#eval-source-map',
+    plugins: plugins
 
 }
 
