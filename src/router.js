@@ -43,5 +43,10 @@ export default function(router) {
             name: 'exchange-detail',
             component: require('views/exchange-detail'),
         }
+    });
+    router.beforeEach((transition)=>{
+      window.scrollTo(0,0);
+      transition.next();
     })
+
 }

@@ -1,57 +1,48 @@
-<style lang='sass' scoped>
-@import '../assets/scss/variable.scss';
-.cell{
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	height: 1.2rem;
-	padding:0 $content-gap;
-	border-top:1px solid black;
-	border-bottom:1px solid black;
+<style lang='sass' scoped>@import '../assets/scss/variable.scss';
+.cell {
+    height: pxTorem(46);
+    padding: 0 $gap*4;
 }
-.icon{
-	height: 0.6rem;
-	width: 0.6rem;
-	vertical-align: middle;
-	border:1px solid black;
+.img {
+    height: pxTorem(25);
+    width: pxTorem(25);
+    vertical-align: middle;
+    margin-right: $gap;
 }
 </style>
 <template>
-<div class='cell' v-link='link'>
-		<div>
-			<img class='icon mg5-r' />
-			{{msgLeft}} 
-		</div>
-		<div>
-			{{msgRight}}
-			<span v-if='link'>></span>
-		</div>
-
+<div class='cell flex flex-space-between border-t-1 border-b-1 bg-white' v-link='link'>
+    <div class='flex flex-center-v'>
+        <img class='img border-1' /> {{msgLeft}}
+    </div>
+    <div class='flex flex-center-v'>
+        {{msgRight}}
+        <span class='iconfont icon-arrows-right ' v-if='link'></span>
+    </div>
 </div>
 </template>
-
 <script>
 export default {
 
-  name: 'cell',
-  props:{
-  	link:{
-  		type:Object,
-  		default:''
-  	},
-  	msgLeft:{
-  		type:String,
-  		default:''
-  	},
-  	msgRight:{
-  		type:String,
-  		default:''
-  	}
-  },
-  data () {
-    return {
+    name: 'cell',
+    props: {
+        link: {
+            type: Object,
+            default: ''
+        },
+        msgLeft: {
+            type: String,
+            default: ''
+        },
+        msgRight: {
+            type: String,
+            default: ''
+        }
+    },
+    data() {
+        return {
 
-    };
-  }
+        };
+    }
 };
 </script>

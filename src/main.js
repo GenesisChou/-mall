@@ -3,19 +3,11 @@ import Vue from 'vue'
 import App from './App'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
-import Mint from 'mint-ui'
-import 'mint-ui/lib/style.css'
-import routerMap from './router'
+import routerConfig from './router'
 
-Vue.use(VueRouter);
-Vue.use(Mint);
 Vue.use(VueResource);
+Vue.use(VueRouter);
 
-let router = new VueRouter({
-    hashbang: true,
-    history: false,
-    saveScrollPosition: true,
-    transitionOnLoad: true
-});
-routerMap(router);
+let router = new VueRouter();
+routerConfig(router);
 router.start(App, '#app');

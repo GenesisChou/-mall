@@ -1,4 +1,3 @@
-@import './variable.scss';
 #app{
 	height:100%;
 }
@@ -11,8 +10,11 @@
 .flex-center-v{
 	align-items:center;
 }
-flex-center-h{
+.flex-center-h{
 	justify-content:center;
+}
+.flex-space-between{
+	justify-content:space-between;
 }
 .pull-left{
 	float:left;
@@ -34,14 +36,14 @@ flex-center-h{
 .text-center{
 	text-align:center;
 }
-.img-circle{
-	border-radius:50%;
-}
 
 /**********间距***********/
 
 .mg5-l{
 	margin-left:$gap;
+}
+.mg5-t{
+	margin-top: $gap;
 }
 
 .mg5-r{
@@ -51,24 +53,59 @@ flex-center-h{
 	margin-bottom:$gap;
 }
 
-
-.mg5-t{
-	margin-top:$gap;
+.mg10-t{
+	margin-top:$gap*2;
+}
+.mg10-r{
+	margin-right:$gap*2;
 }
 .mg10-b{
 	margin-bottom:$gap*2;
 }
-.mg10-t{
-	margin-top:$gap*2;
+.mg10-l{
+	margin-left:$gap*2;
 }
 
 .pd5-t{
 	padding-top:$gap;
 }
+.pd5-r{
+	padding-right:$gap;
+}
+.pd5-b{
+	padding-bottom:$gap;
+}
+.pd5-l{
+	padding-left:$gap;
+}
 .pd10-t{
 	padding-top:$gap*2;
 }
-
+.pd10-r{
+	padding-right:$gap*2;
+}
+.pd10-b{
+	padding-bottom:$gap*2;
+}
+.pd10-l{
+	padding-left:$gap*2;
+}
+/********边框×××××××*****/
+.border-t-1{
+	border-top: pxTorem(1) solid black;
+}
+.border-b-1{
+	border-bottom: pxTorem(1) solid black;
+}
+.border-l-1{
+	border-left:pxTorem(1) solid black;
+}
+.border-r-1{
+	border-right:pxTorem(1) solid black;
+}
+.border-1{
+	border:pxTorem(1) solid black;
+}
 /************颜色********/
 
 .bg-white{
@@ -76,4 +113,41 @@ flex-center-h{
 }
 .bg-gray{
 	background:$gray;
+}
+.text-sliver{
+	color:$sliver;
+}
+.text-red{
+	color:$red;
+}
+.text-white{
+	color:$white;
+}
+
+/********字体***********/
+.text-small{
+	font-size:$base-size*.8;
+}
+.text-normal{
+	font-size:$base-size;
+}
+.text-large{
+	font-size:$base-size*1.3;
+}
+/*******按钮**********/
+.btn{
+	height:pxTorem(24);
+	line-height:pxTorem(24);
+	padding:0 pxTorem(20);
+	text-align:center;
+	border-radius:pxTorem(5);
+}
+.btn-default{
+	background:$white;
+	border:pxTorem(1) solid $black;
+}
+.btn-blue{
+	background: $blue;
+	border:pxTorem(1) solid $white;
+	color:$white;
 }
