@@ -1,7 +1,7 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
 .item {
-    border-bottom: 1px solid $sliver;
+    border-bottom: pxTorem(1) solid $sliver;
     .img {
         width: pxTorem(64);
         height: pxTorem(64);

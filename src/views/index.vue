@@ -12,6 +12,7 @@
         }
     }
 }
+
 .modal-content {
     .img {
         width: pxTorem(30);
@@ -36,7 +37,7 @@
                     <br> 签到
                 </div>
                 <div class='content'>
-                    <p >未签到</p>
+                    <p>未签到</p>
                     <small>连续签到:20天</small>
                 </div>
             </div>
@@ -49,19 +50,17 @@
             <v-cell v-link='{name:"goods-list"}' :icon='' msg-left='热门商品' msg-right='所有商品'></v-cell>
             <v-list-item v-for='i in 3' v-link='{name:"goods-detail"}' title='商品名称' title-dupty='200积分'></v-list-item>
         </div>
-    </div>
-    <v-modal :show.sync='modal'>
-        <div class='modal-content text-center'>
-
+        <v-modal :show.sync='modal'>
+          <div class='modal-content text-center'>
             <img class='img' />
             <p style='line-height:1.5rem'>签到成功，积分+10</p>
             <button class='btn btn-blue' @click='toggleModal(signIn)'>确定</button>
-        </div>
-    </v-modal>
-    <v-loading :show.sync='loading'></v-loading>
+          </div>
+        </v-modal>
+    </div>
 </template>
 <script>
-import vLoading from 'components/v-loading'
+import utils from 'libs/utils'
 import vModal from 'components/v-modal'
 import vCell from 'components/v-cell'
 import vListItem from 'components/v-list-item'
@@ -72,40 +71,41 @@ export default {
         vCell,
         vListItem,
         vModal,
-        vLoading
     },
     data() {
         return {
-            modal:false,
-            loading:false,
-            signState:false
+            modal: false,
+            signState: false
         };
     },
-    methods:{
+    created(){
+      utils.setTitle('积分商城');
+    },
+    methods: {
         //获取用户信息
-        getUserInfor(){
+        getUserInfor() {
 
         },
         //获取热门活动
-        getHotActivityList(){
+        getHotActivityList() {
 
         },
         //获取热门商品
-        getHotGoods(){
+        getHotGoods() {
 
         },
         //签到
-        signIn(){
+        signIn() {
 
         },
         // 显示/隐藏弹出框
-        toggleModal(method){
-            // if(method){
-            //     method();
-            // }
-            this.modal=!this.modal;
+        toggleModal(method) {
+            if(method){
+                method();
+            }
+            this.modal = !this.modal;
 
         },
-    }
+    },
 };
 </script>

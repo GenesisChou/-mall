@@ -5,6 +5,8 @@ import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import RouterConfig from './router'
 import FastClick from 'fastclick'
+import filters from 'libs/filters'
+
 Vue.use(VueResource);
 Vue.use(VueRouter);
 FastClick.attach(document.body);

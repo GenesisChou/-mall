@@ -140,14 +140,16 @@
 	line-height:pxTorem(24);
 	padding:0 pxTorem(20);
 	text-align:center;
+	border-width: pxTorem(1);
+	border-style: solid;
 	border-radius:pxTorem(5);
 }
 .btn-default{
 	background:$white;
-	border:pxTorem(1) solid $black;
+	border-color: $black;
 }
 .btn-blue{
 	background: $blue;
-	border:pxTorem(1) solid $white;
+	border-color: $blue-dark;
 	color:$white;
 }

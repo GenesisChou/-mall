@@ -61,6 +61,7 @@
     </div>
 </template>
 <script>
+import utils from 'libs/utils'
 import vModal from 'components/v-modal'
 import vPopup from 'components/v-popup'
 export default {
@@ -74,6 +75,9 @@ export default {
             popup: false,
             modal:false
         };
+    },
+    created(){
+      utils.setTitle('用户中心');
     },
     methods: {
         //获取用户信息

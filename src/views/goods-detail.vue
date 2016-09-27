@@ -59,29 +59,30 @@
                 <button class='btn btn-default' @click='toggleModal'>兑换</button>
             </div>
         </v-sticky>
-    </div>
-    <v-modal :show.sync='modal'>
-        <div class='modal-content text-center'>
+        <v-modal :show.sync='modal'>
+          <div class='modal-content text-center'>
             <img class='img' />
             <p style='line-height:1.5rem'>
-                <span v-if='!exchangeState'>
-            是否确认兑换?
-          </span>
-                <span v-else>
-            兑换成功
-          </span>
+              <span v-if='!exchangeState'>
+                是否确认兑换?
+              </span>
+              <span v-else>
+                兑换成功
+              </span>
             </p>
             <div v-if='!exchangeState'>
-                <button class='btn btn-default mg10-r' @click='toggleModal'>取消</button>
-                <button class='btn btn-blue' @click='exchange'>确认</button>
+              <button class='btn btn-default mg10-r' @click='toggleModal'>取消</button>
+              <button class='btn btn-blue' @click='exchange'>确认</button>
             </div>
             <div v-else>
-                <button class='btn btn-blue' v-link='{name:"exchange-detail"}'>查看</button>
+              <button class='btn btn-blue' v-link='{name:"exchange-detail"}'>查看</button>
             </div>
-        </div>
-    </v-modal>
+          </div>
+        </v-modal>
+    </div>
 </template>
 <script>
+import utils from 'libs/utils'
 import vSticky from 'components/v-sticky'
 import vModal from 'components/v-modal'
 export default {
@@ -94,13 +95,16 @@ export default {
     data() {
         return {
             popup: false,
-            modal:false,
+            modal: false,
             exchangeState: false
         };
     },
+    created(){
+      utils.setTitle('商品详情');
+    },
     methods: {
         //获取商品详情
-        getGoodsDetail(){
+        getGoodsDetail() {
 
         },
         toggleModal() {

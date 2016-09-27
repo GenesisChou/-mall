@@ -42,6 +42,7 @@
     </div>
 </template>
 <script>
+import utils from 'libs/utils'
 export default {
 
     name: 'activity-detail',
@@ -49,6 +50,9 @@ export default {
         return {
 
         };
+    },
+    created(){
+      utils.setTitle('活动详情');
     },
     methods:{
       getActivityDetail(){

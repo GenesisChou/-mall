@@ -1,12 +1,12 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
 .head {
-    border-bottom: 1px solid $sliver;
+    border-bottom:pxTorem(1) solid $sliver;
 }
 
 .footer,
 .head {
-    line-height: 0.9rem;
+    line-height:pxTorem(35);
 }
 </style>
 <template>
@@ -27,6 +27,7 @@
     </div>
 </template>
 <script>
+import utils from 'libs/utils'
 import vExchangeItem from 'components/v-exchange-item'
 export default {
 
@@ -38,6 +39,9 @@ export default {
         return {
 
         };
+    },
+    created(){
+      utils.setTitle('兑换记录');
     },
     methods:{
       //获取兑换订单列表

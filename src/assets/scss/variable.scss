@@ -17,9 +17,13 @@ $white-dark:#f9fafc;
 /********基础色*********/
 
 $red:#ff4949;
+$red-dark:darken($red,10%);
 $yellow:#f7ba2a;
+$yellow:darken($yellow,10%);
 $green:#13ce66;
+$green-dark:darken($green,10%);
 $blue:#20a0ff;
+$blue-dark:darken($blue,10%);
 
 /*******基础值*********/
 

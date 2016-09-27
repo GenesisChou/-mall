@@ -1,16 +1,16 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
 .head {
-    border-bottom: 1px solid $sliver;
+    border-bottom: pxTorem(1) solid $sliver;
 }
 
 .footer,
 .head {
-    line-height: 0.9rem;
+    line-height: pxTorem(35);
 }
 </style>
 <template>
-    <div class='pd10-l pd10-r border-t-1 border-b-1 mg10-b'>
+    <div class='pd10-l pd10-r  border-b-1 mg10-b'>
         <div class='head'>
             订单号：10086
         </div>
@@ -26,6 +26,7 @@
     </div>
 </template>
 <script>
+import utils from 'libs/utils'
 import vExchangeItem from 'components/v-exchange-item'
 export default {
 
@@ -38,10 +39,13 @@ export default {
 
         };
     },
-    methods:{
-      getExchangeDetail(){
-        
-      }
+    created(){
+      utils.setTitle('订单详情');
+    },
+    methods: {
+        getExchangeDetail() {
+
+        }
     }
 };
 </script>
