@@ -1,4 +1,5 @@
-<style lang='sass' scoped>@import '../assets/scss/variable.scss';
+<style lang='sass' scoped>
+@import '../assets/scss/variable.scss';
 .head {
     height: pxTorem(205);
     position: relative;
@@ -17,28 +18,28 @@
 }
 </style>
 <template>
-<div class='activity-detail'>
-    <div class='head'>
-        <img>
-        <div class='cover text-white pd10-l flex flex-center-v'>
-            <p class='text-large'>活动名称</p>
-        </div>
-    </div>
-    <div class='body pd10-l pd10-r'>
-        <div class='introduction'>
-            <h1 class='text-large pd10-t pd10-b'> 活动介绍 </h1>
-            <div class='content'>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo quaerat quasi quibusdam dicta repellendus, laboriosam obcaecati pariatur adipisci, at quidem iste ex vel? Commodi, ipsam libero natus nihil, delectus voluptatibus.
+    <div class='activity-detail'>
+        <div class='head'>
+            <img>
+            <div class='cover text-white pd10-l flex flex-center-v'>
+                <p class='text-large'>活动名称</p>
             </div>
         </div>
-        <div class='explation'>
-            <h1 class='text-large pd10-t pd10-b'> 活动规则 </h1>
-            <div class='content'>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed dolorum saepe sapiente molestias fugit. Assumenda velit, ullam dicta tenetur mollitia, expedita quis laboriosam consequatur, deleniti enim vitae in distinctio. Incidunt.
+        <div class='body pd10-l pd10-r'>
+            <div class='introduction'>
+                <h1 class='text-large pd10-t pd10-b'> 活动介绍 </h1>
+                <div class='content'>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo quaerat quasi quibusdam dicta repellendus, laboriosam obcaecati pariatur adipisci, at quidem iste ex vel? Commodi, ipsam libero natus nihil, delectus voluptatibus.
+                </div>
+            </div>
+            <div class='explation'>
+                <h1 class='text-large pd10-t pd10-b'> 活动规则 </h1>
+                <div class='content'>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed dolorum saepe sapiente molestias fugit. Assumenda velit, ullam dicta tenetur mollitia, expedita quis laboriosam consequatur, deleniti enim vitae in distinctio. Incidunt.
+                </div>
             </div>
         </div>
     </div>
-</div>
 </template>
 <script>
 export default {

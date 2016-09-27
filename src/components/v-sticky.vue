@@ -1,4 +1,5 @@
-<style lang='sass' scoped>@import '../assets/scss/variable.scss';
+<style lang='sass' scoped>
+@import '../assets/scss/variable.scss';
 .sticky {
     position: fixed;
     bottom: 0;
@@ -8,20 +9,19 @@
 }
 </style>
 <template>
-<div class='sticky bg-white border-t-1'>
-	<slot></slot>
-</div>
+    <div class='sticky bg-white border-t-1'>
+        <slot></slot>
+    </div>
 </template>
-
 <script>
 export default {
 
-	name: 'v-sticky',
+    name: 'v-sticky',
 
-	data() {
-		return {
+    data() {
+        return {
 
-		};
-	}
+        };
+    }
 };
 </script>

@@ -1,5 +1,7 @@
 @import './function.scss';
+
 /******中性色********/
+
 $black:#1f2d32;
 $black-light:#324057;
 $black-light-extra:#475669;
@@ -11,12 +13,16 @@ $gray-light:#e5e9f2;
 $gray-light-extra:#eff2f7;
 $white:#ffffff;
 $white-dark:#f9fafc;
+
 /********基础色*********/
+
 $red:#ff4949;
 $yellow:#f7ba2a;
 $green:#13ce66;
 $blue:#20a0ff;
+
 /*******基础值*********/
+
 $base:2/75;
 $gap:pxTorem(5);
 $panel-gap:$gap*2;

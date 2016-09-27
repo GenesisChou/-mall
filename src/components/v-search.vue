@@ -1,4 +1,5 @@
-<style lang='sass' scoped>@import '../assets/scss/variable.scss';
+<style lang='sass' scoped>
+@import '../assets/scss/variable.scss';
 .search {
     padding: $gap*3;
     .form-group {
@@ -12,21 +13,21 @@
 }
 </style>
 <template>
-<div class='search'>
-    <form class='form-group flex flex-center-v border-1 bg-white'>
-        <input type='text' placeholder={{placeholder}}>
-        <span class='iconfont icon-search '></span>
-    </form>
-</div>
+    <div class='search'>
+        <form class='form-group flex flex-center-v border-1 bg-white'>
+            <input type='text' placeholder={{placeholder}}>
+            <span class='iconfont icon-search '></span>
+        </form>
+    </div>
 </template>
 <script>
 export default {
     name: 'search',
     props: {
-      placeholder: {
-        type: String,
-        default: '请输入关键字'
-      }
+        placeholder: {
+            type: String,
+            default: '请输入关键字'
+        }
     },
 
     data() {
