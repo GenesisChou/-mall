@@ -11,6 +11,10 @@ export default function(router) {
         '*': {
             component: require('views/index'),
         },
+        '/test':{//组件测试
+            name:'test',
+            component:require('views/test')
+        },
         '/index': { //首页
             name: 'index',
             component: require('views/index'),

@@ -49,6 +49,11 @@ export default {
         return {
 
         };
+    },
+    methods:{
+      getActivityDetail(){
+
+      }
     }
 };
 </script>

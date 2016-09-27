@@ -17,9 +17,7 @@
     }
 }
 
-.popup-content {
-    line-height: 0.9rem;
-}
+
 </style>
 <template>
     <div class='mg10-t'>
@@ -27,7 +25,7 @@
             <p><strong>当前余额</strong></p>
             <p class='text-large'><strong>{{1200 | currency '¥'}}</strong></p>
             <p>
-                <button class='btn btn-default mg5-r' @click='togglePopup'>赚取积分</button>
+                <button class='btn btn-default mg5-r' @click='toggleModal'>赚取积分</button>
                 <button class='btn btn-default ' v-link='{name:"exchange-list"}'>兑换记录</button>
             </p>
         </div>
@@ -47,37 +45,48 @@
                 </li>
             </ul>
         </div>
-        <v-popup :show.sync='popup'>
-            <div class='popup-content pd10-l pd10-t pd10-r pd10-b'>
-                您可以通过以下途径赚取积分：
-                <ol>
-                    <li>1、签到</li>
-                    <li>2、分享</li>
-                    <li>3、参与活动</li>
-                </ol>
-                <p class='text-center'>
-                    <button class='btn btn-blue' @click='togglePopup'>知道了</button>
-                </p>
-            </div>
-        </v-popup>
+        <v-modal :show.sync='modal'>
+          <div style='line-height:.9rem'>
+              您可以通过以下途径赚取积分：
+              <ol>
+                  <li>1、签到</li>
+                  <li>2、分享</li>
+                  <li>3、参与活动</li>
+              </ol>
+              <p class='text-center'>
+                  <button class='btn btn-blue' @click='toggleModal'>知道了</button>
+              </p>
+          </div>
+        </v-modal>
     </div>
 </template>
 <script>
+import vModal from 'components/v-modal'
 import vPopup from 'components/v-popup'
 export default {
 
     name: 'my-integral',
     components: {
-        vPopup
+        vPopup,vModal
     },
     data() {
         return {
-            popup: false
+            popup: false,
+            modal:false
         };
     },
     methods: {
-        togglePopup() {
-            this.popup = !this.popup;
+        //获取用户信息
+        getUserInfor(){
+
+        },
+        //获取兑换记录列表
+        getRecordList(){
+
+        },
+        toggleModal() {
+            // this.popup = !this.popup;
+            this.modal=!this.modal;
         }
     }
 };

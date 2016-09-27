@@ -21,6 +21,17 @@ export default {
         return {
 
         };
+    },
+    methods:{
+      //获取商品列表
+      getGoodsList(){
+        
+      },
+      //搜索商品
+      searchGoods(){
+
+      }
+
     }
 };
 </script>

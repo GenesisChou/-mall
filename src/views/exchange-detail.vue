@@ -37,6 +37,11 @@ export default {
         return {
 
         };
+    },
+    methods:{
+      getExchangeDetail(){
+        
+      }
     }
 };
 </script>

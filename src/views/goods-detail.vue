@@ -21,7 +21,7 @@
     height: pxTorem(40);
 }
 
-.popup-content {
+.modal-content {
     .img {
         width: pxTorem(30);
         height: pxTorem(30);
@@ -56,12 +56,12 @@
                 <div>
                     单价：<span class='text-red'>200</span>积分
                 </div>
-                <button class='btn btn-default' @click='togglePopup'>兑换</button>
+                <button class='btn btn-default' @click='toggleModal'>兑换</button>
             </div>
         </v-sticky>
     </div>
-    <v-popup :show.sync='popup'>
-        <div class='popup-content pd10-l pd10-t pd10-r pd10-b text-center'>
+    <v-modal :show.sync='modal'>
+        <div class='modal-content text-center'>
             <img class='img' />
             <p style='line-height:1.5rem'>
                 <span v-if='!exchangeState'>
@@ -72,34 +72,39 @@
           </span>
             </p>
             <div v-if='!exchangeState'>
-                <button class='btn btn-default mg10-r' @click='togglePopup'>取消</button>
+                <button class='btn btn-default mg10-r' @click='toggleModal'>取消</button>
                 <button class='btn btn-blue' @click='exchange'>确认</button>
             </div>
             <div v-else>
                 <button class='btn btn-blue' v-link='{name:"exchange-detail"}'>查看</button>
             </div>
         </div>
-    </v-popup>
+    </v-modal>
 </template>
 <script>
 import vSticky from 'components/v-sticky'
-import vPopup from 'components/v-popup'
+import vModal from 'components/v-modal'
 export default {
 
     name: 'goods-detail',
     components: {
         vSticky,
-        vPopup
+        vModal
     },
     data() {
         return {
             popup: false,
+            modal:false,
             exchangeState: false
         };
     },
     methods: {
-        togglePopup() {
-            this.popup = !this.popup;
+        //获取商品详情
+        getGoodsDetail(){
+
+        },
+        toggleModal() {
+            this.modal = !this.modal;
         },
         exchange() {
             this.exchangeState = true;

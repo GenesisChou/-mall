@@ -21,6 +21,16 @@ export default {
         return {
 
         };
+    },
+    methods:{
+      //获取活动列表
+      getActivityList(){
+
+      },
+      //搜索活动
+      searchActivity(){
+
+      }
     }
 };
 </script>

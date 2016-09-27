@@ -12,7 +12,7 @@
         }
     }
 }
-.popup-content {
+.modal-content {
     .img {
         width: pxTorem(30);
         height: pxTorem(30);
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class='event flex flex-center-h flex-center-v'>
-                <div class='mg5-r circle text-small flex flex-center-h flex-center-v' @click='togglePopup()'>
+                <div class='mg5-r circle text-small flex flex-center-h flex-center-v' @click='toggleModal()'>
                     点击
                     <br> 签到
                 </div>
@@ -50,17 +50,19 @@
             <v-list-item v-for='i in 3' v-link='{name:"goods-detail"}' title='商品名称' title-dupty='200积分'></v-list-item>
         </div>
     </div>
-    <v-popup :show.sync='popup'>
-        <div class='popup-content pd10-l pd10-t pd10-r pd10-b text-center'>
-            
+    <v-modal :show.sync='modal'>
+        <div class='modal-content text-center'>
+
             <img class='img' />
             <p style='line-height:1.5rem'>签到成功，积分+10</p>
-            <button class='btn btn-blue' @click='togglePopup(signIn)'>确定</button>
+            <button class='btn btn-blue' @click='toggleModal(signIn)'>确定</button>
         </div>
-    </v-popup>
+    </v-modal>
+    <v-loading :show.sync='loading'></v-loading>
 </template>
 <script>
-import vPopup from 'components/v-popup'
+import vLoading from 'components/v-loading'
+import vModal from 'components/v-modal'
 import vCell from 'components/v-cell'
 import vListItem from 'components/v-list-item'
 export default {
@@ -69,23 +71,41 @@ export default {
     components: {
         vCell,
         vListItem,
-        vPopup
+        vModal,
+        vLoading
     },
     data() {
         return {
-            popup:false,
+            modal:false,
+            loading:false,
             signState:false
         };
     },
     methods:{
-        togglePopup(method){
-            if(method){
-                method();
-            }
-            this.popup=!this.popup;
+        //获取用户信息
+        getUserInfor(){
+
         },
+        //获取热门活动
+        getHotActivityList(){
+
+        },
+        //获取热门商品
+        getHotGoods(){
+
+        },
+        //签到
         signIn(){
-        }
+
+        },
+        // 显示/隐藏弹出框
+        toggleModal(method){
+            // if(method){
+            //     method();
+            // }
+            this.modal=!this.modal;
+
+        },
     }
 };
 </script>

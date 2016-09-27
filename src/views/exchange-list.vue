@@ -38,6 +38,12 @@ export default {
         return {
 
         };
+    },
+    methods:{
+      //获取兑换订单列表
+      getExchangeList(){
+
+      }
     }
 };
 </script>
