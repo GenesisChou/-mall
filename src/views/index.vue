@@ -66,7 +66,7 @@
         <v-modal :show.sync='modal'>
           <div class='modal-content text-center'>
             <img src='../assets/images/correct.png' />
-            <p ><strong>签到成功，积分+10</strong></p>
+            <p >签到成功，积分+10</p>
             <button class='btn btn-pink' @click='toggleModal(signIn)'>确定</button>
           </div>
         </v-modal>

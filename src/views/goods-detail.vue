@@ -37,7 +37,7 @@
 .modal-content {
     width: pxTorem(500);
     height: pxTorem(260);
-    padding-top:pxTorem(31);
+    padding-top: pxTorem(31);
     >img {
         width: pxTorem(50);
         height: pxTorem(50);
@@ -45,8 +45,8 @@
     >p {
         line-height: pxTorem(101);
     }
-    .btn:nth-child(2){
-        margin-left:pxTorem(30);
+    .btn:nth-child(2) {
+        margin-left: pxTorem(30);
     }
 }
 </style>
@@ -85,12 +85,12 @@
                 <img v-if='!exchangeState' src='../assets/images/question-hollow.png' />
                 <img v-else src='../assets/images/correct-hollow.png' />
                 <p>
-                    <strong v-if='!exchangeState'>
+                    <span v-if='!exchangeState'>
                 是否确认兑换?
-              </strong>
-                    <strong v-else>
+              </span>
+                    <span v-else>
                 兑换成功
-              </strong>
+              </span>
                 </p>
                 <div v-if='!exchangeState'>
                     <button class='btn btn-pink-hollow' @click='toggleModal'>取消</button>
