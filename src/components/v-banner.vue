@@ -33,7 +33,7 @@
 <template>
     <div class='banner flex flex-center-v flex-center-h bg-base'>
         <img class='title' v-if='type=="activity"' src='../assets/images/index/hot-activity.png'>
-        <img class='title' v-else src='../assets/images/index/hot-goods.png'>
+        <img class='title' v-else src='../assets/images/index/hot-product.png'>
         <img class='decorate top' src='../assets/images/index/decorate-top.png'>
         <img class='decorate bottom' src='../assets/images/index/decorate-bottom.png'>
         <div class='link text-small flex flex-center-v'>

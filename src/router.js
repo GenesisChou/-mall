@@ -19,13 +19,13 @@ export default function(router) {
             name: 'index',
             component: require('views/index'),
         },
-        '/goods-list': { //首页
-            name: 'goods-list',
-            component: require('views/goods-list'),
+        '/product-list': { //首页
+            name: 'product-list',
+            component: require('views/product-list'),
         },
-        '/goods-detail': {
-            name: 'goods-detail',
-            component: require('views/goods-detail'),
+        '/product-detail': {
+            name: 'product-detail',
+            component: require('views/product-detail'),
         },
         '/activity-list': {
             name: 'activity-list',

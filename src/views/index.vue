@@ -58,10 +58,10 @@
             <v-list-item  v-link='{name:"activity-detail",query:{game:"quiz"}}'  title='有奖问答' title-dupty='这是活动副标题' img='../src/assets/images/activity-2.png'></v-list-item>
         </div>
         <div class='hot-list'>
-            <v-banner type='goods' v-link='{name:"goods-list"}'></v-banner>
-            <v-list-item  v-link='{name:"goods-detail"}' title='商品名称' title-dupty='200积分' img='../src/assets/images/goods-1.png'></v-list-item>
-            <v-list-item  v-link='{name:"goods-detail"}' title='商品名称' title-dupty='200积分' img='../src/assets/images/goods-2.png'></v-list-item>
-            <v-list-item  v-link='{name:"goods-detail"}' title='商品名称' title-dupty='200积分' img='../src/assets/images/goods-3.png'></v-list-item>
+            <v-banner type='product' v-link='{name:"product-list"}'></v-banner>
+            <v-list-item  v-link='{name:"product-detail"}' title='商品名称' title-dupty='200积分' img='../src/assets/images/product-1.png'></v-list-item>
+            <v-list-item  v-link='{name:"product-detail"}' title='商品名称' title-dupty='200积分' img='../src/assets/images/product-2.png'></v-list-item>
+            <v-list-item  v-link='{name:"product-detail"}' title='商品名称' title-dupty='200积分' img='../src/assets/images/product-3.png'></v-list-item>
         </div>
         <v-modal :show.sync='modal'>
           <div class='modal-content text-center'>
@@ -104,7 +104,7 @@ export default {
 
         },
         //获取热门商品
-        getHotGoods() {
+        getHotproduct() {
 
         },
         //签到

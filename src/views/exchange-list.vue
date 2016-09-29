@@ -12,7 +12,7 @@
                 订单号：10086
             </div>
             <div slot='body-content'>
-                <v-exchange-item img='../src/assets/images/goods-3.png'></v-exchange-item>
+                <v-exchange-item img='../src/assets/images/product-3.png'></v-exchange-item>
             </div>
             <div slot='footer-content'>
                 已发放，点击查看详情记录

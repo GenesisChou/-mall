@@ -51,9 +51,9 @@
 }
 </style>
 <template>
-    <div class='goods-detail'>
+    <div class='product-detail'>
         <div class='head flex flex-center-h flex-center-v'>
-            <img src='../assets/images/goods.png' />
+            <img src='../assets/images/product.png' />
             <div class='cover text-white  flex flex-center-v'>
                 <p class='text-huge'>商品名称</p>
             </div>
@@ -109,7 +109,7 @@ import vSticky from 'components/v-sticky'
 import vModal from 'components/v-modal'
 export default {
 
-    name: 'goods-detail',
+    name: 'product-detail',
     components: {
         vSticky,
         vModal
@@ -126,7 +126,7 @@ export default {
     },
     methods: {
         //获取商品详情
-        getGoodsDetail() {
+        getproductDetail() {
 
         },
         toggleModal() {

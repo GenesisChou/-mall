@@ -12,7 +12,7 @@
                 订单号：10086
             </div>
             <div slot='body-content'>
-                <v-exchange-item v-for='i in 2' img='../src/assets/images/goods-3.png'></v-exchange-item>
+                <v-exchange-item v-for='i in 2' img='../src/assets/images/product-3.png'></v-exchange-item>
             </div>
             <div slot='footer-content'>
                 <p>商品信息： </p>
