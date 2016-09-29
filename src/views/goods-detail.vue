@@ -20,6 +20,7 @@
 
 .body {
     padding: 0 pxTorem(55);
+    margin-bottom: pxTorem(119);
     .title {
         margin: pxTorem(50) 0 pxTorem(30) 0;
     }

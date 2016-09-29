@@ -1,14 +1,15 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
-.sticky {
+.v-sticky {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
+    border-top: pxTorem(1) solid $sliver;
 }
 </style>
 <template>
-    <div class='sticky bg-white border-t-1'>
+    <div class='v-sticky bg-white'>
         <slot></slot>
     </div>
 </template>
