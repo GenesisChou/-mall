@@ -27,23 +27,23 @@ export default function(router) {
             name: 'goods-detail',
             component: require('views/goods-detail'),
         },
-        './activity-list': {
+        '/activity-list': {
             name: 'activity-list',
             component: require('views/activity-list'),
         },
-        './activity-detail': {
+        '/activity-detail': {
             name: 'activity-detail',
             component: require('views/activity-detail'),
         },
-        './my-integral': {
+        '/my-integral': {
             name: 'my-integral',
             component: require('views/my-integral'),
         },
-        './exchange-list': {
+        '/exchange-list': {
             name: 'exchange-list',
             component: require('views/exchange-list'),
         },
-        './exchange-detail': {
+        '/exchange-detail': {
             name: 'exchange-detail',
             component: require('views/exchange-detail'),
         }

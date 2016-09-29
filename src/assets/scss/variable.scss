@@ -2,32 +2,21 @@
 
 /******中性色********/
 
-$black:#1f2d32;
-$black-light:#324057;
-$black-light-extra:#475669;
-$sliver:#8492a6;
-$sliver-light:#99a9bf;
-$sliver-light-extra:#c0ccda;
-$gray:#d3dce6;
-$gray-light:#e5e9f2;
-$gray-light-extra:#eff2f7;
+$black:#000;
+$sliver:#a3a3a3;
+$gray:#666666;
 $white:#ffffff;
-$white-dark:#f9fafc;
 
 /********基础色*********/
 
 $red:#ff4949;
-$red-dark:darken($red,10%);
+$pink:#f06870;
 $yellow:#f7ba2a;
-$yellow:darken($yellow,10%);
-$green:#13ce66;
-$green-dark:darken($green,10%);
+$green:#79cabc;
 $blue:#20a0ff;
-$blue-dark:darken($blue,10%);
 
 /*******基础值*********/
 
-$base:2/75;
 $gap:pxTorem(5);
 $panel-gap:$gap*2;
-$base-size:pxTorem(14);
+$base-size:pxTorem(26);

@@ -1,7 +1,7 @@
 html, body {
     height: 100%;
     border: 0;
-    font-family: "Helvetica-Neue", "Helvetica", Arial, sans-serif;
+    font-family: 'Microsoft Yahei';
     line-height: 1.5;
     margin: 0;
     padding: 0;
@@ -48,7 +48,9 @@ a{
 a img {
     border: 0;
 }
-
+img{
+    vertical-align: middle;
+}
 :focus {
     outline: 0;
 }

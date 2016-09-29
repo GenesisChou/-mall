@@ -107,12 +107,26 @@
 	border:pxTorem(1) solid black;
 }
 /************颜色********/
-
+.bg-base{
+	background:rgb(243,243,243);
+}
 .bg-white{
 	background:$white;
 }
+.bg-blue{
+	background:$blue;
+}
 .bg-gray{
 	background:$gray;
+}
+.bg-pink{
+	background:$pink;
+}
+.bg-green{
+	background:$green;
+}
+.text-gray{
+	color:$gray;
 }
 .text-sliver{
 	color:$sliver;
@@ -123,22 +137,29 @@
 .text-white{
 	color:$white;
 }
+.text-pink{
+	color:$pink;
+}
+
 
 /********字体***********/
 .text-small{
-	font-size:$base-size*.8;
+	font-size:pxTorem(24);
 }
 .text-normal{
 	font-size:$base-size;
 }
 .text-large{
-	font-size:$base-size*1.3;
+	font-size:pxTorem(28);
+}
+.text-huge{
+	font-size:pxTorem(36);
 }
 /*******按钮**********/
 .btn{
-	height:pxTorem(24);
-	line-height:pxTorem(24);
-	padding:0 pxTorem(20);
+	width:pxTorem(150);
+	height:pxTorem(50);
+	line-height:pxTorem(50);
 	text-align:center;
 	border-width: pxTorem(1);
 	border-style: solid;
@@ -148,8 +169,22 @@
 	background:$white;
 	border-color: $black;
 }
+.btn-failed{
+	background:$gray;
+	border-color:$black;
+}
 .btn-blue{
 	background: $blue;
-	border-color: $blue-dark;
+	border-color: $blue;
 	color:$white;
+}
+.btn-pink{
+	background:$pink;
+	border-color:$pink;
+	color:$white;
+}
+.btn-pink-hollow{
+	background:$white;
+	border-color:$pink;
+	color:$pink;
 }

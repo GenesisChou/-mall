@@ -1,8 +1,7 @@
 <style lang='sass' scoped>
   @import '../assets/scss/variable';
     .modal {
-        width:pxTorem(250);
-        padding:pxTorem(10);
+      border-radius: pxTorem(5);
     }
 </style>
 <template >

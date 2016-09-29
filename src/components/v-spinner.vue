@@ -1,7 +1,7 @@
 <style lang='sass' scoped>
   @import '../assets/scss/variable.scss';
     .spinner {
-        border: pxTorem(8) solid $gray-light-extra;
+        border: pxTorem(8) solid $gray;
         border-top: pxTorem(8) solid $blue;
         border-radius: 50%;
         width: pxTorem(60);

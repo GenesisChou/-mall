@@ -1,43 +1,40 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
-.item {
-    border-bottom: pxTorem(1) solid $sliver;
+.v-exchange-item {
+    padding: pxTorem(26) 0;
+    border-bottom: pxTorem(1) solid #c8c8c8;
     .img {
-        width: pxTorem(64);
-        height: pxTorem(64);
+        width: pxTorem(160);
+        height: pxTorem(120);
     }
     .content {
-        flex: 1;
-        display: flex;
+        margin-left: pxTorem(30);
         flex-direction: column;
-        justify-content: space-between;
-    }
-    .number {
-        align-self: flex-end;
     }
 }
 </style>
 <template>
-    <div class='item flex pd10-t pd10-b'>
-        <img class='img border-1' />
-        <div class='content pd10-l'>
-            <strong class='text-large'>商品名称</strong>
-            <span> 200积分 </span>
+    <div class='v-exchange-item flex '>
+        <img class='img ' :src='img' />
+        <div class='content flex flex-item flex-space-between'>
+            <strong class='text-huge'>商品名称</strong>
+            <span class='text-large text-gray'> 200积分 </span>
         </div>
-        <div class='number'>
+        <div class='flex flex-center-v text-large'>
             ×1
         </div>
     </div>
 </template>
 <script>
 export default {
+    props:{
+        img:{
+            type:String,
+            default:''
+        }
+    },
     data() {
             return {}
         },
-        computed: {},
-        ready() {},
-        attached() {},
-        methods: {},
-        components: {}
 }
 </script>

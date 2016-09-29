@@ -1,60 +1,73 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
 .head {
-    padding: $gap*4 0;
+    height:pxTorem(260);
+    padding:pxTorem(10) 0;
     .event {
         flex: 1;
-        .circle {
-            width: pxTorem(49);
-            height: pxTorem(49);
-            border: pxTorem(1) solid $black;
+        .icon {
+            width: pxTorem(100);
+            height: pxTorem(100);
             border-radius: 50%;
+            margin:0 pxTorem(18) 0 pxTorem(56);
+        }
+        &:nth-child(1){
+            border-right: pxTorem(1) solid #7E7E7E;
         }
     }
 }
-
+.hot-list{
+    .v-list-item:last-child{
+        border-bottom:0;
+    }
+}
 .modal-content {
-    .img {
-        width: pxTorem(30);
-        height: pxTorem(30);
-        border: pxTorem(1) solid $black;
+    width: pxTorem(500);
+    height: pxTorem(300);
+    padding-top:pxTorem(34);
+    >img{
+        width: pxTorem(66);
+        height: pxTorem(66);
+    }
+    >p{
+        line-height: pxTorem(110);
     }
 }
 </style>
 <template>
-    <div class='index bg-gray  pd10-t'>
-        <div class='head bg-white flex border-t-1 border-b-1'>
-            <div class='event flex flex-center-h flex-center-v border-r-1' v-link='{name:"my-integral"}'>
-                <img class='mg5-r circle '>
+    <div class='index'>
+        <div class='head bg-white flex '>
+            <div class='event flex  flex-center-v ' v-link='{name:"my-integral"}'>
+                <img class='icon' src='../assets/images/index/money.png' >
                 <div class='content'>
-                    <p>我的积分</p>
-                    <small>当前余额:1200</small>
+                    <p class='text-large'>我的积分</p>
+                    <p class='text-small'>当前余额: <span class='text-pink'>1200</span> </p>
                 </div>
             </div>
-            <div class='event flex flex-center-h flex-center-v'>
-                <div class='mg5-r circle text-small flex flex-center-h flex-center-v' @click='toggleModal()'>
-                    点击
-                    <br> 签到
-                </div>
+            <div class='event flex  flex-center-v'>
+                <img class='icon' src='../assets/images/index/sign-in.png' @click='toggleModal()'>
                 <div class='content'>
-                    <p>未签到</p>
-                    <small>连续签到:20天</small>
+                    <p class='text-large'>未签到</p>
+                    <p class='text-small'>连续签到: <span class='text-pink'>20天</span></p>
                 </div>
             </div>
         </div>
-        <div class='mg10-t'>
-            <v-cell v-link='{name:"activity-list"}' :icon='' msg-left='热门活动' msg-right='所有活动'></v-cell>
-            <v-list-item v-for='i in 3' v-link='{name:"activity-detail"}' title='刮刮卡' title-dupty='这是活动副标题'></v-list-item>
+        <div class='hot-list '>
+            <v-banner type='activity' v-link='{name:"activity-list"}'></v-banner>
+            <v-list-item  v-link='{name:"activity-detail",query:{game:"scrap"}}' title='刮刮卡' title-dupty='这是活动副标题' img='../src/assets/images/activity-1.png'></v-list-item>
+            <v-list-item  v-link='{name:"activity-detail",query:{game:"quiz"}}'  title='有奖问答' title-dupty='这是活动副标题' img='../src/assets/images/activity-2.png'></v-list-item>
         </div>
-        <div class=' mg10-t'>
-            <v-cell v-link='{name:"goods-list"}' :icon='' msg-left='热门商品' msg-right='所有商品'></v-cell>
-            <v-list-item v-for='i in 3' v-link='{name:"goods-detail"}' title='商品名称' title-dupty='200积分'></v-list-item>
+        <div class='hot-list'>
+            <v-banner type='goods' v-link='{name:"goods-list"}'></v-banner>
+            <v-list-item  v-link='{name:"goods-detail"}' title='商品名称' title-dupty='200积分' img='../src/assets/images/goods-1.png'></v-list-item>
+            <v-list-item  v-link='{name:"goods-detail"}' title='商品名称' title-dupty='200积分' img='../src/assets/images/goods-2.png'></v-list-item>
+            <v-list-item  v-link='{name:"goods-detail"}' title='商品名称' title-dupty='200积分' img='../src/assets/images/goods-3.png'></v-list-item>
         </div>
         <v-modal :show.sync='modal'>
           <div class='modal-content text-center'>
-            <img class='img' />
-            <p style='line-height:1.5rem'>签到成功，积分+10</p>
-            <button class='btn btn-blue' @click='toggleModal(signIn)'>确定</button>
+            <img src='../assets/images/correct.png' />
+            <p ><strong>签到成功，积分+10</strong></p>
+            <button class='btn btn-pink' @click='toggleModal(signIn)'>确定</button>
           </div>
         </v-modal>
     </div>
@@ -62,15 +75,15 @@
 <script>
 import utils from 'libs/utils'
 import vModal from 'components/v-modal'
-import vCell from 'components/v-cell'
+import vBanner from 'components/v-banner'
 import vListItem from 'components/v-list-item'
 export default {
 
     name: 'index',
     components: {
-        vCell,
         vListItem,
         vModal,
+        vBanner
     },
     data() {
         return {

@@ -1,20 +1,23 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
 .v-list-item {
-    height: pxTorem(95);
+    height: pxTorem(220);
+    padding: pxTorem(40) 0;
+    border-bottom:pxTorem(1) solid #bababa;
     .img {
-        width: pxTorem(87);
-        height: pxTorem(63);
-        margin: 0 $gap*6;
+        width: pxTorem(180);
+        height: pxTorem(140);
+        margin: 0 pxTorem(50) 0 pxTorem(56);
     }
 }
 </style>
 <template>
-    <div class='v-list-item flex flex-center-v border-b-1 bg-white'>
-        <img class='img border-1' />
+    <div class='v-list-item flex flex-center-v  bg-white'>
+        <img class='img' :src='img' />
         <div>
-            <strong>{{title}}</strong>
-            <p>{{titleDupty}}</p>
+            <p class='text-huge'>{{title}}</p>
+            <p v-if='color' class='text-pink'>{{titleDupty}}</p>
+            <p v-else class='text-gray'>{{titleDupty}}</p>
         </div>
     </div>
 </template>
@@ -30,6 +33,14 @@ export default {
         titleDupty: {
             type: String,
             default: ''
+        },
+        color:{
+            type:Boolean,
+            default:false
+        },
+        img:{
+            type:String,
+            default:''
         }
     },
     data() {
