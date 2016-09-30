@@ -1,6 +1,6 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
-.exchange{
+.order{
     margin-bottom:pxTorem(22);
     padding:0 pxTorem(30);
     border-top:pxTorem(1) solid #7d7d7d;
@@ -16,7 +16,7 @@
 }
 </style>
 <template>
-    <div  class='exchange bg-white'>
+    <div  class='order bg-white'>
         <div class='head text-small'>
         	<slot name='head-content'></slot>
         </div>
@@ -31,12 +31,12 @@
     </div>
 </template>
 <script>
-import vExchangeItem from 'components/v-exchange-item'
+import vorderItem from 'components/v-order-item'
 export default {
 
-    name: 'v-exchange',
+    name: 'v-order',
     components:{
-    	vExchangeItem
+    	vorderItem
     },
     data() {
         return {

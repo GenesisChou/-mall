@@ -82,22 +82,22 @@
         </v-sticky>
         <v-modal :show.sync='modal'>
             <div class='modal-content text-center'>
-                <img v-if='!exchangeState' src='../assets/images/question-hollow.png' />
+                <img v-if='!orderState' src='../assets/images/question-hollow.png' />
                 <img v-else src='../assets/images/correct-hollow.png' />
                 <p>
-                    <span v-if='!exchangeState'>
+                    <span v-if='!orderState'>
                 是否确认兑换?
               </span>
                     <span v-else>
                 兑换成功
               </span>
                 </p>
-                <div v-if='!exchangeState'>
+                <div v-if='!orderState'>
                     <button class='btn btn-pink-hollow' @click='toggleModal'>取消</button>
-                    <button class='btn btn-pink' @click='exchange'>确认</button>
+                    <button class='btn btn-pink' @click='order'>确认</button>
                 </div>
                 <div v-else>
-                    <button class='btn btn-pink' v-link='{name:"exchange-detail"}'>查看</button>
+                    <button class='btn btn-pink' v-link='{name:"order-detail"}'>查看</button>
                 </div>
             </div>
         </v-modal>
@@ -118,7 +118,7 @@ export default {
         return {
             popup: false,
             modal: false,
-            exchangeState: false
+            orderState: false
         };
     },
     created() {
@@ -132,8 +132,8 @@ export default {
         toggleModal() {
             this.modal = !this.modal;
         },
-        exchange() {
-            this.exchangeState = true;
+        order() {
+            this.orderState = true;
         }
     }
 };

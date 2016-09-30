@@ -1,6 +1,6 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
-.v-exchange-item {
+.v-order-item {
     padding: pxTorem(26) 0;
     border-bottom: pxTorem(1) solid #c8c8c8;
     .img {
@@ -14,7 +14,7 @@
 }
 </style>
 <template>
-    <div class='v-exchange-item flex '>
+    <div class='v-order-item flex '>
         <img class='img ' :src='img' />
         <div class='content flex flex-item flex-space-between'>
             <strong class='text-huge'>商品名称</strong>

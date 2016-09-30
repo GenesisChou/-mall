@@ -1,18 +1,18 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
-.exchange-detail {
+.order-detail {
     padding-top: pxTorem(20);
     height: 100%;
 }
 </style>
 <template>
-    <div class='exchange-detail bg-base'>
-        <v-exchange>
+    <div class='order-detail bg-base'>
+        <v-order>
             <div slot='head-content'>
                 订单号：10086
             </div>
             <div slot='body-content'>
-                <v-exchange-item v-for='i in 2' img='../src/assets/images/product-3.png'></v-exchange-item>
+                <v-order-item v-for='i in 2' img='../src/assets/images/product-3.png'></v-order-item>
             </div>
             <div slot='footer-content'>
                 <p>商品信息： </p>
@@ -20,19 +20,19 @@
                 <p>使用说明： </p>
                 <p>请到以下网址按照说明使用：www.test.com </p>
             </div>
-        </v-exchange>
+        </v-order>
     </div>
 </template>
 <script>
 import utils from 'libs/utils'
-import vExchange from 'components/v-exchange'
-import vExchangeItem from 'components/v-exchange-item'
+import vOrder from 'components/v-order'
+import vOrderItem from 'components/v-order-item'
 export default {
 
-    name: 'exchange-detail',
+    name: 'order-detail',
     components: {
-        vExchangeItem,
-        vExchange
+        vOrderItem,
+        vOrder
     },
     data() {
         return {
@@ -43,7 +43,7 @@ export default {
         utils.setTitle('订单详情');
     },
     methods: {
-        getExchangeDetail() {
+        getorderDetail() {
 
         }
     }

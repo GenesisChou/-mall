@@ -1,35 +1,35 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
-.exchange-list {
+.order-list {
     padding-top: pxTorem(20);
     height: 100%;
 }
 </style>
 <template>
-    <div class='exchange-list bg-base'>
-        <v-exchange v-for='i in 3' v-link='{name:"exchange-detail"}'>
+    <div class='order-list bg-base'>
+        <v-order v-for='i in 3' v-link='{name:"order-detail"}'>
             <div slot='head-content'>
                 订单号：10086
             </div>
             <div slot='body-content'>
-                <v-exchange-item img='../src/assets/images/product-3.png'></v-exchange-item>
+                <v-order-item img='../src/assets/images/product-3.png'></v-order-item>
             </div>
             <div slot='footer-content'>
                 已发放，点击查看详情记录
             </div>
-        </v-exchange>
+        </v-order>
     </div>
 </template>
 <script>
 import utils from 'libs/utils'
-import vExchange from 'components/v-exchange'
-import vExchangeItem from 'components/v-exchange-item'
+import vOrder from 'components/v-order'
+import vOrderItem from 'components/v-order-item'
 export default {
 
-    name: 'exchange-list',
+    name: 'order-list',
     components: {
-        vExchangeItem,
-        vExchange
+        vOrderItem,
+        vOrder
     },
     data() {
         return {
@@ -41,7 +41,7 @@ export default {
     },
     methods: {
         //获取兑换订单列表
-        getExchangeList() {
+        getorderList() {
 
         }
     }

@@ -65,7 +65,7 @@
                 <div class='flex-item flex flex-center-v flex-center-h' @click='toggleModal'>
                     <img class='icon' src='../assets/images/store.png'> <span class='text-large'>赚取积分</span>
                 </div>
-                <div class='flex-item flex flex-center-v flex-center-h' v-link='{name:"exchange-list"}'>
+                <div class='flex-item flex flex-center-v flex-center-h' v-link='{name:"order-list"}'>
                     <img class='icon' src='../assets/images/record.png'><span class='text-large'>兑换记录</span>
                 </div>
             </div>

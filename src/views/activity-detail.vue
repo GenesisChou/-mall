@@ -1,6 +1,5 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
-
 .body {
     padding: 0 pxTorem(55);
     .title {
@@ -61,6 +60,9 @@ export default {
         getActivityDetail() {
 
         }
+    },
+    created() {
+        utils.setTitle('活动详情');
     }
 };
 </script>

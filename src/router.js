@@ -39,13 +39,13 @@ export default function(router) {
             name: 'my-integral',
             component: require('views/my-integral'),
         },
-        '/exchange-list': {
-            name: 'exchange-list',
-            component: require('views/exchange-list'),
+        '/order-list': {
+            name: 'order-list',
+            component: require('views/order-list'),
         },
-        '/exchange-detail': {
-            name: 'exchange-detail',
-            component: require('views/exchange-detail'),
+        '/order-detail': {
+            name: 'order-detail',
+            component: require('views/order-detail'),
         }
     });
     router.beforeEach((transition)=>{
