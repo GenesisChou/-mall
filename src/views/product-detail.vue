@@ -55,27 +55,29 @@
         <div class='head flex flex-center-h flex-center-v'>
             <img src='../assets/images/product.png' />
             <div class='cover text-white  flex flex-center-v'>
-                <p class='text-huge'>商品名称</p>
+                <p class='text-huge'>{{detail.name}}</p>
             </div>
         </div>
         <div class='body '>
             <div class='introduction'>
                 <h1 class='text-huge title'> <strong>商品介绍</strong> </h1>
                 <div class='content text-gray'>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo quaerat quasi quibusdam dicta repellendus, laboriosam obcaecati pariatur adipisci, at quidem iste ex vel? Commodi, ipsam libero natus nihil, delectus voluptatibus.
+                    {{detail.content}}
                 </div>
             </div>
             <div class='explation'>
                 <h1 class='text-huge title'><strong>兑换说明</strong>  </h1>
                 <div class='content text-gray'>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed dolorum saepe sapiente molestias fugit. Assumenda velit, ullam dicta tenetur mollitia, expedita quis laboriosam consequatur, deleniti enim vitae in distinctio. Incidunt.
+                    <pre>
+                        {{detail|json}}
+                    </pre>
                 </div>
             </div>
         </div>
         <v-sticky>
             <div class='footer flex flex-space-between flex-center-v'>
                 <div class='text-large'>
-                    单价：<span class='text-pink'>200</span>积分
+                    单价：<span class='text-pink'>{{detail.integral}}</span>积分
                 </div>
                 <button class='btn btn-default ' @click='toggleModal'>兑换</button>
             </div>
@@ -118,16 +120,26 @@ export default {
         return {
             popup: false,
             modal: false,
-            orderState: false
+            orderState: false,
+            id: '',
+            detail: ''
         };
     },
-    created() {
-        utils.setTitle('商品详情');
+    route: {
+        data(transition) {
+            utils.setTitle('商品详情');
+            this.id = transition.to.query.id;
+            this.getProductDetail();
+        }
     },
     methods: {
         //获取商品详情
-        getproductDetail() {
+        getProductDetail() {
+            this.$http.post(`${APP.HOST}/product_detail/${this.id}`).then((response) => {
+                let data = response.data;
+                this.$set('detail', data.data);
 
+            }, (response) => {})
         },
         toggleModal() {
             this.modal = !this.modal;

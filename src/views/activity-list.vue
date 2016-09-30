@@ -1,18 +1,19 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
-  .load-more{
-    height:pxTorem(90);
-  }
-  .search-box{
-    padding:pxTorem(17) pxTorem(30);
-  }
+.load-more {
+    height: pxTorem(90);
+}
+
+.search-box {
+    padding: pxTorem(17) pxTorem(30);
+}
 </style>
 <template>
-      <div class='activity-list'>
+    <div class='activity-list'>
         <div class='search-box bg-base'>
             <v-search placeholder='请输入关键字进行过滤'></v-search>
         </div>
-        <v-list-item v-for='i in 7' v-link='{name:"activity-detail"}'  title='刮刮卡' title-dupty='这是个活动副标题' img='../src/assets/images/activity-1.png'></v-list-item>
+        <v-list-item v-for='i in 7' v-link='{name:"activity-detail"}' title='刮刮卡' title-dupty='这是个活动副标题' img='../src/assets/images/activity-1.png'></v-list-item>
         <div class='load-more text-large  text-sliver flex flex-center-h flex-center-v'>上滑加载更多</div>
     </div>
 </template>
@@ -29,21 +30,28 @@ export default {
     },
     data() {
         return {
-
+          activityList:[]
         };
     },
-    created(){
-      utils.setTitle('活动列表');
+    route: {
+        data() {
+            utils.setTitle('活动列表');
+            this.getActivityList();
+        }
     },
-    methods:{
-      //获取活动列表
-      getActivityList(){
+    methods: {
+        //获取活动列表
+        getActivityList() {
+          this.$http.post(`${APP.HOST}/all_activity`).then((response)=>{
+            let data=response.data;
+          },(response)=>{
 
-      },
-      //搜索活动
-      searchActivity(){
+          });
+        },
+        //搜索活动
+        searchActivity() {
 
-      }
+        }
     }
 };
 </script>

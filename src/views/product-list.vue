@@ -1,11 +1,12 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
-  .load-more{
-    height:pxTorem(90);
-  }
-  .search-box{
-    padding:pxTorem(17) pxTorem(30);
-  }
+.load-more {
+    height: pxTorem(90);
+}
+
+.search-box {
+    padding: pxTorem(17) pxTorem(30);
+}
 </style>
 <template>
     <div class='product-list'>
@@ -29,16 +30,25 @@ export default {
     },
     data() {
         return {
-
+            productList:[],
         };
     },
-    created() {
-        utils.setTitle('商品列表');
+    route: {
+        data(transition) {
+
+            utils.setTitle('商品列表');
+            this.getProductList();
+        }
     },
     methods: {
         //获取商品列表
-        getproductList() {
+        getProductList() {
+            this.$http.post(`${APP.HOST}/all_product`, {sword:''}).then((response) => {
+                let data = response.data;
+                console.log(data);
+            }, (response) => {
 
+            })
         },
         //搜索商品
         searchproduct() {

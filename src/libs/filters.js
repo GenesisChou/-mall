@@ -1,5 +1,8 @@
 export default{
-  test:function(value){
+  test(value){
     return `${value}test`;
+  },
+  parseInt(value){
+  	return parseInt(value);
   }
 }

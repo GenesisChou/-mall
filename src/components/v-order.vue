@@ -42,6 +42,16 @@ export default {
         return {
 
         };
+    },
+    route:{
+        data(transition){
+
+        }
+    },
+    data(){
+        return{
+            
+        }
     }
 };
 </script>

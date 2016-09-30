@@ -53,26 +53,26 @@
 }
 </style>
 <template>
-    <div class='v-quiz '>
+    <div class='v-quiz ' v-for='($index,item) in questions'>
         <div class='head text-center'>
             <img src='./images/quiz.png' alt="">
         </div>
         <div class='body'>
             <div class='panel bg-white'>
                 <div class='panel-head text-center'>
-                    <strong>第一题</strong>
+                    <strong>第{{$index+1}}题</strong>
                     <strong class='point'>10分</strong>
                 </div>
                 <div class='panel-content text-small'>
                     <div class='quiz'>
-                        包拯结婚三十多年,妻子看着他一如往昔的脸道:真实奇怪，为啥这么多年过去了，你脸上一丝皱纹都没有呢？包拯会回道：因为哥...
+                            {{item.question}}
                     </div>
                     <div class='answers text-gray flex'>
-                        <div class='flex-item'>
-                            <input type='radio' id='one' value=1 v-model='pick'>
-                            <label for='one'>用护肤品</label>
+                        <div class='flex-item' v-for='answer in item.answer'>
+                            <input type='radio' :id='answer.id' :value='$index' v-model='pick'>
+                            <label :for='answer.id'>{{answer.option}}</label>
                         </div>
-                        <div class='flex-item'>
+<!--                         <div class='flex-item'>
                             <input type='radio' id='two' value=2 v-model='pick'>
                             <label for='two'>铁面无私</label>
                         </div>
@@ -80,7 +80,7 @@
                             <input type='radio' id='three' value=3 v-model='pick'>
                             <label for='three'>铁面无私</label>
                         </div>
-                    </div>
+ -->                    </div>
                 </div>
             </div>
         </div>
@@ -88,7 +88,14 @@
 </template>
 <script>
 export default {
-
+    props:{
+        questions:{
+            type:Array,
+            default:()=>{
+                return [];
+            }
+        }
+    },
     name: 'quiz',
     data() {
         return {
