@@ -5,7 +5,7 @@
     .main {
         position: relative;
         height: pxTorem(288);
-        background-image: url('../assets/images/my-integral/my-integral.png');
+        background-image: url('../assets/images/my_integral/my_integral.png');
         background-repeat: no-repeat;
         background-size: 100%;
         .title {
@@ -55,17 +55,17 @@
 }
 </style>
 <template>
-    <div class='my-integral'>
+    <div class='my_integral'>
         <div class='head text-center'>
             <div class='main  flex flex-center-v flex-center-h'>
                 <p class='title text-white text-large'>当前积分余额:</p>
-                <span class=' text-white number'>5000</span>
+                <span class=' text-white number' v-text='user.integral|parseInt'></span>
             </div>
             <div class='event flex flex-center-v '>
                 <div class='flex-item flex flex-center-v flex-center-h' @click='toggleModal'>
                     <img class='icon' src='../assets/images/store.png'> <span class='text-large'>赚取积分</span>
                 </div>
-                <div class='flex-item flex flex-center-v flex-center-h' v-link='{name:"order-list"}'>
+                <div class='flex-item flex flex-center-v flex-center-h' v-link='{name:"order_list"}'>
                     <img class='icon' src='../assets/images/record.png'><span class='text-large'>兑换记录</span>
                 </div>
             </div>
@@ -75,14 +75,14 @@
                 积分明细
             </div>
             <ul class='record-list'>
-                <li v-for='i in 5' class='flex flex-space-between flex-center-v'>
+                <li v-for='item in integral_list' class='flex flex-space-between flex-center-v'>
                     <div class='detail'>
-                        <span class='text-large'>签到</span>
+                        <span class='text-large'>{{item.name}}</span>
                         <p class='text-gray text-small'>
-                            2016-9-9 14:58:21
+                            {{item.create_time}}
                         </p>
                     </div>
-                    <div class='text-large flex flex-center-v'>+10 </div>
+                    <div class='text-large flex flex-center-v'>{{getPoint(item.point)}} </div>
                 </li>
             </ul>
         </div>
@@ -103,11 +103,12 @@
 </template>
 <script>
 import utils from 'libs/utils'
-import vModal from 'components/v-modal'
-import vPopup from 'components/v-popup'
+import vModal from 'components/v_modal'
+import vPopup from 'components/v_popup'
+import filters from 'libs/filters'
 export default {
 
-    name: 'my-integral',
+    name: 'my_integral',
     components: {
         vPopup,
         vModal
@@ -115,25 +116,45 @@ export default {
     data() {
         return {
             popup: false,
-            modal: false
+            modal: false,
+            user:{},
+            integral_list:[],
         };
     },
     created() {
-        utils.setTitle('用户中心');
+        this.getUserInfor();
+        this.getIntegralList();
     },
     methods: {
-        //获取用户信息
-        getUserInfor() {
+      //获取用户信息
+      getUserInfor() {
+        this.$http.post(`${APP.HOST}/get_user/${APP.USER_ID}}`).then((response)=>{
+          let data=response.data;
+          this.$set('user',data.data);
+        },(response)=>{
 
+        })
+      },
+        //获取积分明细
+        getIntegralList() {
+          this.$http.post(`${APP.HOST}/integral_list/${APP.USER_ID}`).then((response)=>{
+            let data=response.data;
+            this.$set('integral_list',data.data);
+          })
         },
-        //获取兑换记录列表
-        getRecordList() {
-
+        getPoint(point){
+          point=parseInt(point);
+          if(point>0){
+            point='+'+point;
+          }else if(!point){
+            point='+'+0;
+          }
+          return point;
         },
         toggleModal() {
-            // this.popup = !this.popup;
             this.modal = !this.modal;
         }
-    }
+    },
+    filters
 };
 </script>

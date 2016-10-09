@@ -12,7 +12,7 @@
     </v-modal>
 </template>
 <script>
-import vModal from 'components/v-modal'
+import vModal from 'components/v_modal'
 export default {
 
     name: 'v-confirm',

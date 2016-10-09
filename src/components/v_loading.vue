@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import vPopup from 'components/v-popup'
-import vSpinner from 'components/v-spinner'
+import vPopup from 'components/v_popup'
+import vSpinner from 'components/v_spinner'
 export default {
   components: {
     vPopup,vSpinner

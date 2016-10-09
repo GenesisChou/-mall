@@ -25,7 +25,7 @@
                     <h1 class='text-huge title'><strong>活动规则</strong>  </h1>
                     <div class='content text-gray'>
                         <pre>
-                            
+
                         {{detail|json}}
                         </pre>
                     </div>
@@ -41,7 +41,7 @@ import {
 import utils from 'libs/utils'
 export default {
 
-    name: 'activity-detail',
+    name: 'activity_detail',
     components: {
         quiz,
         scrap
@@ -56,7 +56,6 @@ export default {
     },
     route: {
         data(transtion) {
-            utils.setTitle('活动详情');
             this.id = transtion.to.query.id;
             this.type = transtion.to.query.type;
             if (this.type == 1) {

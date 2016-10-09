@@ -3,9 +3,9 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var plugins = [
     // 使用 ProvidePlugin 加载使用率高的依赖库
-    new webpack.ProvidePlugin({
-        $: 'webpack-zepto'
-    }),
+    // new webpack.ProvidePlugin({
+    //     $: 'webpack-zepto'
+    // }),
     //将样式统一发布到style.css中
     new ExtractTextPlugin("style.css", {
         allChunks: true,

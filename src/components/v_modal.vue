@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import vPopup from 'components/v-popup'
+import vPopup from 'components/v_popup'
 export default {
   components: {vPopup},
   props:{

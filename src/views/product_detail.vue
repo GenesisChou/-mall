@@ -51,7 +51,7 @@
 }
 </style>
 <template>
-    <div class='product-detail'>
+    <div class='product_detail'>
         <div class='head flex flex-center-h flex-center-v'>
             <img src='../assets/images/product.png' />
             <div class='cover text-white  flex flex-center-v'>
@@ -99,7 +99,7 @@
                     <button class='btn btn-pink' @click='order'>确认</button>
                 </div>
                 <div v-else>
-                    <button class='btn btn-pink' v-link='{name:"order-detail"}'>查看</button>
+                    <button class='btn btn-pink' v-link='{name:"order_detail"}'>查看</button>
                 </div>
             </div>
         </v-modal>
@@ -107,11 +107,11 @@
 </template>
 <script>
 import utils from 'libs/utils'
-import vSticky from 'components/v-sticky'
-import vModal from 'components/v-modal'
+import vSticky from 'components/v_sticky'
+import vModal from 'components/v_modal'
 export default {
 
-    name: 'product-detail',
+    name: 'product_detail',
     components: {
         vSticky,
         vModal
@@ -127,7 +127,6 @@ export default {
     },
     route: {
         data(transition) {
-            utils.setTitle('商品详情');
             this.id = transition.to.query.id;
             this.getProductDetail();
         }

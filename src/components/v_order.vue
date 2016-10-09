@@ -31,7 +31,7 @@
     </div>
 </template>
 <script>
-import vorderItem from 'components/v-order-item'
+import vorderItem from 'components/v_order_item'
 export default {
 
     name: 'v-order',

@@ -39,11 +39,11 @@
 <template>
     <div class='index'>
         <div class='head bg-white flex '>
-            <div class='event flex  flex-center-v ' v-link='{name:"my-integral"}'>
+            <div class='event flex  flex-center-v ' v-link='{name:"my_integral"}'>
                 <img class='icon' src='../assets/images/index/money.png'>
                 <div class='content'>
                     <p class='text-large'>我的积分</p>
-                    <p class='text-small'>当前余额: <span class='text-pink'>1200</span> </p>
+                    <p class='text-small'>当前余额: <span class='text-pink'>{{user.integral|parseInt}}</span> </p>
                 </div>
             </div>
             <div class='event flex  flex-center-v'>
@@ -55,21 +55,21 @@
             </div>
         </div>
         <div class='hot-list '>
-            <v-banner type='activity' v-link='{name:"activity-list"}'></v-banner>
-            <v-list-item v-for='activity in hotActivityList' v-link='{name:"activity-detail",query:{id:activity.id,type:activity.type}}' :title='activity.name' :title-dupty=`${activity.integral|parseInt}积分` img='../src/assets/images/activity-1.png'></v-list-item>
-            <!--             <v-list-item v-link='{name:"activity-detail",query:{game:"scrap"}}' title='刮刮卡' title-dupty='这是活动副标题' img='../src/assets/images/activity-1.png'></v-list-item>
+            <v-banner type='activity' v-link='{name:"activity_list"}'></v-banner>
+            <v-list-item v-for='activity in host_activity_list' v-link='{name:"activity_detail",query:{id:activity.id,type:activity.type}}' :title='activity.name' :title-dupty=`${activity.integral|parseInt}积分` img='../src/assets/images/activity-1.png'></v-list-item>
+            <!--             <v-list-item v-link='{name:"activity_detail",query:{game:"scrap"}}' title='刮刮卡' title-dupty='这是活动副标题' img='../src/assets/images/activity-1.png'></v-list-item>
 
-            <v-list-item v-link='{name:"activity-detail",query:{game:"quiz"}}' title='有奖问答' title-dupty='这是活动副标题' img='../src/assets/images/activity-2.png'></v-list-item> -->
+            <v-list-item v-link='{name:"activity_detail",query:{game:"quiz"}}' title='有奖问答' title-dupty='这是活动副标题' img='../src/assets/images/activity-2.png'></v-list-item> -->
         </div>
         <div class='hot-list'>
-            <v-banner type='product' v-link='{name:"product-list"}'></v-banner>
-            <v-list-item v-for='product in hotProductList' v-link='{name:"product-detail",query:{id:product.id}}' :title='product.name' :title-dupty=`${product.integral|parseInt}积分` img='../src/assets/images/product-1.png'></v-list-item>
+            <v-banner type='product' v-link='{name:"product_list"}'></v-banner>
+            <v-list-item v-for='product in hot_product_list' v-link='{name:"product_detail",query:{id:product.id}}' :title='product.name' :title-dupty=`${product.integral|parseInt}积分` img='../src/assets/images/product-1.png'></v-list-item>
         </div>
         <v-modal :show.sync='modal'>
             <div class='modal-content text-center'>
                 <img src='../assets/images/correct.png' />
                 <p>签到成功，积分+10</p>
-                <button class='btn btn-pink' @click='toggleModal(signIn)'>确定</button>
+                <button class='btn btn-pink' @click='toggleModal(checkIn)'>确定</button>
             </div>
         </v-modal>
     </div>
@@ -77,9 +77,9 @@
 <script>
 import utils from 'libs/utils'
 import filters from 'libs/filters'
-import vModal from 'components/v-modal'
-import vBanner from 'components/v-banner'
-import vListItem from 'components/v-list-item'
+import vModal from 'components/v_modal'
+import vBanner from 'components/v_banner'
+import vListItem from 'components/v_list_item'
 export default {
 
     name: 'index',
@@ -92,41 +92,51 @@ export default {
         return {
             modal: false,
             signState: false,
-            hotActivityList: [],
-            hotProductList: []
+            user:{},
+            host_activity_list: [],
+            hot_product_list: []
         };
     },
     created() {
-        utils.setTitle('积分商城');
+        this.getUserInfor();
         this.getHotActivityList();
         this.getHotProductList();
     },
     methods: {
         //获取用户信息
         getUserInfor() {
+          this.$http.post(`${APP.HOST}/get_user/${APP.USER_ID}}`).then((response)=>{
+            let data=response.data;
+            this.$set('user',data.data);
+          },(response)=>{
 
+          })
         },
         //获取热门活动
         getHotActivityList() {
             this.$http.post(`${APP.HOST}/hot_activity`).then((response) => {
                 let data = response.data;
-                this.$set('hotActivityList', data.info.list);
+                this.$set('host_activity_list', data.info.list);
             }, (response) => {
                 // error callback
             });
         },
         //获取热门商品
-        getHotProductList(hotProductList) {
+        getHotProductList(hot_product_list) {
             this.$http.post(`${APP.HOST}/hot_product`).then((response) => {
                 let data = response.data;
-                this.$set('hotProductList', data.info.list);
+                this.$set('hot_product_list', data.info.list);
             }, (response) => {
                 // error callback
             });
         },
         //签到
-        signIn() {
+        checkIn() {
+          this.$http.post(`${APP.HOST}/checkin/${APP.USER_ID}`).then((response)=>{
 
+          },(response)=>{
+
+          })
         },
         // 显示/隐藏弹出框
         toggleModal(method) {

@@ -4,5 +4,8 @@ export default{
   },
   parseInt(value){
   	return parseInt(value);
+  },
+  abs(value){
+    return Math.abs(value);
   }
 }

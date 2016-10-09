@@ -39,6 +39,7 @@
         <div class='link text-small flex flex-center-v'>
             <template v-if='type=="activity"'>
                 <span class='text-sliver'>所有活动</span>
+                <i class='arrows-right'></i>
                 <img src='../assets/images/arrows-right-orange.png'>
             </template>
             <template v-else>

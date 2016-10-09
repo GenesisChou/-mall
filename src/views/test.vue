@@ -19,10 +19,10 @@
     </div>
 </template>
 <script>
-import vSpinner from 'components/v-spinner'
-import vModal from 'components/v-modal'
-import vLoading from 'components/v-loading'
-import vConfirm from 'components/v-confirm'
+import vSpinner from 'components/v_spinner'
+import vModal from 'components/v_modal'
+import vLoading from 'components/v_loading'
+import vConfirm from 'components/v_confirm'
 export default {
     components: {
         vSpinner,

@@ -13,30 +13,30 @@
         <div class='search-box bg-base'>
             <v-search placeholder='请输入关键字进行过滤'></v-search>
         </div>
-        <v-list-item v-for='i in 7' v-link='{name:"product-detail"}' :color=true title='商品名称' title-dupty='200积分' img='../src/assets/images/product-1.png'></v-list-item>
+        <v-list-item v-for='product in product_list' v-link='{name:"product_detail",query:{id:product.id}}' :title='product.name' :title-dupty=`${product.integral|parseInt}积分` img='../src/assets/images/product-1.png'></v-list-item>
+
         <div class='load-more text-large  text-sliver flex flex-center-h flex-center-v'>上滑加载更多</div>
     </div>
 </template>
 <script>
 import utils from 'libs/utils'
-import vSearch from 'components/v-search'
-import vListItem from 'components/v-list-item'
+import vSearch from 'components/v_search'
+import vListItem from 'components/v_list_item'
 export default {
 
-    name: 'product-list',
+    name: 'product_list',
     components: {
         vListItem,
         vSearch
     },
     data() {
         return {
-            productList:[],
+            product_list:[],
         };
     },
     route: {
         data(transition) {
 
-            utils.setTitle('商品列表');
             this.getProductList();
         }
     },
@@ -45,7 +45,7 @@ export default {
         getProductList() {
             this.$http.post(`${APP.HOST}/all_product`, {sword:''}).then((response) => {
                 let data = response.data;
-                console.log(data);
+                this.$set('product_list', data.info.list);
             }, (response) => {
 
             })
