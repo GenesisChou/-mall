@@ -1,0 +1,22 @@
+@import './function.scss';
+
+/******中性色********/
+
+$black:#000;
+$sliver:#a3a3a3;
+$gray:#666666;
+$white:#ffffff;
+
+/********基础色*********/
+
+$red:#ff4949;
+$pink:#f06870;
+$yellow:#f7ba2a;
+$green:#79cabc;
+$blue:#20a0ff;
+
+/*******基础值*********/
+
+$gap:pxTorem(5);
+$panel-gap:$gap*2;
+$base-size:pxTorem(26);
