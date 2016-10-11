@@ -84,8 +84,13 @@
         </v-sticky>
         <v-modal :show.sync='modal'>
             <div class='modal-content text-center'>
-                <img v-if='!order_state.start' src='../assets/images/question-hollow.png' />
-                <img v-else src='../assets/images/correct-hollow.png' />
+                <div v-if='!order_state.start'>
+                    <img src='../assets/images/question-hollow.png' />
+                </div>
+                <div v-else>
+                    <img v-if='order_state.success' src='../assets/images/correct-hollow.png' />
+                    <img v-else src='../assets/images/error-hollow.png' />
+                </div>
                 <p>
                     <p v-if='!order_state.start'>
                         是否确认兑换?
@@ -154,7 +159,7 @@ export default {
             this.modal = !this.modal;
             setTimeout(() => {
                 this.order_state.start = false;
-            },500);
+            }, 500);
         },
         //生成订单
         order() {

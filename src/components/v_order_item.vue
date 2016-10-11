@@ -15,7 +15,7 @@
 </style>
 <template>
     <div class='v-order-item flex '>
-        <img class='img ' :src='img' />
+        <img class='img ' src='../assets/images/product-3.png' />
         <div class='content flex flex-item flex-space-between'>
             <strong class='text-huge'>商品名称</strong>
             <span class='text-large text-gray'> 200积分 </span>

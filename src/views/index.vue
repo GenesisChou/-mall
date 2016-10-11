@@ -56,14 +56,14 @@
         </div>
         <div class='hot-list '>
             <v-banner type='activity' v-link='{name:"activity_list"}'></v-banner>
-            <v-list-item v-for='activity in hotActivityList' v-link='{name:"activity_detail",query:{id:activity.id,type:activity.type}}' :title='activity.name' :title-dupty=`${activity.integral|parseInt}积分` img='../src/assets/images/activity-1.png'></v-list-item>
+            <v-list-item v-for='activity in hotActivityList' v-link='{name:"activity_detail",query:{id:activity.id,type:activity.type}}' :title='activity.name' :title-dupty=`${activity.integral|parseInt}积分` img='../assets/images/activity-1.png'></v-list-item>
             <!--             <v-list-item v-link='{name:"activity_detail",query:{game:"scrap"}}' title='刮刮卡' title-dupty='这是活动副标题' img='../src/assets/images/activity-1.png'></v-list-item>
 
             <v-list-item v-link='{name:"activity_detail",query:{game:"quiz"}}' title='有奖问答' title-dupty='这是活动副标题' img='../src/assets/images/activity-2.png'></v-list-item> -->
         </div>
         <div class='hot-list'>
             <v-banner type='product' v-link='{name:"product_list"}'></v-banner>
-            <v-list-item v-for='product in hot_product_list' v-link='{name:"product_detail",query:{id:product.id}}' :title='product.name' :title-dupty=`${product.integral|parseInt}积分` img='../src/assets/images/product-1.png'></v-list-item>
+            <v-list-item v-for='product in hot_product_list' v-link='{name:"product_detail",query:{id:product.id}}' :title='product.name' :title-dupty=`${product.integral|parseInt}积分` img='../assets/images/product-1.png'></v-list-item>
         </div>
         <v-modal :show.sync='modal'>
             <div class='modal-content text-center'>

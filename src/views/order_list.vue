@@ -12,7 +12,7 @@
                 订单号：10086
             </div>
             <div slot='body-content'>
-                <v-order-item img='../src/assets/images/product-3.png'></v-order-item>
+                <v-order-item img='../assets/images/product-3.png'></v-order-item>
             </div>
             <div slot='footer-content'>
                 已发放，点击查看详情记录

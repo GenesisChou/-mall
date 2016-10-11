@@ -2,10 +2,6 @@ var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var plugins = [
-    // 使用 ProvidePlugin 加载使用率高的依赖库
-    // new webpack.ProvidePlugin({
-    //     $: 'webpack-zepto'
-    // }),
     //将样式统一发布到style.css中
     new ExtractTextPlugin("style.css", {
         allChunks: true,
@@ -19,7 +15,7 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, './dist'),
-        publicPath: '/dist/',
+        publicPath: './dist/',
         filename: 'build.js'
     },
     resolve: {
@@ -60,7 +56,7 @@ module.exports = {
             test: /\.(png|jpg|gif|svg)$/,
             loader: 'url',
             query: {
-                limit: 10000,
+                // limit: 10000,
                 name: '[name].[ext]?[hash]'
             }
         }, {

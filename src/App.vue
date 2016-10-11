@@ -1,10 +1,12 @@
+<style lang='sass'>
+    @import './assets/scss/main.scss';
+</style>
 <template>
     <div id='app' >
         <router-view ：transition='fade'></router-view>
     </div>
 </template>
 <script>
-import 'assets/scss/main.scss'
 export default {
     created() {
             this.init();

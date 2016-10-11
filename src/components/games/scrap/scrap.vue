@@ -34,10 +34,10 @@ export default {
         };
     },
     ready() {
-        this.init();
-        window.onresize = () => {
-            this.init();
-        };
+        // this.init();
+        // window.onresize = () => {
+        //     this.init();
+        // };
     },
     methods: {
         pxTorem(value) {

@@ -13,7 +13,7 @@
 </style>
 <template>
     <div class='v-list-item flex flex-center-v  bg-white'>
-        <img class='img' :src='img' />
+        <img class='img'  src='../assets/images/activity-2.png'/>
         <div>
             <p class='text-huge'>{{title}}</p>
             <p v-if='color' class='text-pink'>{{titleDupty}}</p>
@@ -45,7 +45,6 @@ export default {
     },
     data() {
         return {
-
         };
     }
 };
