@@ -2,17 +2,17 @@
 @import '../assets/scss/variable.scss';
 .order_list {
     padding-top: pxTorem(20);
-    height: 100%;
+    min-height: 100%;
 }
 </style>
 <template>
     <div class='order_list bg-base'>
-        <v-order v-for='i in 3' v-link='{name:"order_detail"}'>
+        <v-order v-for='order in order_list' v-link='{name:"order_detail"}'>
             <div slot='head-content'>
-                订单号：10086
+                订单号：{{order.orderid}}
             </div>
             <div slot='body-content'>
-                <v-order-item img='../assets/images/product-3.png'></v-order-item>
+                <v-order-item img='../assets/images/product-3.png' :name='order.product' :integral='order.integral'></v-order-item>
             </div>
             <div slot='footer-content'>
                 已发放，点击查看详情记录
@@ -33,15 +33,30 @@ export default {
     },
     data() {
         return {
-
-        };
+            order_list: [],
+            params: {
+                p: 1,
+                r: 2,
+                total: 0,
+                count: 0
+            }
+        }
     },
-    created() {
+    route: {
+        data() {
+            this.getorderList();
+            utils.getScrollData(this.order_list, this.params, this.getorderList);
+        }
     },
     methods: {
         //获取兑换订单列表
-        getorderList() {
+        getorderList(params = this.params) {
+            this.$http.post(`${APP.HOST}/order_list/${APP.USER_ID}`, params).then((response) => {
+                let data = response.data;
+                this.$set('order_list', data.data.list);
+            }, (response) => {
 
+            })
         }
     }
 };

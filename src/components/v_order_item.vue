@@ -17,24 +17,33 @@
     <div class='v-order-item flex '>
         <img class='img ' src='../assets/images/product-3.png' />
         <div class='content flex flex-item flex-space-between'>
-            <strong class='text-huge'>商品名称</strong>
-            <span class='text-large text-gray'> 200积分 </span>
+            <strong class='text-huge'>{{name}}</strong>
+            <span class='text-large text-gray'> {{integral|parseInt}}积分 </span>
         </div>
         <div class='flex flex-center-v text-large'>
-            ×1
+            x{{number}}
         </div>
     </div>
 </template>
 <script>
+import filters from 'libs/filters'
 export default {
     props:{
         img:{
             type:String,
             default:''
-        }
-    },
-    data() {
-            return {}
         },
+        name:{
+            type:String,
+            default:'商品名称'
+        },
+        integral:String,
+        number:{
+            type:String,
+            default:1
+        }
+
+    },
+    filters
 }
 </script>

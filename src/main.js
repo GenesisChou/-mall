@@ -5,13 +5,14 @@ import VueResource from 'vue-resource'
 import RouterConfig from './router'
 import FastClick from 'fastclick'
 import filters from 'libs/filters'
-
 Vue.use(VueResource);
 Vue.use(VueRouter);
 Vue.http.options.emulateJSON = true;
 FastClick.attach(document.body);
 let router = new VueRouter();
 RouterConfig(router);
+
+
 
 
 window.APP = {

@@ -49,7 +49,10 @@
             <div class='event flex  flex-center-v'>
                 <img class='icon' src='../assets/images/index/sign-in.png' @click='toggleModal(checkIn)'>
                 <div class='content'>
-                    <p class='text-large'>未签到</p>
+                    <p class='text-large'>
+                        <span v-if='user.checkIn'>已签到</span>
+                        <span v-else>未签到</span>
+                    </p>
                     <p class='text-small'>连续签到: <span class='text-pink'>20天</span></p>
                 </div>
             </div>
@@ -57,22 +60,16 @@
         <div class='hot-list '>
             <v-banner type='activity' v-link='{name:"activity_list"}'></v-banner>
             <v-list-item v-for='activity in hotActivityList' v-link='{name:"activity_detail",query:{id:activity.id,type:activity.type}}' :title='activity.name' :title-dupty=`${activity.integral|parseInt}积分` img='../assets/images/activity-1.png'></v-list-item>
-            <!--             <v-list-item v-link='{name:"activity_detail",query:{game:"scrap"}}' title='刮刮卡' title-dupty='这是活动副标题' img='../src/assets/images/activity-1.png'></v-list-item>
-
-            <v-list-item v-link='{name:"activity_detail",query:{game:"quiz"}}' title='有奖问答' title-dupty='这是活动副标题' img='../src/assets/images/activity-2.png'></v-list-item> -->
-        </div>
-        <div class='hot-list'>
             <v-banner type='product' v-link='{name:"product_list"}'></v-banner>
             <v-list-item v-for='product in hot_product_list' v-link='{name:"product_detail",query:{id:product.id}}' :title='product.name' :title-dupty=`${product.integral|parseInt}积分` img='../assets/images/product-1.png'></v-list-item>
+            <v-modal :show.sync='modal'>
+                <div class='modal-content text-center'>
+                    <img src='../assets/images/correct.png' />
+                    <p>签到成功，积分+10</p>
+                    <button class='btn btn-pink' @click='toggleModal()'>确定</button>
+                </div>
+            </v-modal>
         </div>
-        <v-modal :show.sync='modal'>
-            <div class='modal-content text-center'>
-                <img src='../assets/images/correct.png' />
-                <p>签到成功，积分+10</p>
-                <button class='btn btn-pink' @click='toggleModal()'>确定</button>
-            </div>
-        </v-modal>
-    </div>
 </template>
 <script>
 import utils from 'libs/utils'
@@ -86,7 +83,7 @@ export default {
     components: {
         vListItem,
         vModal,
-        vBanner
+        vBanner,
     },
     data() {
         return {
@@ -94,13 +91,16 @@ export default {
             signState: false,
             user: {},
             hotActivityList: [],
-            hot_product_list: []
+            hot_product_list: [],
         };
     },
-    created() {
-        this.getUserInfor();
-        this.getHotActivityList();
-        this.getHotProductList();
+    route: {
+        data() {
+            this.getUserInfor();
+            this.getHotActivityList();
+            this.getHotProductList();
+
+        }
     },
     methods: {
         //获取用户信息
@@ -108,6 +108,7 @@ export default {
             this.$http.post(`${APP.HOST}/get_user/${APP.USER_ID}}`).then((response) => {
                 let data = response.data;
                 this.$set('user', data.data);
+                this.$set('user.checkIn', this.ifCheckIn(data.data.last_checkin));
             }, (response) => {
 
             })
@@ -134,14 +135,19 @@ export default {
         checkIn() {
             this.$http.post(`${APP.HOST}/checkin/${APP.USER_ID}`).then((response) => {
                 this.getUserInfor();
+
             }, (response) => {
 
             })
         },
+        //判断是否签到
+        ifCheckIn(date) {
+            return utils.compareDate(date, utils.getToday()) > 0 ? true : false;
+        },
         // 显示/隐藏弹出框
-        toggleModal(method) {
-            if (method) {
-                method();
+        toggleModal(func) {
+            if (func) {
+                func();
             }
             this.modal = !this.modal;
 

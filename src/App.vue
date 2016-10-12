@@ -3,7 +3,7 @@
 </style>
 <template>
     <div id='app' >
-        <router-view ：transition='fade'></router-view>
+        <router-view :transition='fade'></router-view>
     </div>
 </template>
 <script>
