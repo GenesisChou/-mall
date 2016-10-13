@@ -36,14 +36,23 @@ export default {
     },
     data() {
         return {
-
+            id: '',
+            detail:{}
         };
     },
-    created() {
+    route: {
+        data(transition) {
+            this.id = transition.to.query.id;
+            this.getorderDetail();
+        }
     },
     methods: {
         getorderDetail() {
+            this.$http.post(`${APP.HOST}/order_detail/${this.id}`).then((response) => {
+                let data = response.data;
+            }, (response) => {
 
+            })
         }
     }
 };

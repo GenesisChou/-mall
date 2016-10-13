@@ -2,12 +2,7 @@
 @import '../assets/scss/variable.scss';
 .body {
     padding: 0 pxTorem(55);
-    .title {
-        margin: pxTorem(50) 0 pxTorem(30) 0;
-    }
-    .content {
-        text-align: justify;
-    }
+    margin:pxTorem(50) 0 pxTorem(150) 0;
 }
 </style>
 <template>
@@ -17,9 +12,10 @@
         </div>
         <div class='body '>
             <div class='introduction'>
-                <h1 class='text-huge title'> <strong>活动介绍</strong> </h1>
+                {{{detail.content}}}
+                <!--                 <h1 class='text-huge title'> <strong>活动介绍</strong> </h1>
                 <div class='content text-gray'>
-                    {{detail.content}}
+                    {{{detail.content}}}
                 </div>
                 <div class='explation'>
                     <h1 class='text-huge title'><strong>活动规则</strong>  </h1>
@@ -29,7 +25,7 @@
                         {{detail|json}}
                         </pre>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
 </template>

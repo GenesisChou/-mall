@@ -56,4 +56,9 @@ export default {
                 }
             }
         },
+        setUserBase() {
+            window.APP.USER_ID = localStorage.user_id;
+            window.APP.NICK_NAME = localStorage.nickname;
+            window.APP.HEAD_IMG = localStorage.headimg;
+        }
 }

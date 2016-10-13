@@ -7,7 +7,7 @@
 </style>
 <template>
     <div class='order_list bg-base'>
-        <v-order v-for='order in order_list' v-link='{name:"order_detail"}'>
+        <v-order v-for='order in order_list' v-link='{name:"order_detail",query:{id:order.id}}'>
             <div slot='head-content'>
                 订单号：{{order.orderid}}
             </div>
@@ -36,7 +36,7 @@ export default {
             order_list: [],
             params: {
                 p: 1,
-                r: 2,
+                r: APP.PERPAGE,
                 total: 0,
                 count: 0
             }

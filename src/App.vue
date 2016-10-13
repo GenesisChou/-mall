@@ -1,15 +1,16 @@
 <style lang='sass'>
-    @import './assets/scss/main.scss';
+@import './assets/scss/main.scss';
 </style>
 <template>
-    <div id='app' >
-        <router-view :transition='fade'></router-view>
+    <div id='app'>
+        <router-view></router-view>
     </div>
 </template>
 <script>
 export default {
     created() {
             this.init();
+
             window.onresize = () => {
                 this.init();
             };
