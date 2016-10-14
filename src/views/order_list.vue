@@ -7,15 +7,15 @@
 </style>
 <template>
     <div class='order_list bg-base'>
-        <v-order v-for='order in order_list' v-link='{name:"order_detail",query:{id:order.id}}'>
+        <v-order v-for='order in order_list' v-link='{name:"order_detail",query:{order_id:order.id}}'>
             <div slot='head-content'>
                 订单号：{{order.orderid}}
             </div>
             <div slot='body-content'>
-                <v-order-item img='../assets/images/product-3.png' :name='order.product' :integral='order.integral'></v-order-item>
+                <v-order-item  :name='order.product' :integral='order.integral'></v-order-item>
             </div>
             <div slot='footer-content'>
-                已发放，点击查看详情记录
+                {{order.status_str}}
             </div>
         </v-order>
     </div>
@@ -38,7 +38,9 @@ export default {
                 p: 1,
                 r: APP.PERPAGE,
                 total: 0,
-                count: 0
+                count: 0,
+                token: APP.TOKEN,
+                userid: APP.USER_ID
             }
         }
     },

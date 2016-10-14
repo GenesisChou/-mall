@@ -39,8 +39,8 @@ export default {
         },
         //获取当天日期
         getToday() {
-            let today = new Date().toLocaleDateString();
-            today = today + ` 00:00:00`;
+            let date=new Date();
+            let today=`${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`;
             return today;
         },
         //比较日期
@@ -56,9 +56,10 @@ export default {
                 }
             }
         },
-        setUserBase() {
-            window.APP.USER_ID = localStorage.user_id;
-            window.APP.NICK_NAME = localStorage.nickname;
-            window.APP.HEAD_IMG = localStorage.headimg;
+        setUserBase(obj) {
+            window.APP.TOKEN=obj.token;
+            window.APP.USER_ID = obj.user_id;
+            window.APP.NICK_NAME = obj.nickname;
+            window.APP.HEAD_IMG = obj.headimg;
         }
 }

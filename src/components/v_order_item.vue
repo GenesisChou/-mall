@@ -15,7 +15,7 @@
 </style>
 <template>
     <div class='v-order-item flex '>
-        <img class='img ' src='../assets/images/product-3.png' />
+        <img class='img ' :src='img' />
         <div class='content flex flex-item flex-space-between'>
             <strong class='text-huge'>{{name}}</strong>
             <span class='text-large text-gray'> {{integral|parseInt}}积分 </span>

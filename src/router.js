@@ -11,9 +11,9 @@ export default function(router) {
         '*': {
             component: require('views/index'),
         },
-        '/test':{//组件测试
-            name:'test',
-            component:require('views/test')
+        '/test': { //组件测试
+            name: 'test',
+            component: require('views/test')
         },
         '/index': { //首页
             name: 'index',
@@ -48,24 +48,36 @@ export default function(router) {
             component: require('views/order_detail'),
         }
     });
-    router.beforeEach((transition)=>{
-      window.scrollTo(0,0);
-      const title_list=[
-        {name:'index',title:'积分商城'},
-        {name:'my_integral',title:'用户中心'},
-        {name:'order_list',title:'兑换记录'},
-        {name:'order_detail',title:'订单详情'},
-        {name:'activity_list',title:'活动列表'},
-        {name:'activity_detail',title:'活动详情'},
-        {name:'product_list',title:'商品列表'},
-        {name:'product_detail',title:'商品详情'}
-      ];
-      title_list.forEach((item)=>{
-          if(item.name==transition.to.name){
-            utils.setTitle(item.title);
-          }
-      })
-      transition.next();
+    router.beforeEach((transition) => {
+        window.scrollTo(0, 0);
+        const title_list = [
+            { name: 'index', title: '积分商城' },
+            { name: 'my_integral', title: '用户中心' },
+            { name: 'order_list', title: '兑换记录' },
+            { name: 'order_detail', title: '订单详情' },
+            { name: 'activity_list', title: '活动列表' },
+            { name: 'activity_detail', title: '活动详情' },
+            { name: 'product_list', title: '商品列表' },
+            { name: 'product_detail', title: '商品详情' }
+        ];
+        title_list.forEach((item) => {
+            if (item.name == transition.to.name) {
+                utils.setTitle(item.title);
+                // let iframe = document.createElement('iframe');
+                // iframe.style.visibility = 'hidden';
+                // iframe.setAttribute('src', '/favicon.ico');
+                // let iframeCallback = function() {
+                //     setTimeout(function() {
+                //         iframe.removeEventListener('load', iframeCallback);
+                //         document.body.removeChild(iframe);
+                //     }, 0);
+                // };
+                // iframe.addEventListener('load', iframeCallback);
+                // document.body.appendChild(iframe);
+
+            }
+        })
+        transition.next();
     })
 
 }

@@ -15,7 +15,7 @@
         </div>
         <ul class='list' v-touch:pan='onDragUp'>
             <li>
-                <v-list-item v-for='activity in activity_list' v-link='{name:"activity_detail",query:{id:activity.id,type:activity.type}}' :title='activity.name' :title-dupty=`${activity.integral|parseInt}积分` :img='activity.pic_thumb'></v-list-item>
+                <v-list-item v-for='activity in activity_list' v-link='{name:"activity_detail",query:{activity_id:activity.id,type:activity.type}}' :title='activity.name' :title-dupty=`${activity.integral|parseInt}积分` :img='activity.pic_thumb'></v-list-item>
             </li>
         </ul>
         <div class='load-more text-large  text-sliver flex flex-center-h flex-center-v'>上滑加载更多</div>

@@ -117,39 +117,42 @@ export default {
         return {
             popup: false,
             modal: false,
-            user:{},
-            integral_list:[],
+            user: {},
+            integral_list: [],
         };
     },
-    created() {
-        this.getUserInfor();
-        this.getIntegralList();
+    route: {
+        data(transition) {
+            this.getUserInfor();
+            this.getIntegralList();
+        },
+
     },
     methods: {
-      //获取用户信息
-      getUserInfor() {
-        this.$http.post(`${APP.HOST}/get_user/${APP.USER_ID}}`).then((response)=>{
-          let data=response.data;
-          this.$set('user',data.data);
-        },(response)=>{
+        //获取用户信息
+        getUserInfor() {
+            this.$http.post(`${APP.HOST}/get_user/${APP.USER_ID}}`).then((response) => {
+                let data = response.data;
+                this.$set('user', data.data);
+            }, (response) => {
 
-        })
-      },
+            })
+        },
         //获取积分明细
         getIntegralList() {
-          this.$http.post(`${APP.HOST}/integral_list/${APP.USER_ID}`).then((response)=>{
-            let data=response.data;
-            this.$set('integral_list',data.data);
-          })
+            this.$http.post(`${APP.HOST}/integral_list/${APP.USER_ID}`).then((response) => {
+                let data = response.data;
+                this.$set('integral_list', data.data);
+            })
         },
-        getPoint(point){
-          point=parseInt(point);
-          if(point>0){
-            point='+'+point;
-          }else if(!point){
-            point='+'+0;
-          }
-          return point;
+        getPoint(point) {
+            point = parseInt(point);
+            if (point > 0) {
+                point = `+${point}`;
+            } else if (!point) {
+                point = `+0`;
+            }
+            return point;
         },
         toggleModal() {
             this.modal = !this.modal;

@@ -9,16 +9,16 @@
     <div class='order-detail bg-base'>
         <v-order>
             <div slot='head-content'>
-                订单号：10086
+                订单号：{{order_detail.orderid}}
             </div>
             <div slot='body-content'>
-                <v-order-item v-for='i in 2' img='../src/assets/images/product-3.png'></v-order-item>
+                <v-order-item :name='order_detail.product' :integral='order_detail.integral'></v-order-item>
             </div>
             <div slot='footer-content'>
                 <p>商品信息： </p>
                 <p>BBW20138012423 </p>
                 <p>使用说明： </p>
-                <p>请到以下网址按照说明使用：www.test.com </p>
+                <p>{{{product_detail.content_use||'无'}}} </p>
             </div>
         </v-order>
     </div>
@@ -36,20 +36,37 @@ export default {
     },
     data() {
         return {
-            id: '',
-            detail:{}
+            order_id: '',
+            order_detail: {},
+            product_detail: {},
         };
     },
     route: {
         data(transition) {
-            this.id = transition.to.query.id;
+            this.order_id = transition.to.query.order_id;
             this.getorderDetail();
         }
     },
     methods: {
         getorderDetail() {
-            this.$http.post(`${APP.HOST}/order_detail/${this.id}`).then((response) => {
+            this.$http.post(`${APP.HOST}/order_detail/${this.order_id}`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            }).then((response) => {
                 let data = response.data;
+                this.$set('order_detail', data.data);
+                this.getProductDetail(data.data.product_id);
+            }, (response) => {
+
+            })
+        },
+        getProductDetail(product_id) {
+            this.$http.post(`${APP.HOST}/product_detail/${product_id}`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            }).then((response) => {
+                let data = response.data;
+                this.$set('product_detail', data.data);
             }, (response) => {
 
             })
