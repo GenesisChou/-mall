@@ -16,9 +16,9 @@
             </div>
             <div slot='footer-content'>
                 <p>商品信息： </p>
-                <p>BBW20138012423 </p>
+                <p>{{{product_detail.content}}} </p>
                 <p>使用说明： </p>
-                <p>{{{product_detail.content_use||'无'}}} </p>
+                <p>{{{product_detail.content_use}}} </p>
             </div>
         </v-order>
     </div>

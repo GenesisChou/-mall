@@ -39,25 +39,30 @@ export default {
         },
         //获取当天日期
         getToday() {
-            let date=new Date();
-            let today=`${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`;
+            let date = new Date();
+            let today = `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`;
             return today;
         },
         //比较日期
         compareDate(date1, date2) {
-            return new Date(date1).getTime() - new Date(date2).getTime();
+            return (new Date(date1).getTime() - new Date(date2).getTime()) > 0 ? true : false;
         },
         //获取滚动数据
+        //list:列别数据 parmas:参数 func:回调函数
         getScrollData(list, params, func) {
-            window.onscroll = () => {
-                if (params.p < params.total && list.length < params.count && this.getScrollTop() + this.getClientHeight() >= this.getScrollHeight()) {
-                    params.p++;
-                    func();
+            if (typeof func === 'function') {
+                window.onscroll = () => {
+                    setTimeout(() => {
+                        if (params.p < params.total && list.length < params.count && this.getScrollTop() + this.getClientHeight() >= this.getScrollHeight()) {
+                            params.p++;
+                            func();
+                        }
+                    },500);
                 }
             }
         },
-        setUserBase(obj) {
-            window.APP.TOKEN=obj.token;
+        setAppBase(obj) {
+            window.APP.TOKEN = obj.token;
             window.APP.USER_ID = obj.user_id;
             window.APP.NICK_NAME = obj.nickname;
             window.APP.HEAD_IMG = obj.headimg;

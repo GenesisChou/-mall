@@ -2,31 +2,26 @@
 @import '../assets/scss/variable.scss';
 .body {
     padding: 0 pxTorem(55);
-    margin: pxTorem(50) 0 pxTorem(150) 0;
+    .introduction{
+        padding:pxTorem(50) 0;
+    }
 }
 </style>
 <template>
     <div class='activity-detail'>
         <div class='head bg-base'>
-            <component :is='game' :questions='detail.question'></component>
+            <component :is='game' :questions='activity_detail.questions' :activity-id='activity_id' ></component>
         </div>
         <div class='body '>
             <div class='introduction'>
-                {{{detail.content}}}
-                <!--                 <h1 class='text-huge title'> <strong>活动介绍</strong> </h1>
-                <div class='content text-gray'>
-                    {{{detail.content}}}
-                </div>
-                <div class='explation'>
-                    <h1 class='text-huge title'><strong>活动规则</strong>  </h1>
-                    <div class='content text-gray'>
-                        <pre>
-
-                        {{detail|json}}
-                        </pre>
-                    </div>
-                </div> -->
+                {{{activity_detail.content}}}
             </div>
+            <v-divider text='奖品列表'></v-divider>
+            <ul class='aword-list'>
+                <li>
+                    <v-list-item v-for='item in activity_detail.items'  :title='item.name' :title-dupty='item.desc' :img='item.pic'></v-list-item>
+                </li>
+            </ul>
         </div>
 </template>
 <script>
@@ -35,18 +30,23 @@ import {
     scrap
 } from 'components/games'
 import utils from 'libs/utils'
+import vListItem from 'components/v_list_item'
+import vDivider from 'components/v_divider'
+
 export default {
 
     name: 'activity_detail',
     components: {
         quiz,
-        scrap
+        scrap,
+        vListItem,
+        vDivider
     },
     data() {
         return {
             activity_id: '',
             type: '',
-            detail: {},
+            activity_detail: {},
             game: ''
         }
     },
@@ -68,7 +68,7 @@ export default {
         getActivityDetail() {
             this.$http.post(`${APP.HOST}/activity_detail/${this.activity_id}`).then((response) => {
                 let data = response.data;
-                this.$set('detail', data.data);
+                this.$set('activity_detail', data.data);
             }, (response) => {
 
             })

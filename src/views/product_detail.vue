@@ -20,14 +20,8 @@
 
 .body {
     padding: 0 pxTorem(55);
-    margin:pxTorem(50) 0 pxTorem(150) 0;
-/*    .title {
-        margin: pxTorem(50) 0 pxTorem(30) 0;
-    }
-    .content {
-        text-align: justify;
-    }
-*/}
+    margin: pxTorem(50) 0 pxTorem(150) 0;
+}
 
 .footer {
     height: pxTorem(119);
@@ -42,10 +36,10 @@
         width: pxTorem(50);
         height: pxTorem(50);
     }
-    >p {
+    .msg {
         line-height: pxTorem(101);
     }
-    .btn:nth-child(2) {
+    .btn+ {
         margin-left: pxTorem(30);
     }
 }
@@ -60,60 +54,38 @@
         </div>
         <div class='body '>
             <div class='introduction'>
-               {{{product_detail.content}}}
-<!--                 <h1 class='text-huge title'> <strong>商品介绍</strong> </h1>
-                <div class='content text-gray'>
-                    {{product_detail.content}}
-                </div> -->
+                {{{product_detail.content}}}
             </div>
-<!--             <div class='explation'>
-                <h1 class='text-huge title'><strong>兑换说明</strong>  </h1>
-                <div class='content text-gray'>
-                    <pre>
-                        {{product_detail|json}}
-                    </pre>
-                </div>
-            </div> -->
         </div>
         <v-sticky>
             <div class='footer flex flex-space-between flex-center-v'>
                 <div class='text-large'>
                     单价：<span class='text-pink'>{{product_detail.integral|parseInt}}</span>积分
                 </div>
-                <button v-if='order_enble' class='btn btn-default ' @click='toggleModal'>兑换</button>
-                <button v-else class='btn btn-disable ' >积分不足</button>
+                <button v-if='order_enble' class='btn btn-pink ' @click='toggleModal'>兑换</button>
+                <button v-else class='btn btn-disable '>积分不足</button>
             </div>
         </v-sticky>
         <v-modal :show.sync='modal'>
             <div class='modal-content text-center'>
-                <div v-if='!order_state.start'>
+                <template v-if='!order_state.start'>
                     <img class='icon' src='../assets/images/question-hollow.png' />
-                </div>
-                <div v-else>
-                    <img v-if='order_state.success' class='icon' src='../assets/images/correct-hollow.png' />
-                    <img v-else class='icon' src='../assets/images/error-hollow.png' />
-                </div>
-                <p class='text-large'>
-                    <p v-if='!order_state.start'>
-                        是否确认兑换?
-                    </p>
-                    <p v-else>
-                        <span v-if='order_state.success'>
-                            兑换成功
-                        </span>
-                        <span v-else>
-                            {{order_state.msg}}
-                        </span>
-                    </p>
-                </p>
-                <div v-if='!order_state.start'>
+                    <h2 class='text-large msg'>是否确认兑换</h2>
                     <button class='btn btn-pink-hollow text-large' @click='toggleModal'>取消</button>
                     <button class='btn btn-pink text-large' @click='order'>确认</button>
-                </div>
-                <div v-else>
-                    <button v-if='order_state.success' class='btn btn-pink' v-link='{name:"order_detail",query:{order_id:order_id}}'>查看</button>
-                    <button v-else class='btn btn-pink' @click='toggleModal'>关闭</button>
-                </div>
+                </template>
+                <template v-else>
+                    <template v-if='order_state.success'>
+                        <img class='icon' src='../assets/images/correct-hollow.png' />
+                        <h2 class='text-large msg'>兑换成功</h2>
+                        <button class='btn btn-pink' v-link='{name:"order_detail",query:{order_id:order_id}}'>查看</button>
+                    </template>
+                    <template v-else>
+                        <img class='icon' src='../assets/images/error-hollow.png' />
+                        <h2 class='text-large msg'>兑换失败</h2>
+                        <button v-else class='btn btn-pink' @click='toggleModal'>关闭</button>
+                    </template>
+                </template>
             </div>
         </v-modal>
     </div>
@@ -133,33 +105,36 @@ export default {
     data() {
         return {
             modal: false,
-            user:{},
+            user: {},
             order_state: {
                 start: false,
                 success: false,
-                msg:''
+                msg: ''
             },
             product_id: '',
             product_detail: '',
-            order_id:'' //兑换成功后用于跳转订单详情的订单id
+            order_id: '' //兑换成功后用于跳转订单详情的订单id
         };
     },
     route: {
         data(transition) {
-            this.$set('product_id',transition.to.query.product_id);
+            this.$set('product_id', transition.to.query.product_id);
             this.getUserInfor();
             this.getProductDetail();
         }
     },
-    computed:{
-        order_enble:function(){
-            return (parseInt(this.user.integral)-parseInt(this.product_detail.integral))>=0?true:false;
+    computed: {
+        order_enble: function() {
+            return (parseInt(this.user.integral) - parseInt(this.product_detail.integral)) >= 0 ? true : false;
         }
     },
     methods: {
         //获取用户信息
         getUserInfor() {
-            this.$http.post(`${APP.HOST}/get_user/${APP.USER_ID}}`,{token:APP.TOKEN,userid:APP.USER_ID}).then((response) => {
+            this.$http.post(`${APP.HOST}/get_user/${APP.USER_ID}}`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            }).then((response) => {
                 let data = response.data;
                 this.$set('user', data.data);
             }, (response) => {
@@ -168,7 +143,10 @@ export default {
         },
         //获取商品详情
         getProductDetail() {
-            this.$http.post(`${APP.HOST}/product_detail/${this.product_id}`,{token:APP.TOKEN,userid:APP.USER_ID}).then((response) => {
+            this.$http.post(`${APP.HOST}/product_detail/${this.product_id}`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            }).then((response) => {
                 let data = response.data;
                 this.$set('product_detail', data.data);
 
@@ -182,13 +160,16 @@ export default {
         },
         //生成订单
         order() {
-            this.$http.post(`${APP.HOST}/product_order/${this.product_id}`,{token:APP.TOKEN,userid:APP.USER_ID}).then((response) => {
-                let data=response.data;
+            this.$http.post(`${APP.HOST}/product_order/${this.product_id}`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            }).then((response) => {
+                let data = response.data;
                 this.$set('order_state.start', true);
                 this.$set('order_state.msg', data.info);
                 if (response.data.status === APP.SUCCESS) {
                     this.$set('order_state.success', true);
-                    this.$set('order_id',data.data.id);
+                    this.$set('order_id', data.data.id);
                     this.getUserInfor();
                 }
             }, (response) => {

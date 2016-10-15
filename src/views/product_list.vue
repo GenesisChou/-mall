@@ -60,10 +60,14 @@ export default {
             })
         },
         //搜索商品
-        searchProduct(params = this.params) {
+        searchProduct(params = this.params,func) {
             this.$http.post(`${APP.HOST}/all_product`, params).then((response) => {
                 let data = response.data;
-                this.$set('product_list', data.data.list);
+                if(typeof func==='function'){
+                    func(data);                    
+                }else{
+                    this.$set('product_list', data.data.list);
+                }
             }, (response) => {
 
             })

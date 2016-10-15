@@ -14,13 +14,19 @@
     width: pxTorem(497);
     height: pxTorem(196);
 }
-
+.start{
+    position: absolute;
+    bottom:pxTorem(175);
+    left:50%;
+    transform: translate(-50%,0);
+}
 </style>
 <template>
     <div class='v-scrap '>
         <div class='container'>
             <canvas id='canvas'></canvas>
         </div>
+        <button class='btn btn-default start'>开始活动</button>
     </div>
 </template>
 <script>

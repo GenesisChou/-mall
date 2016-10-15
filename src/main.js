@@ -10,6 +10,7 @@ import filters from 'libs/filters'
 import utils from 'libs/utils'
 Vue.use(VueResource);
 Vue.use(VueRouter);
+Vue.use(VueTouch);
 
 FastClick.attach(document.body);
 let router = new VueRouter();
@@ -38,16 +39,17 @@ if (!localStorage.token) {
         location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}`;
     } else {
         //第一次登陆  将数据存入localstorage中，再为全局变量赋值，用于后续的request操作
+        console.log('login success');
         localStorage.token = utils.getParameterByName('token');
         localStorage.user_id = utils.getParameterByName('userid');
         localStorage.media_id = utils.getParameterByName('mediaid');
         localStorage.nickname = utils.getParameterByName('nickname');
         localStorage.headimg = utils.getParameterByName('headimg');
-        utils.setUserBase(localStorage);
+        utils.setAppBase(localStorage);
         router.start(App, '#app');
     }
 } else {
-    utils.setUserBase(localStorage);
+    utils.setAppBase(localStorage);
     router.start(App, '#app');
 }
 

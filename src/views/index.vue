@@ -65,7 +65,7 @@
             <v-modal :show.sync='modal'>
                 <div class='modal-content text-center'>
                     <img src='../assets/images/correct.png' />
-                    <p v-if='!user.ischecked ' class='text-large'>签到成功，积分+10</p>
+                    <p v-if='!user.ischecked&&modal ' class='text-large'>签到成功，积分+10</p>
                     <p v-else class='text-large'>已签到</p>
                     <button class='btn   btn-pink text-large' @click='toggleModal()'>确定</button>
                 </div>
@@ -155,10 +155,8 @@ export default {
         },
         // 显示/隐藏弹出框
         toggleModal(func) {
-            console.log(func);
             typeof func==='function'?func():'';
             this.modal = !this.modal;
-
         },
     },
     filters

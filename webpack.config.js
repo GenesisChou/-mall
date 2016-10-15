@@ -47,30 +47,15 @@ module.exports = {
             loader: 'babel',
             exclude: /node_modules/
         }, {
-            test: /\.json$/,
-            loader: 'json'
-        }, {
             test: /\.html$/,
             loader: 'vue-html'
         }, {
             test: /\.(png|jpg|gif|svg)$/,
-            loader: 'url',
+            loader: 'file',
             query: {
-                // limit: 10000,
+                limit: 10000,
                 name: '[name].[ext]?[hash]'
             }
-        }, {
-            test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-            loader: "url-loader?limit=10000&minetype=application/font-woff"
-        }, {
-            test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-            loader: "file-loader"
-        }, {
-            test: /\.json$/,
-            loader: 'json'
-        }, {
-            test: /\.(html|tpl)$/,
-            loader: 'html-loader'
         }]
     },
     devServer: {

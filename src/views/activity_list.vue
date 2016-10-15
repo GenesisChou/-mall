@@ -30,7 +30,7 @@ export default {
     name: 'activity_list',
     components: {
         vListItem,
-        vSearch
+        vSearch,
     },
     data() {
         return {
@@ -70,10 +70,10 @@ export default {
         searchActivity(params = this.params, func) {
             this.$http.post(`${APP.HOST}/all_activity`, params).then((response) => {
                 let data = response.data;
-                if (!func) {
+                if(typeof func==='function'){
+                    func(data);                    
+                }else{
                     this.$set('activity_list', data.data.list);
-                } else {
-                    func(data);
                 }
             }, (response) => {
 
