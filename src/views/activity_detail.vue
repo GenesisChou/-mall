@@ -4,6 +4,7 @@
     padding: 0 pxTorem(55);
     .introduction{
         padding:pxTorem(50) 0;
+        line-height: .7rem;
     }
 }
 </style>

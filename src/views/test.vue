@@ -1,5 +1,16 @@
 <style lang='sass'>
 @import '../assets/scss/variable.scss';
+#lotteryContainer {
+    position: absolute;
+    width: pxTorem(300);
+    height:pxTorem(100);
+    /*left: 300px;*/
+    /*top: 300px;*/
+}
+
+#drawPercent {
+    color: #F60;
+}
 </style>
 <template>
     <div class='test'>
@@ -15,10 +26,13 @@
         <v-modal :show.sync='modal'>
             <div>modal</div>
         </v-modal>
-        <canvas id='canvas' style='border:1px solid black'></canvas>
+        <button id="freshBtn">刷新</button>
+        <label>已刮开 <span id="drawPercent">0%</span> 区域。</label>
+        <div id="lotteryContainer"></div>
     </div>
 </template>
 <script>
+import Lottery from 'libs/lottery'
 import vSpinner from 'components/v_spinner'
 import vModal from 'components/v_modal'
 import vLoading from 'components/v_loading'
@@ -44,15 +58,18 @@ export default {
         }
     },
     ready() {
-        let canvas = document.querySelector('#canvas');
-        let ctx = canvas.getContext('2d');
+        var lottery = new Lottery('lotteryContainer', '#CCC', 'color', this.pxTorem(400),this.pxTorem(200), drawPercent);
+        lottery.init('how are you ', 'text');
+        document.getElementById('freshBtn').onclick = function() {
+            drawPercentNode.innerHTML = '0%';
+            lottery.init('http://www.baidu.com/img/bdlogo.gif', 'image');
+        }
 
-        canvas.setAttribute('width', `${this.pxTorem(500)}px`);
-        canvas.setAttribute('height', `${this.pxTorem(400)}px`);
-        ctx.beginPath();
-        ctx.fillStyle = 'gray';
-        ctx.fillRect(0, 0, this.pxTorem(350), this.pxTorem(200));
-        ctx.closePath();
+        var drawPercentNode = document.getElementById('drawPercent');
+
+        function drawPercent(percent) {
+            drawPercentNode.innerHTML = percent + '%';
+        }
     },
     methods: {
         pxTorem(value) {

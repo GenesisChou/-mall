@@ -65,7 +65,7 @@
             <v-modal :show.sync='modal'>
                 <div class='modal-content text-center'>
                     <img src='../assets/images/correct.png' />
-                    <p v-if='!user.ischecked&&modal ' class='text-large'>签到成功，积分+10</p>
+                    <p v-if='!user.ischecked ' class='text-large'>签到成功，积分+10</p>
                     <p v-else class='text-large'>已签到</p>
                     <button class='btn   btn-pink text-large' @click='toggleModal()'>确定</button>
                 </div>
@@ -142,7 +142,7 @@ export default {
         },
         //签到
         checkIn() {
-            if (!this.user.check_in) {
+            if (!this.user.ischecked) {
                 this.$http.post(`${APP.HOST}/checkin/${APP.USER_ID}`, {
                     token: APP.TOKEN,
                     userid: APP.USER_ID
