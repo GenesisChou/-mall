@@ -92,12 +92,5 @@ export default {
                 return a;
             });
             return detail;
-        },
-        setAppBase(obj) {
-            window.APP.TOKEN = obj.token;
-            window.APP.USER_ID = obj.user_id;
-            window.APP.NICK_NAME = obj.nickname;
-            window.APP.HEAD_IMG = obj.headimg;
-            this.setTitle(window.APP.APP_NAME);
         }
 }

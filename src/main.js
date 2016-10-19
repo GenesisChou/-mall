@@ -19,7 +19,7 @@ wxConfig(wx);
 Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
 
 window.APP = {
-    APP_NAME:'坚果互动',
+    APP_NAME: '坚果互动',
     HOST: 'http://integral.api.justtong.com/imall', //接口域名
     MALL_HOST: 'http://imall.justtong.com', //服务器域名
     SUCCESS: 10000, //服务端返回成功状态码
@@ -31,25 +31,16 @@ window.APP = {
 };
 
 
-if (!localStorage.token) {
-    //若缓存内授权码不存在
-    if (!utils.getParameterByName('token')) {
-        //进行微信登陆操作
-        let redirect = encodeURIComponent(APP.MALL_HOST);
-        let id = utils.getParameterByName('id');
-        location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}`;
-    } else {
-        //第一次登陆  将数据存入localstorage中，再为全局WINDOW.APP赋值，用于后续的request操作
-        console.log('login success');
-        localStorage.token = utils.getParameterByName('token');
-        localStorage.user_id = utils.getParameterByName('userid');
-        localStorage.media_id = utils.getParameterByName('mediaid');
-        localStorage.nickname = utils.getParameterByName('nickname');
-        localStorage.headimg = utils.getParameterByName('headimg');
-        utils.setAppBase(localStorage);
-        router.start(App, '#app');
-    }
+if (!utils.getParameterByName('token')) {
+    //进行微信登陆操作
+    let redirect = encodeURIComponent(APP.MALL_HOST);
+    let id = utils.getParameterByName('id');
+    location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}`;
 } else {
-    utils.setAppBase(localStorage);
+    //第一次登陆  将数据存入localstorage中，再为全局WINDOW.APP赋值，用于后续的request操作
+    console.log('login success');
+    window.APP.TOKEN =utils.getParameterByName('token'); 
+    window.APP.USER_ID =utils.getParameterByName('userid'); 
+    utils.setTitle(window.APP.APP_NAME);
     router.start(App, '#app');
 }

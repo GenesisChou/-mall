@@ -2,11 +2,16 @@
 @import '../assets/scss/variable.scss';
 .order-detail {
     padding: pxTorem(20) 0;
+    min-height: 100%;
 }
 
 .order {
     margin-bottom: 0;   
 }
+.v-order-item{
+    border-bottom: pxTorem(1) solid #c8c8c8;
+}
+
 </style>
 <template>
     <div class='order-detail bg-base'>
@@ -18,9 +23,9 @@
                 <v-order-item :name='order_detail.product' :integral='product_detail.integral' :img='product_detail.pic_thumb'></v-order-item>
             </div>
             <div slot='footer-content'>
-                <p>商品信息： </p>
-                <p>{{{product_detail.content}}} </p>
-                <p>使用说明： </p>
+                <p class='text-large'>优惠券码:</p>
+                <p>{{order_detail.ticket_id}} </p>
+                <p class='text-large'>使用说明:</p>
                 <p>{{{product_detail.content_use}}} </p>
             </div>
         </v-order>

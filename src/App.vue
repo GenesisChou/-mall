@@ -17,6 +17,10 @@ export default {
                 this.init();
             };
         },
+        data(){
+            return {
+            }
+        },
         methods: {
             init() {
                 let scale = 1 / devicePixelRatio;

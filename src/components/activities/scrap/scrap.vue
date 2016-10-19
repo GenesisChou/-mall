@@ -87,7 +87,8 @@ export default {
             state: {
                 start: false,
                 end: false
-            }
+            },
+           clientWidth:document.documentElement.clientWidth,
         };
     },
     watch: {
@@ -100,7 +101,7 @@ export default {
     },
     computed: {
         start_enble: function() {
-            return (parseInt(this.$parent.user.integral) > parseInt(this.integral)) >= 0 ? true : false;
+            return (parseInt(this.$parent.user.integral) - parseInt(this.integral)) >= 0 ? true : false;
         }
     },
     methods: {
@@ -108,8 +109,8 @@ export default {
         startActivity() {
             this.$set('state.start', this.start_enble);
             if (this.state.start) {
-                this.getResult();
                 this.$parent.setUser();
+                this.getResult();
                 this.setLottery();
             } else {
                 this.toggleModal();
@@ -152,8 +153,7 @@ export default {
             this.modal = !this.modal;
         },
         pxTorem(value) {
-            let clientWidth = document.documentElement.clientWidth;
-            return value * clientWidth / 750;
+            return value * this.clientWidth / 750;
         },
     },
     vuex: {

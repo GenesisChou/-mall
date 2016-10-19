@@ -1,16 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var plugins = [
-    //将样式统一发布到style.css中
-    new ExtractTextPlugin("style.css", {
-        allChunks: true,
-        disable: false
-    })
-];
-
 module.exports = {
-    entry:{
+    entry: {
         app: './src/main.js'
     },
     output: {
@@ -24,7 +15,7 @@ module.exports = {
             assets: path.join(__dirname, './src/assets'),
             libs: path.join(__dirname, './src/libs'),
             views: path.join(__dirname, './src/views'),
-            v_vuex:path.join(__dirname, './src/vuex')
+            v_vuex: path.join(__dirname, './src/vuex')
         },
         extensions: ['', '.js', '.json', '.scss', '.css', '.vue']
     },
@@ -37,12 +28,10 @@ module.exports = {
             loader: 'vue'
         }, {
             test: /\.scss$/,
-            loader: ExtractTextPlugin.extract(
-                "style-loader", 'css-loader?sourceMap!sass-loader!cssnext-loader')
+            loader: 'sass'
         }, {
             test: /\.css$/,
-            loader: ExtractTextPlugin.extract(
-                "style-loader", "css-loader?sourceMap!cssnext-loader")
+            loader: 'style'
         }, {
             test: /\.js$/,
             loader: 'babel',
@@ -63,14 +52,11 @@ module.exports = {
         historyApiFallback: true,
         noInfo: true
     },
-    devtool: '#eval-source-map',
-    plugins: plugins
-
+    devtool: '#eval-source-map'
 }
 
 if (process.env.NODE_ENV === 'production') {
     module.exports.devtool = '#source-map'
-        // http://vue-loader.vuejs.org/en/workflow/production.html
     module.exports.plugins = (module.exports.plugins || []).concat([
         new webpack.DefinePlugin({
             'process.env': {

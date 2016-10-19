@@ -84,7 +84,7 @@
                 </div>
             </div>
         </div>
-        <v-alert :show.sync='modal' :msg='msg' :type='result.is_right?true:false' :func='result.is_right?toOrderDetail:toggleModal' :btn-text='result.is_right?"查看":"关闭"'>
+        <v-alert :show.sync='modal' :msg='msg' :type='result.is_right?true:false' :func='result.is_win?toOrderDetail:toggleModal' :btn-text='result.is_win?"查看":"关闭"'>
         </v-alert>
     </div>
 </template>
@@ -126,7 +126,7 @@ export default {
     },
     computed: {
         start_enble: function() {
-            return (parseInt(this.$parent.user.integral) > parseInt(this.integral)) >= 0 ? true : false;
+            return (parseInt(this.$parent.user.integral) - parseInt(this.integral)) >= 0 ? true : false;
         }
     },
     methods: {
@@ -144,7 +144,7 @@ export default {
                     }).then((response) => {
                         let data = response.data;
                         this.$set('result', data.data);
-                        this.$set('msg', data.data.is_right ? '回答正确' : '回答错误');
+                        this.$set('msg',!data.data.is_right?'回答错误':data.data.is_win?'你中奖了':'谢谢参与');
                         this.$parent.setUser();
                         func();
                     }, (response) => {
