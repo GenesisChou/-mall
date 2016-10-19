@@ -1,4 +1,8 @@
 export default {
+  clientWidth:document.documentElement.clientWidth,
+  pxTorem(value){
+      return value * this.clientWidth / 750;
+  },
     getParameterByName(name, url) {
 
             if (!url) url = window.location.href;
@@ -51,20 +55,49 @@ export default {
         //list:列别数据 parmas:参数 func:回调函数
         getScrollData(list, params, func) {
             if (typeof func === 'function') {
-                window.onscroll = () => {
-                    setTimeout(() => {
-                        if (params.p < params.total && list.length < params.count && this.getScrollTop() + this.getClientHeight() >= this.getScrollHeight()) {
-                            params.p++;
-                            func();
-                        }
-                    },500);
-                }
+                window.addEventListener('scroll', this.debounce(() => {
+                    // 滚动中的真正的操作
+                    if (params.p < params.total && list.length < params.count && (this.getScrollTop() + this.getClientHeight() >= this.getScrollHeight())) {
+                        params.p++;
+                        func();
+                    }
+                }, 250));
             }
+        },
+        //防抖函数
+        debounce(func, wait, immediate) {
+            let timeout;
+            return () => {
+                let self = this,
+                    args = arguments;
+                let later = () => {
+                    timeout = null;
+                    if (!immediate) func.apply(self, args);
+                };
+                let callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(self, args);
+            };
+        },
+
+        //将宽度超过屏幕尺寸的图片宽度设为100%
+        resizeImg(detail) {
+            detail.content=detail.content.replace(/([a-z]+)="[\s\S]+?"/ig, function(a, b, c, d) {
+                if (b === 'height') {
+                    return '';
+                } else if (b === 'width') {
+                    return 'style="width:100%"';
+                }
+                return a;
+            });
+            return detail;
         },
         setAppBase(obj) {
             window.APP.TOKEN = obj.token;
             window.APP.USER_ID = obj.user_id;
             window.APP.NICK_NAME = obj.nickname;
             window.APP.HEAD_IMG = obj.headimg;
+            this.setTitle(window.APP.APP_NAME);
         }
 }

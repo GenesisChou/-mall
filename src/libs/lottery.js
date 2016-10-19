@@ -13,7 +13,7 @@ function Lottery(id, cover, coverType, width, height, drawPercentCallback) {
     this.height = height || this.pxTorem(100);
     this.clientRect = null;
     this.drawPercentCallback = drawPercentCallback;
-    this.clientWidth=document.documentElement.clientWidth;
+    this.clientWidth = document.documentElement.clientWidth;
 }
 
 Lottery.prototype = {
@@ -46,7 +46,8 @@ Lottery.prototype = {
         var radgrad = this.maskCtx.createRadialGradient(x, y, 0, x, y, this.pxTorem(40));
         radgrad.addColorStop(0, 'rgba(0,0,0,0.6)');
         radgrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
-        this.maskCtx.fillStyle = radgrad;
+        // this.maskCtx.fillStyle = radgrad;
+        this.maskCtx.fillStyle = '#fff';
         this.maskCtx.arc(x, y, this.pxTorem(40), 0, Math.PI * 2, true);
         this.maskCtx.fill();
         if (this.drawPercentCallback) {
@@ -141,12 +142,7 @@ Lottery.prototype = {
             this.backCtx.fillRect(0, 0, this.width, this.height);
             this.backCtx.restore();
             this.backCtx.save();
-            var fontSize = this.pxTorem(30);
-            this.backCtx.font = 'Bold ' + fontSize + 'px Arial';
-            this.backCtx.textAlign = 'center';
-            this.backCtx.fillStyle = '#F60';
-            this.backCtx.fillText(this.lottery, this.width / 2, this.height / 2 + fontSize / 2);
-            this.backCtx.restore();
+            this.setText(this.lottery);
             this.drawMask();
         }
     },
@@ -170,6 +166,18 @@ Lottery.prototype = {
         this.lottery = lottery;
         this.lotteryType = lotteryType || 'image';
         this.drawLottery();
+    },
+    setText(text) {
+        var fontSize = this.pxTorem(30);
+        this.backCtx.fillStyle = "#fff";
+        this.backCtx.beginPath();
+        this.backCtx.fillRect(0, 0, this.width, this.height);
+        this.backCtx.closePath();
+        this.backCtx.font = 'Bold ' + fontSize + 'px Arial';
+        this.backCtx.textAlign = 'center';
+        this.backCtx.fillStyle = '#F60';
+        this.backCtx.fillText(text, this.width / 2, this.height / 2 + fontSize / 2);
+        this.backCtx.restore();
     },
     pxTorem(value) {
         return value * this.clientWidth / 750;

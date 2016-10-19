@@ -24,6 +24,7 @@ module.exports = {
             assets: path.join(__dirname, './src/assets'),
             libs: path.join(__dirname, './src/libs'),
             views: path.join(__dirname, './src/views'),
+            v_vuex:path.join(__dirname, './src/vuex')
         },
         extensions: ['', '.js', '.json', '.scss', '.css', '.vue']
     },

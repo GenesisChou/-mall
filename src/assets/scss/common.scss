@@ -1,6 +1,5 @@
 #app{
 	height:100%;
-	min-height:100%;
 }
 .flex{
 	display:flex;
@@ -145,22 +144,24 @@
 }
 /*******按钮**********/
 .btn{
-	width:pxTorem(150);
+	padding:0 pxTorem(30);
 	height:pxTorem(50);
 	line-height:pxTorem(50);
-	text-align:center;
 	border-width: pxTorem(1);
 	border-style: solid;
 	border-radius:pxTorem(5);
+
+}
+.btn-block{
+	width:100%;
 }
 .btn-large{
 	width:pxTorem(165);
 	height:pxTorem(65);
-
 }
 .btn-disable{
 	background:#ddd;
-	border-color: $black;	
+	border-color: $black;
 }
 .btn-default{
 	background:$white;
@@ -179,6 +180,11 @@
 	background:$pink;
 	border-color:$pink;
 	color:$white;
+}
+.btn-yellow{
+	background:$yellow;
+	border-color:$yellow;
+
 }
 .btn-pink-hollow{
 	background:$white;

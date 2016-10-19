@@ -20,24 +20,38 @@
 
 .body {
     padding: 0 pxTorem(55);
-    margin: pxTorem(50) 0 pxTorem(150) 0;
+    .introduction {
+        margin: pxTorem(50) 0 pxTorem(150) 0;
+    }
 }
 
 .footer {
     height: pxTorem(119);
     padding: 0 pxTorem(55);
+    .btn {
+        padding: 0;
+        width: pxTorem(180);
+        height: pxTorem(68);
+        line-height: pxTorem(68);
+        font-size: pxTorem(30);
+        letter-spacing: pxTorem(12);
+    }
+    .btn-disable {
+        letter-spacing: 0;
+    }
 }
 
 .modal-content {
     width: pxTorem(500);
     height: pxTorem(260);
     padding-top: pxTorem(31);
+    border-radius: pxTorem(5);
     .icon {
         width: pxTorem(50);
         height: pxTorem(50);
     }
     .msg {
-        line-height: pxTorem(101);
+        line-height: pxTorem(100);
     }
     .btn+ {
         margin-left: pxTorem(30);
@@ -67,22 +81,22 @@
             </div>
         </v-sticky>
         <v-modal :show.sync='modal'>
-            <div class='modal-content text-center'>
+            <div class='modal-content text-center text-large bg-white'>
                 <template v-if='!order_state.start'>
                     <img class='icon' src='../assets/images/question-hollow.png' />
-                    <h2 class='text-large msg'>是否确认兑换</h2>
-                    <button class='btn btn-pink-hollow text-large' @click='toggleModal'>取消</button>
-                    <button class='btn btn-pink text-large' @click='order'>确认</button>
+                    <p class=' msg'>是否确认兑换</p>
+                    <button class='btn btn-pink-hollow ' @click='toggleModal'>取消</button>
+                    <button class='btn btn-pink ' @click='order'>确认</button>
                 </template>
                 <template v-else>
                     <template v-if='order_state.success'>
                         <img class='icon' src='../assets/images/correct-hollow.png' />
-                        <h2 class='text-large msg'>兑换成功</h2>
+                        <p class=' msg'>兑换成功</p>
                         <button class='btn btn-pink' v-link='{name:"order_detail",query:{order_id:order_id}}'>查看</button>
                     </template>
                     <template v-else>
                         <img class='icon' src='../assets/images/error-hollow.png' />
-                        <h2 class='text-large msg'>兑换失败</h2>
+                        <p class=' msg'>{{fail_info}}</p>
                         <button v-else class='btn btn-pink' @click='toggleModal'>关闭</button>
                     </template>
                 </template>
@@ -95,6 +109,8 @@ import utils from 'libs/utils'
 import vSticky from 'components/v_sticky'
 import vModal from 'components/v_modal'
 import filters from 'libs/filters'
+import actions from 'v_vuex/actions'
+import getters from 'v_vuex/getters'
 export default {
 
     name: 'product_detail',
@@ -105,7 +121,6 @@ export default {
     data() {
         return {
             modal: false,
-            user: {},
             order_state: {
                 start: false,
                 success: false,
@@ -113,13 +128,13 @@ export default {
             },
             product_id: '',
             product_detail: '',
-            order_id: '' //兑换成功后用于跳转订单详情的订单id
+            order_id: '', //兑换成功后用于跳转订单详情的订单id
+            fail_info:'' //失败信息
         };
     },
     route: {
         data(transition) {
             this.$set('product_id', transition.to.query.product_id);
-            this.getUserInfor();
             this.getProductDetail();
         }
     },
@@ -129,18 +144,6 @@ export default {
         }
     },
     methods: {
-        //获取用户信息
-        getUserInfor() {
-            this.$http.post(`${APP.HOST}/get_user/${APP.USER_ID}}`, {
-                token: APP.TOKEN,
-                userid: APP.USER_ID
-            }).then((response) => {
-                let data = response.data;
-                this.$set('user', data.data);
-            }, (response) => {
-
-            })
-        },
         //获取商品详情
         getProductDetail() {
             this.$http.post(`${APP.HOST}/product_detail/${this.product_id}`, {
@@ -148,8 +151,7 @@ export default {
                 userid: APP.USER_ID
             }).then((response) => {
                 let data = response.data;
-                this.$set('product_detail', data.data);
-
+                this.$set('product_detail', utils.resizeImg(data.data));
             }, (response) => {})
         },
         toggleModal() {
@@ -170,13 +172,20 @@ export default {
                 if (response.data.status === APP.SUCCESS) {
                     this.$set('order_state.success', true);
                     this.$set('order_id', data.data.id);
-                    this.getUserInfor();
+                    //更新用户数据
+                    this.setUser();
+                }else{
+                    this.$set('fail_info',data.info);
                 }
             }, (response) => {
 
             })
         }
     },
-    filters
+    filters,
+    vuex:{
+        actions,
+        getters
+    }
 };
 </script>

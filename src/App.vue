@@ -7,10 +7,12 @@
     </div>
 </template>
 <script>
+import store from './vuex/store'
+import actions from 'v_vuex/actions'
 export default {
     created() {
+            this.setUser();
             this.init();
-
             window.onresize = () => {
                 this.init();
             };
@@ -22,6 +24,10 @@ export default {
                 document.documentElement.style.fontSize = `${document.documentElement.clientWidth / 10}px`;
 
             }
+        },
+        store,
+        vuex: {
+            actions
         }
 }
 </script>

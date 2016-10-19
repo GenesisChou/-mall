@@ -1,17 +1,17 @@
 <template >
-  <v-popup :show.sync='show'>
+  <v-modal :show.sync='show'>
     <div class='flex flex-center-h'>
         <v-spinner></v-spinner>
     </div>
-  </v-popup>
+  </v-modal>
 </template>
 
 <script>
-import vPopup from 'components/v_popup'
+import vModal from 'components/v_modal'
 import vSpinner from 'components/v_spinner'
 export default {
   components: {
-    vPopup,vSpinner
+    vModal,vSpinner
   },
   props:{
     show:{

@@ -1,8 +1,11 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
 .order-detail {
-    padding-top: pxTorem(20);
-    height: 100%;
+    padding: pxTorem(20) 0;
+}
+
+.order {
+    margin-bottom: 0;   
 }
 </style>
 <template>
@@ -12,7 +15,7 @@
                 订单号：{{order_detail.orderid}}
             </div>
             <div slot='body-content'>
-                <v-order-item :name='order_detail.product' :integral='order_detail.integral'></v-order-item>
+                <v-order-item :name='order_detail.product' :integral='product_detail.integral' :img='product_detail.pic_thumb'></v-order-item>
             </div>
             <div slot='footer-content'>
                 <p>商品信息： </p>
@@ -44,11 +47,11 @@ export default {
     route: {
         data(transition) {
             this.order_id = transition.to.query.order_id;
-            this.getorderDetail();
+            this.getOrderDetail();
         }
     },
     methods: {
-        getorderDetail() {
+        getOrderDetail() {
             this.$http.post(`${APP.HOST}/order_detail/${this.order_id}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID
@@ -66,7 +69,7 @@ export default {
                 userid: APP.USER_ID
             }).then((response) => {
                 let data = response.data;
-                this.$set('product_detail', data.data);
+                this.$set('product_detail', utils.resizeImg(data.data));
             }, (response) => {
 
             })

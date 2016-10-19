@@ -20,7 +20,7 @@
 </style>
 <template>
     <form class='v-search flex flex-center-v bg-white' @submit.prevent>
-        <input class='text-sliver text-large' type='search' placeholder={{placeholder}} v-model='params.sword' @keyup.enter='search()'>
+        <input class='text-sliver text-large' type='search' :placeholder='placeholder' v-model='params.sword' @keyup.enter='search()'>
         <img class='icon' src='../assets/images/search.png' @click='search()'>
     </form>
 </template>

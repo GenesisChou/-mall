@@ -2,7 +2,7 @@
 @import '../assets/scss/variable.scss';
 .v-order-item {
     padding: pxTorem(26) 0;
-    border-bottom: pxTorem(1) solid #c8c8c8;
+    /*border-bottom: pxTorem(1) solid #c8c8c8;*/
     .img {
         width: pxTorem(160);
         height: pxTorem(120);

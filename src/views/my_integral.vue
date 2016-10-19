@@ -49,6 +49,7 @@
     width: pxTorem(600);
     height: pxTorem(460);
     padding: pxTorem(50) pxTorem(68);
+    border-radius:pxTorem(5);
     li {
         line-height: pxTorem(55);
     }
@@ -87,7 +88,7 @@
             </ul>
         </div>
         <v-modal :show.sync='modal'>
-            <div class='modal-content flex flex-space-between'>
+            <div class='modal-content flex flex-space-between bg-white'>
                 <ol class='text-large'>
                     <li>您可以通过以下途径赚取积分：</li>
                     <li>1、签到</li>
@@ -104,40 +105,28 @@
 <script>
 import utils from 'libs/utils'
 import vModal from 'components/v_modal'
-import vPopup from 'components/v_popup'
 import filters from 'libs/filters'
+import getters from 'v_vuex/getters'
+import actions from 'v_vuex/actions'
 export default {
 
     name: 'my_integral',
     components: {
-        vPopup,
-        vModal
+        vModal,
     },
     data() {
         return {
-            popup: false,
             modal: false,
-            user: {},
             integral_list: [],
         };
     },
     route: {
         data(transition) {
-            this.getUserInfor();
             this.getIntegralList();
         },
 
     },
     methods: {
-        //获取用户信息
-        getUserInfor() {
-            this.$http.post(`${APP.HOST}/get_user/${APP.USER_ID}}`).then((response) => {
-                let data = response.data;
-                this.$set('user', data.data);
-            }, (response) => {
-
-            })
-        },
         //获取积分明细
         getIntegralList() {
             this.$http.post(`${APP.HOST}/integral_list/${APP.USER_ID}`).then((response) => {
@@ -158,6 +147,9 @@ export default {
             this.modal = !this.modal;
         }
     },
-    filters
+    filters,
+    vuex:{
+        getters,actions
+    }
 };
 </script>

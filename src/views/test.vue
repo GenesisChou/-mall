@@ -23,9 +23,9 @@
         <br>
         <button class='btn btn-blue' @click='confirm=true'>show confirm</button>
         <v-loading :show.sync='loading'></v-loading>
-        <v-modal :show.sync='modal'>
+        <v-alert :show.sync='modal'>
             <div>modal</div>
-        </v-modal>
+        </v-alert>
         <button id="freshBtn">刷新</button>
         <label>已刮开 <span id="drawPercent">0%</span> 区域。</label>
         <div id="lotteryContainer"></div>
@@ -34,14 +34,14 @@
 <script>
 import Lottery from 'libs/lottery'
 import vSpinner from 'components/v_spinner'
-import vModal from 'components/v_modal'
+import vAlert from 'components/v_alert'
 import vLoading from 'components/v_loading'
 import vConfirm from 'components/v_confirm'
 export default {
     components: {
         vSpinner,
         vLoading,
-        vModal,
+        vAlert,
         vConfirm
     },
     data() {

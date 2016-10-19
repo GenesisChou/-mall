@@ -2,8 +2,9 @@
 @import '../assets/scss/variable.scss';
 .body {
     padding: 0 pxTorem(55);
-    .introduction{
-        padding:pxTorem(50) 0;
+    overflow: hidden;
+    .introduction {
+        padding: pxTorem(50) 0;
         line-height: .7rem;
     }
 }
@@ -11,7 +12,7 @@
 <template>
     <div class='activity-detail'>
         <div class='head bg-base'>
-            <component :is='game' :questions='activity_detail.questions' :activity-id='activity_id' ></component>
+            <component :is='game' :questions='activity_detail.questions' :activity-id='activity_id' :integral='activity_detail.integral' ></component>
         </div>
         <div class='body '>
             <div class='introduction'>
@@ -20,7 +21,7 @@
             <v-divider text='奖品列表'></v-divider>
             <ul class='aword-list'>
                 <li>
-                    <v-list-item v-for='item in activity_detail.items'  :title='item.name' :title-dupty='item.desc' :img='item.pic'></v-list-item>
+                    <v-list-item v-for='item in activity_detail.items' :title='item.name' :title-dupty='item.desc' :img='item.pic'></v-list-item>
                 </li>
             </ul>
         </div>
@@ -29,10 +30,12 @@
 import {
     quiz,
     scrap
-} from 'components/games'
+} from 'components/activities'
 import utils from 'libs/utils'
 import vListItem from 'components/v_list_item'
 import vDivider from 'components/v_divider'
+import getters from 'v_vuex/getters'
+import actions from 'v_vuex/actions'
 
 export default {
 
@@ -48,7 +51,7 @@ export default {
             activity_id: '',
             type: '',
             activity_detail: {},
-            game: ''
+            game: '',
         }
     },
     route: {
@@ -69,11 +72,14 @@ export default {
         getActivityDetail() {
             this.$http.post(`${APP.HOST}/activity_detail/${this.activity_id}`).then((response) => {
                 let data = response.data;
-                this.$set('activity_detail', data.data);
+                this.$set('activity_detail', utils.resizeImg(data.data));
             }, (response) => {
 
             })
-        }
+        },
     },
+    vuex:{
+      actions,getters
+    }
 };
 </script>

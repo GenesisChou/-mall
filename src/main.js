@@ -3,11 +3,11 @@ import App from './App'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import VueTouch from 'vue-touch'
-import Vuex from 'vuex'
-import RouterConfig from './router'
+import RouterConfig from './router_config'
 import FastClick from 'fastclick'
-import filters from 'libs/filters'
 import utils from 'libs/utils'
+import wx from 'weixin-js-sdk'
+import wxConfig from './wx_config'
 Vue.use(VueResource);
 Vue.use(VueRouter);
 Vue.use(VueTouch);
@@ -15,12 +15,11 @@ Vue.use(VueTouch);
 FastClick.attach(document.body);
 let router = new VueRouter();
 RouterConfig(router);
-Vue.http.options.emulateJSON = true;//设置vue-resource post请求参数类型为formdata
-
-
-
+wxConfig(wx);
+Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
 
 window.APP = {
+    APP_NAME:'坚果互动',
     HOST: 'http://integral.api.justtong.com/imall', //接口域名
     MALL_HOST: 'http://imall.justtong.com', //服务器域名
     SUCCESS: 10000, //服务端返回成功状态码
@@ -30,15 +29,17 @@ window.APP = {
     NICK_NAME: '',
     HEAD_IMG: ''
 };
+
+
 if (!localStorage.token) {
-    //若授权码不存在
+    //若缓存内授权码不存在
     if (!utils.getParameterByName('token')) {
         //进行微信登陆操作
         let redirect = encodeURIComponent(APP.MALL_HOST);
         let id = utils.getParameterByName('id');
         location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}`;
     } else {
-        //第一次登陆  将数据存入localstorage中，再为全局变量赋值，用于后续的request操作
+        //第一次登陆  将数据存入localstorage中，再为全局WINDOW.APP赋值，用于后续的request操作
         console.log('login success');
         localStorage.token = utils.getParameterByName('token');
         localStorage.user_id = utils.getParameterByName('userid');
@@ -52,4 +53,3 @@ if (!localStorage.token) {
     utils.setAppBase(localStorage);
     router.start(App, '#app');
 }
-

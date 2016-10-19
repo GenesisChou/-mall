@@ -27,36 +27,34 @@
 .modal-content {
     width: pxTorem(500);
     height: pxTorem(260);
-    padding-top: pxTorem(31);
+    padding-top: pxTorem(30);
     .icon {
         width: pxTorem(50);
         height: pxTorem(50);
     }
     .msg {
-        line-height: pxTorem(101);
+        line-height: pxTorem(100);
     }
 }
 </style>
 <template>
     <div class='v-scrap '>
-        <p>已刮开 <span class='text-white'>{{drawPercent}}%</span> 区域。</p>
         <div id='lotteryContainer'>
             <button class='btn btn-pink' id='start' @click='startActivity'>开始活动</button>
         </div>
     </div>
-    <v-modal :show.sync='modal'>
-        <div class='modal-content text-center'>
-            <img v-if='is_win' class='icon' src='../../../assets/images/correct-hollow.png' />
-            <img v-else class='icon' src='../../../assets/images/error-hollow.png' />
-            <h2 class='text-large msg'>{{result.desc}}</h2>
-            <button v-if='!is_win' class='btn btn-pink' @click='toggleModal'>关闭</button>
-            <button v-else class='btn btn-pink'>查看</button>
-        </div>
-    </v-modal>
+    <v-alert :show.sync='modal' :type='state.start?true:false' :msg='state.start?"你中奖了":"积分不足"' :btn-text='state.start?"查看":"关闭"' :func='state.start?toOrderDetail:toggleModal'>
+    </v-alert>
 </template>
 <script>
-import vModal from 'components/v_modal'
+import vAlert from 'components/v_alert'
 import Lottery from 'libs/lottery'
+import {
+    actions
+} from 'v_vuex/actions'
+import {
+    getters
+} from 'v_vuex/getters'
 export default {
 
     name: 'scrap',
@@ -70,56 +68,85 @@ export default {
         activityId: {
             type: String,
             default: ''
-        }
+        },
+        integral: {
+            type: String,
+            default: '0'
+        },
     },
     components: {
-        vModal
+        vAlert
     },
+
     data() {
         return {
             drawPercent: 0,
             modal: false,
-            is_win: false,
             result: {},
-            end:false
+            lottery: '',
+            state: {
+                start: false,
+                end: false
+            }
         };
     },
     watch: {
         drawPercent(value) {
-            if (!this.end&&value >= 40) {
-                this.end=true;
+            if (!this.state.end && value >= 40 && this.result.is_win) {
+                this.state.end = true;
                 this.toggleModal();
             }
         }
     },
+    computed: {
+        start_enble: function() {
+            return (parseInt(this.$parent.user.integral) > parseInt(this.integral)) >= 0 ? true : false;
+        }
+    },
     methods: {
+        //开始活动
         startActivity() {
-            this.setLottery();
-            this.getResult();
+            this.$set('state.start', this.start_enble);
+            if (this.state.start) {
+                this.getResult();
+                this.$parent.setUser();
+                this.setLottery();
+            } else {
+                this.toggleModal();
+            }
         },
         setLottery() {
-            var lottery = new Lottery('lotteryContainer', '#ddd', 'color', this.pxTorem(500), this.pxTorem(200), (drawPercent) => {
+            this.lottery = new Lottery('lotteryContainer', '#ddd', 'color', this.pxTorem(500), this.pxTorem(200), (drawPercent) => {
                 this.$set('drawPercent', drawPercent);
-                this.drawPercent = drawPercent
+                this.drawPercent = drawPercent;
             });
-            lottery.init('how are you ', 'text');
+            this.lottery.init('谢谢参与', 'text');
         },
+        //获取结果
         getResult() {
             this.$http.post(`${APP.HOST}/activity_order/${this.activityId}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID
             }).then((response) => {
                 let data = response.data;
-                console.log(data);
                 if (data.status == APP.SUCCESS) {
-
-                    this.$set('is_win', data.data.is_win||false);
-                    this.$set('result', data.data.item);
+                    this.$set('result', data.data);
+                    if (this.result.is_win) {
+                        this.lottery.setText(this.result.name);
+                    }
                 } else {
-                    this.$set('is_win', false);
-                    this.$set('result.desc', data.info);
+                    this.$set('result.is_win', false);
                 }
             })
+        },
+        //路由跳转
+        toOrderDetail() {
+            this.$router.go({
+                name: "order_detail",
+                query: {
+                    order_id: this.result.id
+                }
+            });
         },
         toggleModal() {
             this.modal = !this.modal;
@@ -128,6 +155,10 @@ export default {
             let clientWidth = document.documentElement.clientWidth;
             return value * clientWidth / 750;
         },
+    },
+    vuex: {
+        getters,
+        actions
     }
 };
 </script>

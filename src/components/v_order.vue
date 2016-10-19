@@ -6,24 +6,24 @@
     border-top:pxTorem(1) solid #7d7d7d;
     border-bottom:pxTorem(1) solid #7d7d7d;
 }
-.head {
+.order-head {
     border-bottom:pxTorem(1) solid #c8c8c8;
 }
 
-.footer,
-.head {
+.order-footer,
+.order-head {
     line-height:pxTorem(66);
 }
 </style>
 <template>
     <div  class='order bg-white'>
-        <div class='head text-small'>
+        <div class='order-head text-small'>
         	<slot name='head-content'></slot>
         </div>
-        <div class='body'>
+        <div class='order-body'>
         	<slot name='body-content'></slot>
         </div>
-        <div class='footer text-small'>
+        <div class='order-footer text-small'>
         	<slot name='footer-content'>
 
         	</slot>

@@ -1,7 +1,7 @@
 <style lang='sass' scoped>
 </style>
 <template>
-    <v-modal :show.sync='show'>
+    <v-alert :show.sync='show'>
         <div class='text-center'>
             <p>{{msg.title}}</p>
             <div>
@@ -9,15 +9,15 @@
                 <button class='btn btn-blue' @click='ok()'>{{msg.ok}}</button>
             </div>
         </div>
-    </v-modal>
+    </v-alert>
 </template>
 <script>
-import vModal from 'components/v_modal'
+import vAlert from 'components/v_alert'
 export default {
 
     name: 'v-confirm',
     components: {
-        vModal
+        vAlert
     },
     props: {
         show: {
