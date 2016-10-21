@@ -10,7 +10,7 @@
 }
 
 .v-order-item {
-    border-bottom: pxTorem(1) solid #c8c8c8;
+    border-bottom: 1px solid #c8c8c8;
 }
 </style>
 <template>

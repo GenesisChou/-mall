@@ -92,7 +92,7 @@
 	padding-left:$gap*2;
 }
 .border-1{
-	border:pxTorem(1) solid black;
+	border:1px solid black;
 }
 /************颜色********/
 .bg-base{
@@ -148,7 +148,7 @@
 	padding:0 pxTorem(30);
 	height:pxTorem(50);
 	line-height:pxTorem(50);
-	border-width: pxTorem(1);
+	border-width: 1px;
 	border-style: solid;
 	border-radius:pxTorem(5);
 

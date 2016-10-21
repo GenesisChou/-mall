@@ -3,11 +3,11 @@
 .order{
     margin-bottom:pxTorem(22);
     padding:0 pxTorem(30);
-    border-top:pxTorem(1) solid #7d7d7d;
-    border-bottom:pxTorem(1) solid #7d7d7d;
+    border-top:1px solid #7d7d7d;
+    border-bottom:1px solid #7d7d7d;
 }
 .order-head {
-    border-bottom:pxTorem(1) solid #c8c8c8;
+    border-bottom:1px solid #c8c8c8;
 }
 
 .order-footer,

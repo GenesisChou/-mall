@@ -37,7 +37,7 @@
     > li {
         height: pxTorem(100);
         padding: 0 pxTorem(38);
-        border-bottom: pxTorem(1) solid #c8c8c8;
+        border-bottom: 1px solid #c8c8c8;
     }
     .detail {
         line-height: 0.5rem;

@@ -17,10 +17,10 @@
     	top:50%;
     }
     .line.solid{
-        border-bottom: pxTorem(1) solid #bababa;
+        border-bottom: 1px solid #bababa;
     }
     .line.dashed{
-        border-bottom: pxTorem(2) dashed #bababa;
+        border-bottom:2px dashed #bababa;
     }
     span{
         font-size: 100%;
