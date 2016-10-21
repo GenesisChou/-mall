@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
     entry: {
         app: './src/main.js'
@@ -28,10 +29,12 @@ module.exports = {
             loader: 'vue'
         }, {
             test: /\.scss$/,
-            loader: 'sass'
+            loader: ExtractTextPlugin.extract(
+                "style-loader", 'css-loader?sourceMap!sass-loader')
         }, {
             test: /\.css$/,
-            loader: 'style'
+            loader: ExtractTextPlugin.extract(
+                "style-loader", "css-loader?sourceMap")
         }, {
             test: /\.js$/,
             loader: 'babel',
@@ -52,11 +55,18 @@ module.exports = {
         historyApiFallback: true,
         noInfo: true
     },
-    devtool: '#eval-source-map'
+    devtool: '#eval-source-map',
+    plugins: [
+        //将样式统一发布到style.css中
+        new ExtractTextPlugin("style.css", {
+            allChunks: true,
+            disable: false
+        })
+    ]
 }
 
 if (process.env.NODE_ENV === 'production') {
-    module.exports.devtool = '#source-map'
+    module.exports.devtool = '#source-map';
     module.exports.plugins = (module.exports.plugins || []).concat([
         new webpack.DefinePlugin({
             'process.env': {
@@ -64,6 +74,9 @@ if (process.env.NODE_ENV === 'production') {
             }
         }),
         new webpack.optimize.UglifyJsPlugin({
+            output: {
+                comments: false, // remove all comments
+            },
             compress: {
                 warnings: false
             }

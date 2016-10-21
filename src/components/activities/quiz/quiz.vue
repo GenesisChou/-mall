@@ -79,12 +79,12 @@
                         </div>
                     </div>
                     <div class='text-center'>
-                        <button class='btn btn-pink submit text-huge' @click='submitAnswer(toggleModal)'>提交答案</button>
+                        <button class='btn btn-pink submit text-huge' @click='submitAnswer(toggleModal)' :disabled='modal'>提交答案</button>
                     </div>
                 </div>
             </div>
         </div>
-        <v-alert :show.sync='modal' :msg='msg' :type='result.is_right?true:false' :func='result.is_win?toOrderDetail:toggleModal' :btn-text='result.is_win?"查看":"关闭"'>
+        <v-alert :cover-close=false :show.sync='modal' :msg='msg' :type='result.is_win?true:false' :func='result.is_win?toOrderDetail:toggleModal' :btn-text='result.is_win?"查看":"关闭"' >
         </v-alert>
     </div>
 </template>
@@ -144,18 +144,20 @@ export default {
                     }).then((response) => {
                         let data = response.data;
                         this.$set('result', data.data);
-                        this.$set('msg',!data.data.is_right?'回答错误':data.data.is_win?'你中奖了':'谢谢参与');
-                        this.$parent.setUser();
+                        this.$set('msg', data.data.name);
+                        this.$parent.gerUserInfor();
                         func();
                     }, (response) => {
 
                     })
                 } else {
                     this.$set('msg', '请选择答案');
+                    this.$set('result.is_win', false);
                     func();
                 }
             } else {
                 this.$set('msg', '积分不足');
+                this.$set('result.is_win', false);
                 func();
             }
 

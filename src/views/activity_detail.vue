@@ -5,26 +5,34 @@
     overflow: hidden;
     .introduction {
         padding: pxTorem(50) 0;
-        line-height: .7rem;
     }
 }
 </style>
 <template>
     <div class='activity-detail'>
         <div class='head bg-base'>
-            <component :is='game' :questions='activity_detail.questions' :activity-id='activity_id' :integral='activity_detail.integral' ></component>
+            <component :is='game' :questions='activity_detail.questions' :activity-id='activity_id' :integral='activity_detail.integral'></component>
         </div>
         <div class='body '>
             <div class='introduction'>
-                {{{activity_detail.content}}}
+                <v-simditor>
+                    <template v-if='activity_detail.content'>
+                        <v-divider text='活动说明' type='dashed'></v-divider>
+                        {{{activity_detail.content}}}
+                    </template>
+                    <template v-if='activity_detail.content_prob'>
+                        <v-divider text='概率说明' type='dashed'></v-divider>
+                        {{{activity_detail.content_prob}}}
+                    </template>
+                </v-simditor>
             </div>
             <v-divider text='奖品列表'></v-divider>
-            <ul class='aword-list'>
-                <li>
-                    <v-list-item v-for='item in activity_detail.items' :title='item.name' :title-dupty='item.desc' :img='item.pic'></v-list-item>
-                </li>
-            </ul>
         </div>
+        <ul class='aword-list'>
+            <li>
+                <v-list-item v-for='item in activity_detail.items' :title='item.name' :title-dupty='item.desc' :img='item.pic'></v-list-item>
+            </li>
+        </ul>
 </template>
 <script>
 import {
@@ -34,8 +42,7 @@ import {
 import utils from 'libs/utils'
 import vListItem from 'components/v_list_item'
 import vDivider from 'components/v_divider'
-import getters from 'v_vuex/getters'
-import actions from 'v_vuex/actions'
+import vSimditor from 'components/v_simditor'
 
 export default {
 
@@ -44,7 +51,8 @@ export default {
         quiz,
         scrap,
         vListItem,
-        vDivider
+        vDivider,
+        vSimditor
     },
     data() {
         return {
@@ -52,6 +60,7 @@ export default {
             type: '',
             activity_detail: {},
             game: '',
+            user: {}
         }
     },
     route: {
@@ -64,13 +73,29 @@ export default {
             } else if (this.type == 2) {
                 this.$set('game', 'quiz');
             }
+            this.gerUserInfor();
             this.getActivityDetail();
         },
     },
     methods: {
+        gerUserInfor() {
+            this.$http.post(`${APP.HOST}/get_user/${APP.USER_ID}`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            }).then((response) => {
+                let data = response.data;
+                this.$set('user', data.data)
+            }, (response) => {
+
+            })
+
+        },
         //获取活动详情
         getActivityDetail() {
-            this.$http.post(`${APP.HOST}/activity_detail/${this.activity_id}`).then((response) => {
+            this.$http.post(`${APP.HOST}/activity_detail/${this.activity_id}`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            }).then((response) => {
                 let data = response.data;
                 this.$set('activity_detail', utils.resizeImg(data.data));
             }, (response) => {
@@ -78,8 +103,5 @@ export default {
             })
         },
     },
-    vuex:{
-      actions,getters
-    }
 };
 </script>

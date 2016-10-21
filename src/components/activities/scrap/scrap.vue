@@ -3,8 +3,8 @@
 .v-scrap {
     position: relative;
     height: pxTorem(600);
-    background-image: url('./images/scrap.png');
-    background-size: 100%;
+    background:url('./images/scrap.png') no-repeat;
+    background-size:100%;
 }
 
 #lotteryContainer {
@@ -49,12 +49,6 @@
 <script>
 import vAlert from 'components/v_alert'
 import Lottery from 'libs/lottery'
-import {
-    actions
-} from 'v_vuex/actions'
-import {
-    getters
-} from 'v_vuex/getters'
 export default {
 
     name: 'scrap',
@@ -109,7 +103,7 @@ export default {
         startActivity() {
             this.$set('state.start', this.start_enble);
             if (this.state.start) {
-                this.$parent.setUser();
+                this.$parent.gerUserInfor();
                 this.getResult();
                 this.setLottery();
             } else {
@@ -119,7 +113,6 @@ export default {
         setLottery() {
             this.lottery = new Lottery('lotteryContainer', '#ddd', 'color', this.pxTorem(500), this.pxTorem(200), (drawPercent) => {
                 this.$set('drawPercent', drawPercent);
-                this.drawPercent = drawPercent;
             });
             this.lottery.init('谢谢参与', 'text');
         },
@@ -156,9 +149,5 @@ export default {
             return value * this.clientWidth / 750;
         },
     },
-    vuex: {
-        getters,
-        actions
-    }
 };
 </script>

@@ -2,7 +2,7 @@
 @import '../assets/scss/variable.scss';
 .v-divider {
     position: relative;
-    height: pxTorem(50);
+    height: 1rem;
     .text{
     	position: absolute;
     	left:50%;
@@ -15,16 +15,23 @@
     	position: absolute;
     	width: 100%;
     	top:50%;
-    	border-bottom: pxTorem(1) solid #bababa;
-
+    }
+    .line.solid{
+        border-bottom: pxTorem(1) solid #bababa;
+    }
+    .line.dashed{
+        border-bottom: pxTorem(2) dashed #bababa;
+    }
+    span{
+        font-size: 100%;
+        font-family: 'Microsoft Yahei'
     }
 }
 </style>
 <template>
     <div class='v-divider text-gray'>
-    	<div class='line'></div>
-        <span class='text'> {{text}}
-        </span>
+    	<div :class='["line", type]'></div>
+        <span class='text'> {{text}} </span>
     </div>
 </template>
 <script>
@@ -33,7 +40,11 @@ export default {
 		text:{
 			type:String,
 			default:'内容'
-		}
+		},
+        type:{
+            type:String,
+            default:'solid'
+        }
 	}
 }
 </script>

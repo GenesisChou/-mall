@@ -11,10 +11,6 @@ export default function(router) {
         '*': {
             component: require('views/index'),
         },
-        '/test': { //组件测试
-            name: 'test',
-            component: require('views/test')
-        },
         '/index': { //首页
             name: 'index',
             component: require('views/index'),
@@ -63,18 +59,6 @@ export default function(router) {
     //     title_list.forEach((item) => {
     //         if (item.name == transition.to.name) {
     //             utils.setTitle(item.title);
-    //             // let iframe = document.createElement('iframe');
-    //             // iframe.style.visibility = 'hidden';
-    //             // iframe.setAttribute('src', '/favicon.ico');
-    //             // let iframeCallback = function() {
-    //             //     setTimeout(function() {
-    //             //         iframe.removeEventListener('load', iframeCallback);
-    //             //         document.body.removeChild(iframe);
-    //             //     }, 0);
-    //             // };
-    //             // iframe.addEventListener('load', iframeCallback);
-    //             // document.body.appendChild(iframe);
-    //
     //         }
     //     })
     //     transition.next();

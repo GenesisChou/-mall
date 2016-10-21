@@ -7,31 +7,22 @@
     </div>
 </template>
 <script>
-import store from './vuex/store'
-import actions from 'v_vuex/actions'
+
 export default {
     created() {
-            this.setUser();
             this.init();
-            window.onresize = () => {
-                this.init();
-            };
-        },
-        data(){
-            return {
-            }
         },
         methods: {
             init() {
                 let scale = 1 / devicePixelRatio;
-                document.querySelector('meta[name="viewport"]').setAttribute('content', `initial-scale=${scale}, maximum-scale=${scale} , minimum-scale=${scale} , user-scalable=no`);
+                // document.querySelector('meta[name="viewport"]').setAttribute('content', `width=device-width,initial-scale=${scale}, maximum-scale=${scale} , minimum-scale=${scale} , user-scalable=no`);
+                // document.write('<script src="../resource/js/item.js?t='+(+new Date)+'"><\/script>');
+                // let build=document.getElementById('build');
+                // console.log(build.src);
+                // build.src=`${build.src}?timestamp=${new Date().getTime()}`;
                 document.documentElement.style.fontSize = `${document.documentElement.clientWidth / 10}px`;
 
             }
-        },
-        store,
-        vuex: {
-            actions
         }
 }
 </script>

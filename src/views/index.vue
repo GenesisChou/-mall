@@ -17,7 +17,8 @@
     }
 }
 
-.hot-list {
+.product-list,
+.activity-list {
     .v-list-item:last-child {
         border-bottom: 0;
     }
@@ -45,14 +46,17 @@
                 </div>
             </div>
         </div>
-        <div class='hot-list '>
-            <v-banner type='activity' v-link='{name:"activity_list"}'></v-banner>
+        <v-banner type='activity' v-link='{name:"activity_list"}'></v-banner>
+        <div class='activity-list'>
             <v-list-item v-for='activity in hot_activity_list' v-link='{name:"activity_detail",query:{activity_id:activity.id,type:activity.type}}' :title='activity.name' :title-dupty=`${activity.integral|parseInt}积分` :img='activity.pic_thumb'></v-list-item>
-            <v-banner type='product' v-link='{name:"product_list"}'></v-banner>
-            <v-list-item v-for='product in hot_product_list' v-link='{name:"product_detail",query:{product_id:product.id}}' :title='product.name' :title-dupty=`${product.integral|parseInt}积分` :img='product.pic_thumb'></v-list-item>
-            <v-alert :show.sync='modal' :msg='msg' btn-text='确定'>
-            </v-alert>
         </div>
+        <v-banner type='product' v-link='{name:"product_list"}'></v-banner>
+        <div class='product-list'>
+            <v-list-item v-for='product in hot_product_list' v-link='{name:"product_detail",query:{product_id:product.id}}' :title='product.name' :title-dupty=`${product.integral|parseInt}积分` :img='product.pic_thumb'></v-list-item>
+        </div>
+        <v-alert :show.sync='modal' :msg='msg' btn-text='确定'>
+        </v-alert>
+    </div>
 </template>
 <script>
 import utils from 'libs/utils'
@@ -60,8 +64,6 @@ import filters from 'libs/filters'
 import vAlert from 'components/v_alert'
 import vBanner from 'components/v_banner'
 import vListItem from 'components/v_list_item'
-import getters from 'v_vuex/getters'
-import actions from 'v_vuex/actions'
 export default {
 
     name: 'index',
@@ -74,32 +76,46 @@ export default {
         return {
             modal: false,
             signState: false,
-            msg:'签到成功',
-            hot_activity_list:[],
-            hot_product_list:[]
+            msg: '签到成功',
+            user:{},
+            hot_activity_list: [],
+            hot_product_list: []
         };
     },
     route: {
         data() {
+            this.gerUserInfor();
             this.getHotActivityList();
             this.getHotProductList();
         }
     },
     methods: {
         //签到
+        gerUserInfor() {
+            this.$http.post(`${APP.HOST}/get_user/${APP.USER_ID}`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            }).then((response) => {
+                let data = response.data;
+                this.$set('user',data.data)
+            }, (response) => {
+
+            })
+
+        },
         checkIn() {
-            this.modal=!this.modal;
+            this.modal = !this.modal;
             if (!this.user.ischecked) {
                 this.$http.post(`${APP.HOST}/checkin/${APP.USER_ID}`, {
                     token: APP.TOKEN,
                     userid: APP.USER_ID
                 }).then((response) => {
-                    this.setUser();
+                    this.gerUserInfor();
                 }, (response) => {
 
                 })
-            }else{
-                this.$set('msg','已签到');
+            } else {
+                this.$set('msg', '已签到');
             }
         },
         getHotActivityList() {
@@ -108,7 +124,7 @@ export default {
                 userid: APP.USER_ID
             }).then((response) => {
                 let data = response.data;
-                this.$set('hot_activity_list',data.data.list);
+                this.$set('hot_activity_list', data.data.list);
             }, (response) => {
                 // error callback
             });
@@ -119,15 +135,12 @@ export default {
                 userid: APP.USER_ID
             }).then((response) => {
                 let data = response.data;
-                this.$set('hot_product_list',data.data.list);
+                this.$set('hot_product_list', data.data.list);
             }, (response) => {
                 // error callback
             });
         },
     },
-    filters,
-    vuex: {
-        getters,actions
-    }
+    filters
 };
 </script>

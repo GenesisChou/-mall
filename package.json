@@ -1,10 +1,10 @@
 {
-  "name": "integral-mall",
+  "name": "mall",
   "description": "integral mall of justtong",
   "author": "周兆奔 <zzb@justtong.com>",
   "scripts": {
     "dev": "webpack-dev-server --progress --profile --colors --inline --hot --port 8080",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "build": "cross-env NODE_ENV=production webpack -p --progress --hide-modules"
   },
   "dependencies": {
     "babel-runtime": "^6.0.0",

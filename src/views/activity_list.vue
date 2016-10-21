@@ -13,12 +13,12 @@
         <div class='search-box bg-base'>
             <v-search :search='searchActivity' :params.sync='params'></v-search>
         </div>
-        <ul class='list' v-touch:pan='onDragUp'>
+        <ul class='list' >
             <li>
                 <v-list-item v-for='activity in activity_list' v-link='{name:"activity_detail",query:{activity_id:activity.id,type:activity.type}}' :title='activity.name' :title-dupty=`${activity.integral|parseInt}积分` :img='activity.pic_thumb'></v-list-item>
             </li>
         </ul>
-        <div class='load-more text-large  text-sliver flex flex-center-h flex-center-v'>上滑加载更多</div>
+        <!-- <div class='load-more text-large  text-sliver flex flex-center-h flex-center-v'>上滑加载更多</div> -->
     </div>
 </template>
 <script>
@@ -40,7 +40,9 @@ export default {
                 p: 1,
                 r: APP.PERPAGE,
                 total: 0,
-                count: 0
+                count: 0,
+                token: APP.TOKEN,
+                userid: APP.USER_ID
             },
 
         };
@@ -52,9 +54,6 @@ export default {
         }
     },
     methods: {
-        onDragUp(event){
-            console.log(event);
-        },
         //获取活动列表
         getActivityList() {
             this.searchActivity(this.params, (data) => {

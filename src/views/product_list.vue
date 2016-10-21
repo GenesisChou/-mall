@@ -14,7 +14,7 @@
             <v-search :search='searchProduct' :params.sync='params'></v-search>
         </div>
         <v-list-item v-for='product in product_list' v-link='{name:"product_detail",query:{product_id:product.id}}' :title='product.name' :title-dupty=`${product.integral|parseInt}积分` :img='product.pic_thumb'></v-list-item>
-        <div class='load-more text-large  text-sliver flex flex-center-h flex-center-v'>上滑加载更多</div>
+        <!-- <div class='load-more text-large  text-sliver flex flex-center-h flex-center-v'>上滑加载更多</div> -->
     </div>
 </template>
 <script>
@@ -36,7 +36,9 @@ export default {
                 p: 1,
                 r: APP.PERPAGE,
                 total: 0,
-                count: 0
+                count: 0,
+                token: APP.TOKEN,
+                userid: APP.USER_ID
             }
         };
     },

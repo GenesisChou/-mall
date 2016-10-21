@@ -20,7 +20,7 @@
 }
 </style>
 <template>
-    <v-modal :show.sync='show'>
+    <v-modal :show.sync='show' :cover-close='coverClose'>
         <div class='modal bg-white'>
             <div class='modal-content text-center text-large'>
                 <img v-if='type' class='icon' src='../assets/images/correct-hollow.png' />
@@ -51,6 +51,10 @@ export default {
         msg: {
             type: String,
             default: '正确'
+        },
+        coverClose:{
+            type:Boolean,
+            default:true
         },
         btnText: {
             type: String,

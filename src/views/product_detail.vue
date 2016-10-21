@@ -19,14 +19,14 @@
 }
 
 .body {
-    padding: 0 pxTorem(55);
+    padding: 0 pxTorem(50);
     .introduction {
         margin: pxTorem(50) 0 pxTorem(150) 0;
     }
 }
 
 .footer {
-    height: pxTorem(119);
+    height: pxTorem(120);
     padding: 0 pxTorem(55);
     .btn {
         padding: 0;
@@ -68,7 +68,16 @@
         </div>
         <div class='body '>
             <div class='introduction'>
-                {{{product_detail.content}}}
+                <v-simditor>
+                    <template v-if='product_detail.content'>
+                        <v-divider text='详细说明' type='dashed'></v-divider>
+                        {{{product_detail.content}}}
+                    </template>
+                    <template v-if='product_detail.content_use'>
+                        <v-divider text='使用说明' type='dashed'></v-divider>
+                        {{{product_detail.content_use}}}
+                    </template>
+                </v-simditor>
             </div>
         </div>
         <v-sticky>
@@ -107,16 +116,18 @@
 <script>
 import utils from 'libs/utils'
 import vSticky from 'components/v_sticky'
+import vDivider from 'components/v_divider'
 import vModal from 'components/v_modal'
+import vSimditor from 'components/v_simditor'
 import filters from 'libs/filters'
-import actions from 'v_vuex/actions'
-import getters from 'v_vuex/getters'
 export default {
 
     name: 'product_detail',
     components: {
         vSticky,
-        vModal
+        vModal,
+        vSimditor,
+        vDivider
     },
     data() {
         return {
@@ -129,12 +140,14 @@ export default {
             product_id: '',
             product_detail: '',
             order_id: '', //兑换成功后用于跳转订单详情的订单id
-            fail_info:'' //失败信息
+            fail_info: '', //失败信息
+            user: {},
         };
     },
     route: {
         data(transition) {
             this.$set('product_id', transition.to.query.product_id);
+            this.gerUserInfor();
             this.getProductDetail();
         }
     },
@@ -144,6 +157,18 @@ export default {
         }
     },
     methods: {
+        gerUserInfor() {
+            this.$http.post(`${APP.HOST}/get_user/${APP.USER_ID}`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            }).then((response) => {
+                let data = response.data;
+                this.$set('user', data.data)
+            }, (response) => {
+
+            })
+
+        },
         //获取商品详情
         getProductDetail() {
             this.$http.post(`${APP.HOST}/product_detail/${this.product_id}`, {
@@ -173,19 +198,15 @@ export default {
                     this.$set('order_state.success', true);
                     this.$set('order_id', data.data.id);
                     //更新用户数据
-                    this.setUser();
-                }else{
-                    this.$set('fail_info',data.info);
+                    this.gerUserInfor();
+                } else {
+                    this.$set('fail_info', data.info);
                 }
             }, (response) => {
 
             })
         }
     },
-    filters,
-    vuex:{
-        actions,
-        getters
-    }
+    filters
 };
 </script>

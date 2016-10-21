@@ -6,12 +6,12 @@
 }
 
 .order {
-    margin-bottom: 0;   
-}
-.v-order-item{
-    border-bottom: pxTorem(1) solid #c8c8c8;
+    margin-bottom: 0;
 }
 
+.v-order-item {
+    border-bottom: pxTorem(1) solid #c8c8c8;
+}
 </style>
 <template>
     <div class='order-detail bg-base'>
@@ -20,13 +20,19 @@
                 订单号：{{order_detail.orderid}}
             </div>
             <div slot='body-content'>
-                <v-order-item :name='order_detail.product' :integral='product_detail.integral' :img='product_detail.pic_thumb'></v-order-item>
+                <v-order-item :name='order_detail.product' :integral='order_detail.integral' :img='product_detail.pic_thumb'></v-order-item>
             </div>
             <div slot='footer-content'>
-                <p class='text-large'>优惠券码:</p>
-                <p>{{order_detail.ticket_id}} </p>
-                <p class='text-large'>使用说明:</p>
-                <p>{{{product_detail.content_use}}} </p>
+                <template v-if='order_detail.ticket_id'>
+                    <p class='text-huge'>优惠券码:</p>
+                    <p class='text-pink'>{{order_detail.ticket_id}} </p>
+                </template>
+                <template v-if='product_detail.content_use'>
+                    <v-divider text='使用说明' type='dashed'></v-divider>
+                    <v-simditor>
+                        {{{product_detail.content_use}}}
+                    </v-simditor>
+                </template>
             </div>
         </v-order>
     </div>
@@ -35,12 +41,16 @@
 import utils from 'libs/utils'
 import vOrder from 'components/v_order'
 import vOrderItem from 'components/v_order_item'
+import vSimditor from 'components/v_simditor'
+import vDivider from 'components/v_divider'
 export default {
 
     name: 'order_detail',
     components: {
         vOrderItem,
-        vOrder
+        vOrder,
+        vSimditor,
+        vDivider
     },
     data() {
         return {

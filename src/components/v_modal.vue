@@ -33,10 +33,14 @@ export default {
             type: Boolean,
             default: false
         },
+        coverClose:{
+            type:Boolean,
+            default:true
+        }
     },
     methods: {
         close() {
-            if (event.target == document.querySelector('.bg-cover')) {
+            if (this.coverClose&&event.target == document.querySelector('.bg-cover')) {
                 this.show = !this.show;
             }
             // this.show=false;

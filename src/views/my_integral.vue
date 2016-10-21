@@ -37,7 +37,7 @@
     > li {
         height: pxTorem(100);
         padding: 0 pxTorem(38);
-        border-bottom: 1px solid $sliver;
+        border-bottom: pxTorem(1) solid #c8c8c8;
     }
     .detail {
         line-height: 0.5rem;
@@ -49,8 +49,8 @@
     width: pxTorem(600);
     height: pxTorem(460);
     padding: pxTorem(50) pxTorem(68);
-    border-radius:pxTorem(5);
-    li {
+    border-radius: pxTorem(5);
+    p {
         line-height: pxTorem(55);
     }
 }
@@ -89,12 +89,12 @@
         </div>
         <v-modal :show.sync='modal'>
             <div class='modal-content flex flex-space-between bg-white'>
-                <ol class='text-large'>
-                    <li>您可以通过以下途径赚取积分：</li>
-                    <li>1、签到</li>
-                    <li>2、分享</li>
-                    <li>3、参与活动</li>
-                </ol>
+                <div class='text-large'>
+                    <p>您可以通过以下途径赚取积分：</p>
+                    <p>1、签到</p>
+                    <p>2、分享</p>
+                    <p>3、参与活动</p>
+                </div>
                 <p class='text-center'>
                     <button class='btn btn-blue' @click='toggleModal'>知道了</button>
                 </p>
@@ -106,8 +106,6 @@
 import utils from 'libs/utils'
 import vModal from 'components/v_modal'
 import filters from 'libs/filters'
-import getters from 'v_vuex/getters'
-import actions from 'v_vuex/actions'
 export default {
 
     name: 'my_integral',
@@ -118,18 +116,35 @@ export default {
         return {
             modal: false,
             integral_list: [],
+            user: {}
         };
     },
     route: {
         data(transition) {
+            this.gerUserInfor();
             this.getIntegralList();
         },
 
     },
     methods: {
+        gerUserInfor() {
+            this.$http.post(`${APP.HOST}/get_user/${APP.USER_ID}`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            }).then((response) => {
+                let data = response.data;
+                this.$set('user', data.data)
+            }, (response) => {
+
+            })
+
+        },
         //获取积分明细
         getIntegralList() {
-            this.$http.post(`${APP.HOST}/integral_list/${APP.USER_ID}`).then((response) => {
+            this.$http.post(`${APP.HOST}/integral_list/${APP.USER_ID}`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            }).then((response) => {
                 let data = response.data;
                 this.$set('integral_list', data.data);
             })
@@ -147,9 +162,6 @@ export default {
             this.modal = !this.modal;
         }
     },
-    filters,
-    vuex:{
-        getters,actions
-    }
+    filters
 };
 </script>
