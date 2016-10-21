@@ -3,7 +3,7 @@
 .v-list-item {
     height: pxTorem(220);
     padding: pxTorem(40) 0;
-    border-bottom:1px solid #bababa;
+    border-bottom:1px solid $gray-light;
     .img {
         width: pxTorem(180);
         height: pxTorem(140);

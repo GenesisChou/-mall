@@ -3,14 +3,17 @@
 .order-detail {
     padding: pxTorem(20) 0;
     min-height: 100%;
+    .order-body{
+      border-bottom:1px solid $gray-light;
+    }
 }
 
-.order {
-    margin-bottom: 0;
+.ticket,.introduction{
+    padding: pxTorem(20);
 }
 
-.v-order-item {
-    border-bottom: 1px solid #c8c8c8;
+.block-text {
+    height: pxTorem(100);
 }
 </style>
 <template>
@@ -24,13 +27,19 @@
             </div>
             <div slot='footer-content'>
                 <template v-if='order_detail.ticket_id'>
-                    <p class='text-huge'>优惠券码:</p>
-                    <p class='text-pink'>{{order_detail.ticket_id}} </p>
+                    <div class='block-text flex flex-center-v flex-center-h text-gray bg-base text-large'>
+                        优惠券码
+                    </div>
+                    <p class='text-pink ticket'>{{order_detail.ticket_id}} </p>
                 </template>
                 <template v-if='product_detail.content_use'>
-                    <v-divider text='使用说明' type='dashed'></v-divider>
                     <v-simditor>
-                        {{{product_detail.content_use}}}
+                        <div class='block-text flex flex-center-v flex-center-h text-gray bg-base text-large'>
+                            使用说明
+                        </div>
+                        <div class='introduction'>
+                            {{{product_detail.content_use}}}
+                        </div>
                     </v-simditor>
                 </template>
             </div>

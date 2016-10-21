@@ -91,9 +91,6 @@
 .pd10-l{
 	padding-left:$gap*2;
 }
-.border-1{
-	border:1px solid black;
-}
 /************颜色********/
 .bg-base{
 	background:rgb(243,243,243);
@@ -130,6 +127,7 @@
 }
 
 
+
 /********字体***********/
 .text-small{
 	font-size:pxTorem(24);
@@ -142,6 +140,9 @@
 }
 .text-huge{
 	font-size:pxTorem(36);
+}
+.text-bold{
+	font-weight: bold;
 }
 /*******按钮**********/
 .btn{

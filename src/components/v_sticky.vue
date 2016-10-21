@@ -5,7 +5,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    border-top: 1px solid $sliver;
+    border-top: 1px solid $gray-light;
 }
 </style>
 <template>

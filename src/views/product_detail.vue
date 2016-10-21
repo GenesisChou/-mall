@@ -22,6 +22,9 @@
     padding: 0 pxTorem(50);
     .introduction {
         margin: pxTorem(50) 0 pxTorem(150) 0;
+        .title{
+          padding:pxTorem(30) 0;
+          }
     }
 }
 
@@ -70,11 +73,11 @@
             <div class='introduction'>
                 <v-simditor>
                     <template v-if='product_detail.content'>
-                        <v-divider text='详细说明' type='dashed'></v-divider>
+                        <v-divider text='详细说明'></v-divider>
                         {{{product_detail.content}}}
                     </template>
                     <template v-if='product_detail.content_use'>
-                        <v-divider text='使用说明' type='dashed'></v-divider>
+                        <v-divider text='使用说明'></v-divider>
                         {{{product_detail.content_use}}}
                     </template>
                 </v-simditor>

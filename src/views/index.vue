@@ -12,7 +12,7 @@
             margin: 0 pxTorem(18) 0 pxTorem(56);
         }
         &:nth-child(1) {
-            border-right: 1px solid #7E7E7E;
+            border-right: 1px solid $gray-light;
         }
     }
 }

@@ -3,6 +3,9 @@
 .order-list{
     min-height: 100%;
     padding: pxTorem(20) 0;
+    .order{
+      border-bottom:0;
+    }
 }
 
 .order:last-child {

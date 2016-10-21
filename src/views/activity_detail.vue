@@ -5,6 +5,9 @@
     overflow: hidden;
     .introduction {
         padding: pxTorem(50) 0;
+        .title{
+          padding:pxTorem(30) 0;
+        }
     }
 }
 </style>
@@ -17,11 +20,12 @@
             <div class='introduction'>
                 <v-simditor>
                     <template v-if='activity_detail.content'>
-                        <v-divider text='活动说明' type='dashed'></v-divider>
+                      <v-divider text='详细说明'></v-divider>
                         {{{activity_detail.content}}}
                     </template>
                     <template v-if='activity_detail.content_prob'>
-                        <v-divider text='概率说明' type='dashed'></v-divider>
+                      <v-divider text='概率说明'></v-divider>
+
                         {{{activity_detail.content_prob}}}
                     </template>
                 </v-simditor>

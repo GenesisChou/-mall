@@ -10,6 +10,7 @@
     	transform: translate(-50%,-50%);
     	background: $white;
     	padding:0 pxTorem(30);
+      font-size:pxTorem(30);
     }
     .line{
     	position: absolute;
@@ -17,10 +18,10 @@
     	top:50%;
     }
     .line.solid{
-        border-bottom: 1px solid #bababa;
+        border-bottom: 1px solid $gray-light;
     }
     .line.dashed{
-        border-bottom:2px dashed #bababa;
+        border-bottom:1px dashed $gray-light;
     }
     span{
         font-size: 100%;
