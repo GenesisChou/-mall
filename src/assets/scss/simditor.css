@@ -337,8 +337,8 @@
 }
 .simditor .simditor-toolbar > ul > li > .toolbar-item.toolbar-item-image > input[type=file] {
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 0em;
+  top: 0em;
   opacity: 0;
   font-size: 6.25em;
   cursor: pointer;
@@ -376,7 +376,7 @@
   left: 0;
 }
 .simditor .simditor-toolbar .toolbar-menu ul {
-  min-width: 10;
+  min-width: 10em;
   list-style: none;
   margin: 0;
   padding: 0.625em 0.0625em;
@@ -504,8 +504,8 @@
 }
 .simditor .simditor-toolbar .toolbar-menu.toolbar-menu-image .menu-item-upload-image input[type=file] {
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 0em;
+  top: 0em;
   opacity: 0;
   font-size: 6.25em;
   cursor: pointer;
@@ -574,8 +574,8 @@
 }
 .simditor .simditor-popover.image-popover .btn-upload input[type=file] {
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 0em;
+  top: 0em;
   opacity: 0;
   height: 100%;
   width: 1.75em;
@@ -617,7 +617,7 @@
 }
 .simditor .simditor-body h1, .simditor .simditor-body h2, .simditor .simditor-body h3, .simditor .simditor-body h4, .simditor .simditor-body h5, .simditor .simditor-body h6, .editor-style h1, .editor-style h2, .editor-style h3, .editor-style h4, .editor-style h5, .editor-style h6 {
   font-weight: normal;
-  margin: 2.5em 0 1.25em;
+  margin: 1.5em 0 1.25em;
   color: #000000;
 }
 .simditor .simditor-body h1, .editor-style h1 {
@@ -640,7 +640,7 @@
 }
 .simditor .simditor-body p, .simditor .simditor-body div, .editor-style p, .editor-style div {
   word-wrap: break-word;
-  margin: 0 0 0.9375em 0;
+  margin: 0 0 0 0;
   color: #333;
   word-wrap: break-word;
 }
@@ -713,7 +713,7 @@
 }
 .simditor .simditor-body hr, .editor-style hr {
   display: block;
-  height: 0;
+  height: 0em;
   border: 0;
   border-top: 0.0625em solid #ccc;
   margin: 0.9375em 0;
