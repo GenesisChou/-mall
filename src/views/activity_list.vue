@@ -13,11 +13,12 @@
         <div class='search-box bg-base'>
             <v-search :search='searchActivity' :params.sync='params'></v-search>
         </div>
-        <ul class='list' >
+        <ul class='list'>
             <li>
                 <v-list-item v-for='activity in activity_list' v-link='{name:"activity_detail",query:{activity_id:activity.id,type:activity.type}}' :title='activity.name' :title-dupty=`${activity.integral|parseInt}积分` :img='activity.pic_thumb'></v-list-item>
             </li>
         </ul>
+        <v-back-top></v-back-top>
         <!-- <div class='load-more text-large  text-sliver flex flex-center-h flex-center-v'>上滑加载更多</div> -->
     </div>
 </template>
@@ -25,12 +26,14 @@
 import utils from 'libs/utils'
 import vSearch from 'components/v_search'
 import vListItem from 'components/v_list_item'
+import vBackTop from 'components/v_back_top'
 export default {
 
     name: 'activity_list',
     components: {
         vListItem,
         vSearch,
+        vBackTop
     },
     data() {
         return {
@@ -69,9 +72,9 @@ export default {
         searchActivity(params = this.params, func) {
             this.$http.post(`${APP.HOST}/all_activity`, params).then((response) => {
                 let data = response.data;
-                if(typeof func==='function'){
-                    func(data);                    
-                }else{
+                if (typeof func === 'function') {
+                    func(data);
+                } else {
                     this.$set('activity_list', data.data.list);
                 }
             }, (response) => {

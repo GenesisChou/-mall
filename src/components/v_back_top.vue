@@ -4,23 +4,18 @@
     position: fixed;
     right: pxTorem(50);
     bottom: pxTorem(50);
-    width: pxTorem(80);
-    height: pxTorem(80);
+    width: pxTorem(70);
+    height: pxTorem(70);
     border-radius: 50%;
     border: 2px solid $pink;
-    opacity: 0;
     -webkit-transition: opacity .3s linear;
     -moz-transition: opacity .3s linear;
     -o-transition: opacity .3s linear;
     transition: opacity .3s linear;
 }
-
-.v-back-top.fade {
-    opacity: 1;
-}
 </style>
 <template>
-    <div :class='["flex","flex-center-h","flex-center-v","v-back-top","bg-white","text-huge","bg-pink","text-white",show?"fade":""]' @click='backTop'>
+    <div v-show='show' transition='fade' class='flex flex-center-h flex-center-v v-back-top bg-white text-huge bg-pink text-white' @click='backTop'>
         &#8593;
     </div>
 </template>

@@ -7,7 +7,7 @@ Vue.use(Vuex)
     // 创建一个对象来保存应用启动时的初始状态
 const state = {
     // TODO: 放置初始状态
-    user: {},
+    user: {}
 }
 
 // 创建一个对象存储一系列我们接下来要写的 mutation 函数

@@ -31,7 +31,7 @@
                 <img class='icon' src='../assets/images/index/money.png'>
                 <div class='content'>
                     <p class='text-large'>我的积分</p>
-                    <p class='text-small'>当前余额: <span class='text-pink'>{{user.integral|parseInt}}</span> </p>
+                    <p class='text-small'>当前余额: <span class='text-pink'>{{(user.integral|parseInt)||'...'}}</span> </p>
                 </div>
             </div>
             <div class='event flex  flex-center-v' @click='checkIn'>
