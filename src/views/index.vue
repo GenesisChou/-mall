@@ -11,7 +11,7 @@
             border-radius: 50%;
             margin: 0 pxTorem(18) 0 pxTorem(56);
         }
-        &:nth-child(1) {
+        &:first-child {
             border-right: 1px solid $gray-light;
         }
     }
@@ -79,15 +79,17 @@ export default {
             modal: false,
             signState: false,
             msg: '签到成功',
-            hot_activity_list: [],
-            hot_product_list: []
         };
     },
     route: {
         data() {
-            this.getUserInfor();
-            this.getHotActivityList();
-            this.getHotProductList();
+            // this.getUserInfor();
+            if (!this.hot_activity_list) {
+                this.getHotActivityList();
+            }
+            if (!this.hot_product_list) {
+                this.getHotProductList();
+            }
         }
     },
     methods: {
@@ -106,32 +108,10 @@ export default {
             } else {
                 this.$set('msg', '已签到');
             }
-        },
-        getHotActivityList() {
-            this.$http.post(`${APP.HOST}/hot_activity`, {
-                token: APP.TOKEN,
-                userid: APP.USER_ID
-            }).then((response) => {
-                let data = response.data;
-                this.$set('hot_activity_list', data.data.list);
-            }, (response) => {
-                // error callback
-            });
-        },
-        getHotProductList() {
-            this.$http.post(`${APP.HOST}/hot_product`, {
-                token: APP.TOKEN,
-                userid: APP.USER_ID
-            }).then((response) => {
-                let data = response.data;
-                this.$set('hot_product_list', data.data.list);
-            }, (response) => {
-                // error callback
-            });
-        },
+        }
     },
     filters,
-    vuex:{
+    vuex: {
         actions,
         getters
     }

@@ -25,7 +25,7 @@ if (!utils.getParameterByName('token')) {
     //进行微信登陆操作
     let redirect = encodeURIComponent(APP.MALL_HOST);
     let id = utils.getParameterByName('id');
-    location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}?timastamp=${new Date().getTime()}`;
+    location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}`;
 } else {
     //第一次登陆  将数据存入localstorage中，再为全局WINDOW.APP赋值，用于后续的request操作
     Vue.use(VueResource);

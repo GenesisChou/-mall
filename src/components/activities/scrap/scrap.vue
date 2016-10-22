@@ -95,7 +95,7 @@ export default {
     },
     watch: {
         draw_percent(value) {
-            if(this.is_win&&value >40&&!this.activity_end){
+            if(this.activity_start&&value >40&&!this.activity_end){
                 this.$set('activity_end',true);
                 this.toggleModal();
             }
@@ -133,11 +133,13 @@ export default {
                 if(data.status==APP.SUCCESS){
                     this.$parent.getUserInfor();//更新用户信息
                     this.$set('is_win',data.data.is_win);
+                    this.$set('activity_start',true);
                     if(this.is_win){
                         this.setLottery(data.data.name);
                         this.$set('msg',data.data.name);
                         this.$set('order_detail_id',data.data.id);
                     }else{
+                        this.$set('msg','谢谢参与');
                         this.setLottery('谢谢参与');
                     }
                 }else{

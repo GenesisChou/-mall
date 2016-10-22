@@ -78,7 +78,7 @@ export default {
             } else if (this.type == 2) {
                 this.$set('game', 'quiz');
             }
-            this.getUserInfor();
+            // this.getUserInfor();
             this.getActivityDetail();
         },
     },

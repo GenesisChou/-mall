@@ -7,9 +7,12 @@
     </div>
 </template>
 <script>
-import store from 'v_vuex/store';
+import store from 'v_vuex/store'
+import actions from 'v_vuex/actions'
+import getters from 'v_vuex/getters'
 export default {
     created() {
+            this.getUserInfor();
             this.init();
         },
         methods: {
@@ -20,6 +23,10 @@ export default {
 
             }
         },
-        store
+        store,
+        vuex:{
+            actions,
+            getters
+        }
 }
 </script>

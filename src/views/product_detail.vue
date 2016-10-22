@@ -96,13 +96,13 @@
         <v-sticky>
             <div class='footer flex flex-space-between flex-center-v'>
                 <div class='text-large'>
-                    单价：<span class='text-pink'>{{product_detail.integral|parseInt}}</span>积分
+                    单价：<span class='text-pink'>{{(product_detail.integral|parseInt)||'...'}}</span>积分
                 </div>
-                <button v-if='order_enble' class='btn btn-pink ' @click='toggleModal'>兑换</button>
+                <button v-if='integral_enough' class='btn btn-pink ' @click='toggleModal'>兑换</button>
                 <button v-else class='btn btn-disable '>积分不足</button>
             </div>
         </v-sticky>
-        <v-modal :show.sync='modal'>
+        <v-modal :cover-close=false :show.sync='modal' >
             <div class='modal-content text-center text-large bg-white'>
                 <template v-if='!order_state.start'>
                     <img class='icon' src='../assets/images/question-hollow.png' />
@@ -113,12 +113,12 @@
                 <template v-else>
                     <template v-if='order_state.success'>
                         <img class='icon' src='../assets/images/correct-hollow.png' />
-                        <p class=' msg'>兑换成功</p>
-                        <button class='btn btn-pink' v-link='{name:"order_detail",query:{order_id:order_id}}'>查看</button>
+                        <p class=' msg'>{{order_state.msg}}</p>
+                        <button class='btn btn-pink' v-link='{name:"order_detail",query:{order_id:order_detail_id}}'>查看</button>
                     </template>
                     <template v-else>
                         <img class='icon' src='../assets/images/error-hollow.png' />
-                        <p class=' msg'>{{fail_info}}</p>
+                        <p class=' msg'>{{order_state.msg}}</p>
                         <button v-else class='btn btn-pink' @click='toggleModal'>关闭</button>
                     </template>
                 </template>
@@ -147,6 +147,7 @@ export default {
     data() {
         return {
             modal: false,
+            integral_enough:true,
             order_state: {
                 start: false,
                 success: false,
@@ -154,19 +155,18 @@ export default {
             },
             product_id: '',
             product_detail: '',
-            order_id: '', //兑换成功后用于跳转订单详情的订单id
-            fail_info: '', //失败信息
+            order_detail_id: '', //兑换成功后用于跳转订单详情的订单id
         };
     },
     route: {
         data(transition) {
             this.$set('product_id', transition.to.query.product_id);
-            this.getUserInfor();
+            // this.getUserInfor();
             this.getProductDetail();
         }
     },
     computed: {
-        order_enble: function() {
+        integral_enough: function() {
             return (parseInt(this.user.integral) - parseInt(this.product_detail.integral)) >= 0 ? true : false;
         }
     },
@@ -184,9 +184,6 @@ export default {
         },
         toggleModal() {
             this.modal = !this.modal;
-            setTimeout(() => {
-                this.order_state.start = false;
-            }, 500);
         },
         //生成订单
         order() {
@@ -199,11 +196,9 @@ export default {
                 this.$set('order_state.msg', data.info);
                 if (response.data.status === APP.SUCCESS) {
                     this.$set('order_state.success', true);
-                    this.$set('order_id', data.data.id);
+                    this.$set('order_detail_id', data.data.id);
                     //更新用户数据
                     this.getUserInfor();
-                } else {
-                    this.$set('fail_info', data.info);
                 }
             }, (response) => {
 

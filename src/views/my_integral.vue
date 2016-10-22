@@ -58,7 +58,7 @@
         <div class='head text-center'>
             <div class='main  flex flex-center-v flex-center-h'>
                 <p class='title text-white text-large'>当前积分余额:</p>
-                <span class=' text-white number' v-text='user.integral|parseInt'></span>
+                <span class=' text-white number'>{{(user.integral|parseInt)||'...'}}</span>
             </div>
             <div class='event flex flex-center-v '>
                 <div class='flex-item flex flex-center-v flex-center-h' @click='toggleModal'>
@@ -116,31 +116,19 @@ export default {
         return {
             modal: false,
             integral_list: [], //积分明细列表
-            integral_param: [] //获取积分的途径
         };
     },
     route: {
         data(transition) {
-            this.getUserInfor();
+            // this.getUserInfor();
             this.getIntegralList();
-            this.getIntegralParam();
+            if (!this.integral_param) {
+                this.getIntegralParam();
+            }
         },
 
     },
     methods: {
-        //获取积分赚取分数
-        getIntegralParam() {
-            this.$http.post(`${APP.HOST}/get_integral_param`, {
-                token: APP.TOKEN,
-                userid: APP.USER_ID
-            }).then((response) => {
-                let data = response.data;
-                this.$set('integral_param', data.data);
-            }, (response) => {
-
-            })
-
-        },
         //获取积分明细
         getIntegralList() {
             this.$http.post(`${APP.HOST}/integral_list/${APP.USER_ID}`, {

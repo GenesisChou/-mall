@@ -26,8 +26,6 @@
 </template>
 <script>
 export default {
-
-    name: 'popup',
     props: {
         show: {
             type: Boolean,
