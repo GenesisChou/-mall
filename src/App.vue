@@ -7,7 +7,7 @@
     </div>
 </template>
 <script>
-
+import store from 'v_vuex/store';
 export default {
     created() {
             this.init();
@@ -19,6 +19,7 @@ export default {
                 document.documentElement.style.fontSize = `${document.documentElement.clientWidth / 10}px`;
 
             }
-        }
+        },
+        store
 }
 </script>

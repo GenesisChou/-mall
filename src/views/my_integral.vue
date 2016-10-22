@@ -28,10 +28,6 @@
     }
 }
 
-.integral-detail {
-    height: pxTorem(100);
-}
-
 .record-list {
     padding-top: pxTorem(30);
     > li {
@@ -47,11 +43,13 @@
 .modal-content {
     flex-direction: column;
     width: pxTorem(600);
-    height: pxTorem(460);
     padding: pxTorem(50) pxTorem(68);
     border-radius: pxTorem(5);
     p {
-        line-height: pxTorem(55);
+        line-height: 1rem;
+    }
+    button {
+        margin-top: pxTorem(90);
     }
 }
 </style>
@@ -72,9 +70,7 @@
             </div>
         </div>
         <div class='body'>
-            <div class='integral-detail flex flex-center-v flex-center-h text-gray bg-base text-large'>
-                积分明细
-            </div>
+            <v-block-text text='积分明细' type='text-gray'></v-block-text>
             <ul class='record-list'>
                 <li v-for='item in integral_list' class='flex flex-space-between flex-center-v'>
                     <div class='detail'>
@@ -91,49 +87,55 @@
             <div class='modal-content flex flex-space-between bg-white'>
                 <div class='text-large'>
                     <p>您可以通过以下途径赚取积分：</p>
-                    <p>1、签到</p>
-                    <p>2、分享</p>
-                    <p>3、参与活动</p>
+                    <p v-for='item in integral_param'>{{($index+1+'、')+item.name+' +'+item.value}}</p>
                 </div>
                 <p class='text-center'>
                     <button class='btn btn-blue' @click='toggleModal'>知道了</button>
                 </p>
             </div>
         </v-modal>
+        <v-back-top></v-back-top>
     </div>
 </template>
 <script>
 import utils from 'libs/utils'
 import vModal from 'components/v_modal'
+import vBlockText from 'components/v_block_text'
+import vBackTop from 'components/v_back_top'
 import filters from 'libs/filters'
+import actions from 'v_vuex/actions'
+import getters from 'v_vuex/getters'
 export default {
-
     name: 'my_integral',
     components: {
+        vBlockText,
         vModal,
+        vBackTop
     },
     data() {
         return {
             modal: false,
-            integral_list: [],
-            user: {}
+            integral_list: [], //积分明细列表
+            integral_param: [] //获取积分的途径
         };
     },
     route: {
         data(transition) {
-            this.gerUserInfor();
+            this.getUserInfor();
             this.getIntegralList();
+            this.getIntegralParam();
         },
 
     },
     methods: {
-        gerUserInfor() {
-            this.$http.post(`${APP.HOST}/get_user/${APP.USER_ID}`, {
+        //获取积分赚取分数
+        getIntegralParam() {
+            this.$http.post(`${APP.HOST}/get_integral_param`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID
             }).then((response) => {
                 let data = response.data;
-                this.$set('user', data.data)
+                this.$set('integral_param', data.data);
             }, (response) => {
 
             })
@@ -162,6 +164,10 @@ export default {
             this.modal = !this.modal;
         }
     },
-    filters
+    filters,
+    vuex: {
+        actions,
+        getters
+    }
 };
 </script>

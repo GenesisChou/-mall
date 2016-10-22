@@ -29,13 +29,12 @@ export default {
     },
     //获取滚动条距顶部高度
     getScrollTop() {
-        let scrollTop = 0;
         if (document.documentElement && document.documentElement.scrollTop) {
-            scrollTop = document.documentElement.scrollTop;
+            return document.documentElement.scrollTop;
         } else if (document.body) {
-            scrollTop = document.body.scrollTop;
+            return document.body.scrollTop;
         }
-        return scrollTop;
+        return 0;
     },
     //获取可视区域高度
     getClientHeight() {

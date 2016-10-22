@@ -47,7 +47,7 @@ export default function(router) {
     // router.beforeEach((transition) => {
     //     window.scrollTo(0, 0);
     //     const title_list = [
-    //         { name: 'index', title: '积分商城' },
+    //         { name: 'index', title: '坚果互动' },
     //         { name: 'my_integral', title: '用户中心' },
     //         { name: 'order_list', title: '兑换记录' },
     //         { name: 'order_detail', title: '订单详情' },
@@ -58,7 +58,18 @@ export default function(router) {
     //     ];
     //     title_list.forEach((item) => {
     //         if (item.name == transition.to.name) {
+    //             var i = document.createElement('iframe');
+    //             i.src = '//m.baidu.com/favicon.ico';
+    //             i.style.display = 'none';
+    //             i.onload = function() {
+    //                 setTimeout(function() {
+    //                     i.remove();
+    //                 }, 9)
+    //             }
+    //             document.body.appendChild(i);
     //             utils.setTitle(item.title);
+
+
     //         }
     //     })
     //     transition.next();

@@ -3,8 +3,8 @@
 .v-scrap {
     position: relative;
     height: pxTorem(600);
-    background:url('./images/scrap.png') no-repeat;
-    background-size:100%;
+    background: url('./images/scrap.png') no-repeat;
+    background-size: 100%;
 }
 
 #lotteryContainer {
@@ -22,6 +22,13 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    padding: 0;
+    width: pxTorem(180);
+    height: pxTorem(68);
+    line-height: pxTorem(68);
+    font-size: pxTorem(30);
+    text-indent: pxTorem(12);
+    letter-spacing: pxTorem(12);
 }
 
 .modal-content {
@@ -40,10 +47,10 @@
 <template>
     <div class='v-scrap '>
         <div id='lotteryContainer'>
-            <button class='btn btn-pink' id='start' @click='startActivity'>开始活动</button>
+            <button class='btn btn-pink' id='start' @click='startActivity'>开始</button>
         </div>
     </div>
-    <v-alert :show.sync='modal' :type='state.start?true:false' :msg='state.start?"你中奖了":"积分不足"' :btn-text='state.start?"查看":"关闭"' :func='state.start?toOrderDetail:toggleModal'>
+    <v-alert :show.sync='modal' :type='is_win' :msg='msg' :btn-text='is_win?"查看":"关闭"' :func='is_win?toOrderDetail:toggleModal'>
     </v-alert>
 </template>
 <script>
@@ -74,71 +81,77 @@ export default {
 
     data() {
         return {
-            drawPercent: 0,
-            modal: false,
-            result: {},
-            lottery: '',
-            state: {
-                start: false,
-                end: false
-            },
-           clientWidth:document.documentElement.clientWidth,
+            clientWidth: document.documentElement.clientWidth, //设备宽度
+            modal: false, //控制弹窗状态
+            draw_percent: 0, //画布涂抹面积 大于一定值时触发弹窗
+            msg: '', //弹窗消息
+            lottery: '', //画布实例
+            integral_enough: false, //判断是否有足够积分进行活动
+            activity_start: false, //判断活动状态 1.超出活动次数 2.更新积分失败
+            is_win: false, //判断是否中奖
+            activity_end:false, //判断活动是否结束
+            order_detail_id:'' //活动结束跳转id
         };
     },
     watch: {
-        drawPercent(value) {
-            if (!this.state.end && value >= 40 && this.result.is_win) {
-                this.state.end = true;
+        draw_percent(value) {
+            if(this.is_win&&value >40&&!this.activity_end){
+                this.$set('activity_end',true);
                 this.toggleModal();
             }
         }
     },
     computed: {
-        start_enble: function() {
+        integral_enough: function() {
             return (parseInt(this.$parent.user.integral) - parseInt(this.integral)) >= 0 ? true : false;
         }
     },
     methods: {
         //开始活动
         startActivity() {
-            this.$set('state.start', this.start_enble);
-            if (this.state.start) {
-                this.$parent.gerUserInfor();
+            if(this.integral_enough){
                 this.getResult();
-                this.setLottery();
-            } else {
+            }else{
+                this.$set('msg','积分不足');
                 this.toggleModal();
             }
         },
-        setLottery() {
-            this.lottery = new Lottery('lotteryContainer', '#ddd', 'color', this.pxTorem(500), this.pxTorem(200), (drawPercent) => {
-                this.$set('drawPercent', drawPercent);
+        //设置画布
+        setLottery(str) {
+            this.lottery = new Lottery('lotteryContainer', '#ddd', 'color', this.pxTorem(500), this.pxTorem(200), (draw_percent) => {
+                this.$set('draw_percent', draw_percent);
             });
-            this.lottery.init('谢谢参与', 'text');
+            this.lottery.init(str, 'text');
         },
-        //获取结果
+        //获取活动结果
         getResult() {
             this.$http.post(`${APP.HOST}/activity_order/${this.activityId}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID
             }).then((response) => {
                 let data = response.data;
-                if (data.status == APP.SUCCESS) {
-                    this.$set('result', data.data);
-                    if (this.result.is_win) {
-                        this.lottery.setText(this.result.name);
+                if(data.status==APP.SUCCESS){
+                    this.$parent.getUserInfor();//更新用户信息
+                    this.$set('is_win',data.data.is_win);
+                    if(this.is_win){
+                        this.setLottery(data.data.name);
+                        this.$set('msg',data.data.name);
+                        this.$set('order_detail_id',data.data.id);
+                    }else{
+                        this.setLottery('谢谢参与');
                     }
-                } else {
-                    this.$set('result.is_win', false);
+                }else{
+                    this.$set('msg',data.info);
+                    this.toggleModal();
                 }
             })
         },
         //路由跳转
         toOrderDetail() {
             this.$router.go({
-                name: "order_detail",
+                name: 'order_detail',
                 query: {
-                    order_id: this.result.id
+                    order_id: this.order_detail_id
                 }
             });
         },

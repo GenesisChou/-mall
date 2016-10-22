@@ -1,10 +1,10 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
-.order-list{
+.order-list {
     min-height: 100%;
     padding: pxTorem(20) 0;
-    .order{
-      border-bottom:0;
+    .order {
+        border-bottom: 0;
     }
 }
 
@@ -26,6 +26,7 @@
             </div>
         </v-order>
         <v-empty v-if='empty'></v-empty>
+        <v-back-top></v-back-top>
     </div>
 </template>
 <script>
@@ -34,6 +35,7 @@ import utils from 'libs/utils'
 import vOrder from 'components/v_order'
 import vOrderItem from 'components/v_order_item'
 import vEmpty from 'components/v_empty'
+import vBackTop from 'components/v_back_top'
 export default {
 
     name: 'order_list',
@@ -41,7 +43,8 @@ export default {
         vOrderItem,
         vOrder,
         vSpinner,
-        vEmpty
+        vEmpty,
+        vBackTop
     },
     data() {
         return {
@@ -72,7 +75,7 @@ export default {
                     this.$set('params.total', data.data.total);
                     this.$set('params.count', data.data.count);
                 }
-                this.$set('order_list', data.data.list.concat(this.order_list));
+                this.$set('order_list', this.order_list.concat(data.data.list));
                 if (!this.order_list.length > 0) {
                     this.$set('empty', true);
                 }

@@ -3,17 +3,19 @@
 .order-detail {
     padding: pxTorem(20) 0;
     min-height: 100%;
-    .order-body{
-      border-bottom:1px solid $gray-light;
+    .order {
+        border-bottom: 0;
+        .order-body {
+            border-bottom: 1px solid $gray-light;
+        }
     }
-}
-
-.ticket,.introduction{
-    padding: pxTorem(20);
-}
-
-.block-text {
-    height: pxTorem(100);
+    .ticket,
+    .introduction {
+        padding: pxTorem(20);
+    }
+    .introduction {
+        border-bottom: 1px solid $gray-light;
+    }
 }
 </style>
 <template>
@@ -27,16 +29,12 @@
             </div>
             <div slot='footer-content'>
                 <template v-if='order_detail.ticket_id'>
-                    <div class='block-text flex flex-center-v flex-center-h text-gray bg-base text-large'>
-                        优惠券码
-                    </div>
+                    <v-block-text text='优惠券码'></v-block-text>    
                     <p class='text-pink ticket'>{{order_detail.ticket_id}} </p>
                 </template>
                 <template v-if='product_detail.content_use'>
                     <v-simditor>
-                        <div class='block-text flex flex-center-v flex-center-h text-gray bg-base text-large'>
-                            使用说明
-                        </div>
+                    <v-block-text text='使用说明'></v-block-text>    
                         <div class='introduction'>
                             {{{product_detail.content_use}}}
                         </div>
@@ -51,7 +49,7 @@ import utils from 'libs/utils'
 import vOrder from 'components/v_order'
 import vOrderItem from 'components/v_order_item'
 import vSimditor from 'components/v_simditor'
-import vDivider from 'components/v_divider'
+import vBlockText from 'components/v_block_text'
 export default {
 
     name: 'order_detail',
@@ -59,7 +57,7 @@ export default {
         vOrderItem,
         vOrder,
         vSimditor,
-        vDivider
+        vBlockText
     },
     data() {
         return {

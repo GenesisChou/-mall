@@ -36,6 +36,7 @@ export default function(wx) {
             token: APP.TOKEN,
             userid: APP.USER_ID
         }).then((response) => {
+          let data=response.data;
             // updateUser();
         })
     }

@@ -79,12 +79,12 @@
                         </div>
                     </div>
                     <div class='text-center'>
-                        <button class='btn btn-pink submit text-huge' @click='submitAnswer(toggleModal)' :disabled='modal'>提交答案</button>
+                        <button class='btn btn-pink submit text-huge' @click='submitAnswer()' :disabled='modal'>提交答案</button>
                     </div>
                 </div>
             </div>
         </div>
-        <v-alert :cover-close=false :show.sync='modal' :msg='msg' :type='result.is_win?true:false' :func='result.is_win?toOrderDetail:toggleModal' :btn-text='result.is_win?"查看":"关闭"' >
+        <v-alert :cover-close=false :show.sync='modal' :msg='msg' :type='is_win' :func='is_win?toOrderDetail:toggleModal' :btn-text='is_win?"查看":"关闭"'>
         </v-alert>
     </div>
 </template>
@@ -114,74 +114,74 @@ export default {
     data() {
         return {
             current_number: 0, //当前题目号 0开始
-            answer_id: 0, //答案id
-            result: {}, //答题结果 is_right is_win desc
             modal: false,
             msg: '',
-            state: {
-                start: false,
-                end: false
-            }
+            integral_enough: false, //判断是否有足够积分进行活动
+            answer_id: 0, //判断是否有选择题目
+            is_right: false, //判断回答是否正确
+            is_win: false, //判断是否中奖
+            order_detail_id: '' //活动结束跳转id
         };
     },
     computed: {
-        start_enble: function() {
+        integral_enough: function() {
             return (parseInt(this.$parent.user.integral) - parseInt(this.integral)) >= 0 ? true : false;
         }
+
     },
     methods: {
         //提交答案
-        submitAnswer(func) {
-            this.$set('state.start', this.start_enble);
-            if (this.state.start) {
+        submitAnswer() {
+            if (this.integral_enough) {
                 if (this.answer_id) {
-                    let question_id = this.questions[this.current_number].id;
                     this.$http.post(`${APP.HOST}/question_activity/${this.activityId}`, {
-                        question_id: question_id,
+                        question_id: this.questions[this.current_number].id,
                         answer_id: this.answer_id,
                         token: APP.TOKEN,
                         userid: APP.USER_ID
                     }).then((response) => {
                         let data = response.data;
-                        this.$set('result', data.data);
-                        this.$set('msg', data.data.name);
-                        this.$parent.gerUserInfor();
-                        func();
-                    }, (response) => {
+                        if (data.status == APP.SUCCESS) {
+                            this.$parent.getUserInfor(); //更新用户信息
+                            if (data.data.is_right) {
+                                if (data.data.is_win) {
+                                    this.$set('is_win',data.data.is_win);
+                                    this.$set('order_detail_id', data.data.id);
+                                    this.toggleModal(data.data.name || '回答正确');
+                                } else {
+                                    this.toggleModal('谢谢参与');
+                                }
+                            } else {
+                                this.toggleModal('回答错误');
 
+                            }
+                        } else {
+                            this.toggleModal(data.info);
+                        }
                     })
+
                 } else {
-                    this.$set('msg', '请选择答案');
-                    this.$set('result.is_win', false);
-                    func();
+                    this.toggleModal('请选择答案');
                 }
+
             } else {
-                this.$set('msg', '积分不足');
-                this.$set('result.is_win', false);
-                func();
+                this.toggleModal('积分不足');
             }
 
-        },
-        //获取正确答案
-        getRightAnswer(answers = []) {
-            let id = '';
-            answers.forEach((item) => {
-                if (item.isanswer) {
-                    return id = item.id;
-                }
-            })
-            return id || 0;
         },
         //路由跳转
         toOrderDetail() {
             this.$router.go({
-                name: "order_detail",
+                name: 'order_detail',
                 query: {
-                    order_id: this.result.id
+                    order_id: this.order_detail_id
                 }
             });
         },
-        toggleModal() {
+        toggleModal(msg) {
+            if (msg) {
+                this.$set('msg', msg);
+            }
             this.modal = !this.modal;
         }
     }

@@ -17,11 +17,13 @@
         background: rgba(0, 0, 0, .5);
     }
 }
-
+.fill{
+  height:pxTorem(150);
+}
 .body {
     padding: 0 pxTorem(50);
     .introduction {
-        margin: pxTorem(50) 0 pxTorem(150) 0;
+        margin-top: pxTorem(50);
         .title{
           padding:pxTorem(30) 0;
           }
@@ -37,10 +39,13 @@
         height: pxTorem(68);
         line-height: pxTorem(68);
         font-size: pxTorem(30);
+        text-indent:pxTorem(12);
         letter-spacing: pxTorem(12);
     }
     .btn-disable {
         letter-spacing: 0;
+        text-indent:pxTorem(0);
+
     }
 }
 
@@ -55,6 +60,10 @@
     }
     .msg {
         line-height: pxTorem(100);
+    }
+    .btn{
+      text-indent:pxTorem(12);
+      letter-spacing: pxTorem(12);
     }
     .btn+ {
         margin-left: pxTorem(30);
@@ -82,6 +91,7 @@
                     </template>
                 </v-simditor>
             </div>
+            <div class='fill'></div>
         </div>
         <v-sticky>
             <div class='footer flex flex-space-between flex-center-v'>
@@ -123,6 +133,8 @@ import vDivider from 'components/v_divider'
 import vModal from 'components/v_modal'
 import vSimditor from 'components/v_simditor'
 import filters from 'libs/filters'
+import actions from 'v_vuex/actions'
+import getters from 'v_vuex/getters'
 export default {
 
     name: 'product_detail',
@@ -144,13 +156,12 @@ export default {
             product_detail: '',
             order_id: '', //兑换成功后用于跳转订单详情的订单id
             fail_info: '', //失败信息
-            user: {},
         };
     },
     route: {
         data(transition) {
             this.$set('product_id', transition.to.query.product_id);
-            this.gerUserInfor();
+            this.getUserInfor();
             this.getProductDetail();
         }
     },
@@ -160,18 +171,7 @@ export default {
         }
     },
     methods: {
-        gerUserInfor() {
-            this.$http.post(`${APP.HOST}/get_user/${APP.USER_ID}`, {
-                token: APP.TOKEN,
-                userid: APP.USER_ID
-            }).then((response) => {
-                let data = response.data;
-                this.$set('user', data.data)
-            }, (response) => {
 
-            })
-
-        },
         //获取商品详情
         getProductDetail() {
             this.$http.post(`${APP.HOST}/product_detail/${this.product_id}`, {
@@ -201,7 +201,7 @@ export default {
                     this.$set('order_state.success', true);
                     this.$set('order_id', data.data.id);
                     //更新用户数据
-                    this.gerUserInfor();
+                    this.getUserInfor();
                 } else {
                     this.$set('fail_info', data.info);
                 }
@@ -210,6 +210,10 @@ export default {
             })
         }
     },
-    filters
+    filters,
+    vuex:{
+      actions,
+      getters
+    }
 };
 </script>

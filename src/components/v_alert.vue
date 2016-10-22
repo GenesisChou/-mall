@@ -15,6 +15,7 @@
         }
         .btn {
             letter-spacing: pxTorem(10);
+            text-indent: pxTorem(10);
         }
     }
 }

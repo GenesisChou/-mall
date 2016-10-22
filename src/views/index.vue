@@ -64,6 +64,8 @@ import filters from 'libs/filters'
 import vAlert from 'components/v_alert'
 import vBanner from 'components/v_banner'
 import vListItem from 'components/v_list_item'
+import actions from 'v_vuex/actions'
+import getters from 'v_vuex/getters'
 export default {
 
     name: 'index',
@@ -77,32 +79,19 @@ export default {
             modal: false,
             signState: false,
             msg: '签到成功',
-            user:{},
             hot_activity_list: [],
             hot_product_list: []
         };
     },
     route: {
         data() {
-            this.gerUserInfor();
+            this.getUserInfor();
             this.getHotActivityList();
             this.getHotProductList();
         }
     },
     methods: {
         //签到
-        gerUserInfor() {
-            this.$http.post(`${APP.HOST}/get_user/${APP.USER_ID}`, {
-                token: APP.TOKEN,
-                userid: APP.USER_ID
-            }).then((response) => {
-                let data = response.data;
-                this.$set('user',data.data)
-            }, (response) => {
-
-            })
-
-        },
         checkIn() {
             this.modal = !this.modal;
             if (!this.user.ischecked) {
@@ -110,7 +99,7 @@ export default {
                     token: APP.TOKEN,
                     userid: APP.USER_ID
                 }).then((response) => {
-                    this.gerUserInfor();
+                    this.getUserInfor();
                 }, (response) => {
 
                 })
@@ -141,6 +130,10 @@ export default {
             });
         },
     },
-    filters
+    filters,
+    vuex:{
+        actions,
+        getters
+    }
 };
 </script>

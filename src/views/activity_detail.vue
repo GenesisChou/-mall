@@ -47,6 +47,8 @@ import utils from 'libs/utils'
 import vListItem from 'components/v_list_item'
 import vDivider from 'components/v_divider'
 import vSimditor from 'components/v_simditor'
+import actions from 'v_vuex/actions'
+import getters from 'v_vuex/getters'
 
 export default {
 
@@ -64,7 +66,6 @@ export default {
             type: '',
             activity_detail: {},
             game: '',
-            user: {}
         }
     },
     route: {
@@ -77,23 +78,11 @@ export default {
             } else if (this.type == 2) {
                 this.$set('game', 'quiz');
             }
-            this.gerUserInfor();
+            this.getUserInfor();
             this.getActivityDetail();
         },
     },
     methods: {
-        gerUserInfor() {
-            this.$http.post(`${APP.HOST}/get_user/${APP.USER_ID}`, {
-                token: APP.TOKEN,
-                userid: APP.USER_ID
-            }).then((response) => {
-                let data = response.data;
-                this.$set('user', data.data)
-            }, (response) => {
-
-            })
-
-        },
         //获取活动详情
         getActivityDetail() {
             this.$http.post(`${APP.HOST}/activity_detail/${this.activity_id}`, {
@@ -107,5 +96,9 @@ export default {
             })
         },
     },
+    vuex:{
+        actions,
+        getters
+    }
 };
 </script>

@@ -4,17 +4,14 @@
     margin-bottom: pxTorem(22);
     border-top: 1px solid $gray-light;
     border-bottom: 1px solid $gray-light;
-}
-
-
-.order-head,
-.order-body {
-    padding: 0 pxTorem(30);
-      border-bottom: 1px solid $gray-light;
-}
-
-.order-head {
-    line-height: pxTorem(66);
+    .order-head {
+        line-height: pxTorem(66);
+        padding: 0 pxTorem(30);
+    }
+    .order-body {
+        padding: 0 pxTorem(30);
+        border-bottom: 1px solid $gray-light;
+    }
 }
 </style>
 <template>
