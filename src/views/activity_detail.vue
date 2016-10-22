@@ -5,8 +5,8 @@
     overflow: hidden;
     .introduction {
         padding: pxTorem(50) 0;
-        .title{
-          padding:pxTorem(30) 0;
+        .title {
+            padding: pxTorem(30) 0;
         }
     }
 }
@@ -20,23 +20,20 @@
             <div class='introduction'>
                 <v-simditor>
                     <template v-if='activity_detail.content'>
-                      <v-divider text='详细说明'></v-divider>
+                        <v-divider text='详细说明'></v-divider>
                         {{{activity_detail.content}}}
                     </template>
                     <template v-if='activity_detail.content_prob'>
-                      <v-divider text='概率说明'></v-divider>
-
+                        <v-divider text='概率说明'></v-divider>
                         {{{activity_detail.content_prob}}}
                     </template>
                 </v-simditor>
             </div>
             <v-divider text='奖品列表'></v-divider>
         </div>
-        <ul class='aword-list'>
-            <li>
-                <v-list-item v-for='item in activity_detail.items' :title='item.name' :title-dupty='item.desc' :img='item.pic'></v-list-item>
-            </li>
-        </ul>
+        <div class='aword-list'>
+            <v-list-item v-for='item in activity_detail.items' :title='item.name' :title-dupty='item.desc' :img='item.pic'></v-list-item>
+        </div>
 </template>
 <script>
 import {
@@ -96,7 +93,7 @@ export default {
             })
         },
     },
-    vuex:{
+    vuex: {
         actions,
         getters
     }

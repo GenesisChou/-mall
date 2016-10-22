@@ -31,7 +31,7 @@
                 <img class='icon' src='../assets/images/index/money.png'>
                 <div class='content'>
                     <p class='text-large'>我的积分</p>
-                    <p class='text-small'>当前余额: <span class='text-pink'>{{(user.integral|parseInt)||'...'}}</span> </p>
+                    <p class='text-small'>当前余额: <span class='text-pink'>{{(user.integral|parseInt)}}</span> </p>
                 </div>
             </div>
             <div class='event flex  flex-center-v' @click='checkIn'>
@@ -48,11 +48,11 @@
         </div>
         <v-banner type='activity' v-link='{name:"activity_list"}'></v-banner>
         <div class='activity-list'>
-            <v-list-item v-for='activity in hot_activity_list' v-link='{name:"activity_detail",query:{activity_id:activity.id,type:activity.type}}' :title='activity.name' :title-dupty=`${activity.integral|parseInt}积分` :img='activity.pic_thumb'></v-list-item>
+            <v-list-item v-for='activity in hot_activity_list' v-link='{name:"activity_detail",query:{activity_id:activity.id,type:activity.type}}' :title='activity.name' :title-dupty='(activity.integral|parseInt)+"积分"' :img='activity.pic_thumb'></v-list-item>
         </div>
         <v-banner type='product' v-link='{name:"product_list"}'></v-banner>
         <div class='product-list'>
-            <v-list-item v-for='product in hot_product_list' v-link='{name:"product_detail",query:{product_id:product.id}}' :title='product.name' :title-dupty=`${product.integral|parseInt}积分` :img='product.pic_thumb'></v-list-item>
+            <v-list-item v-for='product in hot_product_list' v-link='{name:"product_detail",query:{product_id:product.id}}' :title='product.name' :title-dupty='(product.integral|parseInt)+"积分"' :img='product.pic_thumb'></v-list-item>
         </div>
         <v-alert :show.sync='modal' :msg='msg' btn-text='确定'>
         </v-alert>

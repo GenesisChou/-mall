@@ -7,6 +7,7 @@ module.exports = {
             userid: APP.USER_ID
         }).then((response) => {
             dispatch('GET_USER_INFOR', response.data.data);
+            this.getIntegralList(); //每次更新用户信息,必定更新积分明细列表
         }, (response) => {
 
         })
@@ -42,8 +43,18 @@ module.exports = {
             token: APP.TOKEN,
             userid: APP.USER_ID
         }).then((response) => {
-            dispatch('GET_INTEGRAL_PARAM',response.data.data);
+            dispatch('GET_INTEGRAL_PARAM', response.data.data);
         }, (response) => {
+
+        })
+    },
+    //——获取积分明细列表
+    getIntegralList({ dispatch }) {
+        this.$http.post(`${APP.HOST}/integral_list/${APP.USER_ID}`, {
+            token: APP.TOKEN,
+            userid: APP.USER_ID
+        }).then((response) => {
+            dispatch('GET_INTEGRAL_LIST', response.data.data);
 
         })
     },

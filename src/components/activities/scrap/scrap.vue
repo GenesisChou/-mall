@@ -14,7 +14,7 @@
     height: pxTorem(200);
     left: pxTorem(138);
     top: pxTorem(310);
-    background: #ddd;
+    background: $gray-light;
 }
 
 #start {

@@ -90,7 +90,7 @@
                     <p v-for='item in integral_param'>{{($index+1+'、')+item.name+' +'+item.value}}</p>
                 </div>
                 <p class='text-center'>
-                    <button class='btn btn-blue' @click='toggleModal'>知道了</button>
+                    <button class='btn btn-pink' @click='toggleModal'>知道了</button>
                 </p>
             </div>
         </v-modal>
@@ -115,13 +115,12 @@ export default {
     data() {
         return {
             modal: false,
-            integral_list: [], //积分明细列表
         };
     },
     route: {
         data(transition) {
             // this.getUserInfor();
-            this.getIntegralList();
+            // this.getIntegralList();
             if (!this.integral_param) {
                 this.getIntegralParam();
             }
@@ -129,16 +128,6 @@ export default {
 
     },
     methods: {
-        //获取积分明细
-        getIntegralList() {
-            this.$http.post(`${APP.HOST}/integral_list/${APP.USER_ID}`, {
-                token: APP.TOKEN,
-                userid: APP.USER_ID
-            }).then((response) => {
-                let data = response.data;
-                this.$set('integral_list', data.data);
-            })
-        },
         getPoint(point) {
             point = parseInt(point);
             if (point > 0) {

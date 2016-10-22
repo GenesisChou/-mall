@@ -4,13 +4,11 @@
 <head>
     <meta charset='utf-8'>
     <title>坚果互动</title>
-    <meta name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
 </head>
 
 <body>
     <app id='app'></app>
-    <script  src='./dist/vendors.js?version=1.03'> </script>
-    <script  src='./dist/app.js?version=1.03'> </script>
 </body>
 
 </html>

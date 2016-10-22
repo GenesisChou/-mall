@@ -16,8 +16,7 @@
         <img class='img'  :src='img'/>
         <div>
             <p class='text-huge'>{{title}}</p>
-            <p v-if='color' class='text-pink'>{{titleDupty}}</p>
-            <p v-else class='text-gray'>{{titleDupty}}</p>
+            <p  class='text-gray'>{{titleDupty}}</p>
         </div>
     </div>
 </template>

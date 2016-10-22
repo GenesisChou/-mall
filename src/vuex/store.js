@@ -8,9 +8,10 @@ Vue.use(Vuex)
 const state = {
     // TODO: 放置初始状态
     user: '', //用户信息
-    hot_activity_list:'',//热门活动列表
-    hot_product_list:'',//热门商品列表
-    integral_param: '' //积分获取方式
+    hot_activity_list: '', //热门活动列表
+    hot_product_list: '', //热门商品列表
+    integral_param: '', //积分获取方式
+    integral_list: '', //积分明细
 }
 
 // 创建一个对象存储一系列我们接下来要写的 mutation 函数
@@ -34,6 +35,10 @@ const mutations = {
     //——获取赚取积分方式
     GET_INTEGRAL_PARAM(state, data) {
         state.integral_param = data;
+    },
+    //——获取积分明细
+    GET_INTEGRAL_LIST(state, data) {
+        state.integral_list = data;
     }
 }
 

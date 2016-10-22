@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var HtmlwebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: {
         app: './src/main.js',
@@ -9,7 +10,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './dist'),
         publicPath: '/dist/',
-        filename: '[name].js'
+        filename: '[name].[hash].js'
     },
     resolve: {
         alias: {
@@ -31,11 +32,11 @@ module.exports = {
         }, {
             test: /\.scss$/,
             loader: ExtractTextPlugin.extract(
-                'style', 'css?sourceMap!sass-loader')
+                "style-loader", 'css-loader?sourceMap!sass-loader')
         }, {
             test: /\.css$/,
             loader: ExtractTextPlugin.extract(
-                'style', 'css')
+                "style-loader", "css-loader?sourceMap")
         }, {
             test: /\.js$/,
             loader: 'babel',
@@ -45,7 +46,7 @@ module.exports = {
             loader: 'vue-html'
         }, {
             test: /\.(png|jpg|gif|svg)$/,
-            loader: 'url',
+            loader: 'file',
             query: {
                 limit: 10000,
                 name: '[name].[ext]?[hash]'
@@ -56,21 +57,42 @@ module.exports = {
         historyApiFallback: true,
         noInfo: true
     },
-    // devtool: '#eval-source-map'
+    devtool: '#eval-source-map',
+    plugins: [
+        //将样式统一发布到style.css中
+        new ExtractTextPlugin("style.css", {
+            allChunks: true,
+            disable: false
+        })
+    ]
 }
-
+var TEM_PATH = path.resolve(__dirname, './src/templates');
 if (process.env.NODE_ENV === 'production') {
-    // module.exports.devtool = '#source-map';
+    module.exports.devtool = '#source-map';
     module.exports.plugins = (module.exports.plugins || []).concat([
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: '"production"'
             }
         }),
-        new webpack.optimize.UglifyJsPlugin({ output: { comments: false, }, compress: { warnings: false } }),
+        new webpack.optimize.UglifyJsPlugin({
+            output: {
+                comments: false, // remove all comments
+            },
+            compress: {
+                warnings: false
+            }
+        }),
         new webpack.optimize.OccurenceOrderPlugin(),
+        //把入口文件里面的数组打包成verdors.js
         new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js'),
-        new ExtractTextPlugin("style.css"),
+        new HtmlwebpackPlugin({
+            template: path.resolve(TEM_PATH, 'index.tpl'),
+            filename: 'index.html',
+            chunks: ['app', 'vendors'],
+            //要把script插入到标签里
+            inject: 'body'
+        })
 
     ])
 }

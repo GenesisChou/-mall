@@ -4,7 +4,7 @@ import sha1 from 'libs/sha1';
 import Vue from 'vue';
 import VueResource from 'vue-resource';
 Vue.use(VueResource);
-export default function(wx) {
+export default function(wx,func,vm) {
 
     //通过config接口注入权限验证配置
     let option = {
@@ -36,6 +36,7 @@ export default function(wx) {
             token: APP.TOKEN,
             userid: APP.USER_ID
         }).then((response) => {
+        console.log('vm:'+vm);
           let data=response.data;
             // updateUser();
         })
@@ -47,7 +48,9 @@ export default function(wx) {
             imgUrl: APP.HEAD_IMG, // 分享图标
             success: function() {
                 // 用户确认分享后执行的回调函数
+
                 share();
+                func();
 
             },
             cancel: function() {
