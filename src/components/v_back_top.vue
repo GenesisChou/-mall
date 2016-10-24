@@ -12,6 +12,7 @@
     -moz-transition: opacity .3s linear;
     -o-transition: opacity .3s linear;
     transition: opacity .3s linear;
+    box-shadow: pxTorem(5) pxTorem(5) pxTorem(10) $gray;
 }
 </style>
 <template>
@@ -43,7 +44,7 @@ export default {
     },
     created() {
         window.addEventListener('scroll', () => {
-            this.show = utils.getScrollTop() > 1500 ? true : false;
+            this.show = utils.getScrollTop() > 1000 ? true : false;
         })
     }
 }

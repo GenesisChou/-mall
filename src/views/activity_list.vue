@@ -6,6 +6,10 @@
 
 .search-box {
     padding: pxTorem(17) pxTorem(30);
+    position: fixed;
+}
+.fill{
+    height: pxTorem(100);
 }
 </style>
 <template>
@@ -13,11 +17,8 @@
         <div class='search-box bg-base'>
             <v-search :search='searchActivity' :params.sync='params'></v-search>
         </div>
-        <ul class='list'>
-            <li>
-                <v-list-item v-for='activity in activity_list' v-link='{name:"activity_detail",query:{activity_id:activity.id,type:activity.type}}' :title='activity.name' :title-dupty=`${activity.integral|parseInt}积分` :img='activity.pic_thumb'></v-list-item>
-            </li>
-        </ul>
+        <div class='fill'></div>
+        <v-list-item v-for='activity in activity_list' v-link='{name:"activity_detail",query:{activity_id:activity.id,type:activity.type}}' :title='activity.name' :title-dupty='(activity.integral|parseInt)+"积分"'  :img='activity.pic_thumb'></v-list-item>        
         <v-back-top></v-back-top>
         <!-- <div class='load-more text-large  text-sliver flex flex-center-h flex-center-v'>上滑加载更多</div> -->
     </div>

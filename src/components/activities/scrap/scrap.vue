@@ -50,7 +50,7 @@
             <button class='btn btn-pink' id='start' @click='startActivity'>开始</button>
         </div>
     </div>
-    <v-alert :show.sync='modal' :type='is_win' :msg='msg' :btn-text='is_win?"查看":"关闭"' :func='is_win?toOrderDetail:toggleModal'>
+    <v-alert :show.sync='modal' :suprise=true :msg='msg' :btn-text='is_win?"查看":"关闭"' :func='is_win?toOrderDetail:toggleModal'>
     </v-alert>
 </template>
 <script>

@@ -1,5 +1,8 @@
 <style lang='sass'>
 @import './assets/scss/main.scss';
+  body{
+    /*background: url('./assets/images/loading.gif') no-repeat center;*/
+  }
 </style>
 <template>
     <div id='app'>
@@ -8,29 +11,29 @@
 </template>
 <script>
 import store from 'v_vuex/store'
-import actions from 'v_vuex/actions'
-import getters from 'v_vuex/getters'
-import wx from 'weixin-js-sdk'
-import wxConfig from './wx_config'
+// import actions from 'v_vuex/actions'
+// import getters from 'v_vuex/getters'
+// import wx from 'weixin-js-sdk'
+// import wxConfig from './wx_config'
 export default {
     created() {
-            let vm=this;
-            this.getUserInfor();
+            // let vm=this;
+            // this.getUserInfor();
             this.init();
-            wxConfig(wx,this.getUserInfor,this);
+            // wxConfig(wx,this.getUserInfor,this);
         },
         methods: {
             init() {
                 let scale = 1 / devicePixelRatio;
-                document.querySelector('meta[name="viewport"]').setAttribute('content', `width=device-width,initial-scale=${scale}, maximum-scale=${scale} , minimum-scale=${scale} , user-scalable=no, minimal-ui`);
+                document.querySelector('meta[name="viewport"]').setAttribute('content', `width=device-width,initial-scale=${scale}, maximum-scale=${scale} , minimum-scale=${scale} ,  minimal-ui`);
                 document.documentElement.style.fontSize = `${document.documentElement.clientWidth / 10}px`;
 
             }
         },
         store,
-        vuex: {
-            actions,
-            getters
-        }
+        // vuex: {
+        //     actions,
+        //     getters
+        // }
 }
 </script>

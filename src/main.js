@@ -6,6 +6,8 @@
     import RouterConfig from './router_config'
     import FastClick from 'fastclick'
     import utils from 'libs/utils'
+    import wx from 'weixin-js-sdk'
+    import wxConfig from './wx_config'
     window.APP = {
         APP_NAME: '坚果互动',
         HOST: 'http://integral.api.justtong.com/imall', //接口域名
@@ -25,7 +27,12 @@
         Vue.use(VueRouter);
         Vue.use(Vuex);
         FastClick.attach(document.body);
-        const router = new VueRouter();
+        const router = new VueRouter({
+            hashbang: true,
+            history: false,
+            saveScrollPosition: true,
+            transitionOnLoad: true
+        });
         RouterConfig(router);
         Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
         console.log('login success');
@@ -33,6 +40,7 @@
         window.APP.USER_ID = utils.getParameterByName('userid');
         window.APP.HEAD_IMG = utils.getParameterByName('headimg');
         window.APP.MEDIA_ID = utils.getParameterByName('mediaid');
-        utils.setTitle(window.APP.APP_NAME);
+        // utils.setTitle(window.APP.APP_NAME);
+        wxConfig(wx);
         router.start(App, '#app');
     }

@@ -75,7 +75,7 @@ export default {
             } else if (this.type == 2) {
                 this.$set('game', 'quiz');
             }
-            // this.getUserInfor();
+            this.getUserInfor();
             this.getActivityDetail();
         },
     },
@@ -87,7 +87,8 @@ export default {
                 userid: APP.USER_ID
             }).then((response) => {
                 let data = response.data;
-                this.$set('activity_detail', utils.resizeImg(data.data));
+                this.$set('activity_detail', data.data);
+                // this.$set('activity_detail', utils.resizeImg(data.data));
             }, (response) => {
 
             })

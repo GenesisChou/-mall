@@ -51,55 +51,55 @@ export default {
         return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
     },
     //获取当天日期
-    getToday() {
-        let date = new Date();
-        let today = `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`;
-        return today;
-    },
+    // getToday() {
+    //     let date = new Date();
+    //     let today = `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`;
+    //     return today;
+    // },
     //比较日期
-    compareDate(date1, date2) {
-        return (new Date(date1).getTime() - new Date(date2).getTime()) > 0 ? true : false;
-    },
+    // compareDate(date1, date2) {
+    //     return (new Date(date1).getTime() - new Date(date2).getTime()) > 0 ? true : false;
+    // },
     //获取滚动数据
     //list:列别数据 parmas:参数 func:回调函数
     getScrollData(list, params, func) {
         if (typeof func === 'function') {
-            window.addEventListener('scroll', this.debounce(() => {
+            window.addEventListener('scroll', () => {
                 // 滚动中的真正的操作
-                if (params.p < params.total && list.length < params.count && (this.getScrollTop() + this.getClientHeight() >= this.getScrollHeight())) {
+                if (params.p < params.total && list.length < params.count && (this.getScrollTop() + this.getClientHeight() >= this.getScrollHeight()-200)) {
                     params.p++;
                     func();
                 }
-            }, 250));
+            });
         }
     },
     //防抖函数
-    debounce(func, wait, immediate) {
-        let timeout;
-        return () => {
-            let self = this,
-                args = arguments;
-            let later = () => {
-                timeout = null;
-                if (!immediate) func.apply(self, args);
-            };
-            let callNow = immediate && !timeout;
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-            if (callNow) func.apply(self, args);
-        };
-    },
+    // debounce(func, wait, immediate) {
+    //     let timeout;
+    //     return () => {
+    //         let self = this,
+    //             args = arguments;
+    //         let later = () => {
+    //             timeout = null;
+    //             if (!immediate) func.apply(self, args);
+    //         };
+    //         let callNow = immediate && !timeout;
+    //         clearTimeout(timeout);
+    //         timeout = setTimeout(later, wait);
+    //         if (callNow) func.apply(self, args);
+    //     };
+    // },
 
     //将宽度超过屏幕尺寸的图片宽度设为100%
-    resizeImg(detail) {
-        detail.content = detail.content.replace(/([a-z]+)="[\s\S]+?"/ig, function(a, b, c, d) {
-            if (b === 'height') {
-                return '';
-            } else if (b === 'width') {
-                return 'style="width:100%"';
-            }
-            return a;
-        });
-        return detail;
-    }
+    // resizeImg(detail) {
+    //     detail.content = detail.content.replace(/([a-z]+)="[\s\S]+?"/ig, function(a, b, c, d) {
+    //         if (b === 'height') {
+    //             return '';
+    //         } else if (b === 'width') {
+    //             return 'style="width:100%"';
+    //         }
+    //         return a;
+    //     });
+    //     return detail;
+    // }
 }

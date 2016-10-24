@@ -161,7 +161,7 @@ export default {
     route: {
         data(transition) {
             this.$set('product_id', transition.to.query.product_id);
-            // this.getUserInfor();
+            this.getUserInfor();
             this.getProductDetail();
         }
     },
@@ -179,7 +179,8 @@ export default {
                 userid: APP.USER_ID
             }).then((response) => {
                 let data = response.data;
-                this.$set('product_detail', utils.resizeImg(data.data));
+                // this.$set('product_detail', utils.resizeImg(data.data));
+                this.$set('product_detail', data.data);
             }, (response) => {})
         },
         toggleModal() {

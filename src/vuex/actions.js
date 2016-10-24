@@ -7,7 +7,7 @@ module.exports = {
             userid: APP.USER_ID
         }).then((response) => {
             dispatch('GET_USER_INFOR', response.data.data);
-            this.getIntegralList(); //每次更新用户信息,必定更新积分明细列表
+            // this.getIntegralList(); //每次更新用户信息,必定更新积分明细列表
         }, (response) => {
 
         })

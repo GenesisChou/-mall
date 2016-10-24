@@ -119,8 +119,8 @@ export default {
     },
     route: {
         data(transition) {
-            // this.getUserInfor();
-            // this.getIntegralList();
+            this.getUserInfor();
+            this.getIntegralList();
             if (!this.integral_param) {
                 this.getIntegralParam();
             }
