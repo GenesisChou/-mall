@@ -17,7 +17,7 @@
 </style>
 <template>
     <div v-show='show' transition='fade' class='flex flex-center-h flex-center-v v-back-top bg-white text-huge bg-pink text-white' @click='backTop'>
-        &#8593;
+        <i class=' icon-arrows-up iconfont text-small'></i>
     </div>
 </template>
 <script>

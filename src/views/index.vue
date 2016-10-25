@@ -83,7 +83,7 @@ export default {
         };
     },
     route: {
-        data() {
+        data(transition) {
             // this.pushHistory();
             this.getUserInfor();
             if (!this.hot_activity_list) {
@@ -92,10 +92,6 @@ export default {
             if (!this.hot_product_list) {
                 this.getHotProductList();
             }
-            // window.addEventListener("popstate", function(e) {
-            //     alert('监听了变化');
-            //     wx.closeWindow();
-            // }, false);
         },
         deactivate(transition) {
             transition.next();
@@ -117,13 +113,6 @@ export default {
             } else {
                 this.$set('msg', '已签到');
             }
-        },
-        pushHistory() {
-            var state = {
-                title: "title",
-                url: location.href
-            };
-            window.history.pushState(state, "title", location.href);
         }
     },
     filters,

@@ -86,35 +86,37 @@ export default {
             draw_percent: 0, //画布涂抹面积 大于一定值时触发弹窗
             msg: '', //弹窗消息
             lottery: '', //画布实例
-            integral_enough: false, //判断是否有足够积分进行活动
+            // integral_enough: false, //判断是否有足够积分进行活动
             activity_start: false, //判断活动状态 1.超出活动次数 2.更新积分失败
             is_win: false, //判断是否中奖
-            activity_end:false, //判断活动是否结束
-            order_detail_id:'' //活动结束跳转id
+            activity_end: false, //判断活动是否结束
+            order_detail_id: '' //活动结束跳转id
         };
     },
     watch: {
         draw_percent(value) {
-            if(this.activity_start&&value >40&&!this.activity_end){
-                this.$set('activity_end',true);
+            if (this.activity_start && value > 40 && !this.activity_end) {
+                this.$set('activity_end', true);
                 this.toggleModal();
             }
         }
     },
-    computed: {
-        integral_enough: function() {
-            return (parseInt(this.$parent.user.integral) - parseInt(this.integral)) >= 0 ? true : false;
-        }
-    },
+    // computed: {
+    //     integral_enough: function() {
+    //         return (parseInt(this.$parent.user.integral) - parseInt(this.integral)) >= 0 ? true : false;
+    //     }
+    // },
     methods: {
         //开始活动
         startActivity() {
-            if(this.integral_enough){
-                this.getResult();
-            }else{
-                this.$set('msg','积分不足');
-                this.toggleModal();
-            }
+            // if(this.integral_enough){
+            //     this.getResult();
+            // }else{
+            //     this.$set('msg','积分不足');
+            //     this.toggleModal();
+            // }
+            this.getResult();
+
         },
         //设置画布
         setLottery(str) {
@@ -130,20 +132,20 @@ export default {
                 userid: APP.USER_ID
             }).then((response) => {
                 let data = response.data;
-                if(data.status==APP.SUCCESS){
-                    this.$parent.getUserInfor();//更新用户信息
-                    this.$set('is_win',data.data.is_win);
-                    this.$set('activity_start',true);
-                    if(this.is_win){
+                if (data.status == APP.SUCCESS) {
+                    this.$parent.getUserInfor(); //更新用户信息
+                    this.$set('is_win', data.data.is_win);
+                    this.$set('activity_start', true);
+                    if (this.is_win) {
                         this.setLottery(data.data.name);
-                        this.$set('msg',data.data.name);
-                        this.$set('order_detail_id',data.data.id);
-                    }else{
-                        this.$set('msg','谢谢参与');
+                        this.$set('msg', data.data.name);
+                        this.$set('order_detail_id', data.data.id);
+                    } else {
+                        this.$set('msg', '谢谢参与');
                         this.setLottery('谢谢参与');
                     }
-                }else{
-                    this.$set('msg',data.info);
+                } else {
+                    this.$set('msg', data.info);
                     this.toggleModal();
                 }
             })

@@ -12,8 +12,12 @@
     input[type=search]::-webkit-search-cancel-button {
         display: none;
     }
-    .icon {
-        height: pxTorem(37);
+    // .icon {
+    //     height: pxTorem(37);
+    //     padding-right: pxTorem(44);
+    // }
+    .iconfont{
+        font-size: 130%;
         padding-right: pxTorem(44);
     }
 }
@@ -21,7 +25,8 @@
 <template>
     <form class='v-search flex flex-center-v bg-white' @submit.prevent>
         <input class='text-sliver text-large' type='search' :placeholder='placeholder' v-model='params.sword' @keyup.enter='search()' >
-        <img class='icon' src='../assets/images/search.png' @click='search()'>
+        <!-- <img class='icon' src='../assets/images/search.png' @click='search()'> -->
+         <i class='iconfont icon-search text-sliver text-large' @click='search()'></i>
     </form>
 </template>
 <script>

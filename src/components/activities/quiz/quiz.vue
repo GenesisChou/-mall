@@ -116,56 +116,56 @@ export default {
             current_number: 0, //当前题目号 0开始
             modal: false,
             msg: '',
-            integral_enough: false, //判断是否有足够积分进行活动
+            // integral_enough: false, //判断是否有足够积分进行活动
             answer_id: 0, //判断是否有选择题目
             is_right: false, //判断回答是否正确
             is_win: false, //判断是否中奖
             order_detail_id: '' //活动结束跳转id
         };
     },
-    computed: {
-        integral_enough: function() {
-            return (parseInt(this.$parent.user.integral) - parseInt(this.integral)) >= 0 ? true : false;
-        }
+    // computed: {
+    //     integral_enough: function() {
+    //         return (parseInt(this.$parent.user.integral) - parseInt(this.integral)) >= 0 ? true : false;
+    //     }
 
-    },
+    // },
     methods: {
         //提交答案
         submitAnswer() {
-            if (this.integral_enough) {
-                if (this.answer_id) {
-                    this.$http.post(`${APP.HOST}/question_activity/${this.activityId}`, {
-                        question_id: this.questions[this.current_number].id,
-                        answer_id: this.answer_id,
-                        token: APP.TOKEN,
-                        userid: APP.USER_ID
-                    }).then((response) => {
-                        let data = response.data;
-                        if (data.status == APP.SUCCESS) {
-                            this.$parent.getUserInfor(); //更新用户信息
-                            if (data.data.is_right) {
-                                if (data.data.is_win) {
-                                    this.$set('is_win',data.data.is_win);
-                                    this.$set('order_detail_id', data.data.id);
-                                    this.toggleModal(data.data.name || '回答正确');
-                                } else {
-                                    this.toggleModal('谢谢参与');
-                                }
-                            } else {
-                                this.toggleModal('回答错误');
+            // if (this.integral_enough) {
 
+            // } else {
+            //     this.toggleModal('积分不足');
+            // }
+            if (this.answer_id) {
+                this.$http.post(`${APP.HOST}/question_activity/${this.activityId}`, {
+                    question_id: this.questions[this.current_number].id,
+                    answer_id: this.answer_id,
+                    token: APP.TOKEN,
+                    userid: APP.USER_ID
+                }).then((response) => {
+                    let data = response.data;
+                    if (data.status == APP.SUCCESS) {
+                        this.$parent.getUserInfor(); //更新用户信息
+                        if (data.data.is_right) {
+                            if (data.data.is_win) {
+                                this.$set('is_win', data.data.is_win);
+                                this.$set('order_detail_id', data.data.id);
+                                this.toggleModal(data.data.name || '回答正确');
+                            } else {
+                                this.toggleModal('谢谢参与');
                             }
                         } else {
-                            this.toggleModal(data.info);
-                        }
-                    })
+                            this.toggleModal('回答错误');
 
-                } else {
-                    this.toggleModal('请选择答案');
-                }
+                        }
+                    } else {
+                        this.toggleModal(data.info);
+                    }
+                })
 
             } else {
-                this.toggleModal('积分不足');
+                this.toggleModal('请选择答案');
             }
 
         },

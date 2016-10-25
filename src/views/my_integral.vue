@@ -58,7 +58,7 @@
         <div class='head text-center'>
             <div class='main  flex flex-center-v flex-center-h'>
                 <p class='title text-white text-large'>当前积分余额:</p>
-                <span class=' text-white number'>{{(user.integral|parseInt)||'...'}}</span>
+                <span class=' text-white number'>{{(user.integral|parseInt)||'0'}}</span>
             </div>
             <div class='event flex flex-center-v '>
                 <div class='flex-item flex flex-center-v flex-center-h' @click='toggleModal'>
@@ -119,6 +119,7 @@ export default {
     },
     route: {
         data(transition) {
+            console.log(history);
             this.getUserInfor();
             this.getIntegralList();
             if (!this.integral_param) {

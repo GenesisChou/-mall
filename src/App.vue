@@ -1,12 +1,10 @@
 <style lang='sass'>
 @import './assets/scss/main.scss';
-  body{
-    /*background: url('./assets/images/loading.gif') no-repeat center;*/
-  }
+
 </style>
 <template>
     <div id='app'>
-        <router-view></router-view>
+        <router-view  ></router-view>
     </div>
 </template>
 <script>
@@ -15,9 +13,9 @@ import store from 'v_vuex/store'
 // import getters from 'v_vuex/getters'
 // import wx from 'weixin-js-sdk'
 // import wxConfig from './wx_config'
+
 export default {
     created() {
-            // let vm=this;
             // this.getUserInfor();
             this.init();
             // wxConfig(wx,this.getUserInfor,this);

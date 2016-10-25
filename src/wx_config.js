@@ -44,7 +44,7 @@ export default function(wx, func, vm) {
         wx.onMenuShareTimeline({
             // title: '分享到大奔朋友圈', // 分享标题
             link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`, // 分享链接
-            imgUrl: 'http://static.justtong.com/uploads/images/goods/20161024/151336580db4a067eea.png', // 分享图标
+            imgUrl: 'http://static.justtong.com/uploads/images/goods/20161025/142505580efac1ad494.jpg', // 分享图标
             success: function() {
                 // 用户确认分享后执行的回调函数
 
@@ -60,7 +60,7 @@ export default function(wx, func, vm) {
             // title: '分享给地球的朋友', // 分享标题
             // desc: '来自地球的问候', // 分享描述
             link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`, // 分享链接
-            imgUrl: 'http://static.justtong.com/uploads/images/goods/20161024/151336580db4a067eea.png', // 分享图标
+            imgUrl: 'http://static.justtong.com/uploads/images/goods/20161025/142505580efac1ad494.jpg', // 分享图标
             // type: '', // 分享类型,music、video或link，不填默认为link
             // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function() {
@@ -77,7 +77,7 @@ export default function(wx, func, vm) {
             // title: '分享给地球的QQ', // 分享标题
             // desc: '来自地球的问候', // 分享描述
             link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`, // 分享链接
-            imgUrl: 'http://static.justtong.com/uploads/images/goods/20161024/151336580db4a067eea.png', // 分享图标
+            imgUrl: 'http://static.justtong.com/uploads/images/goods/20161025/142505580efac1ad494.jpg', // 分享图标
             success: function() {
                 // 用户确认分享后执行的回调函数
                 // share();
@@ -92,7 +92,7 @@ export default function(wx, func, vm) {
             // title: '分享给地球的微博', // 分享标题
             // desc: '来自地球的问候', // 分享描述
             link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`, // 分享链接
-            imgUrl: 'http://static.justtong.com/uploads/images/goods/20161024/151336580db4a067eea.png', // 分享图标
+            imgUrl: 'http://static.justtong.com/uploads/images/goods/20161025/142505580efac1ad494.jpg', // 分享图标
             success: function() {
                 // 用户确认分享后执行的回调函数
                 // share();
@@ -107,7 +107,7 @@ export default function(wx, func, vm) {
             // title: '分享给地球的空间', // 分享标题
             // desc: '来自地球的问候', // 分享描述
             link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`, // 分享链接
-            imgUrl: 'http://static.justtong.com/uploads/images/goods/20161024/151336580db4a067eea.png', // 分享图标
+            imgUrl: 'http://static.justtong.com/uploads/images/goods/20161025/142505580efac1ad494.jpg', // 分享图标
             success: function() {
                 // 用户确认分享后执行的回调函数
                 // share();
