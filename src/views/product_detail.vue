@@ -161,7 +161,7 @@ export default {
     route: {
         data(transition) {
             this.$set('product_id', transition.to.query.product_id);
-            this.getUserInfor();
+            // this.getUserInfor();
             this.getProductDetail();
         }
     },
@@ -174,7 +174,7 @@ export default {
 
         //获取商品详情
         getProductDetail() {
-            this.$http.post(`${APP.HOST}/product_detail/${this.product_id}`, {
+            this.$http.post(`${APP.HOST}/product_detail_l/${this.product_id}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID
             }).then((response) => {

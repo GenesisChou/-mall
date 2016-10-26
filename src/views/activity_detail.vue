@@ -75,14 +75,14 @@ export default {
             } else if (this.type == 2) {
                 this.$set('game', 'quiz');
             }
-            this.getUserInfor();
+            // this.getUserInfor();
             this.getActivityDetail();
         },
     },
     methods: {
         //获取活动详情
         getActivityDetail() {
-            this.$http.post(`${APP.HOST}/activity_detail/${this.activity_id}`, {
+            this.$http.post(`${APP.HOST}/activity_detail_l/${this.activity_id}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID
             }).then((response) => {
