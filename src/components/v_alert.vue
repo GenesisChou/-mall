@@ -24,13 +24,9 @@
     <v-modal :show.sync='show' :cover-close='coverClose'>
         <div class='modal bg-white'>
             <div class='modal-content text-center text-large'>
-                <template v-if='suprise'>
-                  <img v-if='type' class='icon' src='../assets/images/suprise-hollow.png' />
-                </template>
-                <template v-else>
-                  <img v-if='type' class='icon' src='../assets/images/correct-hollow.png' />
-                  <img v-else class='icon' src='../assets/images/error-hollow.png' />
-                </template>
+                  <img v-if='type=="suprise"' class='icon' src='../assets/images/suprise-hollow.png' />
+                  <img v-if='type=="correct"' class='icon' src='../assets/images/correct-hollow.png' />
+                  <img v-if='type=="error"' class='icon' src='../assets/images/error-hollow.png' />
                 <p class='msg'>{{msg}}</p>
                 <div class='flex flex-center-h'>
                     <button class='btn btn-pink flex flex-center-h' @click='func()'>{{btnText}}</button>
@@ -51,12 +47,8 @@ export default {
             default: false
         },
         type: {
-            type: Boolean,
-            default: true
-        },
-        suprise:{
-          type:Boolean,
-          default:false
+            type: String,
+            default: 'suprise'
         },
         msg: {
             type: String,

@@ -84,7 +84,7 @@
                 </div>
             </div>
         </div>
-        <v-alert :cover-close=false :show.sync='modal' :msg='msg' :type='is_win' :func='is_win?toOrderDetail:toggleModal' :btn-text='is_win?"查看":"关闭"'>
+        <v-alert :cover-close=false :show.sync='modal' :msg='msg' :type='is_win?"correct":"error"' :func='is_win?toOrderDetail:toggleModal' :btn-text='is_win?"查看":"关闭"'>
         </v-alert>
     </div>
 </template>
