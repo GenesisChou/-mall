@@ -11,7 +11,7 @@
     window.APP = {
         APP_NAME: '坚果互动',
         HOST: 'http://integral.api.justtong.com/imall', //接口域名
-        MALL_HOST: 'http://imall.justtong.com', //服务器域名
+        MALL_HOST: 'http://test.imall.justtong.com', //服务器域名
         SUCCESS: 10000, //服务端返回成功状态码
         PERPAGE: 20, //分页查询时每页条数
         TOKEN: '', //授权码
