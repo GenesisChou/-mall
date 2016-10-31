@@ -1,46 +1,53 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
 .v-order-item {
+    overflow: hidden;
     padding: pxTorem(26) 0;
-    border-top:1px solid $gray-light;
+    border-top: 1px solid $gray-light;
     .img {
         width: pxTorem(160);
         height: pxTorem(120);
     }
     .content {
-        margin-left: pxTorem(30);
-        flex-direction: column;
+        overflow: hidden;
+        margin-left: pxTorem(180);
+        .text-gray {
+            margin-top: pxTorem(10);
+        }
+        /*flex-direction: column;*/
     }
 }
 </style>
 <template>
-    <div class='v-order-item flex '>
-        <img class='img ' :src='img' />
-        <div class='content flex flex-item flex-space-between'>
+    <div class='v-order-item  '>
+        <img class='img pull-left' :src='img' />
+        <div class='content '>
             <strong class='text-huge'>{{name}}</strong>
-            <span class='text-large text-gray'> {{integral|parseInt}}积分 </span>
+            <p class='text-large text-gray'> {{integral|parseInt}}积分
+                <span class='pull-right'>x{{number}}</span>
+            </p>
         </div>
-        <div class='flex flex-center-v text-large'>
-            x{{number}}
+        <!--         <div class='flex flex-center-v text-large'>
+            
         </div>
-    </div>
+ --></div>
 </template>
 <script>
 import filters from 'libs/filters'
 export default {
-    props:{
-        img:{
-            type:String,
-            default:''
+    props: {
+        img: {
+            type: String,
+            default: ''
         },
-        name:{
-            type:String,
-            default:'商品名称'
+        name: {
+            type: String,
+            default: '商品名称'
         },
-        integral:String,
-        number:{
-            type:String,
-            default:1
+        integral: String,
+        number: {
+            type: String,
+            default: 1
         }
 
     },

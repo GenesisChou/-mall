@@ -18,6 +18,9 @@ export default {
     created() {
             // this.getUserInfor();
             this.init();
+            window.onresize=()=>{
+                this.init();
+            }
             // wxConfig(wx,this.getUserInfor,this);
         },
         methods: {
