@@ -9,12 +9,14 @@
             border-bottom: 1px solid $gray-light;
         }
     }
-    .ticket,
     .introduction {
         padding: pxTorem(20);
-    }
-    .introduction {
         border-bottom: 1px solid $gray-light;
+    }
+    .ticket{
+        height: 1rem;
+        line-height: 1rem;
+        padding-left: pxTorem(20);
     }
 }
 </style>
@@ -30,7 +32,7 @@
             <div slot='footer-content'>
                 <template v-if='order_detail.ticket_id'>
                     <v-block-text text='优惠券码'></v-block-text>    
-                    <p class='text-pink ticket'>{{order_detail.ticket_id}} </p>
+                    <div class='text-pink ticket'>{{order_detail.ticket_id}} </div>
                 </template>
                 <template v-if='product_detail.content_use'>
                     <v-simditor>
