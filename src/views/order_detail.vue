@@ -35,8 +35,8 @@
                     <div class='text-pink ticket'>{{order_detail.ticket_id}} </div>
                 </template>
                 <template v-if='product_detail.content_use'>
-                    <v-simditor>
                     <v-block-text text='使用说明'></v-block-text>    
+                    <v-simditor>
                         <div class='introduction'>
                             {{{product_detail.content_use}}}
                         </div>
