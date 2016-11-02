@@ -1,70 +1,81 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
-.head {
-    height: pxTorem(260);
-    padding: pxTorem(10) 0;
-    .event {
-        flex: 1;
-        .icon {
-            width: pxTorem(100);
-            height: pxTorem(100);
-            border-radius: 50%;
-            margin: 0 pxTorem(18) 0 pxTorem(56);
-        }
-        &:first-child {
-            border-right: 1px solid $gray-light;
+.index {
+    min-height: 100%;
+}
+
+.icon-list {
+    padding: pxTorem(25) 0;
+    margin-top: pxTorem(30);
+    .icon {
+        height: pxTorem(90);
+        width: pxTorem(90);
+        border-radius: 50%;
+        line-height: 100%;
+    }
+    >.flex:first-child .icon {
+        position: relative;
+        .label {
+            position: absolute;
+            left: pxTorem(-50);
+            opacity: 0;
+            color: $red;
+            &.active {
+                animation: move 1s;
+            }
         }
     }
 }
 
-.hot-product-list,
-.hot-activity-list {
-    >div:last-child .v-list-item {
-        border-bottom: 0;
+@keyframes move {
+    0% {
+        opacity: 1;
+        top: pxTorem(15);
     }
+    100% {
+        opacity: 0;
+        top: pxTorem(-15);
+    }
+}
+
+.main {
+    display: flex;
+    flex-wrap: wrap;
+    padding: pxTorem(18) pxTorem(12);
 }
 </style>
 <template>
-    <div class='index'>
-        <div class='head bg-white flex '>
-            <router-link :to='{ name:"my_integral"}' class='event flex flex-center-v'>
-                <img class='icon' src='../assets/images/index/money.png'>
-                <div class='content'>
-                    <p class='text-large'>我的积分</p>
-                    <p class='text-small'>当前余额: <span class='text-pink'>{{parseInt(user.integral)}}</span> </p>
-                </div>
-            </router-link>
-            <div class='event flex  flex-center-v' @click='checkIn'>
-                <img class='icon' src='../assets/images/index/sign-in.png'>
-                <div class='content'>
-                    <p class='text-large'>
-                        <span v-if='user.ischecked '>已签到</span>
-                        <span v-else>未签到</span>
-                    </p>
+    <div class='index bg-base'>
+        <v-swipe ></v-swipe>
+        <div class='icon-list flex bg-white'>
+            <div class='flex-item flex flex-center-v flex-center-h' @click='checkIn'>
+                <div class='icon bg-pink text-white flex flex-column flex-center-v flex-center-h '>
+                    <p>点击</p>
+                    <p>签到</p>
+                    <span :class='["label",checked?"active":""]'>+10</span>
                 </div>
             </div>
-        </div>
-        <router-link :to='{name:"activity_list"}'>
-            <v-banner type='activity'></v-banner>
-        </router-link>
-        <div class='hot-activity-list'>
-            <router-link v-for='activity in hot_activity_list' :to='{name:"activity_detail",query:{activity_id:activity.id,type:activity.type}}'>
-                <v-list-item :title='activity.name' :title-dupty='parseInt(activity.integral)+"积分"' :img='activity.pic_thumb'></v-list-item>
+            <router-link :to='{name:"my_integral"}' class='flex-item flex flex-center-v flex-center-h'>
+                <div class='icon bg-blue text-white flex flex-column flex-center-v flex-center-h '>
+                    <p>积分</p>
+                    <p>1200</p>
+                </div>
+            </router-link>
+            <router-link :to='{name:"product_list"}' class='flex-item flex flex-center-v flex-center-h'>
+                <div class='icon bg-yellow text-white flex flex-column flex-center-v flex-center-h '>
+                    <p>所有</p>
+                    <p>商品</p>
+                </div>
             </router-link>
         </div>
-        <router-link :to='{name:"product_list"}'>
-            <v-banner type='product'></v-banner>
-        </router-link>
-        <div class='hot-product-list'>
-            <router-link v-for='product in hot_product_list' :to='{name:"product_detail",query:{product_id:product.id}}'>
-                <v-list-item :title='product.name' :title-dupty='parseInt(product.integral)+"积分"' :img='product.pic_thumb'></v-list-item>
-            </router-link>
-        </div>
+        <section class='main'>
+            <v-item v-for='i in 6'></v-item>
+        </section>
     </div>
 </template>
 <script>
-import vBanner from 'components/v_banner.vue'
-import vListItem from 'components/v_list_item.vue'
+import vSwipe from 'components/v_swipe.vue'
+import vItem from 'components/index/v_item.vue'
 import {
     mapState
 } from 'vuex'
@@ -74,15 +85,30 @@ import {
 export default {
     name: 'index',
     components: {
-        vListItem,
-        vBanner,
+        vSwipe,
+        vItem
     },
-    computed: mapState(['user', 'hot_activity_list', 'hot_product_list']),
-    mounted() {
-        this.getUserInfor();
-        this.getHotActivityList();
-        this.getHotProductList();
+    data() {
+        return {
+            checked: false,
+        }
     },
-    methods: mapActions(['checkIn', 'getUserInfor', 'getHotActivityList', 'getHotProductList'])
+    methods: {
+        checkIn() {
+            this.checked = true;
+        }
+    },
+    beforeRouteLeave(to, from, next) {
+        // 导航离开该组件的对应路由时调用
+        // 可以访问组件实例 `this`
+        next();
+    }
+    // computed: mapState(['user', 'hot_activity_list', 'hot_product_list']),
+    // mounted() {
+    //     this.getUserInfor();
+    //     this.getHotActivityList();
+    //     this.getHotProductList();
+    // },
+    // methods: mapActions(['checkIn', 'getUserInfor', 'getHotActivityList', 'getHotProductList'])
 };
 </script>

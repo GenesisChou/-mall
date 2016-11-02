@@ -119,8 +119,9 @@ export default {
         vModal
     },
     computed: mapState(['user', 'integral_param', 'integral_list']),
-    methods: mapActions(['getIntegralParam', 'getIntegralList', 'toggleModal']),
+    methods: mapActions(['getUserInfor','getIntegralParam', 'getIntegralList', 'toggleModal']),
     mounted() {
+        this.getUserInfor();
         this.getIntegralList();
         this.getIntegralParam();
     }
