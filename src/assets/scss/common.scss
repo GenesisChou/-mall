@@ -1,0 +1,195 @@
+#app{
+	height:100%;
+	width:100%;
+}
+.flex{
+	display:flex;
+}
+.flex-item{
+	flex:1;
+}
+.flex-center-v{
+	align-items:center;
+}
+.flex-center-h{
+	justify-content:center;
+}
+.flex-space-between{
+	justify-content:space-between;
+}
+.pull-left{
+	float:left;
+}
+.pull-right{
+	float:right;
+}
+
+
+.clearfix{
+	overflow:hidden;_zoom:1;
+}
+.text-left{
+	text-align:left;
+}
+.text-right{
+	text-align:right;
+}
+.text-center{
+	text-align:center;
+}
+
+/**********间距***********/
+
+.mg5-l{
+	margin-left:$gap;
+}
+.mg5-t{
+	margin-top: $gap;
+}
+
+.mg5-r{
+	margin-right:$gap;
+}
+.mg5-b{
+	margin-bottom:$gap;
+}
+
+.mg10-t{
+	margin-top:$gap*2;
+}
+.mg10-r{
+	margin-right:$gap*2;
+}
+.mg10-b{
+	margin-bottom:$gap*2;
+}
+.mg10-l{
+	margin-left:$gap*2;
+}
+
+.pd5-t{
+	padding-top:$gap;
+}
+.pd5-r{
+	padding-right:$gap;
+}
+.pd5-b{
+	padding-bottom:$gap;
+}
+.pd5-l{
+	padding-left:$gap;
+}
+.pd10-t{
+	padding-top:$gap*2;
+}
+.pd10-r{
+	padding-right:$gap*2;
+}
+.pd10-b{
+	padding-bottom:$gap*2;
+}
+.pd10-l{
+	padding-left:$gap*2;
+}
+/************颜色********/
+.bg-base{
+	background:rgb(243,243,243);
+}
+.bg-white{
+	background:$white;
+}
+.bg-blue{
+	background:$blue;
+}
+.bg-gray{
+	background:$gray;
+}
+.bg-pink{
+	background:$pink;
+}
+.bg-green{
+	background:$green;
+}
+.text-gray{
+	color:$gray;
+}
+.text-sliver{
+	color:$sliver;
+}
+.text-red{
+	color:$red;
+}
+.text-white{
+	color:$white;
+}
+.text-pink{
+	color:$pink;
+}
+
+
+
+/********字体***********/
+.text-small{
+	font-size:pxTorem(24);
+}
+.text-normal{
+	font-size:$base-size;
+}
+.text-large{
+	font-size:pxTorem(28);
+}
+.text-huge{
+	font-size:pxTorem(36);
+}
+.text-bold{
+	font-weight: bold;
+}
+/*******按钮**********/
+.btn{
+	padding:0 pxTorem(30);
+	height:pxTorem(50);
+	line-height:pxTorem(50);
+	border-width: 1px;
+	border-style: solid;
+	border-radius:pxTorem(5);
+
+}
+.btn-block{
+	width:100%;
+}
+.btn-large{
+	width:pxTorem(165);
+	height:pxTorem(65);
+}
+.btn-disable{
+	background:#ddd;
+	border-color: $black;
+}
+.btn-default{
+	background:$white;
+	border-color: $black;
+}
+.btn-failed{
+	background:$gray;
+	border-color:$black;
+}
+.btn-blue{
+	background: $blue;
+	border-color: $blue;
+	color:$white;
+}
+.btn-pink{
+	background:$pink;
+	border-color:$pink;
+	color:$white;
+}
+.btn-yellow{
+	background:$yellow;
+	border-color:$yellow;
+
+}
+.btn-pink-hollow{
+	background:$white;
+	border-color:$pink;
+	color:$pink;
+}

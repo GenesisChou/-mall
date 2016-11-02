@@ -1,0 +1,93 @@
+<style lang='sass' scoped>
+@import '../assets/scss/variable';
+.modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: pxTorem(5);
+    .modal-content {
+        width: pxTorem(500);
+        height: pxTorem(260);
+        padding-top: pxTorem(30);
+        .icon {
+            width: pxTorem(50);
+            height: pxTorem(50);
+        }
+        .msg {
+            line-height: pxTorem(100);
+        }
+        .btn {
+            letter-spacing: pxTorem(10);
+            text-indent: pxTorem(10);
+        }
+    }
+}
+
+.bg-cover {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .4);
+    z-index: 1;
+}
+</style>
+<template>
+    <div transition='fade' @click='close' class='bg-cover'>
+        <div class='modal bg-white'>
+            <div class='modal-content text-center text-large'>
+                <img v-if='type=="suprise"' class='icon' src='../assets/images/suprise-hollow.png' />
+                <img v-if='type=="correct"' class='icon' src='../assets/images/correct-hollow.png' />
+                <img v-if='type=="error"' class='icon' src='../assets/images/error-hollow.png' />
+                <p class='msg'>{{msg}}</p>
+                <div class='flex flex-center-h'>
+                    <button class='btn btn-pink flex flex-center-h' @click='func()'>{{btnText}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+export default {
+    props: {
+        // show: {
+        //     type: Boolean,
+        //     default: false
+        // },
+        type: {
+            type: String,
+            default: 'suprise'
+        },
+        msg: String,
+        coverClose: {
+            type: Boolean,
+            default: true
+        },
+        btnText: {
+            type: String,
+            default: '关闭'
+        },
+        callback: Function
+    },
+    methods: {
+        func() {
+            this.$store.dispatch('toggleAlert', {
+                msg: this.msg
+            });
+            if (this.callback) {
+                this.callback();
+            }
+        },
+        close() {
+            if (this.coverClose && event.target == document.querySelector('.bg-cover')) {
+                this.$store.dispatch('toggleAlert', {
+                    msg: this.msg
+                });
+            }
+            // this.show=false;
+        }
+    }
+}
+</script>
