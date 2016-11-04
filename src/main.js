@@ -29,7 +29,7 @@ if (!utils.getParameterByName('token')) {
     window.APP.MEDIA_ID = utils.getParameterByName('mediaid');
     FastClick.attach(document.body);
     //配置微信jsdk
-    wxConfig(wx,store);
+    // wxConfig(wx,store);
     Vue.use(VueResource);
     Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
     new Vue({
