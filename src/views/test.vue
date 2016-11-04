@@ -12,7 +12,7 @@
 </style>
 <template>
     <div class='test'>
-        <button class='btn btn-pink' @click='togglePopup'>popup</button>
+        <button class='btn btn-red' @click='togglePopup'>popup</button>
         <v-popup :show='popup' :toggle-popup='togglePopup'>
             <form class='edit-address'>
                 <header class='header'>

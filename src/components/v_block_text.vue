@@ -5,7 +5,7 @@
 }
 </style>
 <template>
-    <div :class='["block-text","flex","flex-center-v","flex-center-h","bg-base","text-large",type]'>
+    <div :class='["block-text","flex","flex-center-v","flex-center-h","text-large",type]'>
         {{text}}
     </div>
 </template>

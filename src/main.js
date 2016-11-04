@@ -25,11 +25,10 @@ if (!utils.getParameterByName('token')) {
     console.log('login success');
     window.APP.TOKEN = utils.getParameterByName('token');
     window.APP.USER_ID = utils.getParameterByName('userid');
-    window.APP.HEAD_IMG = utils.getParameterByName('headimg');
     window.APP.MEDIA_ID = utils.getParameterByName('mediaid');
     FastClick.attach(document.body);
     //配置微信jsdk
-    // wxConfig(wx,store);
+    wxConfig(wx,store);
     Vue.use(VueResource);
     Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
     new Vue({

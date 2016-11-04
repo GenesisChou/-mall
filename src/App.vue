@@ -1,12 +1,12 @@
 <style lang='sass'>
 @import './assets/scss/main.scss';
 .fade-enter-active {
-  transition: opacity .3s
-}
-.fade-enter {
-  opacity: 0
+    transition: opacity .3s
 }
 
+.fade-enter {
+    opacity: 0
+}
 </style>
 <template>
     <div id="app">
@@ -14,14 +14,20 @@
         <transition name='fade'>
             <v-alert v-show='v_alert.show' :msg='v_alert.msg' :callback='v_alert.callback' :type='v_alert.type' :cover-close='v_alert.cover_close' :btn-text='v_alert.btn_text'></v-alert>
         </transition>
+        <v-confirm v-show='v_confirm.show' :msg='v_confirm.msg' :callback='v_confirm.callback'></v-confirm>
     </div>
 </template>
 <script>
 import vAlert from 'components/v_alert.vue'
+import vConfirm from 'components/v_confirm.vue'
+import {
+    mapState
+} from 'vuex'
 export default {
     name: 'app',
     components: {
-        vAlert
+        vAlert,
+        vConfirm
     },
     mounted() {
         this.init();
@@ -33,6 +39,9 @@ export default {
     computed: {
         v_alert() {
             return this.$store.state.v_alert;
+        },
+        v_confirm() {
+            return this.$store.state.v_confirm;
         }
     },
     methods: {

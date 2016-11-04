@@ -5,26 +5,28 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    border-radius: pxTorem(5);
+    border-radius: pxTorem(10);
     .modal-content {
         width: pxTorem(500);
-        height: pxTorem(260);
         padding-top: pxTorem(30);
         .icon {
             width: pxTorem(50);
             height: pxTorem(50);
         }
         .msg {
-            line-height: pxTorem(100);
+            font-size:pxTorem(30);
+            line-height: pxTorem(130);
         }
         .btn {
+            margin-bottom:pxTorem(40);
             letter-spacing: pxTorem(10);
             text-indent: pxTorem(10);
+            width:pxTorem(200);
         }
     }
 }
 
-.bg-cover {
+.v-alert .bg-cover {
     position: fixed;
     left: 0;
     top: 0;
@@ -35,7 +37,8 @@
 }
 </style>
 <template>
-    <div transition='fade' @click='close' class='bg-cover'>
+  <section class='v-alert'>
+    <div  @click='close' class='bg-cover'>
         <div class='modal bg-white'>
             <div class='modal-content text-center text-large'>
                 <img v-if='type=="suprise"' class='icon' src='../assets/images/suprise-hollow.png' />
@@ -43,11 +46,14 @@
                 <img v-if='type=="error"' class='icon' src='../assets/images/error-hollow.png' />
                 <p class='msg'>{{msg}}</p>
                 <div class='flex flex-center-h'>
-                    <button class='btn btn-pink flex flex-center-h' @click='func()'>{{btnText}}</button>
+                    <button class='btn btn-red btn-large' @click='func()'>{{btnText}}</button>
                 </div>
             </div>
         </div>
     </div>
+
+  </section>
+
 </template>
 <script>
 export default {
@@ -73,15 +79,18 @@ export default {
     },
     methods: {
         func() {
-            this.$store.dispatch('toggleAlert', {
-                msg: this.msg
-            });
+          this.$store.dispatch('toggleAlert', {
+            msg: this.msg,
+            btn_text:this.btnText,
+            type:this.type,
+            cover_close:this.coverClose
+          });
             if (this.callback) {
                 this.callback();
             }
         },
         close() {
-            if (this.coverClose && event.target == document.querySelector('.bg-cover')) {
+            if (this.coverClose && event.target == document.querySelector('.v-alert .bg-cover')) {
                 this.$store.dispatch('toggleAlert', {
                     msg: this.msg
                 });

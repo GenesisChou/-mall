@@ -131,7 +131,7 @@
         <v-sticky>
             <footer class='footer flex flex-space-between flex-center-v'>
                 <div class='text-large'>
-                    单价：<span class='text-pink'>{{parseInt(product_detail.integral)||0}}</span>积分
+                    单价：<span class='text-red'>{{parseInt(product_detail.integral)||0}}</span>积分
                 </div>
                 <button v-if='integral_enough' class='btn btn-red ' @click='toggleModal'>兑换</button>
                 <button v-else class='btn btn-disable '>余额不足</button>

@@ -47,7 +47,7 @@
 <template>
     <div class='v-scrap '>
         <div id='lotteryContainer'>
-            <button class='btn btn-pink' id='start' @click='startActivity'>开始</button>
+            <button class='btn btn-red' id='start' @click='startActivity'>开始</button>
         </div>
     </div>
     <!--     <v-alert :show.sync='modal'  :msg='msg' :btn-text='is_win?"查看":"关闭"' :func='is_win?toOrderDetail:toggleAlert'>
@@ -69,7 +69,7 @@ export default {
             alert:{
                 msg:'',
                 callback:''
-            }, 
+            },
             lottery: '', //画布实例
             activity_start: false, //判断活动状态 1.超出活动次数 2.更新积分失败
             is_win: false, //判断是否中奖

@@ -48,7 +48,7 @@
 <template>
     <div class='index bg-base'>
         <v-swipe></v-swipe>
-        <!-- <router-link :to='{name:"activity_list"}' tag='button' class='btn btn-red'>活动列表</router-link > -->
+        <router-link :to='{name:"activity_list"}' tag='button' class='btn btn-red'>活动列表</router-link >
         <div class='icon-list flex bg-white'>
             <router-link :to='{name:"my_integral"}' class='flex-item flex flex-center-v flex-center-h'>
                 <div class='icon bg-blue text-white flex flex-column flex-center-v flex-center-h '>
@@ -86,9 +86,6 @@ import vSwipe from 'components/v_swipe.vue'
 import vItem from 'components/index/v_item.vue'
 import {
     mapState
-} from 'vuex'
-import {
-    mapActions
 } from 'vuex'
 export default {
     name: 'index',

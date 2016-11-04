@@ -207,7 +207,6 @@
 /*******按钮**********/
 
 .btn {
-    padding: 0 pxTorem(30);
     height: pxTorem(50);
     line-height: pxTorem(50);
     border-width: 1px;
@@ -221,8 +220,8 @@
 }
 
 .btn-large {
-    width: pxTorem(165);
-    height: pxTorem(65);
+    height: pxTorem(80);
+    line-height: pxTorem(80);
 }
 
 .btn-default {

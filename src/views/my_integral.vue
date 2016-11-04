@@ -6,26 +6,31 @@
     flex-direction: column;
 }
 
-.head {
-    height: pxTorem(388);
-    .main {
-        position: relative;
+.header {
+    .user-msg {
         height: pxTorem(288);
         background-image: url('../assets/images/my_integral/my_integral.png');
         background-repeat: no-repeat;
         background-size: 100%;
-        .title {
-            position: absolute;
-            left: pxTorem(38);
-            top: pxTorem(18);
-        }
-        .number {
-            font-size: pxTorem(60);
+        font-size: pxTorem(30);
+        .avater {
+            background-color:$white;
+            border-radius: 50%;
+            width: pxTorem(160);
+            height: pxTorem(160);
+            margin:0 pxTorem(30) 0 pxTorem(134);
+            overflow: hidden;
+            border:pxTorem(10) solid $white;
+            img{
+                width: 100%;
+                height: 100%;
+            }
         }
     }
     .event {
         height: pxTorem(100);
         font-size: pxTorem(30);
+        background-color: #f5cfd8;
         .icon {
             width: pxTorem(50);
             height: pxTorem(47);
@@ -53,33 +58,39 @@
     flex-direction: column;
     width: pxTorem(600);
     padding: pxTorem(50) pxTorem(68);
-    border-radius: pxTorem(5);
+    border-radius: pxTorem(10);
     p {
         line-height: 1rem;
     }
     button {
-        margin-top: pxTorem(90);
+        width: pxTorem(300);
+        margin-top: pxTorem(50);
     }
 }
 </style>
 <template>
     <div class='my-integral'>
-        <div class='head text-center'>
-            <div class='main  flex flex-center-v flex-center-h'>
-                <p class='title text-white text-large'>当前积分余额:</p>
-                <span class=' text-white number'>{{parseInt(user.integral)}}</span>
-            </div>
+        <header class='header'>
+            <section class='user-msg  flex flex-center-v '>
+                <div class='avater'>
+                    <img :src='user.headimg'>
+                </div>
+                <div class='text-white'>
+                    <p>{{user.nickname}}</p>
+                    <p>积分: {{parseInt(user.integral)}}</p>
+                </div>
+            </section>
             <div class='event flex flex-center-v '>
                 <div class='flex-item flex flex-center-v flex-center-h' @click='toggleModal()'>
-                    <img class='icon' src='../assets/images/store.png'> <span class='text-large'>赚取积分</span>
+                    <img class='icon' src='../assets/images/store.png'> <span class='text-large text-red'>积分赚取</span>
                 </div>
                 <router-link :to='{name:"order_list"}' tag='div' class='flex-item flex flex-center-v flex-center-h'>
                     <img class='icon' src='../assets/images/record.png'><span class='text-large'>兑换记录</span>
                 </router-link>
             </div>
-        </div>
-        <v-block-text text='积分明细' type='text-gray'></v-block-text>
-        <ul class='record-list'>
+        </header>
+        <v-block-text text='积分明细' type='bg-white'></v-block-text>
+        <ul class='record-list bg-base'>
             <li v-for='item in integral_list' class='flex flex-space-between flex-center-v'>
                 <div class='detail'>
                     <span class='text-large'>{{item.name}}</span>
@@ -97,7 +108,7 @@
                     <p v-for='(item,$index) in integral_param'>{{($index+1+'、')+item.name+' +'+item.value}}</p>
                 </div>
                 <p class='text-center'>
-                    <button class='btn btn-pink' @click='toggleModal()'>知道了</button>
+                    <button class='btn btn-red btn-large' @click='toggleModal()'>知道了</button>
                 </p>
             </div>
         </v-modal>
@@ -118,15 +129,15 @@ export default {
         vBlockText,
         vModal
     },
-    data(){
+    data() {
         return {
-            modal:false
+            modal: false
         }
     },
     computed: mapState(['user', 'integral_param', 'integral_list']),
     methods: {
-        toggleModal(){
-            this.modal=!this.modal;
+        toggleModal() {
+            this.modal = !this.modal;
         }
     },
     mounted() {

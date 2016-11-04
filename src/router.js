@@ -30,22 +30,19 @@ const router = new VueRouter({
             component: function(resolve) {
                 require(['views/product_detail.vue'], resolve)
             }
-        },
-        {
-         path:'/activity_list',
+        }, {
+            path: '/activity_list',
             name: 'activity_list',
-            component:function(resolve){
-             require(['views/activity_list.vue'],resolve)
-            }  
-        },
-        {
-         path:'/activity_detail',
+            component: function(resolve) {
+                require(['views/activity_list.vue'], resolve)
+            }
+        }, {
+            path: '/activity_detail',
             name: 'activity_detail',
-            component:function(resolve){
-             require(['views/activity_detail.vue'],resolve)
-            }  
-        },
-        {
+            component: function(resolve) {
+                require(['views/activity_detail.vue'], resolve)
+            }
+        }, {
             path: '/my_integral',
             name: 'my_integral',
             component: function(resolve) {
@@ -63,7 +60,7 @@ const router = new VueRouter({
             component: function(resolve) {
                 require(['views/order_detail.vue'], resolve)
             }
-        },{
+        }, {
             path: '/test',
             name: 'test',
             component: function(resolve) {
@@ -77,6 +74,9 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (store.state.v_alert.show) {
         store.dispatch('toggleAlert');
+    }
+    if (store.state.v_confirm.show) {
+        store.dispatch('toggleConfirm');
     }
     next();
 })

@@ -17,7 +17,7 @@
     box-shadow: pxTorem(5) pxTorem(5) pxTorem(5) rgba(0, 0, 0, .1);
     .panel-head {
         line-height: pxTorem(72);
-        background: $pink;
+        background-color: $red;
         border-top-left-radius: pxTorem(20);
         border-top-right-radius: pxTorem(20);
     }
@@ -52,7 +52,6 @@
         }
         .submit {
             width: pxTorem(350);
-            height: pxTorem(70);
             font-size: pxTorem(30);
         }
     }
@@ -79,7 +78,7 @@
                         </div>
                     </div>
                     <div class='text-center'>
-                        <button class='btn btn-pink submit text-huge' @click='submitAnswer()' >提交答案</button>
+                        <button class='btn btn-red btn-large submit ' @click='submitAnswer()' >提交答案</button>
                     </div>
                 </div>
             </div>
@@ -122,6 +121,7 @@ export default {
                                 this.toggleAlert({
                                     msg: data.data.name,
                                     type: 'correct',
+                                    btn_text:'查看',
                                     callback: this.toOrderDetail
                                 });
                             } else {

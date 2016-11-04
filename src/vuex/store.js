@@ -19,6 +19,11 @@ const state = {
         cover_close: true,
         callback: function() {}
     },
+    v_confirm:{
+        show:false,
+        msg:'',
+        callback:function(){}
+    }
 }
 
 const mutations = {
@@ -30,6 +35,13 @@ const mutations = {
         state.v_alert.callback = alert.callback;
         state.v_alert.cover_close = alert.cover_close;
         state.v_alert.btn_text = alert.btn_text;
+        state.v_alert.type = alert.type;
+    },
+    toggleConfirm(state,confirm={}){
+        state.v_confirm.show = confirm.show;
+        state.v_confirm.msg = confirm.msg;
+        state.v_confirm.callback = confirm.callback;
+
     },
     //——获取用户信息
     getUserInfor(state, callback) {
@@ -118,6 +130,9 @@ const actions = {
     //显示/关闭 弹窗
     toggleAlert({ commit }, alert) {
         commit('toggleAlert', alert);
+    },
+    toggleConfirm({commit},confirm){
+        commit('toggleConfirm',confirm);
     },
     //——获取用户信息
     getUserInfor({ commit }, callback) {
