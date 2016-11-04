@@ -4,7 +4,7 @@ import sha1 from 'libs/sha1';
 import Vue from 'vue';
 import VueResource from 'vue-resource';
 Vue.use(VueResource);
-export default function(wx, func, vm) {
+export default function(wx,store) {
 
     //通过config接口注入权限验证配置
     let option = {
@@ -36,8 +36,7 @@ export default function(wx, func, vm) {
             token: APP.TOKEN,
             userid: APP.USER_ID
         }).then((response) => {
-            let data = response.data;
-            // updateUser();
+            store.dispatch('getUserInfor');
         })
     }
     wx.ready(function() {
@@ -65,7 +64,7 @@ export default function(wx, func, vm) {
             // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function() {
                 // 用户确认分享后执行的回调函数
-                // share()
+                share()
             },
             cancel: function() {
                 // 用户取消分享后执行的回调函数
@@ -80,7 +79,7 @@ export default function(wx, func, vm) {
             imgUrl: 'http://static.justtong.com/uploads/images/goods/20161025/142505580efac1ad494.jpg', // 分享图标
             success: function() {
                 // 用户确认分享后执行的回调函数
-                // share();
+                share();
 
             },
             cancel: function() {
@@ -95,7 +94,7 @@ export default function(wx, func, vm) {
             imgUrl: 'http://static.justtong.com/uploads/images/goods/20161025/142505580efac1ad494.jpg', // 分享图标
             success: function() {
                 // 用户确认分享后执行的回调函数
-                // share();
+                share();
 
             },
             cancel: function() {
@@ -110,7 +109,7 @@ export default function(wx, func, vm) {
             imgUrl: 'http://static.justtong.com/uploads/images/goods/20161025/142505580efac1ad494.jpg', // 分享图标
             success: function() {
                 // 用户确认分享后执行的回调函数
-                // share();
+                share();
 
             },
             cancel: function() {

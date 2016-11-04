@@ -3,11 +3,14 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-    entry: './src/main.js',
+    entry: {
+        app: './src/main.js',
+        vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk']
+    },
     output: {
         path: path.resolve(__dirname, './dist'),
         publicPath: '/dist/',
-        filename: 'build.js'
+        filename: '[name].js'
     },
     module: {
         rules: [{
@@ -17,7 +20,7 @@ module.exports = {
                 // vue-loader options go here
                 loaders: {
                     // ...
-                    sass:'style!css!sass'
+                    sass: 'style!css!sass'
                 }
             }
         }, {
@@ -26,8 +29,9 @@ module.exports = {
             exclude: /node_modules/
         }, {
             test: /\.(png|jpg|gif|svg)$/,
-            loader: 'file',
-            options: {
+            loader: 'url',
+            query: {
+                limit: 10000,
                 name: '[name].[ext]?[hash]'
             }
         }]
@@ -63,6 +67,7 @@ if (process.env.NODE_ENV === 'production') {
                 warnings: false
             }
         }),
+        new webpack.optimize.CommonsChunkPlugin({name:'vendor', filename:'vendor.js'}),
         new webpack.LoaderOptionsPlugin({
             minimize: true
         })
