@@ -35,7 +35,7 @@
 }
 
 .record-list {
-    flex:1;
+    flex: 1;
     overflow: scroll;
     padding-top: pxTorem(30);
     > li {
@@ -90,7 +90,7 @@
                 <div class='text-large flex flex-center-v'>{{parseInt(item.point)>0?'+'+parseInt(item.point):parseInt(item.point)}} </div>
             </li>
         </ul>
-        <v-modal>
+        <v-modal :toggle-modal='toggleModal' :show='modal'>
             <div class='modal-content flex flex-space-between bg-white'>
                 <div class='text-large'>
                     <p>您可以通过以下途径赚取积分：</p>
@@ -118,12 +118,21 @@ export default {
         vBlockText,
         vModal
     },
+    data(){
+        return {
+            modal:false
+        }
+    },
     computed: mapState(['user', 'integral_param', 'integral_list']),
-    methods: mapActions(['getUserInfor','getIntegralParam', 'getIntegralList', 'toggleModal']),
+    methods: {
+        toggleModal(){
+            this.modal=!this.modal;
+        }
+    },
     mounted() {
-        this.getUserInfor();
-        this.getIntegralList();
-        this.getIntegralParam();
+        // this.$store.dispatch('getUserInfor');
+        this.$store.dispatch('getIntegralList');
+        this.$store.dispatch('getIntegralParam');
     }
 };
 </script>

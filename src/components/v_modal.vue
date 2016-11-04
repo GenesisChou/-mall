@@ -32,17 +32,17 @@ export default {
         coverClose: {
             type: Boolean,
             default: true
-        }
-    },
-    computed: {
-        show() {
-            return this.$store.state.v_modal.show;
-        }
+        },
+        show:{
+            type:Boolean,
+            default:false
+        },
+        toggleModal:Function
     },
     methods: {
         close() {
             if (this.coverClose && event.target == document.querySelector('.bg-cover')) {
-                this.$store.dispatch('toggleModal');
+                this.toggleModal();
             }
         }
     }

@@ -156,6 +156,10 @@
     background-color: $yellow;
 }
 
+.bg-red {
+    background-color: $red;
+}
+
 .text-gray {
     color: $gray;
 }
@@ -208,7 +212,8 @@
     line-height: pxTorem(50);
     border-width: 1px;
     border-style: solid;
-    border-radius: pxTorem(5);
+    border-radius: pxTorem(10);
+    font-size: pxTorem(30);
 }
 
 .btn-block {
@@ -218,11 +223,6 @@
 .btn-large {
     width: pxTorem(165);
     height: pxTorem(65);
-}
-
-.btn-disable {
-    background-color: #ddd;
-    border-color: $black;
 }
 
 .btn-default {
@@ -238,6 +238,12 @@
 .btn-blue {
     background-color: $blue;
     border-color: $blue;
+    color: $white;
+}
+
+.btn-red {
+    background-color: $red;
+    border-color: $red;
     color: $white;
 }
 

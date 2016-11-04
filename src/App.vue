@@ -25,6 +25,7 @@ export default {
     },
     mounted() {
         this.init();
+        this.$store.dispatch('getUserInfor');
         window.onresize = () => {
             this.init();
         }

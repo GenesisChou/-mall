@@ -15,24 +15,31 @@
         padding-left: pxTorem(20);
     }
 }
+.add-address{
+    padding:pxTorem(20) pxTorem(75);
+    .btn{
+        font-size: pxTorem(30);
+        height: pxTorem(80);
+    }
+}
 </style>
 <template>
     <div class='order-detail bg-base'>
         <v-order :order='order_detail'>
-            <div slot='footer-content'>
-                <template v-if='order_detail.ticket_id'>
-                    <v-block-text text='优惠券码'></v-block-text>
-                    <div class='text-pink ticket'>{{order_detail.ticket_id}} </div>
-                </template>
-                <template v-if='product_detail.content_use'>
-                    <v-block-text text='使用说明'></v-block-text>
-                    <v-simditor>
-                        <p class='introduction' v-html='product_detail.content_use'>
-                        </p>
-                    </v-simditor>
-                </template>
-            </div>
+            <template v-if='order_detail.ticket_id'>
+                <v-block-text text='优惠券码'></v-block-text>
+                <div class='text-pink ticket'>{{order_detail.ticket_id}} </div>
+            </template>
+            <template v-if='product_detail.content_use'>
+                <v-block-text text='使用说明'></v-block-text>
+                <v-simditor>
+                    <article class='introduction' v-html='product_detail.content_use'> </article>
+                </v-simditor>
+            </template>
         </v-order>
+        <div class='add-address'>
+            <button class='btn btn-red btn-block'>+请填写收货地址</button>
+        </div>
     </div>
 </template>
 <script>
@@ -65,7 +72,7 @@ export default {
                 userid: APP.USER_ID
             }).then((response) => {
                 let data = response.data;
-                this.order_detail=data.data;
+                this.order_detail = data.data;
                 this.getProductDetail(data.data.product_id);
             }, (response) => {
 
@@ -77,7 +84,7 @@ export default {
                 userid: APP.USER_ID
             }).then((response) => {
                 let data = response.data;
-                this.product_detail=data.data;
+                this.product_detail = data.data;
             }, (response) => {
 
             })

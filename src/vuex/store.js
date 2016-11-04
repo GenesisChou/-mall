@@ -6,22 +6,19 @@ Vue.use(Vuex);
 const state = {
     // TODO: 放置初始状态
     user: '', //用户信息
-    hot_activity_list: '', //热门活动列表
-    hot_product_list: '', //热门商品列表
+    hot_items:'',
+    hot_banners:'',
     integral_param: '', //积分获取方式
     integral_list: '', //积分明细
     v_alert: {
         type: 'suprise',
         show: false,
-        event:'close',
+        event: 'close',
         msg: '',
-        btn_text:'',
-        cover_close:true,
+        btn_text: '',
+        cover_close: true,
         callback: function() {}
     },
-    v_modal: {
-        show: false
-    }
 }
 
 const mutations = {
@@ -33,9 +30,6 @@ const mutations = {
         state.v_alert.callback = alert.callback;
         state.v_alert.cover_close = alert.cover_close;
         state.v_alert.btn_text = alert.btn_text;
-    },
-    toggleModal(state) {
-        state.v_modal.show = !state.v_modal.show;
     },
     //——获取用户信息
     getUserInfor(state, callback) {
@@ -55,46 +49,47 @@ const mutations = {
     },
     //首页
     //签到
-    checkIn(state) {
+    checkIn(state, callback) {
         if (!state.user.ischecked) {
             Vue.http.post(`${APP.HOST}/checkin/${APP.USER_ID}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID
             }).then((response) => {
-                store.dispatch('getUserInfor', function() {
-                    store.dispatch('toggleAlert', { msg: '签到成功' });
-                });
+                let data = response.data;
+                if (data.status ==APP.SUCCESS) {
+
+                    store.dispatch('getUserInfor');
+                    if (callback) {
+                        callback();
+                    }
+                }else{
+                    store.dispatch('toggleAlert',{msg:data.info})
+                }
             }, (response) => {
 
             })
-        } else {
-            store.dispatch('toggleAlert', { msg: '已签到' });
         }
     },
-    //——获取热门活动列表
-    getHotActivityList(state) {
-        Vue.http.post(`${APP.HOST}/hot_activity`, {
+    //热门banner列表
+    getHotBanners(state){
+        Vue.http.post(`${APP.HOST}/hot_banner`, {
             token: APP.TOKEN,
             userid: APP.USER_ID
         }).then((response) => {
-            state.hot_activity_list = response.data.data.list;
-            // dispatch('GET_HOT_ACTIVITY_LIST', response.data.data.list);
+            state.hot_banners = response.data.data.list;
         }, (response) => {
-            // error callback
         });
     },
-    //——获取热门商品列表
-    getHotProductList(state) {
-        Vue.http.post(`${APP.HOST}/hot_product`, {
+    //  热门商品和活动列表，用于首页列表
+    getHotItems(state){
+        Vue.http.post(`${APP.HOST}/hot_item`, {
             token: APP.TOKEN,
             userid: APP.USER_ID
         }).then((response) => {
-            state.hot_product_list = response.data.data.list;
+            state.hot_items = response.data.data.list;
         }, (response) => {
-            // error callback
         });
     },
-
     //积分明细
     //——获取积分赚取方式
     getIntegralParam(state) {
@@ -124,25 +119,20 @@ const actions = {
     toggleAlert({ commit }, alert) {
         commit('toggleAlert', alert);
     },
-    toggleModal({ commit }) {
-        commit('toggleModal');
-    },
     //——获取用户信息
     getUserInfor({ commit }, callback) {
         commit('getUserInfor', callback);
     },
     //首页
     //签到
-    checkIn({ commit }) {
-        commit('checkIn');
+    checkIn({ commit }, callback) {
+        commit('checkIn', callback);
     },
-    //——获取热门活动列表
-    getHotActivityList({ commit }) {
-        commit('getHotActivityList');
+    getHotItems({commit}){
+        commit('getHotItems');
     },
-    //——获取热么商品列表
-    getHotProductList({ commit }) {
-        commit('getHotProductList');
+    getHotBanners({commit}){
+        commit('getHotBanners');
     },
     //积分明细
     //——获取赚取积分方式
@@ -152,7 +142,8 @@ const actions = {
     //——获取积分明细
     getIntegralList({ commit }) {
         commit('getIntegralList');
-    }
+    },
+    //获取商品列表
 }
 const store = new Vuex.Store({
     state,

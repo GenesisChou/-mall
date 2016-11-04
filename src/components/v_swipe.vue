@@ -51,61 +51,62 @@
 <script>
 export default {
     data() {
-        return {
-            scroll: '',
-            timer:'',
-            currentNumber: 0,
-            list: [{
-                class: 'bg-pink'
-            }, {
-                class: 'bg-yellow'
-            }, {
-                class: 'bg-green'
-            }, {
-                class: 'bg-gray'
-            }, {
-                class: 'bg-blue'
-            }],
-        }
-    },
-    mounted() {
-        this.scroll = document.querySelector('.scroll');
-        this.start();
-    },
-    computed: {
-        //轮播总宽度
-        scroll_width() {
-            return (this.list.length * 100) + '%';
+            return {
+                scroll: '',
+                timer: '',
+                currentNumber: 0,
+                list: [{
+                    class: 'bg-pink'
+                }, {
+                    class: 'bg-yellow'
+                }, {
+                    class: 'bg-green'
+                }, {
+                    class: 'bg-gray'
+                }, {
+                    class: 'bg-blue'
+                }],
+            }
         },
-        item_width() {
-            return this.gap + '%';
-        },
-        //每次移动间隔
-        gap() {
-            return Math.floor(100 / this.list.length);
-        }
-    },
-    methods: {
-        move($index) {
-            this.scroll.style.transform = `translateX(-${$index*this.gap}%)`;
-        },
-        start() {
-            this.timer = setInterval(() => {
-            	console.log('moving');
-                this.currentNumber = this.currentNumber == (this.list.length - 1) ? 0 : this.currentNumber + 1;
-                this.move(this.currentNumber);
-            }, 2000);
-
-        },
-        stop() {
-            clearInterval(this.timer);
-        },
-        active($index) {
-            this.stop();
-            this.currentNumber = $index;
-            this.move(this.currentNumber);
+        mounted() {
+            this.scroll = document.querySelector('.scroll');
             this.start();
         },
-    }
+        computed: {
+            //轮播总宽度
+            scroll_width() {
+                return (this.list.length * 100) + '%';
+            },
+            item_width() {
+                return this.gap + '%';
+            },
+            //每次移动间隔
+            gap() {
+                return Math.ceil(100 / this.list.length);
+            }
+        },
+        methods: {
+            move($index) {
+                this.scroll.style.transform = `translateX(-${$index*this.gap}%)`;
+            },
+            start() {
+                this.timer = setInterval(() => {
+                    // console.log('swipe');
+                    this.currentNumber = (this.currentNumber + 1) % this.list.length;
+                    // this.currentNumber = this.currentNumber == (this.list.length - 1) ? 0 : this.currentNumber + 1;
+                    this.move(this.currentNumber);
+                }, 2000);
+
+            },
+            stop() {
+                clearInterval(this.timer);
+            },
+            active($index) {
+                this.stop();
+                this.currentNumber = $index;
+                this.move(this.currentNumber);
+                this.start();
+            },
+        }
 }
 </script>

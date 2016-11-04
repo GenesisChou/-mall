@@ -1,6 +1,6 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
-.head {
+.header {
     height: pxTorem(400);
     position: relative;
     img {
@@ -22,7 +22,7 @@
     height: pxTorem(150);
 }
 
-.body {
+.main {
     padding: 0 pxTorem(50);
     .introduction {
         margin-top: pxTorem(50);
@@ -33,53 +33,87 @@
 }
 
 .footer {
-    height: pxTorem(120);
-    padding: 0 pxTorem(55);
+    height: pxTorem(100);
+    padding-left: pxTorem(55);
     .btn {
         padding: 0;
         width: pxTorem(180);
-        height: pxTorem(68);
-        line-height: pxTorem(68);
+        height: pxTorem(100);
         font-size: pxTorem(30);
         text-indent: pxTorem(12);
         letter-spacing: pxTorem(12);
+        border: 0;
+        border-radius: 0;
     }
     .btn-disable {
+        color: $white;
+        background-color: #838385;
         letter-spacing: 0;
         text-indent: pxTorem(0);
     }
 }
 
 .modal-content {
-    width: pxTorem(500);
-    height: pxTorem(260);
-    padding-top: pxTorem(31);
-    border-radius: pxTorem(5);
-    .icon {
-        width: pxTorem(50);
-        height: pxTorem(50);
-    }
+    width: pxTorem(600);
+    border-radius: pxTorem(10);
+    overflow: hidden;
+    text-align: center;
+}
+
+.modal-1 {
     .msg {
-        line-height: pxTorem(100);
+        line-height: pxTorem(190);
+        background-color: $white;
+        font-size: pxTorem(32);
+    }
+    .btns {
+        font-size: pxTorem(30);
+        >div {
+            height: pxTorem(84);
+            line-height: pxTorem(84);
+            text-indent: pxTorem(12);
+            letter-spacing: pxTorem(12);
+            &:nth-child(1) {
+                border-top: 1px solid $gray;
+            }
+        }
+    }
+}
+
+.modal-2 {
+    padding: pxTorem(20);
+    background-color: $white;
+    border-radius: pxTorem(10);
+    .msg {
+        padding: pxTorem(40) 0;
+        margin: auto;
+        font-size: pxTorem(32);
+        text-align: center;
+        width: pxTorem(400);
+    }
+    .pic {
+        width: pxTorem(270);
+        height: pxTorem(235);
     }
     .btn {
-        text-indent: pxTorem(12);
-        letter-spacing: pxTorem(12);
-    }
-    .btn+ {
-        margin-left: pxTorem(30);
+        width: pxTorem(300);
+        height: pxTorem(78);
+        margin: 0 auto;
+        margin-bottom: pxTorem(30);
+        line-height: pxTorem(78);
+        font-size: pxTorem(30);
     }
 }
 </style>
 <template>
     <div class='product_detail'>
-        <div class='head flex flex-center-h flex-center-v'>
+        <header class='header flex flex-center-h flex-center-v'>
             <img :src='product_detail.pic_banner' />
             <div class='cover text-white  flex flex-center-v'>
                 <p class='text-huge'>{{product_detail.name}}</p>
             </div>
-        </div>
-        <div class='body '>
+        </header>
+        <article class='main '>
             <div class='introduction'>
                 <v-simditor>
                     <template v-if='product_detail.content'>
@@ -93,39 +127,36 @@
                 </v-simditor>
             </div>
             <div class='fill'></div>
-        </div>
+        </article>
         <v-sticky>
-            <div class='footer flex flex-space-between flex-center-v'>
+            <footer class='footer flex flex-space-between flex-center-v'>
                 <div class='text-large'>
                     单价：<span class='text-pink'>{{parseInt(product_detail.integral)||0}}</span>积分
                 </div>
-                <button v-if='integral_enough' class='btn btn-pink ' @click='toggleModal'>兑换</button>
-                <button v-else class='btn btn-disable '>积分不足</button>
-            </div>
+                <button v-if='integral_enough' class='btn btn-red ' @click='toggleModal'>兑换</button>
+                <button v-else class='btn btn-disable '>余额不足</button>
+            </footer>
         </v-sticky>
-        <v-modal :cover-close=false>
-            <div class='modal-content text-center text-large bg-white'>
-                <template v-if='!order_state.start'>
-                    <img class='icon' src='../assets/images/question-hollow.png' />
-                    <p class=' msg'>是否确认兑换</p>
-                    <button class='btn btn-pink-hollow ' @click='toggleModal'>取消</button>
-                    <button class='btn btn-pink ' @click='order'>确认</button>
-                </template>
-                <template v-else>
-                    <template v-if='order_state.success'>
-                        <img class='icon' src='../assets/images/correct-hollow.png' />
-                        <p class=' msg'>{{order_state.msg}}</p>
-                        <router-link tag='button' class='btn btn-pink' :to='{name:"order_detail",query:{order_id:order_detail_id}}' replace>
-                            查看
-                        </router-link>
-                    </template>
-                    <template v-else>
-                        <img class='icon' src='../assets/images/error-hollow.png' />
-                        <p class=' msg'>{{order_state.msg}}</p>
-                        <button  class='btn btn-pink' @click='toggleModal'>关闭</button>
-                    </template>
-                </template>
-            </div>
+        <v-modal :cover-close=false :show='modal'>
+            <section v-if='!order_state.start' class='modal-content modal-1'>
+                <div class=' msg'>是否确认兑换?</div>
+                <div class='flex btns'>
+                    <div class=' flex-item  btn-cancel bg-white' @click='toggleModal'>取消</div>
+                    <div class=' flex-item btn-sure bg-red text-white' @click='order'>确认</div>
+                </div>
+            </section>
+            <section v-else class='modal-content modal-2'>
+                <header>
+                    <img class='pic' src='../assets/images/iphone.png'>
+                </header>
+                <div class='msg'>{{order_state.msg}}</div>
+                <router-link v-if='order_state.success' tag='div' class='btn btn-red' :to='{name:"order_detail",query:{order_id:order_detail_id}}' replace>
+                    查看详情
+                </router-link>
+                <div v-else class='btn btn-red' @click='toggleModal'>
+                    关闭
+                </div>
+            </section>
         </v-modal>
     </div>
 </template>
@@ -157,17 +188,16 @@ export default {
             order_detail_id: '', //兑换成功后用于跳转订单详情的订单id
         };
     },
-
     mounted() {
-        this.product_id=this.$route.query.product_id;
-        this.getUserInfor();
+        this.product_id = this.$route.query.product_id;
+        this.$store.dispatch('getUserInfor');
         this.getProductDetail();
     },
     computed: {
         integral_enough() {
-            return parseInt(this.user.integral)>=parseInt(this.product_detail.integral) ? true : false;
+            return parseInt(this.user.integral) >= parseInt(this.product_detail.integral) ? true : false;
         },
-        user(){
+        user() {
             return this.$store.state.user;
         }
     },
@@ -181,7 +211,7 @@ export default {
             }).then((response) => {
                 let data = response.data;
                 // this.$set('product_detail', utils.resizeImg(data.data));
-                this.product_detail=data.data;
+                this.product_detail = data.data;
             }, (response) => {})
         },
         //生成订单
@@ -191,25 +221,21 @@ export default {
                 userid: APP.USER_ID
             }).then((response) => {
                 let data = response.data;
-
-                this.order_state.start=true;
-                this.order_state.msg=data.info;
+                this.order_state.msg = data.info;
+                this.order_state.start = true;
                 if (response.data.status === APP.SUCCESS) {
-                    this.order_state.success=true;
-                    this.order_detail_id=data.data.id;
+                    this.order_state.success = true;
+                    this.order_detail_id = data.data.id;
                     //更新用户数据
-                    this.getUserInfor();
+                    this.$store.dispatch('getUserInfor');
                 }
             }, (response) => {
 
             })
         },
         toggleModal() {
-            this.$store.dispatch('toggleModal');
+            this.modal = !this.modal;
         },
-        getUserInfor(){
-            this.$store.dispatch('getUserInfor');
-        }
     }
 };
 </script>

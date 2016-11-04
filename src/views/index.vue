@@ -13,7 +13,7 @@
         border-radius: 50%;
         line-height: 100%;
     }
-    >.flex:first-child .icon {
+    >.flex:nth-child(2) .icon {
         position: relative;
         .label {
             position: absolute;
@@ -21,13 +21,13 @@
             opacity: 0;
             color: $red;
             &.active {
-                animation: move 1s;
+                animation: checkAnimation 1s;
             }
         }
     }
 }
 
-@keyframes move {
+@keyframes checkAnimation {
     0% {
         opacity: 1;
         top: pxTorem(15);
@@ -41,26 +41,34 @@
 .main {
     display: flex;
     flex-wrap: wrap;
-    padding: pxTorem(18) pxTorem(12);
+    justify-content: center;
+    padding: pxTorem(18) 0;
 }
 </style>
 <template>
     <div class='index bg-base'>
-        <v-swipe ></v-swipe>
+        <v-swipe></v-swipe>
+        <!-- <router-link :to='{name:"activity_list"}' tag='button' class='btn btn-red'>活动列表</router-link > -->
         <div class='icon-list flex bg-white'>
-            <div class='flex-item flex flex-center-v flex-center-h' @click='checkIn'>
-                <div class='icon bg-pink text-white flex flex-column flex-center-v flex-center-h '>
-                    <p>点击</p>
-                    <p>签到</p>
-                    <span :class='["label",checked?"active":""]'>+10</span>
-                </div>
-            </div>
             <router-link :to='{name:"my_integral"}' class='flex-item flex flex-center-v flex-center-h'>
                 <div class='icon bg-blue text-white flex flex-column flex-center-v flex-center-h '>
                     <p>积分</p>
-                    <p>1200</p>
+                    <p>{{parseInt(user.integral)}}</p>
                 </div>
             </router-link>
+            <div class='flex-item flex flex-center-v flex-center-h' @click='checkIn'>
+                <div class='icon bg-pink text-white flex flex-column flex-center-v flex-center-h '>
+                    <template v-if='!user.ischecked'>
+                        <p>点击</p>
+                        <p>签到</p>
+                    </template>
+                    <template v-else>
+                            <p>您已</p>
+                            <p>签到</p>
+                    </template>
+                    <span :class='["label",check_animation?"active":""]'>+10</span>
+                </div>
+            </div>
             <router-link :to='{name:"product_list"}' class='flex-item flex flex-center-v flex-center-h'>
                 <div class='icon bg-yellow text-white flex flex-column flex-center-v flex-center-h '>
                     <p>所有</p>
@@ -88,27 +96,24 @@ export default {
         vSwipe,
         vItem
     },
+
+    computed: mapState(['user', 'hot_banners', 'hot_items']),
+    mounted() {
+        // this.$store.dispatch('getUserInfor');
+        // this.$store.dispatch('getHotBanners');
+        // this.$store.dispatch('getHotItems');
+    },
     data() {
         return {
-            checked: false,
+            check_animation: false,
         }
     },
     methods: {
         checkIn() {
-            this.checked = true;
+            this.$store.dispatch('checkIn', () => {
+                this.check_animation = true;
+            });
         }
-    },
-    beforeRouteLeave(to, from, next) {
-        // 导航离开该组件的对应路由时调用
-        // 可以访问组件实例 `this`
-        next();
     }
-    // computed: mapState(['user', 'hot_activity_list', 'hot_product_list']),
-    // mounted() {
-    //     this.getUserInfor();
-    //     this.getHotActivityList();
-    //     this.getHotProductList();
-    // },
-    // methods: mapActions(['checkIn', 'getUserInfor', 'getHotActivityList', 'getHotProductList'])
 };
 </script>

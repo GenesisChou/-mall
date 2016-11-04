@@ -1,12 +1,12 @@
 <style lang='sass' scoped>
   @import '../assets/scss/variable.scss';
     .spinner {
-        border: pxTorem(8) solid $gray;
-        border-top: pxTorem(8) solid $blue;
+        border: pxTorem(8) solid $gray-light;
+        border-top: pxTorem(8) solid $red;
         border-radius: 50%;
         width: pxTorem(60);
         height: pxTorem(60);
-        animation: spin 2s linear infinite;
+        animation: spin 1s linear infinite;
     }
     @keyframes spin {
         0% { transform: rotate(0deg); }

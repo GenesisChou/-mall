@@ -13,7 +13,9 @@
         height: pxTorem(200);
         margin-bottom: pxTorem(30);
         border: 1px solid $gray;
-        background:url('../../assets/images/index/v-item.png');
+        background-image:url('../../assets/images/index/v-item.png');
+        background-size:100%;
+        background-repeat:no-repeat;
         .label {
             position: absolute;
             left: -2%;

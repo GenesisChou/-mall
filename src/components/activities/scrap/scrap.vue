@@ -106,7 +106,7 @@ export default {
             }).then((response) => {
                 let data = response.data;
                 if (data.status == APP.SUCCESS) {
-                    this.$parent.getUserInfor(); //更新用户信息
+                    this.$store.dispatch('getUserInfor'); //更新用户信息
                     this.is_win = data.data.is_win;
                     this.activity_start = true;
                     if (this.is_win) {

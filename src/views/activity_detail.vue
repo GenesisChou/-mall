@@ -72,6 +72,7 @@ export default {
             this.game = 'quiz';
         }
         this.getActivityDetail();
+        this.$store.dispatch('getUserInfor');
     },
     methods: {
         //获取活动详情
@@ -85,9 +86,6 @@ export default {
             }, (response) => {
 
             })
-        },
-        getUserInfor(){
-            this.$store.dispatch('getUserInfor');
         }
     }
 };

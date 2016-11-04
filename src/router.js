@@ -31,13 +31,13 @@ const router = new VueRouter({
                 require(['views/product_detail.vue'], resolve)
             }
         },
-        // {
-        //  path:'/activity_list',
-        //     name: 'activity_list',
-        //     component:function(resolve){
-        //      require(['views/activity_list.vue'],resolve)
-        //     }  
-        // },
+        {
+         path:'/activity_list',
+            name: 'activity_list',
+            component:function(resolve){
+             require(['views/activity_list.vue'],resolve)
+            }  
+        },
         {
          path:'/activity_detail',
             name: 'activity_detail',
@@ -63,6 +63,12 @@ const router = new VueRouter({
             component: function(resolve) {
                 require(['views/order_detail.vue'], resolve)
             }
+        },{
+            path: '/test',
+            name: 'test',
+            component: function(resolve) {
+                require(['views/test.vue'], resolve)
+            }
         }
         // { path: '*', redirect: '/' }
     ],
@@ -71,9 +77,6 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (store.state.v_alert.show) {
         store.dispatch('toggleAlert');
-    }
-    if(store.state.v_modal.show){
-        store.dispatch('toggleModal');
     }
     next();
 })

@@ -43,8 +43,7 @@
                 </p>
             </div>
         </section>
-        <slot name='footer-content'>
-        </slot>
+        <slot > </slot>
     </div>
 </template>
 <script>
