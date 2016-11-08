@@ -6,8 +6,10 @@ Vue.use(Vuex);
 const state = {
     // TODO: 放置初始状态
     user: '', //用户信息
-    hot_items:'',
-    hot_banners:'',
+    address_list: '', //用户地址列表 
+    hot_items: '',
+    hot_banners: '',
+    hot_commend: '',
     integral_param: '', //积分获取方式
     integral_list: '', //积分明细
     v_alert: {
@@ -19,10 +21,10 @@ const state = {
         cover_close: true,
         callback: function() {}
     },
-    v_confirm:{
-        show:false,
-        msg:'',
-        callback:function(){}
+    v_confirm: {
+        show: false,
+        msg: '',
+        callback: function() {}
     }
 }
 
@@ -37,7 +39,7 @@ const mutations = {
         state.v_alert.btn_text = alert.btn_text;
         state.v_alert.type = alert.type;
     },
-    toggleConfirm(state,confirm={}){
+    toggleConfirm(state, confirm = {}) {
         state.v_confirm.show = confirm.show;
         state.v_confirm.msg = confirm.msg;
         state.v_confirm.callback = confirm.callback;
@@ -59,6 +61,18 @@ const mutations = {
 
         })
     },
+    getAddressList(state) {
+        Vue.http.post(`${APP.HOST}/address_list/${APP.USER_ID}`, {
+            token: APP.TOKEN,
+            userid: APP.USER_ID
+        }).then((response) => {
+            state.address_list = response.data.data;
+            // dispatch('GET_USER_INFOR', response.data.data);
+            // Vue.etIntegralList(); //每次更新用户信息,必定更新积分明细列表
+        }, (response) => {
+
+        })
+    },
     //首页
     //签到
     checkIn(state, callback) {
@@ -68,14 +82,14 @@ const mutations = {
                 userid: APP.USER_ID
             }).then((response) => {
                 let data = response.data;
-                if (data.status ==APP.SUCCESS) {
+                if (data.status == APP.SUCCESS) {
 
                     store.dispatch('getUserInfor');
                     if (callback) {
                         callback();
                     }
-                }else{
-                    store.dispatch('toggleAlert',{msg:data.info})
+                } else {
+                    store.dispatch('toggleAlert', { msg: data.info })
                 }
             }, (response) => {
 
@@ -83,24 +97,30 @@ const mutations = {
         }
     },
     //热门banner列表
-    getHotBanners(state){
+    getHotBanners(state) {
         Vue.http.post(`${APP.HOST}/hot_banner`, {
             token: APP.TOKEN,
             userid: APP.USER_ID
         }).then((response) => {
             state.hot_banners = response.data.data.list;
-        }, (response) => {
-        });
+        }, (response) => {});
     },
     //  热门商品和活动列表，用于首页列表
-    getHotItems(state){
+    getHotItems(state) {
         Vue.http.post(`${APP.HOST}/hot_item`, {
             token: APP.TOKEN,
             userid: APP.USER_ID
         }).then((response) => {
             state.hot_items = response.data.data.list;
-        }, (response) => {
-        });
+        }, (response) => {});
+    },
+    getHotCommend(state) {
+        Vue.http.post(`${APP.HOST}/hot_commend`, {
+            token: APP.TOKEN,
+            userid: APP.USER_ID
+        }).then((response) => {
+            state.hot_commend = response.data.data.list;
+        }, (response) => {});
     },
     //积分明细
     //——获取积分赚取方式
@@ -131,22 +151,28 @@ const actions = {
     toggleAlert({ commit }, alert) {
         commit('toggleAlert', alert);
     },
-    toggleConfirm({commit},confirm){
-        commit('toggleConfirm',confirm);
+    toggleConfirm({ commit }, confirm) {
+        commit('toggleConfirm', confirm);
     },
     //——获取用户信息
     getUserInfor({ commit }, callback) {
         commit('getUserInfor', callback);
+    },
+    getAddressList({commit}){
+        commit('getAddressList');
     },
     //首页
     //签到
     checkIn({ commit }, callback) {
         commit('checkIn', callback);
     },
-    getHotItems({commit}){
+    getHotItems({ commit }) {
         commit('getHotItems');
     },
-    getHotBanners({commit}){
+    getHotCommend({ commit }) {
+        commit('getHotCommend');
+    },
+    getHotBanners({ commit }) {
         commit('getHotBanners');
     },
     //积分明细

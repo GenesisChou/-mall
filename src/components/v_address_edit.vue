@@ -45,18 +45,34 @@
 
 .modal-content {
     background-color: $white;
+    max-height: pxTorem(400);
+    overflow: scroll;
+    border-radius: pxTorem(10);
     li {
-        max-width: pxTorem(450);
+        display: flex;
+        align-items: center;
+        width: pxTorem(350);
+        height: pxTorem(70);
+        padding: 0 pxTorem(20);
+        list-style: none;
+        overflow: hidden;
         border-bottom: 1px solid $gray-light;
         &:last-child {
             border-bottom: 1px solid $gray-light;
         }
-        div {
-            padding: pxTorem(15) pxTorem(20);
-            list-style: none;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+        .radio {
+            width: pxTorem(30);
+            height: pxTorem(30);
+            line-height: pxTorem(70);
+            margin-right: pxTorem(20);
+            border-radius: 50%;
+            -webkit-box-shadow: inset 0 0 pxTorem(10) $gray-light;
+            -moz-box-shadow: inset 0 0 pxTorem(10) $gray-light;
+            box-shadow: inset 0 0 pxTorem(10) $gray-light;
+        }
+        .radio.active {
+            box-shadow: none;
+            border: pxTorem(10) solid $red;
         }
     }
 }
@@ -104,19 +120,19 @@
                 <ul v-if='current_type=="province"'>
                     <li v-for='(province,$index) in province_list' @click='chooseArea($index,"province")'>
                         <!-- <input type="radio"> -->
-                        <div>{{province}}</div>
+                        <i :class='["radio",$index==2?"active":""]'></i> <span>{{province}}</span>
                     </li>
                 </ul>
                 <ul v-if='current_type=="city"'>
                     <li v-for='(city,$index) in city_list' @click='chooseArea($index,"city")'>
                         <!-- <input type="radio"> -->
-                        <div>{{city}}</div>
+                        <i class='radio'></i> <span>{{city}}</span>
                     </li>
                 </ul>
                 <ul v-if='current_type=="county"'>
                     <li v-for='(county,$index) in county_list' @click='chooseArea($index,"county")'>
                         <!-- <input type="radio"> -->
-                        <div>{{county}}</div>
+                        <i class='radio'></i> <span>{{county}}</span>
                     </li>
                 </ul>
             </div>
@@ -160,8 +176,8 @@ export default {
     data() {
         return {
             modal: false,
-            current_type:'province',
-            province_list: ['浙江', '江苏', '福建'],
+            current_type: 'province',
+            province_list: ['浙江', '江苏', '福建','广东','广西','云南','山东','河北','辽宁','吉林','黑龙江'],
             city_list: ['杭州', '温州', '宁波'],
             county_list: ['西湖区', '上城区', '下城区']
         }
@@ -180,8 +196,8 @@ export default {
             this.reciveInfor.address = '';
             this.reciveInfor.phone = '';
         },
-        showAreaList(type){
-            this.current_type=type;
+        showAreaList(type) {
+            this.current_type = type;
             this.toggleModal();
         },
         //关闭/显示confirm

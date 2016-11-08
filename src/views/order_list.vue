@@ -7,11 +7,7 @@
 </style>
 <template>
     <div class='order-list bg-base'>
-        <!--         <router-link v-for='order in order_list' :to='{name:"order_detail",query:{order_id:order.id}}'>
-            <v-order :order='order'> </v-order>
-        </router-link>
- -->
-        <router-link v-for='order in 10' :to='{name:"order_detail",query:{order_id:order.id}}'>
+        <router-link v-for='order in order_list' :to='{name:"order_detail",query:{order_id:order.id}}'>
             <v-order :order='order'> </v-order>
         </router-link>
         <v-empty v-if='empty'></v-empty>
@@ -45,8 +41,8 @@ export default {
         }
     },
     mounted() {
-        // this.getOrderList();
-        // utils.getScrollData(this.order_list, this.params, this.getOrderList);
+        this.getOrderList();
+        utils.getScrollData(this.order_list, this.params, this.getOrderList);
     },
     methods: {
         //获取兑换订单列表

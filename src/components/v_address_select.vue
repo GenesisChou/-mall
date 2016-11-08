@@ -13,7 +13,7 @@
         li {
             height: pxTorem(107);
             list-style: none;
-            border-top: 1px solid $gray;
+            border-top: 1px solid $gray-light;
             &:last-child {
                 border-bottom: 0;
                 /*height: pxTorem(80);*/
@@ -102,6 +102,14 @@ export default {
             }]
         };
     },
+    computed: {
+        address_list() {
+            return this.$store.address_list;
+        }
+    },
+    mounted() {
+        this.$store.dispatch('getAddressList');
+    },
     methods: {
         toggleEdit(type) {
             this.title = type === 'add' ? '新建收货地址' : '修改收货地址';
@@ -112,7 +120,7 @@ export default {
                 return address.default = (index == $index);
             })
         },
-        saveAddress(){
+        saveAddress() {
             this.togglePopup();
         }
     }

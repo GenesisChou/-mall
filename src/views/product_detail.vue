@@ -107,15 +107,11 @@
         </article>
         <v-sticky>
             <footer class='footer flex flex-space-between flex-center-v'>
-                <!--                 <div class='text-large'>
+                <div class='text-large'>
                     单价：<span class='text-red'>{{parseInt(product_detail.integral)||0}}</span>积分
                 </div>
-                <button v-if='integral_enough' class='btn btn-red ' @click='toggleModal'>兑换</button>
-                <button v-else class='btn btn-disable '>余额不足</button> -->
-                <div class='text-large'>
-                    单价：<span class='text-red'>0</span>积分
-                </div>
-                <button class='btn btn-red ' @click='exchange'>兑换</button>
+                <button v-if='integral_enough' class='btn btn-red ' @click='exchange'>兑换</button>
+                <button v-else class='btn btn-disable '>余额不足</button>
             </footer>
         </v-sticky>
         <v-modal :cover-close=false :show='modal'>
@@ -163,9 +159,9 @@ export default {
         };
     },
     mounted() {
-        // this.product_id = this.$route.query.product_id;
-        // this.$store.dispatch('getUserInfor');
-        // this.getProductDetail();
+        this.product_id = this.$route.query.product_id;
+        this.$store.dispatch('getUserInfor');
+        this.getProductDetail();
     },
     computed: {
         integral_enough() {

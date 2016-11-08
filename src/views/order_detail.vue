@@ -140,8 +140,8 @@ export default {
         };
     },
     mounted() {
-        // this.order_id = this.$route.query.order_id;
-        // this.getOrderDetail();
+        this.order_id = this.$route.query.order_id;
+        this.getOrderDetail();
     },
     methods: {
         //获取订单详情

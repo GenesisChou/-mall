@@ -65,8 +65,8 @@ const router = new VueRouter({
             component: function(resolve) {
                 require(['views/test.vue'], resolve)
             }
-        }
-        // { path: '*', redirect: '/' }
+        },
+        { path: '*', redirect: '/' }
     ],
     scrollBehavior: (to, from, savedPosition) => ({ x: 0, y: 0 })
 })

@@ -39,5 +39,11 @@ if (!utils.getParameterByName('token')) {
     })
 
 }
-
-
+// FastClick.attach(document.body);
+// Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
+// new Vue({
+//     el: '#app',
+//     render: h => h(App),
+//     router,
+//     store
+// })

@@ -8,7 +8,7 @@
 }
 
 .v-confirm-content {
-    position: absolute;
+    position: fixed;
     left: 50%;
     top: 50%;
     width: pxTorem(600);

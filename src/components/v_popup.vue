@@ -1,11 +1,11 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
 .v-popup-content {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    border-top: 1px solid $gray;
+    border-top: 1px solid $gray-light;
     z-index: 2;
     .close-popup {
         position: absolute;

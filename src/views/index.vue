@@ -41,8 +41,7 @@
 .main {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    padding: pxTorem(18) 0;
+    padding: pxTorem(18) 0 pxTorem(18) pxTorem(12);
 }
 </style>
 <template>
@@ -53,22 +52,19 @@
             <router-link :to='{name:"my_integral"}' class='flex-item flex flex-center-v flex-center-h'>
                 <div class='icon bg-blue text-white flex flex-column flex-center-v flex-center-h '>
                     <p>积分</p>
-                    <!-- <p>{{parseInt(user.integral)}}</p> -->
-                    <p>0</p>
+                    <p>{{parseInt(user.integral)}}</p>
                 </div>
             </router-link>
             <div class='flex-item flex flex-center-v flex-center-h' @click='checkIn'>
                 <div class='icon bg-pink text-white flex flex-column flex-center-v flex-center-h '>
-                    <!--                     <template v-if='!user.ischecked'>
+                    <template v-if='!user.ischecked'>
                         <p>点击</p>
                         <p>签到</p>
                     </template>
                     <template v-else>
-                            <p>您已</p>
-                            <p>签到</p>
-                    </template>                     -->
-                    <p>您已</p>
-                    <p>签到</p>
+                        <p>您已</p>
+                        <p>签到</p>
+                    </template>
                     <span :class='["label",check_animation?"active":""]'>+10</span>
                 </div>
             </div>
@@ -80,12 +76,12 @@
             </router-link>
         </div>
         <section class='main'>
-            <v-item v-for='i in 6'></v-item>
+            <v-item v-for='item in hot_items' :item='item'></v-item>
         </section>
     </div>
 </template>
 <script>
-import vSwipe from 'components/v_swipe.vue'
+import vSwipe from 'components/v_swipe'
 import vItem from 'components/index/v_item.vue'
 import {
     mapState
@@ -97,11 +93,12 @@ export default {
         vItem
     },
 
-    computed: mapState(['user', 'hot_banners', 'hot_items']),
+    computed: mapState(['user', 'hot_banners', 'hot_items','hot_commend']),
     mounted() {
         // this.$store.dispatch('getUserInfor');
-        // this.$store.dispatch('getHotBanners');
-        // this.$store.dispatch('getHotItems');
+        this.$store.dispatch('getHotBanners');
+        this.$store.dispatch('getHotItems');
+        this.$store.dispatch('getHotCommend');
     },
     data() {
         return {

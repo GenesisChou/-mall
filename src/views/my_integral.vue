@@ -73,15 +73,11 @@
         <header class='header'>
             <section class='user-msg  flex flex-center-v '>
                 <div class='avater'>
-                    <!-- <img :src='user.headimg'> -->
-                    <img>
+                    <img :src='user.headimg'>
                 </div>
                 <div class='text-white'>
-                    <!--                     <p>{{user.nickname}}</p>
+                    <p>{{user.nickname}}</p>
                     <p>积分: {{parseInt(user.integral)}}</p>
- -->
-                    <p>0</p>
-                    <p>积分: 0</p>
                 </div>
             </section>
             <div class='event flex flex-center-v '>
@@ -145,9 +141,9 @@ export default {
         }
     },
     mounted() {
-        // this.$store.dispatch('getUserInfor');
-        // this.$store.dispatch('getIntegralList');
-        // this.$store.dispatch('getIntegralParam');
+        this.$store.dispatch('getUserInfor');
+        this.$store.dispatch('getIntegralList');
+        this.$store.dispatch('getIntegralParam');
     }
 };
 </script>

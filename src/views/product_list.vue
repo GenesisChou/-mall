@@ -43,11 +43,7 @@
                 兑换量优先
             </div>
         </div>
-        <!--         <router-link :to='{name:"product_detail",query:{product_id:product.id}}' v-for='product in product_list'>
-            <v-list-item :title='product.name' :title-dupty='parseInt(product.integral)+"积分"' :img='product.pic_thumb' color='text-red'></v-list-item>
-        </router-link>
- -->
-        <router-link :to='{name:"product_detail",query:{product_id:product.id}}' v-for='product in 10'>
+        <router-link :to='{name:"product_detail",query:{product_id:product.id}}' v-for='product in product_list'>
             <v-list-item :title='product.name' :title-dupty='parseInt(product.integral)+"积分"' :img='product.pic_thumb' color='text-red'></v-list-item>
         </router-link>
         <v-back-top></v-back-top>

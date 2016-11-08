@@ -5,17 +5,18 @@
     /*height: pxTorem(350);*/
     padding: pxTorem(20);
     margin: pxTorem(11);
-    border: 2px solid $gray-light;
+    border: 1px solid $gray-light;
     background-color: $white;
     .pic {
         position: relative;
         width: pxTorem(300);
         height: pxTorem(200);
         margin-bottom: pxTorem(30);
-        border: 1px solid $gray;
-        background-image:url('../../assets/images/index/v-item.png');
-        background-size:100%;
-        background-repeat:no-repeat;
+        border: 1px solid $gray-light;
+        img {
+            width: 100%;
+            height: 100%;
+        }
         .label {
             position: absolute;
             left: -2%;
@@ -28,30 +29,83 @@
             border-radius: 5%;
         }
     }
-    .exchange{
-    	width: pxTorem(100);
-    	height: pxTorem(40);
-    	line-height: pxTorem(40);
-    	text-align:center;
-    	color:blue;
-    	border:1px solid blue;
-    	border-radius: 5%;
+    .exchange {
+        width: pxTorem(100);
+        height: pxTorem(40);
+        line-height: pxTorem(40);
+        text-align: center;
+        color: blue;
+        border: 1px solid blue;
+        border-radius: 5%;
     }
 }
 </style>
 <template>
-    <div class='v-item'>
+    <router-link class='v-item' :to='router_link'>
         <div class='pic'>
-            <span class='label bg-white text-center'>
-	   			热门活动
-	   		</span>
+            <span v-if='item.script' class='label bg-white text-center'>
+                {{item.script}}
+            </span>
+            <img :src='item.pic'>
         </div>
         <div class='detail'>
-            <p class='text-huge text-ellipsis'>刮刮卡</p>
+            <p class='text-huge text-ellipsis'>{{item.name}}</p>
             <p class=' text-gray flex flex-space-between'>
-                <span class='text-ellipsis flex-item'>200积分</span>
-                <span class='exchange'>兑换</span>
+                <span class='text-ellipsis flex-item'>{{subname}}</span>
+                <span class='exchange'>
+                {{exchange_msg}}
+                </span>
             </p>
         </div>
-    </div>
+    </router-link>
 </template>
+<script type="text/javascript">
+export default {
+    props: {
+        item: Object
+    },
+    computed: {
+        exchange_msg() {
+            if (this.item.type == 1) {
+                return '兑换';
+            }
+            if (this.item.type == 2) {
+                if (this.item.item_type == 1) {
+                    return '刮卡';
+                }
+                if (this.item.item_type == 2) {
+                    return '问答';
+                }
+            }
+        },
+        subname() {
+            let subname = this.item.subname;
+            if (parseInt(subname)) {
+                return parseInt(subname) + '积分';
+            }
+            return subname;
+        },
+        router_link() {
+            if (this.item.type == 1) {
+                return {
+                    name: "product_detail",
+                    query: {
+                        product_id: this.item.item_id
+                    }
+                };
+            }
+
+            if (this.item.type == 2) {
+                return {
+                    name: "activity_detail",
+                    query: {
+                        activity_id: this.item.item_id,
+                        type:this.item.item_type
+                    }
+                };
+
+            }
+        }
+    }
+}
+</script>
