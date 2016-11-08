@@ -1,23 +1,12 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
-.popup-enter-active,
-.popup-leave-active {
-    transition: transform .5s
-}
-
-.popup-enter,
-.popup-leave-active {
-    transform: translateY(100%);
-}
-
 .v-popup-content {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    /*height: 30%;*/
-    border-top: 1px solid $gray-light;
-    /*transform: translateY(100%);*/
+    border-top: 1px solid $gray;
+    z-index: 2;
     .close-popup {
         position: absolute;
         right: 0;
@@ -25,7 +14,6 @@
         height: pxTorem(135);
         line-height: pxTorem(135);
         padding-right: pxTorem(20);
-        /*padding-top: pxTorem(45);*/
     }
 }
 
@@ -41,14 +29,17 @@
 </style>
 <template>
     <section class='v-popup'>
-        <div class='bg-cover' v-show='show'>
-            <transition name='popup'>
-                <div class='v-popup-content' v-show='show'>
-                    <i class='close-popup iconfont icon-error text-bold text-huge' @click='close()'></i>
-                    <slot></slot>
-                </div>
-            </transition>
-        </div>
+        <!-- <div class='bg-cover' v-show='show'> -->
+        <transition name='popup'>
+            <div class='v-popup-content' v-show='show'>
+                <i class='close-popup iconfont icon-error text-bold text-huge' @click='close()'></i>
+                <slot></slot>
+            </div>
+        </transition>
+        <!-- </div> -->
+        <transition name='fade'>
+            <div class='bg-cover' v-show='show'></div>
+        </transition>
     </section>
 </template>
 <script>

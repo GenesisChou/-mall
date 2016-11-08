@@ -5,7 +5,6 @@ import store from 'v_vuex/store.js'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-    mode: 'history',
     routes: [{
             path: '/',
             name: 'index',

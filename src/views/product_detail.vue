@@ -58,29 +58,6 @@
     border-radius: pxTorem(10);
     overflow: hidden;
     text-align: center;
-}
-
-.modal-1 {
-    .msg {
-        line-height: pxTorem(190);
-        background-color: $white;
-        font-size: pxTorem(32);
-    }
-    .btns {
-        font-size: pxTorem(30);
-        >div {
-            height: pxTorem(84);
-            line-height: pxTorem(84);
-            text-indent: pxTorem(12);
-            letter-spacing: pxTorem(12);
-            &:nth-child(1) {
-                border-top: 1px solid $gray;
-            }
-        }
-    }
-}
-
-.modal-2 {
     padding: pxTorem(20);
     background-color: $white;
     border-radius: pxTorem(10);
@@ -130,22 +107,19 @@
         </article>
         <v-sticky>
             <footer class='footer flex flex-space-between flex-center-v'>
-                <div class='text-large'>
+                <!--                 <div class='text-large'>
                     单价：<span class='text-red'>{{parseInt(product_detail.integral)||0}}</span>积分
                 </div>
                 <button v-if='integral_enough' class='btn btn-red ' @click='toggleModal'>兑换</button>
-                <button v-else class='btn btn-disable '>余额不足</button>
+                <button v-else class='btn btn-disable '>余额不足</button> -->
+                <div class='text-large'>
+                    单价：<span class='text-red'>0</span>积分
+                </div>
+                <button class='btn btn-red ' @click='exchange'>兑换</button>
             </footer>
         </v-sticky>
         <v-modal :cover-close=false :show='modal'>
-            <section v-if='!order_state.start' class='modal-content modal-1'>
-                <div class=' msg'>是否确认兑换?</div>
-                <div class='flex btns'>
-                    <div class=' flex-item  btn-cancel bg-white' @click='toggleModal'>取消</div>
-                    <div class=' flex-item btn-sure bg-red text-white' @click='order'>确认</div>
-                </div>
-            </section>
-            <section v-else class='modal-content modal-2'>
+            <div class='modal-content '>
                 <header>
                     <img class='pic' src='../assets/images/iphone.png'>
                 </header>
@@ -156,7 +130,7 @@
                 <div v-else class='btn btn-red' @click='toggleModal'>
                     关闭
                 </div>
-            </section>
+            </div>
         </v-modal>
     </div>
 </template>
@@ -189,9 +163,9 @@ export default {
         };
     },
     mounted() {
-        this.product_id = this.$route.query.product_id;
-        this.$store.dispatch('getUserInfor');
-        this.getProductDetail();
+        // this.product_id = this.$route.query.product_id;
+        // this.$store.dispatch('getUserInfor');
+        // this.getProductDetail();
     },
     computed: {
         integral_enough() {
@@ -214,6 +188,16 @@ export default {
                 this.product_detail = data.data;
             }, (response) => {})
         },
+        //兑换
+        exchange() {
+            this.$store.dispatch('toggleConfirm', {
+                msg: '确认兑换该商品吗?',
+                show: true,
+                callback: () => {
+                    this.order();
+                }
+            });
+        },
         //生成订单
         order() {
             this.$http.post(`${APP.HOST}/product_order/${this.product_id}`, {
@@ -229,8 +213,11 @@ export default {
                     //更新用户数据
                     this.$store.dispatch('getUserInfor');
                 }
+                this.$store.dispatch('toggleConfirm');
+                this.toggleModal();
             }, (response) => {
-
+                this.$store.dispatch('toggleConfirm');
+                this.toggleModal();
             })
         },
         toggleModal() {

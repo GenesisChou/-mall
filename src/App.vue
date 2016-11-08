@@ -1,20 +1,12 @@
 <style lang='sass'>
+@import './assets/scss/iconfont/iconfont.css';
 @import './assets/scss/main.scss';
-.fade-enter-active {
-    transition: opacity .3s
-}
-
-.fade-enter {
-    opacity: 0
-}
 </style>
 <template>
     <div id="app">
         <router-view></router-view>
-        <transition name='fade'>
-            <v-alert v-show='v_alert.show' :msg='v_alert.msg' :callback='v_alert.callback' :type='v_alert.type' :cover-close='v_alert.cover_close' :btn-text='v_alert.btn_text'></v-alert>
-        </transition>
-        <v-confirm v-show='v_confirm.show' :msg='v_confirm.msg' :callback='v_confirm.callback'></v-confirm>
+        <v-alert :show='v_alert.show' :msg='v_alert.msg' :callback='v_alert.callback' :type='v_alert.type' :cover-close='v_alert.cover_close' :btn-text='v_alert.btn_text'></v-alert>
+        <v-confirm :show='v_confirm.show' :msg='v_confirm.msg' :callback='v_confirm.callback'></v-confirm>
     </div>
 </template>
 <script>

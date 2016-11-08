@@ -48,24 +48,27 @@
 <template>
     <div class='index bg-base'>
         <v-swipe></v-swipe>
-        <router-link :to='{name:"activity_list"}' tag='button' class='btn btn-red'>活动列表</router-link >
+        <!-- <router-link :to='{name:"activity_list"}' tag='button' class='btn btn-red'>活动列表</router-link > -->
         <div class='icon-list flex bg-white'>
             <router-link :to='{name:"my_integral"}' class='flex-item flex flex-center-v flex-center-h'>
                 <div class='icon bg-blue text-white flex flex-column flex-center-v flex-center-h '>
                     <p>积分</p>
-                    <p>{{parseInt(user.integral)}}</p>
+                    <!-- <p>{{parseInt(user.integral)}}</p> -->
+                    <p>0</p>
                 </div>
             </router-link>
             <div class='flex-item flex flex-center-v flex-center-h' @click='checkIn'>
                 <div class='icon bg-pink text-white flex flex-column flex-center-v flex-center-h '>
-                    <template v-if='!user.ischecked'>
+                    <!--                     <template v-if='!user.ischecked'>
                         <p>点击</p>
                         <p>签到</p>
                     </template>
                     <template v-else>
                             <p>您已</p>
                             <p>签到</p>
-                    </template>
+                    </template>                     -->
+                    <p>您已</p>
+                    <p>签到</p>
                     <span :class='["label",check_animation?"active":""]'>+10</span>
                 </div>
             </div>

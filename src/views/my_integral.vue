@@ -14,14 +14,14 @@
         background-size: 100%;
         font-size: pxTorem(30);
         .avater {
-            background-color:$white;
+            background-color: $white;
             border-radius: 50%;
             width: pxTorem(160);
             height: pxTorem(160);
-            margin:0 pxTorem(30) 0 pxTorem(134);
+            margin: 0 pxTorem(30) 0 pxTorem(134);
             overflow: hidden;
-            border:pxTorem(10) solid $white;
-            img{
+            border: pxTorem(10) solid $white;
+            img {
                 width: 100%;
                 height: 100%;
             }
@@ -73,11 +73,15 @@
         <header class='header'>
             <section class='user-msg  flex flex-center-v '>
                 <div class='avater'>
-                    <img :src='user.headimg'>
+                    <!-- <img :src='user.headimg'> -->
+                    <img>
                 </div>
                 <div class='text-white'>
-                    <p>{{user.nickname}}</p>
+                    <!--                     <p>{{user.nickname}}</p>
                     <p>积分: {{parseInt(user.integral)}}</p>
+ -->
+                    <p>0</p>
+                    <p>积分: 0</p>
                 </div>
             </section>
             <div class='event flex flex-center-v '>
@@ -142,8 +146,8 @@ export default {
     },
     mounted() {
         // this.$store.dispatch('getUserInfor');
-        this.$store.dispatch('getIntegralList');
-        this.$store.dispatch('getIntegralParam');
+        // this.$store.dispatch('getIntegralList');
+        // this.$store.dispatch('getIntegralParam');
     }
 };
 </script>

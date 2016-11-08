@@ -8,26 +8,27 @@
         right: 0;
         bottom: 0;
         background: rgba(0, 0, 0, .4);
-        z-index: 1;
+        z-index: 5;
     }
     .content {
         position: absolute;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
+        z-index: 6
     }
 }
 </style>
 <template>
-    <transition name='fade'>
-        <section class='v-modal'>
+    <section class='v-modal'>
+        <transition name='fade'>
             <div v-show='show' @click='close()' class='bg-cover'>
-                <div class='content '>
-                    <slot></slot>
-                </div>
             </div>
-        </section>
-    </transition>
+        </transition>
+        <div v-show='show' class='content '>
+            <slot></slot>
+        </div>
+    </section>
 </template>
 <script>
 export default {
@@ -44,7 +45,7 @@ export default {
     },
     methods: {
         close() {
-            if (this.coverClose && event.target == document.querySelector('.v-modal .bg-cover')) {
+            if (this.coverClose && event.target.className == 'bg-cover') {
                 this.toggleModal();
             }
         }

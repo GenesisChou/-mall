@@ -39,3 +39,5 @@ if (!utils.getParameterByName('token')) {
     })
 
 }
+
+

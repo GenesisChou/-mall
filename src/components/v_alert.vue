@@ -14,14 +14,14 @@
             height: pxTorem(50);
         }
         .msg {
-            font-size:pxTorem(30);
+            font-size: pxTorem(30);
             line-height: pxTorem(130);
         }
         .btn {
-            margin-bottom:pxTorem(40);
+            margin-bottom: pxTorem(40);
             letter-spacing: pxTorem(10);
             text-indent: pxTorem(10);
-            width:pxTorem(200);
+            width: pxTorem(200);
         }
     }
 }
@@ -37,31 +37,29 @@
 }
 </style>
 <template>
-  <section class='v-alert'>
-    <div  @click='close' class='bg-cover'>
-        <div class='modal bg-white'>
-            <div class='modal-content text-center text-large'>
-                <img v-if='type=="suprise"' class='icon' src='../assets/images/suprise-hollow.png' />
-                <img v-if='type=="correct"' class='icon' src='../assets/images/correct-hollow.png' />
-                <img v-if='type=="error"' class='icon' src='../assets/images/error-hollow.png' />
-                <p class='msg'>{{msg}}</p>
-                <div class='flex flex-center-h'>
-                    <button class='btn btn-red btn-large' @click='func()'>{{btnText}}</button>
+    <section v-show='show' class='v-alert'>
+        <div class='bg-cover'>
+            <div class='modal bg-white'>
+                <div class='modal-content text-center text-large'>
+                    <img v-if='type=="suprise"' class='icon' src='../assets/images/suprise-hollow.png' />
+                    <img v-if='type=="correct"' class='icon' src='../assets/images/correct-hollow.png' />
+                    <img v-if='type=="error"' class='icon' src='../assets/images/error-hollow.png' />
+                    <p class='msg'>{{msg}}</p>
+                    <div class='flex flex-center-h'>
+                        <button class='btn btn-red btn-large' @click='func()'>{{btnText}}</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-  </section>
-
+    </section>
 </template>
 <script>
 export default {
     props: {
-        // show: {
-        //     type: Boolean,
-        //     default: false
-        // },
+        show: {
+            type: Boolean,
+            default: false
+        },
         type: {
             type: String,
             default: 'suprise'
@@ -79,23 +77,15 @@ export default {
     },
     methods: {
         func() {
-          this.$store.dispatch('toggleAlert', {
-            msg: this.msg,
-            btn_text:this.btnText,
-            type:this.type,
-            cover_close:this.coverClose
-          });
+            this.$store.dispatch('toggleAlert', {
+                msg: this.msg,
+                btn_text: this.btnText,
+                type: this.type,
+                cover_close: this.coverClose
+            });
             if (this.callback) {
                 this.callback();
             }
-        },
-        close() {
-            if (this.coverClose && event.target == document.querySelector('.v-alert .bg-cover')) {
-                this.$store.dispatch('toggleAlert', {
-                    msg: this.msg
-                });
-            }
-            // this.show=false;
         }
     }
 }

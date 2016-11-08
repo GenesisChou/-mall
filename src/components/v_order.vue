@@ -37,7 +37,7 @@
         <section class='order-body flex'>
             <img class='img ' :src='order.product_pic' />
             <div class='detail flex-item'>
-                <strong class='text-huge'>{{order.product}}</strong>
+                <p class='text-huge'>{{order.product}}</p>
                 <p class='text-large text-gray'> {{parseInt(order.integral)}}积分
                     <span class='pull-right'>x1</span>
                 </p>

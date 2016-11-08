@@ -24,60 +24,40 @@
     }
 }
 
-.add-address,
-.confirm-address {
+.add-address {
     padding: pxTorem(20) pxTorem(75);
 }
 
-.confirm-address {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
-.edit-address {
-    background: $white;
-    .header {
-        line-height: pxTorem(135);
-        /*border-bottom: 1px solid $sliver;*/
+.address-selected {
+    padding: pxTorem(55) 0;
+    font-size: pxTorem(28);
+    border-top: 1px solid $gray;
+    border-bottom: 1px solid $gray;
+    .location {
+        width: pxTorem(110);
     }
-    .main {
-        padding: 0 pxTorem(53);
+    .arrows {
+        width: pxTorem(105);
+    }
+    .address-content {
+        line-height: pxTorem(55);
         label {
-            width: pxTorem(204);
-            font-size: pxTorem(30);
-            text-align: left;
+            margin-right: pxTorem(10);
         }
-        input {
-            height: pxTorem(50);
-            width: pxTorem(300);
-            padding-left: pxTorem(18);
-            border: 1px solid $gray;
-            font-size: pxTorem(26);
-        }
-        >.flex {
-            height: pxTorem(87);
-            align-items: center;
-            border-bottom: 1px solid $gray;
-            &:nth-child(1) {
-                border-top: 1px solid $gray;
-            }
-        }
-    }
-    .footer {
-        height: pxTorem(158);
-        line-height: pxTorem(158);
-        padding: 0 pxTorem(73);
-        .btn {
-            text-indent: pxTorem(12);
-            letter-spacing: pxTorem(12);
+        .address-detail {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            max-width: pxTorem(450);
         }
     }
 }
 </style>
 <template>
     <div class='order-detail bg-base'>
+        <!-- 订单详情 -->
         <v-order :order='order_detail'>
             <template v-if='order_detail.ticket_id'>
                 <div class='ticket'>
@@ -91,58 +71,44 @@
                 </v-simditor>
             </template>
         </v-order>
-        <v-address></v-address>
+        <!-- 收货地址 -->
+        <section class='address-selected bg-white flex' @click='toggleSelect'>
+            <div class='location flex flex-center-v flex-center-h'>
+                <i class='iconfont icon-location  text-huge'></i>
+            </div>
+            <div class='address-content '>
+                <p class='flex flex-space-between'>
+                    <span> <label>收货信息:</label>张三</span>
+                    <span>1390000000</span>
+                </p>
+                <div class='flex'>
+                    <label>收货地址:</label>
+                    <div class='flex-item address-detail'>浙江省 杭州市 西湖区 坚果互动科技全球研发中心</div>
+                </div>
+            </div>
+            <div class='arrows flex flex-center-v flex-center-h'>
+                <i class='iconfont icon-arrows-right text-bold text-huge'></i>
+            </div>
+        </section>
+        <!-- 物流信息 -->
         <v-logistics></v-logistics>
         <div class='add-address'>
-            <button class='btn btn-red btn-block btn-large ' @click='togglePopup'>+ 请填写收货地址</button>
+            <button class='btn btn-red btn-block btn-large ' @click='toggleEdit'>+ 请填写收货地址</button>
         </div>
-        <v-popup :show='popup' :toggle-popup='togglePopup' :callback='cancelEdit'>
-            <form class='edit-address'>
-                <header class='header text-center text-huge'>
-                    新增收货地址
-                </header>
-                <section class='main'>
-                    <div class='flex'>
-                        <label for='name'>收货人</label>
-                        <input id='name' placeholder="收货人姓名" v-model='reciveInfor.name'>
-                    </div>
-                    <div class='flex'>
-                        <label for='province'>选择省</label>
-                        <input id='province' placeholder="请选择省" v-model='reciveInfor.province'>
-                    </div>
-                    <div class='flex'>
-                        <label for='city'>选择市</label>
-                        <input id='city' placeholder="请选择市" v-model='reciveInfor.city'>
-                    </div>
-                    <div class='flex'>
-                        <label for='county'>选择区/县</label>
-                        <input id='county' placeholder="请选择区县" v-model='reciveInfor.county'>
-                    </div>
-                    <div class='flex'>
-                        <label for='address'>详细地址</label>
-                        <input id='address' placeholder="请输入详细地址" v-model='reciveInfor.address'>
-                    </div>
-                    <div class='flex'>
-                        <label for='phone'>手机号码</label>
-                        <input id='phone' type='number' placeholder="手机或固定电话" v-model='reciveInfor.phone'>
-                    </div>
-                </section>
-                <footer class='footer text-center'>
-                    <button class='btn btn-red btn-block btn-large' @click.prevent='saveEdit'>保存</button>
-                </footer>
-            </form>
-        </v-popup>
+        <!-- 编辑地址 -->
+        <v-address-edit :show='popup_edit' :toggle-popup='toggleEdit' :recive-infor='reciveInfor'></v-address-edit>
+        <!-- 选择地址 -->
+        <v-address-select :show='popup_select' :toggle-popup='toggleSelect'></v-address-edit>
     </div>
 </template>
 <script>
 import vOrder from 'components/v_order.vue'
 import vSimditor from 'components/v_simditor.vue'
 import vBlockText from 'components/v_block_text.vue'
-import vConfirm from 'components/v_confirm.vue'
-import vPopup from 'components/v_popup.vue'
-import vAddress from 'components/v_address.vue'
 import vLogistics from 'components/v_logistics.vue'
 import vDivider from 'components/v_divider.vue'
+import vAddressEdit from 'components/v_address_edit.vue'
+import vAddressSelect from 'components/v_address_select.vue'
 export default {
 
     name: 'order_detail',
@@ -150,11 +116,10 @@ export default {
         vOrder,
         vSimditor,
         vBlockText,
-        vConfirm,
-        vPopup,
-        vAddress,
         vLogistics,
-        vDivider
+        vDivider,
+        vAddressEdit,
+        vAddressSelect
     },
     data() {
         return {
@@ -162,7 +127,8 @@ export default {
             order_detail: {},
             product_detail: {},
             confirm: false,
-            popup: false,
+            popup_edit:false,
+            popup_select:false,
             reciveInfor: {
                 name: '',
                 province: '',
@@ -174,8 +140,8 @@ export default {
         };
     },
     mounted() {
-        this.order_id = this.$route.query.order_id;
-        this.getOrderDetail();
+        // this.order_id = this.$route.query.order_id;
+        // this.getOrderDetail();
     },
     methods: {
         //获取订单详情
@@ -203,39 +169,11 @@ export default {
 
             })
         },
-        //保存编辑
-        saveEdit() {
-
+        toggleEdit(){
+            this.popup_edit=!this.popup_edit;
         },
-        //取消编辑
-        cancelEdit() {
-            this.toggleConfirm();
-        },
-        //清除输入
-        clearInput() {
-            this.reciveInfor.name = '';
-            this.reciveInfor.province = '';
-            this.reciveInfor.city = '';
-            this.reciveInfor.county = '';
-            this.reciveInfor.address = '';
-            this.reciveInfor.phone = '';
-        },
-        //关闭/显示confirm
-        toggleConfirm() {
-            this.$store.dispatch('toggleConfirm', {
-                msg: '确认放弃编辑?',
-                show: true,
-                callback: () => {
-                    this.$store.dispatch('toggleConfirm', {
-                        show: false
-                    });
-                    this.togglePopup();
-                    this.clearInput();
-                }
-            });
-        },
-        togglePopup() {
-            this.popup = !this.popup;
+        toggleSelect(){
+            this.popup_select=!this.popup_select;
         }
     }
 
