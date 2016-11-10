@@ -21,10 +21,10 @@
 </style>
 <template>
     <section class='v-modal'>
-        <transition name='fade'>
+        <!-- <transition name='fade'> -->
             <div v-show='show' @click='close()' class='bg-cover'>
             </div>
-        </transition>
+        <!-- </transition> -->
         <div v-show='show' class='content '>
             <slot></slot>
         </div>

@@ -41,15 +41,15 @@ export default {
         return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
     },
     //获取滚动数据
-    //list:列别数据 parmas:参数 func:回调函数
-    getScrollData(list, params, func) {
-        if (typeof func === 'function') {
-            window.addEventListener('scroll',this.debounce(() => {
+    //list:列别数据 parmas:参数 callback:回调函数
+    getScrollData(list, params, callback) {
+        if (typeof callback === 'function') {
+            window.addEventListener('scroll', this.debounce(() => {
                 if (params.p < params.total && list.length < params.count && (this.getScrollTop() + this.getClientHeight() >= this.getScrollHeight())) {
                     params.p++;
-                    func();
+                    callback();
                 }
-            },200));
+            }, 200));
         }
     },
     // 防抖函数

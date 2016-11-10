@@ -14,7 +14,7 @@
 <template>
     <div class='activity-detail'>
         <div class='head bg-base'>
-            <component :is='game' :questions='activity_detail.questions' ></component>
+            <component :is='game' :questions='activity_detail.questions' @getFreeTimes="getFreeTimes" :free-times='parseInt(free_times)'></component>
         </div>
         <div class='body '>
             <div class='introduction'>
@@ -59,6 +59,7 @@ export default {
             activity_id: '',
             type: '',
             activity_detail: {},
+            free_times:'',
             game: '',
         }
     },
@@ -72,7 +73,8 @@ export default {
             this.game = 'quiz';
         }
         this.getActivityDetail();
-        this.$store.dispatch('getUserInfor');
+        
+        // this.$store.dispatch('getUserInfor');
     },
     methods: {
         //获取活动详情
@@ -86,6 +88,19 @@ export default {
             }, (response) => {
 
             })
+        },
+        //获取免费活动次数
+        getFreeTimes() {
+            this.$http.post(`${APP.HOST}/get_free_times/${APP.USER_ID}`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID,
+                activity_id:this.activity_id
+            }).then((response) => {
+                this.free_times=response.data.data.free_times;
+            }, (response) => {
+
+            })
+            
         }
     }
 };

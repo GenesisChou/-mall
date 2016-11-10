@@ -7,11 +7,6 @@ const state = {
     // TODO: 放置初始状态
     user: '', //用户信息
     address_list: '', //用户地址列表 
-    hot_items: '',
-    hot_banners: '',
-    hot_commend: '',
-    integral_param: '', //积分获取方式
-    integral_list: '', //积分明细
     v_alert: {
         type: 'suprise',
         show: false,
@@ -45,7 +40,7 @@ const mutations = {
         state.v_confirm.callback = confirm.callback;
 
     },
-    //——获取用户信息
+    //获取用户信息
     getUserInfor(state, callback) {
         Vue.http.post(`${APP.HOST}/get_user/${APP.USER_ID}`, {
             token: APP.TOKEN,
@@ -55,95 +50,34 @@ const mutations = {
             if (callback) {
                 callback();
             }
-            // dispatch('GET_USER_INFOR', response.data.data);
-            // Vue.etIntegralList(); //每次更新用户信息,必定更新积分明细列表
         }, (response) => {
 
         })
     },
-    getAddressList(state) {
+    getAddressList(state,callback) {
         Vue.http.post(`${APP.HOST}/address_list/${APP.USER_ID}`, {
             token: APP.TOKEN,
             userid: APP.USER_ID
         }).then((response) => {
             state.address_list = response.data.data;
-            // dispatch('GET_USER_INFOR', response.data.data);
-            // Vue.etIntegralList(); //每次更新用户信息,必定更新积分明细列表
+            if(callback){
+                callback(response.data.data);
+            }
         }, (response) => {
 
         })
     },
-    //首页
-    //签到
-    checkIn(state, callback) {
-        if (!state.user.ischecked) {
-            Vue.http.post(`${APP.HOST}/checkin/${APP.USER_ID}`, {
-                token: APP.TOKEN,
-                userid: APP.USER_ID
-            }).then((response) => {
-                let data = response.data;
-                if (data.status == APP.SUCCESS) {
-
-                    store.dispatch('getUserInfor');
-                    if (callback) {
-                        callback();
-                    }
-                } else {
-                    store.dispatch('toggleAlert', { msg: data.info })
-                }
-            }, (response) => {
-
-            })
-        }
-    },
-    //热门banner列表
-    getHotBanners(state) {
-        Vue.http.post(`${APP.HOST}/hot_banner`, {
+    pageView(state,page_id) {
+        Vue.http.post(`${APP.HOST}/page_view`, {
             token: APP.TOKEN,
-            userid: APP.USER_ID
+            userid: APP.USER_ID,
+            page_id:page_id
         }).then((response) => {
-            state.hot_banners = response.data.data.list;
-        }, (response) => {});
-    },
-    //  热门商品和活动列表，用于首页列表
-    getHotItems(state) {
-        Vue.http.post(`${APP.HOST}/hot_item`, {
-            token: APP.TOKEN,
-            userid: APP.USER_ID
-        }).then((response) => {
-            state.hot_items = response.data.data.list;
-        }, (response) => {});
-    },
-    getHotCommend(state) {
-        Vue.http.post(`${APP.HOST}/hot_commend`, {
-            token: APP.TOKEN,
-            userid: APP.USER_ID
-        }).then((response) => {
-            state.hot_commend = response.data.data.list;
-        }, (response) => {});
-    },
-    //积分明细
-    //——获取积分赚取方式
-    getIntegralParam(state) {
-        Vue.http.post(`${APP.HOST}/get_integral_param`, {
-            token: APP.TOKEN,
-            userid: APP.USER_ID
-        }).then((response) => {
-            state.integral_param = response.data.data;
+            state.address_list = response.data.data;
         }, (response) => {
 
         })
-    },
-    //——获取积分明细列表
-    getIntegralList(state) {
-        Vue.http.post(`${APP.HOST}/integral_list/${APP.USER_ID}`, {
-            token: APP.TOKEN,
-            userid: APP.USER_ID
-        }).then((response) => {
-            state.integral_list = response.data.data;
-        })
-    },
-
+    }
 }
 const actions = {
     //全局
@@ -158,33 +92,12 @@ const actions = {
     getUserInfor({ commit }, callback) {
         commit('getUserInfor', callback);
     },
-    getAddressList({commit}){
-        commit('getAddressList');
+    getAddressList({ commit },callback) {
+        commit('getAddressList',callback);
     },
-    //首页
-    //签到
-    checkIn({ commit }, callback) {
-        commit('checkIn', callback);
+    pageView({ commit }) {
+        commit('pageView');
     },
-    getHotItems({ commit }) {
-        commit('getHotItems');
-    },
-    getHotCommend({ commit }) {
-        commit('getHotCommend');
-    },
-    getHotBanners({ commit }) {
-        commit('getHotBanners');
-    },
-    //积分明细
-    //——获取赚取积分方式
-    getIntegralParam({ commit }) {
-        commit('getIntegralParam');
-    },
-    //——获取积分明细
-    getIntegralList({ commit }) {
-        commit('getIntegralList');
-    },
-    //获取商品列表
 }
 const store = new Vuex.Store({
     state,

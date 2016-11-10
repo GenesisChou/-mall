@@ -2,6 +2,7 @@
 @import '../assets/scss/variable.scss';
 .order-detail {
     min-height: 100%;
+    overflow: hidden;
     .v-order {
         border: 0;
         margin-bottom: 0;
@@ -24,12 +25,12 @@
     }
 }
 
-.add-address {
+.single-button {
     padding: pxTorem(20) pxTorem(75);
 }
 
 .address-selected {
-    padding: pxTorem(55) 0;
+    padding: pxTorem(55) pxTorem(50) pxTorem(55) 0;
     font-size: pxTorem(28);
     border-top: 1px solid $gray;
     border-bottom: 1px solid $gray;
@@ -37,7 +38,8 @@
         width: pxTorem(110);
     }
     .arrows {
-        width: pxTorem(105);
+        /*width: pxTorem(105);*/
+        margin-left: pxTorem(30);
     }
     .address-content {
         line-height: pxTorem(55);
@@ -50,55 +52,78 @@
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
-            max-width: pxTorem(450);
         }
     }
+}
+
+.copy-ticket {
+    background-color: $white;
+    margin-top: pxTorem(30);
+    padding: pxTorem(25) pxTorem(73);
 }
 </style>
 <template>
     <div class='order-detail bg-base'>
         <!-- 订单详情 -->
         <v-order :order='order_detail'>
-            <template v-if='order_detail.ticket_id'>
+            <!--商品为优惠券时 -->
+            <template v-if='product_type==1||product_type==2'>
                 <div class='ticket'>
                     <div class='ticket-box'><span class='text-large'>优惠券:</span> <span class='text-red text-huge'>{{order_detail.ticket_id}}</span> </div>
                 </div>
-            </template>
-            <template v-if='product_detail.content_use'>
                 <v-divider text='使用说明'></v-divider>
                 <v-simditor>
                     <article class='introduction' v-html='product_detail.content_use'> </article>
                 </v-simditor>
             </template>
         </v-order>
-        <!-- 收货地址 -->
-        <section class='address-selected bg-white flex' @click='toggleSelect'>
-            <div class='location flex flex-center-v flex-center-h'>
-                <i class='iconfont icon-location  text-huge'></i>
-            </div>
-            <div class='address-content '>
-                <p class='flex flex-space-between'>
-                    <span> <label>收货信息:</label>张三</span>
-                    <span>1390000000</span>
-                </p>
-                <div class='flex'>
-                    <label>收货地址:</label>
-                    <div class='flex-item address-detail'>浙江省 杭州市 西湖区 坚果互动科技全球研发中心</div>
-                </div>
-            </div>
-            <div class='arrows flex flex-center-v flex-center-h'>
-                <i class='iconfont icon-arrows-right text-bold text-huge'></i>
-            </div>
-        </section>
-        <!-- 物流信息 -->
-        <v-logistics></v-logistics>
-        <div class='add-address'>
-            <button class='btn btn-red btn-block btn-large ' @click='toggleEdit'>+ 请填写收货地址</button>
+        <div v-if='order_detail.product_type==1||order_detail.product_type==2' class='copy-ticket'>
+            <button class='btn btn-block btn-red btn-large'>
+                <template v-if='order_detail.product_type==1'>
+                    复制优惠券
+                </template>
+                <template v-else>
+                    前往使用
+                </template>
+            </button>
         </div>
-        <!-- 编辑地址 -->
-        <v-address-edit :show='popup_edit' :toggle-popup='toggleEdit' :recive-infor='reciveInfor'></v-address-edit>
-        <!-- 选择地址 -->
-        <v-address-select :show='popup_select' :toggle-popup='toggleSelect'></v-address-edit>
+        <!-- 商品为实物时 -->
+        <template v-if='product_type==3'>
+            <!-- 有地址 -->
+            <template v-if='address_list.length>0'>
+                <section class='address-selected bg-white flex' @click='toggleSelect'>
+                    <div class='location flex flex-center-v flex-center-h'>
+                        <i class='iconfont icon-location  text-huge'></i>
+                    </div>
+                    <div class='address-content flex-item'>
+                        <p class='flex flex-space-between'>
+                            <span> <label>收货信息:</label>{{default_address.contact}}</span>
+                            <span>{{default_address.phone}}</span>
+                        </p>
+                        <div class='flex'>
+                            <label>收货地址:</label>
+                            <div class='flex-item address-detail'>{{default_address.province}} {{default_address.city}} {{default_address.country}} {{default_address.address}}</div>
+                        </div>
+                    </div>
+                    <div v-if='!order_checked' class='arrows flex flex-center-v flex-center-h'>
+                        <i class='iconfont icon-arrows-right text-bold text-huge'></i>
+                    </div>
+                </section>
+                <!-- 物流信息 -->
+                <v-logistics v-if='order_checked' :order-id='order_id' :check='order_checked'></v-logistics>
+                <div v-if='!order_checked' class='single-button'>
+                    <button class='btn btn-red btn-block btn-large ' @click='updateOrderAddress'>确认地址</button>
+                </div>
+                <v-address-select :show='popup_select' :toggle-popup='toggleSelect'></v-address-edit>
+            </template>
+            <!-- 无地址 -->
+            <template v-else>
+                <v-address-edit :show='popup_edit' :toggle-popup='toggleEdit'></v-address-edit>
+                <div class='single-button'>
+                    <button class='btn btn-red btn-block btn-large ' @click='toggleEdit'>+ 请填写收货地址</button>
+                </div>
+            </template>
+        </template>
     </div>
 </template>
 <script>
@@ -126,33 +151,65 @@ export default {
             order_id: '',
             order_detail: {},
             product_detail: {},
+            product_type: '',
             confirm: false,
-            popup_edit:false,
-            popup_select:false,
-            reciveInfor: {
-                name: '',
+            popup_edit: false,
+            popup_select: false
+        };
+    },
+    computed: {
+        address_list() {
+            return this.$store.state.address_list;
+        },
+        //订单地址确认状态
+        order_checked() {
+            return this.order_detail.status != 1;
+        },
+        default_address() {
+            let temp = {
                 province: '',
                 city: '',
-                county: '',
+                country: '',
                 address: '',
-                phone: ''
-            }
-        };
+                phone: '',
+                contact: ''
+            };
+            this.address_list.forEach((address) => {
+                if (address.is_defaults) {
+                    temp = address;
+                    return;
+                }
+            })
+            return temp;
+        }
     },
     mounted() {
         this.order_id = this.$route.query.order_id;
-        this.getOrderDetail();
+        this.getOrderDetail((data) => {
+            let product_type=data.data.product_type;
+            if (product_type == 1 || product_type == 2) {
+                this.getProductDetail(data.data.product_id);
+            } else if (product_type == 3) {
+                this.$store.dispatch('getAddressList');
+            }
+        });
     },
     methods: {
         //获取订单详情
-        getOrderDetail() {
+
+        //product_type 1优惠券码 2优惠券链接 3实物 4积分赠送 5谢谢参与
+        getOrderDetail(callback) {
             this.$http.post(`${APP.HOST}/order_detail/${this.order_id}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID
             }).then((response) => {
                 let data = response.data;
                 this.order_detail = data.data;
-                this.getProductDetail(data.data.product_id);
+                this.product_type = this.order_detail.product_type;
+                if (callback) {
+                    callback(data);
+                }
+
             }, (response) => {
 
             })
@@ -169,11 +226,44 @@ export default {
 
             })
         },
-        toggleEdit(){
-            this.popup_edit=!this.popup_edit;
+        //确认订单地址
+        updateOrderAddress() {
+            this.$http.post(`${APP.HOST}/update_order_address/${this.order_id}`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID,
+                id: this.default_address.id
+            }).then((response) => {
+                let data = response.data;
+                if (data.status == APP.SUCCESS) {
+                    this.getOrderDetail();
+                } else {
+                    this.$store.dispatch('toggleAlert', {
+                        msg: data.info,
+                        show: true
+                    })
+                }
+            }, (response) => {
+
+            })
         },
-        toggleSelect(){
-            this.popup_select=!this.popup_select;
+        //获取物流信息
+        getOderExpress() {
+            this.$http.post(`${APP.HOST}/order_express/${this.order_id}`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            }).then((response) => {
+                let data = response.data;
+            }, (response) => {
+
+            })
+        },
+        toggleEdit() {
+            this.popup_edit = !this.popup_edit;
+        },
+        toggleSelect() {
+            if (!this.order_checked) {
+                this.popup_select = !this.popup_select;
+            }
         }
     }
 

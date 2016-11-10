@@ -78,7 +78,7 @@
                         </div>
                     </div>
                     <div class='text-center'>
-                        <button class='btn btn-red btn-large submit ' @click='submitAnswer()' >提交答案</button>
+                        <button class='btn btn-red btn-large submit ' @click='submitAnswer()'>提交答案</button>
                     </div>
                 </div>
             </div>
@@ -89,7 +89,8 @@
 export default {
     name: 'quiz',
     props: {
-        questions: Array
+        questions: Array,
+        freeTimes: Number
     },
     data() {
         return {
@@ -113,26 +114,27 @@ export default {
                 }).then((response) => {
                     let data = response.data;
                     if (data.status == APP.SUCCESS) {
+                        this.freshFreeTimes();
                         this.$store.dispatch('getUserInfor'); //更新用户信息
                         if (data.data.is_right) {
                             if (data.data.is_win) {
                                 this.is_win = data.data.is_win;
                                 this.order_detail_id = data.data.id;
                                 this.toggleAlert({
-                                    msg: data.data.name,
+                                    msg: this.getMsg(data.data.name),
                                     type: 'correct',
-                                    btn_text:'查看',
+                                    btn_text: '查看',
                                     callback: this.toOrderDetail
                                 });
                             } else {
                                 this.toggleAlert({
-                                    msg: '谢谢参与',
+                                    msg: this.getMsg('谢谢参与'),
 
                                 });
                             }
                         } else {
                             this.toggleAlert({
-                                msg: '回答错误',
+                                msg: this.getMsg('回答错误'),
                                 type: 'error'
                             });
                         }
@@ -152,16 +154,27 @@ export default {
         },
         //路由跳转
         toOrderDetail() {
-            this.$router.replace({
+            this.$router.push({
                 name: 'order_detail',
                 query: {
                     order_id: this.order_detail_id
                 }
             })
         },
+        //获取提示
+        getMsg(msg) {
+            if (this.freeTimes > 0) {
+                return msg + '剩余免费活动次数' + this.freeTimes;
+            }
+            return msg;
+        },
         toggleAlert(alert) {
             alert.cover_close = false;
             this.$store.dispatch('toggleAlert', alert);
+        },
+        //刷新免费次数
+        freshFreeTimes() {
+            this.$emit('getFreeTimes');
         }
     }
 };

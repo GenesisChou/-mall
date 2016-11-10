@@ -26,7 +26,7 @@
                 margin-right: pxTorem(10);
             }
             .iconfont:last-child {
-                padding-left: pxTorem(30);
+                /*padding-left: pxTorem(30);*/
             }
         }
     }
@@ -49,16 +49,19 @@
                     请选择收货地址
                 </header>
                 <ul class='address-list flex-item'>
-                    <li v-for='(address,$index) in address_list' class='flex flex-space-between flex-center-v'>
-                        <i v-if='address.default' class='iconfont icon-correct-circle  text-huge'></i>
+                    <li v-for='address in address_list' class='flex flex-space-between flex-center-v'>
+                        <i v-if='address.id==selected_id' class='iconfont icon-correct-circle  text-huge text-red'></i>
                         <i v-else class='iconfont icon-correct-circle-hollow  text-huge'></i>
-                        <div class='flex-item address' @click='chooseAddress($index)'>
-                            <p class='text-large text-ellipsis'>张三,139000000</p>
-                            <p class='text-small text-gray text-ellipsis'>浙江省 杭州市 西湖区 坚果互动全球研发中心</p>
+                        <div class='flex-item address' @click='selectAddress(address.id)'>
+                            <p class='text-large text-ellipsis'>{{address.contact}},{{address.phone}}</p>
+                            <p class='text-small text-gray text-ellipsis'>{{address.province}} {{address.city}} {{address.country}} {{address.address}}</p>
                         </div>
-                        <i class='iconfont icon-edit  text-huge' @click='toggleEdit'></i>
+                        <div>
+                            <i class='iconfont icon-edit  text-huge' @click='editAddress(address.id)'></i>
+                            <i class='iconfont icon-error  text-huge' @click='deleteAddress(address.id)'></i>
+                        </div>
                     </li>
-                    <li class='flex flex-space-between ' @click='toggleEdit("add")'>
+                    <li class='flex flex-space-between ' @click='insertAddress'>
                         <i class='iconfont icon-plus-circle text-huge '></i>
                         <div class='flex-item'>
                             <span class='text-large title'>新增收货地址</span>
@@ -67,11 +70,11 @@
                     </li>
                 </ul>
                 <footer class='footer'>
-                    <button class='btn btn-large btn-red btn-block' @click='saveAddress'>保存</button>
+                    <button class='btn btn-large btn-red btn-block' @click='save'>保存</button>
                 </footer>
             </div>
         </v-popup>
-        <v-address-edit :show='popup' :toggle-popup='toggleEdit' :title='title'></v-address-edit>
+        <v-address-edit :show='popup' :toggle-popup='toggleEdit' :title='title' :id='parseInt(address_id)'></v-address-edit>
     </section>
 </template>
 <script>
@@ -87,41 +90,134 @@ export default {
         show: {
             type: Boolean,
             default: false
-        },
+        }
     },
     data() {
         return {
             popup: false,
             title: '修改收货地址',
-            address_list: [{
-                default: true
-            }, {
-                default: false
-            }, {
-                default: false
-            }]
+            address_id: 0,
+            selected_id: 0,
         };
+    },
+    watch: {
+        show(value) {
+            if (value) {
+                this.address_list.forEach((address) => {
+                    if (address.is_defaults) {
+                        this.selected_id = address.id;
+                        return;
+                    }
+                })
+            }
+        }
     },
     computed: {
         address_list() {
-            return this.$store.address_list;
-        }
-    },
-    mounted() {
-        this.$store.dispatch('getAddressList');
+            return this.$store.state.address_list;
+        },
+        save_address() {
+            return this.title == '修改收货地址' ? this.updateAddress : this.insertAddress;
+        },
     },
     methods: {
-        toggleEdit(type) {
-            this.title = type === 'add' ? '新建收货地址' : '修改收货地址';
+        toggleEdit() {
             this.popup = !this.popup;
         },
-        chooseAddress($index) {
-            this.address_list.map((address, index) => {
-                return address.default = (index == $index);
+        //修改地址
+        editAddress(id) {
+            this.title = '修改收货地址';
+            this.address_id = id;
+            this.toggleEdit();
+        },
+        //添加地址
+        insertAddress() {
+            this.title = '新建收货物地址';
+            this.address_id = 0;
+            this.toggleEdit();
+        },
+        //删除地址
+        deleteAddress(id) {
+            let address_list = this.address_list;
+            this.$store.dispatch('toggleConfirm', {
+                msg: '你确定要删除该地址吗?',
+                show: true,
+                callback: () => {
+                    let default_delete = this.deleteDefault(address_list, id);
+                    this.$http.post(`${APP.HOST}/address_delete/${id}`, {
+                        token: APP.TOKEN,
+                        userid: APP.USER_ID
+                    }).then((response) => {
+                        let data = response.data;
+                        this.$store.dispatch('toggleConfirm');
+                        if (data.status == APP.SUCCESS) {
+                            this.$store.dispatch('toggleAlert', {
+                                    msg: '删除地址成功'
+                                })
+                                //若被删除的是默认地址,则选取删除后地址列表第一项为默认地址
+                            if (default_delete) {
+                                this.$store.dispatch('getAddressList', (address_list) => {
+                                    this.setDefaultAddress(address_list[0].id);
+                                    this.selectAddress(address_list[0].id);
+                                });
+                            } else {
+                                this.$store.dispatch('getAddressList');
+                            }
+                        } else {
+                            this.$store.dispatch('toggleAlert', {
+                                msg: '删除地址失败'
+                            })
+                        }
+                    }, (response) => {});
+                }
             })
         },
-        saveAddress() {
-            this.togglePopup();
+        //判断被删除的是否是默认地址
+        deleteDefault(address_list, id) {
+            let result = false;
+            for (var i = 0, len = address_list.length; i < len; i++) {
+                let address = address_list[i];
+                if (address.id == id && address.is_defaults == 1 && len > 1) {
+                    result = true;
+                    break;
+                }
+            }
+            return result;
+        },
+        selectAddress(id) {
+            this.selected_id = id;
+        },
+
+        //设置默认地址        
+        save() {
+            this.setDefaultAddress(this.selected_id, (response) => {
+                let data = response.data;
+                if (data.status == APP.SUCCESS) {
+                    this.togglePopup();
+                } else {
+                    this.$store.dispatch('toggleConfirm', {
+                        msg: data.info,
+                        show: true
+                    })
+                }
+            });
+        },
+        setDefaultAddress(id, callback) {
+            this.$http.post(`${APP.HOST}/set_default_address/${APP.USER_ID}`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID,
+                id: id
+            }).then((response) => {
+                if (callback) {
+                    callback(response);
+                }
+                if (response.data.status == APP.SUCCESS) {
+                    this.$store.dispatch('getAddressList');
+                }
+
+            }, (response) => {
+
+            })
         }
     }
 }

@@ -117,12 +117,6 @@
 <script>
 import vModal from 'components/v_modal.vue'
 import vBlockText from 'components/v_block_text.vue'
-import {
-    mapState
-} from 'vuex'
-import {
-    mapActions
-} from 'vuex'
 export default {
     name: 'my_integral',
     components: {
@@ -131,19 +125,45 @@ export default {
     },
     data() {
         return {
-            modal: false
+            modal: false,
+            integral_param:'',
+            integral_list:''
         }
     },
-    computed: mapState(['user', 'integral_param', 'integral_list']),
+    computed:{
+        user(){
+            return this.$store.state.user;
+        }
+    }, 
     methods: {
         toggleModal() {
             this.modal = !this.modal;
-        }
+        },
+        //——获取积分赚取方式
+        getIntegralParam() {
+            this.$http.post(`${APP.HOST}/get_integral_param`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            }).then((response) => {
+                this.integral_param = response.data.data;
+            }, (response) => {
+
+            })
+        },
+        //——获取积分明细列表
+        getIntegralList() {
+            this.$http.post(`${APP.HOST}/integral_list/${APP.USER_ID}`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            }).then((response) => {
+                this.integral_list = response.data.data;
+            })
+        },
     },
     mounted() {
-        this.$store.dispatch('getUserInfor');
-        this.$store.dispatch('getIntegralList');
-        this.$store.dispatch('getIntegralParam');
+        // this.$store.dispatch('getUserInfor');
+        this.getIntegralList();
+        this.getIntegralParam();
     }
 };
 </script>

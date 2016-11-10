@@ -10,12 +10,12 @@
         margin: 0 pxTorem(50) 0 pxTorem(56);
     }
     .describe {
-        flex: 1;
-        height: pxTorem(140);
         .text-huge {
-            max-height: pxTorem(105);
             overflow: hidden;
             text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
             margin-bottom: pxTorem(10);
         }
         /*overflow: hidden;*/
@@ -25,7 +25,7 @@
 <template>
     <div class='v-list-item flex flex-center-v  bg-white'>
         <img class='img' :src='img' />
-        <div class='describe '>
+        <div class='describe flex-item'>
             <div class='text-huge '>{{title}}</div>
             <p :class='color'>{{titleDupty}}</p>
         </div>

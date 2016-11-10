@@ -51,3 +51,34 @@
         </ul>
     </section>
 </template>
+<script>
+export default {
+    props:{
+        orderId:Number,
+        check:Boolean
+    },
+    mounted(){
+        if(this.check){
+            this.getOderExpress();
+        }
+    },
+    data(){
+        return{
+            
+        }
+    },
+    methods: {
+        //获取物流信息
+        getOderExpress() {
+            this.$http.post(`${APP.HOST}/order_express/${this.orderId}`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            }).then((response) => {
+                let data = response.data;
+            }, (response) => {
+
+            })
+        },
+    }
+}
+</script>

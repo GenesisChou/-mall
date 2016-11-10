@@ -6,6 +6,7 @@
     top: 50%;
     transform: translate(-50%, -50%);
     border-radius: pxTorem(10);
+    z-index: 11;
     .modal-content {
         width: pxTorem(500);
         padding-top: pxTorem(30);
@@ -33,7 +34,7 @@
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, .4);
-    z-index: 1;
+    z-index: 10;
 }
 </style>
 <template>

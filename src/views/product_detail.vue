@@ -87,7 +87,7 @@
         <header class='header flex flex-center-h flex-center-v'>
             <img :src='product_detail.pic_banner' />
             <div class='cover text-white  flex flex-center-v'>
-                <p class='text-huge'>{{product_detail.name}}</p>
+                <p class='text-huge text-ellipsis'>{{product_detail.name}}</p>
             </div>
         </header>
         <article class='main '>
@@ -117,10 +117,10 @@
         <v-modal :cover-close=false :show='modal'>
             <div class='modal-content '>
                 <header>
-                    <img class='pic' src='../assets/images/iphone.png'>
+                    <img class='pic' :src='product_detail.pic_thumb'>
                 </header>
                 <div class='msg'>{{order_state.msg}}</div>
-                <router-link v-if='order_state.success' tag='div' class='btn btn-red' :to='{name:"order_detail",query:{order_id:order_detail_id}}' replace>
+                <router-link v-if='order_state.success' tag='div' class='btn btn-red' :to='{name:"order_detail",query:{order_id:order_detail_id}}' >
                     查看详情
                 </router-link>
                 <div v-else class='btn btn-red' @click='toggleModal'>
@@ -160,12 +160,12 @@ export default {
     },
     mounted() {
         this.product_id = this.$route.query.product_id;
-        this.$store.dispatch('getUserInfor');
+        // this.$store.dispatch('getUserInfor');
         this.getProductDetail();
     },
     computed: {
         integral_enough() {
-            return parseInt(this.user.integral) >= parseInt(this.product_detail.integral) ? true : false;
+            return parseInt(this.user.integral) >= parseInt(this.product_detail.integral);
         },
         user() {
             return this.$store.state.user;
@@ -201,13 +201,17 @@ export default {
                 userid: APP.USER_ID
             }).then((response) => {
                 let data = response.data;
-                this.order_state.msg = data.info;
+
                 this.order_state.start = true;
                 if (response.data.status === APP.SUCCESS) {
+                    this.order_state.msg = data.data.name;
                     this.order_state.success = true;
                     this.order_detail_id = data.data.id;
                     //更新用户数据
                     this.$store.dispatch('getUserInfor');
+                } else {
+                    this.order_state.msg = data.info;
+
                 }
                 this.$store.dispatch('toggleConfirm');
                 this.toggleModal();

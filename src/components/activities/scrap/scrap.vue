@@ -128,7 +128,7 @@ export default {
         },
         //路由跳转
         toOrderDetail() {
-            this.$router.replace({
+            this.$router.push({
                 name: 'order_detail',
                 query: {
                     order_id: this.order_detail_id

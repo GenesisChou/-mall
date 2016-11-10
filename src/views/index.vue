@@ -47,7 +47,7 @@
 <template>
     <div class='index bg-base'>
         <v-swipe></v-swipe>
-        <!-- <router-link :to='{name:"activity_list"}' tag='button' class='btn btn-red'>活动列表</router-link > -->
+        <router-link :to='{name:"activity_list"}' tag='button' class='btn btn-red'>活动列表</router-link >
         <div class='icon-list flex bg-white'>
             <router-link :to='{name:"my_integral"}' class='flex-item flex flex-center-v flex-center-h'>
                 <div class='icon bg-blue text-white flex flex-column flex-center-v flex-center-h '>
@@ -81,36 +81,95 @@
     </div>
 </template>
 <script>
+import utils from 'libs/utils.js'
 import vSwipe from 'components/v_swipe'
 import vItem from 'components/index/v_item.vue'
-import {
-    mapState
-} from 'vuex'
 export default {
     name: 'index',
     components: {
         vSwipe,
         vItem
     },
-
-    computed: mapState(['user', 'hot_banners', 'hot_items','hot_commend']),
-    mounted() {
-        // this.$store.dispatch('getUserInfor');
-        this.$store.dispatch('getHotBanners');
-        this.$store.dispatch('getHotItems');
-        this.$store.dispatch('getHotCommend');
+    computed: {
+        user() {
+            return this.$store.state.user;
+        }
     },
     data() {
         return {
+            hot_banners: [],
+            hot_items: [],
+            hot_commend: [],
             check_animation: false,
+            params: {
+                p: 1,
+                r: APP.PERPAGE,
+                total: 0,
+                count: 0,
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            },
         }
     },
+    mounted() {
+        this.getHotBanners();
+        this.getHotCommend();
+        this.getHotItems();
+        utils.getScrollData(this.hot_items, this.params, this.getHotItems);
+    },
     methods: {
+        //签到
         checkIn() {
-            this.$store.dispatch('checkIn', () => {
-                this.check_animation = true;
-            });
-        }
+            if (!this.user.ischecked) {
+                this.$http.post(`${APP.HOST}/checkin/${APP.USER_ID}`, {
+                    token: APP.TOKEN,
+                    userid: APP.USER_ID
+                }).then((response) => {
+                    let data = response.data;
+                    if (data.status == APP.SUCCESS) {
+                        this.$store.dispatch('getUserInfor');
+                        this.check_animation = true;
+                    } else {
+                        this.$store.dispatch('toggleAlert', {
+                            msg: data.info
+                        })
+                    }
+                }, (response) => {
+
+                })
+            }
+        },
+        //热门banner列表
+        getHotBanners() {
+            this.$http.post(`${APP.HOST}/hot_banner`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            }).then((response) => {
+                this.hot_banners = response.data.data.list;
+            }, (response) => {});
+        },
+        //  热门商品和活动列表，用于首页列表
+        getHotItems(params = this.params) {
+            this.$http.post(`${APP.HOST}/hot_item`, params, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            }).then((response) => {
+                let data = response.data;
+                if (this.params.p <= 1) {
+                    this.params.total = data.data.total;
+                    this.params.count = data.data.count;
+                }
+                this.hot_items = this.hot_items.concat(data.data.list);
+            }, (response) => {});
+        },
+        getHotCommend() {
+            this.$http.post(`${APP.HOST}/hot_commend`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            }).then((response) => {
+                this.hot_commend = response.data.data.list;
+            }, (response) => {});
+        },
     }
 };
 </script>

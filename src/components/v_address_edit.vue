@@ -87,52 +87,49 @@
                 <section class='main'>
                     <div class='flex'>
                         <label for='name'>收货人</label>
-                        <input id='name' placeholder="收货人姓名" v-model='reciveInfor.name'>
+                        <input id='name' placeholder="收货人姓名" v-model='receive_infor.contact'>
                     </div>
                     <div class='flex' @click='showAreaList("province")'>
                         <label for='province'>选择省</label>
-                        <input id='province' placeholder="请选择省" v-model='reciveInfor.province' disabled>
+                        <input id='province' placeholder="请选择省" v-model='receive_infor.province' disabled>
                     </div>
                     <div class='flex' @click='showAreaList("city")'>
                         <label for='city'>选择市</label>
-                        <input id='city' placeholder="请选择市" v-model='reciveInfor.city' disabled>
+                        <input id='city' placeholder="请选择市" v-model='receive_infor.city' disabled>
                     </div>
-                    <div class='flex' @click='showAreaList("county")'>
-                        <label for='county'>选择区/县</label>
-                        <input id='county' placeholder="请选择区县" v-model='reciveInfor.county' disabled>
+                    <div class='flex' @click='showAreaList("country")'>
+                        <label for='country'>选择区/县</label>
+                        <input id='country' placeholder="请选择区县" v-model='receive_infor.country' disabled>
                     </div>
                     <div class='flex'>
                         <label for='address'>详细地址</label>
-                        <input id='address' placeholder="请输入详细地址" v-model='reciveInfor.address'>
+                        <input id='address' placeholder="请输入详细地址" v-model='receive_infor.address'>
                     </div>
                     <div class='flex'>
                         <label for='phone'>手机号码</label>
-                        <input id='phone' type='number' placeholder="手机或固定电话" v-model='reciveInfor.phone'>
+                        <input id='phone' type='number' placeholder="手机或固定电话" v-model='receive_infor.phone'>
                     </div>
                 </section>
                 <footer class='footer text-center'>
-                    <button class='btn btn-red btn-block btn-large' @click.prevent='saveEdit'>保存</button>
+                    <button class='btn btn-red btn-block btn-large' @click.prevent='save'>保存</button>
                 </footer>
             </form>
         </v-popup>
         <v-modal :show='modal' :toggle-modal='toggleModal' :cover-close='true'>
             <div class='modal-content'>
                 <ul v-if='current_type=="province"'>
-                    <li v-for='(province,$index) in province_list' @click='chooseArea($index,"province")'>
-                        <!-- <input type="radio"> -->
-                        <i :class='["radio",$index==2?"active":""]'></i> <span>{{province}}</span>
+                    <li v-for='province in province_list' @click='selectAddress("province",province.province,province.provinceid)'>
+                        <i :class='["radio",address_id.province==province.provinceid?"active":""]'></i> <span>{{province.province}}</span>
                     </li>
                 </ul>
                 <ul v-if='current_type=="city"'>
-                    <li v-for='(city,$index) in city_list' @click='chooseArea($index,"city")'>
-                        <!-- <input type="radio"> -->
-                        <i class='radio'></i> <span>{{city}}</span>
+                    <li v-for='city in city_list' @click='selectAddress("city",city.city,city.cityid)'>
+                        <i :class='["radio",address_id.city==city.cityid?"active":""]'></i> <span>{{city.city}}</span>
                     </li>
                 </ul>
-                <ul v-if='current_type=="county"'>
-                    <li v-for='(county,$index) in county_list' @click='chooseArea($index,"county")'>
-                        <!-- <input type="radio"> -->
-                        <i class='radio'></i> <span>{{county}}</span>
+                <ul v-if='current_type=="country"'>
+                    <li v-for='country in area_list' @click='selectAddress("country",country.area,country.areaid)'>
+                        <i :class='["radio",address_id.country==country.areaid?"active":""]'></i> <span>{{country.area}}</span>
                     </li>
                 </ul>
             </div>
@@ -153,80 +150,256 @@ export default {
             type: Boolean,
             default: false
         },
-        reciveInfor: {
-            type: Object,
-            default: function() {
-                return {
-
-                }
-            }
-        },
-        saveEdit: {
-            type: Function,
-            default: function() {
-                this.togglePopup();
-            }
-        },
         title: {
             type: String,
             default: '新建收货地址'
-        }
-
+        },
+        id: Number
     },
     data() {
         return {
             modal: false,
             current_type: 'province',
-            province_list: ['浙江', '江苏', '福建','广东','广西','云南','山东','河北','辽宁','吉林','黑龙江'],
-            city_list: ['杭州', '温州', '宁波'],
-            county_list: ['西湖区', '上城区', '下城区']
+            province_list: '',
+            city_list: '',
+            area_list: '',
+            receive_infor: {
+                province: '',
+                city: '',
+                country: '',
+                address: '',
+                phone: '',
+                contact: ''
+            },
+            address_id: {
+                province: '',
+                city: '',
+                country: ''
+            }
         }
     },
+    computed: {
+        save() {
+            if (this.id) {
+                return this.updateAddress;
+            }
+            return this.insertAddress;
+        },
+        address_list() {
+            return this.$store.state.address_list;
+        },
+        is_empty() {
+            let temp = this.receive_infor;
+            if (temp.province || temp.address || temp.phone || temp.contact) {
+                return false;
+            }
+            return true;
+        },
+        is_defaults(){
+            if(this.address_list.length==0){
+                return 1;
+            }
+            let result=0;
+            this.address_list.forEach(address=>{
+                if(address.id==this.id){
+                    result=address.is_defaults;
+                }
+            })
+            return result;
+        }
+    },
+    watch: {
+        //弹出口开始获取省份列表
+        show(value) {
+            if (value) {
+                this.getProvinceList();
+                if (this.id > 0) {
+                    this.address_list.forEach((address) => {
+                        if (address.id == this.id) {
+                            this.receive_infor.province = address.province;
+                            this.receive_infor.city = address.city;
+                            this.receive_infor.country = address.country;
+                            this.receive_infor.address = address.address;
+                            this.receive_infor.phone = address.phone;
+                            this.receive_infor.contact = address.contact;
+                            return;
+                        }
+                    })
+                }
+            }
+        },
+    },
     methods: {
+        //添加地址
+        insertAddress() {
+            this.$http.post(`${APP.HOST}/address_insert/${APP.USER_ID}`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID,
+                province: this.receive_infor.province,
+                city: this.receive_infor.city,
+                country: this.receive_infor.country,
+                address: this.receive_infor.address,
+                phone: this.receive_infor.phone,
+                contact: this.receive_infor.contact,
+                is_defaults: this.is_defaults
+            }).then((response) => {
+                let data = response.data;
+                if (data.status == APP.SUCCESS) {
+                    //重新获取地址列表
+
+                    this.$store.dispatch('getAddressList');
+                    this.$store.dispatch('toggleAlert', {
+                        msg: '新建地址成功',
+                        type: 'correct'
+                    });
+                    setTimeout(() => {
+                        this.togglePopup();
+                        this.clearInput();
+                    }, 500);
+                } else {
+                    //弹出错误
+                    this.$store.dispatch('toggleAlert', {
+                        msg: data.info
+                    });
+                }
+            }, (response) => {
+
+            })
+        },
+        //更新地址
+        updateAddress() {
+            this.$http.post(`${APP.HOST}/address_update/${this.id}`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID,
+                province: this.receive_infor.province,
+                city: this.receive_infor.city,
+                country: this.receive_infor.country,
+                address: this.receive_infor.address,
+                phone: this.receive_infor.phone,
+                contact: this.receive_infor.contact,
+                is_defaults: this.is_defaults
+            }).then((response) => {
+                let data = response.data;
+                if (data.status == APP.SUCCESS) {
+                    //重新获取地址列表
+                    this.$store.dispatch('getAddressList');
+                    this.$store.dispatch('toggleAlert', {
+                        msg: '编辑地址成功',
+                        type: 'correct'
+                    });
+                    setTimeout(() => {
+                        this.togglePopup();
+                        this.clearInput();
+                    }, 500);
+                } else {
+                    //弹出错误
+                    this.$store.dispatch('toggleAlert', {
+                        msg: data.info
+                    });
+                }
+            }, (response) => {
+
+            })
+        },
         //取消编辑
         cancelEdit() {
             this.toggleConfirm();
         },
         //清除输入
-        clearInput() {
-            this.reciveInfor.name = '';
-            this.reciveInfor.province = '';
-            this.reciveInfor.city = '';
-            this.reciveInfor.county = '';
-            this.reciveInfor.address = '';
-            this.reciveInfor.phone = '';
+        clearInput(type) {
+            this.receive_infor.country = '';
+            if (type == 'city') {
+                return;
+            }
+            this.receive_infor.city = '';
+            if (type == 'province') {
+                return;
+            }
+            this.receive_infor.province = '';
+            this.receive_infor.contact = '';
+            this.receive_infor.address = '';
+            this.receive_infor.phone = '';
         },
         showAreaList(type) {
+            if (type == 'city' && !this.address_id.province) {
+                return;
+            }
+            if (type == 'country' && !this.address_id.city) {
+                return;
+            }
             this.current_type = type;
             this.toggleModal();
         },
+        selectAddress(type, name, id) {
+            if (type == 'province') {
+                if (!this.address_id.province || this.address_id.province != id) {
+                    this.receive_infor.province = name;
+                    this.address_id.province = id;
+                    this.getCityList(id);
+                    this.clearInput('province');
+                }
+
+            } else if (type == 'city') {
+                if (!this.address_id.city || this.address_id.city != id) {
+                    this.receive_infor.city = name;
+                    this.address_id.city = id;
+                    this.getAreaList(id);
+                    this.clearInput('city');
+                }
+            } else if (type == 'country') {
+                this.receive_infor.country = name;
+                this.address_id.country = id;
+            }
+            this.toggleModal();
+        },
+        //获取省份
+        getProvinceList() {
+            this.$http.post(`${APP.HOST}/province_list`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            }).then((response) => {
+                this.province_list = response.data.data;
+            }, (response) => {});
+        },
+        //获取城市
+        getCityList(id) {
+            this.$http.post(`${APP.HOST}/city_list/${id}`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            }).then((response) => {
+                this.city_list = response.data.data;
+            }, (response) => {});
+        },
+        //获取区县
+        getAreaList(id) {
+            this.$http.post(`${APP.HOST}/area_list/${id}`, {
+                token: APP.TOKEN,
+                userid: APP.USER_ID
+            }).then((response) => {
+                this.area_list = response.data.data;
+            }, (response) => {});
+        },
         //关闭/显示confirm
         toggleConfirm() {
-            this.$store.dispatch('toggleConfirm', {
-                msg: '确认放弃编辑?',
-                show: true,
-                callback: () => {
-                    this.$store.dispatch('toggleConfirm', {
-                        show: false
-                    });
-                    this.togglePopup();
-                    this.clearInput();
-                }
-            });
+            if (!this.is_empty) {
+                this.$store.dispatch('toggleConfirm', {
+                    msg: '确认放弃编辑?',
+                    show: true,
+                    callback: () => {
+                        this.$store.dispatch('toggleConfirm', {
+                            show: false
+                        });
+                        this.togglePopup();
+                        this.clearInput();
+                    }
+                });
+            } else {
+                this.togglePopup();
+            }
         },
         toggleModal() {
             this.modal = !this.modal;
         },
-        chooseArea($index, type) {
-            if (type == 'province') {
-                this.reciveInfor.province = this.province_list[$index];
-            } else if (type == 'city') {
-                this.reciveInfor.city = this.city_list[$index];
-            } else if (type == 'county') {
-                this.reciveInfor.county = this.county_list[$index];
-            }
-            this.toggleModal();
-        }
     }
 }
 </script>

@@ -48,9 +48,9 @@
 </style>
 <template>
     <section  class='v-confirm'>
-        <transition name='v-fade'>
+        <!-- <transition name='v-fade'> -->
             <div v-show='show' class='bg-cover'> </div>
-        </transition>
+        <!-- </transition> -->
         <div v-show='show' class='v-confirm-content'>
             <div class=' msg'>{{msg}}</div>
             <div class='flex btns'>
