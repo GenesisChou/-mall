@@ -85,8 +85,11 @@ export default {
     },
     methods: {
         //获取商品列表
-        getProductList() {
+        getProductList(callback) {
             this.searchProduct(this.params, (data) => {
+                if(callback){
+                  callback();
+                }
                 let product_list = this.product_list;
                 if (this.params.p <= 1) {
                     this.params.total = data.data.total;
@@ -108,13 +111,41 @@ export default {
 
             })
         },
+        //初始化参数
+        initParams(){
+          let temp=this.params.sword;
+          this.params={
+              sword: temp,
+              p: 1,
+              r: APP.PERPAGE,
+              total: 0,
+              count: 0,
+              token: APP.TOKEN,
+              userid: APP.USER_ID
+          };
+        },
         //消耗积分排序
         sortByIntegral() {
-            this.sort_type = this.sort_type == 'integral-up' ? 'integral-down' : 'integral-up';
+            this.initParams();
+            if(this.sort_type=='integral-up'){
+              this.sort_type='integral-down';
+              this.params._integral='DESC';
+            }else{
+              this.sort_type='integral-up';
+              this.params._integral='ASC';
+            }
+            this.getProductList(()=>{
+              this.product_list=[];
+            });
         },
         //兑换量优先
         sortByCount() {
+            this.initParams();
+            this.params._used_count='DESC';
             this.sort_type = 'count';
+            this.getProductList(()=>{
+              this.product_list=[];
+            });
         }
 
     }

@@ -6,7 +6,7 @@ Vue.use(Vuex);
 const state = {
     // TODO: 放置初始状态
     user: '', //用户信息
-    address_list: '', //用户地址列表 
+    address_list: '', //用户地址列表
     v_alert: {
         type: 'suprise',
         show: false,
@@ -71,13 +71,26 @@ const mutations = {
         Vue.http.post(`${APP.HOST}/page_view`, {
             token: APP.TOKEN,
             userid: APP.USER_ID,
+            user_id:APP.USER_ID,
             page_id:page_id
-        }).then((response) => {
-            state.address_list = response.data.data;
-        }, (response) => {
-
         })
-    }
+    },
+    bannerView(state,banner_id) {
+        Vue.http.post(`${APP.HOST}/banner_view`, {
+            token: APP.TOKEN,
+            userid: APP.USER_ID,
+            user_id:APP.USER_ID,
+            banner_id:banner_id
+        })
+    },
+    commendView(state,commend_id) {
+        Vue.http.post(`${APP.HOST}/commend_view`, {
+            token: APP.TOKEN,
+            userid: APP.USER_ID,
+            user_id:APP.USER_ID,
+            commend_id:commend_id
+        })
+    },
 }
 const actions = {
     //全局
@@ -95,8 +108,14 @@ const actions = {
     getAddressList({ commit },callback) {
         commit('getAddressList',callback);
     },
-    pageView({ commit }) {
-        commit('pageView');
+    pageView({ commit },page_id) {
+        commit('pageView',page_id);
+    },
+    bannerView({ commit },banner_id) {
+        commit('bannerView',banner_id);
+    },
+    commendView({ commit },commend_id) {
+        commit('commendView',commend_id);
     },
 }
 const store = new Vuex.Store({

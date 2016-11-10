@@ -2,8 +2,6 @@
 @import '../assets/scss/variable.scss';
 .my-integral {
     height: 100%;
-    display: flex;
-    flex-direction: column;
 }
 
 .header {
@@ -55,7 +53,6 @@
 }
 
 .modal-content {
-    flex-direction: column;
     width: pxTorem(600);
     padding: pxTorem(50) pxTorem(68);
     border-radius: pxTorem(10);
@@ -69,7 +66,7 @@
 }
 </style>
 <template>
-    <div class='my-integral'>
+    <div class='my-integral flex flex-column'>
         <header class='header'>
             <section class='user-msg  flex flex-center-v '>
                 <div class='avater'>
@@ -102,7 +99,7 @@
             </li>
         </ul>
         <v-modal :toggle-modal='toggleModal' :show='modal'>
-            <div class='modal-content flex flex-space-between bg-white'>
+            <div class='modal-content flex flex-space-between flex-column bg-white'>
                 <div class='text-large'>
                     <p>您可以通过以下途径赚取积分：</p>
                     <p v-for='(item,$index) in integral_param'>{{($index+1+'、')+item.name+' +'+item.value}}</p>
@@ -134,7 +131,7 @@ export default {
         user(){
             return this.$store.state.user;
         }
-    }, 
+    },
     methods: {
         toggleModal() {
             this.modal = !this.modal;

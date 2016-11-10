@@ -69,8 +69,8 @@
         width: pxTorem(400);
     }
     .pic {
-        width: pxTorem(270);
-        height: pxTorem(235);
+        width: pxTorem(300);
+        height: pxTorem(210);
     }
     .btn {
         width: pxTorem(300);
@@ -116,7 +116,7 @@
         </v-sticky>
         <v-modal :cover-close=false :show='modal'>
             <div class='modal-content '>
-                <header>
+                <header v-if='order_state.success'>
                     <img class='pic' :src='product_detail.pic_thumb'>
                 </header>
                 <div class='msg'>{{order_state.msg}}</div>

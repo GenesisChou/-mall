@@ -39,15 +39,13 @@
 }
 
 .main {
-    display: flex;
-    flex-wrap: wrap;
     padding: pxTorem(18) 0 pxTorem(18) pxTorem(12);
 }
 </style>
 <template>
     <div class='index bg-base'>
         <v-swipe></v-swipe>
-        <router-link :to='{name:"activity_list"}' tag='button' class='btn btn-red'>活动列表</router-link >
+        <!-- <router-link :to='{name:"activity_list"}' tag='button' class='btn btn-red'>活动列表</router-link > -->
         <div class='icon-list flex bg-white'>
             <router-link :to='{name:"my_integral"}' class='flex-item flex flex-center-v flex-center-h'>
                 <div class='icon bg-blue text-white flex flex-column flex-center-v flex-center-h '>
@@ -75,7 +73,7 @@
                 </div>
             </router-link>
         </div>
-        <section class='main'>
+        <section class='main flex flex-wrap'>
             <v-item v-for='item in hot_items' :item='item'></v-item>
         </section>
     </div>

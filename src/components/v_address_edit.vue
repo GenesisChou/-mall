@@ -25,7 +25,6 @@
         }
         >.flex {
             height: pxTorem(87);
-            align-items: center;
             border-bottom: 1px solid $gray;
             &:nth-child(1) {
                 border-top: 1px solid $gray;
@@ -49,8 +48,6 @@
     overflow: scroll;
     border-radius: pxTorem(10);
     li {
-        display: flex;
-        align-items: center;
         width: pxTorem(350);
         height: pxTorem(70);
         padding: 0 pxTorem(20);
@@ -85,27 +82,27 @@
                     {{title}}
                 </header>
                 <section class='main'>
-                    <div class='flex'>
+                    <div class='flex flex-center-v'>
                         <label for='name'>收货人</label>
                         <input id='name' placeholder="收货人姓名" v-model='receive_infor.contact'>
                     </div>
-                    <div class='flex' @click='showAreaList("province")'>
+                    <div class='flex flex-center-v' @click='showAreaList("province")'>
                         <label for='province'>选择省</label>
                         <input id='province' placeholder="请选择省" v-model='receive_infor.province' disabled>
                     </div>
-                    <div class='flex' @click='showAreaList("city")'>
+                    <div class='flex flex-center-v' @click='showAreaList("city")'>
                         <label for='city'>选择市</label>
                         <input id='city' placeholder="请选择市" v-model='receive_infor.city' disabled>
                     </div>
-                    <div class='flex' @click='showAreaList("country")'>
+                    <div class='flex flex-center-v' @click='showAreaList("country")'>
                         <label for='country'>选择区/县</label>
                         <input id='country' placeholder="请选择区县" v-model='receive_infor.country' disabled>
                     </div>
-                    <div class='flex'>
+                    <div class='flex flex-center-v'>
                         <label for='address'>详细地址</label>
                         <input id='address' placeholder="请输入详细地址" v-model='receive_infor.address'>
                     </div>
-                    <div class='flex'>
+                    <div class='flex flex-center-v'>
                         <label for='phone'>手机号码</label>
                         <input id='phone' type='number' placeholder="手机或固定电话" v-model='receive_infor.phone'>
                     </div>
@@ -118,17 +115,17 @@
         <v-modal :show='modal' :toggle-modal='toggleModal' :cover-close='true'>
             <div class='modal-content'>
                 <ul v-if='current_type=="province"'>
-                    <li v-for='province in province_list' @click='selectAddress("province",province.province,province.provinceid)'>
+                    <li class='flex flex-center-v'   v-for='province in province_list' @click='selectAddress("province",province.province,province.provinceid)'>
                         <i :class='["radio",address_id.province==province.provinceid?"active":""]'></i> <span>{{province.province}}</span>
                     </li>
                 </ul>
                 <ul v-if='current_type=="city"'>
-                    <li v-for='city in city_list' @click='selectAddress("city",city.city,city.cityid)'>
+                    <li class='flex flex-center-v'  v-for='city in city_list' @click='selectAddress("city",city.city,city.cityid)'>
                         <i :class='["radio",address_id.city==city.cityid?"active":""]'></i> <span>{{city.city}}</span>
                     </li>
                 </ul>
                 <ul v-if='current_type=="country"'>
-                    <li v-for='country in area_list' @click='selectAddress("country",country.area,country.areaid)'>
+                    <li class='flex flex-center-v'  v-for='country in area_list' @click='selectAddress("country",country.area,country.areaid)'>
                         <i :class='["radio",address_id.country==country.areaid?"active":""]'></i> <span>{{country.area}}</span>
                     </li>
                 </ul>

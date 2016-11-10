@@ -4,15 +4,6 @@
 .swiper-container {
     width: 100%;
     height: pxTorem(300);
-    .swiper-pagination-bullet {
-        padding: pxTorem(10);
-        margin: 0 pxTorem(10);
-        border-radius: 50%;
-        background-color: $white;
-    }
-    .swiper-pagination-bullet-active {
-        background-color: $gray-light;
-    }
 }
 </style>
 <template>
@@ -45,7 +36,9 @@ export default {
                 speed: 600,
                 autoplayDisableOnInteraction: false, //用户操作后不停止
                 pagination: '.swiper-pagination',
+                paginationClickable:true,
                 paginationBulletRender: function(swiper, index, className) {
+                    // return '<span class="' + className + '"></span>';
                     return '<span class="' + className + '"></span>';
                 }
             })

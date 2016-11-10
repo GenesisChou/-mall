@@ -77,15 +77,11 @@
                 </v-simditor>
             </template>
         </v-order>
-        <div v-if='order_detail.product_type==1||order_detail.product_type==2' class='copy-ticket'>
-            <button class='btn btn-block btn-red btn-large'>
-                <template v-if='order_detail.product_type==1'>
-                    复制优惠券
-                </template>
-                <template v-else>
-                    前往使用
-                </template>
-            </button>
+        <!-- <div v-if='order_detail.product_type==1' class='copy-ticket'>
+            <button  class='btn btn-block btn-red btn-large'>复制优惠券</button>
+        </div> -->
+        <div v-if='order_detail.product_type==2' class='copy-ticket'>
+            <button  class='btn btn-block btn-red btn-large'>前往使用</button>
         </div>
         <!-- 商品为实物时 -->
         <template v-if='product_type==3'>
