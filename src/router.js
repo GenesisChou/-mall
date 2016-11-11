@@ -71,7 +71,7 @@ const router = new VueRouter({
     scrollBehavior: (to, from, savedPosition) => ({ x: 0, y: 0 })
 })
 router.beforeEach((to, from, next) => {
-    console.log(to.name);
+    // console.log(to.name);
     // console.log(from);
     store.dispatch('pageView',to.name);
     if (store.state.v_alert.show) {

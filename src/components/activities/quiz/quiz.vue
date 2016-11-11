@@ -106,12 +106,17 @@ export default {
         //提交答案
         submitAnswer() {
             if (this.answer_id) {
+                this.$store.dispatch('toggleLoading', {
+                    show: true
+                });
                 this.$http.post(`${APP.HOST}/question_activity/${this.$parent.activity_id}`, {
                     question_id: this.questions[this.current_number].id,
                     answer_id: this.answer_id,
                     token: APP.TOKEN,
                     userid: APP.USER_ID
                 }).then((response) => {
+                    this.$store.dispatch('toggleLoading');
+
                     let data = response.data;
                     if (data.status == APP.SUCCESS) {
                         this.freshFreeTimes();
@@ -143,6 +148,8 @@ export default {
                             msg: data.info
                         });
                     }
+                }, (response) => {
+                    this.$store.dispatch('toggleLoading');
                 })
 
             } else {

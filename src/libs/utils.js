@@ -44,12 +44,12 @@ export default {
     //list:列别数据 parmas:参数 callback:回调函数
     getScrollData(list, params, callback) {
         if (typeof callback === 'function') {
-            window.addEventListener('scroll', () => {
+            window.addEventListener('scroll', this.debounce(() => {
                 if (params.p < params.total && list.length < params.count && (this.getScrollTop() + this.getClientHeight() >= this.getScrollHeight())) {
                     params.p++;
                     callback();
                 }
-            });
+            }),500);
         }
     },
     // 防抖函数

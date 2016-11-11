@@ -120,7 +120,7 @@
                     <img class='pic' :src='product_detail.pic_thumb'>
                 </header>
                 <div class='msg'>{{order_state.msg}}</div>
-                <router-link v-if='order_state.success' tag='div' class='btn btn-red' :to='{name:"order_detail",query:{order_id:order_detail_id}}' >
+                <router-link v-if='order_state.success' tag='div' class='btn btn-red' :to='{name:"order_detail",query:{order_id:order_detail_id}}'>
                     查看详情
                 </router-link>
                 <div v-else class='btn btn-red' @click='toggleModal'>
@@ -175,14 +175,21 @@ export default {
 
         //获取商品详情
         getProductDetail() {
+                this.$store.dispatch('toggleLoading',{show:true});
+
             this.$http.post(`${APP.HOST}/product_detail_l/${this.product_id}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID
             }).then((response) => {
+                this.$store.dispatch('toggleLoading');
+                
                 let data = response.data;
                 // this.$set('product_detail', utils.resizeImg(data.data));
                 this.product_detail = data.data;
-            }, (response) => {})
+            }, (response) => {
+                this.$store.dispatch('toggleLoading');
+
+            })
         },
         //兑换
         exchange() {
@@ -196,12 +203,15 @@ export default {
         },
         //生成订单
         order() {
+            this.$store.dispatch('toggleLoading', {
+                show: true
+            });
             this.$http.post(`${APP.HOST}/product_order/${this.product_id}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID
             }).then((response) => {
+                this.$store.dispatch('toggleLoading');
                 let data = response.data;
-
                 this.order_state.start = true;
                 if (response.data.status === APP.SUCCESS) {
                     this.order_state.msg = data.data.name;
@@ -216,6 +226,7 @@ export default {
                 this.$store.dispatch('toggleConfirm');
                 this.toggleModal();
             }, (response) => {
+                this.$store.dispatch('toggleLoading');
                 this.$store.dispatch('toggleConfirm');
                 this.toggleModal();
             })

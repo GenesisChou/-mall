@@ -9,11 +9,18 @@
         border-bottom: 1px solid $gray-light;
     }
 }
+.center-container{
+    position: fixed;
+    left:50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+    z-index: 100;
+}
 </style>
 <template>
     <div class='test'>
-        <button class='btn btn-red' @click='togglePopup'>popup</button>
-        <v-popup :show='popup' :toggle-popup='togglePopup'>
+        <!-- <button class='btn btn-red' @click='togglePopup'>popup</button> -->
+        <!--         <v-popup :show='popup' :toggle-popup='togglePopup'>
             <form class='edit-address'>
                 <header class='header'>
                     <h1 class='text-center'>新增收货地址</h1>
@@ -30,9 +37,9 @@
                     <div class='flex'>
                         <label >选择地址</label>
                         <div class='flex flex-item'>
-                        	<span class='flex-item'>选择省份</span>
-                        	<span class='flex-item'>选择城市</span>
-                        	<span class='flex-item'>选择地区</span>
+                            <span class='flex-item'>选择省份</span>
+                            <span class='flex-item'>选择城市</span>
+                            <span class='flex-item'>选择地区</span>
                         </div>
                     </div>
                     <div class='flex'>
@@ -45,14 +52,19 @@
                     <button class='btn btn-blue'>保存</button>
                 </footer>
             </form>
-        </v-popup>
+        </v-popup> -->
+        <div class='center-container'>
+            <v-spinner></v-spinner>
+        </div>
     </div>
 </template>
 <script type="text/javascript">
 import vPopup from 'components/v_popup.vue';
+import vSpinner from 'components/v_spinner.vue'
 export default {
     components: {
-        vPopup
+        vPopup,
+        vSpinner
     },
     data() {
         return {

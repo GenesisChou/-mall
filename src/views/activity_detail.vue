@@ -59,34 +59,30 @@ export default {
             activity_id: '',
             type: '',
             activity_detail: {},
-            free_times:'',
+            free_times: '',
             game: '',
         }
     },
-    mounted(transtion) {
+    mounted() {
         this.activity_id = this.$route.query.activity_id;
-        this.type = this.$route.query.type;
-        if (this.type == 1) {
-            this.game = 'scrap';
-
-        } else if (this.type == 2) {
-            this.game = 'quiz';
-        }
         this.getActivityDetail();
-        
-        // this.$store.dispatch('getUserInfor');
     },
     methods: {
         //获取活动详情
         getActivityDetail() {
+            this.$store.dispatch('toggleLoading', {
+                show: true
+            });
             this.$http.post(`${APP.HOST}/activity_detail_l/${this.activity_id}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID
             }).then((response) => {
+                this.$store.dispatch('toggleLoading');
                 let data = response.data;
                 this.activity_detail = data.data;
+                this.loadActivity(data.data.type);
             }, (response) => {
-
+                this.$store.dispatch('toggleLoading');
             })
         },
         //获取免费活动次数
@@ -94,14 +90,23 @@ export default {
             this.$http.post(`${APP.HOST}/get_free_times/${APP.USER_ID}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID,
-                activity_id:this.activity_id
+                activity_id: this.activity_id
             }).then((response) => {
-                this.free_times=response.data.data.free_times;
+                this.free_times = response.data.data.free_times;
             }, (response) => {
 
             })
-            
+
+        },
+        //载入活动
+        loadActivity(type) {
+            if (type == 1) {
+                this.game = 'scrap';
+            } else if (type == 2) {
+                this.game = 'quiz';
+            }
         }
+
     }
 };
 </script>

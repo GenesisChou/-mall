@@ -19,13 +19,18 @@
     li {
         float: left;
         height: 100%;
+        img {
+            width: 100%;
+            height: 100%;
+        }
     }
 }
 
 .circles {
     position: absolute;
     left: 50%;
-    bottom: 10%;
+    bottom: 0;
+    padding: pxTorem(20);
     transform: translateX(-50%);
     li {
         padding: pxTorem(8);
@@ -41,10 +46,12 @@
 <template>
     <div class='v-swipe bg-white'>
         <ul class='scroll' :style='{width:scroll_width}'>
-            <li v-for='item in list' :class='item.class' :style='{width:item_width}'></li>
+            <li v-for='item in list' @click='bannerView(item)' :style='{width:item_width}'>
+                <img :src="item.pic">
+            </li>
         </ul>
         <ul class='circles'>
-            <li v-for='(i,$index) in list.length' :class='$index==currentNumber?"active":""' @click='active($index)'></li>
+            <li v-for='(i,$index) in list' :class='$index==currentNumber?"active":""' @click='active($index)'></li>
         </ul>
     </div>
 </template>
@@ -55,39 +62,57 @@ export default {
                 scroll: '',
                 timer: '',
                 currentNumber: 0,
-                list: [{
-                    class: 'bg-pink'
-                }, {
-                    class: 'bg-yellow'
-                }, {
-                    class: 'bg-green'
-                }, {
-                    class: 'bg-gray'
-                }, {
-                    class: 'bg-blue'
-                }],
+                list: [],
+                device_width: document.documentElement.clientWidth,
             }
         },
         mounted() {
             this.scroll = document.querySelector('.scroll');
-            this.start();
+            this.getHotBanners();
         },
         computed: {
             //轮播总宽度
             scroll_width() {
-                return (this.list.length * 100) + '%';
+                return this.list.length * this.device_width + 'px';
             },
             item_width() {
-                return this.gap + '%';
+                return this.device_width + 'px';
             },
             //每次移动间隔
             gap() {
-                return Math.ceil(100 / this.list.length);
+                return this.device_width;
             }
         },
         methods: {
-            move($index) {
-                this.scroll.style.transform = `translateX(-${$index*this.gap}%)`;
+            getHotBanners() {
+                this.$http.post(`${APP.HOST}/hot_banner`, {
+                    token: APP.TOKEN,
+                    userid: APP.USER_ID
+                }).then((response) => {
+                    this.list = response.data.data;
+                    this.start();
+
+                }, (response) => {});
+            },
+            routerLink(banner) {
+                if (banner.type == 1) {
+                    console.log(window.location.href);
+                    window.location.href = 'http://' + banner.url;
+                } else if (banner.type == 2) {
+                    this.$router.push({
+                        name: "activity_detail",
+                        query: {
+                            activity_id: banner.item_id
+                        }
+                    })
+                }
+            },
+            bannerView(banner) {
+                this.$store.dispatch('bannerView', banner.id);
+                this.routerLink(banner);
+            },
+            move(index) {
+                this.scroll.style.transform = `translateX(-${index*this.gap}px)`;
             },
             start() {
                 this.timer = setInterval(() => {
@@ -95,7 +120,7 @@ export default {
                     this.currentNumber = (this.currentNumber + 1) % this.list.length;
                     // this.currentNumber = this.currentNumber == (this.list.length - 1) ? 0 : this.currentNumber + 1;
                     this.move(this.currentNumber);
-                }, 2000);
+                }, 4000);
 
             },
             stop() {
@@ -105,7 +130,7 @@ export default {
                 this.stop();
                 this.currentNumber = $index;
                 this.move(this.currentNumber);
-                this.start();
+                setTimeout(this.start, 1000);
             },
         }
 }

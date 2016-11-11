@@ -99,8 +99,7 @@ export default {
                 return {
                     name: "activity_detail",
                     query: {
-                        activity_id: this.item.item_id,
-                        type:this.item.item_type
+                        activity_id: this.item.item_id
                     }
                 };
 

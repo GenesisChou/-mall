@@ -28,7 +28,7 @@
 }
 </style>
 <template>
-    <section class='v-logistics bg-white'>
+    <section v-if='check' class='v-logistics bg-white'>
         <header class='flex flex-center-v flex-space-between'>
             <span>物流信息</span>
             <span>已发货</span>
@@ -61,6 +61,7 @@ export default {
         if(this.check){
             this.getOderExpress();
         }
+            // this.getOderExpress();
     },
     data(){
         return{

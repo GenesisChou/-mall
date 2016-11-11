@@ -123,12 +123,12 @@ export default {
     data() {
         return {
             modal: false,
-            integral_param:'',
-            integral_list:''
+            integral_param: '',
+            integral_list: ''
         }
     },
-    computed:{
-        user(){
+    computed: {
+        user() {
             return this.$store.state.user;
         }
     },
@@ -149,11 +149,18 @@ export default {
         },
         //——获取积分明细列表
         getIntegralList() {
+            this.$store.dispatch('toggleLoading', {
+                show: true
+            });
             this.$http.post(`${APP.HOST}/integral_list/${APP.USER_ID}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID
             }).then((response) => {
+                this.$store.dispatch('toggleLoading');
                 this.integral_list = response.data.data;
+            }, (response) => {
+                this.$store.dispatch('toggleLoading');
+
             })
         },
     },

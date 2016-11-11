@@ -28,7 +28,7 @@
 }
 </style>
 <template>
-    <section class='v-popup'>
+    <div class='v-popup'>
         <!-- <div class='bg-cover' v-show='show'> -->
         <transition name='popup'>
             <div class='v-popup-content' v-show='show'>
@@ -37,10 +37,10 @@
             </div>
         </transition>
         <!-- </div> -->
-        <transition name='fade'>
+        <!-- <transition name='fade'> -->
             <div class='bg-cover' v-show='show'></div>
-        </transition>
-    </section>
+        <!-- </transition> -->
+    </div>
 </template>
 <script>
 export default {

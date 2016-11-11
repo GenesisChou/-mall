@@ -20,7 +20,7 @@
 }
 </style>
 <template>
-    <section class='v-modal'>
+    <div class='v-modal'>
         <!-- <transition name='fade'> -->
             <div v-show='show' @click='close()' class='bg-cover'>
             </div>
@@ -28,7 +28,7 @@
         <div v-show='show' class='content '>
             <slot></slot>
         </div>
-    </section>
+    </div>
 </template>
 <script>
 export default {

@@ -81,7 +81,7 @@
             <button  class='btn btn-block btn-red btn-large'>复制优惠券</button>
         </div> -->
         <div v-if='order_detail.product_type==2' class='copy-ticket'>
-            <button  class='btn btn-block btn-red btn-large'>前往使用</button>
+            <button class='btn btn-block btn-red btn-large'>前往使用</button>
         </div>
         <!-- 商品为实物时 -->
         <template v-if='product_type==3'>
@@ -106,7 +106,7 @@
                     </div>
                 </section>
                 <!-- 物流信息 -->
-                <v-logistics v-if='order_checked' :order-id='order_id' :check='order_checked'></v-logistics>
+                <v-logistics :order-id='order_id' :check='order_checked'></v-logistics>
                 <div v-if='!order_checked' class='single-button'>
                     <button class='btn btn-red btn-block btn-large ' @click='updateOrderAddress'>确认地址</button>
                 </div>
@@ -182,7 +182,7 @@ export default {
     mounted() {
         this.order_id = this.$route.query.order_id;
         this.getOrderDetail((data) => {
-            let product_type=data.data.product_type;
+            let product_type = data.data.product_type;
             if (product_type == 1 || product_type == 2) {
                 this.getProductDetail(data.data.product_id);
             } else if (product_type == 3) {
@@ -195,10 +195,18 @@ export default {
 
         //product_type 1优惠券码 2优惠券链接 3实物 4积分赠送 5谢谢参与
         getOrderDetail(callback) {
+            this.$store.dispatch('toggleLoading', {
+                show: true
+            });
+
             this.$http.post(`${APP.HOST}/order_detail/${this.order_id}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID
             }).then((response) => {
+                this.$store.dispatch('toggleLoading', {
+                    show: false
+                });
+
                 let data = response.data;
                 this.order_detail = data.data;
                 this.product_type = this.order_detail.product_type;
@@ -207,6 +215,9 @@ export default {
                 }
 
             }, (response) => {
+                this.$store.dispatch('toggleLoading', {
+                    show: false
+                });
 
             })
         },
@@ -238,17 +249,6 @@ export default {
                         show: true
                     })
                 }
-            }, (response) => {
-
-            })
-        },
-        //获取物流信息
-        getOderExpress() {
-            this.$http.post(`${APP.HOST}/order_express/${this.order_id}`, {
-                token: APP.TOKEN,
-                userid: APP.USER_ID
-            }).then((response) => {
-                let data = response.data;
             }, (response) => {
 
             })

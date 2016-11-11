@@ -1,34 +1,63 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
 .edit-address {
+    height: pxTorem(800);
     background: $white;
     .header {
         line-height: pxTorem(135);
-        /*border-bottom: 1px solid $sliver;*/
+        margin: 0 pxTorem(53);
+        border-bottom: 1px solid $gray-light;
     }
     .main {
         padding: 0 pxTorem(53);
+        margin-top: pxTorem(80);
         label {
-            width: pxTorem(204);
+            width: pxTorem(150);
             font-size: pxTorem(30);
             text-align: left;
         }
         input {
             height: pxTorem(50);
-            width: pxTorem(300);
-            padding-left: pxTorem(18);
-            border: 1px solid $gray;
+            /*padding-left: pxTorem(18);*/
+            /*border: 1px solid $gray;*/
+            color: $gray;
+            border: 0;
             font-size: pxTorem(26);
-            &:disabled {
-                background-color: $white;
+            border-bottom: 1px solid $gray-light;
+        }
+        .address {
+            .flex-item{
+                margin-right:pxTorem(10);
+            }
+            input {
+                width: 100%;
+                &:disabled {
+                    background-color: $white;
+                }
             }
         }
-        >.flex {
-            height: pxTorem(87);
-            border-bottom: 1px solid $gray;
-            &:nth-child(1) {
-                border-top: 1px solid $gray;
+        .detail-address.flex {
+            line-height: pxTorem(70);
+            height: pxTorem(130);
+            textarea {
+                height: pxTorem(110);
+                margin-top: pxTorem(8);
+                line-height: pxTorem(50);
+                font-size: pxTorem(26);
+                border: 0;
+                border-bottom: 1px solid $gray-light;
+                color: $gray;
             }
+        }
+        .flex-item {
+            width: pxTorem(300);
+        }
+        >.flex {
+            height: pxTorem(70);
+            /*            >input {
+                border-bottom: 1px solid $gray-light;
+            }
+*/
         }
     }
     .footer {
@@ -44,11 +73,11 @@
 
 .modal-content {
     background-color: $white;
-    max-height: pxTorem(400);
+    max-height: pxTorem(600);
     overflow: scroll;
     border-radius: pxTorem(10);
     li {
-        width: pxTorem(350);
+        width: pxTorem(400);
         height: pxTorem(70);
         padding: 0 pxTorem(20);
         list-style: none;
@@ -77,34 +106,48 @@
 <template>
     <section class='v-address-edit'>
         <v-popup :callback='cancelEdit' :show='show' :toggle-popup='togglePopup'>
-            <form class='edit-address'>
+            <form class='edit-address flex flex-column '>
                 <header class='header text-center text-huge'>
                     {{title}}
                 </header>
-                <section class='main'>
+                <section class='main flex-item'>
                     <div class='flex flex-center-v'>
-                        <label for='name'>收货人</label>
-                        <input id='name' placeholder="收货人姓名" v-model='receive_infor.contact'>
+                        <label for='contact'>收货人</label>
+                        <input class='flex-item' @focus='focusContact' id='contact' placeholder="收货人姓名" v-model='receive_infor.contact'>
                     </div>
-                    <div class='flex flex-center-v' @click='showAreaList("province")'>
-                        <label for='province'>选择省</label>
-                        <input id='province' placeholder="请选择省" v-model='receive_infor.province' disabled>
+                    <div class='flex flex-center-v '>
+                        <label for='province'>选择地址</label>
+                        <div class='flex flex-item address'>
+                            <div class='flex-item' @click='showAreaList("province")'>
+                                <input id='province' placeholder="请选择省" v-model='receive_infor.province' disabled>
+                            </div>
+                            <div class='flex-item' @click='showAreaList("city")'>
+                                <input id='city' placeholder="请选择市" v-model='receive_infor.city' disabled>
+                            </div>
+                            <div class='flex-item' @click='showAreaList("country")'>
+                                <input id='country' placeholder="请选择区县" v-model='receive_infor.country' disabled>
+                            </div>
+                        </div>
                     </div>
-                    <div class='flex flex-center-v' @click='showAreaList("city")'>
+                    <!--                     <div class='flex flex-center-v'>
                         <label for='city'>选择市</label>
-                        <input id='city' placeholder="请选择市" v-model='receive_infor.city' disabled>
-                    </div>
-                    <div class='flex flex-center-v' @click='showAreaList("country")'>
-                        <label for='country'>选择区/县</label>
-                        <input id='country' placeholder="请选择区县" v-model='receive_infor.country' disabled>
+                        <div @click='showAreaList("city")'>
+                            <input id='city' placeholder="请选择市" v-model='receive_infor.city' disabled>
+                        </div>
                     </div>
                     <div class='flex flex-center-v'>
+                        <label for='country'>选择区/县</label>
+                        <div @click='showAreaList("country")'>
+                            <input id='country' placeholder="请选择区县" v-model='receive_infor.country' disabled>
+                        </div>
+                    </div> -->
+                    <div class='flex detail-address'>
                         <label for='address'>详细地址</label>
-                        <input id='address' placeholder="请输入详细地址" v-model='receive_infor.address'>
+                        <textarea id='address' class='flex-item' v-model='receive_infor.address' placeholder="请输入详细地址"></textarea>
                     </div>
                     <div class='flex flex-center-v'>
                         <label for='phone'>手机号码</label>
-                        <input id='phone' type='number' placeholder="手机或固定电话" v-model='receive_infor.phone'>
+                        <input class='flex-item' id='phone' type='number' placeholder="手机或固定电话" v-model='receive_infor.phone'>
                     </div>
                 </section>
                 <footer class='footer text-center'>
@@ -115,17 +158,17 @@
         <v-modal :show='modal' :toggle-modal='toggleModal' :cover-close='true'>
             <div class='modal-content'>
                 <ul v-if='current_type=="province"'>
-                    <li class='flex flex-center-v'   v-for='province in province_list' @click='selectAddress("province",province.province,province.provinceid)'>
+                    <li class='flex flex-center-v' v-for='province in province_list' @click='selectAddress("province",province.province,province.provinceid)'>
                         <i :class='["radio",address_id.province==province.provinceid?"active":""]'></i> <span>{{province.province}}</span>
                     </li>
                 </ul>
                 <ul v-if='current_type=="city"'>
-                    <li class='flex flex-center-v'  v-for='city in city_list' @click='selectAddress("city",city.city,city.cityid)'>
+                    <li class='flex flex-center-v' v-for='city in city_list' @click='selectAddress("city",city.city,city.cityid)'>
                         <i :class='["radio",address_id.city==city.cityid?"active":""]'></i> <span>{{city.city}}</span>
                     </li>
                 </ul>
                 <ul v-if='current_type=="country"'>
-                    <li class='flex flex-center-v'  v-for='country in area_list' @click='selectAddress("country",country.area,country.areaid)'>
+                    <li class='flex flex-center-v' v-for='country in country_list' @click='selectAddress("country",country.area,country.areaid)'>
                         <i :class='["radio",address_id.country==country.areaid?"active":""]'></i> <span>{{country.area}}</span>
                     </li>
                 </ul>
@@ -159,7 +202,7 @@ export default {
             current_type: 'province',
             province_list: '',
             city_list: '',
-            area_list: '',
+            country_list: '',
             receive_infor: {
                 province: '',
                 city: '',
@@ -192,27 +235,30 @@ export default {
             }
             return true;
         },
-        is_defaults(){
-            if(this.address_list.length==0){
+        is_defaults() {
+            if (this.address_list.length == 0) {
                 return 1;
             }
-            let result=0;
-            this.address_list.forEach(address=>{
-                if(address.id==this.id){
-                    result=address.is_defaults;
+            let result = 0;
+            this.address_list.forEach(address => {
+                if (address.id == this.id) {
+                    result = address.is_defaults;
                 }
             })
             return result;
         }
     },
     watch: {
-        //弹出口开始获取省份列表
+        //弹出窗口后为表单赋值
         show(value) {
             if (value) {
                 this.getProvinceList();
+                //id大于0代表此时是修改地址状态
                 if (this.id > 0) {
                     this.address_list.forEach((address) => {
                         if (address.id == this.id) {
+                            this.getCityList(address.province_id);
+                            this.getCountryList(address.city_id);
                             this.receive_infor.province = address.province;
                             this.receive_infor.city = address.city;
                             this.receive_infor.country = address.country;
@@ -227,8 +273,13 @@ export default {
         },
     },
     methods: {
+        focusContact() {
+            console.log('focus');
+        },
         //添加地址
         insertAddress() {
+                this.$store.dispatch('toggleLoading',{show:true});
+
             this.$http.post(`${APP.HOST}/address_insert/${APP.USER_ID}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID,
@@ -240,15 +291,16 @@ export default {
                 contact: this.receive_infor.contact,
                 is_defaults: this.is_defaults
             }).then((response) => {
+                this.$store.dispatch('toggleLoading');
                 let data = response.data;
                 if (data.status == APP.SUCCESS) {
                     //重新获取地址列表
 
                     this.$store.dispatch('getAddressList');
-                    this.$store.dispatch('toggleAlert', {
-                        msg: '新建地址成功',
-                        type: 'correct'
-                    });
+                    // this.$store.dispatch('toggleAlert', {
+                    //     msg: '新建地址成功',
+                    //     type: 'correct'
+                    // });
                     setTimeout(() => {
                         this.togglePopup();
                         this.clearInput();
@@ -260,11 +312,14 @@ export default {
                     });
                 }
             }, (response) => {
+                this.$store.dispatch('toggleLoading');
 
             })
         },
         //更新地址
         updateAddress() {
+                this.$store.dispatch('toggleLoading',{show:true});
+
             this.$http.post(`${APP.HOST}/address_update/${this.id}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID,
@@ -276,14 +331,16 @@ export default {
                 contact: this.receive_infor.contact,
                 is_defaults: this.is_defaults
             }).then((response) => {
+                this.$store.dispatch('toggleLoading');
+                
                 let data = response.data;
                 if (data.status == APP.SUCCESS) {
                     //重新获取地址列表
                     this.$store.dispatch('getAddressList');
-                    this.$store.dispatch('toggleAlert', {
-                        msg: '编辑地址成功',
-                        type: 'correct'
-                    });
+                    // this.$store.dispatch('toggleAlert', {
+                    //     msg: '编辑地址成功',
+                    //     type: 'correct'
+                    // });
                     setTimeout(() => {
                         this.togglePopup();
                         this.clearInput();
@@ -295,6 +352,7 @@ export default {
                     });
                 }
             }, (response) => {
+                this.$store.dispatch('toggleLoading');
 
             })
         },
@@ -318,11 +376,15 @@ export default {
             this.receive_infor.phone = '';
         },
         showAreaList(type) {
-            if (type == 'city' && !this.address_id.province) {
-                return;
+            if (type == 'city') {
+                if (!this.receive_infor.province) {
+                    return;
+                }
             }
-            if (type == 'country' && !this.address_id.city) {
-                return;
+            if (type == 'country') {
+                if (!this.receive_infor.city) {
+                    return;
+                }
             }
             this.current_type = type;
             this.toggleModal();
@@ -340,7 +402,7 @@ export default {
                 if (!this.address_id.city || this.address_id.city != id) {
                     this.receive_infor.city = name;
                     this.address_id.city = id;
-                    this.getAreaList(id);
+                    this.getCountryList(id);
                     this.clearInput('city');
                 }
             } else if (type == 'country') {
@@ -368,12 +430,12 @@ export default {
             }, (response) => {});
         },
         //获取区县
-        getAreaList(id) {
+        getCountryList(id) {
             this.$http.post(`${APP.HOST}/area_list/${id}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID
             }).then((response) => {
-                this.area_list = response.data.data;
+                this.country_list = response.data.data;
             }, (response) => {});
         },
         //关闭/显示confirm

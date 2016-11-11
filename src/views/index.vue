@@ -80,7 +80,7 @@
 </template>
 <script>
 import utils from 'libs/utils.js'
-import vSwipe from 'components/v_swipe'
+import vSwipe from 'components/v_swipe.vue'
 import vItem from 'components/index/v_item.vue'
 export default {
     name: 'index',
@@ -95,7 +95,6 @@ export default {
     },
     data() {
         return {
-            hot_banners: [],
             hot_items: [],
             hot_commend: [],
             check_animation: false,
@@ -109,13 +108,19 @@ export default {
             },
         }
     },
+    watch: {
+        '$route': 'test',
+    },
     mounted() {
-        this.getHotBanners();
         this.getHotCommend();
         this.getHotItems();
+
         utils.getScrollData(this.hot_items, this.params, this.getHotItems);
     },
     methods: {
+        test() {
+            console.log('haha');
+        },
         //签到
         checkIn() {
             if (!this.user.ischecked) {
@@ -137,17 +142,12 @@ export default {
                 })
             }
         },
-        //热门banner列表
-        getHotBanners() {
-            this.$http.post(`${APP.HOST}/hot_banner`, {
-                token: APP.TOKEN,
-                userid: APP.USER_ID
-            }).then((response) => {
-                this.hot_banners = response.data.data.list;
-            }, (response) => {});
-        },
+
         //  热门商品和活动列表，用于首页列表
         getHotItems(params = this.params) {
+            this.$store.dispatch('toggleLoading', {
+                show: true
+            });
             this.$http.post(`${APP.HOST}/hot_item`, params, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID
@@ -157,15 +157,18 @@ export default {
                     this.params.total = data.data.total;
                     this.params.count = data.data.count;
                 }
+                this.$store.dispatch('toggleLoading');
                 this.hot_items = this.hot_items.concat(data.data.list);
-            }, (response) => {});
+            }, (response) => {
+                this.$store.dispatch('toggleLoading');
+            });
         },
         getHotCommend() {
             this.$http.post(`${APP.HOST}/hot_commend`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID
             }).then((response) => {
-                this.hot_commend = response.data.data.list;
+                this.hot_commend = response.data.data;
             }, (response) => {});
         },
     }

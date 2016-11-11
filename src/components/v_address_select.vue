@@ -203,11 +203,17 @@ export default {
             });
         },
         setDefaultAddress(id, callback) {
+            this.$store.dispatch('toggleLoading', {
+                show: true
+            });
+
             this.$http.post(`${APP.HOST}/set_default_address/${APP.USER_ID}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID,
                 id: id
             }).then((response) => {
+                this.$store.dispatch('toggleLoading');
+
                 if (callback) {
                     callback(response);
                 }
@@ -216,6 +222,7 @@ export default {
                 }
 
             }, (response) => {
+                this.$store.dispatch('toggleLoading');
 
             })
         }

@@ -7,7 +7,7 @@
 </style>
 <template>
     <div class='order-list bg-base'>
-        <router-link v-for='order in order_list' :to='{name:"order_detail",query:{order_id:order.id}}'>
+        <router-link v-for='order in order_list' :to='{name:"order_detail",query:{order_id:parseInt(order.id)}}'>
             <v-order :order='order'> </v-order>
         </router-link>
         <v-empty v-if='empty'></v-empty>
@@ -47,6 +47,7 @@ export default {
     methods: {
         //获取兑换订单列表
         getOrderList(params = this.params) {
+            this.$store.dispatch('toggleLoading',{show:true});
             this.$http.post(`${APP.HOST}/order_list/${APP.USER_ID}`, params).then((response) => {
                 let data = response.data;
                 if (this.params.p <= 1) {
@@ -57,8 +58,9 @@ export default {
                 if (!this.order_list.length > 0) {
                     this.empty = true;
                 }
+                this.$store.dispatch('toggleLoading',{show:false});
             }, (response) => {
-
+                this.$store.dispatch('toggleLoading',{show:false});
             })
         }
     }
