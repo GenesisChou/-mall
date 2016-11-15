@@ -74,6 +74,7 @@
             </router-link>
         </div>
         <section class='main flex flex-wrap'>
+            <v-item v-for='item in hot_commend' :item='item'></v-item>
             <v-item v-for='item in hot_items' :item='item'></v-item>
         </section>
     </div>
@@ -108,19 +109,12 @@ export default {
             },
         }
     },
-    watch: {
-        '$route': 'test',
-    },
     mounted() {
         this.getHotCommend();
         this.getHotItems();
-
         utils.getScrollData(this.hot_items, this.params, this.getHotItems);
     },
     methods: {
-        test() {
-            console.log('haha');
-        },
         //签到
         checkIn() {
             if (!this.user.ischecked) {
@@ -164,12 +158,18 @@ export default {
             });
         },
         getHotCommend() {
+            this.$store.dispatch('toggleLoading', {
+                show: true
+            });
             this.$http.post(`${APP.HOST}/hot_commend`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID
             }).then((response) => {
+                this.$store.dispatch('toggleLoading');
                 this.hot_commend = response.data.data;
-            }, (response) => {});
+            }, (response) => {
+                this.$store.dispatch('toggleLoading');
+            });
         },
     }
 };

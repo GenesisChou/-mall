@@ -28,24 +28,18 @@
 }
 </style>
 <template>
-    <section v-if='check' class='v-logistics bg-white'>
+    <section v-if='status==3' class='v-logistics bg-white'>
         <header class='flex flex-center-v flex-space-between'>
             <span>物流信息</span>
-            <span>已发货</span>
+
+            <span >已发货</span>
         </header>
         <ul class='main'>
-            <li class='flex'>
-                <i class='iconfont icon-time  text-huge'></i>
-                <div class='detail'>
-                    <p class='msg'> 仓库正在打包，请耐心等候！ </p>
-                    <p>2016-11-01 14:04</p>
-                </div>
-            </li>
-            <li v-for='i in 2' class='flex'>
+            <li v-for='item in logistics' class='flex'>
                 <i class='iconfont icon-car  text-huge'></i>
                 <div class='detail'>
-                    <p class='msg'> 已出库,配送中 </p>
-                    <p>2016-11-01 14:04</p>
+                    <p class='msg'>{{item.AcceptStation}} </p>
+                    <p>{{item.AcceptTime}}</p>
                 </div>
             </li>
         </ul>
@@ -55,27 +49,27 @@
 export default {
     props:{
         orderId:Number,
-        check:Boolean
+        status:Number
+
     },
     mounted(){
-        if(this.check){
+        if(this.status==3){
             this.getOderExpress();
         }
-            // this.getOderExpress();
     },
     data(){
         return{
-            
+            logistics:[]
         }
     },
     methods: {
         //获取物流信息
         getOderExpress() {
-            this.$http.post(`${APP.HOST}/order_express/${this.orderId}`, {
+            this.$http.post(`${APP.HOST}/order_express_trace/${this.orderId}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID
             }).then((response) => {
-                let data = response.data;
+                this.logistics= response.data.data;
             }, (response) => {
 
             })

@@ -23,7 +23,12 @@ module.exports = {
                     sass: 'style!css!sass'
                 }
             }
-        }, {
+        }, 
+        {
+            test:/\.css$/,
+            loaders:['style','css']
+        },
+        {
             test: /\.js$/,
             loader: 'babel',
             exclude: /node_modules/

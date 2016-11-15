@@ -142,6 +142,7 @@ export default {
                 this.sort_type = 'integral-up';
                 this.params._order = 'integral:ASC';
             }
+            
             this.getProductList(() => {
                 this.product_list = [];
             });
@@ -150,10 +151,13 @@ export default {
         sortByCount() {
             this.initParams();
             this.params._order = 'used_count:DESC';
-            this.sort_type = 'count';
-            this.getProductList(() => {
-                this.product_list = [];
-            });
+            if (this.sort_type != 'count') {
+
+                this.sort_type = 'count';
+                this.getProductList(() => {
+                    this.product_list = [];
+                });
+            }
         }
 
     }

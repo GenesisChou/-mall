@@ -7,7 +7,7 @@
         line-height: pxTorem(135);
     }
     .address-list {
-        overflow: scroll;
+        overflow-y: scroll;
         margin: 0 pxTorem(53);
         /*border-top: 1px solid $gray;*/
         li {
@@ -136,54 +136,58 @@ export default {
             this.address_id = 0;
             this.toggleEdit();
         },
-        // //删除地址
-        // deleteAddress(id) {
-        //     let address_list = this.address_list;
-        //     this.$store.dispatch('toggleConfirm', {
-        //         msg: '你确定要删除该地址吗?',
-        //         show: true,
-        //         callback: () => {
-        //             let default_delete = this.deleteDefault(address_list, id);
-        //             this.$http.post(`${APP.HOST}/address_delete/${id}`, {
-        //                 token: APP.TOKEN,
-        //                 userid: APP.USER_ID
-        //             }).then((response) => {
-        //                 let data = response.data;
-        //                 this.$store.dispatch('toggleConfirm');
-        //                 if (data.status == APP.SUCCESS) {
-        //                     this.$store.dispatch('toggleAlert', {
-        //                             msg: '删除地址成功'
-        //                         })
-        //                         //若被删除的是默认地址,则选取删除后地址列表第一项为默认地址
-        //                     if (default_delete) {
-        //                         this.$store.dispatch('getAddressList', (address_list) => {
-        //                             this.setDefaultAddress(address_list[0].id);
-        //                             this.selectAddress(address_list[0].id);
-        //                         });
-        //                     } else {
-        //                         this.$store.dispatch('getAddressList');
-        //                     }
-        //                 } else {
-        //                     this.$store.dispatch('toggleAlert', {
-        //                         msg: '删除地址失败'
-        //                     })
-        //                 }
-        //             }, (response) => {});
-        //         }
-        //     })
-        // },
-        // //判断被删除的是否是默认地址
-        // deleteDefault(address_list, id) {
-        //     let result = false;
-        //     for (var i = 0, len = address_list.length; i < len; i++) {
-        //         let address = address_list[i];
-        //         if (address.id == id && address.is_defaults == 1 && len > 1) {
-        //             result = true;
-        //             break;
-        //         }
-        //     }
-        //     return result;
-        // },
+        //删除地址
+        deleteAddress(id) {
+            let address_list = this.address_list;
+            this.$store.dispatch('toggleConfirm', {
+                msg: '你确定要删除该地址吗?',
+                show: true,
+                callback: () => {
+                    this.$store.dispatch('toggleLoadinge',{show:true});
+                    let default_delete = this.deleteDefault(address_list, id);
+                    this.$http.post(`${APP.HOST}/address_delete/${id}`, {
+                        token: APP.TOKEN,
+                        userid: APP.USER_ID
+                    }).then((response) => {
+                        let data = response.data;
+                        this.$store.dispatch('toggleConfirm');
+                        if (data.status == APP.SUCCESS) {
+                            this.$store.dispatch('toggleLoadinge');
+                            this.$store.dispatch('toggleAlert', {
+                                    msg: '删除地址成功'
+                                })
+                                //若被删除的是默认地址,则选取删除后地址列表第一项为默认地址
+                            if (default_delete) {
+                                this.$store.dispatch('getAddressList', (address_list) => {
+                                    this.setDefaultAddress(address_list[0].id);
+                                    this.selectAddress(address_list[0].id);
+                                });
+                            } else {
+                                this.$store.dispatch('getAddressList');
+                            }
+                        } else {
+                            this.$store.dispatch('toggleLoadinge');
+                            
+                            this.$store.dispatch('toggleAlert', {
+                                msg: '删除地址失败'
+                            })
+                        }
+                    }, (response) => {});
+                }
+            })
+        },
+        //判断被删除的是否是默认地址
+        deleteDefault(address_list, id) {
+            let result = false;
+            for (var i = 0, len = address_list.length; i < len; i++) {
+                let address = address_list[i];
+                if (address.id == id && address.is_defaults == 1 && len > 1) {
+                    result = true;
+                    break;
+                }
+            }
+            return result;
+        },
         selectAddress(id) {
             this.selected_id = id;
         },

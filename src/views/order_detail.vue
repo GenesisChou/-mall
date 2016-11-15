@@ -106,7 +106,7 @@
                     </div>
                 </section>
                 <!-- 物流信息 -->
-                <v-logistics :order-id='order_id' :check='order_checked'></v-logistics>
+                <v-logistics :order-id='parseInt(order_id)'  :status='order_detail.status'></v-logistics>
                 <div v-if='!order_checked' class='single-button'>
                     <button class='btn btn-red btn-block btn-large ' @click='updateOrderAddress'>确认地址</button>
                 </div>

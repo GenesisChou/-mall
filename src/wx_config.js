@@ -4,32 +4,36 @@ import sha1 from 'libs/sha1';
 import Vue from 'vue';
 import VueResource from 'vue-resource';
 Vue.use(VueResource);
-export default function(wx,store) {
+Vue.http.options.emulateJSON = true;
+export default function(wx, store) {
 
-    //通过config接口注入权限验证配置
-    let option = {
-        appId: 'wx871e120dd0a24149',
-        ticket: utils.getParameterByName('ticket'),
-        noncestr: 'helloworld',
-        timestamp: new Date().getTime(),
-        signature: ''
-    }
-    let str1 = `jsapi_ticket=${option.ticket}&noncestr=${option.noncestr}&timestamp=${option.timestamp}&url=${location.href}`;
-    option.signature = sha1(str1);
-    wx.config({
-        // debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-        appId: option.appId, // 必填，公众号的唯一标识
-        timestamp: option.timestamp, // 必填，生成签名的时间戳
-        nonceStr: option.noncestr, // 必填，生成签名的随机串
-        signature: option.signature, // 必填，签名，见附录1
-        jsApiList: [
-                'onMenuShareTimeline',
-                'onMenuShareAppMessage',
-                'onMenuShareQQ',
-                'onMenuShareWeibo',
-                'onMenuShareQZone'
-            ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    getTicket(function(ticket) {
+        //通过config接口注入权限验证配置
+        let option = {
+            appId: 'wx871e120dd0a24149',
+            ticket: ticket,
+            noncestr: 'helloworld',
+            timestamp: new Date().getTime(),
+            signature: ''
+        }
+        let str1 = `jsapi_ticket=${option.ticket}&noncestr=${option.noncestr}&timestamp=${option.timestamp}&url=${location.href}`;
+        option.signature = sha1(str1);
+        wx.config({
+            // debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: option.appId, // 必填，公众号的唯一标识
+            timestamp: option.timestamp, // 必填，生成签名的时间戳
+            nonceStr: option.noncestr, // 必填，生成签名的随机串
+            signature: option.signature, // 必填，签名，见附录1
+            jsApiList: [
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage',
+                    'onMenuShareQQ',
+                    'onMenuShareWeibo',
+                    'onMenuShareQZone'
+                ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
     });
+
     //分享赢积分
     function share() {
         Vue.http.post(`${APP.HOST}/share/${APP.USER_ID}`, {
@@ -37,6 +41,15 @@ export default function(wx,store) {
             userid: APP.USER_ID
         }).then((response) => {
             store.dispatch('getUserInfor');
+        })
+    }
+
+    function getTicket(callback) {
+        Vue.http.post(`${APP.HOST}/get_weixin_ticket/${APP.MEDIA_ID}`, {
+            token: APP.TOKEN,
+            userid: APP.USER_ID
+        }).then((response) => {
+            callback(response.data.data.ticket);
         })
     }
     wx.ready(function() {

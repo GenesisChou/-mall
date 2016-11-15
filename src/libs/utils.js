@@ -43,13 +43,14 @@ export default {
     //获取滚动数据
     //list:列别数据 parmas:参数 callback:回调函数
     getScrollData(list, params, callback) {
+        let utils = this;
         if (typeof callback === 'function') {
-            window.addEventListener('scroll', this.debounce(() => {
-                if (params.p < params.total && list.length < params.count && (this.getScrollTop() + this.getClientHeight() >= this.getScrollHeight())) {
+            window.addEventListener('scroll', function() {
+                if (params.p < params.total && list.length < params.count && (utils.getScrollTop() + utils.getClientHeight() >= utils.getScrollHeight())) {
                     params.p++;
                     callback();
                 }
-            }),500);
+            });
         }
     },
     // 防抖函数

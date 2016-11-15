@@ -1,4 +1,5 @@
 <style type="text/css" scoped>
+@import '../assets/scss/variable.scss';
 .test {
     height: 100%;
     overflow: hidden;

@@ -24,16 +24,17 @@
             border: 0;
             font-size: pxTorem(26);
             border-bottom: 1px solid $gray-light;
+            transition-duration: .5s;
+            &:focus {
+                border-bottom: 1px solid $red;
+            }
         }
         .address {
-            .flex-item{
-                margin-right:pxTorem(10);
+            .flex-item {
+                margin-right: pxTorem(10);
             }
             input {
                 width: 100%;
-                &:disabled {
-                    background-color: $white;
-                }
             }
         }
         .detail-address.flex {
@@ -47,6 +48,10 @@
                 border: 0;
                 border-bottom: 1px solid $gray-light;
                 color: $gray;
+                transition-duration: .5s;
+                &:focus {
+                    border-bottom: 1px solid $red;
+                }
             }
         }
         .flex-item {
@@ -113,20 +118,14 @@
                 <section class='main flex-item'>
                     <div class='flex flex-center-v'>
                         <label for='contact'>收货人</label>
-                        <input class='flex-item' @focus='focusContact' id='contact' placeholder="收货人姓名" v-model='receive_infor.contact'>
+                        <input class='flex-item' id='contact' placeholder="收货人姓名" v-model='receive_infor.contact'>
                     </div>
                     <div class='flex flex-center-v '>
                         <label for='province'>选择地址</label>
                         <div class='flex flex-item address'>
-                            <div class='flex-item' @click='showAreaList("province")'>
-                                <input id='province' placeholder="请选择省" v-model='receive_infor.province' disabled>
-                            </div>
-                            <div class='flex-item' @click='showAreaList("city")'>
-                                <input id='city' placeholder="请选择市" v-model='receive_infor.city' disabled>
-                            </div>
-                            <div class='flex-item' @click='showAreaList("country")'>
-                                <input id='country' placeholder="请选择区县" v-model='receive_infor.country' disabled>
-                            </div>
+                            <input class='flex-item' id='province' @click='showAreaList("province")' placeholder="请选择省" v-model='receive_infor.province' readonly>
+                            <input class='flex-item' @click='showAreaList("city")' id='city' placeholder="请选择市" v-model='receive_infor.city' readonly>
+                            <input class='flex-item' @click='showAreaList("country")' id='country' placeholder="请选择区县" v-model='receive_infor.country' readonly>
                         </div>
                     </div>
                     <!--                     <div class='flex flex-center-v'>
@@ -257,6 +256,11 @@ export default {
                 if (this.id > 0) {
                     this.address_list.forEach((address) => {
                         if (address.id == this.id) {
+                            this.address_id.province = address.province_id;
+                            this.address_id.city = address.city_id;
+                            this.address_id.country = address.country_id;
+
+
                             this.getCityList(address.province_id);
                             this.getCountryList(address.city_id);
                             this.receive_infor.province = address.province;
@@ -273,12 +277,11 @@ export default {
         },
     },
     methods: {
-        focusContact() {
-            console.log('focus');
-        },
         //添加地址
         insertAddress() {
-                this.$store.dispatch('toggleLoading',{show:true});
+            this.$store.dispatch('toggleLoading', {
+                show: true
+            });
 
             this.$http.post(`${APP.HOST}/address_insert/${APP.USER_ID}`, {
                 token: APP.TOKEN,
@@ -289,18 +292,16 @@ export default {
                 address: this.receive_infor.address,
                 phone: this.receive_infor.phone,
                 contact: this.receive_infor.contact,
-                is_defaults: this.is_defaults
+                is_defaults: this.is_defaults,
+                province_id: this.address_id.province,
+                city_id: this.address_id.city,
+                country_id: this.address_id.country
             }).then((response) => {
                 this.$store.dispatch('toggleLoading');
                 let data = response.data;
                 if (data.status == APP.SUCCESS) {
                     //重新获取地址列表
-
                     this.$store.dispatch('getAddressList');
-                    // this.$store.dispatch('toggleAlert', {
-                    //     msg: '新建地址成功',
-                    //     type: 'correct'
-                    // });
                     setTimeout(() => {
                         this.togglePopup();
                         this.clearInput();
@@ -318,7 +319,9 @@ export default {
         },
         //更新地址
         updateAddress() {
-                this.$store.dispatch('toggleLoading',{show:true});
+            this.$store.dispatch('toggleLoading', {
+                show: true
+            });
 
             this.$http.post(`${APP.HOST}/address_update/${this.id}`, {
                 token: APP.TOKEN,
@@ -329,10 +332,13 @@ export default {
                 address: this.receive_infor.address,
                 phone: this.receive_infor.phone,
                 contact: this.receive_infor.contact,
-                is_defaults: this.is_defaults
+                is_defaults: this.is_defaults,
+                province_id: this.address_id.province,
+                city_id: this.address_id.city,
+                country_id: this.address_id.country
             }).then((response) => {
                 this.$store.dispatch('toggleLoading');
-                
+
                 let data = response.data;
                 if (data.status == APP.SUCCESS) {
                     //重新获取地址列表
@@ -363,13 +369,17 @@ export default {
         //清除输入
         clearInput(type) {
             this.receive_infor.country = '';
+            this.address_id.country = '';
             if (type == 'city') {
                 return;
             }
             this.receive_infor.city = '';
+            this.address_id.city = '';
+
             if (type == 'province') {
                 return;
             }
+            this.address_id.province = '';
             this.receive_infor.province = '';
             this.receive_infor.contact = '';
             this.receive_infor.address = '';

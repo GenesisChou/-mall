@@ -12,7 +12,7 @@
     -moz-transition: opacity .3s linear;
     -o-transition: opacity .3s linear;
     transition: opacity .3s linear;
-    box-shadow: pxTorem(5) pxTorem(5) pxTorem(10) $gray;
+    box-shadow: pxTorem(5) pxTorem(5) pxTorem(5) $gray-light;
 }
 </style>
 <template>
