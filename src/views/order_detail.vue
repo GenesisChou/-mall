@@ -106,7 +106,8 @@
                     </div>
                 </section>
                 <!-- 物流信息 -->
-                <v-logistics :order-id='parseInt(order_id)'  :status='order_detail.status'></v-logistics>
+                <v-logistics :order-id='parseInt(order_id)' :status='order_detail.status' :status-str='order_detail.status_str'></v-logistics>
+                
                 <div v-if='!order_checked' class='single-button'>
                     <button class='btn btn-red btn-block btn-large ' @click='updateOrderAddress'>确认地址</button>
                 </div>
@@ -170,12 +171,23 @@ export default {
                 phone: '',
                 contact: ''
             };
-            this.address_list.forEach((address) => {
-                if (address.is_defaults) {
-                    temp = address;
-                    return;
-                }
-            })
+            if (this.order_detail.status == 1) {
+            //若订单未确认 从地址列表内选取默认地址
+                this.address_list.forEach((address) => {
+                    if (address.is_defaults) {
+                        temp = address;
+                        return;
+                    }
+                })
+            }else{
+                //订单已确认,从订单详情内获取指定地址
+                temp.contact=this.order_detail.contact;
+                temp.phone=this.order_detail.phone;
+                temp.province=this.order_detail.province;
+                temp.city=this.order_detail.city;
+                temp.country=this.order_detail.country;
+
+            }
             return temp;
         }
     },
@@ -192,8 +204,9 @@ export default {
     },
     methods: {
         //获取订单详情
-
+        //order_type  1商品兑换 2活动
         //product_type 1优惠券码 2优惠券链接 3实物 4积分赠送 5谢谢参与
+        //status  1未发货 2已确认地址 3已发货
         getOrderDetail(callback) {
             this.$store.dispatch('toggleLoading', {
                 show: true

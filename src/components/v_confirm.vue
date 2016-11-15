@@ -1,12 +1,5 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
-.v-fade-enter-active, .v-fade-leave-active {
-  transition: opacity .5s
-}
-.v-fade-enter, .v-fade-leave-active {
-  opacity: 0
-}
-
 .v-confirm-content {
     position: fixed;
     left: 50%;
@@ -17,6 +10,7 @@
     text-align: center;
     transform: translate(-50%, -50%);
     z-index: 11;
+    transition: all .3s ease;
     .msg {
         line-height: pxTorem(190);
         background-color: $white;
@@ -47,10 +41,8 @@
 }
 </style>
 <template>
-    <section  class='v-confirm'>
-        <!-- <transition name='v-fade'> -->
-            <div v-show='show' class='bg-cover'> </div>
-        <!-- </transition> -->
+    <section class='v-confirm'>
+        <div v-show='show' class='bg-cover'> </div>
         <div v-show='show' class='v-confirm-content'>
             <div class=' msg'>{{msg}}</div>
             <div class='flex btns'>

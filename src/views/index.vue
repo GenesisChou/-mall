@@ -74,7 +74,9 @@
             </router-link>
         </div>
         <section class='main flex flex-wrap'>
+            <!-- 热门推荐 -->
             <v-item v-for='item in hot_commend' :item='item'></v-item>
+            <!-- 热门 -->
             <v-item v-for='item in hot_items' :item='item'></v-item>
         </section>
     </div>
