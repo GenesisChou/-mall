@@ -29,7 +29,6 @@ export default {
     data() {
         return {
             // order_list: [],
-            empty: false,
             // params: {
             //     p: 1,
             //     r: APP.PERPAGE,
@@ -41,6 +40,9 @@ export default {
         }
     },
     computed: {
+        empty(){
+            return this.$store.state.order_list.length==0?true:false;
+        },
         order_list() {
             return this.$store.state.order_list;
         },
