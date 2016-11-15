@@ -107,7 +107,6 @@
                 </section>
                 <!-- 物流信息 -->
                 <v-logistics :order-id='parseInt(order_id)' :status='order_detail.status' :status-str='order_detail.status_str'></v-logistics>
-
                 <div v-if='!order_checked' class='single-button'>
                     <button class='btn btn-red btn-block btn-large ' @click='updateOrderAddress'>确认地址</button>
                 </div>
@@ -172,26 +171,26 @@ export default {
                 contact: ''
             };
             if (this.order_detail.status == 1) {
-            //若订单未确认 从地址列表内选取默认地址
+                //若订单未确认 从地址列表内选取默认地址
                 this.address_list.forEach((address) => {
                     if (address.is_defaults) {
                         temp = address;
                         return;
                     }
                 })
-            }else{
+            } else {
                 //订单已确认,从订单详情内获取指定地址
-                temp.contact=this.order_detail.contact;
-                temp.phone=this.order_detail.phone;
-                temp.province=this.order_detail.province;
-                temp.city=this.order_detail.city;
-                temp.country=this.order_detail.country;
+                temp.contact = this.order_detail.contact;
+                temp.phone = this.order_detail.phone;
+                temp.province = this.order_detail.province;
+                temp.city = this.order_detail.city;
+                temp.country = this.order_detail.country;
 
             }
             return temp;
         },
-        default_id(){
-          return this.default_address.id;
+        default_id() {
+            return this.default_address.id;
         }
     },
     mounted() {
@@ -251,14 +250,16 @@ export default {
         },
         //确认订单地址
         updateOrderAddress() {
-          this.$store.dispatch('toggleLoading',{show:true});
+            this.$store.dispatch('toggleLoading', {
+                show: true
+            });
             this.$http.post(`${APP.HOST}/update_order_address/${this.order_id}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID,
                 id: this.default_address.id
             }).then((response) => {
                 let data = response.data;
-                this.$store.dispath('toggleLoading');
+                this.$store.dispatch('toggleLoading');
                 if (data.status == APP.SUCCESS) {
                     this.getOrderDetail();
                 } else {
@@ -268,7 +269,8 @@ export default {
                     })
                 }
             }, (response) => {
-              this.$store.dispath('toggleLoading');
+                this.$store.dispatch('toggleLoading');
+                
             })
         },
         toggleEdit() {

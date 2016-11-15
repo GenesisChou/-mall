@@ -23,6 +23,13 @@ const state = {
     },
     v_loading: {
         show: false
+    },
+    order_list: [],
+    order_list_params: {
+        p: 1,
+        r: 20,
+        total: 0,
+        count: 0
     }
 }
 
@@ -43,8 +50,8 @@ const mutations = {
         state.v_confirm.callback = confirm.callback;
 
     },
-    toggleLoading(state,loading={}){
-        state.v_loading.show=loading.show;
+    toggleLoading(state, loading = {}) {
+        state.v_loading.show = loading.show;
     },
     //获取用户信息
     getUserInfor(state, callback) {
@@ -60,6 +67,7 @@ const mutations = {
 
         })
     },
+    //获取地址列表
     getAddressList(state, callback) {
         Vue.http.post(`${APP.HOST}/address_list/${APP.USER_ID}`, {
             token: APP.TOKEN,
@@ -71,6 +79,30 @@ const mutations = {
             }
         }, (response) => {
 
+        })
+    },
+    //获取订单列表
+    getOrderList(state) {
+        let params = state.order_list_params;
+        params.token = window.APP.TOKEN;
+        params.userid = window.APP.USER_ID;
+        store.dispatch('toggleLoading', { show: true });
+        Vue.http.post(`${APP.HOST}/order_list/${APP.USER_ID}`, params, {
+            token: APP.TOKEN,
+            userid: APP.USER_ID
+        }).then((response) => {
+            store.dispatch('toggleLoading');
+            let data = response.data;
+            if (params.p <= 1) {
+                params.total = data.data.total;
+                params.count = data.data.count;
+            }
+            state.order_list = state.order_list.concat(data.data.list);
+            // if (!this.order_list.length > 0) {
+            //     this.empty = true;
+            // }
+        }, (response) => {
+            store.dispatch('toggleLoading');
         })
     },
     pageView(state, page_id) {
@@ -126,6 +158,9 @@ const actions = {
     commendView({ commit }, commend_id) {
         commit('commendView', commend_id);
     },
+    getOrderList({ commit }) {
+        commit('getOrderList');
+    }
 }
 const store = new Vuex.Store({
     state,
