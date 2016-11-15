@@ -90,7 +90,8 @@ export default {
         show: {
             type: Boolean,
             default: false
-        }
+        },
+        defaultId:Number
     },
     data() {
         return {
@@ -167,7 +168,7 @@ export default {
                             }
                         } else {
                             this.$store.dispatch('toggleLoadinge');
-                            
+
                             this.$store.dispatch('toggleAlert', {
                                 msg: '删除地址失败'
                             })
@@ -194,17 +195,21 @@ export default {
 
         //设置默认地址
         save() {
+          if(this.defaultId!=this.selected_id){
             this.setDefaultAddress(this.selected_id, (response) => {
-                let data = response.data;
-                if (data.status == APP.SUCCESS) {
-                    this.togglePopup();
-                } else {
-                    this.$store.dispatch('toggleConfirm', {
-                        msg: data.info,
-                        show: true
-                    })
-                }
+              let data = response.data;
+              if (data.status == APP.SUCCESS) {
+                this.togglePopup();
+              } else {
+                this.$store.dispatch('toggleConfirm', {
+                  msg: data.info,
+                  show: true
+                })
+              }
             });
+          }else{
+            this.togglePopup();
+          }
         },
         setDefaultAddress(id, callback) {
             this.$store.dispatch('toggleLoading', {

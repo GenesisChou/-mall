@@ -41,6 +41,8 @@ export default function(wx, store) {
             userid: APP.USER_ID
         }).then((response) => {
             store.dispatch('getUserInfor');
+        },(response)=>{
+
         })
     }
 
@@ -49,7 +51,11 @@ export default function(wx, store) {
             token: APP.TOKEN,
             userid: APP.USER_ID
         }).then((response) => {
-            callback(response.data.data.ticket);
+            if(response.data.status==APP.SUCCESS){
+              callback(response.data.data.ticket);
+            }
+        },(response)=>{
+
         })
     }
     wx.ready(function() {

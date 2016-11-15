@@ -107,11 +107,11 @@
                 </section>
                 <!-- 物流信息 -->
                 <v-logistics :order-id='parseInt(order_id)' :status='order_detail.status' :status-str='order_detail.status_str'></v-logistics>
-                
+
                 <div v-if='!order_checked' class='single-button'>
                     <button class='btn btn-red btn-block btn-large ' @click='updateOrderAddress'>确认地址</button>
                 </div>
-                <v-address-select :show='popup_select' :toggle-popup='toggleSelect'></v-address-edit>
+                <v-address-select :show='popup_select' :toggle-popup='toggleSelect' :default-id='parseInt(default_id)'></v-address-edit>
             </template>
             <!-- 无地址 -->
             <template v-else>
@@ -189,6 +189,9 @@ export default {
 
             }
             return temp;
+        },
+        default_id(){
+          return this.default_address.id;
         }
     },
     mounted() {
@@ -248,12 +251,14 @@ export default {
         },
         //确认订单地址
         updateOrderAddress() {
+          this.$store.dispatch('toggleLoading',{show:true});
             this.$http.post(`${APP.HOST}/update_order_address/${this.order_id}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID,
                 id: this.default_address.id
             }).then((response) => {
                 let data = response.data;
+                this.$store.dispath('toggleLoading');
                 if (data.status == APP.SUCCESS) {
                     this.getOrderDetail();
                 } else {
@@ -263,7 +268,7 @@ export default {
                     })
                 }
             }, (response) => {
-
+              this.$store.dispath('toggleLoading');
             })
         },
         toggleEdit() {
