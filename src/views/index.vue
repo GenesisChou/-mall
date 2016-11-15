@@ -75,9 +75,9 @@
         </div>
         <section class='main flex flex-wrap'>
             <!-- 热门推荐 -->
-            <v-item v-for='item in hot_commend' :item='item'></v-item>
+            <v-item v-for='item in hot_commend' :item='item' type='commend'></v-item>
             <!-- 热门 -->
-            <v-item v-for='item in hot_items' :item='item'></v-item>
+            <v-item v-for='item in hot_items' :item='item' type='item'></v-item>
         </section>
     </div>
 </template>
@@ -172,7 +172,7 @@ export default {
             }, (response) => {
                 this.$store.dispatch('toggleLoading');
             });
-        },
+        }
     }
 };
 </script>

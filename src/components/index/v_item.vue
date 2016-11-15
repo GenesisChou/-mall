@@ -41,7 +41,7 @@
 }
 </style>
 <template>
-    <router-link class='v-item' :to='router_link'>
+    <div class='v-item' @click='router'>
         <div class='pic'>
             <span v-if='item.script' class='label bg-white text-center'>
                 {{item.script}}
@@ -57,12 +57,22 @@
                 </span>
             </p>
         </div>
-    </router-link>
+    </div>
 </template>
 <script type="text/javascript">
 export default {
     props: {
-        item: Object
+        item: Object,
+        type: String
+    },
+    methods: {
+        router() {
+            if (this.type == 'commend') {
+                this.$store.dispatch('commendView',this.item.id);
+            }
+
+            this.$router.push(this.router_link);
+        }
     },
     computed: {
         exchange_msg() {
