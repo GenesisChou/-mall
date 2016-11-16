@@ -41,9 +41,9 @@ function startApp(id) {
         localStorage[window.APP.MEDIA_ID+'-user_id']=window.APP.USER_ID;
         localStorage[window.APP.MEDIA_ID+'-media_id']=window.APP.MEDIA_ID;
     } else {
-        window.APP.TOKEN=localStorage[window.APP.MEDIA_ID+'-token'];
-        window.APP.USER_ID=localStorage[window.APP.MEDIA_ID+'-user_id'];
-        window.APP.MEDIA_ID=localStorage[window.APP.MEDIA_ID+'-media_id'];
+        window.APP.TOKEN=localStorage[id+'-token'];
+        window.APP.USER_ID=localStorage[id+'-user_id'];
+        window.APP.MEDIA_ID=localStorage[id+'-media_id'];
     }
     console.log('login success');
     FastClick.attach(document.body);
