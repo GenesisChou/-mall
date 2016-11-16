@@ -42,7 +42,9 @@ function startApp(id) {
             user_id: window.APP.USER_ID,
             media_id: window.APP.MEDIA_ID
         }
+        console.log(localStorage['media:' + window.APP.MEDIA_ID]);
     } else {
+        console.log(localStorage['media:' + id]);
         window.APP.TOKEN = localStorage['media:' + id].token;
         window.APP.USER_ID = localStorage['media:' + id].user_id;
         window.APP.MEDIA_ID = localStorage['media:' + id].media_id;
