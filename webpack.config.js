@@ -15,22 +15,22 @@ module.exports = {
     module: {
         rules: [{
             test: /\.vue$/,
-            loader: 'vue',
+            loader: 'vue-loader',
             options: {
                 // vue-loader options go here
                 loaders: {
                     // ...
-                    sass: 'style!css!sass'
+                    sass: 'style-loader!css-loader!sass-loader'
                 }
             }
         }, 
         {
             test:/\.css$/,
-            loaders:['style','css']
+            loaders:['style-loader','css-loader']
         },
         {
             test: /\.js$/,
-            loader: 'babel',
+            loader: 'babel-loader',
             exclude: /node_modules/
         }, {
             test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -40,7 +40,7 @@ module.exports = {
             loader: "file-loader"
         }, {
             test: /\.(png|jpg|gif|svg)$/,
-            loader: 'url',
+            loader: 'url-loader',
             query: {
                 limit: 10000,
                 name: '[name].[ext]?[hash]'
