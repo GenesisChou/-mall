@@ -19,16 +19,40 @@ window.APP = {
 if (!utils.getParameterByName('token')) {
     //进行微信登陆操作
     var redirect = encodeURIComponent(APP.MALL_HOST);
+
     var id = utils.getParameterByName('id');
-    location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}`;
+    if (localStorage['media:' + id].login) {
+        startApp(id);
+
+    } else {
+        localStorage['media:' + id].login = true;
+        location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}`;
+    }
 } else {
+    startApp();
+}
+
+function startApp(id) {
+    if (!id) {
+        //first login
+        window.APP.TOKEN = utils.getParameterByName('token');
+        window.APP.USER_ID = utils.getParameterByName('userid');
+        window.APP.MEDIA_ID = utils.getParameterByName('mediaid');
+        localStorage['media:' + window.APP.MEDIA_ID] = {
+            login: true,
+            token: window.APP.TOKEN,
+            user_id: window.APP.USER_ID,
+            media_id: window.APP.MEDIA_ID
+        }
+    } else {
+        window.APP.TOKEN = localStorage['media:' + id].token;
+        window.APP.USER_ID = localStorage['media:' + id].user_id;
+        window.APP.MEDIA_ID = localStorage['media:' + id].media_id;
+    }
     console.log('login success');
-    window.APP.TOKEN = utils.getParameterByName('token');
-    window.APP.USER_ID = utils.getParameterByName('userid');
-    window.APP.MEDIA_ID = utils.getParameterByName('mediaid');
     FastClick.attach(document.body);
     //配置微信jsdk
-    wxConfig(wx,store);
+    wxConfig(wx, store);
     Vue.use(VueResource);
     Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
     new Vue({
@@ -37,5 +61,4 @@ if (!utils.getParameterByName('token')) {
         router,
         store
     })
-
 }
