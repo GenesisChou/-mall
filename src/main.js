@@ -21,11 +21,10 @@ if (!utils.getParameterByName('token')) {
     var redirect = encodeURIComponent(APP.MALL_HOST);
 
     var id = utils.getParameterByName('id');
-    if (localStorage['media:' + id].login) {
+    if (localStorage['media:' + id]) {
         startApp(id);
 
     } else {
-        localStorage['media:' + id].login = true;
         location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}`;
     }
 } else {
@@ -39,7 +38,6 @@ function startApp(id) {
         window.APP.USER_ID = utils.getParameterByName('userid');
         window.APP.MEDIA_ID = utils.getParameterByName('mediaid');
         localStorage['media:' + window.APP.MEDIA_ID] = {
-            login: true,
             token: window.APP.TOKEN,
             user_id: window.APP.USER_ID,
             media_id: window.APP.MEDIA_ID
