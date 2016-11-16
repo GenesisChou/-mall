@@ -37,7 +37,7 @@ function startApp(id) {
         window.APP.TOKEN = utils.getParameterByName('token');
         window.APP.USER_ID = utils.getParameterByName('userid');
         window.APP.MEDIA_ID = utils.getParameterByName('mediaid');
-        localStorage[window.APP.MEDIA_ID+'-token']=window.APP.TOKE;
+        localStorage[window.APP.MEDIA_ID+'-token']=window.APP.TOKEN;
         localStorage[window.APP.MEDIA_ID+'-user_id']=window.APP.USER_ID;
         localStorage[window.APP.MEDIA_ID+'-media_id']=window.APP.MEDIA_ID;
     } else {
