@@ -37,17 +37,13 @@ function startApp(id) {
         window.APP.TOKEN = utils.getParameterByName('token');
         window.APP.USER_ID = utils.getParameterByName('userid');
         window.APP.MEDIA_ID = utils.getParameterByName('mediaid');
-        localStorage['media:' + window.APP.MEDIA_ID] = {
-            token: window.APP.TOKEN,
-            user_id: window.APP.USER_ID,
-            media_id: window.APP.MEDIA_ID
-        }
-        console.log(localStorage['media:' + window.APP.MEDIA_ID]);
+        localStorage[window.APP.MEDIA_ID+'-token']=window.APP.TOKE;
+        localStorage[window.APP.MEDIA_ID+'-user_id']=window.APP.USER_ID;
+        localStorage[window.APP.MEDIA_ID+'-media_id']=window.APP.MEDIA_ID;
     } else {
-        console.log(localStorage['media:' + id]);
-        window.APP.TOKEN = localStorage['media:' + id].token;
-        window.APP.USER_ID = localStorage['media:' + id].user_id;
-        window.APP.MEDIA_ID = localStorage['media:' + id].media_id;
+        window.APP.TOKEN=localStorage[window.APP.MEDIA_ID+'-token'];
+        window.APP.USER_ID=localStorage[window.APP.MEDIA_ID+'-user_id'];
+        window.APP.MEDIA_ID=localStorage[window.APP.MEDIA_ID+'-media_id'];
     }
     console.log('login success');
     FastClick.attach(document.body);
