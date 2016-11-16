@@ -21,7 +21,7 @@ if (!utils.getParameterByName('token')) {
     var redirect = encodeURIComponent(APP.MALL_HOST);
 
     var id = utils.getParameterByName('id');
-    if (localStorage['media:' + id]) {
+    if (localStorage[id+'-token']) {
         startApp(id);
 
     } else {
