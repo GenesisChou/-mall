@@ -28,11 +28,11 @@
 }
 </style>
 <template>
-    <section v-if='status!=1' class='v-logistics bg-white'>
+    <section v-if='status==3' class='v-logistics bg-white'>
         <header class='flex flex-center-v flex-space-between'>
             <span>物流信息</span>
 
-            <span >已发货</span>
+            <span >{{statusStr}}</span>
         </header>
         <ul class='main'>
             <li v-for='item in logistics' class='flex'>
@@ -49,7 +49,8 @@
 export default {
     props:{
         orderId:Number,
-        status:Number
+        status:Number,
+        statusStr:String
 
     },
     mounted(){
