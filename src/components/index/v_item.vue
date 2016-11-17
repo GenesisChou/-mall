@@ -30,10 +30,15 @@
         }
     }
 }
-.detail{
-    p:first-child{
-        height:pxTorem(54);
-        line-height:pxTorem(54);
+
+.exchange {
+    width: pxTorem(100);
+    height: pxTorem(40);
+}
+
+.detail {
+    p:first-child {
+        height: pxTorem(54);
     }
 }
 </style>
@@ -49,7 +54,7 @@
             <p class='text-huge text-ellipsis'>{{item.name}}</p>
             <p class=' text-gray flex flex-space-between'>
                 <span class='text-ellipsis flex-item'>{{subname}}</span>
-                <img src="../../assets/images/blue-button.png" >
+                <img class='exchange' src="../../assets/images/blue-button.png">
             </p>
         </div>
     </div>
@@ -63,7 +68,7 @@ export default {
     methods: {
         router() {
             if (this.type == 'commend') {
-                this.$store.dispatch('commendView',this.item.id);
+                this.$store.dispatch('commendView', this.item.id);
             }
 
             this.$router.push(this.router_link);
