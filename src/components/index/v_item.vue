@@ -24,19 +24,16 @@
             width: pxTorem(115);
             height: pxTorem(40);
             line-height: pxTorem(40);
-            color: $red;
-            border: 1px solid $red;
-            border-radius: 5%;
+            color: red;
+            border: 1px solid red;
+            border-radius: pxTorem(8);
         }
     }
-    .exchange {
-        width: pxTorem(100);
-        height: pxTorem(40);
-        line-height: pxTorem(40);
-        text-align: center;
-        color: blue;
-        border: 1px solid blue;
-        border-radius: 5%;
+}
+.detail{
+    p:first-child{
+        height:pxTorem(54);
+        line-height:pxTorem(54);
     }
 }
 </style>
@@ -52,9 +49,7 @@
             <p class='text-huge text-ellipsis'>{{item.name}}</p>
             <p class=' text-gray flex flex-space-between'>
                 <span class='text-ellipsis flex-item'>{{subname}}</span>
-                <span class='exchange'>
-                {{exchange_msg}}
-                </span>
+                <img src="../../assets/images/blue-button.png" >
             </p>
         </div>
     </div>

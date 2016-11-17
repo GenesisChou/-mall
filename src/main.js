@@ -21,12 +21,13 @@ if (!utils.getParameterByName('token')) {
     var redirect = encodeURIComponent(APP.MALL_HOST);
 
     var id = utils.getParameterByName('id');
-    if (localStorage[id+'-token']) {
-        startApp(id);
+    // if (localStorage[id+'-token']) {
+    //     startApp(id);
 
-    } else {
+    // } else {
+    //     location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}`;
+    // }
         location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}`;
-    }
 } else {
     startApp();
 }

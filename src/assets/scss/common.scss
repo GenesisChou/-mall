@@ -232,11 +232,13 @@
     color: $pink;
 }
 .swiper-pagination-bullet {
-    padding: pxTorem(10);
-    margin: 0 pxTorem(10);
+    padding: pxTorem(6);
+    margin: 0 pxTorem(8) !important;
     border-radius: 50%;
     background-color: $white !important;
+    opacity: 1 !important;
 }
 .swiper-pagination-bullet-active {
     background-color: $gray-light !important;
+
 }

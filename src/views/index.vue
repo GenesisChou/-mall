@@ -11,7 +11,7 @@
         height: pxTorem(90);
         width: pxTorem(90);
         border-radius: 50%;
-        line-height: 100%;
+        line-height: 120%;
     }
     >.flex:nth-child(2) .icon {
         position: relative;
