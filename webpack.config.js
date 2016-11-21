@@ -19,16 +19,17 @@ module.exports = {
             options: {
                 // vue-loader options go here
                 loaders: {
-                    // ...
-                    sass: 'style-loader!css-loader!sass-loader'
+                    // extra style file
+                    sass: ExtractTextPlugin.extract({
+                        loader: ['css-loader','sass-loader'],
+                        fallbackLoader: 'style-loader' // <- this is a dep of vue-loader, so no need to explicitly install if using npm3
+                    })
                 }
             }
-        }, 
-        {
-            test:/\.css$/,
-            loaders:['style-loader','css-loader']
-        },
-        {
+        }, {
+            test: /\.css$/,
+            loaders: ['style-loader', 'css-loader']
+        }, {
             test: /\.js$/,
             loader: 'babel-loader',
             exclude: /node_modules/
@@ -60,25 +61,27 @@ module.exports = {
     devServer: {
         historyApiFallback: true,
         noInfo: true,
-        host:'0.0.0.0'
+        host: '0.0.0.0'
     },
     devtool: '#eval-source-map'
 }
 
 if (process.env.NODE_ENV === 'production') {
     module.exports.devtool = '#source-map'
-        // http://vue-loader.vuejs.org/en/workflow/production.html
+    // http://vue-loader.vuejs.org/en/workflow/production.html
     module.exports.plugins = (module.exports.plugins || []).concat([
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: '"production"'
             }
         }),
+        //zip js file
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false
             }
         }),
+        new ExtractTextPlugin("style.css"),
         new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js' }),
         new webpack.LoaderOptionsPlugin({
             minimize: true
