@@ -34,6 +34,15 @@
 .exchange {
     width: pxTorem(100);
     height: pxTorem(40);
+    background: url('../../assets/images/blue-button.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    color: rgb(29,60,247);
+    text-align: center;
+    text-indent: pxTorem(12);
+    letter-spacing: pxTorem(12);
+
 }
 
 .detail {
@@ -52,10 +61,12 @@
         </div>
         <div class='detail'>
             <p class='text-huge text-ellipsis'>{{item.name}}</p>
-            <p class=' text-gray flex flex-space-between'>
+            <div class=' text-gray flex flex-space-between'>
                 <span class='text-ellipsis flex-item'>{{subname}}</span>
-                <img class='exchange' src="../../assets/images/blue-button.png">
-            </p>
+                <div class='exchange'>
+                    {{exchange_msg}}
+                </div>
+            </div>
         </div>
     </div>
 </template>
