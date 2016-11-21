@@ -4,27 +4,29 @@ var
     fs = require('fs'),
     url = require('url'),
     path = require('path'),
-    http = require('http');
+    http = require('http'),
+    os = require('os'),
+    ifaces = os.networkInterfaces();
 
 // 从命令行参数获取root目录，默认是当前目录:
 var root = path.resolve('.');
 console.log('Static root dir: ' + root);
 
-var server = http.createServer(function (request, response) {
+var server = http.createServer(function(request, response) {
     var pathname = url.parse(request.url).pathname;
     var filepath = path.join(root, pathname);
-    if(!filepath.includes(".")){
+    if (!filepath.includes(".")) {
         filepath = path.join(filepath, "index.html");
         //判断index.html是否存在，否的话改filepath
-        try{
+        try {
             fs.statSync(filepath);
-        }catch(err){
-            filepath = path.join(root,pathname, "default.html");
+        } catch (err) {
+            filepath = path.join(root, pathname, "default.html");
         }
     }
 
     // 获取文件状态:
-    fs.stat(filepath, function (err, stats) {
+    fs.stat(filepath, function(err, stats) {
         if (!err && stats.isFile()) {
             // 没有出错并且文件存在:
             console.log('200 ' + request.url);
@@ -44,4 +46,6 @@ var server = http.createServer(function (request, response) {
 
 server.listen(8080);
 
-console.log('Server is running at http://127.0.0.1:8080/');
+
+
+console.log('Server is running at http://' + ifaces.en0[1].address + ':8080/');
