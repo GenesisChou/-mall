@@ -21,9 +21,10 @@ module.exports = {
                 loaders: {
                     // extra style file
                     sass: ExtractTextPlugin.extract({
-                        loader: ['css-loader','sass-loader'],
-                        fallbackLoader: 'style-loader' // <- this is a dep of vue-loader, so no need to explicitly install if using npm3
-                    })
+                            loader: ['css-loader', 'sass-loader'],
+                            fallbackLoader: 'style-loader' // <- this is a dep of vue-loader, so no need to explicitly install if using npm3
+                        })
+                        // sass:'style-loader!css-loader!sass-loader'
                 }
             }
         }, {
@@ -63,28 +64,31 @@ module.exports = {
         noInfo: true,
         host: '0.0.0.0'
     },
-    // devtool: '#eval-source-map'
+    plugins: [
+        new ExtractTextPlugin("style.css")
+    ],
+    devtool: '#eval-source-map'
 }
 
 if (process.env.NODE_ENV === 'production') {
-    // module.exports.devtool = '#source-map'
-    // http://vue-loader.vuejs.org/en/workflow/production.html
-    module.exports.plugins = (module.exports.plugins || []).concat([
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: '"production"'
-            }
-        }),
-        //zip js file
-        // new webpack.optimize.UglifyJsPlugin({
-        //     compress: {
-        //         warnings: false
-        //     }
-        // }),
-        new ExtractTextPlugin("style.css"),
-        new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js' }),
-        new webpack.LoaderOptionsPlugin({
-            minimize: true
-        })
-    ])
+    module.exports.devtool = '#source-map',
+        // http://vue-loader.vuejs.org/en/workflow/production.html
+        module.exports.plugins = (module.exports.plugins || []).concat([
+            new webpack.DefinePlugin({
+                'process.env': {
+                    NODE_ENV: '"production"'
+                }
+            }),
+            //zip js file
+            new webpack.optimize.UglifyJsPlugin({
+                compress: {
+                    warnings: false
+                }
+            }),
+
+            new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js' }),
+            new webpack.LoaderOptionsPlugin({
+                minimize: true
+            })
+        ])
 }

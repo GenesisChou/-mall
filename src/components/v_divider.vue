@@ -8,7 +8,12 @@
         position: absolute;
         left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%);
+        /*transform: translate(-50%, -50%);*/
+        /*transform:rotate(7deg);*/
+        -ms-transform:translate(-50%, -50%);     /* IE 9 */
+        -moz-transform:translate(-50%, -50%);    /* Firefox */
+        -webkit-transform:translate(-50%, -50%); /* Safari 和 Chrome */
+        -o-transform:translate(-50%, -50%);
         background: $white;
         padding: 0 pxTorem(30);
         font-size: pxTorem(30);

@@ -17,11 +17,14 @@
         border-top: 1px solid $gray-light;
         /*border-bottom: 1px solid $gray-light;*/
         .img {
+            float: left;
+            margin-left: pxTorem(10);
             width: pxTorem(160);
             height: pxTorem(120);
         }
         .detail {
-            margin-left: pxTorem(30);
+            margin-left: pxTorem(200);
+            overflow: hidden;
             .text-gray {
                 margin-top: pxTorem(10);
             }
@@ -34,9 +37,9 @@
         <header class='order-head'>
             订单号：{{order.orderid}}
         </header>
-        <section class='order-body flex'>
+        <section class='order-body'>
             <img class='img ' :src='order.product_pic' />
-            <div class='detail flex-item'>
+            <div class='detail '>
                 <p class='text-huge text-ellipsis'>{{order.product}}</p>
                 <p class='text-large text-gray'> {{parseInt(order.integral)}}积分
                     <span class='pull-right'>x1</span>

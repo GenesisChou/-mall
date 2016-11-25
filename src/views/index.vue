@@ -7,22 +7,31 @@
 .icon-list {
     padding: pxTorem(25) 0;
     margin-top: pxTorem(30);
+    overflow: hidden;
+    >li{
+        width: 33.3%;
+        float: left;
+        &:nth-child(2) {
+            position: relative;
+        }
+    }
     .icon {
         height: pxTorem(90);
         width: pxTorem(90);
         border-radius: 50%;
-        line-height: 120%;
+        padding-top: pxTorem(10);
+        line-height: pxTorem(35);
+        margin: auto;
+        text-align: center;
+        color: $white;
     }
-    >.flex:nth-child(2) .icon {
-        position: relative;
-        .label {
-            position: absolute;
-            left: pxTorem(-50);
-            opacity: 0;
-            color: $red;
-            &.active {
-                animation: checkAnimation 1s;
-            }
+    .label {
+        position: absolute;
+        left: pxTorem(-50);
+        opacity: 0;
+        color: $red;
+        &.active {
+            animation: checkAnimation 1s;
         }
     }
 }
@@ -39,22 +48,23 @@
 }
 
 .main {
-    padding: pxTorem(18) 0 pxTorem(18) pxTorem(12);
+    padding: pxTorem(18) pxTorem(11);
+    overflow: wrap;
 }
 </style>
 <template>
     <div class='index bg-base'>
         <v-swipe></v-swipe>
         <!-- <router-link :to='{name:"activity_list"}' tag='button' class='btn btn-red'>活动列表</router-link > -->
-        <div class='icon-list flex bg-white'>
-            <router-link :to='{name:"my_integral"}' class='flex-item flex flex-center-v flex-center-h'>
-                <div class='icon bg-blue text-white flex flex-column flex-center-v flex-center-h '>
+        <ul class='list-inline icon-list  bg-white'>
+            <router-link :to='{name:"my_integral"}' tag='li' class=''>
+                <div class='icon bg-blue '>
                     <p>积分</p>
                     <p>{{parseInt(user.integral)}}</p>
                 </div>
             </router-link>
-            <div class='flex-item flex flex-center-v flex-center-h' @click='checkIn'>
-                <div class='icon bg-pink text-white flex flex-column flex-center-v flex-center-h '>
+            <li  @click='checkIn'>
+                <div class='icon bg-pink '>
                     <template v-if='!user.ischecked'>
                         <p>点击</p>
                         <p>签到</p>
@@ -65,15 +75,15 @@
                     </template>
                     <span :class='["label",check_animation?"active":""]'>+10</span>
                 </div>
-            </div>
-            <router-link :to='{name:"product_list"}' class='flex-item flex flex-center-v flex-center-h'>
-                <div class='icon bg-yellow text-white flex flex-column flex-center-v flex-center-h '>
+            </li>
+            <router-link :to='{name:"product_list"}' tag='li'>
+                <div class='icon bg-yellow '>
                     <p>所有</p>
                     <p>商品</p>
                 </div>
             </router-link>
-        </div>
-        <section class='main flex flex-wrap'>
+        </ul>
+        <section class='main'>
             <!-- 热门推荐 -->
             <v-item v-for='item in hot_commend' :item='item' type='commend'></v-item>
             <!-- 热门 -->

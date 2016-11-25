@@ -9,11 +9,13 @@
     .address-list {
         overflow-y: scroll;
         margin: 0 pxTorem(53);
-        /*border-top: 1px solid $gray;*/
+        max-height: pxTorem(535);
+        /*margin-bottom: pxTorem(25);*/
         li {
             height: pxTorem(107);
             list-style: none;
             border-top: 1px solid $gray-light;
+            overflow: hidden;
             &:last-child {
                 border-bottom: 0;
                 /*height: pxTorem(80);*/
@@ -21,12 +23,23 @@
             }
             .address {
                 overflow: hidden;
+                float: left;
+                max-width: pxTorem(523);
+                margin-top: pxTorem(15);
             }
-            .iconfont:first-child {
-                margin-right: pxTorem(10);
+            .iconfont {
+                line-height: pxTorem(107);
+                &:first-child {
+                    float: left;
+                    margin-right: pxTorem(10);
+                }
+                &:last-child {
+                    float: right;
+                }
             }
-            .iconfont:last-child {
-                /*padding-left: pxTorem(30);*/
+            .new-address {
+                float: left;
+                line-height: pxTorem(107);
             }
         }
     }
@@ -44,27 +57,25 @@
 <template>
     <section class='v-address-select'>
         <v-popup :show='show' :toggle-popup='togglePopup'>
-            <div class='select-address flex flex-column flex-space-between'>
+            <div class='select-address'>
                 <header class='header text-center text-huge'>
                     请选择收货地址
                 </header>
-                <ul class='address-list flex-item'>
-                    <li v-for='address in address_list' class='flex flex-space-between flex-center-v'>
+                <ul class='address-list'>
+                    <li v-for='address in address_list'>
                         <i v-if='address.id==selected_id' class='iconfont icon-correct-circle  text-huge text-red'></i>
                         <i v-else class='iconfont icon-correct-circle-hollow  text-huge'></i>
-                        <div class='flex-item address' @click='selectAddress(address.id)'>
+                        <div class='address' @click='selectAddress(address.id)'>
                             <p class='text-large text-ellipsis'>{{address.contact}},{{address.phone}}</p>
                             <p class='text-small text-gray text-ellipsis'>{{address.province}} {{address.city}} {{address.country}} {{address.address}}</p>
                         </div>
-                        <div>
-                            <i class='iconfont icon-edit  text-huge' @click='editAddress(address.id)'></i>
-                            <!-- <i class='iconfont icon-error  text-huge' @click='deleteAddress(address.id)'></i> -->
-                        </div>
+                        <i class='iconfont icon-edit  text-huge' @click='editAddress(address.id)'></i>
+                        <!-- <i class='iconfont icon-error  text-huge' @click='deleteAddress(address.id)'></i> -->
                     </li>
-                    <li class='flex flex-space-between ' @click='insertAddress'>
+                    <li @click='insertAddress'>
                         <i class='iconfont icon-plus-circle text-huge '></i>
-                        <div class='flex-item'>
-                            <span class='text-large title'>新增收货地址</span>
+                        <div class='new-address'>
+                            新增收货地址
                         </div>
                         <i class='iconfont icon-arrows-right  text-huge text-bold'></i>
                     </li>
@@ -91,7 +102,7 @@ export default {
             type: Boolean,
             default: false
         },
-        defaultId:Number
+        defaultId: Number
     },
     data() {
         return {
@@ -144,7 +155,9 @@ export default {
                 msg: '你确定要删除该地址吗?',
                 show: true,
                 callback: () => {
-                    this.$store.dispatch('toggleLoadinge',{show:true});
+                    this.$store.dispatch('toggleLoadinge', {
+                        show: true
+                    });
                     let default_delete = this.deleteDefault(address_list, id);
                     this.$http.post(`${APP.HOST}/address_delete/${id}`, {
                         token: APP.TOKEN,
@@ -195,21 +208,21 @@ export default {
 
         //设置默认地址
         save() {
-          if(this.defaultId!=this.selected_id){
-            this.setDefaultAddress(this.selected_id, (response) => {
-              let data = response.data;
-              if (data.status == APP.SUCCESS) {
+            if (this.defaultId != this.selected_id) {
+                this.setDefaultAddress(this.selected_id, (response) => {
+                    let data = response.data;
+                    if (data.status == APP.SUCCESS) {
+                        this.togglePopup();
+                    } else {
+                        this.$store.dispatch('toggleConfirm', {
+                            msg: data.info,
+                            show: true
+                        })
+                    }
+                });
+            } else {
                 this.togglePopup();
-              } else {
-                this.$store.dispatch('toggleConfirm', {
-                  msg: data.info,
-                  show: true
-                })
-              }
-            });
-          }else{
-            this.togglePopup();
-          }
+            }
         },
         setDefaultAddress(id, callback) {
             this.$store.dispatch('toggleLoading', {

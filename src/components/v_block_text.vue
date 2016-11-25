@@ -2,10 +2,12 @@
 @import '../assets/scss/variable.scss';
 .block-text {
     height: pxTorem(100);
+    line-height: pxTorem(100);
+    text-align: center;
 }
 </style>
 <template>
-    <div :class='["block-text","flex","flex-center-v","flex-center-h","text-large",type]'>
+    <div :class='["block-text","text-large",type]'>
         {{text}}
     </div>
 </template>

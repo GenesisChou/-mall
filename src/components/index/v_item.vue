@@ -1,12 +1,17 @@
 <style lang='sass' scoped>
 @import '../../assets/scss/variable.scss';
-.v-item {
+.v-item{
+    width:50%;
+    display: inline-block;
+}
+.container {
     width: pxTorem(340);
     /*height: pxTorem(350);*/
     padding: pxTorem(20);
-    margin: pxTorem(11);
+    margin: pxTorem(11) auto;
     border: 1px solid $gray-light;
     background-color: $white;
+    overflow: hidden;
     .pic {
         position: relative;
         width: pxTorem(300);
@@ -34,37 +39,44 @@
 .exchange {
     width: pxTorem(100);
     height: pxTorem(40);
+    line-height: pxTorem(40);
+    /*margin-top:pxTorem(2);*/
     background: url('../../assets/images/blue-button.png');
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: center;
-    color: rgb(29,60,247);
+    color: rgb(29, 60, 247);
     text-align: center;
     text-indent: pxTorem(12);
     letter-spacing: pxTorem(12);
-
 }
 
 .detail {
-    p:first-child {
+    >p {
         height: pxTorem(54);
+        font-size: pxTorem(32);
+    }
+    span{
+        line-height: pxTorem(40);
     }
 }
 </style>
 <template>
     <div class='v-item' @click='router'>
-        <div class='pic'>
-            <span v-if='item.script' class='label bg-white text-center'>
+        <div class='container'>
+            <div class='pic'>
+                <span v-if='item.script' class='label bg-white text-center'>
                 {{item.script}}
             </span>
-            <img :src='item.pic'>
-        </div>
-        <div class='detail'>
-            <p class='text-huge text-ellipsis'>{{item.name}}</p>
-            <div class=' text-gray flex flex-space-between'>
-                <span class='text-ellipsis flex-item'>{{subname}}</span>
-                <div class='exchange'>
-                    {{exchange_msg}}
+                <img :src='item.pic'>
+            </div>
+            <div class='detail'>
+                <p class='text-ellipsis'>{{item.name}}</p>
+                <div class=' text-gray '>
+                    <span >{{subname}}</span>
+                    <div class='pull-right exchange'>
+                        {{exchange_msg}}
+                    </div>
                 </div>
             </div>
         </div>

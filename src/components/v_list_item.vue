@@ -1,33 +1,43 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
 .v-list-item {
+    display: table;
+    width: 100%;
     height: pxTorem(220);
-    /*padding: pxTorem(40) 0;*/
     border-bottom: 1px solid $gray-light;
+    background-color: $white;
     .img {
-        width: pxTorem(180);
-        height: pxTorem(140);
-        margin: 0 pxTorem(50) 0 pxTorem(56);
+        display: table-cell;
+        width: pxTorem(280);
+        vertical-align: middle;
+        text-align: center;
+        img: {
+            width: pxTorem(180);
+            height: pxTorem(140);
+        }
     }
     .describe {
-        .text-huge {
+        display: table-cell;
+        vertical-align: middle;
+        span:nth-child(1) {
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
-            margin-bottom: pxTorem(10);
+            margin-bottom: pxTorem(7);
         }
-        /*overflow: hidden;*/
     }
 }
 </style>
 <template>
-    <div class='v-list-item flex flex-center-v  bg-white'>
-        <img class='img' :src='img' />
-        <div class='describe flex-item'>
-            <div class='text-huge '>{{title}}</div>
-            <p :class='color'>{{titleDupty}}</p>
+    <div class='v-list-item'>
+        <div class='img'>
+            <img :src='img' />
+        </div>
+        <div class='describe'>
+            <span class='text-huge '>{{title}}</span>
+            <span :class='color'>{{titleDupty}}</span>
         </div>
     </div>
 </template>

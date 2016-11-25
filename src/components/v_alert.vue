@@ -11,11 +11,12 @@
         width: pxTorem(500);
         padding-top: pxTorem(30);
         .icon {
-            width: pxTorem(50);
-            height: pxTorem(50);
+            width: pxTorem(60);
+            height: pxTorem(60);
+            font-size: pxTorem(40);
         }
         .msg {
-            font-size: pxTorem(30);
+            font-size: pxTorem(32);
             line-height: pxTorem(130);
         }
         .btn {
@@ -42,13 +43,9 @@
         <div class='bg-cover'>
             <div class='modal bg-white'>
                 <div class='modal-content text-center text-large'>
-                    <img v-if='type=="suprise"' class='icon' src='../assets/images/suprise-hollow.png' />
-                    <img v-if='type=="correct"' class='icon' src='../assets/images/correct-hollow.png' />
-                    <img v-if='type=="error"' class='icon' src='../assets/images/error-hollow.png' />
+                    <i :class='["icon","text-red","iconfont","text-bold",icon_class]'></i>
                     <p class='msg'>{{msg}}</p>
-                    <div class='flex flex-center-h'>
-                        <button class='btn btn-red btn-large' @click='func()'>{{btnText}}</button>
-                    </div>
+                    <button class='btn btn-red btn-large' @click='func()'>{{btnText}}</button>
                 </div>
             </div>
         </div>
@@ -75,6 +72,18 @@ export default {
             default: '关闭'
         },
         callback: Function
+    },
+    computed: {
+        //get right icon-class from props's type
+        icon_class() {
+            if (this.type == 'suprise') {
+                return 'icon-warn';
+            } else if (this.type == 'correct') {
+                return 'icon-correct-circle-hollow';
+            } else if (this.type == 'error') {
+                return 'icon-error-circle';
+            }
+        }
     },
     methods: {
         func() {

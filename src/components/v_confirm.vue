@@ -8,7 +8,10 @@
     border-radius: pxTorem(10);
     overflow: hidden;
     text-align: center;
-    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
     z-index: 11;
     transition: all .3s ease;
     .msg {
@@ -18,7 +21,10 @@
     }
     .btns {
         font-size: pxTorem(30);
+        background-color: $red;
+        overflow: hidden;
         >div {
+            width: 50%;
             height: pxTorem(84);
             line-height: pxTorem(84);
             text-indent: pxTorem(12);
@@ -45,9 +51,9 @@
         <div v-show='show' class='bg-cover'> </div>
         <div v-show='show' class='v-confirm-content'>
             <div class=' msg'>{{msg}}</div>
-            <div class='flex btns'>
-                <div class=' flex-item   bg-white' @click='close'>取消</div>
-                <div class=' flex-item  bg-red text-white' @click='func()'>确定</div>
+            <div class='btns'>
+                <div class='pull-left bg-white' @click='close'>取消</div>
+                <div class='pull-right text-white' @click='func()'>确定</div>
             </div>
         </div>
     </section>

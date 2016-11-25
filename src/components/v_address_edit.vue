@@ -11,15 +11,33 @@
     .main {
         padding: 0 pxTorem(53);
         margin-top: pxTorem(80);
+        list-style: none;
+        >li {
+            overflow: hidden;
+        }
+        >li:nth-child(2) {
+            input {
+                float: left;
+                width: pxTorem(150);
+                margin-right: pxTorem(10);
+                &:nth-child(4) {
+                    margin-right: 0;
+                }
+            }
+        }
         label {
+            float: left;
             width: pxTorem(150);
+            height: pxTorem(70);
+            line-height: pxTorem(70);
             font-size: pxTorem(30);
             text-align: left;
         }
         input {
-            height: pxTorem(50);
-            /*padding-left: pxTorem(18);*/
-            /*border: 1px solid $gray;*/
+            width: pxTorem(470);
+            height: pxTorem(70);
+            line-height: pxTorem(70);
+            box-sizing: border-box;
             color: $gray;
             border: 0;
             font-size: pxTorem(26);
@@ -30,42 +48,30 @@
             }
         }
         .address {
-            .flex-item {
-                margin-right: pxTorem(10);
-            }
             input {
                 width: 100%;
             }
         }
-        .detail-address.flex {
-            line-height: pxTorem(70);
-            height: pxTorem(130);
-            textarea {
-                height: pxTorem(110);
-                margin-top: pxTorem(8);
-                line-height: pxTorem(50);
-                font-size: pxTorem(26);
-                border: 0;
-                border-bottom: 1px solid $gray-light;
-                color: $gray;
-                transition-duration: .5s;
-                &:focus {
-                    border-bottom: 1px solid $red;
-                }
+        textarea {
+            width: pxTorem(470);
+            height: pxTorem(110);
+            margin-top: pxTorem(8);
+            line-height: pxTorem(50);
+            font-size: pxTorem(26);
+            border: 0;
+            border-bottom: 1px solid $gray-light;
+            color: $gray;
+            transition-duration: .5s;
+            &:focus {
+                border-bottom: 1px solid $red;
             }
-        }
-        .flex-item {
-            width: pxTorem(300);
-        }
-        >.flex {
-            height: pxTorem(70);
-            /*            >input {
-                border-bottom: 1px solid $gray-light;
-            }
-*/
         }
     }
     .footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
         height: pxTorem(158);
         line-height: pxTorem(158);
         padding: 0 pxTorem(73);
@@ -84,6 +90,7 @@
     li {
         width: pxTorem(400);
         height: pxTorem(70);
+        line-height: pxTorem(70);
         padding: 0 pxTorem(20);
         list-style: none;
         overflow: hidden;
@@ -91,7 +98,11 @@
         &:last-child {
             border-bottom: 1px solid $gray-light;
         }
+        span{
+            /*margin-left: pxTorem(30);*/
+        }
         .radio {
+            display: inline-block;
             width: pxTorem(30);
             height: pxTorem(30);
             line-height: pxTorem(70);
@@ -111,44 +122,30 @@
 <template>
     <section class='v-address-edit'>
         <v-popup :callback='cancelEdit' :show='show' :toggle-popup='togglePopup'>
-            <form class='edit-address flex flex-column '>
+            <form class='edit-address '>
                 <header class='header text-center text-huge'>
                     {{title}}
                 </header>
-                <section class='main flex-item'>
-                    <div class='flex flex-center-v'>
+                <ul class='main'>
+                    <li>
                         <label for='contact'>收货人</label>
-                        <input class='flex-item' id='contact' placeholder="收货人姓名" v-model='receive_infor.contact'>
-                    </div>
-                    <div class='flex flex-center-v '>
+                        <input id='contact' placeholder="收货人姓名" v-model='receive_infor.contact'>
+                    </li>
+                    <li>
                         <label for='province'>选择地址</label>
-                        <div class='flex flex-item address'>
-                            <input class='flex-item' id='province' @click='showAreaList("province")' placeholder="请选择省" v-model='receive_infor.province' readonly>
-                            <input class='flex-item' @click='showAreaList("city")' id='city' placeholder="请选择市" v-model='receive_infor.city' readonly>
-                            <input class='flex-item' @click='showAreaList("country")' id='country' placeholder="请选择区县" v-model='receive_infor.country' readonly>
-                        </div>
-                    </div>
-                    <!--                     <div class='flex flex-center-v'>
-                        <label for='city'>选择市</label>
-                        <div @click='showAreaList("city")'>
-                            <input id='city' placeholder="请选择市" v-model='receive_infor.city' disabled>
-                        </div>
-                    </div>
-                    <div class='flex flex-center-v'>
-                        <label for='country'>选择区/县</label>
-                        <div @click='showAreaList("country")'>
-                            <input id='country' placeholder="请选择区县" v-model='receive_infor.country' disabled>
-                        </div>
-                    </div> -->
-                    <div class='flex detail-address'>
+                        <input id='province' @click='showAreaList("province")' placeholder="请选择省" v-model='receive_infor.province' readonly>
+                        <input @click='showAreaList("city")' id='city' placeholder="请选择市" v-model='receive_infor.city' readonly>
+                        <input @click='showAreaList("country")' id='country' placeholder="请选择区县" v-model='receive_infor.country' readonly>
+                    </li>
+                    <li>
                         <label for='address'>详细地址</label>
-                        <textarea id='address' class='flex-item' v-model='receive_infor.address' placeholder="请输入详细地址"></textarea>
-                    </div>
-                    <div class='flex flex-center-v'>
+                        <textarea id='address' v-model='receive_infor.address' placeholder="请输入详细地址"></textarea>
+                    </li>
+                    <li>
                         <label for='phone'>手机号码</label>
-                        <input class='flex-item' id='phone' type='number' placeholder="手机或固定电话" v-model='receive_infor.phone'>
-                    </div>
-                </section>
+                        <input id='phone' type='number' placeholder="手机或固定电话" v-model='receive_infor.phone'>
+                    </li>
+                </ul>
                 <footer class='footer text-center'>
                     <button class='btn btn-red btn-block btn-large' @click.prevent='save'>保存</button>
                 </footer>
@@ -157,17 +154,17 @@
         <v-modal :show='modal' :toggle-modal='toggleModal' :cover-close='true'>
             <div class='modal-content'>
                 <ul v-if='current_type=="province"'>
-                    <li class='flex flex-center-v' v-for='province in province_list' @click='selectAddress("province",province.province,province.provinceid)'>
+                    <li  v-for='province in province_list' @click='selectAddress("province",province.province,province.provinceid)'>
                         <i :class='["radio",address_id.province==province.provinceid?"active":""]'></i> <span>{{province.province}}</span>
                     </li>
                 </ul>
                 <ul v-if='current_type=="city"'>
-                    <li class='flex flex-center-v' v-for='city in city_list' @click='selectAddress("city",city.city,city.cityid)'>
+                    <li  v-for='city in city_list' @click='selectAddress("city",city.city,city.cityid)'>
                         <i :class='["radio",address_id.city==city.cityid?"active":""]'></i> <span>{{city.city}}</span>
                     </li>
                 </ul>
                 <ul v-if='current_type=="country"'>
-                    <li class='flex flex-center-v' v-for='country in country_list' @click='selectAddress("country",country.area,country.areaid)'>
+                    <li  v-for='country in country_list' @click='selectAddress("country",country.area,country.areaid)'>
                         <i :class='["radio",address_id.country==country.areaid?"active":""]'></i> <span>{{country.area}}</span>
                     </li>
                 </ul>

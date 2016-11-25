@@ -12,7 +12,8 @@
         left: 0;
         right: 0;
         bottom: 0;
-        height: pxTorem(102);
+        height: pxTorem(100);
+        line-height: pxTorem(100);
         padding-left: pxTorem(55);
         background: rgba(0, 0, 0, .5);
     }
@@ -34,6 +35,7 @@
 
 .footer {
     height: pxTorem(100);
+    line-height: pxTorem(100);
     padding-left: pxTorem(55);
     .btn {
         padding: 0;
@@ -84,9 +86,9 @@
 </style>
 <template>
     <div class='product_detail'>
-        <header class='header flex flex-center-h flex-center-v'>
+        <header class='header '>
             <img :src='product_detail.pic_banner' />
-            <div class='cover text-white  flex flex-center-v'>
+            <div class='cover text-white '>
                 <p class='text-huge text-ellipsis'>{{product_detail.name}}</p>
             </div>
         </header>
@@ -106,12 +108,12 @@
             <div class='fill'></div>
         </article>
         <v-sticky>
-            <footer class='footer flex flex-space-between flex-center-v'>
-                <div class='text-large'>
+            <footer class='footer '>
+                <div class='text-large pull-left'>
                     单价：<span class='text-red'>{{parseInt(product_detail.integral)||0}}</span>积分
                 </div>
-                <button v-if='integral_enough' class='btn btn-red ' @click='exchange'>兑换</button>
-                <button v-else class='btn btn-disable '>余额不足</button>
+                <button v-if='integral_enough' class='btn btn-red pull-right' @click='exchange'>兑换</button>
+                <button v-else class='btn btn-disable pull-right'>余额不足</button>
             </footer>
         </v-sticky>
         <v-modal :cover-close=false :show='modal'>

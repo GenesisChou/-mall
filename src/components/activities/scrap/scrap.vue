@@ -22,6 +22,10 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+
     padding: 0;
     width: pxTorem(180);
     height: pxTorem(68);

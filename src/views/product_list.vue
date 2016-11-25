@@ -7,6 +7,8 @@
 .search-box {
     padding: pxTorem(17) pxTorem(30);
     position: fixed;
+    z-index: 1;
+    
 }
 
 .fill {
@@ -17,12 +19,30 @@
     border-top: 1px solid $gray-light;
     border-bottom: 1px solid $gray-light;
     height: pxTorem(105);
+    line-height: pxTorem(105);
+    >li {
+        width: 50%;
+        text-align: center;
+        &:nth-child(1) {
+            position: relative;
+        }
+    }
 }
 
 .arrows {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    -ms-transform: translateY( -50%);
+    -moz-transform: translateY( -50%);
+    -webkit-transform: translateY( -50%);
+    -o-transform: translateY( -50%);
     line-height: pxTorem(18);
-    font-size: pxTorem(18);
-    margin-left: pxTorem(10);
+    right: pxTorem(20);
+    i {
+        font-size: pxTorem(18);
+        display: block;
+    }
 }
 </style>
 <template>
@@ -31,18 +51,18 @@
             <v-search :search='searchProduct' :params='params'></v-search>
         </div>
         <div class='fill'></div>
-        <div class='sort flex'>
-            <div class='flex-item text-huge flex flex-center-h flex-center-v' @click='sortByIntegral'>
+        <ul class='sort list-inline'>
+            <li class=' text-huge' @click='sortByIntegral'>
                 <span :class='[sort_type!="count"&&sort_type?"text-red":""]'>消耗积分排序</span>
-                <div class='arrows flex flex-column '>
+                <div class='arrows'>
                     <i :class='["icon-arrows-up","iconfont","text-bold",sort_type=="integral-up"?"text-red":""]'></i>
                     <i :class='["icon-arrows-down","iconfont","text-bold",sort_type=="integral-down"?"text-red":""]'></i>
                 </div>
-            </div>
-            <div :class='["flex-item","text-huge","flex","flex-center-h","flex-center-v",sort_type=="count"?"text-red":""]' @click='sortByCount'>
+            </li>
+            <li :class='["text-huge",sort_type=="count"?"text-red":""]' @click='sortByCount'>
                 兑换量优先
-            </div>
-        </div>
+            </li>
+        </ul>
         <router-link :to='{name:"product_detail",query:{product_id:product.id}}' v-for='product in product_list'>
             <v-list-item :title='product.name' :title-dupty='parseInt(product.integral)+"积分"' :img='product.pic_thumb' color='text-red'></v-list-item>
         </router-link>
@@ -142,7 +162,7 @@ export default {
                 this.sort_type = 'integral-up';
                 this.params._order = 'integral:ASC';
             }
-            
+
             this.getProductList(() => {
                 this.product_list = [];
             });

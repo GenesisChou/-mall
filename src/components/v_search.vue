@@ -3,26 +3,28 @@
 .v-search {
     width: pxTorem(690);
     height: pxTorem(66);
+    line-height: pxTorem(66);
     border-radius: pxTorem(5);
+    background-color: $white;
     input {
-        flex: 1;
+        width: pxTorem(610);
         border: 0;
-        padding: 0 pxTorem(27);
+        text-indent: 27px;
     }
     input[type=search]::-webkit-search-cancel-button {
         display: none;
     }
     .iconfont {
-        font-size: 130%;
-        padding-right: pxTorem(44);
+        float:right;
+        margin-right: pxTorem(44);
     }
 }
 </style>
 <template>
-    <form class='v-search flex flex-center-v bg-white' @submit.prevent>
+    <div class='v-search ' @submit.prevent>
         <input class='text-sliver text-large' type='search' :placeholder='placeholder' v-model='params.sword' @keyup.enter='search()'>
-        <i class='iconfont icon-search text-sliver text-large' @click='search()'></i>
-    </form>
+        <i class='iconfont icon-search text-sliver text-huge ' @click='search()'></i>
+    </div>
 </template>
 <script>
 export default {

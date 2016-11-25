@@ -30,28 +30,26 @@
 }
 
 .address-selected {
-    padding: pxTorem(55) pxTorem(50) pxTorem(55) 0;
+    position: relative;
+    padding: pxTorem(55) pxTorem(70) pxTorem(55) 0;
     font-size: pxTorem(28);
     border-top: 1px solid $gray;
     border-bottom: 1px solid $gray;
     .location {
         width: pxTorem(110);
+        text-align: center;
+        line-height: pxTorem(110);
     }
     .arrows {
-        /*width: pxTorem(105);*/
-        margin-left: pxTorem(30);
+        position: absolute;
+        right: pxTorem(15);
+        top: 50%;
+        transform: translateY(-50%);
     }
     .address-content {
         line-height: pxTorem(55);
         label {
             margin-right: pxTorem(10);
-        }
-        .address-detail {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
         }
     }
 }
@@ -87,22 +85,23 @@
         <template v-if='product_type==3'>
             <!-- 有地址 -->
             <template v-if='address_list.length>0'>
-                <section class='address-selected bg-white flex' @click='toggleSelect'>
-                    <div class='location flex flex-center-v flex-center-h'>
+                <section class='address-selected bg-white clearfix' @click='toggleSelect'>
+                    <div class='location pull-left'>
                         <i class='iconfont icon-location  text-huge'></i>
                     </div>
-                    <div class='address-content flex-item'>
-                        <p class='flex flex-space-between'>
+                    <div class='address-content clearfix'>
+                        <p>
                             <span> <label>收货信息:</label>{{default_address.contact}}</span>
-                            <span>{{default_address.phone}}</span>
+                            <span class='pull-right'>{{default_address.phone}}</span>
                         </p>
-                        <div class='flex'>
+                        <p>
                             <label>收货地址:</label>
-                            <div class='flex-item address-detail'>{{default_address.province}} {{default_address.city}} {{default_address.country}} {{default_address.address}}</div>
+                            {{default_address.province}} {{default_address.city}} {{default_address.country}} {{default_address.address}}
+                        </p>
+                        
+                        <div v-if='!order_checked' class='arrows'>
+                            <i class='iconfont icon-arrows-right text-bold text-huge'></i>
                         </div>
-                    </div>
-                    <div v-if='!order_checked' class='arrows flex flex-center-v flex-center-h'>
-                        <i class='iconfont icon-arrows-right text-bold text-huge'></i>
                     </div>
                 </section>
                 <!-- 物流信息 -->
@@ -270,7 +269,7 @@ export default {
                 }
             }, (response) => {
                 this.$store.dispatch('toggleLoading');
-                
+
             })
         },
         toggleEdit() {

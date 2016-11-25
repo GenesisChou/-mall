@@ -11,6 +11,7 @@
         background-repeat: no-repeat;
         background-size: 100%;
         font-size: pxTorem(30);
+        padding-top: pxTorem(64);
         .avater {
             background-color: $white;
             border-radius: 50%;
@@ -24,11 +25,21 @@
                 height: 100%;
             }
         }
+        >div:nth-child(2) {
+            padding-top: pxTorem(30);
+            line-height: pxTorem(50);
+        }
     }
     .event {
         height: pxTorem(100);
+        line-height: pxTorem(100);
         font-size: pxTorem(30);
         background-color: #f5cfd8;
+        overflow: hidden;
+        >div{
+            width: 50%;
+            text-align: center;
+        }
         .icon {
             width: pxTorem(50);
             height: pxTorem(47);
@@ -38,7 +49,12 @@
 }
 
 .record-list {
-    flex: 1;
+    position: fixed;
+    top: pxTorem(488);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
     overflow: scroll;
     padding-top: pxTorem(30);
     > li {
@@ -46,9 +62,15 @@
         padding: 0 pxTorem(38);
         border-bottom: 1px solid $gray-light;
         list-style: none;
-    }
-    .detail {
-        line-height: 0.5rem;
+        overflow: hidden;
+        .pull-left{
+            line-height: pxTorem(45);
+
+            padding-top: pxTorem(5);
+        }
+        .pull-right{
+            line-height: pxTorem(100);
+        }
     }
 }
 
@@ -66,40 +88,41 @@
 }
 </style>
 <template>
-    <div class='my-integral flex flex-column'>
+    <div class='my-integral '>
         <header class='header'>
-            <section class='user-msg  flex flex-center-v '>
-                <div class='avater'>
+            <section class='user-msg'>
+                <div class='avater pull-left'>
                     <img :src='user.headimg'>
                 </div>
-                <div class='text-white'>
+                <div class='text-white pull-left'>
                     <p>{{user.nickname}}</p>
                     <p>积分: {{parseInt(user.integral)}}</p>
                 </div>
             </section>
-            <div class='event flex flex-center-v '>
-                <div class='flex-item flex flex-center-v flex-center-h' @click='toggleModal()'>
+
+            <div class='event'>
+                <div class='pull-left' @click='toggleModal()'>
                     <img class='icon' src='../assets/images/store.png'> <span class='text-large text-red'>积分赚取</span>
                 </div>
-                <router-link :to='{name:"order_list"}' tag='div' class='flex-item flex flex-center-v flex-center-h'>
+                <router-link :to='{name:"order_list"}' tag='div' class='pull-left'>
                     <img class='icon' src='../assets/images/record.png'><span class='text-large'>兑换记录</span>
                 </router-link>
             </div>
         </header>
         <v-block-text text='积分明细' type='bg-white'></v-block-text>
         <ul class='record-list bg-base'>
-            <li v-for='item in integral_list' class='flex flex-space-between flex-center-v'>
-                <div class='detail'>
-                    <span class='text-large'>{{item.name}}</span>
+            <li v-for='item in integral_list' >
+                <div class='pull-left'>
+                    <p class='text-large'>{{item.name}}</p>
                     <p class='text-gray text-small'>
                         {{item.create_time}}
                     </p>
                 </div>
-                <div class='text-large flex flex-center-v'>{{parseInt(item.point)>0?'+'+parseInt(item.point):parseInt(item.point)}} </div>
+                <div class='pull-right'>{{parseInt(item.point)>0?'+'+parseInt(item.point):parseInt(item.point)}} </div>
             </li>
         </ul>
         <v-modal :toggle-modal='toggleModal' :show='modal'>
-            <div class='modal-content flex flex-space-between flex-column bg-white'>
+            <div class='modal-content  bg-white'>
                 <div class='text-large'>
                     <p>您可以通过以下途径赚取积分：</p>
                     <p v-for='(item,$index) in integral_param'>{{($index+1+'、')+item.name+' +'+item.value}}</p>

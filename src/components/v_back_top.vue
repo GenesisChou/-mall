@@ -6,18 +6,22 @@
     bottom: pxTorem(50);
     width: pxTorem(70);
     height: pxTorem(70);
+    padding-top:pxTorem(5);
+    text-align: center;
     border-radius: 50%;
     border: 2px solid $pink;
+    color: $white;
+    background-color: $red;
     -webkit-transition: opacity .3s linear;
     -moz-transition: opacity .3s linear;
     -o-transition: opacity .3s linear;
     transition: opacity .3s linear;
-    box-shadow: pxTorem(5) pxTorem(5) pxTorem(5) $gray-light;
+    box-shadow: pxTorem(2) pxTorem(5) pxTorem(10) rgba(0, 15, 15, .3);
 }
 </style>
 <template>
     <transition name='fade'>
-        <div v-show='show' class='flex flex-center-h flex-center-v v-back-top bg-white text-huge bg-red text-white' @click='backTop'>
+        <div v-show='show' class=' v-back-top text-huge' @click='backTop'>
             <i class=' icon-arrows-up iconfont text-small'></i>
         </div>
     </transition>
@@ -28,7 +32,7 @@ export default {
     name: 'back_top',
     data() {
         return {
-            show: false
+            show: true
         }
     },
     methods: {
@@ -46,7 +50,7 @@ export default {
     },
     created() {
         window.addEventListener('scroll', () => {
-            this.show = utils.getScrollTop() > 1000 ? true : false;
+            this.show = utils.getScrollTop() > 1000;
         })
     }
 }
