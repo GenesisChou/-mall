@@ -7,7 +7,7 @@
 
 .container {
     width: pxTorem(340);
-    /*height: pxTorem(350);*/
+    height: pxTorem(375);
     padding: pxTorem(20);
     margin: pxTorem(11) auto;
     border: 1px solid $gray-light;
