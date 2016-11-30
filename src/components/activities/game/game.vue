@@ -1,5 +1,10 @@
 <style lang='sass' scoped>
 @import '../../../assets/scss/variable.scss';
+.game {
+    height: 100%;
+    width: 100%;
+}
+
 .btn {
     position: absolute;
     left: 50%;
@@ -16,7 +21,7 @@
 }
 </style>
 <template>
-    <div class='game' :style='game_style'>
+    <div class='game'>
         <canvas id="canvas"></canvas>
         <button v-if='!start' class='btn  btn-red' @click='startGame'>开始游戏</button>
     </div>
@@ -31,17 +36,10 @@ export default {
             order_detail_id: '', //活动结束跳转id
             alert: {
                 msg: '谢谢参与',
-                btn_text:'关闭',
+                btn_text: '关闭',
                 callback: function() {}
             }
         }
-    },
-    computed: {
-        game_style() {
-            return {
-                backgroundImg: 'url( ' + this.$parent.activity_detail.pic_banner + ')'
-            }
-        },
     },
     watch: {
         start(value) {
@@ -56,8 +54,6 @@ export default {
     },
     methods: {
         startGame() {
-            this.$parent.startGame();
-            this.start = true;
             this.$store.dispatch('toggleLoading', {
                 show: true
             });
@@ -67,6 +63,7 @@ export default {
             }).then((response) => {
                 let data = response.data;
                 this.is_win = data.data.is_win;
+                this.start = true;
                 if (this.is_win) {
                     this.order_detail_id = data.data.id;
                     this.alert = {
@@ -80,6 +77,9 @@ export default {
             }, (response) => {
                 this.$store.dispatch('toggleLoading');
             })
+        },
+        stopGame() {
+            AIR.Game.stopGame();
         },
         toOrderDetail() {
             this.$router.push({

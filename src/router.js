@@ -37,8 +37,8 @@ const router = new VueRouter({
         //         require(['views/activity_list.vue'], resolve)
         //     }
         // },
-        
-         {
+
+        {
             path: '/activity_detail',
             name: 'activity_detail',
             component: function(resolve) {
@@ -62,21 +62,23 @@ const router = new VueRouter({
             component: function(resolve) {
                 require(['views/order_detail.vue'], resolve)
             }
-        }, {
-            path:'/test',
-            name:'test',
-            component:function(resolve){
-                require(['views/test.vue'],resolve)
-            }
         },
+        //  {
+        //     path:'/test',
+        //     name:'test',
+        //     component:function(resolve){
+        //         require(['views/test.vue'],resolve)
+        //     }
+        // },
+
         { path: '*', redirect: '/' }
     ],
-    scrollBehavior: (to, from, savedPosition) => ({ x: 0, y: 0 })
+    // scrollBehavior: (to, from, savedPosition) => ({ x: 0, y: 0 })
 })
 router.beforeEach((to, from, next) => {
     // console.log(to.name);
     // console.log(from);
-    store.dispatch('pageView',to.name);
+    store.dispatch('pageView', to.name);
     if (store.state.v_alert.show) {
         store.dispatch('toggleAlert');
     }

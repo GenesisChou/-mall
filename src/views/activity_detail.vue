@@ -1,21 +1,18 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
-.activity-detail{
+.activity-detail {
     width: 100%;
     height: 100%;
 }
-.expand{
-    min-height: 100%;
-}
-header{
-    width: 100%;
-    min-height: 30%;
-    transition:height  .5s;
-    -webkit-transition:height  .5s;
-    -moz-transition:height  .5s;
-    -o-transition:height  .5s;
+
+header {
     position: relative;
 }
+header.expand{
+    width: 100%;
+    height: 100%;
+}
+
 article {
     padding: 0 pxTorem(55);
     overflow: hidden;
@@ -26,15 +23,16 @@ article {
         }
     }
 }
-.aword-list{
-    .v-list-item:last-child{
-        border-bottom:0;
+
+.aword-list {
+    .v-list-item:last-child {
+        border-bottom: 0;
     }
 }
 </style>
 <template>
     <div class='activity-detail'>
-        <header :class='["header","bg-base",expand?"expand":""]'>
+        <header :class='[activity_type=="game"?"expand":""]'>
             <component :is='activity_type' :questions='activity_detail.questions' :free-times='parseInt(free_times)'></component>
         </header>
         <article>
@@ -77,6 +75,13 @@ export default {
         vDivider,
         vSimditor
     },
+    beforeRouteLeave(to, from, next) {
+        let game=this.$children[2];
+        if(game.start){
+            game.stopGame();
+        } 
+        next();
+    },
     data() {
         return {
             activity_id: '',
@@ -84,7 +89,7 @@ export default {
             activity_detail: {},
             free_times: '',
             activity_type: '',
-            expand:false
+            expand: false
         }
     },
     mounted() {
@@ -99,9 +104,9 @@ export default {
             });
             this.$http.post(`${APP.HOST}/activity_detail_l/${this.activity_id}`, {
                 token: APP.TOKEN,
-                media_id:APP.MEDIA_ID,
-                user_id:APP.USER_ID,
-                open_id:APP.OPEN_ID
+                media_id: APP.MEDIA_ID,
+                user_id: APP.USER_ID,
+                open_id: APP.OPEN_ID
             }).then((response) => {
                 this.$store.dispatch('toggleLoading');
                 let data = response.data;
@@ -134,10 +139,7 @@ export default {
                 this.activity_type = 'game';
             }
         },
-        //start
-        startGame(){
-            this.expand=!this.expand;
-        }
+
     }
 };
 </script>

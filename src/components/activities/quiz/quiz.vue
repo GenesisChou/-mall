@@ -1,6 +1,7 @@
 <style lang='sass' scoped>
 @import '../../../assets/scss/variable.scss';
 .v-quiz {
+    background-color: rgb(243, 243, 243);
     padding: pxTorem(14) pxTorem(64) pxTorem(36) pxTorem(64);
 }
 

@@ -11,7 +11,12 @@
         padding: pxTorem(20);
         margin:0;
         &:last-child {
+            padding:pxTorem(20) pxTorem(40);
             border-bottom: 1px solid $gray-light;
+            box-sizing: border-box;
+            li{
+                list-style: none;
+            }
         }
     }
     .ticket {
