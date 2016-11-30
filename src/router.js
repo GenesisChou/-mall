@@ -29,13 +29,16 @@ const router = new VueRouter({
             component: function(resolve) {
                 require(['views/product_detail.vue'], resolve)
             }
-        }, {
-            path: '/activity_list',
-            name: 'activity_list',
-            component: function(resolve) {
-                require(['views/activity_list.vue'], resolve)
-            }
-        }, {
+        },
+        //  {
+        //     path: '/activity_list',
+        //     name: 'activity_list',
+        //     component: function(resolve) {
+        //         require(['views/activity_list.vue'], resolve)
+        //     }
+        // },
+        
+         {
             path: '/activity_detail',
             name: 'activity_detail',
             component: function(resolve) {
@@ -59,7 +62,13 @@ const router = new VueRouter({
             component: function(resolve) {
                 require(['views/order_detail.vue'], resolve)
             }
-        }, 
+        }, {
+            path:'/test',
+            name:'test',
+            component:function(resolve){
+                require(['views/test.vue'],resolve)
+            }
+        },
         { path: '*', redirect: '/' }
     ],
     scrollBehavior: (to, from, savedPosition) => ({ x: 0, y: 0 })

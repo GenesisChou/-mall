@@ -108,9 +108,10 @@ const mutations = {
     pageView(state, page_id) {
         Vue.http.post(`${APP.HOST}/page_view`, {
             token: APP.TOKEN,
-            userid: APP.USER_ID,
             user_id: APP.USER_ID,
-            page_id: page_id
+            page_id: page_id,
+            media_id:APP.MEDIA_ID,
+            open_id:APP.OPEN_ID
         })
     },
     bannerView(state, banner_id) {
@@ -118,7 +119,8 @@ const mutations = {
             token: APP.TOKEN,
             userid: APP.USER_ID,
             user_id: APP.USER_ID,
-            banner_id: banner_id
+            banner_id: banner_id,
+            media_id:APP.MEDIA_ID
         })
     },
     commendView(state, commend_id) {
@@ -126,7 +128,8 @@ const mutations = {
             token: APP.TOKEN,
             userid: APP.USER_ID,
             user_id: APP.USER_ID,
-            commend_id: commend_id
+            commend_id: commend_id,
+            media_id:APP.MEDIA_ID,
         })
     },
 }

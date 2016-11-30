@@ -36,18 +36,6 @@
 }
 
 
-/*.modal-content {
-    width: pxTorem(500);
-    height: pxTorem(260);
-    padding-top: pxTorem(30);
-    .icon {
-        width: pxTorem(50);
-        height: pxTorem(50);
-    }
-    .msg {
-        line-height: pxTorem(100);
-    }
-}*/
 </style>
 <template>
     <div class='v-scrap '>
@@ -55,8 +43,6 @@
             <button class='btn btn-red' id='start' @click='startActivity'>开始</button>
         </div>
     </div>
-    <!--     <v-alert :show.sync='modal'  :msg='msg' :btn-text='is_win?"查看":"关闭"' :func='is_win?toOrderDetail:toggleAlert'>
-    </v-alert> -->
 </template>
 <script>
 import Lottery from 'libs/lottery.js'
@@ -64,7 +50,6 @@ export default {
 
     name: 'scrap',
     props: {
-        questions: Array,
         freeTimes: Number
     },
     data() {
@@ -74,7 +59,7 @@ export default {
             draw_percent: 0, //画布涂抹面积 大于一定值时触发弹窗
             alert: {
                 msg: '',
-                callback: ''
+                callback:function(){} 
             },
             lottery: '', //画布实例
             activity_start: false, //判断活动状态 1.超出活动次数 2.更新积分失败
@@ -111,7 +96,7 @@ export default {
             });
             this.$http.post(`${APP.HOST}/activity_order/${this.$parent.activity_id}`, {
                 token: APP.TOKEN,
-                userid: APP.USER_ID
+                user_id: APP.USER_ID
             }).then((response) => {
                 this.$store.dispatch('toggleLoading');
 
@@ -168,7 +153,7 @@ export default {
         },
         //刷新免费次数
         freshFreeTimes() {
-            this.$emit('getFreeTimes');
+            this.$parent.getFreeTimes();
         }
     },
 };

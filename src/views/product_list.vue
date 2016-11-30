@@ -95,7 +95,9 @@ export default {
                 count: 0,
                 token: APP.TOKEN,
                 userid: APP.USER_ID,
-                _order: ''
+                media_id:APP.MEDIA_ID,
+                _order: '',
+
             },
             sort_type: ''
         };
@@ -149,6 +151,7 @@ export default {
                 count: 0,
                 token: APP.TOKEN,
                 userid: APP.USER_ID,
+                media_id:APP.MEDIA_ID,
                 _order: ''
             };
         },

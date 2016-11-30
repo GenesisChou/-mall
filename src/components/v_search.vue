@@ -16,7 +16,7 @@
     }
     .iconfont {
         float:right;
-        margin-right: pxTorem(44);
+        margin-right: pxTorem(35);
     }
 }
 </style>

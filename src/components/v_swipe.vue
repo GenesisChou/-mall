@@ -51,7 +51,8 @@ export default {
         getHotBanners() {
             this.$http.post(`${APP.HOST}/hot_banner`, {
                 token: APP.TOKEN,
-                userid: APP.USER_ID
+                userid: APP.USER_ID,
+                media_id:APP.MEDIA_ID
             }).then((response) => {
                 this.swiperSlides = response.data.data;
             }, (response) => {});

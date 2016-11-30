@@ -27,7 +27,7 @@ export default {
     mounted() {
         this.$store.dispatch('getUserInfor');
         let scale = 1 / devicePixelRatio;
-        document.querySelector('meta[name="viewport"]').setAttribute('content', `width=device-width,initial-scale=${scale}, maximum-scale=${scale} , minimum-scale=${scale} ,  minimal-ui,user-scalable=0`);
+        // document.querySelector('meta[name="viewport"]').setAttribute('content', `width=device-width,initial-scale=${scale}, maximum-scale=${scale} , minimum-scale=${scale} ,  minimal-ui,user-scalable=no`);
         document.documentElement.style.fontSize = `${document.documentElement.clientWidth / 10}px`;
     },
     computed: {

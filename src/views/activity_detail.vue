@@ -1,6 +1,22 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
-.body {
+.activity-detail{
+    width: 100%;
+    height: 100%;
+}
+.expand{
+    min-height: 100%;
+}
+header{
+    width: 100%;
+    min-height: 30%;
+    transition:height  .5s;
+    -webkit-transition:height  .5s;
+    -moz-transition:height  .5s;
+    -o-transition:height  .5s;
+    position: relative;
+}
+article {
     padding: 0 pxTorem(55);
     overflow: hidden;
     .introduction {
@@ -10,13 +26,18 @@
         }
     }
 }
+.aword-list{
+    .v-list-item:last-child{
+        border-bottom:0;
+    }
+}
 </style>
 <template>
     <div class='activity-detail'>
-        <div class='head bg-base'>
-            <component :is='game' :questions='activity_detail.questions' @getFreeTimes="getFreeTimes" :free-times='parseInt(free_times)'></component>
-        </div>
-        <div class='body '>
+        <header :class='["header","bg-base",expand?"expand":""]'>
+            <component :is='activity_type' :questions='activity_detail.questions' :free-times='parseInt(free_times)'></component>
+        </header>
+        <article>
             <div class='introduction'>
                 <v-simditor>
                     <template v-if='activity_detail.content'>
@@ -30,15 +51,16 @@
                 </v-simditor>
             </div>
             <v-divider text='奖品列表'></v-divider>
-        </div>
-        <div class='aword-list'>
+        </article>
+        <footer class='aword-list'>
             <v-list-item v-for='item in activity_detail.items' :title='item.name' :title-dupty='item.desc' :img='item.pic'></v-list-item>
-        </div>
+        </footer>
 </template>
 <script>
 import {
     quiz,
-    scrap
+    scrap,
+    game
 } from 'components/activities'
 import vListItem from 'components/v_list_item.vue'
 import vDivider from 'components/v_divider.vue'
@@ -50,6 +72,7 @@ export default {
     components: {
         quiz,
         scrap,
+        game,
         vListItem,
         vDivider,
         vSimditor
@@ -60,7 +83,8 @@ export default {
             type: '',
             activity_detail: {},
             free_times: '',
-            game: '',
+            activity_type: '',
+            expand:false
         }
     },
     mounted() {
@@ -75,7 +99,9 @@ export default {
             });
             this.$http.post(`${APP.HOST}/activity_detail_l/${this.activity_id}`, {
                 token: APP.TOKEN,
-                userid: APP.USER_ID
+                media_id:APP.MEDIA_ID,
+                user_id:APP.USER_ID,
+                open_id:APP.OPEN_ID
             }).then((response) => {
                 this.$store.dispatch('toggleLoading');
                 let data = response.data;
@@ -101,12 +127,17 @@ export default {
         //载入活动
         loadActivity(type) {
             if (type == 1) {
-                this.game = 'scrap';
+                this.activity_type = 'scrap';
             } else if (type == 2) {
-                this.game = 'quiz';
+                this.activity_type = 'quiz';
+            } else if (type == 3) {
+                this.activity_type = 'game';
             }
+        },
+        //start
+        startGame(){
+            this.expand=!this.expand;
         }
-
     }
 };
 </script>

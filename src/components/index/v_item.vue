@@ -1,9 +1,10 @@
 <style lang='sass' scoped>
 @import '../../assets/scss/variable.scss';
-.v-item{
-    width:50%;
+.v-item {
+    width: 50%;
     display: inline-block;
 }
+
 .container {
     width: pxTorem(340);
     /*height: pxTorem(350);*/
@@ -40,11 +41,8 @@
     width: pxTorem(100);
     height: pxTorem(40);
     line-height: pxTorem(40);
-    /*margin-top:pxTorem(2);*/
-    background: url('../../assets/images/blue-button.png');
-    background-repeat: no-repeat;
-    background-size: 100%;
-    background-position: center;
+    border: pxTorem(1) solid rgb(29, 60, 247);
+    border-radius: pxTorem(20);
     color: rgb(29, 60, 247);
     text-align: center;
     text-indent: pxTorem(12);
@@ -56,8 +54,13 @@
         height: pxTorem(54);
         font-size: pxTorem(32);
     }
-    span{
+    span {
+        display: inline-block;
+        max-width: pxTorem(192);
         line-height: pxTorem(40);
+        height: pxTorem(40);
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }
 </style>
@@ -73,7 +76,7 @@
             <div class='detail'>
                 <p class='text-ellipsis'>{{item.name}}</p>
                 <div class=' text-gray '>
-                    <span >{{subname}}</span>
+                    <span>{{subname}}</span>
                     <div class='pull-right exchange'>
                         {{exchange_msg}}
                     </div>
@@ -108,6 +111,9 @@ export default {
                 }
                 if (this.item.item_type == 2) {
                     return '问答';
+                }
+                if(this.item.item_type==3){
+                    return '游戏';
                 }
             }
         },

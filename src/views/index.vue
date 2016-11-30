@@ -83,6 +83,7 @@
                 </div>
             </router-link>
         </ul>
+
         <section class='main'>
             <!-- 热门推荐 -->
             <v-item v-for='item in hot_commend' :item='item' type='commend'></v-item>
@@ -117,7 +118,8 @@ export default {
                 total: 0,
                 count: 0,
                 token: APP.TOKEN,
-                userid: APP.USER_ID
+                userid: APP.USER_ID,
+                media_id:APP.MEDIA_ID
             },
         }
     },
@@ -154,10 +156,7 @@ export default {
             this.$store.dispatch('toggleLoading', {
                 show: true
             });
-            this.$http.post(`${APP.HOST}/hot_item`, params, {
-                token: APP.TOKEN,
-                userid: APP.USER_ID
-            }).then((response) => {
+            this.$http.post(`${APP.HOST}/hot_item`, params ).then((response) => {
                 let data = response.data;
                 if (this.params.p <= 1) {
                     this.params.total = data.data.total;
@@ -175,7 +174,8 @@ export default {
             });
             this.$http.post(`${APP.HOST}/hot_commend`, {
                 token: APP.TOKEN,
-                userid: APP.USER_ID
+                userid: APP.USER_ID,
+                media_id:APP.MEDIA_ID
             }).then((response) => {
                 this.$store.dispatch('toggleLoading');
                 this.hot_commend = response.data.data;

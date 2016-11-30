@@ -113,7 +113,7 @@ export default {
                     question_id: this.questions[this.current_number].id,
                     answer_id: this.answer_id,
                     token: APP.TOKEN,
-                    userid: APP.USER_ID
+                    user_id: APP.USER_ID
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
 
@@ -181,7 +181,7 @@ export default {
         },
         //刷新免费次数
         freshFreeTimes() {
-            this.$emit('getFreeTimes');
+            this.$parent.getFreeTimes();
         }
     }
 };

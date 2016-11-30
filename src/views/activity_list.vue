@@ -48,7 +48,8 @@ export default {
                 total: 0,
                 count: 0,
                 token: APP.TOKEN,
-                userid: APP.USER_ID
+                userid: APP.USER_ID,
+                media_id:APP.MEDIA_ID
             },
 
         };

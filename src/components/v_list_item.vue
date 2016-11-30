@@ -11,7 +11,7 @@
         width: pxTorem(280);
         vertical-align: middle;
         text-align: center;
-        img: {
+        img{
             width: pxTorem(180);
             height: pxTorem(140);
         }

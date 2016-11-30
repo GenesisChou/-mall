@@ -40,7 +40,9 @@
     .btn {
         padding: 0;
         width: pxTorem(180);
-        height: pxTorem(100);
+        height: pxTorem(101);
+        line-height: pxTorem(101);
+        margin-top: pxTorem(-1);
         font-size: pxTorem(30);
         text-indent: pxTorem(12);
         letter-spacing: pxTorem(12);
@@ -181,7 +183,9 @@ export default {
 
             this.$http.post(`${APP.HOST}/product_detail_l/${this.product_id}`, {
                 token: APP.TOKEN,
-                userid: APP.USER_ID
+                media_id:APP.MEDIA_ID,
+                user_id:APP.USER_ID,
+                open_id:APP.OPEN_ID
             }).then((response) => {
                 this.$store.dispatch('toggleLoading');
                 
@@ -210,7 +214,7 @@ export default {
             });
             this.$http.post(`${APP.HOST}/product_order/${this.product_id}`, {
                 token: APP.TOKEN,
-                userid: APP.USER_ID
+                user_id: APP.USER_ID
             }).then((response) => {
                 this.$store.dispatch('toggleLoading');
                 let data = response.data;
