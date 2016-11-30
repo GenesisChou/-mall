@@ -19,7 +19,11 @@ window.APP = {
 if (!utils.getParameterByName('token')) {
     var redirect = encodeURIComponent(APP.MALL_HOST);
     var id = utils.getParameterByName('id');
-    location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}`;
+    if (localStorage[id + '-token']) {
+        startApp(id);
+    } else {
+        location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}`;
+    }
 } else {
     startApp();
 }
@@ -55,7 +59,7 @@ function startApp(id) {
 
     Vue.http.options.headers = {
         "Token-Key": window.APP.TOKEN,
-        "Media-Id":window.APP.MEDIA_ID
+        "Media-Id": window.APP.MEDIA_ID
     };
     // Vue.http.headers['fuck'] = 'Basic YXBpOnBhc3N3b3Jk';
     new Vue({
