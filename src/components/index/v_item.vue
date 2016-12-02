@@ -41,8 +41,12 @@
     width: pxTorem(100);
     height: pxTorem(40);
     line-height: pxTorem(40);
-    border: pxTorem(1) solid rgb(29, 60, 247);
+    border: 1px solid rgb(29, 60, 247);
     border-radius: pxTorem(20);
+    // -webkit-border-radius:pxTorem(20);
+    // -moz-border-radius: pxTorem(20);
+    // -o-border-radius:pxTorem(20);
+    // -ms-border-raidus:pxTorem(20);
     color: rgb(29, 60, 247);
     text-align: center;
     text-indent: pxTorem(12);
@@ -70,7 +74,7 @@
             <div class='pic'>
                 <span v-if='item.script' class='label bg-white text-center'>
                 {{item.script}}
-            </span>
+                </span>
                 <img :src='item.pic'>
             </div>
             <div class='detail'>

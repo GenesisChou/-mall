@@ -8,7 +8,7 @@
     padding: pxTorem(17) pxTorem(30);
     position: fixed;
     z-index: 1;
-    
+
 }
 
 .fill {
@@ -86,7 +86,7 @@ export default {
     },
     data() {
         return {
-            product_list: '',
+            product_list: [],
             params: {
                 sword: '',
                 p: 1,
@@ -118,7 +118,8 @@ export default {
                     this.params.total = data.data.total;
                     this.params.count = data.data.count;
                 }
-                this.product_list = data.data.list.concat(product_list);
+                console.log(this.product_list.concat(data.data.list));
+                this.product_list = this.product_list.concat(data.data.list);
             })
         },
         //搜索商品

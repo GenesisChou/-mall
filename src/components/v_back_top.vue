@@ -6,16 +6,11 @@
     bottom: pxTorem(50);
     width: pxTorem(70);
     height: pxTorem(70);
-    padding-top:pxTorem(5);
     text-align: center;
     border-radius: 50%;
-    border: 2px solid $pink;
+    border: 2px solid $red;
     color: $white;
     background-color: $red;
-    -webkit-transition: opacity .3s linear;
-    -moz-transition: opacity .3s linear;
-    -o-transition: opacity .3s linear;
-    transition: opacity .3s linear;
     box-shadow: pxTorem(2) pxTorem(5) pxTorem(10) rgba(0, 15, 15, .3);
 }
 </style>

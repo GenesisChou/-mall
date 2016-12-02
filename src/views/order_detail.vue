@@ -25,6 +25,7 @@
         .ticket-box {
             width: pxTorem(608);
             height: pxTorem(66);
+            line-height:pxTorem(66);
             border: 1px solid $red;
             padding-left: pxTorem(20);
             margin: pxTorem(40) auto;
@@ -75,9 +76,12 @@
         <!-- 订单详情 -->
         <v-order :order='order_detail'>
             <!--商品为优惠券时 -->
-            <template v-if='product_type==1||(product_type==2&&send_type==2)'>
-                <div v-if='product_type==1' class='ticket'>
-                    <div class='ticket-box'><span class='text-large'>优惠券:</span> <span class='text-red text-huge'>{{order_detail.ticket_id}}</span> </div>
+            <template v-if='product_type==1||(product_type==2&&send_type==2)||product_type==5||product_type==6'>
+                <div v-if='product_type==1||product_type==6' class='ticket'>
+                    <div class='ticket-box'><span class='text-large'>优惠券:</span>
+                      <span v-if='product_type==1' class='text-red text-huge'>{{order_detail.ticket_id}}</span>
+                      <span v-if='product_type==6' class='text-red text-huge'>{{product_detail.ticket_id}}</span>
+                    </div>
                 </div>
                 <section v-if='product_type==2' class='address-selected '>
                     <div class='location pull-left'>
@@ -95,10 +99,10 @@
                     <article class='introduction' v-html='product_detail.content_use'> </article>
                     <v-divider text='重要声明'></v-divider>
                     <ul class='introduction'>
-                        <li> 1.除商品本身不能正常兑换外，商品一经兑换，积分概不退还，请用户在兑换前仔细阅读使用规则、使用说明、有效期等重要信息； </li>
+                        <li>1.除商品本身不能正常兑换外，商品一经兑换，积分概不退还，请用户在兑换前仔细阅读使用规则、使用说明、有效期等重要信息； </li>
                         <li>2.除活动流程出现异常外，奖品一经发放，参与活动积分概不退还，请用户在参与活动前仔细阅读活动规则、活动说明等重要信息； </li>
                         <li>3.通过非法途径获得积分后进行的正常兑换（参与活动）行为，或不按照商品使用规则进行兑换，商家有权不提供服务； </li>
-                        <li> 4.凡以不正当手段（包括但不限于作弊、扰乱系统、实施网络攻击等）进行兑换，平台有权终止该次兑换。</li>
+                        <li>4.凡以不正当手段（包括但不限于作弊、扰乱系统、实施网络攻击等）进行兑换，平台有权终止该次兑换。</li>
                     </ul>
                 </v-simditor>
             </template>
@@ -228,7 +232,7 @@ export default {
         this.getOrderDetail((data) => {
             let product_type = data.data.product_type;
             this.send_type = data.data.send_type;
-            if (product_type == 1 || product_type == 2) {
+            if (product_type == 1 || product_type == 2||product_type==5||product_type==6) {
                 this.getProductDetail(data.data.product_id);
             }
             if (this.send_type == 1 && product_type == 2) {

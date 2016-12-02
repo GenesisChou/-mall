@@ -49,7 +49,7 @@
 }
 
 .record-list {
-    position: fixed;
+    position: absolute;
     top: pxTorem(488);
     left: 0;
     right: 0;
