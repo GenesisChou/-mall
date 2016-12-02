@@ -1,5 +1,5 @@
 <style lang='sass' scoped>
-@import '../assets/scss/variable.scss';
+@import '../../assets/scss/variable.scss';
 .v-order {
     margin-bottom: pxTorem(22);
     border-top: 1px solid $gray-light;

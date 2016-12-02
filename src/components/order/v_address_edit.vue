@@ -1,5 +1,5 @@
 <style lang='sass' scoped>
-@import '../assets/scss/variable.scss';
+@import '../../assets/scss/variable.scss';
 .edit-address {
     height: pxTorem(800);
     background: $white;

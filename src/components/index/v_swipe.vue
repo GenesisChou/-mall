@@ -1,5 +1,5 @@
 <style lang='sass' scoped>
-@import '../assets/scss/variable.scss';
+@import '../../assets/scss/variable.scss';
 .swiper-container {
     width: 100%;
     height: pxTorem(300);

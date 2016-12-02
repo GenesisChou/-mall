@@ -1,15 +1,15 @@
 <style lang='sass' scoped>
-@import '../assets/scss/variable.scss';
+@import '../../assets/scss/variable.scss';
 .v-logistics {
     background-color: $white;
     font-size: pxTorem(28);
     header {
         height: pxTorem(90);
-        line-height: pxTorem(90);  
+        line-height: pxTorem(90);
         padding: 0 pxTorem(100);
         border-bottom: 1px solid $gray;
         label{
-            float: right; 
+            float: right;
         }
     }
     .main {
@@ -24,7 +24,7 @@
                 margin-left: pxTorem(60);
                 overflow: hidden;
                 .msg {
-                    margin-bottom: pxTorem(5);  
+                    margin-bottom: pxTorem(5);
                     overflow: hidden;
                     text-overflow: ellipsis;
                     display: -webkit-box;

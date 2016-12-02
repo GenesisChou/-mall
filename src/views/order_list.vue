@@ -16,8 +16,8 @@
 </template>
 <script>
 import utils from 'libs/utils.js'
-import vOrder from 'components/v_order.vue'
-import vEmpty from 'components/v_empty.vue'
+import vOrder from 'components/order/v_order.vue'
+import vEmpty from 'components/order/v_empty.vue'
 import vBackTop from 'components/v_back_top.vue'
 export default {
     name: 'order_list',

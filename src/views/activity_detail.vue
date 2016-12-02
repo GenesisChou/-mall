@@ -32,7 +32,7 @@ article {
 </style>
 <template>
     <div class='activity-detail'>
-        <header :class='[activity_type=="game"?"expand":""]'>
+        <header :class='[game_start?"expand":""]'>
             <component :is='activity_type' :questions='activity_detail.questions' :free-times='parseInt(free_times)'></component>
         </header>
         <article>
@@ -79,7 +79,7 @@ export default {
         let game=this.$children[2];
         if(game.start){
             game.stopGame();
-        } 
+        }
         next();
     },
     data() {
@@ -89,7 +89,7 @@ export default {
             activity_detail: {},
             free_times: '',
             activity_type: '',
-            expand: false
+            game_start:false,
         }
     },
     mounted() {

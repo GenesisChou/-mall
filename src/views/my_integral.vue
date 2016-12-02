@@ -7,7 +7,7 @@
 .header {
     .user-msg {
         height: pxTorem(288);
-        background-image: url('../assets/images/my_integral/my_integral.png');
+        background-image: url('../assets/images/my_integral.png');
         background-repeat: no-repeat;
         background-size: 100%;
         font-size: pxTorem(30);

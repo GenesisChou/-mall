@@ -1,5 +1,5 @@
 <style lang='sass' scoped>
-@import '../assets/scss/variable.scss';
+@import '../../assets/scss/variable.scss';
 .select-address {
     height: pxTorem(800);
     background: $white;
@@ -89,7 +89,7 @@
     </section>
 </template>
 <script>
-import vAddressEdit from 'components/v_address_edit.vue'
+import vAddressEdit from 'components/order/v_address_edit.vue'
 import vPopup from 'components/v_popup.vue'
 export default {
     components: {

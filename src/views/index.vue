@@ -94,7 +94,7 @@
 </template>
 <script>
 import utils from 'libs/utils.js'
-import vSwipe from 'components/v_swipe.vue'
+import vSwipe from 'components/index/v_swipe.vue'
 import vItem from 'components/index/v_item.vue'
 export default {
     name: 'index',

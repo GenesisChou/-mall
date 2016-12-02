@@ -1,11 +1,16 @@
 <style lang='sass' scoped>
 @import '../../../assets/scss/variable.scss';
 .game {
-    height: 100%;
+    // height: 100%;
     width: 100%;
+    height:pxTorem(720);
+    background:url('./images/game.png');
+    background-size:pxTorem(750) pxTorem(720);
+    background-repeat:no-repeat;
+    background-position:center;
 }
 
-.btn {
+.start {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -14,16 +19,19 @@
     -webkit-transform: translate(-50%, -50%);
     -o-transform: translate(-50%, -50%);
     padding: 0;
-    width: pxTorem(180);
-    height: pxTorem(68);
-    line-height: pxTorem(68);
+    width: pxTorem(268);
+    height: pxTorem(106);
     font-size: pxTorem(30);
+    background:url('./images/start.png');
+    background-size:pxTorem(284) pxTorem(126);
+    background-repeat:no-repeat;
+    background-position-x:inherit;
 }
 </style>
 <template>
     <div class='game'>
         <canvas id="canvas"></canvas>
-        <button v-if='!start' class='btn  btn-red' @click='startGame'>开始游戏</button>
+        <div v-if='!start' class='start' @click='startGame'></div>
     </div>
 </template>
 <script>
@@ -63,6 +71,7 @@ export default {
             }).then((response) => {
                 let data = response.data;
                 this.is_win = data.data.is_win;
+                this.$parent.game_start=true;
                 this.start = true;
                 if (this.is_win) {
                     this.order_detail_id = data.data.id;

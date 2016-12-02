@@ -1,5 +1,5 @@
 <style lang='sass' scoped>
-@import '../assets/scss/variable.scss';
+@import '../../assets/scss/variable.scss';
 .v-empty {
     position: absolute;
     left: 50%;
@@ -19,7 +19,7 @@
 </style>
 <template>
     <div class='v-empty'>
-        <img src='../assets/images/empty.png'>
+        <img src='../../assets/images/empty.png'>
     </div>
 </template>
 <script>

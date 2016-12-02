@@ -149,13 +149,13 @@
     </div>
 </template>
 <script>
-import vOrder from 'components/v_order.vue'
+import vOrder from 'components/order/v_order.vue'
 import vSimditor from 'components/v_simditor.vue'
 import vBlockText from 'components/v_block_text.vue'
-import vLogistics from 'components/v_logistics.vue'
+import vLogistics from 'components/order/v_logistics.vue'
 import vDivider from 'components/v_divider.vue'
-import vAddressEdit from 'components/v_address_edit.vue'
-import vAddressSelect from 'components/v_address_select.vue'
+import vAddressEdit from 'components/order/v_address_edit.vue'
+import vAddressSelect from 'components/order/v_address_select.vue'
 export default {
 
     name: 'order_detail',
