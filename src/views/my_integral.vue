@@ -57,6 +57,9 @@
     z-index: 1;
     overflow: scroll;
     padding-top: pxTorem(30);
+    &::-webkit-scrollbar{
+      display:none;
+    }
     > li {
         height: pxTorem(100);
         padding: 0 pxTorem(38);

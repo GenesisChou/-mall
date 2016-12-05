@@ -2,8 +2,8 @@
 @import '../assets/scss/variable.scss';
 .sk-fading-circle {
     margin: 0 auto;
-    width: 90px;
-    height: 90px;
+    width: pxTorem(90);
+    height:pxTorem(90);
     position: relative;
 }
 
