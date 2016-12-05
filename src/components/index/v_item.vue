@@ -2,22 +2,18 @@
 @import '../../assets/scss/variable.scss';
 .v-item {
     width: 50%;
-    display: inline-block;
+    float:left;
+    padding: pxTorem(20) pxTorem(35);
+    border: 1px solid rgb(243, 243, 243);
+    background-color: #ffffff;
 }
 
-.container {
-    width: pxTorem(340);
-    height: pxTorem(375);
-    padding: pxTorem(20);
-    margin: pxTorem(11) auto;
-    border: 1px solid $gray-light;
-    background-color: $white;
-    overflow: hidden;
+
     .pic {
         position: relative;
         width: pxTorem(300);
         height: pxTorem(200);
-        margin-bottom: pxTorem(30);
+        margin:0 auto;
         border: 1px solid $gray-light;
         img {
             width: 100%;
@@ -25,52 +21,59 @@
         }
         .label {
             position: absolute;
-            left: -2%;
-            top: -2%;
+            left:pxTorem(-10);
+            top:pxTorem(-10);
             width: pxTorem(115);
-            height: pxTorem(40);
-            line-height: pxTorem(40);
+            height: pxTorem(42);
             color: red;
             border: 1px solid red;
-            border-radius: pxTorem(8);
+            border-radius: pxTorem(10);
+            font-size:pxTorem(26);
+            padding:0;
         }
     }
-}
 
 .exchange {
-    width: pxTorem(100);
+    width: pxTorem(80);
     height: pxTorem(40);
     line-height: pxTorem(40);
-    border: 1px solid rgb(29, 60, 247);
+    border: 1px solid #0000ff;
     border-radius: pxTorem(20);
-    // -webkit-border-radius:pxTorem(20);
-    // -moz-border-radius: pxTorem(20);
-    // -o-border-radius:pxTorem(20);
-    // -ms-border-raidus:pxTorem(20);
-    color: rgb(29, 60, 247);
+    color: #0000ff;
     text-align: center;
-    text-indent: pxTorem(12);
-    letter-spacing: pxTorem(12);
+    text-indent: pxTorem(3);
+    letter-spacing: pxTorem(3);
+    font-size:pxTorem(24);
+    transform:translateY(pxTorem(-8));
 }
 
 .detail {
+  margin-top: pxTorem(30);
     >p {
         height: pxTorem(54);
         font-size: pxTorem(32);
+        color:#1d1e1d;
     }
     span {
         display: inline-block;
-        max-width: pxTorem(192);
+        max-width: pxTorem(225);
         line-height: pxTorem(40);
         height: pxTorem(40);
+        font-size:pxTorem(24);
         overflow: hidden;
         text-overflow: ellipsis;
+        color:#878686;
+        i{
+          color:red;
+          margin-right:pxTorem(8);
+          font-style:normal;
+          font-size:pxTorem(32);
+        }
     }
 }
 </style>
 <template>
     <div class='v-item' @click='router'>
-        <div class='container'>
             <div class='pic'>
                 <span v-if='item.script' class='label bg-white text-center'>
                 {{item.script}}
@@ -79,14 +82,14 @@
             </div>
             <div class='detail'>
                 <p class='text-ellipsis'>{{item.name}}</p>
-                <div class=' text-gray '>
-                    <span>{{subname}}</span>
+                <div >
+                    <span v-if='parseInt(item.subname)'><i>{{parseInt(item.subname)}}</i>积分</span>
+                    <span v-else>{{item.subname}}</span>
                     <div class='pull-right exchange'>
                         {{exchange_msg}}
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 </template>
 <script type="text/javascript">
@@ -120,13 +123,6 @@ export default {
                     return '游戏';
                 }
             }
-        },
-        subname() {
-            let subname = this.item.subname;
-            if (parseInt(subname)) {
-                return parseInt(subname) + '积分';
-            }
-            return subname;
         },
         router_link() {
             if (this.item.type == 1) {

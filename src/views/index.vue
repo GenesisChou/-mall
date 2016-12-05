@@ -1,12 +1,12 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
 .index {
-    min-height: 100%;
+  overflow:hidden;
 }
 
 .icon-list {
     padding: pxTorem(25) 0;
-    margin-top: pxTorem(30);
+    margin: pxTorem(30) 0;
     overflow: hidden;
     >li{
         width: 33.3%;
@@ -46,11 +46,21 @@
         top: pxTorem(-15);
     }
 }
-
-.main {
-    padding: pxTorem(18) pxTorem(11);
-    overflow: wrap;
-}
+  .v-item:nth-child(1){
+    border-top:0;
+  }
+  .v-item:nth-child(2){
+    border-top:0;
+  }
+  .v-item:nth-child(2n-1){
+    border-left:0;
+  }
+  .v-item:nth-child(2n){
+    border-right:0;
+  }
+// .main {
+//     padding: pxTorem(18) pxTorem(11);
+// }
 </style>
 <template>
     <div class='index bg-base'>

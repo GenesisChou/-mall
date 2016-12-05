@@ -32,7 +32,8 @@ if (!utils.getParameterByName('token')) {
     var id = utils.getParameterByName('id');
     var activity_id=utils.getParameterByName('activity_id');
     if(activity_id){
-      location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}&activity_id=${activity_id}`;
+      console.log(`${APP.HOST}/weixin/${id}?callback=${redirect}&activity_id=${activity_id}`);
+      // location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}&activity_id=${activity_id}`;
     }else{
       location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}`;
     }

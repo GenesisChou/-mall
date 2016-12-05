@@ -75,7 +75,14 @@ export default {
         vDivider,
         vSimditor
     },
+    beforeRouteEnter(to,from,next){
+        // let scale = 1;
+        // document.querySelector('meta[name="viewport"]').setAttribute('content', `width=device-width,initial-scale=${scale}, maximum-scale=${scale} , minimum-scale=${scale} ,  minimal-ui,user-scalable=no`);
+        next();
+    },
     beforeRouteLeave(to, from, next) {
+        // let scale = 1 / devicePixelRatio;
+        // document.querySelector('meta[name="viewport"]').setAttribute('content', `width=device-width,initial-scale=${scale}, maximum-scale=${scale} , minimum-scale=${scale} ,  minimal-ui,user-scalable=no`);
         let game=this.$children[2];
         if(game.start){
             game.stopGame();
