@@ -145,7 +145,8 @@ export default {
             if (!this.user.ischecked) {
                 this.$http.post(`${APP.HOST}/checkin/${APP.USER_ID}`, {
                     token: APP.TOKEN,
-                    userid: APP.USER_ID
+                    userid: APP.USER_ID,
+                    media_id:APP.MEDIA_ID
                 }).then((response) => {
                     let data = response.data;
                     if (data.status == APP.SUCCESS) {

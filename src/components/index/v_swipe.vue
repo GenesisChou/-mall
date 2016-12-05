@@ -33,7 +33,7 @@ export default {
             swiperOption: {
                 // loop: true,
                 autoplay: 4000,
-                speed: 500,
+                speed: 300,
                 autoplayDisableOnInteraction: false, //用户操作后不停止
                 pagination: '.swiper-pagination',
                 paginationClickable: true,

@@ -38,7 +38,8 @@ export default function(wx, store) {
     function share() {
         Vue.http.post(`${APP.HOST}/share/${APP.USER_ID}`, {
             token: APP.TOKEN,
-            userid: APP.USER_ID
+            userid: APP.USER_ID,
+            media_id:APP.MEDIA_ID
         }).then((response) => {
             store.dispatch('getUserInfor');
         },(response)=>{
@@ -49,7 +50,8 @@ export default function(wx, store) {
     function getTicket(callback) {
         Vue.http.post(`${APP.HOST}/get_weixin_ticket/${APP.MEDIA_ID}`, {
             token: APP.TOKEN,
-            userid: APP.USER_ID
+            userid: APP.USER_ID,
+            media_id:APP.MEDIA_ID
         }).then((response) => {
             if(response.data.status==APP.SUCCESS){
               callback(response.data.data.ticket);
