@@ -30,13 +30,17 @@ window.APP = {
 if (!utils.getParameterByName('token')) {
     var redirect = encodeURIComponent(APP.MALL_HOST);
     var id = utils.getParameterByName('id');
-    var activity_id=utils.getParameterByName('activity_id');
-    if(activity_id){
-      console.log(`${APP.HOST}/weixin/${id}?callback=${redirect}&activity_id=${activity_id}`);
-      location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}&activity_id=${activity_id}`;
+    if(localStorage[id + '-token'] ){
+       startApp(id); 
     }else{
-      location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}`;
+      var activity_id=utils.getParameterByName('activity_id');
+      if(activity_id){
+        location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}&activity_id=${activity_id}`;
+      }else{
+        location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}`;
+      }
     }
+
 } else {
     startApp();
 }
@@ -49,11 +53,11 @@ function startApp(id) {
         window.APP.MEDIA_ID = utils.getParameterByName('mediaid');
         window.APP.IMALL_TITLE = utils.getParameterByName('imall_title');
         window.APP.OPEN_ID = utils.getParameterByName('open_id');
-        // localStorage[window.APP.MEDIA_ID + '-token'] = window.APP.TOKEN;
-        // localStorage[window.APP.MEDIA_ID + '-user_id'] = window.APP.USER_ID;
-        // localStorage[window.APP.MEDIA_ID + '-media_id'] = window.APP.MEDIA_ID;
-        // localStorage[window.APP.MEDIA_ID + '-imall-title'] = window.APP.IMALL_TITLE;
-        // localStorage[window.APP.MEDIA_ID + '-oepn_id'] = window.APP.OPEN_ID;
+        localStorage[window.APP.MEDIA_ID + '-token'] = window.APP.TOKEN;
+        localStorage[window.APP.MEDIA_ID + '-user_id'] = window.APP.USER_ID;
+        localStorage[window.APP.MEDIA_ID + '-media_id'] = window.APP.MEDIA_ID;
+        localStorage[window.APP.MEDIA_ID + '-imall-title'] = window.APP.IMALL_TITLE;
+        localStorage[window.APP.MEDIA_ID + '-oepn_id'] = window.APP.OPEN_ID;
     } else {
         window.APP.TOKEN = localStorage[id + '-token'];
         window.APP.USER_ID = localStorage[id + '-user_id'];
