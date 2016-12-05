@@ -30,7 +30,12 @@ window.APP = {
 if (!utils.getParameterByName('token')) {
     var redirect = encodeURIComponent(APP.MALL_HOST);
     var id = utils.getParameterByName('id');
-    location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}`;
+    var activity_id=utils.getParameterByName('activity_id');
+    if(activity_id){
+      location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}&&activity_id=${activity_id}}`;
+    }else{
+      location.href = `${APP.HOST}/weixin/${id}?callback=${redirect}`;
+    }
 } else {
     startApp();
 }
