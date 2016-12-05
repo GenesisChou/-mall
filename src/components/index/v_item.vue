@@ -4,7 +4,7 @@
     width: 50%;
     float:left;
     padding: pxTorem(20) pxTorem(35);
-    border: 1px solid rgb(243, 243, 243);
+    border: 1px solid #f3f3f3;
     background-color: #ffffff;
 }
 
@@ -14,7 +14,6 @@
         width: pxTorem(300);
         height: pxTorem(200);
         margin:0 auto;
-        border: 1px solid $gray-light;
         img {
             width: 100%;
             height: 100%;
@@ -34,17 +33,16 @@
     }
 
 .exchange {
-    width: pxTorem(80);
+    width: pxTorem(70);
     height: pxTorem(40);
     line-height: pxTorem(40);
     border: 1px solid #0000ff;
     border-radius: pxTorem(20);
     color: #0000ff;
     text-align: center;
-    text-indent: pxTorem(3);
-    letter-spacing: pxTorem(3);
+    // text-indent: pxTorem(3);
+    // letter-spacing: pxTorem(3);
     font-size:pxTorem(24);
-    transform:translateY(pxTorem(-8));
 }
 
 .detail {

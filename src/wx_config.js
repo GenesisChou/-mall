@@ -61,7 +61,7 @@ export default function(wx, store) {
     wx.ready(function() {
         wx.onMenuShareTimeline({
             // title: '分享到大奔朋友圈', // 分享标题
-            link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`, // 分享链接
+            link: getLink(), // 分享链接
             imgUrl: 'http://static.justtong.com/uploads/images/goods/20161025/142505580efac1ad494.jpg', // 分享图标
             success: function() {
                 // 用户确认分享后执行的回调函数
@@ -77,7 +77,7 @@ export default function(wx, store) {
         wx.onMenuShareAppMessage({
             // title: '分享给地球的朋友', // 分享标题
             // desc: '来自地球的问候', // 分享描述
-            link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`, // 分享链接
+            link: getLink(), // 分享链接
             imgUrl: 'http://static.justtong.com/uploads/images/goods/20161025/142505580efac1ad494.jpg', // 分享图标
             // type: '', // 分享类型,music、video或link，不填默认为link
             // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
@@ -94,7 +94,7 @@ export default function(wx, store) {
         wx.onMenuShareQQ({
             // title: '分享给地球的QQ', // 分享标题
             // desc: '来自地球的问候', // 分享描述
-            link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`, // 分享链接
+            link: getLink(), // 分享链接
             imgUrl: 'http://static.justtong.com/uploads/images/goods/20161025/142505580efac1ad494.jpg', // 分享图标
             success: function() {
                 // 用户确认分享后执行的回调函数
@@ -109,7 +109,7 @@ export default function(wx, store) {
         wx.onMenuShareWeibo({
             // title: '分享给地球的微博', // 分享标题
             // desc: '来自地球的问候', // 分享描述
-            link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`, // 分享链接
+            link: getLink(), // 分享链接
             imgUrl: 'http://static.justtong.com/uploads/images/goods/20161025/142505580efac1ad494.jpg', // 分享图标
             success: function() {
                 // 用户确认分享后执行的回调函数
@@ -124,7 +124,7 @@ export default function(wx, store) {
         wx.onMenuShareQZone({
             // title: '分享给地球的空间', // 分享标题
             // desc: '来自地球的问候', // 分享描述
-            link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`, // 分享链接
+            link: getLink(), // 分享链接
             imgUrl: 'http://static.justtong.com/uploads/images/goods/20161025/142505580efac1ad494.jpg', // 分享图标
             success: function() {
                 // 用户确认分享后执行的回调函数
@@ -137,6 +137,18 @@ export default function(wx, store) {
         });
         // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
     });
+    function getLink(){
+      var link=`${APP.MALL_HOST}?id=${APP.MEDIA_ID}`;
+      var activity_id=utils.getParameterByName('activity_id');
+      var product_id=utils.getParameterByName('product_id');
+      if(activity_id){
+        link=link+'&activity_id='+activity_id;
+      }
+      if(product_id){
+        link=link+'$product_id='+product_id;
+      }
+      return link;
+    }
     //通过error接口处理失败验证
     wx.error(function(res) {
         console.log(res);

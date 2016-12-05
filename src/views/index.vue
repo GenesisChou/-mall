@@ -2,6 +2,7 @@
 @import '../assets/scss/variable.scss';
 .index {
   overflow:hidden;
+  background-color:#f3f3f3;
 }
 
 .icon-list {
@@ -63,7 +64,7 @@
 // }
 </style>
 <template>
-    <div class='index bg-base'>
+    <div class='index '>
         <v-swipe></v-swipe>
         <!-- <router-link :to='{name:"activity_list"}' tag='button' class='btn btn-red'>活动列表</router-link > -->
         <ul class='list-inline icon-list  bg-white'>

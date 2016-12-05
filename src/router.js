@@ -73,7 +73,10 @@ const router = new VueRouter({
 
         { path: '*', redirect: '/' }
     ],
-    // scrollBehavior: (to, from, savedPosition) => ({ x: 0, y: 0 })
+     mode: 'history',
+    scrollBehavior (to, from, savedPosition){
+      return false;
+    }
 })
 router.beforeEach((to, from, next) => {
     // console.log(to.name);
