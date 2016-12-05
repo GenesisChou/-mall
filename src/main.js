@@ -42,7 +42,11 @@ function startApp() {
     window.APP.OPEN_ID = utils.getParameterByName('open_id');
     localStorage[window.APP.MEDIA_ID + '-token'] = window.APP.TOKEN;
     console.log('login success');
-    utils.setTitle(window.APP.IMALL_TITLE);
+    if(window.APP.IMALL_TITLE){
+      utils.setTitle(window.APP.IMALL_TITLE);
+    }else{
+      utils.setTitle(window.APP.APP_NAME);
+    }
     FastClick.attach(document.body);
       //配置微信jsdk
     wxConfig(wx, store);
