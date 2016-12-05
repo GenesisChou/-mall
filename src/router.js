@@ -73,7 +73,7 @@ const router = new VueRouter({
 
         { path: '*', redirect: '/' }
     ],
-     mode: 'history',
+    //  mode: 'history',
     scrollBehavior (to, from, savedPosition){
       return false;
     }
