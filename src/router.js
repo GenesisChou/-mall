@@ -1,33 +1,33 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import store from 'v_vuex/store.js'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import store from './vuex/store.js';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const router = new VueRouter({
     routes: [{
             path: '/',
             name: 'index',
             component: function(resolve) {
-                require(['views/index.vue'], resolve)
+                require(['views/index.vue'], resolve);
             }
         }, {
             path: '/index',
             name: 'index',
             component: function(resolve) {
-                require(['views/index.vue'], resolve)
+                require(['views/index.vue'], resolve);
             }
         }, {
             path: '/product_list',
             name: 'product_list',
             component: function(resolve) {
-                require(['views/product_list.vue'], resolve)
+                require(['views/product_list.vue'], resolve);
             }
         }, {
             path: '/product_detail',
             name: 'product_detail',
             component: function(resolve) {
-                require(['views/product_detail.vue'], resolve)
+                require(['views/product_detail.vue'], resolve);
             }
         },
         //  {
@@ -42,25 +42,25 @@ const router = new VueRouter({
             path: '/activity_detail',
             name: 'activity_detail',
             component: function(resolve) {
-                require(['views/activity_detail.vue'], resolve)
+                require(['views/activity_detail.vue'], resolve);
             }
         }, {
             path: '/my_integral',
             name: 'my_integral',
             component: function(resolve) {
-                require(['views/my_integral.vue'], resolve)
+                require(['views/my_integral.vue'], resolve);
             }
         }, {
             path: '/order_list',
             name: 'order_list',
             component: function(resolve) {
-                require(['views/order_list.vue'], resolve)
+                require(['views/order_list.vue'], resolve);
             }
         }, {
             path: '/order_detail',
             name: 'order_detail',
             component: function(resolve) {
-                require(['views/order_detail.vue'], resolve)
+                require(['views/order_detail.vue'], resolve);
             }
         },
         //  {
@@ -77,7 +77,7 @@ const router = new VueRouter({
     scrollBehavior (to, from, savedPosition){
       return false;
     }
-})
+});
 router.beforeEach((to, from, next) => {
     // console.log(to.name);
     // console.log(from);
@@ -89,6 +89,6 @@ router.beforeEach((to, from, next) => {
         store.dispatch('toggleConfirm');
     }
     next();
-})
+});
 
 module.exports = router;

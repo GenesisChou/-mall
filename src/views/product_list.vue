@@ -1,14 +1,11 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
-.load-more {
-    height: pxTorem(90);
-}
 
 .search-box {
     padding: pxTorem(17) pxTorem(30);
     position: fixed;
     z-index: 1;
-
+    background-color:$gray-light;
 }
 
 .fill {
@@ -47,7 +44,7 @@
 </style>
 <template>
     <div class='product-list'>
-        <div class='search-box bg-base'>
+        <div class='search-box'>
             <v-search :search='searchProduct' :params='params'></v-search>
         </div>
         <div class='fill'></div>
@@ -118,7 +115,6 @@ export default {
                     this.params.total = data.data.total;
                     this.params.count = data.data.count;
                 }
-                console.log(this.product_list.concat(data.data.list));
                 this.product_list = this.product_list.concat(data.data.list);
             })
         },

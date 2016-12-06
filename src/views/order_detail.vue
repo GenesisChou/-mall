@@ -3,6 +3,7 @@
 .order-detail {
     min-height: 100%;
     overflow: hidden;
+    background-color:$gray-light;
     .v-order {
         border: 0;
         margin-bottom: 0;
@@ -72,7 +73,7 @@
 }
 </style>
 <template>
-    <div class='order-detail bg-base'>
+    <div class='order-detail '>
         <!-- 订单详情 -->
         <v-order :order='order_detail'>
             <!--商品为优惠券时 -->

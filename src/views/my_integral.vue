@@ -57,13 +57,14 @@
     z-index: 1;
     overflow: scroll;
     padding-top: pxTorem(30);
+    background-color:$gray-light;
     &::-webkit-scrollbar{
       display:none;
     }
     > li {
         height: pxTorem(100);
         padding: 0 pxTorem(38);
-        border-bottom: 1px solid $gray-light;
+        border-bottom: 1px solid #c8c8c8;
         list-style: none;
         overflow: hidden;
         .pull-left{
@@ -113,7 +114,7 @@
             </div>
         </header>
         <v-block-text text='积分明细' type='bg-white'></v-block-text>
-        <ul class='record-list bg-base'>
+        <ul class='record-list'>
             <li v-for='item in integral_list' >
                 <div class='pull-left'>
                     <p class='text-large'>{{item.name}}</p>

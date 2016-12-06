@@ -58,8 +58,7 @@ module.exports = {
             components: path.resolve(__dirname, './src/components'),
             assets: path.resolve(__dirname, './src/assets'),
             libs: path.resolve(__dirname, './src/libs'),
-            views: path.resolve(__dirname, './src/views'),
-            v_vuex: path.resolve(__dirname, './src/vuex')
+            views: path.resolve(__dirname, './src/views')
         }
     },
     devServer: {
@@ -71,7 +70,7 @@ module.exports = {
         new ExtractTextPlugin("style.css")
     ]
     // devtool: '#eval-source-map'
-}
+};
 
 if (process.env.NODE_ENV === 'production') {
     // module.exports.devtool = '#source-map',
@@ -93,5 +92,5 @@ if (process.env.NODE_ENV === 'production') {
             new webpack.LoaderOptionsPlugin({
                 minimize: true
             })
-        ])
+        ]);
 }

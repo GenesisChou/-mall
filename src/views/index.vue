@@ -2,7 +2,7 @@
 @import '../assets/scss/variable.scss';
 .index {
   overflow:hidden;
-  background-color:#f3f3f3;
+  background-color:$gray-light;
 }
 
 .icon-list {

@@ -5,6 +5,7 @@
 }
 
 .search-box {
+    background-color:$gray-light;
     padding: pxTorem(17) pxTorem(30);
     position: fixed;
 }
@@ -15,7 +16,7 @@
 </style>
 <template>
     <div class='activity-list'>
-        <div class='search-box bg-base'>
+        <div class='search-box '>
             <v-search :search='searchActivity' :params.sync='params'></v-search>
         </div>
         <div class='fill'></div>

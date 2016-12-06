@@ -6,9 +6,9 @@
     bottom: pxTorem(50);
     width: pxTorem(70);
     height: pxTorem(70);
+    line-height:pxTorem(70);
     text-align: center;
     border-radius: 50%;
-    border: 2px solid $red;
     color: $white;
     background-color: $red;
     box-shadow: pxTorem(2) pxTorem(5) pxTorem(10) rgba(0, 15, 15, .3);
@@ -16,8 +16,8 @@
 </style>
 <template>
     <transition name='fade'>
-        <div v-show='show' class=' v-back-top text-huge' @click='backTop'>
-            <i class=' icon-arrows-up iconfont text-small'></i>
+        <div v-show='show' class=' v-back-top ' @click='backTop'>
+            <i class=' icon-arrows-up iconfont text-small text-bold'></i>
         </div>
     </transition>
 </template>
@@ -27,7 +27,7 @@ export default {
     name: 'back_top',
     data() {
         return {
-            show: true
+            show: false
         }
     },
     methods: {

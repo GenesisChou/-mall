@@ -1,4 +1,4 @@
-export default function(str) {
+module.exports=function(str) {
     var hexcase = 0; /* hex output format. 0 - lowercase; 1 - uppercase */
     var chrsz = 8; /* bits per input character. 8 - ASCII; 16 - Unicode */
     return hex_sha1(str);
@@ -151,4 +151,4 @@ export default function(str) {
         var digestM = hex_sha1(document.SHAForm.SourceMessage.value);
         document.SHAForm.MessageDigest.value = digestM;
     }
-}
+};

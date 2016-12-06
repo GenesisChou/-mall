@@ -1,9 +1,4 @@
-export default {
-    clientWidth: document.documentElement.clientWidth,
-    pxTorem(value) {
-        return value * this.clientWidth / 750;
-    },
-    //获取url指定参数的值
+module.exports={
     getParameterByName(name, url) {
         if (!url) url = window.location.href;
         name = name.replace(/[\[\]]/g, "\\$&");
@@ -45,28 +40,21 @@ export default {
     getScrollData(list, params, callback) {
         let utils = this;
         if (typeof callback === 'function') {
-            window.addEventListener('scroll', function() {
+            window.addEventListener('scroll', utils.debounce(function() {
                 if (params.p < params.total && list.length < params.count && (utils.getScrollTop() + utils.getClientHeight() >= utils.getScrollHeight())) {
                     params.p++;
                     callback();
                 }
-            });
+            },500));
         }
     },
-    // 防抖函数
-    debounce(func, wait, immediate) {
-        let timeout;
-        return () => {
-            let self = this,
-                args = arguments;
-            let later = () => {
-                timeout = null;
-                if (!immediate) func.apply(self, args);
-            };
-            let callNow = immediate && !timeout;
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-            if (callNow) func.apply(self, args);
-        };
-    },
-}
+    debounce(callback,delay){
+      var timer=null;
+      return function(){
+        clearTimeout(timer);
+        timer=setTimeout(function(){
+          callback();
+        },delay);
+      };
+    }
+};

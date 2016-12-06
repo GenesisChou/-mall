@@ -1,6 +1,5 @@
-"use strict";
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
 Vue.use(Vuex);
 const state = {
@@ -31,7 +30,7 @@ const state = {
         total: 0,
         count: 0
     }
-}
+};
 
 const mutations = {
     //全局
@@ -65,7 +64,7 @@ const mutations = {
             }
         }, (response) => {
 
-        })
+        });
     },
     //获取地址列表
     getAddressList(state, callback) {
@@ -79,7 +78,7 @@ const mutations = {
             }
         }, (response) => {
 
-        })
+        });
     },
     //获取订单列表
     getOrderList(state) {
@@ -103,7 +102,7 @@ const mutations = {
             // }
         }, (response) => {
             store.dispatch('toggleLoading');
-        })
+        });
     },
     pageView(state, page_id) {
         Vue.http.post(`${APP.HOST}/page_view`, {
@@ -112,7 +111,7 @@ const mutations = {
             page_id: page_id,
             media_id:APP.MEDIA_ID,
             open_id:APP.OPEN_ID
-        })
+        });
     },
     bannerView(state, banner_id) {
         Vue.http.post(`${APP.HOST}/banner_view`, {
@@ -121,7 +120,7 @@ const mutations = {
             user_id: APP.USER_ID,
             banner_id: banner_id,
             media_id:APP.MEDIA_ID
-        })
+        });
     },
     commendView(state, commend_id) {
         Vue.http.post(`${APP.HOST}/commend_view`, {
@@ -130,9 +129,9 @@ const mutations = {
             user_id: APP.USER_ID,
             commend_id: commend_id,
             media_id:APP.MEDIA_ID,
-        })
+        });
     },
-}
+};
 const actions = {
     //全局
     //显示/关闭 弹窗
@@ -164,7 +163,7 @@ const actions = {
     getOrderList({ commit }) {
         commit('getOrderList');
     }
-}
+};
 const store = new Vuex.Store({
     state,
     mutations,

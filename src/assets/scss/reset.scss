@@ -7,7 +7,7 @@ html, body {
     line-height: 1.5;
     margin: 0;
     padding: 0;
-    font-size:$base-size;
+    font-size:pxTorem(26);
 }
 input,textarea{
     font-family: 'Microsoft Yahei';
@@ -75,5 +75,5 @@ select {
     background-color: $white;
 }
 button,input{
-    font-size: $base-size;
+    font-size:pxTorem(26);
 }

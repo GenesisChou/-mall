@@ -3,10 +3,11 @@
 .order-list {
     min-height: 100%;
     padding-bottom: pxTorem(22);
+    background-color:$gray-light;
 }
 </style>
 <template>
-    <div class='order-list bg-base'>
+    <div class='order-list'>
         <router-link v-for='order in order_list' :to='{name:"order_detail",query:{order_id:parseInt(order.id)}}'>
             <v-order :order='order'> </v-order>
         </router-link>
@@ -40,27 +41,11 @@ export default {
             empty:'',
         }
     },
-    computed: {
-
-        // order_list() {
-        //     return this.$store.state.order_list;
-        // },
-        // params() {
-        //     return this.$store.state.order_list_params;
-        // }
-    },
-    mounted() {
-        // if (this.order_list.length==0) {
-        //     this.$store.dispatch('getOrderList');
-        // }
+  mounted() {
         this.getOrderList();
         utils.getScrollData(this.order_list, this.params, this.getOrderList);
     },
     methods: {
-        // getOrderList() {
-        //     this.$store.dispatch('getOrderList');
-        // }
-        // 获取兑换订单列表
         getOrderList(params = this.params) {
             this.$store.dispatch('toggleLoading',{show:true});
             this.$http.post(`${APP.HOST}/order_list/${APP.USER_ID}`, params).then((response) => {
@@ -73,9 +58,9 @@ export default {
                 if (!this.order_list.length > 0) {
                     this.empty = true;
                 }
-                this.$store.dispatch('toggleLoading',{show:false});
+                this.$store.dispatch('toggleLoading');
             }, (response) => {
-                this.$store.dispatch('toggleLoading',{show:false});
+                this.$store.dispatch('toggleLoading');
             })
         }
     }

@@ -63,7 +63,7 @@ import {
 import vListItem from 'components/v_list_item.vue'
 import vDivider from 'components/v_divider.vue'
 import vSimditor from 'components/v_simditor.vue'
-
+import wxConfig from '../wx_config.js'
 export default {
 
     name: 'activity_detail',
@@ -75,18 +75,12 @@ export default {
         vDivider,
         vSimditor
     },
-    beforeRouteEnter(to,from,next){
-        // let scale = 1;
-        // document.querySelector('meta[name="viewport"]').setAttribute('content', `width=device-width,initial-scale=${scale}, maximum-scale=${scale} , minimum-scale=${scale} ,  minimal-ui,user-scalable=no`);
-        next();
-    },
     beforeRouteLeave(to, from, next) {
-        // let scale = 1 / devicePixelRatio;
-        // document.querySelector('meta[name="viewport"]').setAttribute('content', `width=device-width,initial-scale=${scale}, maximum-scale=${scale} , minimum-scale=${scale} ,  minimal-ui,user-scalable=no`);
         let game=this.$children[2];
         if(game.start){
             game.stopGame();
         }
+        this.weixin.resetLink();
         next();
     },
     data() {
@@ -97,10 +91,12 @@ export default {
             free_times: '',
             activity_type: '',
             game_start:false,
+            weixin:wxConfig()
         }
     },
     mounted() {
         this.activity_id = this.$route.query.activity_id;
+        this.weixin.setLink('activity',this.activity_id);
         this.getActivityDetail();
     },
     methods: {
