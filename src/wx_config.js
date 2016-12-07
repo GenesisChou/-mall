@@ -21,7 +21,7 @@ module.exports = function() {
         var option = {
             appId: 'wx871e120dd0a24149',
             ticket: '',
-            noncestr:Math.random().toString(36).substring(7), 
+            noncestr:Math.random().toString(36).substring(7),
             timestamp: Math.floor(new Date().getTime()/1000),
             signature: ''
         };
@@ -29,7 +29,7 @@ module.exports = function() {
         getTicket(function(ticket) {
             //通过config接口注入权限验证配置
             option.ticket = ticket;
-            var redirect = encodeURIComponent(APP.MALL_HOST);
+            var redirect = encodeURIComponent(location.href.split('#')[0]);
             var str1 = `jsapi_ticket=${option.ticket}&noncestr=${option.noncestr}&timestamp=${option.timestamp}&url=${redirect}`;
             console.log(str1);
             option.signature = sha1(str1);
