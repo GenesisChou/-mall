@@ -2,10 +2,12 @@
 @import '../../assets/scss/variable.scss';
 .v-item {
     width: 50%;
+    height:pxTorem(375);
     float:left;
     padding: pxTorem(20) pxTorem(35);
-    border: 1px solid #f3f3f3;
-    background-color: #ffffff;
+    border: 1px solid $gray-light;
+    background-color:$white;
+    overflow:hidden;
 }
 
 
@@ -23,12 +25,14 @@
             left:pxTorem(-10);
             top:pxTorem(-10);
             width: pxTorem(115);
-            height: pxTorem(42);
+            height: pxTorem(40);
+            line-height:pxTorem(40);
+            padding:0;
             color: red;
             border: 1px solid red;
+            box-sizing:content-box;
             border-radius: pxTorem(10);
             font-size:pxTorem(26);
-            padding:0;
         }
     }
 

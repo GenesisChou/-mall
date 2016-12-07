@@ -52,7 +52,6 @@ export default {
     watch: {
         start(value) {
             if (value) {
-                var chuck = require('libs/games/chuck.js');
                 AIR.Game.startGame('#canvas');
                 AIR.Game.gameOver((score) => {
                     this.toggleAlert(this.alert);

@@ -20,8 +20,8 @@
         height: pxTorem(90);
         width: pxTorem(90);
         border-radius: 50%;
-        padding-top: pxTorem(10);
-        line-height: pxTorem(35);
+        padding-top: pxTorem(5);
+        // line-height: pxTorem(35);
         margin: auto;
         text-align: center;
         color: $white;

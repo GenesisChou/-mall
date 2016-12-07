@@ -21,7 +21,7 @@ module.exports = function() {
         var option = {
             appId: 'wx871e120dd0a24149',
             ticket: '',
-            noncestr: 'helloworld',
+            noncestr:Math.random().toString(36).substring(7), 
             timestamp: Math.floor(new Date().getTime()/1000),
             signature: ''
         };
