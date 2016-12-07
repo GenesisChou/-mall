@@ -1,7 +1,6 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
 .sk-fading-circle {
-    margin: 0 auto;
     width: pxTorem(90);
     height:pxTorem(90);
     position: relative;
@@ -18,10 +17,9 @@
 .sk-fading-circle .sk-circle:before {
     content: '';
     display: block;
-    margin: 0 auto;
     width: 15%;
     height: 15%;
-    background-color: $gray-light;
+    background-color:#c8c8c8 ;
     border-radius: 100%;
     -webkit-animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;
     animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;

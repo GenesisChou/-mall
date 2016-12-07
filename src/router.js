@@ -30,14 +30,6 @@ const router = new VueRouter({
                 require(['views/product_detail.vue'], resolve);
             }
         },
-        //  {
-        //     path: '/activity_list',
-        //     name: 'activity_list',
-        //     component: function(resolve) {
-        //         require(['views/activity_list.vue'], resolve)
-        //     }
-        // },
-
         {
             path: '/activity_detail',
             name: 'activity_detail',
@@ -63,13 +55,13 @@ const router = new VueRouter({
                 require(['views/order_detail.vue'], resolve);
             }
         },
-        //  {
-        //     path:'/test',
-        //     name:'test',
-        //     component:function(resolve){
-        //         require(['views/test.vue'],resolve)
-        //     }
-        // },
+         {
+            path:'/test',
+            name:'test',
+            component:function(resolve){
+                require(['views/test.vue'],resolve)
+            }
+        },
 
         { path: '*', redirect: '/' }
     ],

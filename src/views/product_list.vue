@@ -60,7 +60,7 @@
                 兑换量优先
             </li>
         </ul>
-        <router-link :to='{name:"product_detail",query:{product_id:product.id}}' v-for='product in product_list'>
+        <router-link :to='{name:"product_detail",query:{product_id:product.id}}' v-for='product in product_list' tag='div'>
             <v-list-item :title='product.name' :title-dupty='parseInt(product.integral)+"积分"' :img='product.pic_thumb' color='text-red'></v-list-item>
         </router-link>
         <v-back-top></v-back-top>

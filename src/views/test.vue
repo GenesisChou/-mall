@@ -1,46 +1,39 @@
-<style type="text/css" scoped>
+<style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
+.load-more{
+  background:$gray-light;
+  text-align:center;
+  overflow:hidden;
+  span{
+    color:$gray;
+    font-size:pxTorem(30);
+    // float:left;
+  }
+    .spinner{
+      transform:scale(0.5);
+      position:absolute;
+      left:0;
+      top:0;
+    }
+}
 </style>
 <template>
     <div class='test'>
-        <canvas id="canvas"></canvas>
-        <button class='btn btn-default'>startGame</button>
+      <div class="load-more">
+          <div class='spinner'>
+          <v-spinner></v-spinner>
+
+          </div>
+          <span>加载更多</span>
+      </div>
     </div>
 </template>
-<script type="text/javascript">
+<script >
 // import 'libs/games/chuck.js'
+import vSpinner from 'components/v_spinner.vue';
 export default {
-    components: {},
-    data() {
-        return {}
-    },
-    mounted() {
-
-
-
-        /**
-         * 开始游戏
-         */
-        // AIR.Game.startGame('#canvas');
-
-        document.querySelector('.test .btn').addEventListener('click', () => {
-            var chuck = require('libs/games/chuck.js');
-            AIR.Game.startGame('#canvas');
-            AIR.Game.gameOver((score) => {
-                this.$store.dispatch('toggleAlert', {
-                    show: true,
-                    msg: '垃圾游戏结束啦,得分' + score,
-                    btn_test: '关闭'
-                })
-
-            });
-        })
-    },
-    methods: {
-        // startGame() {
-        //     AIR.Game.startGame('#canvas');
-
-        // }
-    }
+  components:{
+    vSpinner
+  }
 }
 </script>

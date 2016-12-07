@@ -51,10 +51,12 @@
 
 .detail {
   margin-top: pxTorem(30);
-    >p {
-        height: pxTorem(54);
+    h2{
+        // height: pxTorem(54);
         font-size: pxTorem(32);
         color:#1d1e1d;
+        font-weight:normal;
+        margin-bottom:pxTorem(5);
     }
     span {
         display: inline-block;
@@ -83,7 +85,7 @@
                 <img :src='item.pic'>
             </div>
             <div class='detail'>
-                <p class='text-ellipsis'>{{item.name}}</p>
+                <h2 class='text-ellipsis'>{{item.name}}</h2>
                 <div >
                     <span v-if='parseInt(item.subname)'><i>{{parseInt(item.subname)}}</i>积分</span>
                     <span v-else>{{item.subname}}</span>
