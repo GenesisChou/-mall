@@ -59,9 +59,6 @@
   .v-item:nth-child(2n){
     border-right:0;
   }
-// .main {
-//     padding: pxTorem(18) pxTorem(11);
-// }
 </style>
 <template>
     <div class='index '>

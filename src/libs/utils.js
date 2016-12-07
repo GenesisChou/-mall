@@ -48,6 +48,7 @@ module.exports={
             },500));
         }
     },
+    // 防抖函数
     debounce(callback,delay){
       var timer=null;
       return function(){

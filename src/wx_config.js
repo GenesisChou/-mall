@@ -2,7 +2,7 @@ module.exports = function() {
     var wx = require('weixin-js-sdk');
     var store = require('./vuex/store.js');
     var utils = require('libs/utils.js');
-    var sha1 = require('libs/sha1');
+    var sha1 = require('js-sha1');
     var Vue = require('vue');
     var VueResource = require('vue-resource');
     var link = `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`;
@@ -16,27 +16,22 @@ module.exports = function() {
         }
         configShare();
     }
+
     function configBase() {
         var option = {
             appId: 'wx871e120dd0a24149',
-            ticket: localStorage[`${APP.MEDIA_ID}-ticket`],
+            ticket: '',
             noncestr: 'helloworld',
-            timestamp: new Date().getTime(),
+            timestamp: Math.floor(new Date().getTime()/1000),
             signature: ''
         };
-        if (option.ticket) {
-            getBaseInfor();
-        } else {
-            getTicket(function(ticket) {
-                option.ticket = ticket;
-                localStorage[`${APP.MEDIA_ID}-ticket`] = ticket;
-                getBaseInfor();
-            });
-        }
 
-        function getBaseInfor() {
+        getTicket(function(ticket) {
             //通过config接口注入权限验证配置
-            var str1 = `jsapi_ticket=${option.ticket}&noncestr=${option.noncestr}&timestamp=${option.timestamp}&url=${location.href}`;
+            option.ticket = ticket;
+            var redirect = encodeURIComponent(APP.MALL_HOST);
+            var str1 = `jsapi_ticket=${option.ticket}&noncestr=${option.noncestr}&timestamp=${option.timestamp}&url=${redirect}`;
+            console.log(str1);
             option.signature = sha1(str1);
             wx.config({
                 // debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
@@ -68,8 +63,10 @@ module.exports = function() {
                 }
             });
 
-        }
+
+        });
     }
+
 
     function configShare() {
         wx.ready(function() {
