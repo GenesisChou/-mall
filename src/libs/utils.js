@@ -57,5 +57,8 @@ module.exports={
           callback();
         },delay);
       };
+    },
+    getType(value){
+      return Object.prototype.toString.call(value).substring(8,14);
     }
 };

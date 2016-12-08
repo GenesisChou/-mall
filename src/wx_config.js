@@ -18,27 +18,13 @@ module.exports = function() {
     }
 
     function configBase() {
-        var option = {
-            appId: 'wx871e120dd0a24149',
-            ticket: '',
-            noncestr:Math.random().toString(36).substring(7),
-            timestamp: Math.floor(new Date().getTime()/1000),
-            signature: ''
-        };
-
-        getTicket(function(ticket) {
-            //通过config接口注入权限验证配置
-            option.ticket = ticket;
-            var redirect = encodeURIComponent(location.href.split('#')[0]);
-            var str1 = `jsapi_ticket=${option.ticket}&noncestr=${option.noncestr}&timestamp=${option.timestamp}&url=${redirect}`;
-            console.log(str1);
-            option.signature = sha1(str1);
+        getSignature(function(data) {
+            console.log(data);
             wx.config({
-                // debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-                appId: option.appId, // 必填，公众号的唯一标识
-                timestamp: option.timestamp, // 必填，生成签名的时间戳
-                nonceStr: option.noncestr, // 必填，生成签名的随机串
-                signature: option.signature, // 必填，签名，见附录1
+                appId: "wx871e120dd0a24149", // 必填，公众号的唯一标识
+                timestamp:data.timestamp , // 必填，生成签名的时间戳
+                nonceStr: data.nonceStr, // 必填，生成签名的随机串
+                signature: data.signature, // 必填，签名，见附录1
                 jsApiList: [
                         'onMenuShareTimeline',
                         'onMenuShareAppMessage',
@@ -163,14 +149,15 @@ module.exports = function() {
         });
     }
 
-    function getTicket(callback) {
-        Vue.http.post(`${APP.HOST}/get_weixin_ticket/${APP.MEDIA_ID}`, {
+    function getSignature(callback) {
+        Vue.http.post(`${APP.HOST}/share_test`, {
             token: APP.TOKEN,
             userid: APP.USER_ID,
-            media_id: APP.MEDIA_ID
+            media_id: APP.MEDIA_ID,
+            url:location.href
         }).then((response) => {
             if (response.data.status == APP.SUCCESS) {
-                callback(response.data.data.ticket);
+                callback(response.data.data);
             }
         }, (response) => {
 
