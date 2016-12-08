@@ -5,8 +5,8 @@ module.exports = function() {
     var sha1 = require('js-sha1');
     var Vue = require('vue');
     var VueResource = require('vue-resource');
-    var link = APP.MALL_HOST+'?id='+APP.MEDIA_ID;
-    var logo = APP.LOGO;
+    // var link = `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`;
+    // var logo = APP.LOGO;
     Vue.use(VueResource);
     Vue.http.options.emulateJSON = true;
     function init(state) {
@@ -54,9 +54,12 @@ module.exports = function() {
               }
           });
           wx.ready(function() {
+              var link ='www.baidu.com';
+              var logo = APP.LOGO;
+              var title='积分兑换';
               wx.onMenuShareTimeline({
-                  title: APP.IMALL_TITLE, // 分享标题
-                  link: APP.MALL_HOST+'?id='+APP.MEDIA_ID, // 分享链接
+                  title: title,// 分享标题
+                  link: link, // 分享链接
                   imgUrl: logo, // 分享图标
                   success: function() {
                       // 用户确认分享后执行的回调函数
@@ -70,9 +73,9 @@ module.exports = function() {
                   }
               });
               wx.onMenuShareAppMessage({
-                  title: APP.IMALL_TITLE, // 分享标题
+                  title: title, // 分享标题
                   // desc: '来自地球的问候', // 分享描述
-                  link: APP.MALL_HOST+'?id='+APP.MEDIA_ID, // 分享链接
+                  link: link, // 分享链接
                   imgUrl: logo, // 分享图标
                   // type: '', // 分享类型,music、video或link，不填默认为link
                   // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
