@@ -1,6 +1,6 @@
 import utils from 'libs/utils.js';
 window.APP = {
-    APP_NAME: '积分兑换',
+    TITLE: '积分兑换',
     HOST: 'http://test.integral.api.justtong.com/imall', //接口域名
     MALL_HOST: 'http://test.imall.justtong.com', //服务器域名
     LOGO:'http://static.justtong.com/uploads/images/goods/20161025/142505580efac1ad494.jpg',
@@ -8,6 +8,7 @@ window.APP = {
     PERPAGE: 20, //分页查询时每页条数
     TOKEN: '', //授权码
     MEDIA_ID: '',
+    appId:'wxda819741c7aa5b47'
 };
 if (!utils.getParameterByName('token')) {
     var redirect = encodeURIComponent(APP.MALL_HOST);
@@ -34,15 +35,14 @@ function startApp() {
     window.APP.TOKEN = utils.getParameterByName('token');
     window.APP.USER_ID = utils.getParameterByName('userid');
     window.APP.MEDIA_ID = utils.getParameterByName('mediaid');
-    window.APP.IMALL_TITLE = utils.getParameterByName('imall_title');
     window.APP.OPEN_ID = utils.getParameterByName('open_id');
     localStorage[window.APP.MEDIA_ID + '-token'] = window.APP.TOKEN;
     console.log('login success');
-    if(window.APP.IMALL_TITLE){
-      utils.setTitle(window.APP.IMALL_TITLE);
-    }else{
-      utils.setTitle(window.APP.APP_NAME);
-    }
+    var title = utils.getParameterByName('imall_title');
+    if(title){
+      window.APP.TITLE=title;
+    };
+    utils.setTitle(window.APP.TITLE);
     FastClick.attach(document.body);
     Vue.use(VueResource);
     Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
