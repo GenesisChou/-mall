@@ -13,8 +13,9 @@ module.exports = function() {
     function init(state) {
         if (state === 'first') {
             configBase();
+        }else{
+          configShare();
         }
-        configShare();
     }
 
     function configBase() {
@@ -62,8 +63,7 @@ module.exports = function() {
                     // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
                 }
             });
-
-
+            configShare();
         });
     }
 

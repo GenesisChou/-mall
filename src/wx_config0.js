@@ -13,13 +13,13 @@ module.exports = function() {
     function init(state) {
         if (state === 'first') {
             configBase();
+        }else{
+          configShare();
         }
-        configShare();
     }
 
     function configBase() {
         getSignature(function(data) {
-            console.log(data);
             wx.config({
                 appId: "wxda819741c7aa5b47", // 必填，公众号的唯一标识
                 timestamp:data.timestamp , // 必填，生成签名的时间戳
@@ -48,8 +48,7 @@ module.exports = function() {
                     // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
                 }
             });
-
-
+            configShare();
         });
     }
 
