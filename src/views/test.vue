@@ -1,24 +1,32 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
 .load-more{
-  background:$gray-light;
+  position:relative;
   text-align:center;
   overflow:hidden;
+  height:pxTorem(100);
+  border:1px solid $gray;
   span{
-    color:$gray;
+    color:$sliver;
     font-size:pxTorem(30);
     // float:left;
   }
     .spinner{
       transform:scale(0.5);
       position:absolute;
-      left:0;
+      left:30%;
       top:0;
     }
 }
 </style>
 <template>
     <div class='test'>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
       <div class="load-more">
           <div class='spinner'>
           <v-spinner></v-spinner>
