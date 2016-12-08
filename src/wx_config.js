@@ -154,7 +154,7 @@ module.exports = function() {
             token: APP.TOKEN,
             userid: APP.USER_ID,
             media_id: APP.MEDIA_ID,
-            url:location.href.split('#')[0]
+            url:location.href
         }).then((response) => {
             if (response.data.status == APP.SUCCESS) {
                 callback(response.data.data);
