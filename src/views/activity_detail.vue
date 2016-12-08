@@ -80,7 +80,7 @@ export default {
         if(game.start){
             game.stopGame();
         }
-        this.weixin.resetLink();
+        // this.weixin.resetLink();
         next();
     },
     data() {
@@ -96,7 +96,7 @@ export default {
     },
     mounted() {
         this.activity_id = this.$route.query.activity_id;
-        this.weixin.setLink('activity',this.activity_id);
+        // this.weixin.setLink('activity',this.activity_id);
         this.getActivityDetail();
     },
     methods: {
