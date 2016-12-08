@@ -44,10 +44,9 @@ function startApp() {
       utils.setTitle(window.APP.APP_NAME);
     }
     FastClick.attach(document.body);
-      //配置微信jsdk
-    wxConfig().init('first');
     Vue.use(VueResource);
     Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
+    wxConfig(Vue);
     new Vue({
         el: '#app',
         render: h => h(require('./APP.vue')),

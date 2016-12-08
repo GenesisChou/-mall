@@ -91,7 +91,7 @@ export default {
             free_times: '',
             activity_type: '',
             game_start:false,
-            weixin:wxConfig()
+            // weixin:wxConfig()
         }
     },
     mounted() {

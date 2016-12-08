@@ -1,14 +1,14 @@
-module.exports = function() {
+module.exports = function(Vue) {
     var wx = require('weixin-js-sdk');
     var store = require('./vuex/store.js');
     var utils = require('libs/utils.js');
     var sha1 = require('js-sha1');
-    var Vue = require('vue');
-    var VueResource = require('vue-resource');
     // var link = `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`;
     // var logo = APP.LOGO;
-    Vue.use(VueResource);
-    Vue.http.options.emulateJSON = true;
+    init();
+
+
+
     function init(state) {
       var option = {
           appId: 'wxda819741c7aa5b47',
@@ -18,14 +18,11 @@ module.exports = function() {
           signature: ''
       };
       getTicket(function(ticket) {
-          //通过config接口注入权限验证配置
           option.ticket = ticket;
-          // var redirect = encodeURIComponent(location.href.split('#')[0]);
           var str1 = `jsapi_ticket=${option.ticket}&noncestr=${option.noncestr}&timestamp=${option.timestamp}&url=${location.href}`;
-          console.log(str1);
           option.signature = sha1(str1);
           wx.config({
-              // debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+              debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
               appId: option.appId, // 必填，公众号的唯一标识
               timestamp: option.timestamp, // 必填，生成签名的时间戳
               nonceStr: option.noncestr, // 必填，生成签名的随机串
@@ -54,7 +51,7 @@ module.exports = function() {
               }
           });
           wx.ready(function() {
-              var link ='www.baidu.com';
+              var link = `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`;
               var logo = APP.LOGO;
               var title='积分兑换';
               wx.onMenuShareTimeline({
@@ -165,30 +162,20 @@ module.exports = function() {
 
         });
     }
+    // 
+    // function setLink(type, id) {
+    //     if (!type) {
+    //         link = `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`;
+    //     } else if (type == 'activity') {
+    //         link = link + '&activity_id=' + id;
+    //     } else if (type == 'product') {
+    //         link = link + '&product_id=' + id;
+    //     }
+    //     init();
+    // }
 
-    function setLink(type, id) {
-        if (!type) {
-            link = `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`;
-        } else if (type == 'activity') {
-            link = link + '&activity_id=' + id;
-        } else if (type == 'product') {
-            link = link + '&product_id=' + id;
-        }
-        init();
-    }
-
-    function resetLink() {
-        setLink();
-    }
-
-    function setLogo(img_link) {
-        logo = img_link;
-        init();
-    }
     return {
         init,
-        setLink,
-        resetLink
     };
 
 };
