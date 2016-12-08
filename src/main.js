@@ -17,7 +17,7 @@ if (!utils.getParameterByName('token')) {
     var link=`${APP.HOST}/weixin/${id}?callback=${redirect}`;
     var activity_id=utils.getParameterByName('activity_id');
     if(token){
-      // link=link+'&token='+token;
+      link=link+'&token='+token;
     }
     if(activity_id){
       link=link+'&activity_id='+activity_id;
