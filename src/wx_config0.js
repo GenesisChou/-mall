@@ -21,7 +21,7 @@ module.exports = function() {
         getSignature(function(data) {
             console.log(data);
             wx.config({
-                appId: "wx871e120dd0a24149", // 必填，公众号的唯一标识
+                appId: "wxda819741c7aa5b47", // 必填，公众号的唯一标识
                 timestamp:data.timestamp , // 必填，生成签名的时间戳
                 nonceStr: data.nonceStr, // 必填，生成签名的随机串
                 signature: data.signature, // 必填，签名，见附录1
@@ -154,7 +154,7 @@ module.exports = function() {
             token: APP.TOKEN,
             userid: APP.USER_ID,
             media_id: APP.MEDIA_ID,
-            url:location.href.split('#')[0]
+            url:location.href
         }).then((response) => {
             if (response.data.status == APP.SUCCESS) {
                 callback(response.data.data);

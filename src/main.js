@@ -48,10 +48,6 @@ function startApp() {
     wxConfig().init('first');
     Vue.use(VueResource);
     Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
-    Vue.http.options.headers = {
-        "Token-Key": window.APP.TOKEN,
-        "Media-Id": window.APP.MEDIA_ID
-    };
     new Vue({
         el: '#app',
         render: h => h(require('./APP.vue')),
