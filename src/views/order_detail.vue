@@ -37,6 +37,9 @@
 
 .single-button {
     padding: pxTorem(20) pxTorem(75);
+    a{
+      color:$white;
+    }
 }
 
 .address-selected {
@@ -106,6 +109,14 @@
                         <li>4.凡以不正当手段（包括但不限于作弊、扰乱系统、实施网络攻击等）进行兑换，平台有权终止该次兑换。</li>
                     </ul>
                 </v-simditor>
+                <div v-if='product_type==5' class='single-button'>
+                    <button class='btn btn-red btn-block btn-large '>
+                      <a  :href="product_detail.url">
+                          前往使用
+                      </a>
+                    </button>
+
+                </div>
             </template>
         </v-order>
         <!-- 商品为实物时 -->
@@ -132,7 +143,9 @@
                         </div>
                     </section>
                     <!-- 物流信息 -->
+                    <!-- status=3时为发货状态 -->
                     <v-logistics :order-id='parseInt(order_id)' :status='order_detail.status' :status-str='order_detail.status_str'></v-logistics>
+
                     <div v-if='!order_checked' class='single-button'>
                         <button class='btn btn-red btn-block btn-large ' @click='updateOrderAddress'>确认地址</button>
                     </div>
