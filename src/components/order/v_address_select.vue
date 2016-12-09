@@ -116,7 +116,7 @@ export default {
         show(value) {
             if (value) {
                 this.address_list.forEach((address) => {
-                    if (address.is_defaults) {
+                    if (address.is_defaults==1) {
                         this.selected_id = address.id;
                         return;
                     }

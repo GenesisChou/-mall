@@ -204,7 +204,7 @@ export default {
                 if (this.order_detail.status == 1) {
                     //若订单未确认 从地址列表内选取默认地址
                     this.address_list.forEach((address) => {
-                        if (address.is_defaults) {
+                        if (address.is_defaults==1) {
                             temp = address;
                             return;
                         }
