@@ -80,7 +80,6 @@ export default {
         if(game.start){
             game.stopGame();
         }
-        // this.weixin.resetLink();
         next();
     },
     data() {
@@ -91,12 +90,10 @@ export default {
             free_times: '',
             activity_type: '',
             game_start:false,
-            // weixin:wxConfig()
         }
     },
     mounted() {
         this.activity_id = this.$route.query.activity_id;
-        // this.weixin.setLink('activity',this.activity_id);
         this.getActivityDetail();
     },
     methods: {

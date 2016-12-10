@@ -131,7 +131,7 @@ module.exports = function(Vue) {
     }
 
     function getSignature(callback) {
-        Vue.http.post(`${APP.HOST}/share_test`, {
+        Vue.http.post(`${APP.HOST}/get_signature`, {
             token: APP.TOKEN,
             userid: APP.USER_ID,
             media_id: APP.MEDIA_ID,
