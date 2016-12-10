@@ -4,7 +4,7 @@ module.exports = function(Vue) {
     var utils = require('libs/utils.js');
     var sha1 = require('js-sha1');
     var link = `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`;
-    var logo = APP.LOGO;
+    var imgUrl = APP.LOGO;
     var title = APP.TITLE;
     var option = {
         appId: APP.appId,
@@ -18,9 +18,10 @@ module.exports = function(Vue) {
         getTicket(function(ticket) {
             option.ticket = ticket;
             var str1 = `jsapi_ticket=${option.ticket}&noncestr=${option.noncestr}&timestamp=${option.timestamp}&url=${location.href}`;
+            // var str1 = `jsapi_ticket=${option.ticket}&noncestr=${option.noncestr}&timestamp=${option.timestamp}&url=${APP.MALL_HOST}`;
             option.signature = sha1(str1);
             wx.config({
-                // debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
                 appId: option.appId, // 必填，公众号的唯一标识
                 timestamp: option.timestamp, // 必填，生成签名的时间戳
                 nonceStr: option.noncestr, // 必填，生成签名的随机串
@@ -50,9 +51,9 @@ module.exports = function(Vue) {
             });
             wx.ready(function() {
                 wx.onMenuShareTimeline({
-                    title: title, // 分享标题
-                    link: link, // 分享链接
-                    imgUrl: logo, // 分享图标
+                    title, // 分享标题
+                    link, // 分享链接
+                    imgUrl, // 分享图标
                     success: function() {
                         // 用户确认分享后执行的回调函数
 
@@ -65,10 +66,10 @@ module.exports = function(Vue) {
                     }
                 });
                 wx.onMenuShareAppMessage({
-                    title: title, // 分享标题
+                    title, // 分享标题
                     // desc: '来自地球的问候', // 分享描述
-                    link: link, // 分享链接
-                    imgUrl: logo, // 分享图标
+                    link, // 分享链接
+                    imgUrl, // 分享图标
                     // type: '', // 分享类型,music、video或link，不填默认为link
                     // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
                     success: function() {
@@ -84,8 +85,8 @@ module.exports = function(Vue) {
                 wx.onMenuShareQQ({
                     // title: '分享给地球的QQ', // 分享标题
                     // desc: '来自地球的问候', // 分享描述
-                    link: link, // 分享链接
-                    imgUrl: logo, // 分享图标
+                    link, // 分享链接
+                    imgUrl, // 分享图标
                     success: function() {
                         // 用户确认分享后执行的回调函数
                         share();
@@ -99,8 +100,8 @@ module.exports = function(Vue) {
                 wx.onMenuShareWeibo({
                     // title: '分享给地球的微博', // 分享标题
                     // desc: '来自地球的问候', // 分享描述
-                    link: link, // 分享链接
-                    imgUrl: logo, // 分享图标
+                    link, // 分享链接
+                    imgUrl, // 分享图标
                     success: function() {
                         // 用户确认分享后执行的回调函数
                         share();
@@ -114,8 +115,8 @@ module.exports = function(Vue) {
                 wx.onMenuShareQZone({
                     // title: '分享给地球的空间', // 分享标题
                     // desc: '来自地球的问候', // 分享描述
-                    link: link, // 分享链接
-                    imgUrl: logo, // 分享图标
+                    link, // 分享链接
+                    imgUrl, // 分享图标
                     success: function() {
                         // 用户确认分享后执行的回调函数
                         share();
@@ -150,6 +151,7 @@ module.exports = function(Vue) {
             media_id: APP.MEDIA_ID,
             url: location.href
         }).then((response) => {
+            console.log(response.data);
             if (response.data.status == APP.SUCCESS) {
                 callback(response.data.data.ticket);
             }

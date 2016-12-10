@@ -38,6 +38,8 @@
 .single-button {
     padding: pxTorem(20) pxTorem(75);
     a{
+      display:block;
+      text-align:center;
       color:$white;
     }
 }
@@ -110,11 +112,9 @@
                     </ul>
                 </v-simditor>
                 <div v-if='product_type==5' class='single-button'>
-                    <button class='btn btn-red btn-block btn-large '>
-                      <a  :href="product_detail.url">
+                    <a class='btn btn-red btn-block btn-large ' :href='product_detail.url'>
                           前往使用
-                      </a>
-                    </button>
+                    </a>
 
                 </div>
             </template>
