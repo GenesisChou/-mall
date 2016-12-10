@@ -3,29 +3,24 @@ module.exports = function(Vue) {
     var store = require('./vuex/store.js');
     var utils = require('libs/utils.js');
     var sha1 = require('js-sha1');
-    var link = `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`;
-    var imgUrl = APP.LOGO;
-    var title = APP.TITLE;
-    var option = {
-        appId: APP.appId,
-        ticket: '',
-        noncestr: Math.random().toString(36).substring(7),
-        timestamp: Math.floor(new Date().getTime() / 1000),
-        signature: ''
-    };
-    init();
 
-    function init() {
-        option.ticket = utils.getParameterByName('ticket');
-        var str1 = `jsapi_ticket=${option.ticket}&noncestr=${option.noncestr}&timestamp=${option.timestamp}&url=${location.href}`;
-        // var str1 = `jsapi_ticket=${option.ticket}&noncestr=${option.noncestr}&timestamp=${option.timestamp}&url=${APP.MALL_HOST}`;
-        option.signature = sha1(str1);
+    getSignature(init);
+
+
+    function init(data) {
+        var title=APP.TITLE;
+        var link = `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`;
+        var imgUrl = APP.LOGO;
+        var appId = 'wxda819741c7aa5b47';
+        var timestamp = data.timestamp;
+        var nonceStr = data.noncestr;
+        var signature = data.signature;
         wx.config({
             // debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-            appId: option.appId, // 必填，公众号的唯一标识
-            timestamp: option.timestamp, // 必填，生成签名的时间戳
-            nonceStr: option.noncestr, // 必填，生成签名的随机串
-            signature: option.signature, // 必填，签名，见附录1
+            appId, // 必填，公众号的唯一标识
+            timestamp, // 必填，生成签名的时间戳
+            nonceStr, // 必填，生成签名的随机串
+            signature, // 必填，签名，见附录1
             jsApiList: [
                     'onMenuShareTimeline',
                     'onMenuShareAppMessage',
@@ -41,8 +36,7 @@ module.exports = function(Vue) {
         // //判断当前客户端版本是否支持指定JS接口
         wx.checkJsApi({
             jsApiList: ['onMenuShareTimeline'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
-            success: function(res) {
-            }
+            success: function(res) {}
         });
         wx.ready(function() {
             wx.onMenuShareTimeline({
@@ -125,7 +119,6 @@ module.exports = function(Vue) {
     }
     //分享赢积分
     function share() {
-        alert('fuck');
         Vue.http.post(`${APP.HOST}/share/${APP.USER_ID}`, {
             token: APP.TOKEN,
             userid: APP.USER_ID,
@@ -137,7 +130,7 @@ module.exports = function(Vue) {
         });
     }
 
-    function getTicket(callback) {
+    function getSignature(callback) {
         Vue.http.post(`${APP.HOST}/share_test`, {
             token: APP.TOKEN,
             userid: APP.USER_ID,
@@ -145,7 +138,7 @@ module.exports = function(Vue) {
             url: location.href
         }).then((response) => {
             if (response.data.status == APP.SUCCESS) {
-                callback(response.data.data.ticket);
+                if (callback) callback(response.data.data);
             }
         }, (response) => {
 

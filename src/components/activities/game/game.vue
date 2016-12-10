@@ -35,6 +35,7 @@
     </div>
 </template>
 <script>
+import './game.js';
 export default {
     components: {},
     data() {

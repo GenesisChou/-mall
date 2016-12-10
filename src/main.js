@@ -8,7 +8,7 @@ window.APP = {
     PERPAGE: 20, //分页查询时每页条数
     TOKEN: '', //授权码
     MEDIA_ID: '',
-    appId: 'wxda819741c7aa5b47'
+    appId: ''
 };
 if (!utils.getParameterByName('token')) {
     var redirect = encodeURIComponent(APP.MALL_HOST);
