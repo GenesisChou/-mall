@@ -46,6 +46,10 @@
                 border: pxTorem(3) solid $gray;
                 border-radius: 50%;
                 transform: translateY(pxTorem(3));
+                -ms-transform: translateY(pxTorem(3));
+                -moz-transform: translateY(pxTorem(3));
+                -webkit-transform: translateY(pxTorem(3));
+                -o-transform: translateY(pxTorem(3));
             }
             input[type="radio"]:checked + label:before {
                 background: $gray;

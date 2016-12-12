@@ -62,6 +62,10 @@
         right: pxTorem(15);
         top: 50%;
         transform: translateY(-50%);
+        -ms-transform:translateY(-50%);
+        -moz-transform:translateY(-50%);
+        -webkit-transform:translateY(-50%);
+        -o-transform:translateY(-50%);
     }
     .address-content {
         line-height: pxTorem(55);

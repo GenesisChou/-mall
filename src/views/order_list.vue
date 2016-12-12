@@ -8,7 +8,7 @@
 </style>
 <template>
     <div class='order-list'>
-        <router-link v-for='order in order_list' :to='{name:"order_detail",query:{order_id:parseInt(order.id)}}'>
+        <router-link v-for='order in order_list' :to='{name:"order_detail",query:{order_id:parseInt(order.id)}}' tag='div'>
             <v-order :order='order'> </v-order>
         </router-link>
         <v-empty v-if='empty'></v-empty>

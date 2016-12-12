@@ -7,7 +7,7 @@
         height: pxTorem(90);
         line-height: pxTorem(90);
         padding: 0 pxTorem(100);
-        border-bottom: 1px solid $gray;
+        border-bottom: 1px solid $gray-light;
         label{
             float: right;
         }
@@ -16,7 +16,7 @@
         li {
             list-style: none;
             padding: pxTorem(40) 0 pxTorem(40) pxTorem(120);
-            border-bottom: 1px solid $gray;
+            border-bottom: 1px solid $gray-light;
             .iconfont{
                 line-height: pxTorem(87);
             }
@@ -76,13 +76,17 @@ export default {
     methods: {
         //获取物流信息
         getOderExpress() {
+          this.$store.dispatch('toggleLoading', {
+              show: true
+          });
             this.$http.post(`${APP.HOST}/order_express_trace/${this.orderId}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID
             }).then((response) => {
                 this.logistics = response.data.data;
+                this.$store.dispatch('toggleLoading');
             }, (response) => {
-
+              this.$store.dispatch('toggleLoading');
             })
         },
     }

@@ -10,17 +10,18 @@
     margin: pxTorem(30) 0;
     overflow: hidden;
     >li{
+        position:relative;
         width: 33.3%;
         float: left;
-        &:nth-child(2) {
-            position: relative;
-        }
+        padding-left:pxTorem(80);
     }
     .icon {
+        display:table-cell;
+        vertical-align:middle;
         height: pxTorem(90);
         width: pxTorem(90);
         border-radius: 50%;
-        padding-top: pxTorem(5);
+        // padding-top: pxTorem(5);
         // line-height: pxTorem(35);
         margin: auto;
         text-align: center;

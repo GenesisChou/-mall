@@ -1,23 +1,6 @@
 <style lang='sass' scoped>
 @import '../assets/scss/variable.scss';
-.load-more{
-  position:relative;
-  text-align:center;
-  overflow:hidden;
-  height:pxTorem(100);
-  border:1px solid $gray;
-  span{
-    color:$sliver;
-    font-size:pxTorem(30);
-    // float:left;
-  }
-    .spinner{
-      transform:scale(0.5);
-      position:absolute;
-      left:30%;
-      top:0;
-    }
-}
+
 </style>
 <template>
     <div class='test'>
@@ -27,21 +10,64 @@
       <br>
       <br>
       <br>
-      <div class="load-more">
-          <div class='spinner'>
-          <v-spinner></v-spinner>
-
-          </div>
-          <span>加载更多</span>
-      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <v-load-more></v-load-more>
     </div>
 </template>
 <script >
-// import 'libs/games/chuck.js'
-import vSpinner from 'components/v_spinner.vue';
+import vLoadMore from 'components/v_load_more.vue';
+import utils from 'libs/utils';
 export default {
   components:{
-    vSpinner
+    vLoadMore
+  },
+  computed:{
+  },
+  mounted(){
+    window.addEventListener('scroll',function(){
+      if(utils.touchBottom()){
+          console.log('bottom');
+      }
+    })
+      // console.log(this.test);
+  },
+  methods:{
+    fuck(){
+      console.log('fuck');
+    },
+    test(){
+      console.log('test');
+    }
   }
 }
 </script>

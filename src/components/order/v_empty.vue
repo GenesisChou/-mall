@@ -5,11 +5,8 @@
     left: 50%;
     top: 50%;
     -ms-transform: translate(-50%, -100%);
-    /* IE 9 */
     -moz-transform: translate(-50%, -100%);
-    /* Firefox */
     -webkit-transform: translate(-50%, -100%);
-    /* Safari 和 Chrome */
     -o-transform: translate(-50%, -100%);
     img {
         width: pxTorem(280);
@@ -22,8 +19,3 @@
         <img src='../../assets/images/empty.png'>
     </div>
 </template>
-<script>
-export default {
-
-}
-</script>

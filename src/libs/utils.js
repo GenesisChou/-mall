@@ -35,6 +35,10 @@ module.exports={
     getScrollHeight() {
         return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
     },
+    touchBottom(){
+      var utils=this;
+      return utils.getScrollTop() + utils.getClientHeight() >= utils.getScrollHeight();
+    },
     //获取滚动数据
     //list:列别数据 parmas:参数 callback:回调函数
     getScrollData(list, params, callback) {
@@ -58,7 +62,4 @@ module.exports={
         },delay);
       };
     },
-    getType(value){
-      return Object.prototype.toString.call(value).substring(8,14);
-    }
 };
