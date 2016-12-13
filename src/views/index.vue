@@ -132,7 +132,8 @@ export default {
                 count: 0,
                 token: APP.TOKEN,
                 userid: APP.USER_ID,
-                media_id:APP.MEDIA_ID
+                media_id:APP.MEDIA_ID,
+                pro_st:''
             },
         }
     },
@@ -181,10 +182,9 @@ export default {
             });
             this.$http.post(`${APP.HOST}/hot_item`, params ).then((response) => {
                 let data = response.data;
-                if (this.params.p <= 1) {
-                    this.params.total = data.data.total;
-                    this.params.count = data.data.count;
-                }
+                this.params.total = data.data.total;
+                this.params.count = data.data.count;
+                this.params.pro_st=data.data.pro_st;
                 this.$store.dispatch('toggleLoading');
                 this.hot_items = this.hot_items.concat(data.data.list);
             }, (response) => {
