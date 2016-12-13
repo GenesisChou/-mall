@@ -116,6 +116,10 @@ export default {
             return this.$store.state.user;
         }
     },
+    beforeRouteLeave(to, from, next) {
+        window.removeEventListener('scroll',this.getScrollData);
+        next();
+    },
     data() {
         return {
             hot_items: [],
@@ -135,9 +139,18 @@ export default {
     mounted() {
         this.getHotCommend();
         this.getHotItems();
-        utils.getScrollData(this.hot_items, this.params, this.getHotItems);
+        window.addEventListener('scroll',this.getScrollData);
     },
     methods: {
+        getScrollData(){
+           var self=this;
+           utils.debounce(function() {
+              if (self.params.p < self.params.total && self.hot_items.length < self.params.count && utils.touchBottom()) {
+                  self.params.p++;
+                  self.getHotItems();
+              }
+          },500)();
+        },
         //签到
         checkIn() {
             if (!this.user.ischecked) {

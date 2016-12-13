@@ -65,14 +65,11 @@ const router = new VueRouter({
 
         { path: '*', redirect: '/' }
     ],
-    //  mode: 'history',
     scrollBehavior (to, from, savedPosition){
       return false;
     }
 });
 router.beforeEach((to, from, next) => {
-    // console.log(to.name);
-    // console.log(from);
     store.dispatch('pageView', to.name);
     if (store.state.v_alert.show) {
         store.dispatch('toggleAlert');

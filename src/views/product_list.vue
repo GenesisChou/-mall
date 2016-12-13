@@ -81,6 +81,10 @@ export default {
         vBackTop,
         vSpinner
     },
+    beforeRouteLeave(to, from, next) {
+        window.removeEventListener('scroll',this.getScrollData);
+        next();
+    },
     data() {
         return {
             product_list: [],
@@ -101,20 +105,27 @@ export default {
     },
     mounted() {
         this.getProductList();
-        utils.getScrollData(this.product_list, this.params, this.getProductList);
+        // utils.getScrollData(this.product_list, this.params, this.getProductList);
+        window.addEventListener('scroll',this.getScrollData);
     },
     methods: {
+      getScrollData(){
+         var self=this;
+         utils.debounce(function() {
+            if (self.params.p < self.params.total && self.product_list.length < self.params.count && utils.touchBottom()) {
+                self.params.p++;
+                self.getProductList();
+            }
+        },500)();
+      },
         //获取商品列表
         getProductList(callback) {
             this.searchProduct(this.params, (data) => {
                 if (callback) {
                     callback();
                 }
-                let product_list = this.product_list;
-                if (this.params.p <= 1) {
-                    this.params.total = data.data.total;
-                    this.params.count = data.data.count;
-                }
+                this.params.total = data.data.total;
+                this.params.count = data.data.count;
                 this.product_list = this.product_list.concat(data.data.list);
             })
         },
