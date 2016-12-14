@@ -52,7 +52,7 @@
 .detail {
   margin-top: pxTorem(30);
     h2{
-        // height: pxTorem(54);
+        height: pxTorem(42);
         font-size: pxTorem(32);
         color:#1d1e1d;
         font-weight:normal;
