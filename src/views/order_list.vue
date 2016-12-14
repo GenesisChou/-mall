@@ -52,12 +52,10 @@ export default {
     methods: {
       getScrollData(){
          var self=this;
-         utils.debounce(function() {
             if (self.params.p < self.params.total && self.order_list.length < self.params.count && utils.touchBottom()) {
                 self.params.p++;
                 self.getOrderList();
             }
-        },500)();
       },
         getOrderList(params = this.params) {
             this.$store.dispatch('toggleLoading',{show:true});

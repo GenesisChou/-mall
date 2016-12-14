@@ -11,7 +11,7 @@ module.exports = function(Vue) {
         var title=APP.TITLE;
         var link = `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`;
         var imgUrl = APP.LOGO;
-        var appId = 'wxda819741c7aa5b47';
+        var appId = APP.APPID;
         var timestamp = data.timestamp;
         var nonceStr = data.noncestr;
         var signature = data.signature;

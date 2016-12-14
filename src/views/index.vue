@@ -145,12 +145,10 @@ export default {
     methods: {
         getScrollData(){
            var self=this;
-           utils.debounce(function() {
               if (self.params.p < self.params.total && self.hot_items.length < self.params.count && utils.touchBottom()) {
                   self.params.p++;
                   self.getHotItems();
               }
-          },500)();
         },
         //签到
         checkIn() {
