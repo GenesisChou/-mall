@@ -102,6 +102,8 @@ export default {
               require('./eliminate.js');
             }else if(data.data.name=='棍子忍者'){
               require('./ninja.js');
+            }else if(data.data.name=='逝去的青春'){
+              retuqire('./catch.js');
             }
           })
         },
