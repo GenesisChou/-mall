@@ -108,7 +108,8 @@ export default {
             },
             sort_type: '',
             scroll:false,
-            loading:false
+            loading:false,
+            save_position:true
         };
     },
     mounted() {
@@ -125,13 +126,16 @@ export default {
         window.addEventListener('scroll', this.getScrollData);
     },
     updated(){
-      var position=utils.getSessionStorage('position:'+this.$route.name);
+      if (this.save_position) {
+        var position=utils.getSessionStorage('position:'+this.$route.name);
         window.scrollTo(0,position);
+      }
     },
     methods: {
         getScrollData() {
             var self = this;
             this.scroll=true;
+            this.save_position=false;
             utils.debounce(function() {
                if (self.scroll&&utils.touchBottom()&&self.params.p < self.params.total&&!self.loading) {
                    self.params.p++;

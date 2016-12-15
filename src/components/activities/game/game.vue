@@ -38,11 +38,11 @@
   position:absolute;
   color:$white;
   left:50%;
-  top:50%;
-  transform: translate(-50%, 150%);
-  -moz-transform: translate(-50%, 150%);
-  -webkit-transform: translate(-50%, 150%);
-  -o-transform: translate(-50%, 150%);
+  top:65%;
+  transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
   z-index:2;
 }
 </style>
@@ -51,7 +51,7 @@
         <canvas id="canvas"></canvas>
         <div v-if='!start' class='start' @click='startGame'></div>
         <div v-if='!start' class='cover'></div>
-        <div v-if='!start' class='free-time-message'>提示：您还剩余{{freeTimes}}次免费机会啦</div>
+        <div v-if='!start' class='free-time-message'>提示：您还剩余{{freeTimes}}次免费机会</div>
     </div>
 </template>
 <script>

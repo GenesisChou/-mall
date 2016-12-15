@@ -52,7 +52,7 @@
         <div id='lotteryContainer'>
             <button class='btn btn-red' id='start' @click='startActivity'>开始</button>
         </div>
-        <div v-if='!activity_start' class='free-time-message'>提示:您还剩余{{freeTimes}}次免费机会啦</div>
+        <div v-if='!activity_start' class='free-time-message'>提示:您还剩余{{freeTimes}}次免费机会</div>
     </div>
 </template>
 <script>

@@ -98,7 +98,7 @@
             </div>
         </div>
         <div class='free-time-message'>
-            提示:您还剩余{{freeTimes}}次免费机会啦
+            提示:您还剩余{{freeTimes}}次免费机会
         </div>
     </div>
 </template>
