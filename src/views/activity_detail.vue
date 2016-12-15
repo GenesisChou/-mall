@@ -80,9 +80,6 @@ export default {
         if(game.start){
             game.stopGame();
         }
-        if(this.activity_type==='game'){
-          window.AIR=null;
-        }
         next();
     },
     data() {
