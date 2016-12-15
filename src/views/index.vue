@@ -129,7 +129,6 @@ export default {
         window.removeEventListener('scroll',this.getScrollData);
         next();
     },
-  
     activated(){
       var position=utils.getSessionStorage('position:'+this.$route.name);
       window.scrollTo(0,position);

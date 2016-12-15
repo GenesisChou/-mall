@@ -103,7 +103,7 @@ export default {
             }else if(data.data.name=='棍子忍者'){
               require('./ninja.js');
             }else if(data.data.name=='逝去的青春'){
-              retuqire('./catch.js');
+              require('./catch.js');
             }
           })
         },
@@ -128,7 +128,7 @@ export default {
                       this.alert = {
                           type:'img',
                           img:data.data.pic_thumb,
-                          msg: data.data.name,
+                          msg: '获得'+data.data.name,
                           callback: this.toOrderDetail,
                           btn_text: '查看'
                       };

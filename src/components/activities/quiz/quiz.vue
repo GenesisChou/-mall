@@ -143,7 +143,7 @@ export default {
                                 this.is_win = data.data.is_win;
                                 this.order_detail_id = data.data.id;
                                 this.toggleAlert({
-                                    msg: data.data.name,
+                                    msg: '回答正确,获得'+data.data.name,
                                     type: 'img',
                                     img:data.data.pic_thumb,
                                     btn_text: '查看',

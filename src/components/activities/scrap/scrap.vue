@@ -122,7 +122,7 @@ export default {
                         this.alert = {
                             type:'img',
                             img:data.data.pic_thumb,
-                            msg: data.data.name,
+                            msg: '获得'+data.data.name,
                             callback: this.toOrderDetail,
                             btn_text: '查看'
                         };

@@ -53,7 +53,6 @@ const router = new VueRouter({
         //         require(['views/test.vue'],resolve);
         //     }
         // },
-
         { path: '*', redirect: '/' }
     ],
 });
