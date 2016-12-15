@@ -162,6 +162,11 @@ export default {
             order_detail_id: '', //兑换成功后用于跳转订单详情的订单id
         };
     },
+    beforeRouteLeave(to, from, next) {
+      next(vm=>{
+        vm.getProductDetail();
+      })
+    },
     mounted() {
         this.product_id = this.$route.query.product_id;
         // this.$store.dispatch('getUserInfor');
@@ -179,8 +184,7 @@ export default {
 
         //获取商品详情
         getProductDetail() {
-                this.$store.dispatch('toggleLoading',{show:true});
-
+            this.$store.dispatch('toggleLoading',{show:true});
             this.$http.post(`${APP.HOST}/product_detail_l/${this.product_id}`, {
                 token: APP.TOKEN,
                 media_id:APP.MEDIA_ID,

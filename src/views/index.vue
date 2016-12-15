@@ -127,9 +127,12 @@ export default {
     },
     beforeRouteLeave(to, from, next) {
         window.removeEventListener('scroll',this.getScrollData);
-        utils.setSessionStorage('hot_items',this.hot_items);
-        utils.setSessionStorage('hot_items_params',this.params);
         next();
+    },
+  
+    activated(){
+      var position=utils.getSessionStorage('position:'+this.$route.name);
+      window.scrollTo(0,position);
     },
     data() {
         return {
@@ -148,35 +151,17 @@ export default {
             },
             scroll:false,
             loading:false,
-            save_position:true
         }
     },
     mounted() {
-        var temp_hot_items=utils.getSessionStorage('hot_items');
-        var temp_hot_items_params=utils.getSessionStorage('hot_items_params');
         this.getHotCommend();
-        if(temp_hot_items){
-            this.params=temp_hot_items_params;
-        }
-        if(temp_hot_items_params){
-            this.hot_items=temp_hot_items;
-        }else{
-          this.getHotItems();
-        }
-
+        this.getHotItems();
         window.addEventListener('scroll',this.getScrollData);
-    },
-    updated(){
-      if(this.save_position){
-        var position=utils.getSessionStorage('position:'+this.$route.name);
-        window.scrollTo(0,position);
-      }
     },
     methods: {
         getScrollData(){
            var self=this;
            this.scroll=true;
-           this.save_position=false;
            utils.debounce(function() {
               if (self.scroll&&utils.touchBottom()&&self.params.p < self.params.total&&!self.loading) {
                   self.params.p++;

@@ -82,14 +82,11 @@ export default {
     },
     beforeRouteLeave(to, from, next) {
         window.removeEventListener('scroll', this.getScrollData);
-        if(!this.params.sword&&!this.params._order){
-          utils.setSessionStorage('product_list',this.product_list);
-          utils.setSessionStorage('product_list_params',this.params);
-        }else{
-          utils.setSessionStorage('product_list',null);
-          utils.setSessionStorage('product_list_params',null);
-        }
         next();
+    },
+    activated(){
+      var position=utils.getSessionStorage('position:'+this.$route.name);
+      window.scrollTo(0,position);
     },
     data() {
         return {
@@ -109,33 +106,16 @@ export default {
             sort_type: '',
             scroll:false,
             loading:false,
-            save_position:true
         };
     },
     mounted() {
-        var temp_list=utils.getSessionStorage('product_list');
-        var temp_params=utils.getSessionStorage('product_list_params');
-        if(temp_params){
-            this.params=temp_params;
-        }
-        if(temp_list){
-          this.product_list=temp_list;
-        }else{
-          this.getProductList();
-        }
+        this.getProductList();
         window.addEventListener('scroll', this.getScrollData);
-    },
-    updated(){
-      if (this.save_position) {
-        var position=utils.getSessionStorage('position:'+this.$route.name);
-        window.scrollTo(0,position);
-      }
     },
     methods: {
         getScrollData() {
             var self = this;
             this.scroll=true;
-            this.save_position=false;
             utils.debounce(function() {
                if (self.scroll&&utils.touchBottom()&&self.params.p < self.params.total&&!self.loading) {
                    self.params.p++;
