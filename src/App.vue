@@ -7,7 +7,7 @@
         <keep-alive exclude='product_detail,activity_detail,order_list,my_integral,order_detail' >
           <router-view></router-view>
         </keep-alive>
-        <v-alert :show='v_alert.show' :msg='v_alert.msg' :callback='v_alert.callback' :type='v_alert.type' :cover-close='v_alert.cover_close' :btn-text='v_alert.btn_text'></v-alert>
+        <v-alert :show='v_alert.show' :msg='v_alert.msg' :callback='v_alert.callback' :type='v_alert.type' :cover-close='v_alert.cover_close' :btn-text='v_alert.btn_text' :img='v_alert.img'></v-alert>
         <v-confirm :show='v_confirm.show' :msg='v_confirm.msg' :callback='v_confirm.callback'></v-confirm>
         <v-loading :show='v_loading.show'></v-loading>
     </div>

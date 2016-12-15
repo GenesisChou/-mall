@@ -126,6 +126,8 @@ export default {
                   if (this.is_win) {
                       this.order_detail_id = data.data.id;
                       this.alert = {
+                          type:'img',
+                          img:data.data.pic_thumb,
                           msg: data.data.name,
                           callback: this.toOrderDetail,
                           btn_text: '查看'
@@ -155,6 +157,8 @@ export default {
         },
         toggleAlert(alert) {
             this.$store.dispatch('toggleAlert', {
+                type:alert.type,
+                img:alert.img,
                 show: true,
                 msg: alert.msg,
                 btn_text: alert.btn_text,

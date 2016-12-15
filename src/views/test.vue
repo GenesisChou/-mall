@@ -4,36 +4,7 @@
 </style>
 <template>
     <div class='test'>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
+      <button class='btn' @click='alert'>alert</button>
       <br>
       <br>
       <br>
@@ -62,6 +33,14 @@ export default {
       // console.log(this.test);
   },
   methods:{
+    alert(){
+        this.$store.dispatch('toggleAlert',{
+          // type:'img',
+          // img:'http://static.justtong.com/uploads/images/goods/20161215/12513458522156ad5b5.png',
+          show:true,
+          msg:'asdfasdf',
+        });
+    },
     fuck(){
       console.log('fuck');
     },

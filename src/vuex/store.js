@@ -13,6 +13,7 @@ const state = {
         msg: '',
         btn_text: '',
         cover_close: true,
+        img:'',
         callback: function() {}
     },
     v_confirm: {
@@ -23,13 +24,6 @@ const state = {
     v_loading: {
         show: false
     },
-    order_list: [],
-    order_list_params: {
-        p: 1,
-        r: 20,
-        total: 0,
-        count: 0
-    }
 };
 
 const mutations = {
@@ -42,6 +36,7 @@ const mutations = {
         state.v_alert.cover_close = alert.cover_close;
         state.v_alert.btn_text = alert.btn_text;
         state.v_alert.type = alert.type;
+        state.v_alert.img=alert.img;
     },
     toggleConfirm(state, confirm = {}) {
         state.v_confirm.show = confirm.show;

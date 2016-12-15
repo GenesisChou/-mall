@@ -144,7 +144,8 @@ export default {
                                 this.order_detail_id = data.data.id;
                                 this.toggleAlert({
                                     msg: data.data.name,
-                                    type: 'correct',
+                                    type: 'img',
+                                    img:data.data.pic_thumb,
                                     btn_text: '查看',
                                     callback: this.toOrderDetail
                                 });

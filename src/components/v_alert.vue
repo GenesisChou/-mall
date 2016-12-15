@@ -11,22 +11,36 @@
     border-radius: pxTorem(10);
     z-index: 11;
     .modal-content {
-        width: pxTorem(500);
-        padding-top: pxTorem(30);
+        width: pxTorem(600);
+        border-radius: pxTorem(10);
+        overflow: hidden;
+        text-align: center;
+        padding: pxTorem(20);
+        background-color: $white;
+        border-radius: pxTorem(10);
         .icon {
             width: pxTorem(60);
             height: pxTorem(60);
             font-size: pxTorem(40);
         }
+          .pic {
+              width: pxTorem(300);
+              height: pxTorem(210);
+          }
         .msg {
-            font-size: pxTorem(32);
-            line-height: pxTorem(130);
+          padding: pxTorem(40) 0;
+          margin: auto;
+          font-size: pxTorem(32);
+          text-align: center;
+          width: pxTorem(400);
         }
         .btn {
-            margin-bottom: pxTorem(40);
-            letter-spacing: pxTorem(10);
-            text-indent: pxTorem(10);
-            width: pxTorem(200);
+          width: pxTorem(300);
+          height: pxTorem(78);
+          margin: 0 auto;
+          margin-bottom: pxTorem(30);
+          line-height: pxTorem(78);
+          font-size: pxTorem(30);
         }
     }
 }
@@ -46,7 +60,8 @@
         <div class='bg-cover'>
             <div class='modal bg-white'>
                 <div class='modal-content text-center text-large'>
-                    <i :class='["icon","text-red","iconfont","text-bold",icon_class]'></i>
+                    <img v-if='type=="img"' class='pic' :src='img' alt="">
+                    <i v-else :class='["icon","text-red","iconfont","text-bold",icon_class]'></i>
                     <p class='msg'>{{msg}}</p>
                     <button class='btn btn-red btn-large' @click='func()'>{{btnText}}</button>
                 </div>

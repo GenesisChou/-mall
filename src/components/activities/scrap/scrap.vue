@@ -120,13 +120,15 @@ export default {
                     if (this.is_win) {
                         this.setLottery(data.data.name);
                         this.alert = {
-                            msg: this.getMsg(data.data.name),
+                            type:'img',
+                            img:data.data.pic_thumb,
+                            msg: data.data.name,
                             callback: this.toOrderDetail,
                             btn_text: '查看'
                         };
                         this.order_detail_id = data.data.id;
                     } else {
-                        this.alert.msg = this.getMsg(data.data.name);
+                        this.alert.msg = data.data.name;
                         this.setLottery('谢谢参与');
                     }
                 } else {
@@ -154,13 +156,6 @@ export default {
         },
         pxTorem(value) {
             return value * this.client_width / 750;
-        },
-        //获取提示
-        getMsg(msg) {
-            if (this.freeTimes > 0) {
-                return msg + '剩余免费活动次数' + this.freeTimes;
-            }
-            return msg;
         },
         //刷新免费次数
         freshFreeTimes() {
