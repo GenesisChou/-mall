@@ -9,11 +9,20 @@
     padding: pxTorem(25) 0;
     margin: pxTorem(30) 0;
     overflow: hidden;
-    >li{
+    li{
         position:relative;
         width: 33.3%;
         float: left;
         padding-left:pxTorem(80);
+        &:nth-child(1) .icon{
+          background:linear-gradient(to bottom, #2190ff, #52b3ff 80%);
+        }
+        &:nth-child(2) .icon{
+          background:linear-gradient(to bottom, #f41c29, #f1737b 80%);
+        }
+        &:nth-child(3) .icon{
+          background:linear-gradient(to bottom, #ffa502, #ffd476 80%);
+        }
     }
     .icon {
         display:table-cell;
@@ -22,10 +31,11 @@
         width: pxTorem(90);
         border-radius: 50%;
         // padding-top: pxTorem(5);
-        // line-height: pxTorem(35);
+        line-height: pxTorem(35);
         margin: auto;
         text-align: center;
         color: $white;
+
     }
     .label {
         position: absolute;
@@ -64,16 +74,15 @@
 <template>
     <div class='index '>
         <v-swipe></v-swipe>
-        <!-- <router-link :to='{name:"activity_list"}' tag='button' class='btn btn-red'>活动列表</router-link > -->
         <ul class='list-inline icon-list  bg-white'>
             <router-link :to='{name:"my_integral"}' tag='li' class=''>
-                <div class='icon bg-blue '>
+                <div class='icon '>
                     <p>积分</p>
                     <p>{{parseInt(user.integral)}}</p>
                 </div>
             </router-link>
             <li  @click='checkIn'>
-                <div class='icon bg-pink '>
+                <div class='icon '>
                     <template v-if='!user.ischecked'>
                         <p>点击</p>
                         <p>签到</p>
@@ -86,7 +95,7 @@
                 </div>
             </li>
             <router-link :to='{name:"product_list"}' tag='li'>
-                <div class='icon bg-yellow '>
+                <div class='icon'>
                     <p>所有</p>
                     <p>商品</p>
                 </div>
@@ -118,6 +127,8 @@ export default {
     },
     beforeRouteLeave(to, from, next) {
         window.removeEventListener('scroll',this.getScrollData);
+        utils.setSessionStorage('hot_items',this.hot_items);
+        utils.setSessionStorage('hot_items_params',this.params);
         next();
     },
     data() {
@@ -135,20 +146,43 @@ export default {
                 media_id:APP.MEDIA_ID,
                 pro_st:''
             },
+            scroll:false,
+            loading:false
         }
     },
     mounted() {
+        var temp_hot_items=utils.getSessionStorage('hot_items');
+        var temp_hot_items_params=utils.getSessionStorage('hot_items_params');
         this.getHotCommend();
-        this.getHotItems();
+        if(temp_hot_items){
+            this.params=temp_hot_items_params;
+        }
+        if(temp_hot_items_params){
+            this.hot_items=temp_hot_items;
+        }else{
+          this.getHotItems();
+        }
+
         window.addEventListener('scroll',this.getScrollData);
+    },
+    updated(){
+      var position=utils.getSessionStorage('position:'+this.$route.name);
+      window.scrollTo(0,position);
     },
     methods: {
         getScrollData(){
            var self=this;
-              if (self.params.p < self.params.total && self.hot_items.length < self.params.count && utils.touchBottom()) {
+           this.scroll=true;
+           utils.debounce(function() {
+              if (self.scroll&&utils.touchBottom()&&self.params.p < self.params.total&&!self.loading) {
                   self.params.p++;
-                  self.getHotItems();
+                  self.scroll=false;
+                  self.loading=true;
+                  self.getHotItems(function(){
+                    self.loading=false;
+                  });
               }
+          },500)();
         },
         //签到
         checkIn() {
@@ -174,16 +208,18 @@ export default {
         },
 
         //  热门商品和活动列表，用于首页列表
-        getHotItems(params = this.params) {
+        getHotItems(callback) {
             this.$store.dispatch('toggleLoading', {
                 show: true
             });
-            this.$http.post(`${APP.HOST}/hot_item`, params ).then((response) => {
+            this.$http.post(`${APP.HOST}/hot_item`, this.params ).then((response) => {
                 let data = response.data;
-                this.params.total = data.data.total;
-                this.params.count = data.data.count;
-                this.params.pro_st=data.data.pro_st;
                 this.$store.dispatch('toggleLoading');
+                if(callback){
+                  callback();
+                }
+                this.params.total = data.data.total;
+                this.params.pro_st=data.data.pro_st;
                 this.hot_items = this.hot_items.concat(data.data.list);
             }, (response) => {
                 this.$store.dispatch('toggleLoading');

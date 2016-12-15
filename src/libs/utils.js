@@ -39,18 +39,11 @@ module.exports={
       var utils=this;
       return utils.getScrollTop() + utils.getClientHeight() >= utils.getScrollHeight();
     },
-    //获取滚动数据
-    //list:列别数据 parmas:参数 callback:回调函数
-    getScrollData(list, params, callback) {
-        let utils = this;
-        if (typeof callback === 'function') {
-            window.addEventListener('scroll', utils.debounce(function() {
-                if (params.p < params.total && list.length < params.count && (utils.getScrollTop() + utils.getClientHeight() >= utils.getScrollHeight())) {
-                    params.p++;
-                    callback();
-                }
-            },500));
-        }
+    setSessionStorage(key,obj){
+      sessionStorage.setItem(key,JSON.stringify(obj));
+    },
+    getSessionStorage(key){
+      return JSON.parse(sessionStorage.getItem(key));
     },
     // 防抖函数
     debounce(callback,delay){

@@ -1,11 +1,8 @@
 <style lang='sass' scoped>
 @import '../../../assets/scss/variable.scss';
 .game {
-    // height: 100%;
     width: 100%;
     height:pxTorem(720);
-    background:url('./images/game.png');
-    background-size:pxTorem(750) pxTorem(720);
     background-repeat:no-repeat;
     background-position:center;
 }
@@ -26,18 +23,44 @@
     background-size:pxTorem(284) pxTorem(126);
     background-repeat:no-repeat;
     background-position-x:inherit;
+    z-index:2;
+}
+.cover{
+  position:absolute;
+  left:0;
+  top:0;
+  right:0;
+  bottom:0;
+  background-color:rgba(0,0,0,.5);
+  z-index:1;
+}
+.free-time-message{
+  position:absolute;
+  color:$white;
+  left:50%;
+  top:50%;
+  transform: translate(-50%, 150%);
+  -moz-transform: translate(-50%, 150%);
+  -webkit-transform: translate(-50%, 150%);
+  -o-transform: translate(-50%, 150%);
+  z-index:2;
 }
 </style>
 <template>
-    <div class='game'>
+    <div class='game' :style='bg_img'>
         <canvas id="canvas"></canvas>
         <div v-if='!start' class='start' @click='startGame'></div>
+        <div v-if='!start' class='cover'></div>
+        <div v-if='!start' class='free-time-message'>提示：您还剩余{{freeTimes}}次免费机会啦</div>
     </div>
 </template>
 <script>
-import './game.js';
+// import './game.js';
 export default {
     components: {},
+    props:{
+        freeTimes:Number
+    },
     data() {
         return {
             start: false,
@@ -47,7 +70,8 @@ export default {
                 msg: '谢谢参与',
                 btn_text: '关闭',
                 callback: function() {}
-            }
+            },
+            bg_img:''
         }
     },
     watch: {
@@ -60,7 +84,27 @@ export default {
             }
         }
     },
+    mounted(){
+        this.getGameDetail(this.$parent.activity_detail.game_id);
+    },
     methods: {
+        getGameDetail(game_id){
+          this.$http.post(`${APP.HOST}/game_detail/${game_id}`, {
+              token: APP.TOKEN,
+              user_id: APP.USER_ID
+          }).then((response) => {
+            let data=response.data;
+            this.bg_img={
+              background:'url('+data.data.pic+')',
+              backgroundSize:'100% 100%'
+            };
+            if(data.data.name=='开心消消乐'){
+              require('./eliminate.js');
+            }else if(data.data.name=='棍子忍者'){
+              require('./ninja.js');
+            }
+          })
+        },
         startGame() {
             this.$store.dispatch('toggleLoading', {
                 show: true
@@ -69,20 +113,29 @@ export default {
                 token: APP.TOKEN,
                 user_id: APP.USER_ID
             }).then((response) => {
-                let data = response.data;
-                this.is_win = data.data.is_win;
-                this.$parent.game_start=true;
-                this.start = true;
-                if (this.is_win) {
-                    this.order_detail_id = data.data.id;
-                    this.alert = {
-                        msg: data.data.name,
-                        callback: this.toOrderDetail,
-                        btn_text: '查看'
-                    };
-                }
                 this.$store.dispatch('toggleLoading');
-                this.$store.dispatch('getUserInfor'); //更新用户信息
+                let data = response.data;
+                if(data.status==APP.SUCCESS){
+                  this.freshFreeTimes();
+                  this.$store.dispatch('getUserInfor');
+                  this.is_win = data.data.is_win;
+                  this.$parent.game_start=true;
+                  this.start = true;
+                  if (this.is_win) {
+                      this.order_detail_id = data.data.id;
+                      this.alert = {
+                          msg: data.data.name,
+                          callback: this.toOrderDetail,
+                          btn_text: '查看'
+                      };
+                  }
+                }else{
+                  this.toggleAlert({
+                      msg: data.info
+                  });
+                }
+
+               //更新用户信息
             }, (response) => {
                 this.$store.dispatch('toggleLoading');
             })
@@ -105,6 +158,10 @@ export default {
                 btn_text: alert.btn_text,
                 callback: alert.callback,
             })
+        },
+        //刷新免费次数
+        freshFreeTimes() {
+            this.$parent.getFreeTimes();
         }
 
     }

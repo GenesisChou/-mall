@@ -35,6 +35,16 @@
     letter-spacing: pxTorem(12);
 }
 
+.free-time-message{
+  position:absolute;
+  left:50%;
+  top:75%;
+  transform: translateX(-45%);
+  -moz-transform: translateX(-45%);
+  -webkit-transform: translateX(-45%);
+  -o-transform: translateX(-45%);
+  z-index:2;
+}
 
 </style>
 <template>
@@ -42,6 +52,7 @@
         <div id='lotteryContainer'>
             <button class='btn btn-red' id='start' @click='startActivity'>开始</button>
         </div>
+        <div v-if='!activity_start' class='free-time-message'>提示:您还剩余{{freeTimes}}次免费机会啦</div>
     </div>
 </template>
 <script>
@@ -59,7 +70,7 @@ export default {
             draw_percent: 0, //画布涂抹面积 大于一定值时触发弹窗
             alert: {
                 msg: '',
-                callback:function(){} 
+                callback:function(){}
             },
             lottery: '', //画布实例
             activity_start: false, //判断活动状态 1.超出活动次数 2.更新积分失败

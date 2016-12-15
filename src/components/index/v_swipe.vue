@@ -59,7 +59,7 @@ export default {
         },
         routerLink(banner) {
             if (banner.type == 1) {
-                window.location.href = 'http://' + banner.url;
+                window.location.href = banner.url;
             } else if (banner.type == 2) {
                 this.$router.push({
                     name: "activity_detail",

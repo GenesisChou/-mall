@@ -29,6 +29,7 @@ if (!utils.getParameterByName('token')) {
     var store = require('./vuex/store.js');
     var FastClick = require('fastclick');
     var wxConfig = require('./wx_config');
+    var VueKeepScrollPosition=require('vue-keep-scroll-position');
     window.APP.TOKEN = utils.getParameterByName('token');
     window.APP.USER_ID = utils.getParameterByName('userid');
     window.APP.MEDIA_ID = utils.getParameterByName('mediaid');
@@ -41,6 +42,7 @@ if (!utils.getParameterByName('token')) {
     }
     utils.setTitle(window.APP.TITLE);
     FastClick.attach(document.body);
+    Vue.use(VueKeepScrollPosition);
     Vue.use(VueResource);
     Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
     wxConfig(Vue);

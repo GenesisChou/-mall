@@ -5,7 +5,7 @@
     padding: pxTorem(17) pxTorem(30);
     position: fixed;
     z-index: 1;
-    background-color:$gray-light;
+    background-color: $gray-light;
 }
 
 .fill {
@@ -17,7 +17,7 @@
     border-bottom: 1px solid $gray-light;
     height: pxTorem(105);
     line-height: pxTorem(105);
-    >li {
+    > li {
         width: 50%;
         text-align: center;
         &:nth-child(1) {
@@ -43,28 +43,28 @@
 }
 </style>
 <template>
-    <div class='product-list'>
-        <div class='search-box'>
-            <v-search :search='searchProduct' :params='params'></v-search>
-        </div>
-        <div class='fill'></div>
-        <ul class='sort list-inline'>
-            <li class=' text-huge' @click='sortByIntegral'>
-                <span :class='[sort_type!="count"&&sort_type?"text-red":""]'>消耗积分排序</span>
-                <div class='arrows'>
-                    <i :class='["icon-arrows-up","iconfont","text-bold",sort_type=="integral-up"?"text-red":""]'></i>
-                    <i :class='["icon-arrows-down","iconfont","text-bold",sort_type=="integral-down"?"text-red":""]'></i>
-                </div>
-            </li>
-            <li :class='["text-huge",sort_type=="count"?"text-red":""]' @click='sortByCount'>
-                兑换量优先
-            </li>
-        </ul>
-        <router-link :to='{name:"product_detail",query:{product_id:product.id}}' v-for='product in product_list' tag='div'>
-            <v-list-item :title='product.name' :title-dupty='parseInt(product.integral)+"积分"' :img='product.pic_thumb' color='text-red'></v-list-item>
-        </router-link>
-        <v-back-top></v-back-top>
+<div class='product-list'>
+    <div class='search-box'>
+        <v-search :search='searchProduct' :params='params'></v-search>
     </div>
+    <div class='fill'></div>
+    <ul class='sort list-inline'>
+        <li class=' text-huge' @click='sortByIntegral'>
+            <span :class='[sort_type!="count"&&sort_type?"text-red":""]'>消耗积分排序</span>
+            <div class='arrows'>
+                <i :class='["icon-arrows-up","iconfont","text-bold",sort_type=="integral-up"?"text-red":""]'></i>
+                <i :class='["icon-arrows-down","iconfont","text-bold",sort_type=="integral-down"?"text-red":""]'></i>
+            </div>
+        </li>
+        <li :class='["text-huge",sort_type=="count"?"text-red":""]' @click='sortByCount'>
+            兑换量优先
+        </li>
+    </ul>
+    <router-link :to='{name:"product_detail",query:{product_id:product.id}}' v-for='product in product_list' tag='div'>
+        <v-list-item :title='product.name' :title-dupty='parseInt(product.integral)+"积分"' :img='product.pic_thumb' color='text-red'></v-list-item>
+    </router-link>
+    <v-back-top></v-back-top>
+</div>
 </template>
 <script>
 import utils from 'libs/utils.js'
@@ -73,7 +73,6 @@ import vListItem from 'components/v_list_item.vue'
 import vBackTop from 'components/v_back_top.vue'
 import vSpinner from 'components/v_spinner.vue'
 export default {
-
     name: 'product_list',
     components: {
         vListItem,
@@ -82,7 +81,14 @@ export default {
         vSpinner
     },
     beforeRouteLeave(to, from, next) {
-        window.removeEventListener('scroll',this.getScrollData);
+        window.removeEventListener('scroll', this.getScrollData);
+        if(!this.params.sword&&!this.params._order){
+          utils.setSessionStorage('product_list',this.product_list);
+          utils.setSessionStorage('product_list_params',this.params);
+        }else{
+          utils.setSessionStorage('product_list',null);
+          utils.setSessionStorage('product_list_params',null);
+        }
         next();
     },
     data() {
@@ -96,51 +102,77 @@ export default {
                 count: 0,
                 token: APP.TOKEN,
                 userid: APP.USER_ID,
-                media_id:APP.MEDIA_ID,
+                media_id: APP.MEDIA_ID,
                 _order: '',
 
             },
-            sort_type: ''
+            sort_type: '',
+            scroll:false,
+            loading:false
         };
     },
     mounted() {
-        this.getProductList();
-        // utils.getScrollData(this.product_list, this.params, this.getProductList);
-        window.addEventListener('scroll',this.getScrollData);
+        var temp_list=utils.getSessionStorage('product_list');
+        var temp_params=utils.getSessionStorage('product_list_params');
+        if(temp_params){
+            this.params=temp_params;
+        }
+        if(temp_list){
+          this.product_list=temp_list;
+        }else{
+          this.getProductList();
+        }
+        window.addEventListener('scroll', this.getScrollData);
+    },
+    updated(){
+      var position=utils.getSessionStorage('position:'+this.$route.name);
+        window.scrollTo(0,position);
     },
     methods: {
-      getScrollData(){
-         var self=this;
-            if (self.params.p < self.params.total && self.product_list.length < self.params.count && utils.touchBottom()) {
-                self.params.p++;
-                self.getProductList();
-            }
-      },
+        getScrollData() {
+            var self = this;
+            this.scroll=true;
+            utils.debounce(function() {
+               if (self.scroll&&utils.touchBottom()&&self.params.p < self.params.total&&!self.loading) {
+                   self.params.p++;
+                   self.scroll=false;
+                   self.loading=true;
+                   self.getProductList(function(){
+                     self.loading=false;
+                   });
+               }
+           },500)();
+
+        },
         //获取商品列表
         getProductList(callback) {
-            this.searchProduct(this.params, (data) => {
+            this.$store.dispatch('toggleLoading', {
+                show: true
+            });
+            this.$http.post(`${APP.HOST}/all_product`, this.params).then((response) => {
+                let data = response.data;
+                this.$store.dispatch('toggleLoading');
                 if (callback) {
                     callback();
                 }
                 this.params.total = data.data.total;
-                this.params.count = data.data.count;
                 this.product_list = this.product_list.concat(data.data.list);
+            }, (response) => {
+                this.$store.dispatch('toggleLoading');
             })
         },
         //搜索商品
-        searchProduct(params = this.params, callback) {
+        searchProduct() {
             this.$store.dispatch('toggleLoading', {
                 show: true
             });
-            this.$http.post(`${APP.HOST}/all_product`, params).then((response) => {
+            this.initParams();
+            this.$http.post(`${APP.HOST}/all_product`, this.params).then((response) => {
                 let data = response.data;
                 this.$store.dispatch('toggleLoading');
-                if (callback) {
-                    callback(data);
-                } else {
-                    this.product_list = data.data.list;
-                }
-
+                this.loading=true;
+                this.params.total = data.data.total;
+                this.product_list = data.data.list;
             }, (response) => {
                 this.$store.dispatch('toggleLoading');
 
@@ -157,7 +189,7 @@ export default {
                 count: 0,
                 token: APP.TOKEN,
                 userid: APP.USER_ID,
-                media_id:APP.MEDIA_ID,
+                media_id: APP.MEDIA_ID,
                 _order: ''
             };
         },
@@ -181,7 +213,6 @@ export default {
             this.initParams();
             this.params._order = 'used_count:DESC';
             if (this.sort_type != 'count') {
-
                 this.sort_type = 'count';
                 this.getProductList(() => {
                     this.product_list = [];

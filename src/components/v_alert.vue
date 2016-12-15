@@ -74,6 +74,7 @@ export default {
             type: String,
             default: '关闭'
         },
+        img:String,
         callback: Function
     },
     computed: {
@@ -85,6 +86,8 @@ export default {
                 return 'icon-correct-circle-hollow';
             } else if (this.type == 'error') {
                 return 'icon-error-circle';
+            }else if(this.type=='img'){
+                return '';
             }
         }
     },

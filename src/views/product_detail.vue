@@ -115,7 +115,7 @@
                     单价：<span class='text-red'>{{parseInt(product_detail.integral)||0}}</span>积分
                 </div>
                 <button v-if='integral_enough' class='btn-red pull-right' @click='exchange'>兑换</button>
-                <button v-else class='btn-disable pull-right'>余额不足</button>
+                <button v-else class='btn-disable pull-right'>积分不足</button>
             </footer>
         </v-sticky>
         <v-modal :cover-close=false :show='modal'>

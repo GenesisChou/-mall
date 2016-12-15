@@ -95,6 +95,7 @@ export default {
     mounted() {
         this.activity_id = this.$route.query.activity_id;
         this.getActivityDetail();
+        this.getFreeTimes();
     },
     methods: {
         //获取活动详情

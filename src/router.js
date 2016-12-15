@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from './vuex/store.js';
-
+import utils from 'libs/utils.js';
 Vue.use(VueRouter);
 
 const router = new VueRouter({
@@ -65,9 +65,6 @@ const router = new VueRouter({
 
         { path: '*', redirect: '/' }
     ],
-    scrollBehavior (to, from, savedPosition){
-      return false;
-    }
 });
 router.beforeEach((to, from, next) => {
     store.dispatch('pageView', to.name);
@@ -77,7 +74,9 @@ router.beforeEach((to, from, next) => {
     if (store.state.v_confirm.show) {
         store.dispatch('toggleConfirm');
     }
+    utils.setSessionStorage('position:' + from.name, utils.getScrollTop());
     next();
 });
+
 
 module.exports = router;

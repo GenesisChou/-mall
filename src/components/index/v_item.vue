@@ -56,17 +56,17 @@
         font-size: pxTorem(32);
         color:#1d1e1d;
         font-weight:normal;
-        margin-bottom:pxTorem(5);
+        margin-bottom:pxTorem(10);
     }
     span {
         display: inline-block;
         max-width: pxTorem(225);
         line-height: pxTorem(40);
         height: pxTorem(40);
-        font-size:pxTorem(24);
         overflow: hidden;
         text-overflow: ellipsis;
         color:#878686;
+        font-size:pxTorem(28);
         i{
           color:red;
           margin-right:pxTorem(8);

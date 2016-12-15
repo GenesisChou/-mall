@@ -23,7 +23,7 @@
         border-top-right-radius: pxTorem(20);
     }
     .panel-content {
-        padding: pxTorem(35) pxTorem(55) pxTorem(50) pxTorem(50);
+        padding: pxTorem(35) pxTorem(55) pxTorem(100) pxTorem(50);
         .quiz {
             margin-bottom: pxTorem(35);
         }
@@ -61,6 +61,15 @@
         }
     }
 }
+.free-time-message{
+  position:absolute;
+  left:50%;
+  bottom:6%;
+  transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+}
 </style>
 <template>
     <div class='v-quiz '>
@@ -87,6 +96,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class='free-time-message'>
+            提示:您还剩余{{freeTimes}}次免费机会啦
         </div>
     </div>
 </template>
@@ -131,20 +143,19 @@ export default {
                                 this.is_win = data.data.is_win;
                                 this.order_detail_id = data.data.id;
                                 this.toggleAlert({
-                                    msg: this.getMsg(data.data.name),
+                                    msg: data.data.name,
                                     type: 'correct',
                                     btn_text: '查看',
                                     callback: this.toOrderDetail
                                 });
                             } else {
                                 this.toggleAlert({
-                                    msg: this.getMsg('谢谢参与'),
-
+                                    msg: '谢谢参与',
                                 });
                             }
                         } else {
                             this.toggleAlert({
-                                msg: this.getMsg('回答错误'),
+                                msg: '回答错误',
                                 type: 'error'
                             });
                         }
@@ -172,13 +183,6 @@ export default {
                     order_id: this.order_detail_id
                 }
             })
-        },
-        //获取提示
-        getMsg(msg) {
-            if (this.freeTimes > 0) {
-                return msg + '剩余免费活动次数' + this.freeTimes;
-            }
-            return msg;
         },
         toggleAlert(alert) {
             alert.cover_close = false;
