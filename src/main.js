@@ -37,6 +37,13 @@ if (token) {
         }
         location.href = link;
     } else {
+        var Vue = require('vue');
+        var VueResource = require('vue-resource');
+        var VueLazyLoad=require('vue-lazyload');
+        var store = require('./vuex/store.js');
+        var FastClick = require('fastclick');
+        var wxConfig = require('./wx_config');
+        console.log('login success');
         APP.TOKEN = cache.TOKEN;
         APP.USER_ID = cache.USER_ID;
         APP.MEDIA_ID = cache.MEDIA_ID;
