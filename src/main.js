@@ -4,7 +4,7 @@ window.APP = {
     // APPID: 'wx8057c4704888d230',
     // HOST: 'http://integral.api.justtong.com/imall', //接口域名
     // MALL_HOST: 'http://imall.justtong.com', //服务器域名
-    APPID: 'wx871e120dd0a24149',
+    APPID: 'wxda819741c7aa5b47',
     HOST: 'http://test.integral.api.justtong.com/imall', //接口域名
     MALL_HOST: 'http://test.imall.justtong.com', //服务器域名
     LOGO: 'http://static.justtong.com/uploads/images/goods/20161025/142505580efac1ad494.jpg',
