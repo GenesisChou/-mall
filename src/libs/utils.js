@@ -45,6 +45,12 @@ module.exports={
     getSessionStorage(key){
       return JSON.parse(sessionStorage.getItem(key));
     },
+    setLocalStorage(key,obj){
+      localStorage.setItem(key,JSON.stringify(obj));
+    },
+    getLocalStorage(key){
+      return JSON.parse(localStorage.getItem(key));
+    },
     // 防抖函数
     debounce(callback,delay){
       var timer;
