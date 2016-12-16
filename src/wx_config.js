@@ -14,11 +14,11 @@ module.exports = function(Vue) {
         var appId = APP.APPID;
         var timestamp = data.timestamp;
         var nonceStr = data.noncestr;
-        var str=`jsapi_ticket=${data.ticket}&noncestr=${nonceStr}&timestamp=${timestamp}&url=${location.href}`;
-        // var signature = data.signature;
-        var signature=sha1(str);
-        console.log(str);
-        console.log(signature);
+        // var str=`jsapi_ticket=${data.ticket}&noncestr=${nonceStr}&timestamp=${timestamp}&url=${location.href}`;
+        var signature = data.signature;
+        // var signature=sha1(str);
+        // console.log(str);
+        // console.log(signature);
         wx.config({
             // debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId, // 必填，公众号的唯一标识
