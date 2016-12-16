@@ -51,6 +51,14 @@ module.exports={
     getLocalStorage(key){
       return JSON.parse(localStorage.getItem(key));
     },
+    getTimeInterval(date_1,date_2,type){
+      var interval=Math.abs((date_2-date_1)/1000);
+      if(type=='day'){
+        return interval/3600/24;
+      }else if(type=='hour'){
+        return integral/3600;
+      }
+    },
     // 防抖函数
     debounce(callback,delay){
       var timer;
