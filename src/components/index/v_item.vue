@@ -84,7 +84,7 @@ header{
         <span v-if='item.script'>
                 {{item.script}}
                 </span>
-        <img  v-lazy='item.pic'>
+        <img  :src='item.pic'>
     </header>
     <div class='detail'>
         <h2 class='text-ellipsis'>{{item.name}}</h2>
