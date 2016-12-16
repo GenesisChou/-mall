@@ -132,6 +132,7 @@ export default {
     activated(){
       var position=utils.getSessionStorage('position:'+this.$route.name);
       window.scrollTo(0,position);
+      window.addEventListener('scroll',this.getScrollData);
     },
     data() {
         return {
