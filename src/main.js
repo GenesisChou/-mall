@@ -26,9 +26,9 @@ if (token) {
         DATE: new Date()
     };
     utils.setLocalStorage(media_id, cache);
-    var link = `${APP.MALL_HOST}/?id=${media_id}#`;
+    var link = `${APP.MALL_HOST}/?id=${media_id}`;
     if (activity_id) {
-        link = link + '/activity_detail?activity_id=' + activity_id;
+        link = link + '#/activity_detail?activity_id=' + activity_id;
     }
     location.href = link;
 } else {

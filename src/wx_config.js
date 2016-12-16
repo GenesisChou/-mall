@@ -19,6 +19,7 @@ module.exports = function(Vue) {
         console.log('ticket:'+data.ticket);
         console.log(str);
         console.log(sha1(str));
+        console.log(sha1(data.url));
         console.log('luo: '+data.url);
         console.log('luo: '+signature);
         wx.config({
