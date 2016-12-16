@@ -15,6 +15,7 @@ window.APP = {
 };
 
 var token = utils.getParameterByName('token');
+var activity_id = utils.getParameterByName('activity_id');
 if (token) {
     var media_id=utils.getParameterByName('mediaid');
     var cache = {
@@ -24,14 +25,17 @@ if (token) {
         OPEN_ID: utils.getParameterByName('open_id')
     };
     utils.setLocalStorage(media_id, cache);
-    location.href = `${APP.MALL_HOST}?id=${media_id}`;
+    var link=`${APP.MALL_HOST}/?id=${media_id}#`;
+    if(activity_id){
+      link=link+'/activity_detail?activity_id='+activity_id;
+    }
+    location.href = link;
 } else {
     var media_id = utils.getParameterByName('id');
     var cache = utils.getLocalStorage(media_id);
     if (!cache) {
         var redirect = encodeURIComponent(APP.MALL_HOST);
         var link = `${APP.HOST}/weixin/${media_id}?callback=${redirect}`;
-        var activity_id = utils.getParameterByName('activity_id');
         if (activity_id) {
             link = link + '&activity_id=' + activity_id;
         }
