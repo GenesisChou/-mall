@@ -98,7 +98,7 @@
             </div>
         </div>
         <div class='free-time-message'>
-            提示:您还剩余{{freeTimes}}次免费机会
+          {{notice}}
         </div>
     </div>
 </template>
@@ -118,6 +118,15 @@ export default {
             is_win: false, //判断是否中奖
             order_detail_id: '' //活动结束跳转id
         };
+    },
+    computed:{
+        notice(){
+            if(this.freeTimes>0){
+              return '您还剩余'+this.freeTimes+'次免费机会'
+            }else{
+              return '消耗积分'+parseInt(this.$parent.activity_detail.integral);
+            }
+        }
     },
     methods: {
         //提交答案
@@ -143,7 +152,7 @@ export default {
                                 this.is_win = data.data.is_win;
                                 this.order_detail_id = data.data.id;
                                 this.toggleAlert({
-                                    msg: '回答正确,获得'+data.data.name,
+                                    msg: '获得'+data.data.name,
                                     type: 'img',
                                     img:data.data.pic_thumb,
                                     btn_text: '查看',

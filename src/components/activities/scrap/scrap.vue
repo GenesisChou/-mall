@@ -52,7 +52,7 @@
         <div id='lotteryContainer'>
             <button class='btn btn-red' id='start' @click='startActivity'>开始</button>
         </div>
-        <div v-if='!activity_start' class='free-time-message'>提示:您还剩余{{freeTimes}}次免费机会</div>
+        <div v-if='!activity_start' class='free-time-message'>{{notice}}</div>
     </div>
 </template>
 <script>
@@ -62,6 +62,15 @@ export default {
     name: 'scrap',
     props: {
         freeTimes: Number
+    },
+    computed:{
+        notice(){
+            if(this.freeTimes>0){
+              return '您还剩余'+this.freeTimes+'次免费机会'
+            }else{
+              return '消耗积分'+parseInt(this.$parent.activity_detail.integral);
+            }
+        }
     },
     data() {
         return {
