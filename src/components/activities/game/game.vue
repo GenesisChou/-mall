@@ -51,7 +51,7 @@
         <canvas id="canvas"></canvas>
         <div v-if='!start' class='start' @click='startGame'></div>
         <div v-if='!start' class='cover'></div>
-        <div v-if='!start' class='free-time-message'>提示：您还剩余{{freeTimes}}次免费机会</div>
+        <div v-if='!start' class='free-time-message'>{{notice}}</div>
     </div>
 </template>
 <script>
@@ -72,6 +72,15 @@ export default {
                 callback: function() {}
             },
             bg_img:''
+        }
+    },
+    computed:{
+        notice(){
+            if(this.freeTimes>0){
+              return '您还剩余'+this.freeTimes+'次免费机会'
+            }else{
+              return '消耗积分'+parseInt(this.$parent.activity_detail.integral);
+            }
         }
     },
     watch: {
