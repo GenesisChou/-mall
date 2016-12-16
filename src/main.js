@@ -24,7 +24,7 @@ if (token) {
         OPEN_ID: utils.getParameterByName('open_id')
     };
     utils.setLocalStorage(media_id, cache);
-    location.href = `${APP.HOST}?id=${media_id}`;
+    location.href = `${APP.MALL_HOST}?id=${media_id}`;
 } else {
     var cache = utils.getLocalStorage(media_id);
     if (!cache) {
