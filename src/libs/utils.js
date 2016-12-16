@@ -47,7 +47,7 @@ module.exports={
     },
     // 防抖函数
     debounce(callback,delay){
-      var timer=null;
+      var timer;
       return function(){
         clearTimeout(timer);
         timer=setTimeout(function(){

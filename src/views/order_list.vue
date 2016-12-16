@@ -3,17 +3,20 @@
 .order-list {
     min-height: 100%;
     padding-bottom: pxTorem(22);
-    background-color:$gray-light;
+    background-color: $gray-light;
 }
 </style>
 <template>
-    <div class='order-list'>
-        <router-link v-for='order in order_list' :to='{name:"order_detail",query:{order_id:parseInt(order.id)}}' tag='div'>
-            <v-order :order='order'> </v-order>
+<div class='order-list'>
+    <ul>
+        <router-link v-for='order in order_list' :to='{name:"order_detail",query:{order_id:parseInt(order.id)}}' tag='li'>
+            <v-order :img='order.product_pic' :id='order.orderid' :integral='parseInt(order.integral)' :name='order.product'> </v-order>
         </router-link>
-        <v-empty v-if='empty'></v-empty>
-        <v-back-top></v-back-top>
-    </div>
+    </ul>
+
+    <v-empty v-if='empty'></v-empty>
+    <v-back-top></v-back-top>
+</div>
 </template>
 <script>
 import utils from 'libs/utils.js'
@@ -28,7 +31,7 @@ export default {
         vBackTop
     },
     beforeRouteLeave(to, from, next) {
-        window.removeEventListener('scroll',this.getScrollData);
+        window.removeEventListener('scroll', this.getScrollData);
         next();
     },
     data() {
@@ -38,36 +41,49 @@ export default {
                 p: 1,
                 r: APP.PERPAGE,
                 total: 0,
-                count: 0,
                 token: APP.TOKEN,
                 userid: APP.USER_ID
             },
-            empty:'',
+            empty: '',
+            scroll: false,
+            loading: false
         }
     },
-  mounted() {
+    mounted() {
         this.getOrderList();
-        window.addEventListener('scroll',this.getScrollData);
+        window.addEventListener('scroll', this.getScrollData);
     },
     methods: {
-      getScrollData(){
-         var self=this;
-            if (self.params.p < self.params.total && self.order_list.length < self.params.count && utils.touchBottom()) {
-                self.params.p++;
-                self.getOrderList();
-            }
-      },
-        getOrderList(params = this.params) {
-            this.$store.dispatch('toggleLoading',{show:true});
-            this.$http.post(`${APP.HOST}/order_list/${APP.USER_ID}`, params).then((response) => {
+        getScrollData() {
+            var self = this;
+            this.scroll = true;
+            utils.debounce(function() {
+                if (self.scroll && utils.touchBottom() && self.params.p < self.params.total && !self.loading) {
+                    self.params.p++;
+                    self.scroll = false;
+                    self.loading = true;
+                    self.getOrderList(function() {
+                        self.loading = false;
+                    });
+                }
+            }, 500)();
+
+        },
+        getOrderList(callback) {
+            this.$store.dispatch('toggleLoading', {
+                show: true
+            });
+            this.$http.post(`${APP.HOST}/order_list/${APP.USER_ID}`, this.params).then((response) => {
                 let data = response.data;
+                this.$store.dispatch('toggleLoading');
+                if (callback) {
+                    callback();
+                }
                 this.params.total = data.data.total;
-                this.params.count = data.data.count;
                 this.order_list = this.order_list.concat(data.data.list);
                 if (!this.order_list.length > 0) {
                     this.empty = true;
                 }
-                this.$store.dispatch('toggleLoading');
             }, (response) => {
                 this.$store.dispatch('toggleLoading');
             })

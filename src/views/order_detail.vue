@@ -74,17 +74,11 @@
         }
     }
 }
-
-.copy-ticket {
-    background-color: $white;
-    margin-top: pxTorem(30);
-    padding: pxTorem(25) pxTorem(73);
-}
 </style>
 <template>
     <div class='order-detail '>
         <!-- 订单详情 -->
-        <v-order :order='order_detail'>
+        <v-order :img='order_detail.product_pic' :id='order_detail.orderid' :integral='parseInt(order_detail.integral)' :name='order_detail.product'>
             <!--商品为优惠券时 -->
             <template v-if='product_type==1||(product_type==2&&send_type==2)||product_type==5||product_type==6'>
                 <div v-if='product_type==1||product_type==6' class='ticket'>
