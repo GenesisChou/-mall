@@ -15,8 +15,8 @@ window.APP = {
 };
 
 var token = utils.getParameterByName('token');
-var media_id = utils.getParameterByName('id');
 if (token) {
+    var media_id=utils.getParameterByName('mediaid');
     var cache = {
         TOKEN: token,
         USER_ID: utils.getParameterByName('userid'),
@@ -26,6 +26,7 @@ if (token) {
     utils.setLocalStorage(media_id, cache);
     location.href = `${APP.MALL_HOST}?id=${media_id}`;
 } else {
+    var media_id = utils.getParameterByName('id');
     var cache = utils.getLocalStorage(media_id);
     if (!cache) {
         var redirect = encodeURIComponent(APP.MALL_HOST);
