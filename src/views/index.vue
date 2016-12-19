@@ -212,8 +212,9 @@ export default {
                   this.params.pro_st=data.data.pro_st;
                   this.hot_items = this.hot_items.concat(data.data.list);
                 }else{
+                  var message=APP.TOKEN+';'+APP.MEDIA_ID+';'+APP.USER_ID;
                   this.$store.dispatch('toggleAlert', {
-                      msg: '获取数据失败'
+                      msg: message+';'+data.info
                   })
                 }
 
