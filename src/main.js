@@ -36,10 +36,10 @@ if (token) {
     var cache = utils.getLocalStorage(media_id);
     //无缓存
     if (!cache) {
-        wxLogin(activity_id);
+        wxLogin(media_id,activity_id);
     //缓存过期
     } else if (cacheExpire(cache)) {
-        wxLogin(activity_id);
+        wxLogin(media_id,activity_id);
     } else {
         var Vue = require('vue');
         var VueResource = require('vue-resource');
@@ -77,7 +77,7 @@ function cacheExpire(cache) {
     return interval > 30;
 }
 //微信登陆
-function wxLogin(activity_id) {
+function wxLogin(media_id,activity_id) {
     var redirect = encodeURIComponent(APP.MALL_HOST);
     var link = `${APP.HOST}/weixin/${media_id}?callback=${redirect}`;
     if (activity_id) {
