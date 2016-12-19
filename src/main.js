@@ -1,12 +1,12 @@
 import utils from 'libs/utils.js';
 window.APP = {
     TITLE: '积分兑换',
-    // APPID: 'wx8057c4704888d230',
-    // HOST: 'http://integral.api.justtong.com/imall', //接口域名
-    // MALL_HOST: 'http://imall.justtong.com', //服务器域名
-    APPID: 'wxda819741c7aa5b47',
-    HOST: 'http://test.integral.api.justtong.com/imall', //接口域名
-    MALL_HOST: 'http://test.imall.justtong.com', //服务器域名
+    APPID: 'wx8057c4704888d230',
+    HOST: 'http://integral.api.justtong.com/imall', //接口域名
+    MALL_HOST: 'http://imall.justtong.com', //服务器域名
+    // APPID: 'wxda819741c7aa5b47',
+    // HOST: 'http://test.integral.api.justtong.com/imall', //接口域名
+    // MALL_HOST: 'http://test.imall.justtong.com', //服务器域名
     LOGO: 'http://static.justtong.com/uploads/images/goods/20161025/142505580efac1ad494.jpg',
     SUCCESS: 10000, //服务端返回成功状态码
     PERPAGE: 20, //分页查询时每页条数
@@ -36,10 +36,10 @@ if (token) {
     var cache = utils.getLocalStorage(media_id);
     //无缓存
     if (!cache) {
-        wxLogin(activity_id);
+        wxLogin(media_id,activity_id);
     //缓存过期
     } else if (cacheExpire(cache)) {
-        wxLogin(activity_id);
+        wxLogin(media_id,activity_id);
     } else {
         var Vue = require('vue');
         var VueResource = require('vue-resource');
@@ -77,7 +77,7 @@ function cacheExpire(cache) {
     return interval > 30;
 }
 //微信登陆
-function wxLogin(activity_id) {
+function wxLogin(media_id,activity_id) {
     var redirect = encodeURIComponent(APP.MALL_HOST);
     var link = `${APP.HOST}/weixin/${media_id}?callback=${redirect}`;
     if (activity_id) {
