@@ -107,7 +107,8 @@ export default {
     name: 'quiz',
     props: {
         questions: Array,
-        freeTimes: Number
+        freeTimes: Number,
+        freshFreeTimes:Function
     },
     data() {
         return {
@@ -151,7 +152,7 @@ export default {
                             if (data.data.is_win) {
                                 this.is_win = data.data.is_win;
                                 this.order_detail_id = data.data.id;
-                                this.toggleAlert({
+                                this.$store.dispatch('toggleAlert',{
                                     msg: '获得'+data.data.name,
                                     type: 'img',
                                     img:data.data.pic_thumb,
@@ -159,18 +160,18 @@ export default {
                                     callback: this.toOrderDetail
                                 });
                             } else {
-                                this.toggleAlert({
+                                this.$store.dispatch('toggleAlert',{
                                     msg: '谢谢参与',
                                 });
                             }
                         } else {
-                            this.toggleAlert({
+                            this.$store.dispatch('toggleAlert',{
                                 msg: '回答错误',
                                 type: 'error'
                             });
                         }
                     } else {
-                        this.toggleAlert({
+                        this.$store.dispatch('toggleAlert',{
                             msg: data.info
                         });
                     }
@@ -179,9 +180,9 @@ export default {
                 })
 
             } else {
-                this.toggleAlert({
-                    msg: '请选择答案'
-                });
+                this.$store.dispatch('toggleAlert',{
+                  msg:'请选择答案'
+                })
             }
 
         },
@@ -194,14 +195,6 @@ export default {
                 }
             })
         },
-        toggleAlert(alert) {
-            alert.cover_close = false;
-            this.$store.dispatch('toggleAlert', alert);
-        },
-        //刷新免费次数
-        freshFreeTimes() {
-            this.$parent.getFreeTimes();
-        }
     }
 };
 </script>

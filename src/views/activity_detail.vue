@@ -33,7 +33,7 @@ article {
 <template>
     <div class='activity-detail'>
         <header :class='[game_start?"expand":""]'>
-            <component :is='activity_type' :questions='activity_detail.questions' :free-times='parseInt(free_times)'></component>
+            <component :is='activity_type' :questions='activity_detail.questions' :free-times='parseInt(free_times)' :fresh-free-times='getFreeTimes'></component>
         </header>
         <article>
             <div class='introduction'>

@@ -61,7 +61,8 @@ export default {
 
     name: 'scrap',
     props: {
-        freeTimes: Number
+        freeTimes: Number,
+        freshFreeTimes:Function
     },
     computed:{
         notice(){
@@ -166,10 +167,6 @@ export default {
         pxTorem(value) {
             return value * this.client_width / 750;
         },
-        //刷新免费次数
-        freshFreeTimes() {
-            this.$parent.getFreeTimes();
-        }
     },
 };
 </script>
