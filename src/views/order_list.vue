@@ -13,7 +13,6 @@
             <v-order :img='order.product_pic' :id='order.orderid' :integral='parseInt(order.integral)' :name='order.product'> </v-order>
         </router-link>
     </ul>
-
     <v-empty v-if='empty'></v-empty>
     <v-back-top></v-back-top>
 </div>

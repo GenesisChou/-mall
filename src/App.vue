@@ -21,7 +21,7 @@ export default {
     components: {
         vAlert,
         vConfirm,
-        vLoading
+        vLoading,
     },
     mounted() {
         this.$store.dispatch('getUserInfor',function(response){

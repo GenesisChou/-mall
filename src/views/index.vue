@@ -108,17 +108,20 @@
             <!-- 热门 -->
             <v-item v-for='item in hot_items' :item='item' type='item'></v-item>
         </section>
+        <v-back-top></v-back-top>
     </div>
 </template>
 <script>
 import utils from 'libs/utils.js'
 import vSwipe from 'components/index/v_swipe.vue'
 import vItem from 'components/index/v_item.vue'
+import vBackTop from 'components/v_back_top.vue'
 export default {
     name: 'index',
     components: {
         vSwipe,
-        vItem
+        vItem,
+        vBackTop
     },
     computed: {
         user() {

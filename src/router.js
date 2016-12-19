@@ -46,13 +46,13 @@ const router = new VueRouter({
             name: 'order_detail',
             component: require('views/order_detail.vue')
         },
-         {
-            path:'/test',
-            name:'test',
-            component:function(resolve){
-                require(['views/test.vue'],resolve);
-            }
-        },
+        //  {
+        //     path:'/test',
+        //     name:'test',
+        //     component:function(resolve){
+        //         require(['views/test.vue'],resolve);
+        //     }
+        // },
         { path: '*', redirect: '/' }
     ],
 });

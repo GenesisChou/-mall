@@ -6,12 +6,12 @@
     border-bottom: 1px solid $gray-light;
     background: $white;
 }
-header {
+header.v-order-header{
     font-size: pxTorem(24);
     line-height: pxTorem(66);
     padding: 0 pxTorem(30);
 }
-section {
+section.v-order-message {
     padding: pxTorem(26) 0;
     margin: 0 pxTorem(30);
     overflow: hidden;
@@ -42,10 +42,10 @@ section {
 </style>
 <template>
 <div class='v-order'>
-    <header>
+    <header class='v-order-header'>
         订单号：{{id}}
     </header>
-    <section>
+    <section class='v-order-message'>
         <img  :src='img' />
         <div>
             <h2 class='text-ellipsis'>{{name}}</h2>
