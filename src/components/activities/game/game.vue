@@ -85,13 +85,12 @@ export default {
     },
     watch: {
         start(value) {
-            console.log(value);
-            // if (value) {
-            //     AIR.Game.startGame('#canvas');
-            //     AIR.Game.gameOver((score) => {
-            //         this.toggleAlert(this.alert);
-            //     });
-            // }
+            if (value) {
+                AIR.Game.startGame('#canvas');
+                AIR.Game.gameOver((score) => {
+                    this.toggleAlert(this.alert);
+                });
+            }
         }
     },
     mounted(){
