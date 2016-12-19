@@ -59,6 +59,9 @@ module.exports={
         return integral/3600;
       }
     },
+    deleteLocalStorage(key){
+      localStorage.removeItem(key);
+    },
     // 防抖函数
     debounce(callback,delay){
       var timer;

@@ -5,6 +5,7 @@
 }
 
 .header {
+  position:relative;
     .user-msg {
         height: pxTorem(288);
         background-image: url('../assets/images/my_integral.png');
@@ -90,6 +91,12 @@
         margin-top: pxTorem(50);
     }
 }
+.btn-test{
+  position:absolute;
+  right:0;
+  top:0;
+  opacity:0;
+}
 </style>
 <template>
     <div class='my-integral '>
@@ -103,7 +110,7 @@
                     <p>积分: {{parseInt(user.integral)}}</p>
                 </div>
             </section>
-
+            <button class='btn btn-large btn-test' @click='deleteTest()'>btn-test</button>
             <div class='event'>
                 <div class='pull-left' @click='toggleModal()'>
                     <img class='icon' src='../assets/images/store.png'> <span class='text-large text-red'>积分赚取</span>
@@ -141,6 +148,7 @@
 <script>
 import vModal from 'components/v_modal.vue'
 import vBlockText from 'components/v_block_text.vue'
+import utils from 'libs/utils.js'
 export default {
     name: 'my_integral',
     components: {
@@ -190,6 +198,12 @@ export default {
 
             })
         },
+        deleteTest(){
+          utils.deleteLocalStorage(APP.MEDIA_ID);
+          this.$store.dispatch('toggleAlert', {
+              msg:'删除缓存成功'
+          })
+        }
     },
     mounted() {
         // this.$store.dispatch('getUserInfor');

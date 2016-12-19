@@ -93,6 +93,9 @@ export default {
             }
         }
     },
+    activated(){
+      console.log('game');
+    },
     mounted(){
         this.getGameDetail(this.$parent.activity_detail.game_id);
     },

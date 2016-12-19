@@ -204,12 +204,20 @@ export default {
             this.$http.post(`${APP.HOST}/hot_item`, this.params ).then((response) => {
                 let data = response.data;
                 this.$store.dispatch('toggleLoading');
-                if(callback){
-                  callback();
+                if(data.status==APP.SUCCESS){
+                  if(callback){
+                    callback();
+                  }
+                  this.params.total = data.data.total;
+                  this.params.pro_st=data.data.pro_st;
+                  this.hot_items = this.hot_items.concat(data.data.list);
+                }else{
+                  var message=APP.TOKEN+';'+APP.MEDIA_ID+';'+APP.USER_ID;
+                  this.$store.dispatch('toggleAlert', {
+                      msg: message+';'+data.info
+                  })
                 }
-                this.params.total = data.data.total;
-                this.params.pro_st=data.data.pro_st;
-                this.hot_items = this.hot_items.concat(data.data.list);
+
             }, (response) => {
                 this.$store.dispatch('toggleLoading');
             });
@@ -223,8 +231,9 @@ export default {
                 userid: APP.USER_ID,
                 media_id:APP.MEDIA_ID
             }).then((response) => {
+                let data=response.data;
                 this.$store.dispatch('toggleLoading');
-                this.hot_commend = response.data.data;
+                this.hot_commend = data.data;
             }, (response) => {
                 this.$store.dispatch('toggleLoading');
             });

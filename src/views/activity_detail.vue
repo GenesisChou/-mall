@@ -76,11 +76,11 @@ export default {
         vSimditor
     },
     beforeRouteLeave(to, from, next) {
+        next();
         let game=this.$children[2];
-        if(game.start){
+        if(this.game_start){
             game.stopGame();
         }
-        next();
     },
     data() {
         return {
