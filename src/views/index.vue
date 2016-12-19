@@ -231,14 +231,9 @@ export default {
                 userid: APP.USER_ID,
                 media_id:APP.MEDIA_ID
             }).then((response) => {
+                let data=response.data;
                 this.$store.dispatch('toggleLoading');
-                if(data.status==APP.SUCCESS){
-                  this.hot_commend = response.data.data;
-                }else{
-                  this.$store.dispatch('toggleAlert', {
-                      msg: '获取数据失败'
-                  })
-                }
+                this.hot_commend = data.data;
             }, (response) => {
                 this.$store.dispatch('toggleLoading');
             });
