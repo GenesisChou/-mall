@@ -73,7 +73,9 @@
 </style>
 <template>
     <div class='index '>
-        <v-swipe></v-swipe>
+        <keep-alive>
+          <v-swipe></v-swipe>
+        </keep-alive>
         <ul class='list-inline icon-list  bg-white'>
             <router-link :to='{name:"my_integral"}' tag='li' class=''>
                 <div class='icon '>
