@@ -21,10 +21,16 @@ export default {
     components: {
         vAlert,
         vConfirm,
-        vLoading
+        vLoading,
     },
     mounted() {
-        this.$store.dispatch('getUserInfor');
+        this.$store.dispatch('getUserInfor',function(response){
+          let data=response.data;
+          if(data.status==APP.LOGIN_FAILED){
+            utils.deleteLocalStorage(MEDIA_ID);
+            utils.reloadApp();
+          }
+        });
         document.documentElement.style.fontSize = `${document.documentElement.clientWidth / 10}px`;
     },
     computed: {

@@ -12,6 +12,64 @@
       <br>
       <br>
       <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
       <v-load-more></v-load-more>
     </div>
 </template>
@@ -25,11 +83,9 @@ export default {
   computed:{
   },
   mounted(){
-    window.addEventListener('scroll',function(){
-      if(utils.touchBottom()){
-          console.log('bottom');
-      }
-    })
+    // window.addEventListener('scroll',utils.debounce(function(){
+    //   console.log('hi');
+    // },1000))
       // console.log(this.test);
   },
   methods:{

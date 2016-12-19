@@ -72,4 +72,7 @@ module.exports={
         },delay);
       };
     },
+    reloadApp(){
+      location.reload();
+    }
 };

@@ -118,20 +118,6 @@
                 <button v-else class='btn-disable pull-right'>积分不足</button>
             </footer>
         </v-sticky>
-        <v-modal :cover-close=false :show='modal'>
-            <div class='modal-content '>
-                <header v-if='order_state.success'>
-                    <img class='pic' :src='product_detail.pic_thumb'>
-                </header>
-                <div class='msg'>{{order_state.msg}}</div>
-                <router-link v-if='order_state.success' tag='button' class='btn btn-red' :to='{name:"order_detail",query:{order_id:order_detail_id}}'>
-                    查看详情
-                </router-link>
-                <button v-else class='btn btn-red' @click='toggleModal'>
-                    关闭
-                </button>
-            </div>
-        </v-modal>
     </div>
 </template>
 <script>
@@ -162,14 +148,8 @@ export default {
             order_detail_id: '', //兑换成功后用于跳转订单详情的订单id
         };
     },
-    beforeRouteLeave(to, from, next) {
-      next(vm=>{
-        vm.getProductDetail();
-      })
-    },
     mounted() {
         this.product_id = this.$route.query.product_id;
-        // this.$store.dispatch('getUserInfor');
         this.getProductDetail();
     },
     computed: {
@@ -192,13 +172,10 @@ export default {
                 open_id:APP.OPEN_ID
             }).then((response) => {
                 this.$store.dispatch('toggleLoading');
-
                 let data = response.data;
-                // this.$set('product_detail', utils.resizeImg(data.data));
                 this.product_detail = data.data;
             }, (response) => {
                 this.$store.dispatch('toggleLoading');
-
             })
         },
         //兑换
@@ -207,12 +184,31 @@ export default {
                 msg: '确认兑换该商品吗?',
                 show: true,
                 callback: () => {
-                    this.order();
+                    this.order((data)=>{
+                      if (data.status === APP.SUCCESS) {
+                          this.order_detail_id = data.data.id;
+                          //更新用户数据
+                          this.$store.dispatch('getUserInfor');
+                          this.$store.dispatch('toggleAlert',{
+                            msg:'获得'+data.data.name,
+                            type:'img',
+                            img:this.product_detail.pic_thumb,
+                            btn_text:'查看',
+                            callback:this.toOrderDetail
+                          })
+                      } else {
+                          this.$store.dispatch('toggleAlert',{
+                            msg:data.info,
+                            type:'error',
+                            btn_text:'关闭',
+                          })
+                      }
+                    })
                 }
             });
         },
         //生成订单
-        order() {
+        order(callback) {
             this.$store.dispatch('toggleLoading', {
                 show: true
             });
@@ -222,28 +218,24 @@ export default {
             }).then((response) => {
                 this.$store.dispatch('toggleLoading');
                 let data = response.data;
-                this.order_state.start = true;
-                if (response.data.status === APP.SUCCESS) {
-                    this.order_state.msg = data.data.name;
-                    this.order_state.success = true;
-                    this.order_detail_id = data.data.id;
-                    //更新用户数据
-                    this.$store.dispatch('getUserInfor');
-                } else {
-                    this.order_state.msg = data.info;
-
+                if(callback){
+                  callback(data);
                 }
                 this.$store.dispatch('toggleConfirm');
-                this.toggleModal();
             }, (response) => {
                 this.$store.dispatch('toggleLoading');
                 this.$store.dispatch('toggleConfirm');
-                this.toggleModal();
             })
         },
-        toggleModal() {
-            this.modal = !this.modal;
-        },
+        //路由跳转
+        toOrderDetail(){
+          this.$router.push({
+              name: 'order_detail',
+              query: {
+                  order_id: this.order_detail_id
+              }
+          })
+        }
     }
 };
 </script>

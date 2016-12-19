@@ -59,7 +59,8 @@
 export default {
     components: {},
     props:{
-        freeTimes:Number
+        freeTimes:Number,
+        freshFreeTimes:Function
     },
     data() {
         return {
@@ -177,11 +178,6 @@ export default {
                 callback: alert.callback,
             })
         },
-        //刷新免费次数
-        freshFreeTimes() {
-            this.$parent.getFreeTimes();
-        }
-
     }
 }
 </script>

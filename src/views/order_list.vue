@@ -13,7 +13,6 @@
             <v-order :img='order.product_pic' :id='order.orderid' :integral='parseInt(order.integral)' :name='order.product'> </v-order>
         </router-link>
     </ul>
-
     <v-empty v-if='empty'></v-empty>
     <v-back-top></v-back-top>
 </div>
@@ -57,7 +56,6 @@ export default {
         getScrollData() {
             var self = this;
             this.scroll = true;
-            utils.debounce(function() {
                 if (self.scroll && utils.touchBottom() && self.params.p < self.params.total && !self.loading) {
                     self.params.p++;
                     self.scroll = false;
@@ -66,7 +64,6 @@ export default {
                         self.loading = false;
                     });
                 }
-            }, 500)();
 
         },
         getOrderList(callback) {

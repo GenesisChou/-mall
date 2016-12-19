@@ -87,6 +87,9 @@
     max-height: pxTorem(600);
     overflow: scroll;
     border-radius: pxTorem(10);
+    &::-webkit-scrollbar{
+      display:none;
+    }
     li {
         width: pxTorem(400);
         height: pxTorem(70);
