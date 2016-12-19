@@ -27,7 +27,7 @@ export default {
         this.$store.dispatch('getUserInfor',function(response){
           let data=response.data;
           if(data.status==APP.LOGIN_FAILED){
-            utils.deleteLocalStorage(MEDIA_ID);
+            utils.deleteLocalStorage(APP.MEDIA_ID);
             utils.reloadApp();
           }
         });
