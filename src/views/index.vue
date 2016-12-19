@@ -204,12 +204,19 @@ export default {
             this.$http.post(`${APP.HOST}/hot_item`, this.params ).then((response) => {
                 let data = response.data;
                 this.$store.dispatch('toggleLoading');
-                if(callback){
-                  callback();
+                if(data.status==APP.SUCCESS){
+                  if(callback){
+                    callback();
+                  }
+                  this.params.total = data.data.total;
+                  this.params.pro_st=data.data.pro_st;
+                  this.hot_items = this.hot_items.concat(data.data.list);
+                }else{
+                  this.$store.dispatch('toggleAlert', {
+                      msg: '获取数据失败'
+                  })
                 }
-                this.params.total = data.data.total;
-                this.params.pro_st=data.data.pro_st;
-                this.hot_items = this.hot_items.concat(data.data.list);
+
             }, (response) => {
                 this.$store.dispatch('toggleLoading');
             });
@@ -224,7 +231,13 @@ export default {
                 media_id:APP.MEDIA_ID
             }).then((response) => {
                 this.$store.dispatch('toggleLoading');
-                this.hot_commend = response.data.data;
+                if(data.status==APP.SUCCESS){
+                  this.hot_commend = response.data.data;
+                }else{
+                  this.$store.dispatch('toggleAlert', {
+                      msg: '获取数据失败'
+                  })
+                }
             }, (response) => {
                 this.$store.dispatch('toggleLoading');
             });

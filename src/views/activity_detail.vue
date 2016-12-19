@@ -77,7 +77,7 @@ export default {
     },
     beforeRouteLeave(to, from, next) {
         let game=this.$children[2];
-        if(game.start){
+        if(AIR){
             game.stopGame();
         }
         next();
