@@ -26,46 +26,26 @@ if (token) {
         DATE: new Date()
     };
     utils.setLocalStorage(media_id, cache);
-    var link = `${APP.MALL_HOST}/?id=${media_id}`;
-    if (activity_id) {
-        link = link + '#/activity_detail?activity_id=' + activity_id;
-    }
-    location.href = link;
+    // var link = `${APP.MALL_HOST}/?id=${media_id}`;
+    // if (activity_id) {
+    //     link = link + '#/activity_detail?activity_id=' + activity_id;
+    // }
+    // location.href = link;
+    startApp(cache);
 } else {
     var media_id = utils.getParameterByName('id');
     var cache = utils.getLocalStorage(media_id);
+    console.log(cache);
     //无缓存
     if (!cache) {
         wxLogin(media_id,activity_id);
+        console.log('no cache');
     //缓存过期
     } else if (cacheExpire(cache)) {
         wxLogin(media_id,activity_id);
+        console.log('out of date');
     } else {
-        var Vue = require('vue');
-        var VueResource = require('vue-resource');
-        var store = require('./vuex/store.js');
-        var FastClick = require('fastclick');
-        var wxConfig = require('./wx_config');
-        console.log('login success');
-        APP.TOKEN = cache.TOKEN;
-        APP.USER_ID = cache.USER_ID;
-        APP.MEDIA_ID = cache.MEDIA_ID;
-        APP.OPEN_ID = cache.OPEN_ID;
-        var title = utils.getParameterByName('imall_title');
-        if (title) {
-            window.APP.TITLE = title;
-        }
-        utils.setTitle(window.APP.TITLE);
-        FastClick.attach(document.body);
-        Vue.use(VueResource);
-        Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
-        wxConfig(Vue);
-        new Vue({
-            el: '#app',
-            render: h => h(require('./APP.vue')),
-            router: require('./router.js'),
-            store
-        });
+      startApp(cache);
     }
 }
 //判断是否过期
@@ -84,4 +64,32 @@ function wxLogin(media_id,activity_id) {
         link = link + '&activity_id=' + activity_id;
     }
     location.href = link;
+}
+function startApp(cache){
+  var Vue = require('vue');
+  var VueResource = require('vue-resource');
+  var store = require('./vuex/store.js');
+  var FastClick = require('fastclick');
+  var wxConfig = require('./wx_config');
+  console.log('login success');
+  APP.TOKEN = cache.TOKEN;
+  APP.USER_ID = cache.USER_ID;
+  APP.MEDIA_ID = cache.MEDIA_ID;
+  APP.OPEN_ID = cache.OPEN_ID;
+  var title = utils.getParameterByName('imall_title');
+  if (title) {
+      window.APP.TITLE = title;
+  }
+  utils.setTitle(window.APP.TITLE);
+  FastClick.attach(document.body);
+  Vue.use(VueResource);
+  Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
+  wxConfig(Vue);
+  new Vue({
+      el: '#app',
+      render: h => h(require('./APP.vue')),
+      router: require('./router.js'),
+      store
+  });
+
 }
