@@ -3,45 +3,29 @@
 .swiper-container {
     width: 100%;
     height: pxTorem(300);
-    img{
-        width: 100%;
-        height: 100%;
-    }
 }
 
 </style>
 <template>
-    <swiper :options="swiperOption">
-        <swiper-slide v-for="slide in swiperSlides" >
-            <img :src="slide.pic" @click='bannerView(slide)' class='swiper-lazy'>
-        </swiper-slide>
-        <div class="swiper-pagination" slot="pagination"></div>
-    </swiper>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
 </template>
 <script>
-import {
-    swiper,
-    swiperSlide,
-} from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.min.css';
+import 'swiper/dist/js/swiper.min.js'
 export default {
-    components: {
-        swiper,
-        swiperSlide
-    },
     data() {
         return {
             swiperOption: {
-                // loop: true,
-                autoplay: 4000,
-                speed: 300,
-                autoplayDisableOnInteraction: false, //用户操作后不停止
+                loop: true,
                 pagination: '.swiper-pagination',
-                paginationClickable: true,
-                // mousewheelControl: true,
-                // observeParents: true,
-                // setWrapperSize: true,
+                autoplay:3000,
+                autoplayDisableOnInteraction:false,
+                paginationClickable:true
             },
-            swiperSlides: []
         }
     },
     mounted() {
@@ -49,12 +33,24 @@ export default {
     },
     methods: {
         getHotBanners() {
+            var wrapper=document.querySelector('.swiper-wrapper');
+            var _this=this;
             this.$http.post(`${APP.HOST}/hot_banner`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID,
                 media_id:APP.MEDIA_ID
             }).then((response) => {
                 this.swiperSlides = response.data.data;
+                this.swiperSlides.forEach(item=>{
+                  var newSlide=document.createElement('div');
+                  newSlide.className='swiper-slide';
+                  newSlide.innerHTML=`<img  src="${item.pic}" style='width:100%;height:100%'>`;
+                  newSlide.addEventListener('click',function(){
+                    _this.bannerView(item);
+                  })
+                  wrapper.appendChild(newSlide);
+                })
+                new Swiper('.swiper-container',this.swiperOption);
             }, (response) => {});
         },
         routerLink(banner) {
