@@ -55,7 +55,7 @@ const mutations = {
         }).then((response) => {
             state.user = response.data.data;
             if (callback) {
-                callback();
+                callback(response);
             }
         }, (response) => {
 

@@ -162,7 +162,6 @@ export default {
         getScrollData(){
            var self=this;
            this.scroll=true;
-           utils.debounce(function() {
               if (self.scroll&&utils.touchBottom()&&self.params.p < self.params.total&&!self.loading) {
                   self.params.p++;
                   self.scroll=false;
@@ -171,7 +170,6 @@ export default {
                     self.loading=false;
                   });
               }
-          },500)();
         },
         //签到
         checkIn() {

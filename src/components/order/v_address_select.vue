@@ -10,6 +10,9 @@
         overflow-y: scroll;
         margin: 0 pxTorem(53);
         max-height: pxTorem(535);
+        &::-webkit-scrollbar{
+          display:none;
+        }
         /*margin-bottom: pxTorem(25);*/
         li {
             height: pxTorem(107);
