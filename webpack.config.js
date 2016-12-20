@@ -14,48 +14,46 @@ module.exports = {
     },
     module: {
         rules: [{
-                test: /\.vue$/,
-                loader: 'vue-loader',
-                options: {
-                    // vue-loader options go here
-                    loaders: {
-                        // extra style file
-                        sass: ExtractTextPlugin.extract({
-                                loader: ['css-loader', 'sass-loader'],
-                                fallbackLoader: 'style-loader' // <- this is a dep of vue-loader, so no need to explicitly install if using npm3
-                            })
-                            // sass:'style-loader!css-loader!sass-loader'
-                    }
-                }
-            }, {
-                test: /\.css$/,
-                loaders: ['style-loader', 'css-loader']
-            }, {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/,
-                query: {
-                    presets: ['es2015']
-                }
-            }, {
-                test: /\.json$/,
-                loader: "json-loader"
-            },
-            {
-                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "url-loader?limit=10000&minetype=application/font-woff"
-            }, {
-                test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "file-loader"
-            }, {
-                test: /\.(png|jpg|gif|svg)$/,
-                loader: 'url-loader',
-                query: {
-                    limit: 10000,
-                    name: '[name].[ext]?[hash]'
+            test: /\.vue$/,
+            loader: 'vue-loader',
+            options: {
+                // vue-loader options go here
+                loaders: {
+                    // extra style file
+                    sass: ExtractTextPlugin.extract({
+                            loader: ['css-loader', 'sass-loader'],
+                            fallbackLoader: 'style-loader' // <- this is a dep of vue-loader, so no need to explicitly install if using npm3
+                        })
+                        // sass:'style-loader!css-loader!sass-loader'
                 }
             }
-        ]
+        }, {
+            test: /\.css$/,
+            loaders: ['style-loader', 'css-loader']
+        }, {
+            test: /\.js$/,
+            loader: 'babel-loader',
+            exclude: /node_modules/,
+            query: {
+                presets: ['es2015']
+            }
+        }, {
+            test: /\.json$/,
+            loader: "json-loader"
+        }, {
+            test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+            loader: "url-loader?limit=10000&minetype=application/font-woff"
+        }, {
+            test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+            loader: "file-loader"
+        }, {
+            test: /\.(png|jpg|gif|svg)$/,
+            loader: 'url-loader',
+            query: {
+                limit: 10000,
+                name: '[name].[ext]?[hash]'
+            }
+        }]
     },
     resolve: {
         alias: {
@@ -71,8 +69,17 @@ module.exports = {
         noInfo: true,
         host: '0.0.0.0'
     },
+    externals: [
+        require('webpack-require-http')
+    ],
     plugins: [
-            new ExtractTextPlugin("style.css")
+            new ExtractTextPlugin("style.css"),
+            new webpack.ProvidePlugin({
+                utils: path.resolve(__dirname, './src/libs/utils.js')
+            }),
+            new webpack.ProvidePlugin({
+                APP: path.resolve(__dirname, './src/app_config.js')
+            })
         ]
         // devtool: '#eval-source-map'
 };

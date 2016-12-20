@@ -67,7 +67,6 @@
 </div>
 </template>
 <script>
-import utils from 'libs/utils.js'
 import vSearch from 'components/v_search.vue'
 import vListItem from 'components/v_list_item.vue'
 import vBackTop from 'components/v_back_top.vue'
@@ -114,17 +113,15 @@ export default {
     },
     methods: {
         getScrollData() {
-            var self = this;
             this.scroll=true;
-               if (self.scroll&&utils.touchBottom()&&self.params.p < self.params.total&&!self.loading) {
-                   self.params.p++;
-                   self.scroll=false;
-                   self.loading=true;
-                   self.getProductList(function(){
-                     self.loading=false;
-                   });
-               }
-
+             if (this.scroll&&utils.touchBottom()&&this.params.p < this.params.total&&!this.loading) {
+                 this.params.p++;
+                 this.scroll=false;
+                 this.loading=true;
+                 this.getProductList(()=>{
+                   this.loading=false;
+                 });
+             }
         },
         //获取商品列表
         getProductList(callback) {

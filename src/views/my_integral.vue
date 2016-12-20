@@ -148,7 +148,6 @@
 <script>
 import vModal from 'components/v_modal.vue'
 import vBlockText from 'components/v_block_text.vue'
-import utils from 'libs/utils.js'
 export default {
     name: 'my_integral',
     components: {

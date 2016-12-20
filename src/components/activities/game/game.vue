@@ -64,6 +64,7 @@ export default {
     },
     data() {
         return {
+            game:'',
             start: false,
             is_win: false,
             order_detail_id: '', //活动结束跳转id
@@ -94,9 +95,6 @@ export default {
             }
         }
     },
-    activated(){
-      console.log('game');
-    },
     mounted(){
         this.getGameDetail(this.$parent.activity_detail.game_id);
     },
@@ -112,15 +110,21 @@ export default {
               backgroundSize:'100% 100%'
             };
             if(data.data.name=='开心消消乐'){
-              require('./eliminate.js');
+              this.game=require('http://m.goldmiao.com/yngame/3x.min.js');
             }else if(data.data.name=='棍子忍者'){
-              require('./ninja.js');
+              this.game=require('http://m.goldmiao.com/yngame/uWr5e32D.min.js');
             }else if(data.data.name=='逝去的青春'){
-              require('./catch.js');
+              this.game=require('http://m.goldmiao.com/yngame/o3KdlWed.min.js');
             }
           })
         },
         startGame() {
+            if(!this.game){
+              this.$store.dispatch('toggleAlert',{
+                msg:'该活动已下架'
+              });
+              return;
+            }
             this.$store.dispatch('toggleLoading', {
                 show: true
             });

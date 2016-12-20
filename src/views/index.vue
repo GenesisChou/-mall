@@ -9,22 +9,23 @@
     padding: pxTorem(25) 0;
     margin: pxTorem(30) 0;
     overflow: hidden;
+    background-color:$white;
     li{
         position:relative;
         width: 33.3%;
         float: left;
         padding-left:pxTorem(80);
-        &:nth-child(1) .icon{
+        &:nth-child(1) div{
           background:linear-gradient(to bottom, #2190ff, #52b3ff 80%);
         }
-        &:nth-child(2) .icon{
+        &:nth-child(2) div{
           background:linear-gradient(to bottom, #f41c29, #f1737b 80%);
         }
-        &:nth-child(3) .icon{
+        &:nth-child(3) div{
           background:linear-gradient(to bottom, #ffa502, #ffd476 80%);
         }
     }
-    .icon {
+    div{
         display:table-cell;
         vertical-align:middle;
         height: pxTorem(90);
@@ -76,15 +77,15 @@
         <keep-alive>
           <v-swipe></v-swipe>
         </keep-alive>
-        <ul class='list-inline icon-list  bg-white'>
-            <router-link :to='{name:"my_integral"}' tag='li' class=''>
-                <div class='icon '>
+        <ul class='list-inline icon-list'>
+            <router-link :to='{name:"my_integral"}' tag='li'>
+                <div >
                     <p>积分</p>
                     <p>{{parseInt(user.integral)}}</p>
                 </div>
             </router-link>
             <li  @click='checkIn'>
-                <div class='icon '>
+                <div >
                     <template v-if='!user.ischecked'>
                         <p>点击</p>
                         <p>签到</p>
@@ -97,14 +98,14 @@
                 </div>
             </li>
             <router-link :to='{name:"product_list"}' tag='li'>
-                <div class='icon'>
+                <div >
                     <p>所有</p>
                     <p>商品</p>
                 </div>
             </router-link>
         </ul>
 
-        <section class='main'>
+        <section>
             <!-- 热门推荐 -->
             <v-item v-for='item in hot_commend' :item='item' type='commend'></v-item>
             <!-- 热门 -->
@@ -114,7 +115,6 @@
     </div>
 </template>
 <script>
-import utils from 'libs/utils.js'
 import vSwipe from 'components/index/v_swipe.vue'
 import vItem from 'components/index/v_item.vue'
 import vBackTop from 'components/v_back_top.vue'
@@ -165,14 +165,13 @@ export default {
     },
     methods: {
         getScrollData(){
-           var self=this;
            this.scroll=true;
-              if (self.scroll&&utils.touchBottom()&&self.params.p < self.params.total&&!self.loading) {
-                  self.params.p++;
-                  self.scroll=false;
-                  self.loading=true;
-                  self.getHotItems(function(){
-                    self.loading=false;
+              if (this.scroll&&utils.touchBottom()&&this.params.p < this.params.total&&!this.loading) {
+                  this.params.p++;
+                  this.scroll=false;
+                  this.loading=true;
+                  this.getHotItems(()=>{
+                    this.loading=false;
                   });
               }
         },
@@ -214,9 +213,6 @@ export default {
                   this.params.total = data.data.total;
                   this.params.pro_st=data.data.pro_st;
                   this.hot_items = this.hot_items.concat(data.data.list);
-                }else{
-                  utils.deleteLocalStorage(APP.MEDIA_ID);
-                  utils.reloadApp();
                 }
             }, (response) => {
                 this.$store.dispatch('toggleLoading');
