@@ -18,11 +18,11 @@ if (token) {
     console.log(cache);
     //无缓存
     if (!cache) {
-        wxLogin(activity_id);
+        wxLogin(media_id,activity_id);
         console.log('no cache');
     //缓存过期
     } else if (cacheExpire(cache)) {
-        wxLogin(activity_id);
+        wxLogin(media_id,activity_id);
         console.log('out of date');
     } else {
       startApp(cache);
@@ -37,9 +37,9 @@ function cacheExpire(cache) {
     return interval > 30;
 }
 //微信登陆
-function wxLogin(activity_id) {
+function wxLogin(media_id,activity_id) {
     var redirect = encodeURIComponent(APP.MALL_HOST);
-    var link = `${APP.HOST}/weixin/${APP.MEDIA_ID}?callback=${redirect}`;
+    var link = `${APP.HOST}/weixin/${media_id}?callback=${redirect}`;
     if (activity_id) {
         link = link + '&activity_id=' + activity_id;
     }
