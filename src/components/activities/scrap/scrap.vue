@@ -3,8 +3,8 @@
 .v-scrap {
     position: relative;
     height: pxTorem(600);
-    background: url('./images/scrap.png') no-repeat;
-    background-size: 100%;
+    // background: url('./images/scrap.png') no-repeat;
+    // background-size: 100%;
 }
 
 #lotteryContainer {
@@ -48,7 +48,7 @@
 
 </style>
 <template>
-    <div class='v-scrap '>
+    <div class='v-scrap' :style='bg_img'>
         <div id='lotteryContainer'>
             <button class='btn btn-red' id='start' @click='startActivity'>开始</button>
         </div>
@@ -61,16 +61,18 @@ export default {
 
     name: 'scrap',
     props: {
-        freeTimes: Number,
-        freshFreeTimes:Function
+        freshFreeTimes:Function,
+        activityDetail:Object,
+        id:Number,
+        notice:String,
+        toOrderDetail:Function
     },
     computed:{
-        notice(){
-            if(this.freeTimes>0){
-              return '您还剩余'+this.freeTimes+'次免费机会'
-            }else{
-              return '消耗积分'+parseInt(this.$parent.activity_detail.integral);
-            }
+        bg_img(){
+          return {
+            background:'url('+this.activityDetail.pic_banner+')',
+            backgroundSize:'100% 100%'
+          }
         }
     },
     data() {
@@ -86,14 +88,13 @@ export default {
             activity_start: false, //判断活动状态 1.超出活动次数 2.更新积分失败
             is_win: false, //判断是否中奖
             activity_end: false, //判断活动是否结束
-            order_detail_id: '' //活动结束跳转id
         };
     },
     watch: {
         draw_percent(value) {
             if (this.activity_start && value > 40 && !this.activity_end) {
                 this.activity_end = true;
-                this.toggleAlert(this.alert);
+                this.$store.dispatch('toggleAlert',this.alert);
             }
         }
     },
@@ -115,7 +116,7 @@ export default {
             this.$store.dispatch('toggleLoading', {
                 show: true
             });
-            this.$http.post(`${APP.HOST}/activity_order/${this.$parent.activity_id}`, {
+            this.$http.post(`${APP.HOST}/activity_order/${this.id}`, {
                 token: APP.TOKEN,
                 user_id: APP.USER_ID
             }).then((response) => {
@@ -133,36 +134,21 @@ export default {
                             type:'img',
                             img:data.data.pic_thumb,
                             msg: '获得'+data.data.name,
-                            callback: this.toOrderDetail,
+                            callback: this.toOrderDetail(data.data.id),
                             btn_text: '查看'
                         };
-                        this.order_detail_id = data.data.id;
                     } else {
                         this.alert.msg = data.data.name;
                         this.setLottery('谢谢参与');
                     }
                 } else {
-                    this.toggleAlert({
-                        msg: data.info
-                    });
+                    this.$store.dispatch('toggleAlert',{
+                      msg:data.info
+                    })
                 }
             }, (response) => {
                 this.$store.dispatch('toggleLoading');
-
             })
-        },
-        //路由跳转
-        toOrderDetail() {
-            this.$router.push({
-                name: 'order_detail',
-                query: {
-                    order_id: this.order_detail_id
-                }
-            })
-        },
-        toggleAlert(alert) {
-            alert.cover_close = false;
-            this.$store.dispatch('toggleAlert', alert);
         },
         pxTorem(value) {
             return value * this.client_width / 750;

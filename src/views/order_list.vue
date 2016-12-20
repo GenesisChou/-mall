@@ -28,10 +28,6 @@ export default {
         vEmpty,
         vBackTop
     },
-    beforeRouteLeave(to, from, next) {
-        window.removeEventListener('scroll', this.getScrollData);
-        next();
-    },
     data() {
         return {
             order_list: [],
@@ -50,6 +46,10 @@ export default {
     mounted() {
         this.getOrderList();
         window.addEventListener('scroll', this.getScrollData);
+    },
+    beforeRouteLeave(to, from, next) {
+        window.removeEventListener('scroll', this.getScrollData);
+        next();
     },
     methods: {
         getScrollData() {

@@ -130,15 +130,6 @@ export default {
             return this.$store.state.user;
         }
     },
-    beforeRouteLeave(to, from, next) {
-        window.removeEventListener('scroll',this.getScrollData);
-        next();
-    },
-    activated(){
-      var position=utils.getSessionStorage('position:'+this.$route.name);
-      window.scrollTo(0,position);
-      window.addEventListener('scroll',this.getScrollData);
-    },
     data() {
         return {
             hot_items: [],
@@ -158,10 +149,19 @@ export default {
             loading:false,
         }
     },
-    mounted() {
-        this.getHotCommend();
-        this.getHotItems();
-        window.addEventListener('scroll',this.getScrollData);
+    mounted(){
+      this.getHotCommend();
+      this.getHotItems();
+    },
+    activated(){
+      var position=utils.getSessionStorage('position:'+this.$route.name);
+      if(position){
+        window.scrollTo(0,position);
+      }
+      window.addEventListener('scroll',this.getScrollData);
+    },
+    deactivated(){
+      window.removeEventListener('scroll',this.getScrollData);
     },
     methods: {
         getScrollData(){

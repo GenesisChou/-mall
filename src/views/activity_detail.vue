@@ -24,7 +24,7 @@ article {
     }
 }
 
-.aword-list {
+footer.aword-list {
     .v-list-item:last-child {
         border-bottom: 0;
     }
@@ -33,7 +33,18 @@ article {
 <template>
     <div class='activity-detail'>
         <header :class='[game_start?"expand":""]'>
-            <component :is='activity_type' :questions='activity_detail.questions' :free-times='parseInt(free_times)' :fresh-free-times='getFreeTimes'></component>
+          <keep-alive>
+            <!-- is：活动类型 freshFreeTimes:刷新免费活动次数 ：notice:剩余次数／消耗积分提示 ：toOrderDetail:订单详情跳转 -->
+            <component
+              :is='activity_type'
+              :fresh-free-times='getFreeTimes'
+              :activity-detail='activity_detail'
+              :id='parseInt(activity_id)'
+              :notice='notice'
+              :to-order-detail='toOrderDetail'
+              >
+            </component>
+          </keep-alive>
         </header>
         <article>
             <div class='introduction'>
@@ -63,7 +74,6 @@ import {
 import vListItem from 'components/v_list_item.vue'
 import vDivider from 'components/v_divider.vue'
 import vSimditor from 'components/v_simditor.vue'
-import wxConfig from '../wx_config.js'
 export default {
 
     name: 'activity_detail',
@@ -75,13 +85,6 @@ export default {
         vDivider,
         vSimditor
     },
-    beforeRouteLeave(to, from, next) {
-        next();
-        let game=this.$children[2];
-        if(this.game_start){
-            game.stopGame();
-        }
-    },
     data() {
         return {
             activity_id: '',
@@ -91,6 +94,15 @@ export default {
             activity_type: '',
             game_start:false,
         }
+    },
+    computed:{
+      notice(){
+          if(this.freeTimes>0){
+            return '您还剩余'+this.free_times+'次免费机会'
+          }else{
+            return '消耗积分'+parseInt(this.activity_detail.integral);
+          }
+      }
     },
     mounted() {
         this.activity_id = this.$route.query.activity_id;
@@ -140,7 +152,17 @@ export default {
                 this.activity_type = 'game';
             }
         },
-
+        //中奖后的路由跳转
+        toOrderDetail(order_id) {
+            return function(){
+                this.$router.push({
+                    name: 'order_detail',
+                    query: {
+                        order_id:order_id
+                    }
+                })
+            }
+        },
     }
 };
 </script>

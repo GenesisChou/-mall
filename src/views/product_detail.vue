@@ -87,7 +87,7 @@
 }
 </style>
 <template>
-    <div class='product_detail'>
+    <div class='product-detail'>
         <header class='header '>
             <img :src='product_detail.pic_banner' />
             <div class='cover text-white '>
@@ -123,14 +123,12 @@
 <script>
 import vSticky from 'components/v_sticky.vue'
 import vDivider from 'components/v_divider.vue'
-import vModal from 'components/v_modal.vue'
 import vSimditor from 'components/v_simditor.vue'
 export default {
 
     name: 'product_detail',
     components: {
         vSticky,
-        vModal,
         vSimditor,
         vDivider
     },

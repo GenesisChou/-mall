@@ -59,8 +59,11 @@
 export default {
     components: {},
     props:{
-        freeTimes:Number,
-        freshFreeTimes:Function
+        freshFreeTimes:Function,
+        activityDetail:Object,
+        id:Number,
+        notice:String,
+        toOrderDetail:Function
     },
     data() {
         return {
@@ -76,27 +79,24 @@ export default {
             bg_img:''
         }
     },
-    computed:{
-        notice(){
-            if(this.freeTimes>0){
-              return '您还剩余'+this.freeTimes+'次免费机会'
-            }else{
-              return '消耗积分'+parseInt(this.$parent.activity_detail.integral);
-            }
-        }
-    },
     watch: {
         start(value) {
             if (value) {
                 AIR.Game.startGame('#canvas');
                 AIR.Game.gameOver((score) => {
-                    this.toggleAlert(this.alert);
+                    this.$store.dispatch('toggleAlert',this.alert);
                 });
             }
         }
     },
-    mounted(){
-        this.getGameDetail(this.$parent.activity_detail.game_id);
+    activated(){
+      this.getGameDetail(this.activityDetail.game_id);
+    },
+    deactivated(){
+        if(this.start){
+          console.log('game stopped');
+          this.stopGame();
+        }
     },
     methods: {
         getGameDetail(game_id){
@@ -128,7 +128,7 @@ export default {
             this.$store.dispatch('toggleLoading', {
                 show: true
             });
-            this.$http.post(`${APP.HOST}/game_activity/${this.$parent.activity_id}`, {
+            this.$http.post(`${APP.HOST}/game_activity/${this.id}`, {
                 token: APP.TOKEN,
                 user_id: APP.USER_ID
             }).then((response) => {
@@ -141,22 +141,19 @@ export default {
                   this.$parent.game_start=true;
                   this.start = true;
                   if (this.is_win) {
-                      this.order_detail_id = data.data.id;
                       this.alert = {
                           type:'img',
                           img:data.data.pic_thumb,
                           msg: '获得'+data.data.name,
-                          callback: this.toOrderDetail,
+                          callback: this.toOrderDetail(data.data.id),
                           btn_text: '查看'
                       };
                   }
                 }else{
-                  this.toggleAlert({
-                      msg: data.info
-                  });
+                  this.$store.dispatch({
+                    msg:data.info
+                  })
                 }
-
-               //更新用户信息
             }, (response) => {
                 this.$store.dispatch('toggleLoading');
             })
@@ -164,24 +161,7 @@ export default {
         stopGame() {
             AIR.Game.stopGame();
         },
-        toOrderDetail() {
-            this.$router.push({
-                name: 'order_detail',
-                query: {
-                    order_id: this.order_detail_id
-                }
-            })
-        },
-        toggleAlert(alert) {
-            this.$store.dispatch('toggleAlert', {
-                type:alert.type,
-                img:alert.img,
-                show: true,
-                msg: alert.msg,
-                btn_text: alert.btn_text,
-                callback: alert.callback,
-            })
-        },
+
     }
 }
 </script>

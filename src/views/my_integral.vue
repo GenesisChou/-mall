@@ -166,6 +166,12 @@ export default {
             return this.$store.state.user;
         }
     },
+    activated(){
+      this.getIntegralList();
+    },
+    mounted() {
+      this.getIntegralParam();
+    },
     methods: {
         toggleModal() {
             this.modal = !this.modal;
@@ -203,11 +209,6 @@ export default {
               msg:'删除缓存成功'
           })
         }
-    },
-    mounted() {
-        // this.$store.dispatch('getUserInfor');
-        this.getIntegralList();
-        this.getIntegralParam();
     }
 };
 </script>

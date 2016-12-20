@@ -76,7 +76,7 @@
         <div class='head text-center'>
             <img src='./images/quiz.png' alt="">
         </div>
-        <div v-for='(item,$index) in questions' class='body'>
+        <div v-for='(item,$index) in activityDetail.questions' class='body'>
             <div v-if='current_number==$index' class='panel bg-white text-huge '>
                 <div class='panel-head text-center text-white'>
                     第{{$index+1}}题
@@ -106,9 +106,11 @@
 export default {
     name: 'quiz',
     props: {
-        questions: Array,
-        freeTimes: Number,
-        freshFreeTimes:Function
+        activityDetail:Object,
+        freshFreeTimes:Function,
+        id:Number,
+        notice:String,
+        toOrderDetail:Function
     },
     data() {
         return {
@@ -117,17 +119,7 @@ export default {
             answer_id: 0, //判断是否有选择题目
             is_right: false, //判断回答是否正确
             is_win: false, //判断是否中奖
-            order_detail_id: '' //活动结束跳转id
         };
-    },
-    computed:{
-        notice(){
-            if(this.freeTimes>0){
-              return '您还剩余'+this.freeTimes+'次免费机会'
-            }else{
-              return '消耗积分'+parseInt(this.$parent.activity_detail.integral);
-            }
-        }
     },
     methods: {
         //提交答案
@@ -136,14 +128,13 @@ export default {
                 this.$store.dispatch('toggleLoading', {
                     show: true
                 });
-                this.$http.post(`${APP.HOST}/question_activity/${this.$parent.activity_id}`, {
-                    question_id: this.questions[this.current_number].id,
+                this.$http.post(`${APP.HOST}/question_activity/${this.id}`, {
+                    question_id: this.activityDetail.questions[this.current_number].id,
                     answer_id: this.answer_id,
                     token: APP.TOKEN,
                     user_id: APP.USER_ID
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
-
                     let data = response.data;
                     if (data.status == APP.SUCCESS) {
                         this.freshFreeTimes();
@@ -151,13 +142,12 @@ export default {
                         if (data.data.is_right) {
                             if (data.data.is_win) {
                                 this.is_win = data.data.is_win;
-                                this.order_detail_id = data.data.id;
                                 this.$store.dispatch('toggleAlert',{
                                     msg: '获得'+data.data.name,
                                     type: 'img',
                                     img:data.data.pic_thumb,
                                     btn_text: '查看',
-                                    callback: this.toOrderDetail
+                                    callback: this.toOrderDetail(data.data.id)
                                 });
                             } else {
                                 this.$store.dispatch('toggleAlert',{
@@ -185,15 +175,6 @@ export default {
                 })
             }
 
-        },
-        //路由跳转
-        toOrderDetail() {
-            this.$router.push({
-                name: 'order_detail',
-                query: {
-                    order_id: this.order_detail_id
-                }
-            })
         },
     }
 };

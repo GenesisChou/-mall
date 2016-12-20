@@ -1,10 +1,11 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1479718726634'); /* IE9*/
-  src: url('iconfont.eot?t=1479718726634#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1479718726634') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1479718726634') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1479718726634#iconfont') format('svg'); /* iOS 4.1- */
+  font-family: 'iconfont';  /* project id 117685 */
+  src: url('//at.alicdn.com/t/font_lw1we175d2lf2yb9.eot');
+  src: url('//at.alicdn.com/t/font_lw1we175d2lf2yb9.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_lw1we175d2lf2yb9.woff') format('woff'),
+  url('//at.alicdn.com/t/font_lw1we175d2lf2yb9.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_lw1we175d2lf2yb9.svg#iconfont') format('svg');
 }
 
 .iconfont {
@@ -73,4 +74,3 @@
 .icon-car:before { content: "\e61b"; }
 
 .icon-plus-circle:before { content: "\e61a"; }
-

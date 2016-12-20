@@ -24,7 +24,7 @@ export default {
                 pagination: '.swiper-pagination',
                 autoplay:3000,
                 autoplayDisableOnInteraction:false,
-                paginationClickable:true
+                paginationClickable:true,
             },
         }
     },
@@ -34,22 +34,24 @@ export default {
     methods: {
         getHotBanners() {
             var wrapper=document.querySelector('.swiper-wrapper');
-            var _this=this;
             this.$http.post(`${APP.HOST}/hot_banner`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID,
                 media_id:APP.MEDIA_ID
             }).then((response) => {
-                this.swiperSlides = response.data.data;
-                this.swiperSlides.forEach(item=>{
-                  var newSlide=document.createElement('div');
-                  newSlide.className='swiper-slide';
-                  newSlide.innerHTML=`<img  src="${item.pic}" style='width:100%;height:100%'>`;
-                  newSlide.addEventListener('click',function(){
-                    _this.bannerView(item);
+                let data=response.data;
+                let slides=data.data;
+                if(slides.length>0){
+                  slides.forEach(slide=>{
+                    var newSlide=document.createElement('div');
+                    newSlide.className='swiper-slide';
+                    newSlide.innerHTML=`<img  src="${slide.pic}" style='width:100%;height:100%'>`;
+                    newSlide.addEventListener('click',()=>{
+                      this.bannerView(slide);
+                    })
+                    wrapper.appendChild(newSlide);
                   })
-                  wrapper.appendChild(newSlide);
-                })
+                }
                 new Swiper('.swiper-container',this.swiperOption);
             }, (response) => {});
         },

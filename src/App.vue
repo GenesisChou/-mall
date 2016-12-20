@@ -1,10 +1,10 @@
 <style lang='sass'>
-@import './assets/scss/iconfont/iconfont.css';
+@import './assets/scss/iconfont.css';
 @import './assets/scss/main.scss';
 </style>
 <template>
     <div id="app">
-        <keep-alive exclude='product_detail,activity_detail,order_list,my_integral,order_detail' >
+        <keep-alive exclude='product_detail,activity_detail,order_list,order_detail' >
           <router-view></router-view>
         </keep-alive>
         <v-alert :show='v_alert.show' :msg='v_alert.msg' :callback='v_alert.callback' :type='v_alert.type' :cover-close='v_alert.cover_close' :btn-text='v_alert.btn_text' :img='v_alert.img'></v-alert>
@@ -26,9 +26,17 @@ export default {
     mounted() {
         this.$store.dispatch('getUserInfor',function(response){
           let data=response.data;
-          if(data.status==APP.LOGIN_FAILED){
+          if(data.status==APP.SUCCESS){
+            console.log('login success');
+          }else if(data.status==APP.LOGIN_FAILED){
+            console.log(data.info);
             utils.deleteLocalStorage(APP.MEDIA_ID);
             utils.reloadApp();
+          }else{
+            console.log(data.info);
+            this.$store.dispatch('toggleAlert',{
+              msg:'网络断开连接'
+            })
           }
         });
         document.documentElement.style.fontSize = `${document.documentElement.clientWidth / 10}px`;

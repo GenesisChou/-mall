@@ -79,15 +79,6 @@ export default {
         vBackTop,
         vSpinner
     },
-    beforeRouteLeave(to, from, next) {
-        window.removeEventListener('scroll', this.getScrollData);
-        next();
-    },
-    activated(){
-      var position=utils.getSessionStorage('position:'+this.$route.name);
-      window.scrollTo(0,position);
-      window.addEventListener('scroll', this.getScrollData);
-    },
     data() {
         return {
             product_list: [],
@@ -109,7 +100,16 @@ export default {
     },
     mounted() {
         this.getProductList();
-        window.addEventListener('scroll', this.getScrollData);
+    },
+    deactivated() {
+        window.removeEventListener('scroll', this.getScrollData);
+    },
+    activated(){
+      var position=utils.getSessionStorage('position:'+this.$route.name);
+      if(position){
+        window.scrollTo(0,position);
+      }
+      window.addEventListener('scroll', this.getScrollData);
     },
     methods: {
         getScrollData() {

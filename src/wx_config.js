@@ -145,20 +145,4 @@ module.exports = function(Vue) {
 
         });
     }
-    //
-    // function setLink(type, id) {
-    //     if (!type) {
-    //         link = `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`;
-    //     } else if (type == 'activity') {
-    //         link = link + '&activity_id=' + id;
-    //     } else if (type == 'product') {
-    //         link = link + '&product_id=' + id;
-    //     }
-    //     init();
-    // }
-
-    return {
-        init,
-    };
-
 };
