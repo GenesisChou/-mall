@@ -91,12 +91,6 @@
         margin-top: pxTorem(50);
     }
 }
-.btn-test{
-  position:absolute;
-  right:0;
-  top:0;
-  opacity:0;
-}
 </style>
 <template>
     <div class='my-integral '>
@@ -110,7 +104,6 @@
                     <p>积分: {{parseInt(user.integral)}}</p>
                 </div>
             </section>
-            <button class='btn btn-large btn-test' @click='deleteTest()'>btn-test</button>
             <div class='event'>
                 <div class='pull-left' @click='toggleModal()'>
                     <img class='icon' src='../assets/images/store.png'> <span class='text-large text-red'>积分赚取</span>
@@ -202,12 +195,6 @@ export default {
                 this.$store.dispatch('toggleLoading');
 
             })
-        },
-        deleteTest(){
-          utils.deleteLocalStorage(APP.MEDIA_ID);
-          this.$store.dispatch('toggleAlert', {
-              msg:'删除缓存成功'
-          })
         }
     }
 };

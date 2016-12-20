@@ -11,11 +11,15 @@ if (token) {
         TITLE:utils.getParameterByName('imall_title')
     };
     utils.setLocalStorage(media_id, cache);
-    startApp(cache);
+    // startApp(cache);
+    var link = `${APP.MALL_HOST}/?id=${media_id}`;
+    if (activity_id) {
+        link = link + '#/activity_detail?activity_id=' + activity_id;
+    }
+    location.href = link;
 } else {
     var media_id = utils.getParameterByName('id');
     var cache = utils.getLocalStorage(media_id);
-    console.log(cache);
     //无缓存
     if (!cache) {
         wxLogin(media_id,activity_id);
