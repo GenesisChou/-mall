@@ -207,20 +207,12 @@ export default {
             this.$http.post(`${APP.HOST}/hot_item`, this.params ).then((response) => {
                 let data = response.data;
                 this.$store.dispatch('toggleLoading');
-                if(data.status==APP.SUCCESS){
                   if(callback){
                     callback();
                   }
                   this.params.total = data.data.total;
                   this.params.pro_st=data.data.pro_st;
                   this.hot_items = this.hot_items.concat(data.data.list);
-                }else{
-                  var message=APP.TOKEN+';'+APP.MEDIA_ID+';'+APP.USER_ID;
-                  this.$store.dispatch('toggleAlert', {
-                      msg: message+';'+data.info
-                  })
-                }
-
             }, (response) => {
                 this.$store.dispatch('toggleLoading');
             });
