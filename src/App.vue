@@ -26,10 +26,10 @@ export default {
     mounted() {
         this.$store.dispatch('getUserInfor',function(response){
           let data=response.data;
-          if(data.status==APP.LOGIN_FAILED){
-            utils.deleteLocalStorage(APP.MEDIA_ID);
-            utils.reloadApp();
-          }
+          // if(data.status==APP.LOGIN_FAILED){
+          //   utils.deleteLocalStorage(APP.MEDIA_ID);
+          //   utils.reloadApp();
+          // }
         });
         document.documentElement.style.fontSize = `${document.documentElement.clientWidth / 10}px`;
     },
