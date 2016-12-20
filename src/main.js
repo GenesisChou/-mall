@@ -1,6 +1,7 @@
 import utils from 'libs/utils.js';
 window.APP = {
     TITLE: '积分兑换',
+    VERSION:'1.20',
     APPID: 'wx8057c4704888d230',
     HOST: 'http://integral.api.justtong.com/imall', //接口域名
     MALL_HOST: 'http://imall.justtong.com', //服务器域名
@@ -26,7 +27,8 @@ if (token) {
         OPEN_ID: utils.getParameterByName('open_id'),
         DATE: new Date()
     };
-    utils.setLocalStorage(media_id, cache);
+    //储存数据
+    utils.setLocalStorage(APP.VERSION+media_id, cache);
     var link = `${APP.MALL_HOST}/?id=${media_id}`;
     if (activity_id) {
         link = link + '#/activity_detail?activity_id=' + activity_id;
@@ -34,13 +36,16 @@ if (token) {
     location.href = link;
 } else {
     var media_id = utils.getParameterByName('id');
-    var cache = utils.getLocalStorage(media_id);
+    //获取缓存
+    var cache = utils.getLocalStorage(APP.VERSION+media_id);
     //无缓存
     if (!cache) {
-        wxLogin(media_id,activity_id);
+        console.log('no cache');
+        wxLogin(activity_id);
     //缓存过期
     } else if (cacheExpire(cache)) {
-        wxLogin(media_id,activity_id);
+        console.log('cache out of date');
+        wxLogin(activity_id);
     } else {
         var Vue = require('vue');
         var VueResource = require('vue-resource');
@@ -78,9 +83,9 @@ function cacheExpire(cache) {
     return interval > 30;
 }
 //微信登陆
-function wxLogin(media_id,activity_id) {
+function wxLogin(activity_id) {
     var redirect = encodeURIComponent(APP.MALL_HOST);
-    var link = `${APP.HOST}/weixin/${media_id}?callback=${redirect}`;
+    var link = `${APP.HOST}/weixin/${APP.MEDIA_ID}?callback=${redirect}`;
     if (activity_id) {
         link = link + '&activity_id=' + activity_id;
     }
