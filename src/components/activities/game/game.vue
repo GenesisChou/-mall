@@ -150,7 +150,7 @@ export default {
                       };
                   }
                 }else{
-                  this.$store.dispatch({
+                  this.$store.dispatch('toggleAlert',{
                     msg:data.info
                   })
                 }
