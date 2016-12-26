@@ -5,7 +5,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
     entry: {
         app: './src/main.js',
-        vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk']
+        vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk','swiper','webpack-require-http','js-sha1']
     },
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -57,7 +57,9 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'vue$': 'vue/dist/vue',
+            'vue$': 'vue/dist/vue.min.js',
+            'vue-resource$': 'vue-resource/dist/vue-resource.min.js',
+            'vue-router$': 'vue-router/dist/vue-router.min.js',
             components: path.resolve(__dirname, './src/components'),
             assets: path.resolve(__dirname, './src/assets'),
             libs: path.resolve(__dirname, './src/libs'),

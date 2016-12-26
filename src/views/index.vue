@@ -38,13 +38,14 @@
         color: $white;
 
     }
-    .label {
+    label{
         position: absolute;
         left: pxTorem(-50);
         opacity: 0;
         color: $red;
         &.active {
-            animation: checkAnimation 1s;
+            animation: checkAnimation 1s ease-out;
+            -webkit-animation: checkAnimation 1s ease-out;
         }
     }
 }
@@ -94,7 +95,7 @@
                         <p>您已</p>
                         <p>签到</p>
                     </template>
-                    <span :class='["label",check_animation?"active":""]'>+10</span>
+                    <label :class='{ active: is_animated}'>+10</label>
                 </div>
             </li>
             <router-link :to='{name:"product_list"}' tag='li'>
@@ -111,7 +112,9 @@
             <!-- 热门 -->
             <v-item v-for='item in hot_items' :item='item' type='item'></v-item>
         </section>
-        <v-back-top></v-back-top>
+        <keep-alive>
+          <v-back-top></v-back-top>
+        </keep-alive>
     </div>
 </template>
 <script>
@@ -134,7 +137,7 @@ export default {
         return {
             hot_items: [],
             hot_commend: [],
-            check_animation: false,
+            is_animated: false,
             params: {
                 p: 1,
                 r: APP.PERPAGE,
@@ -145,6 +148,7 @@ export default {
                 media_id:APP.MEDIA_ID,
                 pro_st:''
             },
+            scrollEvent:'',
             scroll:false,
             loading:false,
         }
@@ -152,28 +156,29 @@ export default {
     mounted(){
       this.getHotCommend();
       this.getHotItems();
+      this.scrollEvent=utils.debounce(this.getScrollData,500,500);
     },
     activated(){
       var position=utils.getSessionStorage('position:'+this.$route.name);
       if(position){
         window.scrollTo(0,position);
       }
-      window.addEventListener('scroll',this.getScrollData);
+      window.addEventListener('scroll',this.scrollEvent);
     },
     deactivated(){
-      window.removeEventListener('scroll',this.getScrollData);
+      window.removeEventListener('scroll',this.scrollEvent);
     },
     methods: {
         getScrollData(){
-           this.scroll=true;
-              if (this.scroll&&utils.touchBottom()&&this.params.p < this.params.total&&!this.loading) {
-                  this.params.p++;
-                  this.scroll=false;
-                  this.loading=true;
-                  this.getHotItems(()=>{
-                    this.loading=false;
-                  });
-              }
+             this.scroll=true;
+             if (this.scroll&&utils.touchBottom()&&this.params.p < this.params.total&&!this.loading) {
+                 this.params.p++;
+                 this.scroll=false;
+                 this.loading=true;
+                 this.getHotItems(()=>{
+                   this.loading=false;
+                 });
+             }
         },
         //签到
         checkIn() {
@@ -186,7 +191,7 @@ export default {
                     let data = response.data;
                     if (data.status == APP.SUCCESS) {
                         this.$store.dispatch('getUserInfor');
-                        this.check_animation = true;
+                        this.startAnimation();
                     } else {
                         this.$store.dispatch('toggleAlert', {
                             msg: data.info
@@ -197,7 +202,13 @@ export default {
                 })
             }
         },
-
+        //签到动画
+        startAnimation(){
+          this.is_animated=true;
+          setTimeout(()=>{
+            this.is_animated=false;
+          },1000);
+        },
         //  热门商品和活动列表，用于首页列表
         getHotItems(callback) {
             this.$store.dispatch('toggleLoading', {

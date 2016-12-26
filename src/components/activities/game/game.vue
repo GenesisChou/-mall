@@ -94,8 +94,8 @@ export default {
     },
     deactivated(){
         if(this.start){
-          console.log('game stopped');
           this.stopGame();
+          console.log('game stopped');
         }
     },
     methods: {

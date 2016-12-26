@@ -26,7 +26,8 @@ export default {
     name: 'back_top',
     data() {
         return {
-            show: false
+            show: false,
+            scrollEvent:'',
         }
     },
     methods: {
@@ -42,10 +43,14 @@ export default {
             }, 10)
         }
     },
-    created() {
-        window.addEventListener('scroll', () => {
-            this.show = utils.getScrollTop() > 1000;
-        })
+    mounted() {
+        this.scrollEvent=utils.debounce(()=>{
+          this.show = utils.getScrollTop() > 1000;
+        },100,100);
+        window.addEventListener('scroll',this.scrollEvent);
+    },
+    deactivated(){
+      window.removeEventListener('scroll',this.scrollEvent);
     }
 }
 </script>
