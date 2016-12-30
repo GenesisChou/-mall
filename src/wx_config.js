@@ -2,11 +2,7 @@ module.exports = function(Vue) {
     var wx = require('weixin-js-sdk');
     var store = require('./vuex/store.js');
     var utils = require('libs/utils.js');
-    var sha1 = require('js-sha1');
-
     getSignature(init);
-
-
     function init(data) {
         var title=APP.TITLE;
         var link = `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`;

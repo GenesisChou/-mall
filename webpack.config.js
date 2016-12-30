@@ -5,7 +5,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
     entry: {
         app: './src/main.js',
-        vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk','swiper','webpack-require-http','js-sha1']
+        vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk','scriptjs']
     },
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -71,9 +71,6 @@ module.exports = {
         noInfo: true,
         host: '0.0.0.0'
     },
-    externals: [
-        require('webpack-require-http')
-    ],
     plugins: [
             new ExtractTextPlugin("style.css"),
             new webpack.ProvidePlugin({
@@ -101,7 +98,6 @@ if (process.env.NODE_ENV === 'production') {
                 warnings: false
             }
         }),
-
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             filename: 'vendor.js'

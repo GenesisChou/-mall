@@ -76,12 +76,13 @@ export default {
                 btn_text: '关闭',
                 callback: function() {}
             },
-            bg_img:''
+            bg_img:'',
+            loaded:false
         }
     },
     watch: {
         start(value) {
-            if (value) {
+            if (value){
                 AIR.Game.startGame('#canvas');
                 AIR.Game.gameOver((score) => {
                     this.$store.dispatch('toggleAlert',this.alert);
@@ -105,16 +106,26 @@ export default {
               user_id: APP.USER_ID
           }).then((response) => {
             let data=response.data;
+            let $script=require('scriptjs');
             this.bg_img={
               background:'url('+data.data.pic+')',
               backgroundSize:'100% 100%'
             };
             if(data.data.name=='开心消消乐'){
-              this.game=require('http://m.goldmiao.com/yngame/3x.min.js');
+              this.game=$script('http://m.goldmiao.com/yngame/3x.min.js',()=>{
+                  console.log('game loaded');
+                  this.loaded=true;
+              });
             }else if(data.data.name=='棍子忍者'){
-              this.game=require('http://m.goldmiao.com/yngame/uWr5e32D.min.js');
+              this.game=$script('http://m.goldmiao.com/yngame/uWr5e32D.min.js',()=>{
+                  console.log('game loaded');
+                  this.loaded=true;
+              });
             }else if(data.data.name=='逝去的青春'){
-              this.game=require('http://m.goldmiao.com/yngame/o3KdlWed.min.js');
+              this.game=$script('http://m.goldmiao.com/yngame/o3KdlWed.min.js',()=>{
+                  console.log('game loaded');
+                  this.loaded=true;
+              });
             }
           })
         },
@@ -122,6 +133,12 @@ export default {
             if(!this.game){
               this.$store.dispatch('toggleAlert',{
                 msg:'该活动已下架'
+              });
+              return;
+            }
+            if(!this.loaded){
+              this.$store.dispatch('toggleAlert',{
+                msg:'请等待游戏完全载入'
               });
               return;
             }
