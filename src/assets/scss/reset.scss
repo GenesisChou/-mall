@@ -1,28 +1,89 @@
-html, body {
+html,
+body {
     height: 100%;
     width: 100%;
     border: 0;
-    font-family: 'PingFangSc-Light','Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'PingFangSc-Light', 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.5;
     margin: 0;
     padding: 0;
-    font-size:pxTorem(26);
-}
-input,textarea{
-    font-family: 'PingFangSc-Light','Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+    font-size: pxTorem(26);
 }
 
-div, span, object, iframe, img, table, caption, thead, tbody,
-tfoot, tr, tr, td, article, aside, canvas, details, figure, hgroup, menu,
-nav, footer, header, section, summary, mark, audio, video {
+input,
+textarea {
+    font-family: 'PingFangSc-Light', 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+}
+
+div,
+span,
+object,
+iframe,
+img,
+table,
+caption,
+thead,
+tbody,
+tfoot,
+tr,
+tr,
+td,
+article,
+aside,
+canvas,
+details,
+figure,
+hgroup,
+menu,
+nav,
+footer,
+header,
+section,
+summary,
+mark,
+audio,
+video {
     border: 0;
     margin: 0;
     padding: 0;
 }
 
-h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, address, cit, code,
-del, dfn, em, ins, q, samp, small, strong, sub, sup, b, i, hr, dl, dt, dd,
-ol, ul, li, fieldset, legend, label {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+address,
+cit,
+code,
+del,
+dfn,
+em,
+ins,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+b,
+i,
+hr,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+legend,
+label {
     border: 0;
     font-size: 100%;
     vertical-align: baseline;
@@ -30,49 +91,110 @@ ol, ul, li, fieldset, legend, label {
     padding: 0;
 }
 
-article, aside, canvas, figure, figure img, figcaption, hgroup,
-footer, header, nav, section, audio, video {
+article,
+aside,
+canvas,
+figure,
+figure img,
+figcaption,
+hgroup,
+footer,
+header,
+nav,
+section,
+audio,
+video {
     display: block;
 }
 
 table {
     border-collapse: separate;
     border-spacing: 0;
-    caption, th, td {
+    caption,
+    th,
+    td {
         text-align: left;
         vertical-align: middle;
     }
 }
+
+
 /*li{
     list-style: none;
 }*/
-a,a:link,a:visited{
-    color:#333;
+
+a,
+a:link,
+a:visited {
+    color: #333;
     text-decoration: none;
 }
+
 a img {
     border: 0;
 }
-img{
+
+img {
     vertical-align: middle;
 }
+
 :focus {
     outline: 0;
 }
-*{
+
+* {
+    box-sizing: border-box;
     -webkit-box-sizing: border-box;
 }
-textarea{
+
+textarea {
     resize: none;
     -webkit-appearance: none;
 }
-input{
+
+input {
     -webkit-appearance: none;
 }
+
 select {
     -webkit-appearance: none;
     background-color: $white;
 }
-button,input{
-    font-size:pxTorem(26);
+
+button,
+input {
+    font-size: pxTorem(26);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+}
+
+h1 {
+    font-size: pxTorem(36);
+}
+
+h2 {
+    font-size: pxTorem(32);
+}
+
+h3 {
+    font-size: pxTorem(30);
+}
+
+h4 {
+    font-size: pxTorem(28);
+}
+
+h5 {
+    font-size: pxTorem(26);
+}
+
+h6 {
+    font-size: pxTorem(24);
 }

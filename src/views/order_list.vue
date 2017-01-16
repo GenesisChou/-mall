@@ -1,88 +1,220 @@
 <style lang='sass' scoped>
-@import '../assets/scss/variable.scss';
-.order-list {
-    min-height: 100%;
-    padding-bottom: pxTorem(22);
-    background-color: $gray-light;
-}
-</style>
-<template>
-<div class='order-list'>
-    <ul>
-        <router-link v-for='order in order_list' :to='{name:"order_detail",query:{order_id:parseInt(order.id)}}' tag='li'>
-            <v-order :img='order.product_pic' :id='order.orderid' :integral='parseInt(order.integral)' :name='order.product'> </v-order>
-        </router-link>
-    </ul>
-    <v-empty v-if='empty'></v-empty>
-    <v-back-top></v-back-top>
-</div>
-</template>
-<script>
-import vOrder from 'components/order/v_order.vue'
-import vEmpty from 'components/order/v_empty.vue'
-import vBackTop from 'components/v_back_top.vue'
-export default {
-    name: 'order_list',
-    components: {
-        vOrder,
-        vEmpty,
-        vBackTop
-    },
-    data() {
-        return {
-            order_list: [],
-            params: {
-                p: 1,
-                r: APP.PERPAGE,
-                total: 0,
-                token: APP.TOKEN,
-                userid: APP.USER_ID
-            },
-            empty: '',
-            scroll: false,
-            loading: false
-        }
-    },
-    mounted() {
-        this.getOrderList();
-        window.addEventListener('scroll', this.getScrollData);
-    },
-    beforeRouteLeave(to, from, next) {
-        window.removeEventListener('scroll', this.getScrollData);
-        next();
-    },
-    methods: {
-        getScrollData() {
-            this.scroll = true;
-            if (this.scroll && utils.touchBottom() && this.params.p < this.params.total && !this.loading) {
-                this.params.p++;
-                this.scroll = false;
-                this.loading = true;
-                this.getOrderList(() => {
-                    this.loading = false;
-                });
+    @import '../assets/scss/variable.scss';
+    .order-list {
+        min-height: 100%;
+        padding: pxTorem(20) 0;
+        background-color: $gray-light;
+    }
+    
+    .tabs {
+        background-color: $white;
+        margin-bottom: pxTorem(20);
+        li {
+            position: relative;
+            width: 25%;
+            height: pxTorem(110);
+            padding-top: pxTorem(10);
+            text-align: center;
+            border-right:1px solid $gray-light;
+            &:nth-child(4){
+                border-right:none;
             }
-
-        },
-        getOrderList(callback) {
-            this.$store.dispatch('toggleLoading', {
-                show: true
-            });
-            this.$http.post(`${APP.HOST}/order_list/${APP.USER_ID}`, this.params).then((response) => {
-                let data = response.data;
-                this.$store.dispatch('toggleLoading');
-                if (callback) {
-                    callback();
+            &.active {
+                color: $white;
+                background-color: $red;
+                .badage{
+                    color:$white;
+                    border:2px solid $white;
                 }
-                this.params.total = data.data.total;
-                this.order_list = this.order_list.concat(data.data.list);
-                if (!this.order_list.length > 0) {
-                    this.empty = true;
-                }
-            }, (response) => {
-                this.$store.dispatch('toggleLoading');
-            })
+                
+            }
+        }
+        .badage {
+            width: pxTorem(50);
+            height: pxTorem(50);
+            position: absolute;
+            right:pxTorem(10) ;
+            top: 0;
+            color: $red;
+            border-radius: 50%;
+            border: 2px solid $red;
+            text-align: center;
+            line-height: pxTorem(50);
+            font-weight: bold;
+            box-sizing: content-box;
+            z-index: 1;
+            transform: scale(0.5);
+            transform: -webkit-scale(0.5);
+            transform: -moz-scale(0.5);
+            transform: -ms-scale(0.5);
         }
     }
-};
+    
+    .v-order footer {
+        border-top: 1px solid $gray-light;
+        margin: 0 pxTorem(30);
+        font-size: pxTorem(24);
+        line-height: pxTorem(66);
+    }
+</style>
+<template>
+    <div class='order-list'>
+        <ul class='tabs list-inline'>
+            <li v-for='(tab,$index) in tabs' :class='{active:$index+1==current_tab}' @click='switchTab($index+1)'>
+                <i v-if='$index==0' class='iconfont icon-order-unsolved  text-huge'></i>
+                <i v-if='$index==1' class='iconfont icon-car  text-huge'></i>
+                <i v-if='$index==2' class='iconfont icon-order  text-huge'></i>
+                <i v-if='$index==3' class='iconfont icon-delete  text-huge'></i>
+                <h6>{{tab.name}}</h6>
+                <span class='badage' v-if='$index==0'>{{user.unfinished_order_count}}</span>
+            </li>
+        </ul>
+        <ul>
+            <router-link v-for='order in order_list[current_type]' :to='{name:"order_detail",query:{order_id:parseInt(order.id)}}' tag='li'>
+                <v-order :img='order.product_pic' :id='order.orderid' :integral='order.integral>>0' :name='order.product'>
+                    <footer>
+                        {{order.tips}}
+                    </footer>
+                </v-order>
+            </router-link>
+        </ul>
+        <v-load-more v-if='busy'></v-load-more>
+        <v-support></v-support>
+    </div>
+</template>
+<script>
+    import vOrder from 'components/order/vOrder.vue'
+    export default {
+        name: 'order_list',
+        components: {
+            vOrder,
+        },
+        data() {
+            return {
+                order_list: {
+                    unsolved: [],
+                    untransported: [],
+                    solved: [],
+                    expired: [],
+                },
+                current_tab: 0,
+                params: {},
+                scroll_events: {},
+                tabs: [{
+                    type: 'unsolved',
+                    name: '待处理订单'
+                }, {
+                    type: 'untransported',
+                    name: '待发货订单'
+                }, {
+                    type: 'solved',
+                    name: '已完成订单'
+                }, {
+                    type: 'expired',
+                    name: '已逾期订单'
+                }],
+                busy: false
+            }
+        },
+        computed: {
+            user() {
+                return this.$store.state.user;
+            },
+            current_type() {
+                return this.tabs[this.current_tab - 1].type;
+            },
+        },
+        watch: {
+            current_tab(tab) {
+                let type = this.current_type;
+                //显示／隐藏加载更多
+                this.busy = this.params[type].total > this.params[type].p;
+                //添加当前目滚动事件 解除其余项滚动事件
+                this.tabs.forEach((item) => {
+                    if (item.type == type) {
+                        window.addEventListener('scroll', this.scroll_events[item.type]);
+                    } else {
+                        window.removeEventListener('scroll', this.scroll_events[item.type])
+                    }
+                })
+                //仅当第一次切换选项卡时才执行操作 
+                if (this.params[type].total) return;
+                this.$store.dispatch('toggleLoading');
+                this.getOrderList(tab, this.params[type]).then((data) => {
+                    this.$store.dispatch('toggleLoading');
+                    let p = data.data.p,
+                        total = data.data.total;
+                    this.params[type].total = total;
+                    this.order_list[type] = this.order_list[type].concat(data.data.list);
+                    if (total > p) {
+                        this.busy = true;
+                    }
+                }).catch((data) => {
+                    this.$store.dispatch('toggleLoading');
+                })
+            }
+        },
+        //路由变化后 解除滚动事件
+        beforeRouteLeave(to, from, next) {
+            window.removeEventListener('scroll', this.scroll_events[this.current_type]);
+            next();
+        },
+        created() {
+            this.init();
+        },
+        methods: {
+            init() {
+                this.tabs.forEach((item, index) => {
+                    let type = item.type,
+                        tab = index + 1;
+                    this.params[type] = {
+                        p: 1,
+                        r: APP.PERPAGE,
+                        total: 0,
+                        token: APP.TOKEN,
+                        userid: APP.USER_ID,
+                        class: tab
+                    }
+                    this.scroll_events[type] = this.getScrollEvent(tab, this.params[type], (data) => {
+                        this.order_list[type] = this.order_list[type].concat(data.data.list);
+                    });
+                });
+                this.current_tab = 1;
+            },
+            getOrderList(tab, params) {
+                return new Promise((resolve, reject) => {
+                    this.$http.post(`${APP.HOST}/order_list/${APP.USER_ID}/${tab}`, params).then((
+                        response) => {
+                        let data = response.data;
+                        if (resolve) {
+                            resolve(data);
+                        }
+                    }, (response) => {
+                        if (reject) {
+                            reject(data);
+                        }
+                    })
+                })
+            },
+            getScrollEvent(tab, params, success, failure) {
+                let scroll = true;
+                return utils.debounce(() => {
+                    this.busy = params.total > params.p;
+                    if (scroll && this.busy && utils.touchBottom()) {
+                        scroll = false;
+                        params.p++;
+                        this.getOrderList(tab, params).then((data) => {
+                            success(data);
+                            scroll = true;
+                        }).catch((data) => {
+                            failure(data);
+                        });
+                    }
+                }, 500, 500);
+            },
+            switchTab(tab) {
+                this.current_tab = tab;
+            }
+        }
+    };
 </script>

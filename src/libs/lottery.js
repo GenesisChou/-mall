@@ -13,7 +13,7 @@ function Lottery(id, cover, coverType, width, height, drawPercentCallback) {
     this.height = height || this.pxTorem(100);
     this.clientRect = null;
     this.drawPercentCallback = drawPercentCallback;
-    this.clientWidth = document.documentElement.clientWidth;
+    this.clientWidth = utils.getClientWidth();
 }
 
 Lottery.prototype = {

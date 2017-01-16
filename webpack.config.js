@@ -5,7 +5,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
     entry: {
         app: './src/main.js',
-        vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk','scriptjs']
+        vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk', 'scriptjs','vue-lazyload','vue-swipe']
     },
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -21,10 +21,10 @@ module.exports = {
                 loaders: {
                     // extra style file
                     sass: ExtractTextPlugin.extract({
-                            loader: ['css-loader', 'sass-loader'],
-                            fallbackLoader: 'style-loader' // <- this is a dep of vue-loader, so no need to explicitly install if using npm3
-                        })
-                        // sass:'style-loader!css-loader!sass-loader'
+                        loader: ['css-loader', 'sass-loader'],
+                        fallbackLoader: 'style-loader' // <- this is a dep of vue-loader, so no need to explicitly install if using npm3
+                    })
+                    // sass:'style-loader!css-loader!sass-loader'
                 }
             }
         }, {
@@ -57,11 +57,7 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'vue$': 'vue/dist/vue.min.js',
-            'vue-resource$': 'vue-resource/dist/vue-resource.min.js',
-            'vue-router$': 'vue-router/dist/vue-router.min.js',
             components: path.resolve(__dirname, './src/components'),
-            assets: path.resolve(__dirname, './src/assets'),
             libs: path.resolve(__dirname, './src/libs'),
             views: path.resolve(__dirname, './src/views')
         }
@@ -72,15 +68,16 @@ module.exports = {
         host: '0.0.0.0'
     },
     plugins: [
-            new ExtractTextPlugin("style.css"),
-            new webpack.ProvidePlugin({
-                utils: path.resolve(__dirname, './src/libs/utils.js')
-            }),
-            new webpack.ProvidePlugin({
-                APP: path.resolve(__dirname, './src/app_config.js')
-            })
-        ]
-        // devtool: '#eval-source-map'
+        new ExtractTextPlugin("style.css"),
+        new webpack.ProvidePlugin({
+            utils: path.resolve(__dirname, './src/libs/utils.js')
+        }),
+        new webpack.ProvidePlugin({
+            APP: path.resolve(__dirname, './src/libs/appConfig.js')
+        }),
+
+    ],
+    devtool: '#eval-source-map'
 };
 
 if (process.env.NODE_ENV === 'production') {

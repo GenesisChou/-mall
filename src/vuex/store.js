@@ -9,17 +9,17 @@ const state = {
     v_alert: {
         type: 'suprise',
         show: false,
-        event: 'close',
+        close_btn:false,
         msg: '',
         btn_text: '',
-        cover_close: true,
-        img:'',
-        callback: function() {}
+        img: '',
+        callback: function () {},
+        callback_close:function(){}
     },
     v_confirm: {
         show: false,
         msg: '',
-        callback: function() {}
+        callback: function () {}
     },
     v_loading: {
         show: false
@@ -31,21 +31,22 @@ const mutations = {
     //显示/关闭弹窗
     toggleAlert(state, alert = {}) {
         state.v_alert.show = !state.v_alert.show;
+        state.v_alert.close_btn = alert.close_btn;
         state.v_alert.msg = alert.msg;
         state.v_alert.callback = alert.callback;
-        state.v_alert.cover_close = alert.cover_close;
+        state.v_alert.callback_close = alert.callback_close;
         state.v_alert.btn_text = alert.btn_text;
         state.v_alert.type = alert.type;
-        state.v_alert.img=alert.img;
+        state.v_alert.img = alert.img;
     },
     toggleConfirm(state, confirm = {}) {
-        state.v_confirm.show = confirm.show;
+        state.v_confirm.show = !state.v_confirm.show;
         state.v_confirm.msg = confirm.msg;
         state.v_confirm.callback = confirm.callback;
 
     },
-    toggleLoading(state, loading = {}) {
-        state.v_loading.show = loading.show;
+    toggleLoading(state) {
+        state.v_loading.show = !state.v_loading.show;
     },
     //获取用户信息
     getUserInfor(state, callback) {
@@ -79,9 +80,9 @@ const mutations = {
         Vue.http.post(`${APP.HOST}/page_view`, {
             token: APP.TOKEN,
             user_id: APP.USER_ID,
-            page_id: page_id,
-            media_id:APP.MEDIA_ID,
-            open_id:APP.OPEN_ID
+            page_id,
+            media_id: APP.MEDIA_ID,
+            open_id: APP.OPEN_ID
         });
     },
     bannerView(state, banner_id) {
@@ -89,8 +90,8 @@ const mutations = {
             token: APP.TOKEN,
             userid: APP.USER_ID,
             user_id: APP.USER_ID,
-            banner_id: banner_id,
-            media_id:APP.MEDIA_ID
+            banner_id,
+            media_id: APP.MEDIA_ID
         });
     },
     commendView(state, commend_id) {
@@ -98,39 +99,70 @@ const mutations = {
             token: APP.TOKEN,
             userid: APP.USER_ID,
             user_id: APP.USER_ID,
-            commend_id: commend_id,
-            media_id:APP.MEDIA_ID,
+            commend_id,
+            media_id: APP.MEDIA_ID,
         });
     },
+    subjectView(state, subject_id) {
+        Vue.http.post(`${APP.HOST}/subject_view`, {
+            token: APP.TOKEN,
+            userid: APP.USER_ID,
+            user_id: APP.USER_ID,
+            subject_id,
+            media_id: APP.MEDIA_ID,
+        });
+
+    }
 };
 const actions = {
     //全局
     //显示/关闭 弹窗
-    toggleAlert({ commit }, alert) {
+    toggleAlert({
+        commit
+    }, alert) {
         commit('toggleAlert', alert);
     },
-    toggleConfirm({ commit }, confirm) {
+    toggleConfirm({
+        commit
+    }, confirm) {
         commit('toggleConfirm', confirm);
     },
-    toggleLoading({ commit }, loading) {
-        commit('toggleLoading', loading);
+    toggleLoading({
+        commit
+    }, loading) {
+        commit('toggleLoading');
     },
     //——获取用户信息
-    getUserInfor({ commit }, callback) {
+    getUserInfor({
+        commit
+    }, callback) {
         commit('getUserInfor', callback);
     },
-    getAddressList({ commit }, callback) {
+    getAddressList({
+        commit
+    }, callback) {
         commit('getAddressList', callback);
     },
-    pageView({ commit }, page_id) {
+    pageView({
+        commit
+    }, page_id) {
         commit('pageView', page_id);
     },
-    bannerView({ commit }, banner_id) {
+    bannerView({
+        commit
+    }, banner_id) {
         commit('bannerView', banner_id);
     },
-    commendView({ commit }, commend_id) {
+    commendView({
+        commit
+    }, commend_id) {
         commit('commendView', commend_id);
     },
+    subjectView({
+        commit
+    }, subject_id) {
+        commit('subjectView', subject_id);
+    }
 };
 const store = new Vuex.Store({
     state,

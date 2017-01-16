@@ -1,250 +1,250 @@
 <style lang='sass' scoped>
-@import '../assets/scss/variable.scss';
-.index {
-  overflow:hidden;
-  background-color:$gray-light;
-}
-
-.icon-list {
-    padding: pxTorem(25) 0;
-    margin: pxTorem(30) 0;
-    overflow: hidden;
-    background-color:$white;
-    li{
-        position:relative;
-        width: 33.3%;
-        float: left;
-        padding-left:pxTorem(80);
-        &:nth-child(1) div{
-          background:linear-gradient(to bottom, #2190ff, #52b3ff 80%);
-        }
-        &:nth-child(2) div{
-          background:linear-gradient(to bottom, #f41c29, #f1737b 80%);
-        }
-        &:nth-child(3) div{
-          background:linear-gradient(to bottom, #ffa502, #ffd476 80%);
-        }
+    @import '../assets/scss/variable.scss';
+    .index {
+        overflow: hidden;
+        background-color: $gray-light;
     }
-    div{
-        display:table-cell;
-        vertical-align:middle;
-        height: pxTorem(90);
-        width: pxTorem(90);
-        border-radius: 50%;
-        // padding-top: pxTorem(5);
-        line-height: pxTorem(35);
-        margin: auto;
-        text-align: center;
-        color: $white;
-
-    }
-    label{
-        position: absolute;
-        left: pxTorem(-50);
-        opacity: 0;
-        color: $red;
-        &.active {
-            animation: checkAnimation 1s ease-out;
-            -webkit-animation: checkAnimation 1s ease-out;
+    
+    .icon-list {
+        padding: pxTorem(25) 0;
+        margin: pxTorem(30) 0;
+        overflow: hidden;
+        li {
+            position: relative;
+            width: 25%;
+            float: left;
+            text-align: center;
+            font-size: pxTorem(24);
+            background-color: $white;
+            &:active{
+                background-color:darken($white,10%);
+            }
+        }
+        .iconfont {
+            font-size: pxTorem(40);
         }
     }
-}
-
-@keyframes checkAnimation {
-    0% {
-        opacity: 1;
-        top: pxTorem(15);
+    
+    .v-item:nth-child(1) {
+        border-top: 0;
     }
-    100% {
-        opacity: 0;
-        top: pxTorem(-15);
+    
+    .v-item:nth-child(2) {
+        border-top: 0;
     }
-}
-  .v-item:nth-child(1){
-    border-top:0;
-  }
-  .v-item:nth-child(2){
-    border-top:0;
-  }
-  .v-item:nth-child(2n-1){
-    border-left:0;
-  }
-  .v-item:nth-child(2n){
-    border-right:0;
-  }
+    
+    .v-item:nth-child(2n-1) {
+        border-left: 0;
+    }
+    
+    .v-item:nth-child(2n) {
+        border-right: 0;
+    }
+    
+    .subject {
+        margin-bottom: pxTorem(30);
+        overflow: hidden;
+        background-color: $white;
+        img {
+            width: 100%;
+            height: 100%;
+        }
+        >div {
+            float: left;
+            width: 50%;
+            height: pxTorem(400);
+        }
+        .left div:active,
+        .right div:active {
+            background-color: darken($white, 5%);
+        }
+        .left {
+            div {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .right {
+            border-left: 1px solid $gray-light;
+            div {
+                width: 100%;
+                height: 50%;
+                &:nth-child(1) {
+                    border-bottom: 1px solid $gray-light;
+                }
+            }
+        }
+    }
 </style>
 <template>
     <div class='index '>
-        <keep-alive>
-          <v-swipe></v-swipe>
-        </keep-alive>
+        <v-swipe></v-swipe>
         <ul class='list-inline icon-list'>
             <router-link :to='{name:"my_integral"}' tag='li'>
-                <div >
-                    <p>积分</p>
-                    <p>{{parseInt(user.integral)}}</p>
-                </div>
+                <i class=' icon-money iconfont  '></i>
+                <p>我的积分</p>
             </router-link>
-            <li  @click='checkIn'>
-                <div >
-                    <template v-if='!user.ischecked'>
-                        <p>点击</p>
-                        <p>签到</p>
-                    </template>
-                    <template v-else>
-                        <p>您已</p>
-                        <p>签到</p>
-                    </template>
-                    <label :class='{ active: is_animated}'>+10</label>
-                </div>
-            </li>
+            <router-link :to='{name:"check_in"}' tag='li'>
+                <i class=' icon-check-in iconfont  '></i>
+                <p>每日签到</p>
+            </router-link>
+            <router-link :to='{name:"order_list"}' tag='li'>
+                <i class=' icon-order iconfont  '></i>
+                <v-badage :num='user.unfinished_order_count'></v-badage>
+                <p>我的订单</p>
+            </router-link>
             <router-link :to='{name:"product_list"}' tag='li'>
-                <div >
-                    <p>所有</p>
-                    <p>商品</p>
-                </div>
+                <i class=' icon-product iconfont  '></i>
+                <p>所有商品</p>
             </router-link>
         </ul>
-
+        <!-- 专题列表 -->
+        <div class='subject'>
+            <div class='left'>
+                <router-link :to='{name:"subject_detail",query:{subject_id:subject_list[0].id}}' tag='div'>
+                    <img :src='subject_list[0].pic_main'>
+                </router-link>
+            </div>
+            <div class='right'>
+                <router-link :to='{name:"subject_detail",query:{subject_id:subject_list[1].id}}' tag='div'>
+                    <img :src='subject_list[1].pic_second'>
+                </router-link>
+                <router-link :to='{name:"subject_detail",query:{subject_id:subject_list[2].id}}' tag='div'>
+                    <img :src='subject_list[2].pic_second'>
+                </router-link>
+            </div>
+        </div>
         <section>
             <!-- 热门推荐 -->
             <v-item v-for='item in hot_commend' :item='item' type='commend'></v-item>
             <!-- 热门 -->
             <v-item v-for='item in hot_items' :item='item' type='item'></v-item>
         </section>
-        <keep-alive>
-          <v-back-top></v-back-top>
-        </keep-alive>
+        <v-load-more v-if='busy'></v-load-more>
+        <v-support v-if='support_show'></v-support>
     </div>
 </template>
 <script>
-import vSwipe from 'components/index/v_swipe.vue'
-import vItem from 'components/index/v_item.vue'
-import vBackTop from 'components/v_back_top.vue'
-export default {
-    name: 'index',
-    components: {
-        vSwipe,
-        vItem,
-        vBackTop
-    },
-    computed: {
-        user() {
-            return this.$store.state.user;
-        }
-    },
-    data() {
-        return {
-            hot_items: [],
-            hot_commend: [],
-            is_animated: false,
-            params: {
-                p: 1,
-                r: APP.PERPAGE,
-                total: 0,
-                count: 0,
-                token: APP.TOKEN,
-                userid: APP.USER_ID,
-                media_id:APP.MEDIA_ID,
-                pro_st:''
-            },
-            scrollEvent:'',
-            scroll:false,
-            loading:false,
-        }
-    },
-    mounted(){
-      this.getHotCommend();
-      this.getHotItems();
-      this.scrollEvent=utils.debounce(this.getScrollData,500,500);
-    },
-    activated(){
-      var position=utils.getSessionStorage('position:'+this.$route.name);
-      if(position){
-        window.scrollTo(0,position);
-      }
-      window.addEventListener('scroll',this.scrollEvent);
-    },
-    deactivated(){
-      window.removeEventListener('scroll',this.scrollEvent);
-    },
-    methods: {
-        getScrollData(){
-             this.scroll=true;
-             if (this.scroll&&utils.touchBottom()&&this.params.p < this.params.total&&!this.loading) {
-                 this.params.p++;
-                 this.scroll=false;
-                 this.loading=true;
-                 this.getHotItems(()=>{
-                   this.loading=false;
-                 });
-             }
+    import vSwipe from 'components/index/vSwipe.vue'
+    import vItem from 'components/index/vItem.vue'
+    export default {
+        name: 'index',
+        components: {
+            vSwipe,
+            vItem,
         },
-        //签到
-        checkIn() {
-            if (!this.user.ischecked) {
-                this.$http.post(`${APP.HOST}/checkin/${APP.USER_ID}`, {
+        data() {
+            return {
+                hot_items: [],
+                hot_commend: [],
+                subject_list: [{
+                    id: 0,
+                    pic_main: '',
+                    pic_second: ''
+                }, {
+                    id: 0,
+                    pic_main: '',
+                    pic_second: ''
+                }, {
+                    id: 0,
+                    pic_main: '',
+                    pic_second: ''
+                }],
+                params: {
+                    p: 1,
+                    r: APP.PERPAGE,
+                    total: 0,
+                    count: 0,
                     token: APP.TOKEN,
                     userid: APP.USER_ID,
-                    media_id:APP.MEDIA_ID
-                }).then((response) => {
-                    let data = response.data;
-                    if (data.status == APP.SUCCESS) {
-                        this.$store.dispatch('getUserInfor');
-                        this.startAnimation();
-                    } else {
-                        this.$store.dispatch('toggleAlert', {
-                            msg: data.info
-                        })
-                    }
-                }, (response) => {
-
-                })
+                    media_id: APP.MEDIA_ID,
+                    pro_st: ''
+                },
+                scroll_event: '',
+                support_show: false
             }
         },
-        //签到动画
-        startAnimation(){
-          this.is_animated=true;
-          setTimeout(()=>{
-            this.is_animated=false;
-          },1000);
+        computed: {
+            user() {
+                return this.$store.state.user;
+            },
+            busy() {
+                return this.params.total > this.params.p;
+            },
         },
-        //  热门商品和活动列表，用于首页列表
-        getHotItems(callback) {
-            this.$store.dispatch('toggleLoading', {
-                show: true
-            });
-            this.$http.post(`${APP.HOST}/hot_item`, this.params ).then((response) => {
-                let data = response.data;
+        created() {
+            this.getHotCommend();
+            this.$store.dispatch('toggleLoading');
+            this.getHotItems().then(() => {
+                this.support_show = true;
                 this.$store.dispatch('toggleLoading');
-                if(data.status==APP.SUCCESS){
-                  if(callback){
-                    callback();
-                  }
-                  this.params.total = data.data.total;
-                  this.params.pro_st=data.data.pro_st;
-                  this.hot_items = this.hot_items.concat(data.data.list);
-                }
-            }, (response) => {
+            }).catch(() => {
                 this.$store.dispatch('toggleLoading');
             });
+            this.getSubjectList();
+            this.scroll_event = this.getScrollEvent();
         },
-        getHotCommend() {
-            this.$store.dispatch('toggleLoading', {
-                show: true
-            });
-            this.$http.post(`${APP.HOST}/hot_commend`, {
-                token: APP.TOKEN,
-                userid: APP.USER_ID,
-                media_id:APP.MEDIA_ID
-            }).then((response) => {
-                let data=response.data;
-                this.$store.dispatch('toggleLoading');
-                this.hot_commend = data.data;
-            }, (response) => {
-                this.$store.dispatch('toggleLoading');
-            });
+        activated() {
+            var position = utils.getSessionStorage('position:' + this.$route.name);
+            if (position) {
+                window.scrollTo(0, position);
+            }
+            window.addEventListener('scroll', this.scroll_event);
+        },
+        deactivated() {
+            window.removeEventListener('scroll', this.scroll_event);
+        },
+        methods: {
+            getSubjectList() {
+                this.$http.post(`${APP.HOST}/subject_list`, {
+                    token: APP.TOKEN,
+                    userid: APP.USER_ID,
+                    media_id: APP.MEDIA_ID
+                }).then((response) => {
+                    let data = response.data;
+                    this.subject_list = data.data.list;
+                }, (response) => {});
+            },
+            getHotCommend() {
+                this.$http.post(`${APP.HOST}/hot_commend`, {
+                    token: APP.TOKEN,
+                    userid: APP.USER_ID,
+                    media_id: APP.MEDIA_ID
+                }).then((response) => {
+                    let data = response.data;
+                    this.hot_commend = data.data;
+                }, (response) => {});
+            },
+            //  热门商品和活动列表，用于首页列表
+            getHotItems() {
+                return new Promise((resolve, reject) => {
+                    this.$http.post(`${APP.HOST}/hot_item`, this.params).then((response) => {
+                        let data = response.data;
+                        this.params.total = data.data.total;
+                        this.params.pro_st = data.data.pro_st;
+                        this.hot_items = this.hot_items.concat(data.data.list);
+                        if (resolve) {
+                            resolve();
+                        }
+                    }, (response) => {
+                        reject();
+                    });
+
+
+                })
+            },
+            getScrollEvent() {
+                let scroll = true;
+                return utils.debounce(() => {
+                    if (scroll && this.busy && utils.touchBottom()) {
+                        scroll = false;
+                        this.params.p++;
+                        this.getHotItems().then(() => {
+                            scroll = true;
+                        });
+                    }
+                }, 500, 500);
+            },
         }
-    }
-};
+    };
 </script>

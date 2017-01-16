@@ -1,35 +1,40 @@
 <style lang='sass' scoped>
-@import '../assets/scss/variable.scss';
-
-
+    @import '../assets/scss/variable.scss';
 </style>
 <template>
-<div class='test'>
-
-    <v-load-more></v-load-more>
-</div>
+    <div class='test'>
+        <img src="" alt="">
+        <v-load-more></v-load-more>
+        <button class='btn btn-red' @click='toggleAlert'>alert</button>
+    </div>
 </template>
-<script >
-import vLoadMore from 'components/v_load_more.vue';
-import {
-    Swipe,
-    SwipeItem
-} from 'vue-swipe';
-
-export default {
-    components: {
-        vLoadMore,
-        Swipe,
-        SwipeItem
-    },
-    computed: {},
-    mounted() {
-      // require('https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css');
-      // require('https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js');
-      // require('https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js');
-    },
-    methods: {
-
+<script>
+    import vLoadMore from 'components/vLoadMore.vue'
+    import fortune from 'components/activities/fortune';
+    import shake from 'components/activities/shake';
+    export default {
+        components: {
+            fortune,
+            shake,
+            vLoadMore,
+        },
+        data() {
+            return {}
+        },
+        created() {},
+        methods: {
+            toggleAlert() {
+                this.$store.dispatch('toggleAlert', {
+                    msg: "test",
+                    // close_btn:true
+                })
+            },
+            toggleConfirm() {
+                this.$store.dispatch('toggleConfirm', {
+                    show: true,
+                    msg: 'hello world'
+                })
+            }
+        }
     }
-}
 </script>

@@ -1,13 +1,11 @@
-
-@font-face {font-family: "iconfont";
+@font-face {
   font-family: 'iconfont';  /* project id 117685 */
-  src: url('//at.alicdn.com/t/font_lw1we175d2lf2yb9.eot');
-  src: url('//at.alicdn.com/t/font_lw1we175d2lf2yb9.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_lw1we175d2lf2yb9.woff') format('woff'),
-  url('//at.alicdn.com/t/font_lw1we175d2lf2yb9.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_lw1we175d2lf2yb9.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_zwdisfcr2dfgvi.eot');
+  src: url('//at.alicdn.com/t/font_zwdisfcr2dfgvi.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_zwdisfcr2dfgvi.woff') format('woff'),
+  url('//at.alicdn.com/t/font_zwdisfcr2dfgvi.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_zwdisfcr2dfgvi.svg#iconfont') format('svg');
 }
-
 .iconfont {
   font-family:"iconfont" !important;
   font-size:16px;
@@ -16,6 +14,20 @@
   -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.icon-drag-up:before{ content:"\e61d"; }
+
+.icon-money:before{ content:"\e62e"; }
+
+.icon-product:before{ content:"\e61e"; }
+
+.icon-check-in:before{ content:"\e689"; }
+
+.icon-order-unsolved:before{ content:"\e637"; }
+
+.icon-share:before{ content:"\e67e"; }
+
+.icon-timeline:before{ content:"\e647"; }
 
 .icon-edit:before { content: "\e611"; }
 
@@ -28,8 +40,6 @@
 .icon-delete:before { content: "\e604"; }
 
 .icon-scan:before { content: "\e605"; }
-
-.icon-drag-up:before { content: "\e606"; }
 
 .icon-config:before { content: "\e607"; }
 
