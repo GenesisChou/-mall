@@ -60,19 +60,12 @@ function startApp(cache) {
     let VueResource = require('vue-resource');
     let store = require('./vuex/store.js');
     let FastClick = require('fastclick');
-    let LazyLoad = require('vue-lazyload');
     APP.TOKEN = cache.TOKEN;
     APP.USER_ID = cache.USER_ID;
     APP.MEDIA_ID = cache.MEDIA_ID;
     APP.OPEN_ID = cache.OPEN_ID;
     APP.TITLE = cache.TITLE;
     FastClick.attach(document.body);
-    Vue.use(LazyLoad, {
-        // preLoad: 1.3,
-        //   error: 'dist/error.png',
-        //   loading: 'dist/loading.gif',
-        // attempt: 1
-    });
     Vue.use(VueResource);
     Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
     registerComponents(Vue);

@@ -36,7 +36,7 @@
 <template>
     <div class='v-list-item'>
         <div class='img'>
-            <img v-lazy='img' />
+            <img :src='img' />
         </div>
         <div class='describe'>
             <span class='text-huge '>{{title}}</span>

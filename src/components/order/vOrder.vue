@@ -49,7 +49,7 @@ section.v-order-message {
         订单号：{{id}}
     </header>
     <section class='v-order-message'>
-        <img  v-lazy='img' />
+        <img  :src='img' />
         <div>
             <h2 class='text-ellipsis'>{{name}}</h2>
             <p> {{integral}}积分

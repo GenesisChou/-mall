@@ -66,7 +66,7 @@
                 <i v-if='$index==2' class='iconfont icon-order  text-huge'></i>
                 <i v-if='$index==3' class='iconfont icon-delete  text-huge'></i>
                 <h6>{{tab.name}}</h6>
-                <span class='badage' v-if='$index==0'>{{user.unfinished_order_count}}</span>
+                <span class='badage' v-if='$index==0&&user.unfinished_order_count>0'>{{user.unfinished_order_count}}</span>
             </li>
         </ul>
         <ul>

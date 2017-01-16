@@ -127,7 +127,6 @@
         watch: {
             is_right(value) {
                 if (this.state != 'start') return;
-                this.init();
                 this.freshFreeTimes();
                 let result = this.activity_result;
                 if (value) {
@@ -135,7 +134,10 @@
                 } else {
                     this.$store.dispatch('toggleAlert', {
                         msg: result.name,
-                        type: 'error'
+                        type: 'error',
+                        callback:()=>{
+                            this.init();
+                        }
                     });
                 }
             },
@@ -149,11 +151,17 @@
                         type: 'img',
                         img: result.pic_thumb,
                         btn_text: '查看',
-                        callback: this.toOrderDetail(result.id)
+                        callback: this.toOrderDetail(result.id),
+                        callback_close: () => {
+                            this.init();
+                        }
                     });
                 } else {
                     this.$store.dispatch('toggleAlert', {
                         msg: result.name,
+                        callback: () => {
+                            this.init();
+                        }
                     });
                 }
             }

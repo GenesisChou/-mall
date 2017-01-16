@@ -51,10 +51,9 @@
             float: left;
             margin-right: pxTorem(5);
             max-width: pxTorem(225);
-            line-height: pxTorem(35);
+            // line-height: pxTorem(35);
             height: pxTorem(35);
             overflow: hidden;
-            text-overflow: ellipsis;
             color: #878686;
             font-size: pxTorem(28);
             i {
@@ -84,7 +83,7 @@
             <span v-if='item.script'>
                 {{item.script}}
                 </span>
-            <img v-lazy='item.pic'>
+            <img :src='item.pic'>
         </header>
         <div class='detail'>
             <h2 class='text-ellipsis'>{{item.name}}</h2>
