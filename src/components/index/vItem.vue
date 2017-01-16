@@ -149,7 +149,6 @@
                         name: "activity_detail",
                         query: {
                             activity_id: this.item.item_id,
-                            integral: this.item.integral >> 0
                         }
                     };
 

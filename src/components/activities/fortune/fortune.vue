@@ -90,7 +90,7 @@
                     <img :src='awards[7].pic'>
                     <h6> {{awards[7].name}} </h6>
                 </td>
-                <td class='button' @click='start()'>
+                <td class='button' @click='start'>
                     <h2><strong>点击抽奖</strong></h2>
                     <h5>{{notice}}</h5>
                 </td>
@@ -147,7 +147,6 @@
         },
         watch: {
             state(value) {
-                console.log(value);
                 if (value == 'start') {
                     let result = this.activity_result;
                     this.freshFreeTimes();
@@ -175,7 +174,6 @@
                     setTimeout(() => {
                         step();
                     }, interval);
-
                     function step() {
                         if (time < speed_buffer) {
                             interval = _this.speedUp(interval, speed_interval);
@@ -225,7 +223,14 @@
                 this.current_index = (this.current_index + 1) % this.grid_num;
             },
             getPosition(name) {
-                return this.awards.findIndex(award => award.name == name);
+                let stop_position=0;
+                this.awards.forEach((award,index)=>{
+                    if(award.name==name){
+                       stop_position=index; 
+                       return true;
+                    }
+                })
+                return stop_position;
             },
             getMoveTimes(stop_position) {
                 let step = stop_position - this.current_index;

@@ -49,7 +49,7 @@
     <!--<div class='v-scrap' :style='bg_img'>-->
     <div class='v-scrap'>
         <div id='lotteryContainer'>
-            <button class='btn btn-red' id='start' @click='startActivity'>开始</button>
+            <button class='btn btn-red' id='start' @click='start'>开始</button>
         </div>
         <div v-if='state=="ready"' class='free-time-message'>{{notice}}</div>
     </div>
@@ -100,7 +100,8 @@
                         callback: this.toOrderDetail(result.id),
                         callback_close: () => {
                             let canvas = document.querySelectorAll('canvas');
-                            [...canvas].forEach(item => {
+                            canvas = Array.prototype.slice.call(canvas);
+                            canvas.forEach(item => {
                                 item.parentElement.removeChild(item)
                             });
                             this.init();
@@ -108,9 +109,9 @@
                         btn_text: '查看'
                     };
                 } else {
-                    this.alert={
-                        msg:result.name,
-                        callback:()=>{
+                    this.alert = {
+                        msg: result.name,
+                        callback: () => {
                             this.init();
                         }
                     };
@@ -130,7 +131,8 @@
                 this.activity_result = {};
             },
             //开始活动
-            startActivity() {
+            start() {
+                if (this.state != 'ready') return;
                 this.$store.dispatch('toggleLoading');
                 this.$http.post(`${APP.HOST}/activity_order/${this.id}`, {
                     token: APP.TOKEN,

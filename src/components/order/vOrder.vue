@@ -5,9 +5,6 @@
     border-top: 1px solid $gray-light;
     border-bottom: 1px solid $gray-light;
     background: $white;
-    &:active{
-        background-color:darken($white,10%);
-    }
 }
 header.v-order-header{
     font-size: pxTorem(24);

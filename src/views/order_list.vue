@@ -15,25 +15,30 @@
             height: pxTorem(110);
             padding-top: pxTorem(10);
             text-align: center;
-            border-right:1px solid $gray-light;
-            &:nth-child(4){
-                border-right:none;
+            border-right: 1px solid $gray-light;
+            &:nth-child(4) {
+                border-right: none;
+            }
+            &:active{
+                background-color:darken($white,2%);
             }
             &.active {
                 color: $white;
                 background-color: $red;
-                .badage{
-                    color:$white;
-                    border:2px solid $white;
+                .badage {
+                    color: $white;
+                    border: 2px solid $white;
                 }
-                
+                &:active{
+                    background-color:darken($red,10%);
+                }
             }
         }
         .badage {
             width: pxTorem(50);
             height: pxTorem(50);
             position: absolute;
-            right:pxTorem(10) ;
+            right: pxTorem(10);
             top: 0;
             color: $red;
             border-radius: 50%;
@@ -50,11 +55,16 @@
         }
     }
     
-    .v-order footer {
-        border-top: 1px solid $gray-light;
-        margin: 0 pxTorem(30);
-        font-size: pxTorem(24);
-        line-height: pxTorem(66);
+    .v-order {
+        &:active {
+            background-color: darken($white, 2%);
+        }
+        footer {
+            border-top: 1px solid $gray-light;
+            margin: 0 pxTorem(30);
+            font-size: pxTorem(24);
+            line-height: pxTorem(66);
+        }
     }
 </style>
 <template>

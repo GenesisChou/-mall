@@ -82,14 +82,13 @@
     
     .circle {
         margin: 0 auto pxTorem(10) auto;
-        width: pxTorem(50);
-        height: pxTorem(50);
-        line-height:pxTorem(50);
+        width: pxTorem(52);
+        height: pxTorem(52);
+        line-height: pxTorem(50);
         background-color: $white;
         border-radius: 50%;
         border: 1px solid $gray;
         font-size: pxTorem(20);
-        box-sizing:content-box;
     }
     /* .rotate-enter {
         transform: rotateY(180deg);
@@ -103,7 +102,7 @@
     }*/
 </style>
 <template>
-    <div class='check-in'>
+    <div v-if='loaded' class='check-in'>
         <header>
             <transition name='rotate'>
                 <div v-if='user.ischecked'>
@@ -134,8 +133,6 @@
                 <h6>{{item.day}}</h6>
             </li>
         </ul>
-        <section>
-        </section>
     </div>
 </template>
 <script>
@@ -144,6 +141,7 @@
         data() {
             return {
                 check_in_params: [],
+                loaded:false
             }
         },
         computed: {
@@ -156,6 +154,11 @@
                     return this.check_in_params[1]['integral'].substring(1);
                 }
                 return this.check_in_params[2]['integral'].substring(1);
+            }
+        },
+        watch: {
+            check_in_params() {
+                this.loaded=true;
             }
         },
         created() {
@@ -187,15 +190,17 @@
             },
             //获取签到记录
             getCheckInParams() {
+                this.$store.dispatch('toggleLoading');
                 this.$http.post(`${APP.HOST}/get_checkin_param/${APP.USER_ID}`, {
                     token: APP.TOKEN,
                     userid: APP.USER_ID,
                     media_id: APP.MEDIA_ID
                 }).then((response) => {
+                    this.$store.dispatch('toggleLoading');
                     let data = response.data;
                     this.check_in_params = data.data;
                 }, (response) => {
-
+                    this.$store.dispatch('toggleLoading');
                 })
             }
 

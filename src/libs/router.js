@@ -60,6 +60,7 @@ const router = new VueRouter({
     ],
 });
 router.beforeEach((to, from, next) => {
+    setWeChatConfig(Vue);
     titles.forEach(item => {
         if (item.name == to.name) {
             setWeChatTitle(item.title);
@@ -76,9 +77,4 @@ router.beforeEach((to, from, next) => {
     utils.setSessionStorage('position:' + from.name, utils.getScrollTop());
     next();
 });
-router.afterEach(()=>{
-    setWeChatConfig(Vue);
-})
-
-
 module.exports = router;

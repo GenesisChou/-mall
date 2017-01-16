@@ -18,8 +18,11 @@
     }
 </style>
 <template>
-    <div :style='shake_style'>
+    <div class='v-shake' :style='shake_style'>
         <div class='msg'>
+            <audio id='audio'>
+                <source src="http://xunlei.sc.chinaz.com/files/download/sound1/201410/5018.wav" type="audio/mpeg" />
+            </audio>
             <img src='./images/shake.png'>
             <h3>{{notice}}</h3>
         </div>
@@ -40,7 +43,9 @@
                 state: '', //游戏状态
                 alert: {},
                 is_win: '', //判断是否中奖
-                activity_result: {}
+                activity_result: {},
+                deviceEvent: '',
+                audio: ''
             }
         },
         computed: {
@@ -55,37 +60,41 @@
             }
         },
         watch: {
-            state(value) {
-
-            },
             is_win(value) {
                 if (this.state != 'start') return;
+                this.audio.play();
                 let result = this.activity_result;
-                if (value) {
-                    this.$store.dispatch('toggleAlert', {
-                        close_btn: true,
-                        msg: '获得' + result.name,
-                        type: 'img',
-                        img: result.pic_thumb,
-                        btn_text: '查看',
-                        callback: this.toOrderDetail(result.id),
-                        callback_close: () => {
-                            this.init();
-                        },
-                    });
-                } else {
-                    this.$store.dispatch('toggleAlert', {
-                        msg: result.name,
-                        callback: () => {
-                            this.init();
-                        },
-                    });
-                }
+                this.$store.dispatch('toggleLoading');
+                setTimeout(() => {
+                    this.$store.dispatch('toggleLoading');
+                    if (value) {
+                        this.$store.dispatch('toggleAlert', {
+                            close_btn: true,
+                            msg: '获得' + result.name,
+                            type: 'img',
+                            img: result.pic_thumb,
+                            btn_text: '查看',
+                            callback: this.toOrderDetail(result.id),
+                            callback_close: () => {
+                                this.init();
+                            },
+                        });
+                    } else {
+                        this.$store.dispatch('toggleAlert', {
+                            msg: result.name,
+                            callback: () => {
+                                this.init();
+                            },
+                        });
+                    }
+                }, 1000);
             }
         },
-        created() {
+        mounted() {
             this.init();
-            window.addEventListener('devicemotion', this.deviceMotionHandler, false);
+            this.audio = document.querySelector('.v-shake #audio');
+            this.deviceEvent = this.getDeviceEvent();
+            window.addEventListener('devicemotion', this.deviceEvent);
         },
         methods: {
             init() {
@@ -94,34 +103,36 @@
                 this.is_win = '';
                 this.activity_result = {};
             },
-            deviceMotionHandler(eventData) {
-                const SHAKE_THRESHOLD = 3000;
-                let last_update = 0,
-                    x = 0,
-                    y = 0,
-                    z = 0,
+            getDeviceEvent() {
+                let SHAKE_THRESHOLD = 3000,
+                    last_update = 0,
                     last_x = 0,
                     last_y = 0,
                     last_z = 0,
-                    acceleration = eventData.accelerationIncludingGravity,
-                    curTime = new Date().getTime();
-                if ((curTime - last_update) > 100) {
-                    let diffTime = curTime - last_update;
-                    last_update = curTime;
-                    x = acceleration.x;
-                    y = acceleration.y;
-                    z = acceleration.z;
-                    let speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
-                    if (speed > SHAKE_THRESHOLD) {
-                        alert("摇动了");
-                        this.start();
+                    _this = this;
+                return function (event) {
+                    //acceleration:提供了设备在X,Y,Z轴方向上加速度的对象。加速度的单位为 m/s2。
+                    let acceleration = event.acceleration,
+                        curTime = new Date().getTime(),
+                        diffTime = curTime - last_update;
+                    if (diffTime > 100) {
+                        last_update = curTime;
+                        let x = acceleration.x,
+                            y = acceleration.y,
+                            z = acceleration.z;
+                        let speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
+                        if (speed > SHAKE_THRESHOLD) {
+                            _this.start();
+                        }
+                        last_x = x;
+                        last_y = y;
+                        last_z = z;
                     }
-                    last_x = x;
-                    last_y = y;
-                    last_z = z;
+
                 }
             },
             start() {
+                if (this.state != 'ready') return;
                 this.$http.post(`${APP.HOST}/shake_activity/${this.id}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID
@@ -137,7 +148,6 @@
                         })
                     }
                 }, (response) => {})
-
             }
 
         }

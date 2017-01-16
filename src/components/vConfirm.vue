@@ -34,18 +34,12 @@
             float: left;
             border-top: 1px solid $gray-light;
             background-color: $white;
-            &:active {
-                background-color: darken($white, 5%);
-            }
         }
         .btn-right {
             float: right;
             background-color: $red;
             border-top: 1px solid $red;
             color: $white;
-            &:active {
-                background-color: darken($red, 10%);
-            }
         }
         .bg-cover {
             position: fixed;
