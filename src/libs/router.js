@@ -48,11 +48,11 @@ const router = new VueRouter({
             name: 'check_in',
             component: require('views/checkIn.vue')
         },
-        // {
-        //     path: '/test',
-        //     name: 'test',
-        //     component: require('views/test.vue')
-        // },
+        {
+            path: '/test',
+            name: 'test',
+            component: require('views/test.vue')
+        },
         {
             path: '*',
             redirect: '/'

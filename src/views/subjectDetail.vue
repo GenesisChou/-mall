@@ -48,6 +48,7 @@
             </template>
         </section>
         <v-support v-if='support_show'></v-support>
+        <v-back-top></v-back-top>
     </div>
 </template>
 <script>

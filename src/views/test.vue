@@ -1,9 +1,14 @@
 <style lang='sass' scoped>
     @import '../assets/scss/variable.scss';
+    img {
+        width: pxTorem(200);
+        height: pxTorem(200);
+        margin: pxTorem(300) auto;
+    }
 </style>
 <template>
     <div class='test'>
-        <img src="" alt="">
+        <img class='img' src="">
         <v-load-more></v-load-more>
         <button class='btn btn-red' @click='toggleAlert'>alert</button>
     </div>
@@ -21,7 +26,24 @@
         data() {
             return {}
         },
-        created() {},
+        mounted() {
+            let img = document.getElementsByTagName('img')[0];
+            let start_x=0,start_y=0;
+            img.addEventListener('touchstart', (event) => {
+                let target = event.target,
+                    startPoint = event.touches[0];
+                start_x = startPoint.clientX,
+                    start_y = startPoint.clientY;
+            })
+            img.addEventListener('touchend', (event) => {
+                let stopPoint = event.changedTouches[0],
+                    stop_x = stopPoint.clientX,
+                    stop_y = stopPoint.clientY;
+                let off_x = stop_x - start_x,
+                    off_y = stop_y - start_y;
+                console.log('touchend', off_x, off_y);
+            })
+        },
         methods: {
             toggleAlert() {
                 this.$store.dispatch('toggleAlert', {

@@ -14,18 +14,15 @@
             </v-confirm>
             <v-loading :show='v_loading.show'>
             </v-loading>
-            <v-back-top></v-back-top>
     </div>
 </template>
 <script>
-    import vBackTop from 'components/vBackTop.vue';
     import vLoading from 'components/vLoading.vue';
     import vAlert from 'components/vAlert.vue';
     import vConfirm from 'components/vConfirm.vue';
     export default {
         name: 'app',
         components: {
-            vBackTop,
             vLoading,
             vAlert,
             vConfirm

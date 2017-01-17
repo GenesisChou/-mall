@@ -16,15 +16,95 @@
         height: pxTorem(304);
         margin: pxTorem(20) auto;
     }
+    
+    .msg.active {
+        animation: shake 1s linear;
+        -webkit-animation: shake 1s linear;
+        -moz-animation: shake 1s linear;
+        -ms-animation: shake 1s linear;
+    }
+    
+    @keyframes shake {
+        0% {
+            top: 50%;
+        }
+        25% {
+            top: 40%;
+        }
+        50% {
+            top: 50%;
+        }
+        75% {
+            top: 60%;
+        }
+        100% {
+            top: 50%;
+        }
+    }
+    
+    @-webkit-keyframes shake {
+        0% {
+            top: 50%;
+        }
+        25% {
+            top: 40%;
+        }
+        50% {
+            top: 50%;
+        }
+        75% {
+            top: 60%;
+        }
+        100% {
+            top: 50%;
+        }
+    }
+    
+    @-moz-keyframes shake {
+        0% {
+            top: 50%;
+        }
+        25% {
+            top: 40%;
+        }
+        50% {
+            top: 50%;
+        }
+        75% {
+            top: 60%;
+        }
+        100% {
+            top: 50%;
+        }
+    }
+    
+    @-ms-keyframes shake {
+        0% {
+            top: 50%;
+        }
+        25% {
+            top: 40%;
+        }
+        50% {
+            top: 50%;
+        }
+        75% {
+            top: 60%;
+        }
+        100% {
+            top: 50%;
+        }
+    }
 </style>
 <template>
-    <div class='v-shake' :style='shake_style'>
-        <div class='msg'>
+    <div class='v-shake ' :style='shake_style'>
+        <div :class='["msg",{active:this.shaking}]'>
             <audio id='audio'>
                 <source src="http://xunlei.sc.chinaz.com/files/download/sound1/201410/5018.wav" type="audio/mpeg" />
             </audio>
             <img src='./images/shake.png'>
             <h3>{{notice}}</h3>
+            <!-- <button class='btn btn-red' @click='start'>shake</button>-->
         </div>
     </div>
 </template>
@@ -45,7 +125,8 @@
                 is_win: '', //判断是否中奖
                 activity_result: {},
                 deviceEvent: '',
-                audio: ''
+                audio: '',
+                shaking: false
             }
         },
         computed: {
@@ -61,9 +142,10 @@
         },
         watch: {
             is_win(value) {
-                if (this.state != 'start') return;
-                this.audio.play();
+                if (this.state != 'shaking') return;
                 let result = this.activity_result;
+                this.shake();
+                this.sound();
                 this.$store.dispatch('toggleLoading');
                 setTimeout(() => {
                     this.$store.dispatch('toggleLoading');
@@ -133,21 +215,34 @@
             },
             start() {
                 if (this.state != 'ready') return;
+                this.state = 'start';
                 this.$http.post(`${APP.HOST}/shake_activity/${this.id}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID
                 }).then((response) => {
                     let data = response.data;
                     if (data.status == APP.SUCCESS) {
-                        this.state = 'start';
+                        this.state = 'shaking';
                         this.activity_result = data.data;
                         this.is_win = this.activity_result.is_win;
                     } else {
                         this.$store.dispatch('toggleAlert', {
-                            msg: data.info
+                            msg: data.info,
+                            callback: () => {
+                                this.init();
+                            }
                         })
                     }
                 }, (response) => {})
+            },
+            sound() {
+                this.audio.play();
+            },
+            shake() {
+                this.shaking = true;
+                setTimeout(() => {
+                    this.shaking = false;
+                }, 1000);
             }
 
         }

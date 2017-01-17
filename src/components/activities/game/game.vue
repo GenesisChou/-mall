@@ -82,7 +82,6 @@
             state(value) {
                 if (value == 'start') {
                     this.freshFreeTimes();
-                    this.expand();
                     // this.$parent.game_start = true;
                     AIR.Game.startGame('#canvas', this.game);
                     AIR.Game.gameOver((score) => {
@@ -103,19 +102,35 @@
             },
             is_win(value) {
                 if (this.state != 'start') return;
-                let result = this.activity_result;
+                let result = this.activity_result,
+                    game = this.$el,
+                    canvas = document.getElementById('canvas');
                 if (value) {
                     this.alert = {
-                        // close_btn: true,
+                        close_btn: true,
                         type: 'img',
                         img: result.pic_thumb,
                         msg: '获得' + result.name,
                         callback: this.toOrderDetail(result.id),
+                        callback_close: () => {
+                            this.init();
+                            game.removeChild(canvas);
+                            let new_canvas = document.createElement('canvas');
+                            new_canvas.setAttribute('id', 'canvas');
+                            game.appendChild(canvas);
+                        },
                         btn_text: '查看'
                     };
                 } else {
                     this.alert = {
-                        msg: result.name
+                        msg: result.name,
+                        callback: () => {
+                            this.init();
+                            game.removeChild(canvas);
+                            let new_canvas = document.createElement('canvas');
+                            new_canvas.setAttribute('id', 'canvas');
+                            game.appendChild(canvas);
+                        }
                     }
                 }
 
@@ -146,10 +161,6 @@
                 this.order_detail_id = ''; //活动结束跳转id
                 this.alert = {};
                 this.state = 'ready';
-            },
-            expand() {
-                let height = utils.getClientHeight();
-                this.bg_img.height = height + 'px';
             },
             getGameDetail() {
                 this.$http.post(`${APP.HOST}/game_detail/${this.game_id}`, {

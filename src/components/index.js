@@ -9,6 +9,7 @@ import vPopup from 'components/vPopup.vue';
 import vSimditor from 'components/vSimditor.vue';
 import vSpinner from 'components/vSpinner.vue';
 import vSticky from 'components/vSticky.vue';
+import vBackTop from 'components/vBackTop.vue';
 module.exports = {
     vLoadMore,
     vSupport,
@@ -21,4 +22,5 @@ module.exports = {
     vSimditor,
     vSpinner,
     vSticky,
+    vBackTop
 }

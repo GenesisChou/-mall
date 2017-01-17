@@ -65,6 +65,7 @@
             </router-link>
             <v-load-more v-if='busy'></v-load-more>
             <v-support v-if='support_show'></v-support>
+            <v-back-top></v-back-top>
     </div>
 </template>
 <script>

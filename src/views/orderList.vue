@@ -19,8 +19,8 @@
             &:nth-child(4) {
                 border-right: none;
             }
-            &:active{
-                background-color:darken($white,2%);
+            &:active {
+                background-color: darken($white, 2%);
             }
             &.active {
                 color: $white;
@@ -29,8 +29,8 @@
                     color: $white;
                     border: 2px solid $white;
                 }
-                &:active{
-                    background-color:darken($red,10%);
+                &:active {
+                    background-color: darken($red, 10%);
                 }
             }
         }
@@ -90,6 +90,7 @@
         </ul>
         <v-load-more v-if='busy'></v-load-more>
         <v-support></v-support>
+        <v-back-top></v-back-top>
     </div>
 </template>
 <script>
