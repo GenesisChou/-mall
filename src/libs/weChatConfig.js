@@ -1,12 +1,12 @@
 import wx from 'weixin-js-sdk';
 import store from '../vuex/store.js';
-module.exports = function (Vue) {
-    getSignature().then((data) => {
+module.exports = function (Vue,url) {
+    getSignature(url).then((data) => {
         init(data.data);
     });
     function init(data) {
         let title = APP.TITLE;
-        let link = location.href;
+        let link = url;
         let imgUrl = APP.LOGO;
         let appId = APP.APPID;
         let timestamp = data.timestamp;
@@ -125,13 +125,13 @@ module.exports = function (Vue) {
         });
     }
 
-    function getSignature() {
+    function getSignature(url) {
         return new Promise((resolve, reject) => {
             Vue.http.post(`${APP.HOST}/get_signature`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID,
                 media_id: APP.MEDIA_ID,
-                url: location.href
+                url
             }).then((response) => {
                 let data = response.data;
                 if (data.status == APP.SUCCESS) {

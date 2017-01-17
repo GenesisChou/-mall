@@ -90,36 +90,58 @@
         border: 1px solid $gray;
         font-size: pxTorem(20);
     }
-    /* .rotate-enter {
-        transform: rotateY(180deg);
-    }
-    .rotate-leave-to {
-        transform: rotateY(180deg);
-    }
-    .rotate-enter-active,
+    
     .rotate-leave-active {
-        transition: all 1s;
-    }*/
+        animation: rotate-back 1s linear;
+    }
+    
+    .rotate-enter-active {
+        animation: rotate-front 1s linear;
+    }
+    
+    @keyframes rotate-back {
+        0% {
+            transform: rotateY(0deg);
+        }
+        50% {
+            transform: rotateY(90deg);
+            visibility: hidden;
+        }
+        100% {
+            transform: rotateY(180deg);
+            visibility: hidden;
+        }
+    }
+    
+    @keyframes rotate-front {
+        0% {
+            transform: rotateY(180deg);
+            visibility: hidden;
+        }
+        50% {
+            transform: rotateY(270deg);
+            visibility: hidden;
+        }
+        100% {
+            transform: rotateY(360deg);
+        }
+    }
 </style>
 <template>
     <div v-if='loaded' class='check-in'>
         <header>
-            <transition name='rotate'>
-                <div v-if='user.ischecked'>
-                    <h2>您已连续签到</h2>
-                    <div class='calendar'>
-                        <strong>{{user.checkin_days}}</strong>
-                        <span> 天</span>
-                    </div>
+            <div v-if='user.ischecked'>
+                <h2>您已连续签到</h2>
+                <div class='calendar'>
+                    <strong>{{user.checkin_days}}</strong>
+                    <span> 天</span>
                 </div>
-            </transition>
-            <transition name='rotate'>
-                <div v-if='!user.ischecked'>
-                    <h2></h2>
-                    <div @click='checkIn' class='check-button'>
-                    </div>
+            </div>
+            <div v-else>
+                <h2></h2>
+                <div @click='checkIn' class='check-button'>
                 </div>
-            </transition>
+            </div>
             <h2>
                 <span v-if='!user.ischecked'>今日</span>
                 <span v-else>明日</span> 签到以领取
@@ -141,7 +163,8 @@
         data() {
             return {
                 check_in_params: [],
-                loaded:false
+                loaded: false,
+                checked: true
             }
         },
         computed: {
@@ -158,7 +181,7 @@
         },
         watch: {
             check_in_params() {
-                this.loaded=true;
+                this.loaded = true;
             }
         },
         created() {
