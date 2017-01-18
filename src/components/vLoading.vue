@@ -17,10 +17,9 @@
 </template>
 <script>
 	export default {
-		props: {
-			show: {
-				type: Boolean,
-				default: false
+		computed: {
+			show(){
+                return this.$store.state.v_loading.show;
 			}
 		}
 	}

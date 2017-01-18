@@ -12,7 +12,7 @@
             position: relative;
             width: 25%;
             height: pxTorem(140);
-            padding-top:pxTorem(20);
+            padding-top: pxTorem(20);
             float: left;
             text-align: center;
             font-size: pxTorem(24);
@@ -100,7 +100,7 @@
             </router-link>
         </ul>
         <!-- 专题列表 -->
-        <div class='subject'>
+        <div v-if='subject_show' class='subject'>
             <div class='left'>
                 <router-link :to='{name:"subject_detail",query:{subject_id:subject_list[0].id}}' tag='div'>
                     <img :src='subject_list[0].pic_main'>
@@ -163,7 +163,8 @@
                     pro_st: ''
                 },
                 scroll_event: '',
-                support_show: false
+                support_show: false,
+                subject_show: false
             }
         },
         computed: {
@@ -204,7 +205,10 @@
                     media_id: APP.MEDIA_ID
                 }).then((response) => {
                     let data = response.data;
-                    this.subject_list = data.data.list;
+                    if (data.data.list.length >= 3) {
+                        this.subject_list = data.data.list;
+                        this.subject_show = false;
+                    }
                 }, (response) => {});
             },
             getHotCommend() {

@@ -4,16 +4,12 @@
 </style>
 <template>
     <div id="app">
-            <keep-alive exclude='product_detail,activity_detail,order_list,order_detail,subject_detail'>
-                <router-view></router-view>
-            </keep-alive>
-        <v-alert :show='v_alert.show' :close-btn='v_alert.close_btn' :msg='v_alert.msg' :callback='v_alert.callback' :callback-close='v_alert.callback_close' :type='v_alert.type' :btn-text='v_alert.btn_text'
-            :img='v_alert.img'>
-            </v-alert>
-            <v-confirm :show='v_confirm.show' :msg='v_confirm.msg' :callback='v_confirm.callback'>
-            </v-confirm>
-            <v-loading :show='v_loading.show'>
-            </v-loading>
+        <keep-alive exclude='product_detail,activity_detail,order_list,order_detail,subject_detail'>
+            <router-view></router-view>
+        </keep-alive>
+        <v-alert></v-alert>
+        <v-confirm> </v-confirm>
+        <v-loading></v-loading>
     </div>
 </template>
 <script>
@@ -45,16 +41,5 @@
             });
             document.documentElement.style.fontSize = `${document.documentElement.clientWidth / 10}px`;
         },
-        computed: {
-            v_alert() {
-                return this.$store.state.v_alert;
-            },
-            v_confirm() {
-                return this.$store.state.v_confirm;
-            },
-            v_loading() {
-                return this.$store.state.v_loading;
-            }
-        }
     }
 </script>

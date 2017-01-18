@@ -1,40 +1,147 @@
 <style lang='sass' scoped>
     @import '../../../assets/scss/variable.scss';
-    .msg {
+    .v-shake {
+        overflow: hidden;
+        background-color: $sliver;
+    }
+    
+    .shake {
+        width: pxTorem(200);
+        height: pxTorem(130);
+    }
+    
+    .flower {
         position: absolute;
         left: 50%;
         top: 50%;
-        text-align: center;
+        width: pxTorem(140);
+        height: pxTorem(140);
         transform: translate(-50%, -50%);
-        transform: -webkit-translate(-50%, -50%);
-        transform: -moz-translate(-50%, -50%);
-        transform: -ms-translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
     }
     
-    img {
-        width: pxTorem(235);
-        height: pxTorem(304);
-        margin: pxTorem(20) auto;
+    .top {
+        position: absolute;
+        bottom: 50%;
+        width: 100%;
+        height: 50%;
+        background-color: #2e3132;
+        z-index: 1;
+        .shake {
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            -webkit-transform: translateX(-50%);
+            -moz-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+        }
+        &.active {
+            border-bottom: pxTorem(5) solid $white;
+            animation: up 1.5s linear;
+            -webkit-animation: up 1.5s linear;
+            -moz-animation: up 1.5s linear;
+            -ms-animation: up 1.5s linear;
+        }
     }
     
-    .msg.active {
-        animation: shake 1s linear;
-        -webkit-animation: shake 1s linear;
-        -moz-animation: shake 1s linear;
-        -ms-animation: shake 1s linear;
+    .bottom {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        height: 50%;
+        padding-top: pxTorem(150);
+        background-color: #2e3132;
+        color: $white;
+        z-index: 1;
+        .shake {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            -webkit-transform: translateX(-50%);
+            -moz-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+        }
+        &.active {
+            border-top: pxTorem(5) solid $white;
+            animation: down 1.5s linear;
+            -webkit-animation: down 1.5s linear;
+            -moz-animation: down 1.5s linear;
+            -ms-animation: down 1.5s linear;
+        }
     }
     
-    @keyframes shake {
+    @keyframes up {
+        0% {
+            bottom: 50%;
+        }
+        40% {
+            bottom: 60%;
+        }
+        60% {
+            bottom: 60%;
+        }
+        100% {
+            bottom: 50%;
+        }
+    }
+    
+    @-webkit-keyframes up {
+        0% {
+            bottom: 50%;
+        }
+        40% {
+            bottom: 60%;
+        }
+        60% {
+            bottom: 60%;
+        }
+        100% {
+            bottom: 50%;
+        }
+    }
+    
+    @-moz-keyframes up {
+        0% {
+            bottom: 50%;
+        }
+        40% {
+            bottom: 60%;
+        }
+        60% {
+            bottom: 60%;
+        }
+        100% {
+            bottom: 50%;
+        }
+    }
+    
+    @-ms-keyframes up {
+        0% {
+            bottom: 50%;
+        }
+        40% {
+            bottom: 60%;
+        }
+        60% {
+            bottom: 60%;
+        }
+        100% {
+            bottom: 50%;
+        }
+    }
+    
+    @keyframes down {
         0% {
             top: 50%;
         }
-        25% {
-            top: 40%;
+        40% {
+            top: 60%;
         }
-        50% {
-            top: 50%;
-        }
-        75% {
+        60% {
             top: 60%;
         }
         100% {
@@ -42,17 +149,14 @@
         }
     }
     
-    @-webkit-keyframes shake {
+    @-webkit-keyframes down {
         0% {
             top: 50%;
         }
-        25% {
-            top: 40%;
+        40% {
+            top: 60%;
         }
-        50% {
-            top: 50%;
-        }
-        75% {
+        60% {
             top: 60%;
         }
         100% {
@@ -60,17 +164,14 @@
         }
     }
     
-    @-moz-keyframes shake {
+    @-moz-keyframes down {
         0% {
             top: 50%;
         }
-        25% {
-            top: 40%;
+        40% {
+            top: 60%;
         }
-        50% {
-            top: 50%;
-        }
-        75% {
+        60% {
             top: 60%;
         }
         100% {
@@ -78,17 +179,14 @@
         }
     }
     
-    @-ms-keyframes shake {
+    @-ms-keyframes down {
         0% {
             top: 50%;
         }
-        25% {
-            top: 40%;
+        40% {
+            top: 60%;
         }
-        50% {
-            top: 50%;
-        }
-        75% {
+        60% {
             top: 60%;
         }
         100% {
@@ -98,13 +196,17 @@
 </style>
 <template>
     <div class='v-shake ' :style='shake_style'>
-        <div :class='["msg",{active:this.shaking}]'>
-            <audio id='audio'>
-                <source src="http://xunlei.sc.chinaz.com/files/download/sound1/201410/5018.wav" type="audio/mpeg" />
-            </audio>
-            <img src='./images/shake.png'>
-            <h3>{{notice}}</h3>
-            <!-- <button class='btn btn-red' @click='start'>shake</button>-->
+        <audio id='audio'>
+            <source src="http://xunlei.sc.chinaz.com/files/download/sound1/201410/5018.wav" type="audio/mpeg" />
+        </audio>
+        <img class='flower' src='./images/flower.png'>
+        <div :class='["top",{active:this.shaking}]'>
+            <img class='shake' src='./images/shake_top.png'>
+        </div>
+        <div :class='["bottom",{active:this.shaking}]'>
+            <img class='shake' src='./images/shake_bottom.png'>
+            <h3 class='text-center'>{{notice}}</h3>
+            <!--<button class='btn btn-red' @click='start'>shake</button>-->
         </div>
     </div>
 </template>
@@ -126,7 +228,8 @@
                 activity_result: {},
                 deviceEvent: '',
                 audio: '',
-                shaking: false
+                shaking: false,
+                animation_time: 1500
             }
         },
         computed: {
@@ -135,8 +238,6 @@
                     width: '100%',
                     height: utils.getClientHeight() + 'px',
                     position: 'relative',
-                    backgroundColor: '#2e3132',
-                    color: '#fff',
                 }
             }
         },
@@ -144,32 +245,34 @@
             is_win(value) {
                 if (this.state != 'shaking') return;
                 let result = this.activity_result;
-                this.shake();
                 this.sound();
-                this.$store.dispatch('toggleLoading');
+                this.shake();
                 setTimeout(() => {
                     this.$store.dispatch('toggleLoading');
-                    if (value) {
-                        this.$store.dispatch('toggleAlert', {
-                            close_btn: true,
-                            msg: '获得' + result.name,
-                            type: 'img',
-                            img: result.pic_thumb,
-                            btn_text: '查看',
-                            callback: this.toOrderDetail(result.id),
-                            callback_close: () => {
-                                this.init();
-                            },
-                        });
-                    } else {
-                        this.$store.dispatch('toggleAlert', {
-                            msg: result.name,
-                            callback: () => {
-                                this.init();
-                            },
-                        });
-                    }
-                }, 1000);
+                    setTimeout(() => {
+                        this.$store.dispatch('toggleLoading');
+                        if (value) {
+                            this.$store.dispatch('toggleAlert', {
+                                close_btn: true,
+                                msg: '获得' + result.name,
+                                type: 'img',
+                                img: result.pic_thumb,
+                                btn_text: '查看',
+                                callback: this.toOrderDetail(result.id),
+                                callback_close: () => {
+                                    this.init();
+                                },
+                            });
+                        } else {
+                            this.$store.dispatch('toggleAlert', {
+                                msg: result.name,
+                                callback: () => {
+                                    this.init();
+                                },
+                            });
+                        }
+                    }, 500);
+                }, this.animation_time);
             }
         },
         mounted() {
@@ -215,7 +318,9 @@
             },
             start() {
                 if (this.state != 'ready') return;
-                this.state = 'start';
+                // this.state = 'start';
+                // this.state = 'shaking';
+                // this.is_win = false;
                 this.$http.post(`${APP.HOST}/shake_activity/${this.id}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID
@@ -242,7 +347,7 @@
                 this.shaking = true;
                 setTimeout(() => {
                     this.shaking = false;
-                }, 1000);
+                }, this.animation_time);
             }
 
         }

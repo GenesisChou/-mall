@@ -54,14 +54,6 @@
 <script>
     export default {
         name: 'subject_detail',
-        computed: {
-            tabs() {
-                return this.subject_detail.class_items;
-            },
-            tabs_show() {
-                return this.subject_detail.class_items.length > 1;
-            }
-        },
         data() {
             return {
                 subject_id: '',
@@ -73,13 +65,25 @@
                 tabs_init: false
             }
         },
+        computed: {
+            tabs() {
+                return this.subject_detail.class_items;
+            },
+            tabs_show() {
+                return this.subject_detail.class_items.length > 1;
+            }
+        },
+        watch: {
+            subject_id(value) {
+                this.getSubjectDetail().then(() => {
+                    this.tabs_init = true;
+                    this.support_show = true;
+                });
+                this.$store.dispatch('subjectView',value);
+            }
+        },
         created() {
             this.subject_id = this.$route.query.subject_id;
-            this.getSubjectDetail().then(() => {
-                this.tabs_init = true;
-                this.support_show = true;
-            });
-            this.$store.dispatch('subjectView', this.subject_id);
         },
         methods: {
             getSubjectDetail() {

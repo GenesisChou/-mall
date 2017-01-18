@@ -69,10 +69,19 @@
 <script>
     export default {
         name: 'v-confirm',
-        props: {
-            show: false,
-            msg: String,
-            callback: Function
+        computed:{
+            confirm(){
+                return this.$store.state.v_confirm;
+            },
+            show(){
+                return this.confirm.show;
+            },
+            msg(){
+                return this.confirm.msg;
+            },
+            callback(){
+                return this.confirm.callback;
+            }
         },
         methods: {
             func() {

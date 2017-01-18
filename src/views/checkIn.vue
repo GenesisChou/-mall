@@ -147,7 +147,7 @@
                 <span v-else>明日</span> 签到以领取
                 <span class='text-red'>{{integral}}</span> 积分
             </h2>
-            <h4>连续签到与更多惊喜哦</h4>
+            <h4>连续签到有更多惊喜哦</h4>
         </header>
         <ul class='date list-inline'>
             <li v-for='(item,$index) in check_in_params'>

@@ -65,8 +65,8 @@
             <img v-if='type=="img"' class='pic' :src='img' alt="">
             <i v-else :class='["icon","text-red","iconfont","text-bold",icon_class]'></i>
             <h3 class='msg'>{{msg}}</h3>
-            <button class='btn btn-red btn-large' @click='func()'>{{btnText}}</button>
-            <i v-if='closeBtn' class='close iconfont icon-error-circle' @click='close()'></i>
+            <button class='btn btn-red btn-large' @click='func()'>{{btn_text}}</button>
+            <i v-if='close_btn' class='close iconfont icon-error-circle' @click='close()'></i>
         </div>
         <div v-show='show' class='bg-cover'>
         </div>
@@ -74,30 +74,34 @@
 </template>
 <script>
     export default {
-        props: {
-            show: {
-                type: Boolean,
-                default: false
-            },
-            type: {
-                type: String,
-                default: 'suprise'
-            },
-            msg: String,
-            btnText: {
-                type: String,
-                default: '关闭'
-            },
-            img: String,
-            callback: Function,
-            callbackClose: Function,
-            closeBtn: {
-                type: Boolean,
-                default: false
-            }
-        },
         computed: {
-            //get right icon-class from props's type
+            alert() {
+                return this.$store.state.v_alert;
+            },
+            show() {
+                return this.alert.show;
+            },
+            type() {
+                return this.alert.type;
+            },
+            msg() {
+                return this.alert.msg;
+            },
+            btn_text() {
+                return this.alert.btn_text || '关闭';
+            },
+            img() {
+                return this.alert.img;
+            },
+            callback() {
+                return this.alert.callback;
+            },
+            callback_close() {
+                return this.alert.callback_close;
+            },
+            close_btn() {
+                return this.alert.close_btn;
+            },
             icon_class() {
                 if (this.type == 'suprise') {
                     return 'icon-warn';
@@ -112,14 +116,14 @@
         },
         methods: {
             func() {
-                this.close();
                 if (this.callback) {
                     this.callback();
                 }
+                this.close();
             },
             close() {
-                if (this.callbackClose) {
-                    this.callbackClose();
+                if (this.callback_close) {
+                    this.callback_close();
                 }
                 this.$store.dispatch('toggleAlert');
             }

@@ -123,7 +123,7 @@
             <div class='modal-content'>
                 <header>
                     <p>您可以通过以下途径赚取积分：</p>
-                    <p>1.点击右上角的’...‘</p>
+                    <p>1.点击右上角的'...'</p>
                     <p>2.选择 <i class=' icon-share iconfont text-normal '></i> 或 <i class=' icon-timeline iconfont text-normal '></i>                        即可
                     </p>
                     <img src='../assets/images/share.png'>

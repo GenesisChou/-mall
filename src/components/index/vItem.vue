@@ -50,8 +50,7 @@
         span {
             float: left;
             margin-right: pxTorem(5);
-            max-width: pxTorem(225);
-            // line-height: pxTorem(35);
+            max-width: pxTorem(200);
             height: pxTorem(35);
             overflow: hidden;
             color: #878686;
@@ -64,9 +63,7 @@
             }
         }
         strong {
-            width: pxTorem(70);
-            height: pxTorem(35);
-            line-height: pxTorem(35);
+            padding: 0 pxTorem(10);
             background: $pink;
             border-radius: pxTorem(10);
             color: $white;
@@ -90,7 +87,7 @@
             <div>
                 <span>{{item.sub_name}}</span>
                 <strong>
-                 {{exchange_msg}}
+                 {{item.label}}
                 </strong>
             </div>
         </div>
@@ -112,26 +109,6 @@
             }
         },
         computed: {
-            exchange_msg() {
-                if (this.item.type == 1) {
-                    return '兑换';
-                }
-                if (this.item.type == 2) {
-                    let type = this.item.item_type;
-                    switch (type) {
-                        case 1:
-                            return '刮卡';
-                        case 2:
-                            return '问答';
-                        case 3:
-                            return '游戏';
-                        case 4:
-                            return '摇摇';
-                        case 5:
-                            return '转盘';
-                    }
-                }
-            },
             router_link() {
                 if (this.item.type == 1) {
                     return {

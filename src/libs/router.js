@@ -67,12 +67,6 @@ router.beforeEach((to, from, next) => {
         }
     })
     store.dispatch('pageView', to.name);
-    if (store.state.v_alert.show) {
-        store.dispatch('toggleAlert');
-    }
-    if (store.state.v_confirm.show) {
-        store.dispatch('toggleConfirm');
-    }
     utils.setSessionStorage('position:' + from.name, utils.getScrollTop());
     next();
 });

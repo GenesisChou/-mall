@@ -96,14 +96,12 @@
         name: 'product_detail',
         data() {
             return {
+                product_id:'',
                 product_detail: '',
                 order_detail_id: '', //兑换成功后用于跳转订单详情的订单id
             };
         },
         computed: {
-            product_id() {
-                return this.$route.query.product_id;
-            },
             integral_enough() {
                 return this.user.integral >= this.integral;
             },
@@ -118,11 +116,14 @@
             }
         },
         watch: {
+            product_id() {
+                this.getProductDetail();
+            },
             order_detail_id() {
                 //更新用户数据
                 this.$store.dispatch('getUserInfor');
                 this.$store.dispatch('toggleAlert', {
-                    close_btn:true,
+                    close_btn: true,
                     msg: '获得' + this.product_name,
                     type: 'img',
                     img: this.product_detail.pic_thumb,
@@ -132,7 +133,7 @@
             }
         },
         created() {
-            this.getProductDetail();
+            this.product_id = this.$route.query.product_id;
         },
         methods: {
             //获取商品详情

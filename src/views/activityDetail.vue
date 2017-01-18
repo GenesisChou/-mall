@@ -31,8 +31,8 @@
         <header>
             <keep-alive>
                 <!-- is：活动类型 freshFreeTimes:刷新免费活动次数 ：notice:剩余次数／消耗积分提示 ：toOrderDetail:订单详情跳转 -->
-                <component :is='activity_type' :fresh-free-times='freshFreeTimes' :activity-detail='activity_detail' :id='activity_id>>0' :notice='notice'
-                    :to-order-detail='toOrderDetail'>
+                <component :is='activity_type' :fresh-free-times='freshFreeTimes' :activity-detail='activity_detail' :id='activity_id>>0'
+                    :notice='notice' :to-order-detail='toOrderDetail'>
                     </component>
             </keep-alive>
         </header>
@@ -74,6 +74,7 @@
         data() {
             return {
                 type: '',
+                activity_id: '',
                 activity_detail: '',
                 free_times: '',
                 activity_type: '',
@@ -85,9 +86,6 @@
                     return `您还剩余${this.free_times}次免费机会`;
                 }
                 return `消耗积分${this.activity_detail.integral >> 0}`;
-            },
-            activity_id() {
-                return this.$route.query.activity_id;
             },
             aword_list() {
                 return this.activity_detail.items;
@@ -116,11 +114,16 @@
                 }
             }
         },
+        watch: {
+            activity_id() {
+                this.getActivityDetail().then(data => {
+                    this.type = data.data.type;
+                });
+                this.getFreeTimes();
+            },
+        },
         created() {
-            this.getActivityDetail().then(data => {
-                this.type = data.data.type;
-            });
-            this.getFreeTimes();
+            this.activity_id = this.$route.query.activity_id;
         },
         methods: {
             //获取活动详情
@@ -156,7 +159,7 @@
                     this.free_times = data.data.free_times;
                 })
             },
-            freshFreeTimes(){
+            freshFreeTimes() {
                 this.$store.dispatch('getUserInfor');
                 this.getFreeTimes();
             },
