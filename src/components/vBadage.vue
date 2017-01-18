@@ -5,7 +5,7 @@
         height: pxTorem(50);
         position: absolute;
         right: pxTorem(45);
-        top: pxTorem(-20);
+        top: pxTorem(0);
         background-color: $white;
         color: $red;
         border-radius: 50%;

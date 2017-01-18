@@ -6,18 +6,19 @@
     }
     
     .icon-list {
-        padding: pxTorem(25) 0;
         margin: pxTorem(30) 0;
         overflow: hidden;
         li {
             position: relative;
             width: 25%;
+            height: pxTorem(140);
+            padding-top:pxTorem(20);
             float: left;
             text-align: center;
             font-size: pxTorem(24);
             background-color: $white;
-            &:active{
-                background-color:darken($white,10%);
+            &:active {
+                background-color: darken($white, 10%);
             }
         }
         .iconfont {
