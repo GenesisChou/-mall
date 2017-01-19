@@ -70,11 +70,11 @@ router.beforeEach((to, from, next) => {
     utils.setSessionStorage('position:' + from.name, utils.getScrollTop());
     next();
 });
-router.afterEach((to,from)=>{
-    let url=location.href;
-    if(from.name){
-        url+=to.fullPath.substring(1);
-    }
-    setWeChatConfig(Vue,url);
+router.afterEach((to, from) => {
+    let url = location.href.split('#/')[0];
+    url += '#' + to.fullPath;
+    console.log(to.fullPath);
+    console.log(url);
+    setWeChatConfig(Vue, url);
 });
 module.exports = router;
