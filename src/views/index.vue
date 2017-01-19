@@ -139,19 +139,7 @@
             return {
                 hot_items: [],
                 hot_commend: [],
-                subject_list: [{
-                    id: 0,
-                    pic_main: '',
-                    pic_second: ''
-                }, {
-                    id: 0,
-                    pic_main: '',
-                    pic_second: ''
-                }, {
-                    id: 0,
-                    pic_main: '',
-                    pic_second: ''
-                }],
+                subject_list: [],
                 params: {
                     p: 1,
                     r: APP.PERPAGE,
@@ -174,6 +162,9 @@
             busy() {
                 return this.params.total > this.params.p;
             },
+            subject_show(){
+                return this.subject_list.length>=3;
+            }
         },
         created() {
             this.getHotCommend();
@@ -207,7 +198,6 @@
                     let data = response.data;
                     if (data.data.list.length >= 3) {
                         this.subject_list = data.data.list;
-                        this.subject_show = false;
                     }
                 }, (response) => {});
             },
