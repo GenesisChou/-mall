@@ -115,7 +115,6 @@
                         name: "product_detail",
                         query: {
                             product_id: this.item.item_id,
-                            product_name: this.item.name,
                             integral: this.item.integral >> 0
                         }
                     };

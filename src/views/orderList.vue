@@ -124,7 +124,8 @@
                     type: 'expired',
                     name: '已逾期订单'
                 }],
-                busy: false
+                busy: false,
+                first: true
             }
         },
         computed: {
@@ -165,16 +166,35 @@
                 })
             }
         },
-        //路由变化后 解除滚动事件
         beforeRouteLeave(to, from, next) {
             window.removeEventListener('scroll', this.scroll_events[this.current_type]);
             next();
         },
+        beforeRouteEnter(to, from, next) {
+            next(vm => {
+                if (from.name == 'index') {
+                    vm.init();
+                } else if(!vm.first){
+                    window.addEventListener('scroll', vm.scroll_events[vm.current_type]);
+                }
+            })
+        },
         created() {
+            this.first = false;
             this.init();
+        },
+        activated() {
+            var position = utils.getSessionStorage('position:' + this.$route.name);
+            if (position) {
+                window.scrollTo(0, position);
+            }
         },
         methods: {
             init() {
+                this.order_list.unsolved = [];
+                this.order_list.untransported = [];
+                this.order_list.solved = [];
+                this.order_list.expired = [];
                 this.tabs.forEach((item, index) => {
                     let type = item.type,
                         tab = index + 1;
@@ -186,6 +206,7 @@
                         userid: APP.USER_ID,
                         class: tab
                     }
+
                     this.scroll_events[type] = this.getScrollEvent(tab, this.params[type], (data) => {
                         this.order_list[type] = this.order_list[type].concat(data.data.list);
                     });

@@ -6,13 +6,13 @@
     }
     
     .icon-list {
-        margin: pxTorem(30) 0;
+        margin: pxTorem(20) 0;
         overflow: hidden;
+        color: $gray;
         li {
             position: relative;
             width: 25%;
-            height: pxTorem(140);
-            padding-top: pxTorem(20);
+            height: pxTorem(138);
             float: left;
             text-align: center;
             font-size: pxTorem(24);
@@ -22,7 +22,25 @@
             }
         }
         .iconfont {
-            font-size: pxTorem(40);
+            display: block;
+            width: 100%;
+            height: pxTorem(80);
+            padding-top: pxTorem(10);
+            font-size: pxTorem(50);
+        }
+        .icon-money {
+            color: rgb(14, 75, 171);
+        }
+        .icon-check-in {
+            font-size: pxTorem(43);
+            padding-top: pxTorem(15);
+            color: rgb(42, 170, 24);
+        }
+        .icon-order-unsolved {
+            color: rgb(202, 84, 70);
+        }
+        .icon-product {
+            color: rgb(231, 143, 65);
         }
     }
     
@@ -43,7 +61,7 @@
     }
     
     .subject {
-        margin-bottom: pxTorem(30);
+        margin-bottom: pxTorem(20);
         overflow: hidden;
         background-color: $white;
         img {
@@ -90,7 +108,7 @@
                 <p>每日签到</p>
             </router-link>
             <router-link :to='{name:"order_list"}' tag='li'>
-                <i class=' icon-order iconfont  '></i>
+                <i class=' icon-order-unsolved iconfont  '></i>
                 <v-badage :num='user.unfinished_order_count'></v-badage>
                 <p>我的订单</p>
             </router-link>
@@ -162,8 +180,8 @@
             busy() {
                 return this.params.total > this.params.p;
             },
-            subject_show(){
-                return this.subject_list.length>=3;
+            subject_show() {
+                return this.subject_list.length >= 3;
             }
         },
         created() {

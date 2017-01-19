@@ -112,7 +112,7 @@
                 return this.$route.query.integral || this.product_detail.integral || 0;
             },
             product_name() {
-                return this.product_detail.name || this.$route.query.product_name;
+                return this.product_detail.name;
             }
         },
         watch: {

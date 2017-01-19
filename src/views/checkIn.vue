@@ -48,9 +48,9 @@
     
     .date {
         margin: pxTorem(70) pxTorem(37);
-        padding: pxTorem(28) pxTorem(70);
+        padding: pxTorem(28) pxTorem(50);
         font-size: pxTorem(24);
-        border: 1px solid $gray-light;
+        // border: 1px solid $gray-light;
         border-radius: pxTorem(10);
         color: $gray;
         li {
@@ -81,10 +81,10 @@
     }
     
     .circle {
-        margin: 0 auto pxTorem(10) auto;
-        width: pxTorem(52);
-        height: pxTorem(52);
-        line-height: pxTorem(50);
+        margin: 0 auto pxTorem(20) auto;
+        width: pxTorem(68);
+        height: pxTorem(68);
+        line-height: pxTorem(66);
         background-color: $white;
         border-radius: 50%;
         border: 1px solid $gray;
@@ -144,7 +144,7 @@
             </div>
             <h2>
                 <span v-if='!user.ischecked'>今日</span>
-                <span v-else>明日</span> 签到以领取
+                <span v-else>明日</span> 签到可领取
                 <span class='text-red'>{{integral}}</span> 积分
             </h2>
             <h4>连续签到有更多惊喜哦</h4>

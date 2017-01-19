@@ -74,6 +74,24 @@
             }
         }
     }
+    
+    .input-box {
+        padding: pxTorem(30);
+        input {
+            width: pxTorem(500);
+            border: 1px solid $gray-light;
+            color: $sliver;
+            text-indent: pxTorem(20);
+        }
+        .btn {
+            font-size: pxTorem(26);
+            padding-left: pxTorem(15);
+            padding-right: pxTorem(15);
+        }
+        .btn-receive{
+            background-color:$gray;
+        }
+    }
 </style>
 <template>
     <div v-if='loaded' class='order-detail '>
@@ -114,7 +132,15 @@
             <template v-else>
                 <!-- 取货类型为快递 -->
                 <template v-if='send_type==1'>
-                    <template v-if='address_list.length'>
+                    <!-- 无地址 -->
+                    <template v-if='order_detail.status==1&&!address_list.length'>
+                        <v-address-edit :show='popup_edit' :toggle-popup='toggleEdit'></v-address-edit>
+                        <div class='single-button'>
+                            <button class='btn btn-red btn-block btn-large ' @click='toggleEdit'>+ 请填写收货地址</button>
+                        </div>
+                    </template>
+                    <!-- 有地址 -->
+                    <template v-else>
                         <section class='address-selected ' @click='toggleSelect'>
                             <div class='location pull-left'>
                                 <i class='iconfont icon-location  text-huge'></i>
@@ -134,32 +160,44 @@
                             </div>
                         </section>
                         <!-- 物流信息 -->
-                        <!-- status=3时为发货状态 -->
-                        <v-logistics v-if='order_detail.status==3' :order-detail='order_detail'></v-logistics>
+                        <!-- status!=1时为已确认地址 -->
+                        <v-logistics v-if='order_detail.status!=1' :order-detail='order_detail'></v-logistics>
                         <div v-if='!order_checked' class='single-button'>
                             <button class='btn btn-red btn-block btn-large ' @click='updateOrderAddress'>确认地址</button>
                         </div>
                         <v-address-select :show='popup_select' :toggle-popup='toggleSelect' :default-id='default_address.id>>0'></v-address-select>
                     </template>
-                    <!-- 无地址 -->
-                    <template v-else>
-                        <v-address-edit :show='popup_edit' :toggle-popup='toggleEdit'></v-address-edit>
-                        <div class='single-button'>
-                            <button class='btn btn-red btn-block btn-large ' @click='toggleEdit'>+ 请填写收货地址</button>
-                        </div>
-                    </template>
                 </template>
                 <!-- 取货类型为自取时 -->
-                <div v-if='send_type==2' class='address-selected '>
-                    <div class='location pull-left'>
-                        <i class='iconfont icon-location  text-huge'></i>
+                <template v-if='send_type==2'>
+                    <div class='address-selected '>
+                        <div class='location pull-left'>
+                            <i class='iconfont icon-location  text-huge'></i>
+                        </div>
+                        <div class='address-content clearfix'>
+                            <p>
+                                <label>取货地址:</label> {{order_detail.take_address}}
+                            </p>
+                        </div>
                     </div>
-                    <div class='address-content clearfix'>
-                        <p>
-                            <label>取货地址:</label> {{order_detail.take_address}}
-                        </p>
-                    </div>
-                </div>
+                    <v-divider text='输入取货码'></v-divider>
+                    <form class='input-box'>
+                        <input type="text">
+                        <button v-if='order_detail.status==3' class='btn btn-red pull-right text-normal' @click='receiveOrder'>确认</button>
+                        <button v-else class='btn  pull-right text-normal'>已取货</button>
+                    </form>
+                    <v-simditor>
+                        <v-divider v-if='product_detail.content_use' text='领取说明'></v-divider>
+                        <article v-if='product_detail.content_use' class='introduction' v-html='product_detail.content_use'> </article>
+                        <v-divider text='重要声明'></v-divider>
+                        <ul class='introduction'>
+                            <li>1.除商品本身不能正常兑换外，商品一经兑换，积分概不退还，请用户在兑换前仔细阅读使用规则、使用说明、有效期等重要信息； </li>
+                            <li>2.除活动流程出现异常外，奖品一经发放，参与活动积分概不退还，请用户在参与活动前仔细阅读活动规则、活动说明等重要信息； </li>
+                            <li>3.通过非法途径获得积分后进行的正常兑换（参与活动）行为，或不按照商品使用规则进行兑换，商家有权不提供服务； </li>
+                            <li>4.凡以不正当手段（包括但不限于作弊、扰乱系统、实施网络攻击等）进行兑换，平台有权终止该次兑换。</li>
+                        </ul>
+                    </v-simditor>
+                </template>
             </template>
         </v-order>
     </div>
@@ -244,7 +282,7 @@
             },
             //order_type  1商品兑换 2活动
             //product_type 1优惠券唯一码 2实物 3积分赠送 4谢谢参与 5优惠券链接 6优惠券通用码
-            //status  1未发货 2已确认地址 3已发货
+            //status  1未确认地址 2已确认地址 3已发货
             //send_type 1快递 2自提
             product_type(value) {
                 if (value == 1 || value == 2 || value == 5 || value == 6) {
@@ -256,7 +294,7 @@
                 }
             },
             send_type(value) {
-                if (value == 1 && this.product_type == 2) {
+                if (value == 1 && this.product_type == 2 && this.order_detail.status == 1) {
                     this.$store.dispatch('getAddressList');
                 }
             }
@@ -303,6 +341,28 @@
             },
             //确认订单地址
             updateOrderAddress() {
+                this.$store.dispatch('toggleLoading');
+                this.$http.post(`${APP.HOST}/update_order_address/${this.order_id}`, {
+                    token: APP.TOKEN,
+                    userid: APP.USER_ID,
+                    id: this.default_address.id
+                }).then((response) => {
+                    let data = response.data;
+                    this.$store.dispatch('toggleLoading');
+                    if (data.status == APP.SUCCESS) {
+                        this.getOrderDetail();
+                    } else {
+                        this.$store.dispatch('toggleAlert', {
+                            msg: data.info
+                        })
+                    }
+                }, (response) => {
+                    this.$store.dispatch('toggleLoading');
+
+                })
+            },
+            //领取订单
+            receiveOrder() {
                 this.$store.dispatch('toggleLoading');
                 this.$http.post(`${APP.HOST}/update_order_address/${this.order_id}`, {
                     token: APP.TOKEN,
