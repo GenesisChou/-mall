@@ -88,9 +88,13 @@
             padding-left: pxTorem(15);
             padding-right: pxTorem(15);
         }
-        .btn-receive{
-            background-color:$gray;
+        .btn-receive {
+            background-color: $gray;
         }
+    }
+    
+    input[type="text"]:disabled {
+        background-color: $gray-light;
     }
 </style>
 <template>
@@ -180,12 +184,15 @@
                             </p>
                         </div>
                     </div>
+                    <!--
                     <v-divider text='输入取货码'></v-divider>
-                    <form class='input-box'>
-                        <input type="text">
-                        <button v-if='order_detail.status==3' class='btn btn-red pull-right text-normal' @click='receiveOrder'>确认</button>
-                        <button v-else class='btn  pull-right text-normal'>已取货</button>
-                    </form>
+                    <div class='input-box'>
+                        <input type="text" v-model='receive_code' :disabled='order_detail.status==3||order_detail.status==4'>
+                        <button v-if='order_detail.status==2' class='btn btn-red pull-right text-normal' @click='receiveOrder'>确认</button>
+                        <button v-if='order_detail.status==3' class='btn  pull-right text-normal'>已取货</button>
+                        <button v-if='order_detail.status==4' class='btn  pull-right text-normal'>已逾期</button>
+                    </div>
+                    -->
                     <v-simditor>
                         <v-divider v-if='product_detail.content_use' text='领取说明'></v-divider>
                         <article v-if='product_detail.content_use' class='introduction' v-html='product_detail.content_use'> </article>
@@ -223,10 +230,10 @@
                 product_id: '',
                 product_type: '',
                 send_type: '',
-                confirm: false,
                 popup_edit: false,
                 popup_select: false,
                 loaded: false,
+                receive_code: ''
             };
         },
         computed: {
@@ -364,7 +371,7 @@
             //领取订单
             receiveOrder() {
                 this.$store.dispatch('toggleLoading');
-                this.$http.post(`${APP.HOST}/update_order_address/${this.order_id}`, {
+                this.$http.post(`${APP.HOST}/receive_order/${this.order_id}`, {
                     token: APP.TOKEN,
                     userid: APP.USER_ID,
                     id: this.default_address.id

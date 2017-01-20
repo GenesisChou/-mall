@@ -24,9 +24,9 @@
     .detail {
         margin-left: pxTorem(60);
         overflow: hidden;
-        color:$gray;
-        &.active{
-            color:$red;
+        color: $gray;
+        &.active {
+            color: $red;
         }
         .msg {
             margin-bottom: pxTorem(5);
@@ -52,7 +52,7 @@
     }
 </style>
 <template>
-    <section class='v-logistics'>
+    <section v-if='!is_expired' class='v-logistics'>
         <header>
             <span>物流信息</span>
             <label>{{message}}</label>
@@ -100,6 +100,9 @@
             },
             is_shiped() {
                 return this.orderDetail.status == 3;
+            },
+            is_expired(){
+                return this.orderDetail.status == 4;
             },
             message() {
                 if (this.is_shiped) {
