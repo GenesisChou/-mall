@@ -99,7 +99,7 @@
                         msg: '获得' + result.name,
                         callback: this.toOrderDetail(result.id),
                         callback_close: () => {
-                            let canvas = document.querySelectorAll('canvas');
+                            let canvas = document.getElementsByTagName('canvas');
                             canvas = Array.prototype.slice.call(canvas);
                             canvas.forEach(item => {
                                 item.parentElement.removeChild(item)
@@ -112,6 +112,11 @@
                     this.alert = {
                         msg: result.name,
                         callback: () => {
+                            let canvas = document.getElementsByTagName('canvas');
+                            canvas = Array.prototype.slice.call(canvas);
+                            canvas.forEach(item => {
+                                item.parentElement.removeChild(item)
+                            });
                             this.init();
                         }
                     };

@@ -94,6 +94,9 @@
             }
         }
     }
+    .hot-list{
+        overflow:hidden;
+    }
 </style>
 <template>
     <div class='index '>
@@ -133,7 +136,7 @@
                 </router-link>
             </div>
         </div>
-        <section>
+        <section class='hot-list'>
             <!-- 热门推荐 -->
             <v-item v-for='item in hot_commend' :item='item' type='commend'></v-item>
             <!-- 热门 -->

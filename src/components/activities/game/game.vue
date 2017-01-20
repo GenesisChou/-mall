@@ -104,7 +104,9 @@
                 if (this.state != 'start') return;
                 let result = this.activity_result,
                     game = this.$el,
-                    canvas = document.getElementById('canvas');
+                    old_canvas = document.getElementById('canvas'),
+                    new_canvas = document.createElement('canvas');
+                new_canvas.setAttribute('id', 'canvas');
                 if (value) {
                     this.alert = {
                         close_btn: true,
@@ -114,10 +116,7 @@
                         callback: this.toOrderDetail(result.id),
                         callback_close: () => {
                             this.init();
-                            game.removeChild(canvas);
-                            let new_canvas = document.createElement('canvas');
-                            new_canvas.setAttribute('id', 'canvas');
-                            game.appendChild(canvas);
+                            game.replaceChild(new_canvas, old_canvas);
                         },
                         btn_text: '查看'
                     };
@@ -126,10 +125,7 @@
                         msg: result.name,
                         callback: () => {
                             this.init();
-                            game.removeChild(canvas);
-                            let new_canvas = document.createElement('canvas');
-                            new_canvas.setAttribute('id', 'canvas');
-                            game.appendChild(canvas);
+                            game.replaceChild(new_canvas, old_canvas);
                         }
                     }
                 }
