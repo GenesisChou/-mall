@@ -1,6 +1,7 @@
 let token = utils.getParameterByName('token');
-let activity_id = utils.getParameterByName('activity_id');
-let product_id = utils.getParameterByName('product_id');
+let activity_id = utils.getParameterByName('activity_id'),
+    product_id = utils.getParameterByName('product_id'),
+    subject_id = utils.getParameterByName('subject_id');
 if (token) {
     let media_id = utils.getParameterByName('mediaid');
     let cache = {
@@ -12,12 +13,18 @@ if (token) {
         TITLE: utils.getParameterByName('imall_title')
     };
     utils.setLocalStorage(media_id, cache);
-    startApp(cache);
-    // let link = `${APP.MALL_HOST}/?id=${media_id}`;
-    // if (activity_id) {
-    //     link = link + '#/activity_detail?activity_id=' + activity_id;
-    // }
-    // location.href = link;
+    //本地测试用
+    // startApp(cache);
+    //正式部署用
+    let link = `${APP.MALL_HOST}/?id=${media_id}`;
+    if (activity_id) {
+        link += '#/activity_detail?activity_id=' + activity_id;
+    } else if (product_id) {
+        link += '#/product_detail?product_id=' + product_id;
+    } else if (subject_id) {
+        link += '#/subject_detail?subject_id=' + subject_id;
+    }
+    location.href = link;
 } else {
     let media_id = utils.getParameterByName('id');
     let cache = utils.getLocalStorage(media_id);
@@ -51,6 +58,8 @@ function wxLogin(media_id) {
         link += '&activity_id=' + activity_id;
     } else if (product_id) {
         link += '&product_id=' + product_id;
+    } else if (subject_id) {
+        link += '&subject_id=' + product_id;
     }
     location.href = link;
 }

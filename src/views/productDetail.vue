@@ -83,7 +83,7 @@
         <v-sticky>
             <footer class='footer '>
                 <h4 class='pull-left'>
-                    单价：<span class='text-red'>{{integral||(product_detail.integral)>>0}}</span>积分
+                    单价：<span class='text-red'>{{integral}}</span>积分
                 </h4>
                 <button v-if='integral_enough' class='btn-red pull-right' @click='exchange'>兑换</button>
                 <button v-else class='btn-disable pull-right'>积分不足</button>
@@ -109,7 +109,7 @@
                 return this.$store.state.user;
             },
             integral() {
-                return this.$route.query.integral || this.product_detail.integral || 0;
+                return this.$route.query.integral || (this.product_detail.integral>>0) || 0;
             },
             product_name() {
                 return this.product_detail.name;

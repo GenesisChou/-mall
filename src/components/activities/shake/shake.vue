@@ -247,6 +247,7 @@
                 let result = this.activity_result;
                 this.sound();
                 this.shake();
+                this.freshFreeTimes();
                 setTimeout(() => {
                     this.$store.dispatch('toggleLoading');
                     setTimeout(() => {

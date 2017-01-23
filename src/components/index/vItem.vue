@@ -85,7 +85,7 @@
         <div class='detail'>
             <h2 class='text-ellipsis'>{{item.name}}</h2>
             <div>
-                <span>{{item.sub_name}}</span>
+                <span>{{sub_name}}</span>
                 <strong>
                  {{item.label}}
                 </strong>
@@ -99,16 +99,14 @@
             item: Object,
             type: String
         },
-        methods: {
-            router() {
-                if (this.type == 'commend') {
-                    this.$store.dispatch('commendView', this.item.id);
-                }
-
-                this.$router.push(this.router_link);
-            }
-        },
         computed: {
+
+            sub_name() {
+                if (this.item.sub_name) {
+                    return this.item.sub_name;
+                }
+                return `${this.item.integral>>0}积分`;
+            },
             router_link() {
                 if (this.item.type == 1) {
                     return {
@@ -130,6 +128,17 @@
 
                 }
             }
-        }
+        },
+
+        methods: {
+            router() {
+                if (this.type == 'commend') {
+                    this.$store.dispatch('commendView', this.item.id);
+                }
+
+                this.$router.push(this.router_link);
+            },
+
+        },
     }
 </script>
