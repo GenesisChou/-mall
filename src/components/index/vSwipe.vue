@@ -7,7 +7,6 @@
             height: pxTorem(300);
         }
     }
-    
 </style>
 <template>
     <swipe class='v-swipe'>
@@ -47,16 +46,7 @@
                 }, (response) => {});
             },
             routerLink(banner) {
-                if (banner.type == 1) {
-                    location.href = banner.url;
-                } else if (banner.type == 2) {
-                    this.$router.push({
-                        name: "activity_detail",
-                        query: {
-                            activity_id: banner.item_id
-                        }
-                    })
-                }
+                location.href = banner.url;
             },
             bannerView(banner) {
                 this.$store.dispatch('bannerView', banner.id);
