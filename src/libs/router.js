@@ -59,8 +59,7 @@ const router = new VueRouter({
         }
     ],
 });
-
-setWeChatTitle(APP.TITLE);
+utils.setTitle(APP.TITLE);
 router.beforeEach((to, from, next) => {
     titles.forEach(item => {
         if (item.name == to.name) {

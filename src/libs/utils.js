@@ -1,4 +1,7 @@
 module.exports = {
+    setTitle(title) {
+        document.title = title;
+    },
     getParameterByName(name, url) {
         if (!url) url = window.location.href;
         name = name.replace(/[\[\]]/g, "\\$&");
