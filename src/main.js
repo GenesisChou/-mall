@@ -73,7 +73,9 @@ function startApp(cache) {
     APP.USER_ID = cache.USER_ID;
     APP.MEDIA_ID = cache.MEDIA_ID;
     APP.OPEN_ID = cache.OPEN_ID;
-    APP.TITLE = cache.TITLE;
+    if (cache.TITLE) {
+        APP.TITLE = cache.TITLE;
+    }
     FastClick.attach(document.body);
     Vue.use(VueResource);
     Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
