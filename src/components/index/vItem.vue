@@ -100,9 +100,8 @@
             type: String
         },
         computed: {
-
             sub_name() {
-                if (this.item.sub_name) {
+                if (this.type == 'commend' && this.item.sub_name) {
                     return this.item.sub_name;
                 }
                 return `${this.item.integral>>0}积分`;
