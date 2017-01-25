@@ -46,7 +46,49 @@
                 }, (response) => {});
             },
             routerLink(banner) {
-                location.href = banner.url;
+                if (banner.type == 1) {
+                    let subject_id = utils.getParameterByName('subject_id', banner.url);
+                    if (subject_id) {
+                        let router = {
+                            name: "subject_detail",
+                            query: {
+                                subject_id,
+                            }
+                        };
+                        this.$router.push(router);
+                    } else {
+                        location.href = banner.url;
+                    }
+                    return;
+                }
+                let activity_id = utils.getParameterByName('activity_id', banner.url),
+                    product_id = utils.getParameterByName('product_id', banner.url),
+                    subject_id = utils.getParameterByName('subject_id', banner.url),
+                    router = {};
+
+                if (activity_id) {
+                    router = {
+                        name: "activity_detail",
+                        query: {
+                            activity_id,
+                        }
+                    };
+                } else if (product_id) {
+                    router = {
+                        name: "product_detail",
+                        query: {
+                            product_id,
+                        }
+                    };
+                } else if (subject_id) {
+                    router = {
+                        name: "subject_detail",
+                        query: {
+                            subject_id,
+                        }
+                    };
+                }
+                this.$router.push(router);
             },
             bannerView(banner) {
                 this.$store.dispatch('bannerView', banner.id);

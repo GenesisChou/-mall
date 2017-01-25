@@ -50,7 +50,7 @@
             </div>
         </article>
         <footer class='aword-list'>
-            <v-list-item v-for='aword in aword_list' :title='aword.name' :title-dupty='aword.desc' :img='aword.pic'></v-list-item>
+            <v-list-item v-for='aword in aword_list' :active=false :title='aword.name' :title-dupty='aword.desc' :img='aword.pic'  ></v-list-item>
         </footer>
 </template>
 <script>
@@ -159,6 +159,7 @@
                     this.free_times = data.data.free_times;
                 })
             },
+            //刷新免费次数 刷新用户信息
             freshFreeTimes() {
                 this.$store.dispatch('getUserInfor');
                 this.getFreeTimes();
