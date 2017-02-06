@@ -1,16 +1,31 @@
 import wx from 'weixin-js-sdk';
 import store from '../vuex/store.js';
-module.exports = function (Vue,url) {
+import sha1 from 'sha1'
+module.exports = function (Vue) {
+    let url = location.href;
     getSignature(url).then((data) => {
-        init(data.data);
+        let ticket = data.data.ticket,
+            timestamp = new Date().getTime(),
+            nonceStr = Math.random().toString(36).substr(2, 10),
+            signatureStr = `jsapi_ticket=${ticket}&noncestr=${nonceStr}&timestamp=${timestamp}&url=${url}`,
+            signature = sha1(signatureStr),
+            temp={
+                timestamp,
+                nonceStr,
+                signature
+            }
+        console.log(signatureStr)
+        console.log(signature);
+        init(temp);
     });
+
     function init(data) {
         let title = APP.TITLE;
         let link = url;
         let imgUrl = APP.LOGO;
         let appId = APP.APPID;
         let timestamp = data.timestamp;
-        let nonceStr = data.noncestr;
+        let nonceStr = data.nonceStr;
         let signature = data.signature;
         wx.config({
             // debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。

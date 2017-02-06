@@ -72,8 +72,9 @@ router.beforeEach((to, from, next) => {
     next();
 });
 router.afterEach((to, from) => {
-    let url = location.href.split('#/')[0];
-    url += '#' + to.fullPath;
-    setWeChatConfig(Vue, url);
+    // let url = location.href.split('#/')[0];
+    // url += '#' + to.fullPath;
+    // setWeChatConfig(Vue, url);
+    setWeChatConfig(Vue);
 });
 module.exports = router;
