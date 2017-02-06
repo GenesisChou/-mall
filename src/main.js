@@ -16,13 +16,13 @@ if (token) {
     //本地测试用
     // startApp(cache);
     //正式部署用
-    let link = `${APP.MALL_HOST}/?id=${media_id}`;
+    let link = `${APP.MALL_HOST}/?id=${media_id}#/`;
     if (activity_id) {
-        link += '#/activity_detail?activity_id=' + activity_id;
+        link += 'activity_detail?activity_id=' + activity_id;
     } else if (product_id) {
-        link += '#/product_detail?product_id=' + product_id;
+        link += 'product_detail?product_id=' + product_id;
     } else if (subject_id) {
-        link += '#/subject_detail?subject_id=' + subject_id;
+        link += 'subject_detail?subject_id=' + subject_id;
     }
     location.href = link;
 } else {
