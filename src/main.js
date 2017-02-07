@@ -69,6 +69,7 @@ function startApp(cache) {
     let VueResource = require('vue-resource');
     let store = require('./vuex/store.js');
     let FastClick = require('fastclick');
+    let setWeChatConfig=require('libs/weChatConfig.js');
     APP.TOKEN = cache.TOKEN;
     APP.USER_ID = cache.USER_ID;
     APP.MEDIA_ID = cache.MEDIA_ID;
@@ -80,6 +81,7 @@ function startApp(cache) {
     Vue.use(VueResource);
     Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
     registerComponents(Vue);
+    setWeChatCnfig(Vue);
     new Vue({
         el: '#app',
         render: h => h(require('./APP.vue')),

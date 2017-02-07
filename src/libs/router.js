@@ -1,11 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '../vuex/store.js';
-import setWeChatConfig from 'libs/weChatConfig.js';
 import setWeChatTitle from 'libs/setTitle.js';
 import titles from 'libs/titles.js';
 Vue.use(VueRouter);
-
 const router = new VueRouter({
     routes: [{
             path: '/',
@@ -71,12 +69,9 @@ router.beforeEach((to, from, next) => {
     utils.setSessionStorage('position:' + from.name, utils.getScrollTop());
     next();
 });
-router.afterEach((to, from) => {
-    let url = location.href;
-    //on android
-    if (/#\//.test(url)) {
-        url = `${url.split('#/')[0]}#${to.fullPath}`;
-    }
-    setWeChatConfig(Vue, url);
-});
+// router.afterEach((to, from) => {
+//     let url = location.href;
+//     url = `${url.split('#/')[0]}#${to.fullPath}`;
+//     setWeChatConfig(Vue, url);
+// });
 module.exports = router;
