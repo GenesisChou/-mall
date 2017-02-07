@@ -81,7 +81,7 @@ function startApp(cache) {
     Vue.use(VueResource);
     Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
     registerComponents(Vue);
-    setWeChatCnfig(Vue);
+    setWeChatConfig(Vue);
     new Vue({
         el: '#app',
         render: h => h(require('./APP.vue')),
