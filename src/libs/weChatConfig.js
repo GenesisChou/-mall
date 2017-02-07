@@ -1,7 +1,8 @@
 import wx from 'weixin-js-sdk';
 import store from '../vuex/store.js';
 module.exports = function (Vue) {
-    let url = encodeURIComponent(location.href.split('#')[0]);
+    // let url = encodeURIComponent(location.href.split('#')[0]);
+    let url = location.href.split('#')[0];
     getSignature(url).then((data) => {
         init(data.data);
     });
