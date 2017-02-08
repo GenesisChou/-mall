@@ -102,13 +102,13 @@
     <div class='index '>
         <v-swipe></v-swipe>
         <ul class='list-inline icon-list'>
-            <router-link :to='{name:"my_integral"}' tag='li'>
+            <router-link :to='{name:"my_account"}' tag='li'>
                 <i class=' icon-money iconfont  '></i>
-                <p>我的积分</p>
+                <p>我的账户</p>
             </router-link>
-            <router-link :to='{name:"check_in"}' tag='li'>
+            <router-link :to='{name:"earn_integral"}' tag='li'>
                 <i class=' icon-check-in iconfont  '></i>
-                <p>每日签到</p>
+                <p>赚取积分</p>
             </router-link>
             <router-link :to='{name:"order_list"}' tag='li'>
                 <i class=' icon-order-unsolved iconfont  '></i>

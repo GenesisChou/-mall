@@ -24,9 +24,9 @@ const router = new VueRouter({
             name: 'activity_detail',
             component: require('views/activityDetail.vue')
         }, {
-            path: '/my_integral',
-            name: 'my_integral',
-            component: require('views/myIntegral.vue')
+            path: '/my_account',
+            name: 'my_account',
+            component: require('views/myAccount.vue')
 
         }, {
             path: '/order_list',
@@ -42,9 +42,14 @@ const router = new VueRouter({
             component: require('views/subjectDetail.vue')
         },
         {
-            path: '/check_in',
-            name: 'check_in',
-            component: require('views/checkIn.vue')
+            path: '/earn_integral',
+            name: 'earn_integral',
+            component: require('views/earnIntegral.vue')
+        },
+        {
+            path:'/edit_user',
+            name:'edit_user',
+            component: require('views/editUser.vue')
         },
         {
             path: '/test',

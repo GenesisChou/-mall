@@ -101,6 +101,9 @@
             <div class='message'>
                 <p>{{user.nickname}}</p>
                 <p>积分: {{user.integral>>0}}</p>
+                <router-link :to='{name:"edit_user"}' tag='div'>
+                    <button class='btn'>完善资料赚积分</button>
+                </router-link>
             </div>
             <i class='earn-integral' @click='toggleModal()'>
                 赚取积分?
@@ -149,7 +152,7 @@
         filters: {
             pointFormat(point) {
                 point = point >> 0;
-                return point>0?'+'+point:point;
+                return point > 0 ? '+' + point : point;
             }
         },
         computed: {

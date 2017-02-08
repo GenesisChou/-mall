@@ -126,6 +126,40 @@
             transform: rotateY(360deg);
         }
     }
+    
+    .edit-user {
+        overflow: hidden;
+        height: pxTorem(100);
+        .icon {
+            float: left;
+            width: pxTorem(100);
+            height: pxTorem(100);
+            i {
+                display: block;
+                width: pxTorem(50);
+                height: pxTorem(50);
+                background-color: $red;
+                border-radius: 50%;
+                margin: pxTorem(10) auto;
+            }
+        }
+        .message {
+            overflow: hidden;
+            padding-right: pxTorem(50);
+        }
+    }
+    
+    .notice {
+        padding: pxTorem(20) pxTorem(50);
+        background-color: $gray-light;
+    }
+    
+    .mission-list {
+        ul,
+        li {
+            list-style: none;
+        }
+    }
 </style>
 <template>
     <div v-if='loaded' class='check-in'>
@@ -155,11 +189,44 @@
                 <h6>{{item.day}}</h6>
             </li>
         </ul>
+        <router-link tag='div' class='edit-user' :to='{name:"edit_user"}'>
+            <div class='icon'>
+                <i></i>
+            </div>
+            <div class='message'>
+                <h4>填写个人资料
+                    <span class='pull-right'>+20</span>
+                </h4>
+                <h5 class='text-sliver'>首次完善个人资料可获得积分</h5>
+            </div>
+        </router-link>
+        <div class='notice'>
+            <h5>阅读一篇文稿<span class='text-red'>+5</span>积分</h5>
+            <h5>每日最多可得<span class='text-red'>30</span>积分,今日已获得<span class='text-red'>0积分</span></h5>
+        </div>
+        <ul class='mission-list'>
+            <li>
+                <v-mission title='杭州两名市管领杭州两名市管领杭州两名市管领杭州两名市管领杭州两名市管领' btn-text='点击观看'></v-mission>
+            </li>
+            <li>
+                <v-mission title='杭州两名州两名市管领' btn-text='点击阅读'></v-mission>
+            </li>
+            <li>
+                <v-mission title='杭州两名市管领杭州两名市管领名市管领' btn-text='点击转发' :is-read='true'></v-mission>
+            </li>
+            <li>
+                <v-mission title='杭州两名市管领杭州两名市管领名市管领' btn-text='点击转发' ></v-mission>
+            </li>
+        </ul>
     </div>
 </template>
 <script>
+    import vMission from 'components/vMission.vue';
     export default {
         name: 'check_in',
+        components: {
+            vMission
+        },
         data() {
             return {
                 check_in_params: [],
