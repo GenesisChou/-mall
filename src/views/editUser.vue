@@ -80,35 +80,33 @@
     }
 </style>
 <template>
-    <div class='edit-user'>
-        <form>
+    <div v-if='content_show' class='edit-user'>
+        <form ref='form'>
             <ul class='main'>
                 <li>
                     <label for='contact'>姓名</label>
-                    <input id='contact' placeholder="姓名">
+                    <input id='contact' placeholder="姓名" v-model='contact'>
                 </li>
                 <li>
                     <label for='birth'>出生年月</label>
-                    <input id='birth' @click='toggleBirth' readonly v-model='birth_format'>
+                    <input id='birth' @click='toggleBirth' readonly v-model='birthday'>
                 </li>
                 <li>
                     <label for='phone'>手机号</label>
-                    <input id='phone' type='number' placeholder="手机或固定电话">
+                    <input id='phone' type='tel' placeholder="手机或固定电话" v-model='phone'>
                 </li>
                 <li class='code'>
                     <label for='code'>验证码</label>
-                    <input id='code'>
-                    <button class='btn btn-red'>验证</button>
+                    <input id='code' v-model='verification_code'>
+                    <button class='btn btn-red' @click='getVerificationCode'>验证</button>
                 </li>
                 <li class='select-address'>
                     <label for='province'>收货地址</label>
-                    <input id='province' placeholder="请选择省" readonly>
-                    <input id='city' placeholder="请选择市" readonly>
-                    <input id='country' placeholder="请选择区县" readonly>
+                    <v-address :address='{province,city,country}' :id='{province_id,city_id,country_id}' :change-id='changeId' :change-name='changeName'></v-address>
                 </li>
                 <li>
                     <label for='address'></label>
-                    <textarea id='address' placeholder="请输入详细地址"></textarea>
+                    <textarea id='address' placeholder="请输入详细地址" v-model='address'></textarea>
                 </li>
                 <li class='operation'>
                     <button class='btn pull-left' @click='reset'>重置</button>
@@ -121,22 +119,46 @@
 </template>
 <script>
     import vDate from 'components/vDate.vue';
+    import vAddress from 'components/vAddress.vue';
     export default {
-        name: 'edit-user',
+        name: 'editUser',
+        components: {
+            vDate,
+            vAddress,
+        },
         data() {
             return {
-                form: '',
                 show_birth: false,
                 birth: {
                     year: '',
                     month: '',
                     day: ''
-                }
+                },
+                province: '',
+                city: '',
+                country: '',
+                address: '',
+                phone: '',
+                contact: '',
+                birthday: '',
+                province_id: '',
+                city_id: '',
+                country_id: '',
+                verification_code: '',
             }
         },
         computed: {
             user() {
                 return this.$store.state.user;
+            },
+            content_show() {
+                return !utils.isEmptyObject(this.user);
+            },
+            is_submit() {
+                return this.$store.state.user.is_submit == 1;
+            },
+            default_address() {
+                return this.user.default_address || {};
             },
             birth_format() {
                 if (this.birth.year && this.birth.month && this.birth.day) {
@@ -145,11 +167,15 @@
                 return '';
             }
         },
-        components: {
-            vDate
+        watch: {
+            default_address(value) {
+                this.init(value);
+            }
+        },
+        created() {
+            this.init(this.default_address);
         },
         mounted() {
-            this.form = this.$el.querySelector('form');
             this.birth = {
                 year: this.user.year || '',
                 month: this.user.month || '',
@@ -157,22 +183,103 @@
             };
         },
         methods: {
+            //初始化地址列表
+            //scen1:原地刷新 由watch实现初始化 
+            //scen2:从其他页面进入 由created实现初始化 
+            init(default_address) {
+                //防止重复初始化
+                if (utils.isEmptyObject(default_address)) return;
+                const address_config = [
+                    'province',
+                    'city',
+                    'country',
+                    'address',
+                    'phone',
+                    'contact',
+                    'province_id',
+                    'city_id',
+                    'country_id'
+                ];
+                address_config.forEach(config => {
+                    this[config] = default_address[config];
+                })
+                this.birthday = this.user.birthday;
+            },
+            //重置表单
+            reset() {
+                event.preventDefault();
+                this.$refs.form.reset();
+            },
+            //提交表单
+            submit() {
+                event.preventDefault();
+                this.$store.dispatch('toggleLoading')
+                this.$http.post(`${APP.HOST}/user_submit/${APP.USER_ID}`, {
+                    token: APP.TOKEN,
+                    userid: APP.USER_ID,
+                    province: this.province,
+                    city: this.city,
+                    country: this.country,
+                    address: this.address,
+                    phone: this.phone,
+                    contact: this.contact,
+                    birthday: this.birthday,
+                    province_id: this.province_id,
+                    city_id: this.city_id,
+                    country_id: this.country_id,
+                    verification_code: this.verification_code
+                }).then((response) => {
+                    this.$store.dispatch('toggleLoading');
+                    let data = response.data;
+                    this.$store.dispatch('toggleAlert', {
+                        msg: data.info
+                    })
+                }, (response) => {
+                    this.$store.dispatch('toggleLoading');
+                })
+
+
+            },
+            //获取验证码
+            getVerificationCode() {
+                event.preventDefault();
+                this.$http.post(`${APP.HOST}/verification_sm/${APP.USER_ID}`, {
+                    token: APP.TOKEN,
+                    userid: APP.USER_ID,
+                    phone: this.phone
+                }).then((response) => {
+                    let data = response.data;
+                    if (data.status != APP.SUCCESS) {
+                        this.$store.dispatch('toggleAlert', {
+                            msg: data.info
+                        })
+                    }
+                })
+            },
+            changeName(type, name) {
+                let list = ['province', 'city', 'country'];
+                list.forEach(item => {
+                    if (item == type) {
+                        this[item] = name;
+                        return;
+                    }
+                })
+            },
+            changeId(type, id) {
+                let list = ['province', 'city', 'country'];
+                list.forEach(item => {
+                    if (item == type) {
+                        this[item + '_id'] = id;
+                        return;
+                    }
+                })
+            },
             changeBirth(value) {
                 this.birth = value;
             },
             toggleBirth() {
                 this.show_birth = !this.show_birth;
             },
-            reset() {
-                event.preventDefault();
-                this.form.reset();
-            },
-            submit() {
-                event.preventDefault();
-                this.$store.dispatch('toggleAlert', {
-                    msg: '提交成功'
-                });
-            }
         }
     }
 </script>

@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
     .index {
         overflow: hidden;
@@ -94,8 +94,9 @@
             }
         }
     }
-    .hot-list{
-        overflow:hidden;
+    
+    .hot-list {
+        overflow: hidden;
     }
 </style>
 <template>
@@ -123,25 +124,31 @@
         <!-- 专题列表 -->
         <div v-if='subject_show' class='subject'>
             <div class='left'>
-                <router-link :to='{name:"subject_detail",query:{subject_id:subject_list[0].id}}' tag='div'>
+                <router-link :to='{
+                    name:"subject_detail",
+                    query:{subject_id:(subject_list[0].id).toString() }}' tag='div'>
                     <img :src='subject_list[0].pic_main'>
-                </router-link>
+                    </router-link>
             </div>
             <div class='right'>
-                <router-link :to='{name:"subject_detail",query:{subject_id:subject_list[1].id}}' tag='div'>
+                <router-link :to='{
+                    name:"subject_detail",
+                    query:{subject_id:(subject_list[1].id).toString()}}' tag='div'>
                     <img :src='subject_list[1].pic_second'>
                 </router-link>
-                <router-link :to='{name:"subject_detail",query:{subject_id:subject_list[2].id}}' tag='div'>
+                <router-link :to='{
+                    name:"subject_detail",
+                    query:{subject_id:(subject_list[2].id).toString()}}' tag='div'>
                     <img :src='subject_list[2].pic_second'>
                 </router-link>
             </div>
         </div>
-        <section class='hot-list'>
+        <main class='hot-list'>
             <!-- 热门推荐 -->
             <v-item v-for='item in hot_commend' :item='item' type='commend'></v-item>
             <!-- 热门 -->
             <v-item v-for='item in hot_items' :item='item' type='item'></v-item>
-        </section>
+        </main>
         <v-load-more v-if='busy'></v-load-more>
         <v-support v-if='support_show'></v-support>
         <v-back-top></v-back-top>
@@ -186,6 +193,13 @@
             subject_show() {
                 return this.subject_list.length >= 3;
             }
+        }, //beforeRouteEnter无法获取实例this
+        activated() {
+            let position = utils.getSessionStorage('position:' + this.$route.name);
+            if (position) {
+                window.scrollTo(0, position);
+            }
+            window.addEventListener('scroll', this.scroll_event);
         },
         created() {
             this.getHotCommend();
@@ -199,15 +213,9 @@
             this.getSubjectList();
             this.scroll_event = this.getScrollEvent();
         },
-        activated() {
-            var position = utils.getSessionStorage('position:' + this.$route.name);
-            if (position) {
-                window.scrollTo(0, position);
-            }
-            window.addEventListener('scroll', this.scroll_event);
-        },
-        deactivated() {
+        beforeRouteLeave(to, from, next) {
             window.removeEventListener('scroll', this.scroll_event);
+            next();
         },
         methods: {
             getSubjectList() {
@@ -262,6 +270,12 @@
                     }
                 }, 500, 500);
             },
+        },
+        filters: {
+            toString(value) {
+                return value.toString()
+            }
         }
+
     };
 </script>

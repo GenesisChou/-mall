@@ -12,8 +12,8 @@ module.exports = [{
         name: 'activity_detail',
         title: '活动详情'
     }, {
-        name: 'my_integral',
-        title: '我的积分'
+        name: 'my_account',
+        title: '我的账户'
     }, {
         name: 'order_list',
         title: '兑换记录'
@@ -25,7 +25,7 @@ module.exports = [{
         title: '每日上新'
     },
     {
-        name: 'check_in',
-        title: '每日签到'
+        name: 'earn_integral',
+        title: '赚取积分'
     }
 ]

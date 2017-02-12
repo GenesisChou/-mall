@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
 @import '../assets/scss/variable.scss';
 .v-search {
     width: pxTorem(690);

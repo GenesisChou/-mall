@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .game {
         width: 100%;
@@ -9,19 +9,17 @@
         position: absolute;
         left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%);
-        -moz-transform: translate(-50%, -50%);
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        padding: 0;
         width: pxTorem(268);
         height: pxTorem(106);
+        padding: 0;
         font-size: pxTorem(30);
         background: url('./images/start.png');
         background-size: pxTorem(284) pxTorem(126);
         background-repeat: no-repeat;
         background-position-x: inherit;
         z-index: 2;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
     }
     
     .cover {
@@ -40,18 +38,18 @@
         left: 50%;
         top: 65%;
         transform: translateX(-50%);
-        -moz-transform: translateX(-50%);
         -webkit-transform: translateX(-50%);
-        -ms-transform: translateX(-50%);
         z-index: 2;
     }
 </style>
 <template>
     <div class='game' :style='bg_img'>
         <canvas id="canvas"></canvas>
-        <div v-if='state=="ready"' class='start' @click='startGame'></div>
-        <div v-if='state=="ready"' class='cover'></div>
-        <div v-if='state=="ready"' class='free-time-message'>{{notice}}</div>
+        <template v-if='state=="ready"'>
+            <div class='start' @click='startGame'></div>
+            <div class='cover'></div>
+            <div class='free-time-message'>{{notice}}</div>
+        </template>
     </div>
 </template>
 <script>
@@ -67,6 +65,7 @@
         },
         data() {
             return {
+                game_id: '',
                 game: '',
                 state: '',
                 is_win: '',
@@ -74,7 +73,7 @@
                 alert: {},
                 bg_img: '',
                 script: null,
-                loaded: false,
+                game_loaded: false,
                 activity_result: {}
             }
         },
@@ -92,12 +91,51 @@
                     this.$store.dispatch('toggleAlert', this.alert);
                 }
             },
+            game_id(value) {
+                this.getGameDetail(value).then(data => {
+                    this.bg_img = {
+                        background: 'url(' + data.data.pic + ')',
+                        backgroundSize: '100% 100%',
+                    };
+                    /*
+                     * 各个游戏的游戏代码为：
+                     * 接元宝游戏：   8Ew3kl53
+                     * 逝去的青春：   o3KdlWed
+                     * 三消游戏  ：   r3FEflzD
+                     * 棍子忍者  ：   uWr5e32D
+                     */
+                    let name = data.data.name;
+                    const game_list = [{
+                            name: '开心消消乐',
+                            code: 'r3FEflzD'
+                        }, {
+                            name: '棍子忍者',
+                            code: 'uWr5e32D'
+                        },
+                        {
+                            name: '逝去的青春',
+                            code: 'o3KdlWed'
+                        },
+                        {
+                            name: '接金元宝',
+                            code: '8Ew3kl53'
+                        },
+                    ];
+                    game_list.forEach(item => {
+                        if (item.name == name) {
+                            this.game = item.code;
+                            return;
+                        }
+                    });
+
+                });
+            },
             game(value) {
                 if (!value) return;
                 let url = `http://m.goldmiao.com/yngame/${value}.min.1.0.0.js`;
                 this.$script(url, () => {
                     console.log('game loaded');
-                    this.loaded = true;
+                    this.game_loaded = true;
                 });
             },
             is_win(value) {
@@ -132,68 +170,40 @@
 
             }
         },
-        computed: {
-            game_id() {
-                return this.activityDetail.game_id;
-            }
+        activated() {
+            this.init();
         },
         created() {
             this.$script = require('scriptjs');
         },
-        activated() {
-            this.init();
-            this.getGameDetail();
-        },
         deactivated() {
-            //若游戏结束前离开界面，手动停止游戏 
-            if (this.state != 'stop') {
+            //游戏开始后
+            //若游戏后结束前离开界面，手动停止游戏 
+            if (this.state == 'start') {
                 AIR.Game.stopGame();
                 console.log('game stopped');
             }
         },
         methods: {
             init() {
+                this.game_id = this.activityDetail.game_id;
                 this.is_win = '';
                 this.order_detail_id = ''; //活动结束跳转id
                 this.alert = {};
                 this.state = 'ready';
             },
-            getGameDetail() {
-                this.$http.post(`${APP.HOST}/game_detail/${this.game_id}`, {
-                    token: APP.TOKEN,
-                    user_id: APP.USER_ID
-                }).then((response) => {
-                    let data = response.data;
-                    this.bg_img = {
-                        background: 'url(' + data.data.pic + ')',
-                        backgroundSize: '100% 100%',
-                    };
+            getGameDetail(game_id) {
+                return new Promise(resolve => {
+                    this.$http.post(`${APP.HOST}/game_detail/${game_id}`, {
+                        token: APP.TOKEN,
+                        user_id: APP.USER_ID
+                    }).then((response) => {
+                        let data = response.data;
+                        if (resolve) {
+                            resolve(data);
+                        }
+                    })
 
-                    /*
-                     * 各个游戏的游戏代码为：
-                     * 接元宝游戏：   8Ew3kl53
-                     * 逝去的青春：   o3KdlWed
-                     * 三消游戏  ：   r3FEflzD
-                     * 棍子忍者  ：   uWr5e32D
-                     */
-                    let name = data.data.name;
-                    switch (name) {
-                        case '开心消消乐':
-                            this.game = 'r3FEflzD';
-                            break;
-                        case '棍子忍者':
-                            this.game = 'uWr5e32D';
-                            break;
-                        case '逝去的青春':
-                            this.game = 'o3KdlWed';
-                            break;
-                        case '接金元宝':
-                            this.game = '8Ew3kl53';
-                            break;
-                        default:
-                            console.log('no game found');
-                            break;
-                    }
                 })
             },
             startGame() {
@@ -203,7 +213,7 @@
                     });
                     return;
                 }
-                if (!this.loaded) {
+                if (!this.game_loaded) {
                     this.$store.dispatch('toggleAlert', {
                         msg: '请等待游戏完全载入'
                     });

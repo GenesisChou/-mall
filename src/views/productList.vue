@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
     .search-box {
         padding: pxTorem(17) pxTorem(30);
@@ -29,10 +29,7 @@
         position: absolute;
         right: 0;
         top: 50%;
-        -ms-transform: translateY( -50%);
-        -moz-transform: translateY( -50%);
         -webkit-transform: translateY( -50%);
-        -ms-transform: translateY( -50%);
         line-height: pxTorem(18);
         right: pxTorem(20);
         i {
@@ -71,7 +68,7 @@
 <script>
     import vSearch from 'components/vSearch.vue'
     export default {
-        name: 'product_list',
+        name: 'productList',
         components: {
             vSearch
         },
@@ -91,7 +88,7 @@
                 },
                 sort_type: '',
                 scroll_event: '',
-                support_show:false
+                support_show: false
             };
         },
         computed: {
@@ -99,25 +96,26 @@
                 return this.params.total > this.params.p;
             }
         },
-        created() {
-            this.$store.dispatch('toggleLoading');
-            this.getProductList().then(() => {
-                this.support_show=true;
-                this.$store.dispatch('toggleLoading');
-            }).catch(() => {
-                this.$store.dispatch('toggleLoading');
-            })
-            this.scroll_event=this.getScrollEvent();
-        },
         activated() {
-            var position = utils.getSessionStorage('position:' + this.$route.name);
+            let position = utils.getSessionStorage('position:' + this.$route.name);
             if (position) {
                 window.scrollTo(0, position);
             }
             window.addEventListener('scroll', this.scroll_event);
         },
-        deactivated() {
+        created() {
+            this.$store.dispatch('toggleLoading');
+            this.getProductList().then(() => {
+                this.support_show = true;
+                this.$store.dispatch('toggleLoading');
+            }).catch(() => {
+                this.$store.dispatch('toggleLoading');
+            })
+            this.scroll_event = this.getScrollEvent();
+        },
+        beforeRouteLeave(to, from, next) {
             window.removeEventListener('scroll', this.scroll_event);
+            next();
         },
         methods: {
             //获取商品列表

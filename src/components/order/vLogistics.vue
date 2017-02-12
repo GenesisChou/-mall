@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
     .v-logistics {
         background-color: $white;
@@ -52,7 +52,7 @@
     }
 </style>
 <template>
-    <section v-if='!is_expired' class='v-logistics'>
+    <div v-if='!is_expired' class='v-logistics'>
         <header>
             <span>物流信息</span>
             <label>{{message}}</label>
@@ -77,7 +77,7 @@
                 </div>
             </li>
         </ul>
-    </section>
+    </div>
 </template>
 <script>
     export default {

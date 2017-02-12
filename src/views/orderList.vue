@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
     .order-list {
         min-height: 100%;
@@ -50,8 +50,6 @@
             z-index: 1;
             transform: scale(0.5);
             transform: -webkit-scale(0.5);
-            transform: -moz-scale(0.5);
-            transform: -ms-scale(0.5);
         }
     }
     
@@ -70,18 +68,20 @@
 <template>
     <div class='order-list'>
         <ul class='tabs list-inline'>
-            <li v-for='(tab,$index) in tabs' :class='{active:$index+1==current_tab}' @click='switchTab($index+1)'>
-                <i v-if='$index==0' class='iconfont icon-order-unsolved  text-huge'></i>
-                <i v-if='$index==1' class='iconfont icon-car  text-huge'></i>
-                <i v-if='$index==2' class='iconfont icon-order  text-huge'></i>
-                <i v-if='$index==3' class='iconfont icon-delete  text-huge'></i>
+            <li v-for='(tab,$index) in tabs' @click='switchTab($index+1)' :class='{active:$index+1==current_tab}'>
+                <i :class='["text-huge","iconfont",getIconType($index)]'>
                 <h6>{{tab.name}}</h6>
                 <span class='badage' v-if='$index==0&&user.unfinished_order_count>0'>{{user.unfinished_order_count}}</span>
             </li>
         </ul>
         <ul>
-            <router-link v-for='order in order_list[current_type]' :to='{name:"order_detail",query:{order_id:parseInt(order.id)}}' tag='li'>
-                <v-order :img='order.product_pic' :id='order.orderid' :integral='order.integral>>0' :name='order.product'>
+            <router-link v-for='order in order_list[current_type]' 
+                        :to='{name:"order_detail",
+                        query:{order_id:parseInt(order.id)}}' tag='li'>
+                <v-order :img='order.product_pic' 
+                         :id='order.orderid' 
+                         :integral='order.integral>>0' 
+                         :name='order.product'>
                     <footer>
                         {{order.tips}}
                     </footer>
@@ -96,7 +96,7 @@
 <script>
     import vOrder from 'components/order/vOrder.vue'
     export default {
-        name: 'order_list',
+        name: 'orderList',
         components: {
             vOrder,
         },
@@ -125,7 +125,6 @@
                     name: '已逾期订单'
                 }],
                 busy: false,
-                first: true
             }
         },
         computed: {
@@ -166,28 +165,31 @@
                 })
             }
         },
-        beforeRouteLeave(to, from, next) {
-            window.removeEventListener('scroll', this.scroll_events[this.current_type]);
-            next();
-        },
-        beforeRouteEnter(to, from, next) {
-            next(vm => {
-                if (from.name == 'index') {
-                    vm.init();
-                } else if(!vm.first){
-                    window.addEventListener('scroll', vm.scroll_events[vm.current_type]);
+        beforeRouteEnter(to,from,next){
+              //当从订单详情返回至订单列表时绑定滚动事件
+              next(vm => {
+                if(from.name=='order_detail'){
+                     window.addEventListener('scroll', vm.scroll_events[vm.current_type]);
                 }
-            })
-        },
-        created() {
-            this.first = false;
-            this.init();
+              })
         },
         activated() {
-            var position = utils.getSessionStorage('position:' + this.$route.name);
+            let position = utils.getSessionStorage('position:' + this.$route.name);
             if (position) {
                 window.scrollTo(0, position);
             }
+        },
+        created() {
+            this.init();
+        },
+        beforeRouteLeave(to, from, next) {
+            //离开页面后解除滚动事件
+            window.removeEventListener('scroll', this.scroll_events[this.current_type]);
+            //回到主页时重置所有状态
+            if(to.name=='index'){
+                this.init();
+            }
+            next();
         },
         methods: {
             init() {
@@ -228,6 +230,7 @@
                     })
                 })
             },
+            //获取对应的滚动事件
             getScrollEvent(tab, params, success, failure) {
                 let scroll = true;
                 return utils.debounce(() => {
@@ -246,6 +249,16 @@
             },
             switchTab(tab) {
                 this.current_tab = tab;
+            },
+            getIconType($index){
+                let icon_list=['icon-order-unsolved','icon-car','icon-order','icon-delete'],temp=''
+                icon_list.forEach((name,index)=>{
+                    if(index==$index){
+                        temp=name;
+                        return;
+                    }
+                })
+                return temp;
             }
         }
     };

@@ -1,8 +1,8 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
     .v-item {
         width: 50%;
-        height: pxTorem(375);
+        height: pxTorem(450);
         float: left;
         padding: pxTorem(20) pxTorem(35);
         border: 1px solid $gray-light;
@@ -34,42 +34,26 @@
             text-align: center;
             transform: rotate(-45deg);
             -webkit-transform: rotate(-45deg);
-            -moz-transform: rotate(-45deg);
-            -ms-transform: rotate(-45deg);
             z-index: 1;
         }
     }
     
-    .detail {
+    main {
         margin-top: pxTorem(30);
         h2 {
-            height: pxTorem(42);
             color: #1d1e1d;
-            margin-bottom: pxTorem(10);
         }
         span {
-            float: left;
-            margin-right: pxTorem(5);
-            max-width: pxTorem(200);
-            height: pxTorem(35);
-            overflow: hidden;
             color: #878686;
             font-size: pxTorem(28);
-            i {
-                color: red;
-                margin-right: pxTorem(8);
-                font-style: normal;
-                font-size: pxTorem(32);
-            }
         }
         strong {
             padding: 0 pxTorem(10);
             background: $pink;
             border-radius: pxTorem(10);
             color: $white;
-            text-align: center;
             font-size: pxTorem(24);
-            float: left;
+            float: right;
             font-weight: normal;
         }
     }
@@ -82,19 +66,19 @@
                 </span>
             <img :src='item.pic'>
         </header>
-        <div class='detail'>
+        <main>
             <h2 class='text-ellipsis'>{{item.name}}</h2>
-            <div>
-                <span>{{sub_name}}</span>
-                <strong>
+            <h4 class='text-ellipsis'>{{item.sub_name}}</h4>
+            <span>{{item.integral>>0}}积分</span>
+            <strong>
                  {{item.label}}
-                </strong>
-            </div>
-        </div>
+             </strong>
+        </main>
     </div>
 </template>
 <script>
     export default {
+        name:'vItem',
         props: {
             item: Object,
             type: String

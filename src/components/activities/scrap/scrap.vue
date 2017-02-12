@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .v-scrap {
         position: relative;
@@ -23,8 +23,6 @@
         top: 50%;
         transform: translate(-50%, -50%);
         -webkit-transform: translate(-50%, -50%);
-        -moz-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
         padding: 0;
         width: pxTorem(180);
         height: pxTorem(68);
@@ -39,9 +37,7 @@
         left: 50%;
         top: 75%;
         transform: translateX(-45%);
-        -moz-transform: translateX(-45%);
         -webkit-transform: translateX(-45%);
-        -ms-transform: translateX(-45%);
         z-index: 2;
     }
 </style>

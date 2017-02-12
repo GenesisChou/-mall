@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .v-shake {
         overflow: hidden;
@@ -18,8 +18,6 @@
         height: pxTorem(140);
         transform: translate(-50%, -50%);
         -webkit-transform: translate(-50%, -50%);
-        -moz-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
     }
     
     .top {
@@ -35,15 +33,11 @@
             bottom: 0;
             transform: translateX(-50%);
             -webkit-transform: translateX(-50%);
-            -moz-transform: translateX(-50%);
-            -ms-transform: translateX(-50%);
         }
         &.active {
             border-bottom: pxTorem(5) solid $white;
             animation: up 1.5s linear;
             -webkit-animation: up 1.5s linear;
-            -moz-animation: up 1.5s linear;
-            -ms-animation: up 1.5s linear;
         }
     }
     
@@ -62,15 +56,11 @@
             top: 0;
             transform: translateX(-50%);
             -webkit-transform: translateX(-50%);
-            -moz-transform: translateX(-50%);
-            -ms-transform: translateX(-50%);
         }
         &.active {
             border-top: pxTorem(5) solid $white;
             animation: down 1.5s linear;
             -webkit-animation: down 1.5s linear;
-            -moz-animation: down 1.5s linear;
-            -ms-animation: down 1.5s linear;
         }
     }
     
@@ -90,36 +80,6 @@
     }
     
     @-webkit-keyframes up {
-        0% {
-            bottom: 50%;
-        }
-        40% {
-            bottom: 60%;
-        }
-        60% {
-            bottom: 60%;
-        }
-        100% {
-            bottom: 50%;
-        }
-    }
-    
-    @-moz-keyframes up {
-        0% {
-            bottom: 50%;
-        }
-        40% {
-            bottom: 60%;
-        }
-        60% {
-            bottom: 60%;
-        }
-        100% {
-            bottom: 50%;
-        }
-    }
-    
-    @-ms-keyframes up {
         0% {
             bottom: 50%;
         }
@@ -164,39 +124,10 @@
         }
     }
     
-    @-moz-keyframes down {
-        0% {
-            top: 50%;
-        }
-        40% {
-            top: 60%;
-        }
-        60% {
-            top: 60%;
-        }
-        100% {
-            top: 50%;
-        }
-    }
-    
-    @-ms-keyframes down {
-        0% {
-            top: 50%;
-        }
-        40% {
-            top: 60%;
-        }
-        60% {
-            top: 60%;
-        }
-        100% {
-            top: 50%;
-        }
-    }
-</style>
+   </style>
 <template>
     <div class='v-shake ' :style='shake_style'>
-        <audio id='audio'>
+        <audio ref='audio'>
             <source src="http://xunlei.sc.chinaz.com/files/download/sound1/201410/5018.wav" type="audio/mpeg" />
         </audio>
         <img class='flower' src='./images/flower.png'>
@@ -227,7 +158,6 @@
                 is_win: '', //判断是否中奖
                 activity_result: {},
                 deviceEvent: '',
-                audio: '',
                 shaking: false,
                 animation_time: 1500
             }
@@ -278,7 +208,6 @@
         },
         mounted() {
             this.init();
-            this.audio = document.querySelector('.v-shake #audio');
             this.deviceEvent = this.getDeviceEvent();
             window.addEventListener('devicemotion', this.deviceEvent);
         },
@@ -342,7 +271,8 @@
                 }, (response) => {})
             },
             sound() {
-                this.audio.play();
+                this.$refs.audio.play();
+                // this.audio.play();
             },
             shake() {
                 this.shaking = true;

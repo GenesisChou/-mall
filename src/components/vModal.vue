@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
 @import '../assets/scss/variable.scss';
 .v-modal {
     .bg-cover {
@@ -14,10 +14,7 @@
         position: fixed;
         left: 50%;
         top: 50%;
-        -ms-transform:translate(-50%, -50%);     /* IE 9 */
-        -moz-transform:translate(-50%, -50%);    /* Firefox */
         -webkit-transform:translate(-50%, -50%); /* Safari 和 Chrome */
-        -ms-transform:translate(-50%, -50%);
         z-index: 6
     }
 }
@@ -25,10 +22,10 @@
 <template>
     <div class='v-modal'>
         <!-- <transition name='fade'> -->
-            <div v-show='show' @click='close()' class='bg-cover'>
+            <div v-if='show' @click='close()' class='bg-cover'>
             </div>
         <!-- </transition> -->
-        <div v-show='show' class='content '>
+        <div v-if='show' class='content '>
             <slot></slot>
         </div>
     </div>

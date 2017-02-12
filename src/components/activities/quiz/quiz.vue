@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .v-quiz {
         background-color: rgb(243, 243, 243);
@@ -46,10 +46,7 @@
                     border: pxTorem(3) solid $gray;
                     border-radius: 50%;
                     transform: translateY(pxTorem(3));
-                    -ms-transform: translateY(pxTorem(3));
-                    -moz-transform: translateY(pxTorem(3));
                     -webkit-transform: translateY(pxTorem(3));
-                    -ms-transform: translateY(pxTorem(3));
                 }
                 input[type="radio"]:checked+label:before {
                     background: $gray;
@@ -68,8 +65,6 @@
         bottom: 6%;
         transform: translateX(-50%);
         -webkit-transform: translateX(-50%);
-        -moz-transform: translateX(-50%);
-        -ms-transform: translateX(-50%);
     }
 </style>
 <template>

@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
 @import '../assets/scss/variable.scss';
 .block-text {
     height: pxTorem(100);
@@ -13,7 +13,7 @@
 </template>
 <script>
 export default {
-    name: 'block_text',
+    name: 'blockText',
     props: {
         text: {
             type: String,

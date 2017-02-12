@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
 @import '../assets/scss/variable.scss';
 .v-support{
     height:pxTorem(120);
@@ -15,6 +15,7 @@
 </template>
 <script>
     export default {
+        name:'vSupport',
         computed:{
             name(){
                 return APP.NAME;

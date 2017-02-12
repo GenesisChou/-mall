@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
 @import '../../assets/scss/variable.scss';
 .v-order {
     margin-bottom: pxTorem(20);
@@ -11,7 +11,7 @@ header.v-order-header{
     line-height: pxTorem(66);
     padding: 0 pxTorem(30);
 }
-section.v-order-message {
+main.v-order-main {
     padding: pxTorem(26) 0;
     margin: 0 pxTorem(30);
     overflow: hidden;
@@ -45,7 +45,7 @@ section.v-order-message {
     <header class='v-order-header'>
         订单号：{{id}}
     </header>
-    <section class='v-order-message'>
+    <main class='v-order-main'>
         <img  :src='img' />
         <div>
             <h2 class='text-ellipsis'>{{name}}</h2>
@@ -53,7 +53,7 @@ section.v-order-message {
                 <span>x1</span>
             </p>
         </div>
-    </section>
+    </main>
     <slot> </slot>
 </div>
 </template>

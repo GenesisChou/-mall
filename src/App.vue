@@ -1,10 +1,10 @@
-<style lang='sass'>
+<style lang='scss'>
     @import './assets/scss/iconfont.css';
     @import './assets/scss/main.scss';
 </style>
 <template>
     <div id="app">
-        <keep-alive exclude='product_detail,activity_detail,order_detail,subject_detail'>
+        <keep-alive exclude='activity_detail'>
             <router-view></router-view>
         </keep-alive>
         <v-alert></v-alert>

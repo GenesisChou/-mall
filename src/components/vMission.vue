@@ -38,56 +38,60 @@
         top: 50%;
         margin-top: pxTorem(-30);
         width: pxTorem(180);
-        height: pxTorem(60);
-        line-height: pxTorem(60);
         border-radius: pxTorem(90);
         font-size: pxTorem(26);
         text-align: center;
         &:active {
             color: darken($white, 10%);
         }
-    }
-    
-    button.btn-sliver {
-        background-color: $sliver;
-        color: $white;
+        &.btn-sliver {
+            background-color: $sliver;
+            color: $white;
+        }
     }
 </style>
 <template>
     <div class='v-mission'>
-        <h4 class='title' :style='verticle'>
+        <h4 ref='title' class='title' :style='verticle'>
             {{title}}
         </h4>
-        <button @click='router()' :class='["btn",isRead?"btn-sliver":"btn-red"]'>{{btn_text}}></button>
+        <button @click='router()' :class='["btn",is_read?"btn-sliver":"btn-red"]'>{{btn_text}}></button>
     </div>
 </template>
 <script>
     export default {
-        name: 'v-mission',
+        name: 'vMission',
         props: {
-            title: String,
-            link: String,
-            text: {
-                type: String,
-                default: '点击阅读'
-            },
-            isRead: {
-                type: Boolean,
-                default: false
-            }
+            article: Object,
+            callback: Function
         },
         data() {
             return {
                 verticle: ''
             }
         },
-        computed:{
-            btn_text(){
-                return this.isRead?'已完成':this.text;
+        computed: {
+            id() {
+                return this.article.id;
+            },
+            title() {
+                return this.article.title;
+            },
+            url() {
+                return this.article.url;
+            },
+            button() {
+                return this.article.button;
+            },
+            is_read() {
+                return this.article.is_read;
+            },
+            btn_text() {
+                return this.is_read ? '已完成' : this.button;
             }
         },
         mounted() {
-            let percent = this.$el.querySelector('.title').clientHeight / this.$el.clientHeight;
+            let percent = this.$refs.title.clientHeight / this.$el.clientHeight;
             if (percent < 0.5) {
                 this.verticle = {
                     lineHeight: '1.33rem'
@@ -97,7 +101,10 @@
         methods: {
             router() {
                 event.preventDefault();
-                location.href=this.link;
+                if (!this.is_read) {
+                    this.callback(this.id);
+                }
+                location.href = this.url;
             }
         }
     }

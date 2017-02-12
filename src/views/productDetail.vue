@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
     .header {
         height: pxTorem(400);
@@ -59,13 +59,13 @@
 </style>
 <template>
     <div class='product-detail'>
-        <header class='header '>
+        <header v-show='content_show' class='header '>
             <img :src='product_detail.pic_banner' />
             <div class='cover text-white '>
                 <p class='text-huge text-ellipsis'>{{product_name}}</p>
             </div>
         </header>
-        <article class='main '>
+        <article v-show='content_show' class='main '>
             <div class='introduction'>
                 <v-simditor>
                     <template v-if='product_detail.content'>
@@ -93,20 +93,21 @@
 </template>
 <script>
     export default {
-        name: 'product_detail',
+        name: 'productDetail',
         data() {
             return {
                 product_id: '',
                 product_detail: '',
                 order_detail_id: '', //兑换成功后用于跳转订单详情的订单id
+                content_show: false
             };
         },
         computed: {
-            integral_enough() {
-                return this.user.integral >= this.integral;
-            },
             user() {
                 return this.$store.state.user;
+            },
+            integral_enough() {
+                return (this.user.integral) >> 0 >= this.integral;
             },
             integral() {
                 return this.$route.query.integral || (this.product_detail.integral >> 0) || 0;
@@ -117,7 +118,10 @@
         },
         watch: {
             product_id() {
-                this.getProductDetail();
+                this.content_show = false;
+                this.getProductDetail().then(()=>{
+                    this.content_show=true;
+                });
             },
             order_detail_id() {
                 this.$store.dispatch('getUserInfor');
@@ -131,24 +135,30 @@
                 })
             }
         },
-        created() {
+        activated() {
             this.product_id = this.$route.query.product_id;
         },
         methods: {
             //获取商品详情
             getProductDetail() {
-                this.$store.dispatch('toggleLoading');
-                this.$http.post(`${APP.HOST}/product_detail_l/${this.product_id}`, {
-                    token: APP.TOKEN,
-                    media_id: APP.MEDIA_ID,
-                    user_id: APP.USER_ID,
-                    open_id: APP.OPEN_ID
-                }).then((response) => {
+                return new Promise((resolve, reject) => {
                     this.$store.dispatch('toggleLoading');
-                    let data = response.data;
-                    this.product_detail = data.data;
-                }, (response) => {
-                    this.$store.dispatch('toggleLoading');
+                    this.$http.post(`${APP.HOST}/product_detail_l/${this.product_id}`, {
+                        token: APP.TOKEN,
+                        media_id: APP.MEDIA_ID,
+                        user_id: APP.USER_ID,
+                        open_id: APP.OPEN_ID
+                    }).then((response) => {
+                        this.$store.dispatch('toggleLoading');
+                        let data = response.data;
+                        this.product_detail = data.data;
+                        if(resolve){
+                            resolve();
+                        }
+                    }, (response) => {
+                        this.$store.dispatch('toggleLoading');
+                    })
+
                 })
             },
             //兑换

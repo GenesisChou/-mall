@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
     @import '../assets/scss/variable';
     .v-alert {
         .v-alert-content {
@@ -10,9 +10,8 @@
             text-align: center;
             padding: pxTorem(20);
             background-color: $white;
+            transform: translate(-50%, -50%);
             -webkit-transform: translate(-50%, -50%);
-            -moz-transform: translate(-50%, -50%);
-            -ms-transform: translate(-50%, -50%);
             border-radius: pxTorem(10);
             background-color: $white;
             z-index: 11;
@@ -74,6 +73,7 @@
 </template>
 <script>
     export default {
+        name:'vAlert',
         computed: {
             alert() {
                 return this.$store.state.v_alert;

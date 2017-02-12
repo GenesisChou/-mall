@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
     header {
         width: 100%;
@@ -9,14 +9,10 @@
     .tabs {
         display: flex;
         display: -webkit-flex;
-        display: -moz-flex;
-        display: -ms-flex;
         border-bottom: 1px solid $gray-light;
         li {
             flex: 1;
             -webkit-flex: 1;
-            -moz-flex: 1;
-            -ms-flex: 1;
             text-align: center;
             height: pxTorem(80);
             padding: 0 pxTorem(15);
@@ -29,11 +25,11 @@
     }
 </style>
 <template>
-    <div class='subject-detail'>
+    <div v-show='content_show' class='subject-detail'>
         <header>
             <img class='img-responsive' :src='subject_detail.pic'>
         </header>
-        <section>
+        <main>
             <ul v-if='tabs_show' class='tabs'>
                 <li :class='{active:current_tab=="全部"}' @click='switchTab("全部")'>全部</li>
                 <li v-for='tab in tabs' :class='{active:current_tab==tab.name}' @click='switchTab(tab.name)'>
@@ -46,14 +42,14 @@
                         color='text-red'></v-list-item>
                 </router-link>
             </template>
-        </section>
-        <v-support v-if='support_show'></v-support>
+        </main>
+        <v-support></v-support>
         <v-back-top></v-back-top>
     </div>
 </template>
 <script>
     export default {
-        name: 'subject_detail',
+        name: 'subjectDetail',
         data() {
             return {
                 subject_id: '',
@@ -61,8 +57,7 @@
                     class_items: []
                 },
                 current_tab: '全部',
-                support_show: false,
-                tabs_init: false
+                content_show: false,
             }
         },
         computed: {
@@ -75,15 +70,30 @@
         },
         watch: {
             subject_id(value) {
+                //bug 路由进入时值为number 路由返回/路由原地刷新时值类型为string
+                //类型变化也会引发该函数
+                this.content_show = false;
                 this.getSubjectDetail().then(() => {
-                    this.tabs_init = true;
-                    this.support_show = true;
+                    this.content_show = true;
                 });
-                this.$store.dispatch('subjectView',value);
             }
         },
-        created() {
+        activated() {
             this.subject_id = this.$route.query.subject_id;
+            this.$store.dispatch('subjectView', this.subject_id);
+            //保持滚动位置
+            let position = utils.getSessionStorage('position:' + this.$route.name);
+            if (position) {
+                window.scrollTo(0, position);
+            }
+        },
+        //路由至详情内tab状态不重置 
+        //返回至主页时tab状态重置
+        beforeRouteLeave(to, from, next) {
+            if (to.name == 'index') {
+                this.current_tab = '全部';
+            }
+            next();
         },
         methods: {
             getSubjectDetail() {
@@ -115,7 +125,7 @@
                         name: "product_detail",
                         query: {
                             product_id: item.item_id,
-                            integral: item.integral >> 0,
+                            integral: item.integral>>0,
                             product_name: item.name,
                         }
                     };
@@ -125,12 +135,11 @@
                         name: "activity_detail",
                         query: {
                             activity_id: item.item_id,
-                            integral: item.integral >> 0
                         }
                     };
 
                 }
             }
-        }
+        },
     }
 </script>

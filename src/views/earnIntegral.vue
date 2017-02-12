@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
     header {
         >div {
@@ -189,33 +189,24 @@
                 <h6>{{item.day}}</h6>
             </li>
         </ul>
-        <router-link tag='div' class='edit-user' :to='{name:"edit_user"}'>
+        <router-link v-if='is_submit' :to='{name:"edit_user"}' tag='div' class='edit-user'>
             <div class='icon'>
                 <i></i>
             </div>
             <div class='message'>
                 <h4>填写个人资料
-                    <span class='pull-right'>+20</span>
+                    <span class='pull-right'>+{{submit_param.integral}}</span>
                 </h4>
                 <h5 class='text-sliver'>首次完善个人资料可获得积分</h5>
             </div>
         </router-link>
         <div class='notice'>
-            <h5>阅读一篇文稿<span class='text-red'>+5</span>积分</h5>
-            <h5>每日最多可得<span class='text-red'>30</span>积分,今日已获得<span class='text-red'>0积分</span></h5>
+            <h5>阅读一篇文稿<span class='text-red'>+{{read_param.integral}}</span>积分</h5>
+            <h5>每日最多可得<span class='text-red'>{{read_param.day_limit}}</span>积分,今日已获得<span class='text-red'>{{read_param.today}}积分</span></h5>
         </div>
         <ul class='mission-list'>
-            <li>
-                <v-mission title='杭州两名市管领杭州两名市管领杭州两名市管领杭州两名市管领杭州两名市管领' btn-text='点击观看'></v-mission>
-            </li>
-            <li>
-                <v-mission title='杭州两名州两名市管领' btn-text='点击阅读'></v-mission>
-            </li>
-            <li>
-                <v-mission title='杭州两名市管领杭州两名市管领名市管领' btn-text='点击转发' :is-read='true'></v-mission>
-            </li>
-            <li>
-                <v-mission title='杭州两名市管领杭州两名市管领名市管领' btn-text='点击转发' ></v-mission>
+            <li v-for='article in article_list'>
+                <v-mission :article='article' :callback='readArticle'></v-mission>
             </li>
         </ul>
     </div>
@@ -223,7 +214,7 @@
 <script>
     import vMission from 'components/vMission.vue';
     export default {
-        name: 'check_in',
+        name: 'earnIntegral',
         components: {
             vMission
         },
@@ -231,12 +222,50 @@
             return {
                 check_in_params: [],
                 loaded: false,
-                checked: true
+                checked: true,
+                submit_param: {
+                    integral: 0
+                },
+                //
+                read_param: {
+                    integral: 0,
+                    day_limit: 0,
+                    today: 0
+                },
+                article_list: [{
+                        title: '杭州两名市管领杭州两',
+                        button: '点击观看',
+                        is_read: false
+                    },
+                    {
+                        title: '杭州两名市管领杭州两名市管领杭州两名市管领杭州两名市管领杭州两名市管领',
+                        button: '点击阅读',
+                        is_read: false
+                    },
+                    {
+                        title: '杭州两名市管领杭州两名市管领杭州两名市管领杭州两名市管领杭州两名市管领',
+                        button: '点击观看',
+                        is_read: true
+                    },
+                    {
+                        title: '杭州两名市管领杭州两名市管领',
+                        button: '点击分享',
+                        is_read: true
+                    },
+                    {
+                        title: '杭州两名市管领杭州两',
+                        button: '点击观看',
+                        is_read: false
+                    },
+                ]
             }
         },
         computed: {
             user() {
                 return this.$store.state.user;
+            },
+            is_submit() {
+                return this.user.is_submit == 1;
             },
             integral() {
                 if (this.check_in_params.length == 0) return 0;
@@ -249,10 +278,15 @@
         watch: {
             check_in_params() {
                 this.loaded = true;
-            }
+            },
+        },
+        activated() {
+            this.getArticleList();
+            this.getReadParam();
         },
         created() {
             this.getCheckInParams();
+            this.getSubmitParam();
         },
         methods: {
             //签到
@@ -292,6 +326,58 @@
                 }, (response) => {
                     this.$store.dispatch('toggleLoading');
                 })
+            },
+            //获取提交资料积分参数
+            getSubmitParam() {
+                console.log('getSubmit');
+                // this.$http.post(`${APP.HOST}/get_submit_param/${APP.USER_ID}`, {
+                //     token: APP.TOKEN,
+                //     userid: APP.USER_ID,
+                //     media_id: APP.MEDIA_ID
+                // }).then((response) => {
+                //     let data = response.data;
+                //     this.submit_param = data.data.integral;
+                // })
+
+            },
+            //获取阅读文章积分参数
+            getReadParam() {
+                console.log('getReadParam')
+                // this.$http.post(`${app.host}/get_read_param/${app.user_id}`, {
+                //     token: app.token,
+                //     userid: app.user_id,
+                //     media_id: app.media_id
+                // }).then((response) => {
+                //     let data = response.data;
+                //     this.read_param = data.data;
+                // })
+            },
+            //获取文章列表
+            getArticleList() {
+                console.log('getArticleList')
+                // this.$http.post(`${app.host}/article_list/${app.user_id}`, {
+                //     token: app.token,
+                //     userid: app.user_id,
+                //     media_id: app.media_id
+                // }).then((response) => {
+                //     let data = response.data;
+                //     this.article_list = data.data.list;
+                // })
+            },
+            //阅读文章取积分
+            readArticle(article_id) {
+                console.log('readArticle')
+                // this.$http.post(`${app.host}/read_article/${article_id}`, {
+                //     token: app.token,
+                //     userid: app.user_id,
+                //     media_id: app.media_id
+                // }).then((response) => {
+                //     let data = response.data;
+                //     if (data.status == APP.SUCCESS) {
+                //         this.$store.dispatch('getUserInfor')
+                //     }
+                // })
+
             }
 
 

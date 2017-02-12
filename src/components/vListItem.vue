@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
     .v-list-item {
         display: table;
@@ -47,7 +47,7 @@
 </template>
 <script>
     export default {
-        name: 'v-list-item',
+        name: 'vListItem',
         /*
             @title:主标题
             @titleDuty:副标题

@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
     .order-detail {
         min-height: 100%;
@@ -62,10 +62,7 @@
             right: pxTorem(15);
             top: 50%;
             transform: translateY(-50%);
-            -ms-transform: translateY(-50%);
-            -moz-transform: translateY(-50%);
             -webkit-transform: translateY(-50%);
-            -ms-transform: translateY(-50%);
         }
         .address-content {
             line-height: pxTorem(55);
@@ -98,7 +95,7 @@
     }
 </style>
 <template>
-    <div v-if='loaded' class='order-detail '>
+    <div v-show='content_show' class='order-detail '>
         <!-- 订单详情 -->
         <v-order :img='order_detail.product_pic' :id='order_detail.orderid' :integral='order_detail.integral>>0' :name='order_detail.product'>
             <!--商品为虚拟物品时 -->
@@ -233,7 +230,8 @@
                 popup_edit: false,
                 popup_select: false,
                 loaded: false,
-                receive_code: ''
+                receive_code: '',
+                content_show: false
             };
         },
         computed: {
@@ -279,26 +277,21 @@
             },
         },
         watch: {
+            //order_type  1商品兑换 2活动
+            //product_type 1优惠券唯一码 2实物 3积分赠送 4谢谢参与 5优惠券链接 6优惠券通用码
+            //status  1未确认地址 2已确认地址 3已发货
+            //send_type 1快递 2自提
             order_id() {
+                this.content_show = false;
                 this.getOrderDetail().then(() => {
                     let data = this.order_detail;
                     this.product_id = data.product_id;
                     this.product_type = data.product_type;
                     this.send_type = data.send_type;
-                });
-            },
-            //order_type  1商品兑换 2活动
-            //product_type 1优惠券唯一码 2实物 3积分赠送 4谢谢参与 5优惠券链接 6优惠券通用码
-            //status  1未确认地址 2已确认地址 3已发货
-            //send_type 1快递 2自提
-            product_type(value) {
-                if (value == 1 || value == 2 || value == 5 || value == 6) {
                     this.getProductDetail().then(() => {
-                        this.loaded = true;
-                    });
-                } else {
-                    this.loaded = true;
-                }
+                        this.content_show = true;
+                    })
+                });
             },
             send_type(value) {
                 if (value == 1 && this.product_type == 2 && this.order_detail.status == 1) {
@@ -306,7 +299,7 @@
                 }
             }
         },
-        created() {
+        activated() {
             this.order_id = this.$route.query.order_id;
         },
         methods: {

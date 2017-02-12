@@ -47,8 +47,8 @@ const router = new VueRouter({
             component: require('views/earnIntegral.vue')
         },
         {
-            path:'/edit_user',
-            name:'edit_user',
+            path: '/edit_user',
+            name: 'edit_user',
             component: require('views/editUser.vue')
         },
         {
@@ -63,6 +63,8 @@ const router = new VueRouter({
     ],
 });
 utils.setTitle(APP.TITLE);
+//需要固定滚动条位置的页面
+const fixList = ['index', 'product_list', 'order_list','subject_detail'];
 router.beforeEach((to, from, next) => {
     titles.forEach(item => {
         if (item.name == to.name) {
@@ -70,13 +72,18 @@ router.beforeEach((to, from, next) => {
             return;
         }
     })
+    if (utils.isInArray(from.name, fixList)) {
+        utils.setSessionStorage('position:' + from.name, utils.getScrollTop());
+    }
+    if (!utils.isInArray(to.name, fixList)) {
+        window.scrollTo(0, 0);
+    }
     store.dispatch('pageView', to.name);
-    utils.setSessionStorage('position:' + from.name, utils.getScrollTop());
     next();
 });
+module.exports = router;
 // router.afterEach((to, from) => {
 //     let url = location.href;
 //     url = `${url.split('#/')[0]}#${to.fullPath}`;
 //     setWeChatConfig(Vue, url);
 // });
-module.exports = router;

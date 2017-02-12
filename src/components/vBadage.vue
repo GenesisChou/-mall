@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
     .v-badage {
         width: pxTorem(50);
@@ -16,9 +16,7 @@
         box-sizing: content-box;
         z-index: 1;
         transform: scale(0.5);
-        transform: -webkit-scale(0.5);
-        transform: -moz-scale(0.5);
-        transform: -ms-scale(0.5);
+        -webkit-transform:scale(0.5);
     }
 </style>
 <template>

@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
     .select-address {
         height: pxTorem(800);
@@ -94,6 +94,7 @@
 <script>
     import vAddressEdit from 'components/order/vAddressEdit.vue'
     export default {
+        name: 'vAddressSelect',
         components: {
             vAddressEdit
         },
@@ -113,6 +114,14 @@
                 selected_id: 0,
             };
         },
+        computed: {
+            address_list() {
+                return this.$store.state.address_list;
+            },
+            save_address() {
+                return this.title == '修改收货地址' ? this.updateAddress : this.insertAddress;
+            },
+        },
         watch: {
             show(value) {
                 if (value) {
@@ -124,14 +133,6 @@
                     })
                 }
             }
-        },
-        computed: {
-            address_list() {
-                return this.$store.state.address_list;
-            },
-            save_address() {
-                return this.title == '修改收货地址' ? this.updateAddress : this.insertAddress;
-            },
         },
         methods: {
             toggleEdit() {

@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
     .activity-detail {
         width: 100%;
@@ -27,7 +27,7 @@
     }
 </style>
 <template>
-    <div class='activity-detail'>
+    <div v-if='content_show' class='activity-detail'>
         <header>
             <keep-alive>
                 <!-- is：活动类型 freshFreeTimes:刷新免费活动次数 ：notice:剩余次数／消耗积分提示 ：toOrderDetail:订单详情跳转 -->
@@ -50,7 +50,7 @@
             </div>
         </article>
         <footer class='aword-list'>
-            <v-list-item v-for='aword in aword_list' :active=false :title='aword.name' :title-dupty='aword.desc' :img='aword.pic'  ></v-list-item>
+            <v-list-item v-for='aword in aword_list' :active=false :title='aword.name' :title-dupty='aword.desc' :img='aword.pic'></v-list-item>
         </footer>
 </template>
 <script>
@@ -63,7 +63,7 @@
     } from 'components/activities'
     export default {
 
-        name: 'activity_detail',
+        name: 'activityDetail',
         components: {
             quiz,
             scrap,
@@ -78,46 +78,41 @@
                 activity_detail: '',
                 free_times: '',
                 activity_type: '',
+                content_show: false
             }
         },
         computed: {
             notice() {
-                if (this.free_times > 0) {
-                    return `您还剩余${this.free_times}次免费机会`;
-                }
-                return `消耗积分${this.activity_detail.integral >> 0}`;
+                return this.free_times > 0 ? `您还剩余${this.free_times}次免费机会` :
+                    `消耗积分${this.activity_detail.integral >> 0}`;
             },
             aword_list() {
                 return this.activity_detail.items;
             },
             activity_type() {
-                let type = this.type
                 /*  1:刮刮卡
                     2:有奖问答
                     3:游戏
                     4:摇一摇
                     5:大转盘 */
-                if (type == 1) {
-                    return 'scrap';
-                }
-                if (type == 2) {
-                    return 'quiz';
-                }
-                if (type == 3) {
-                    return 'game';
-                }
-                if (type == 4) {
-                    return 'shake';
-                }
-                if (type == 5) {
-                    return 'fortune';
-                }
+                let type = this.type,
+                    result = '';
+                const type_list = ['scrap', 'quiz', 'game', 'shake', 'fortune'];
+                type_list.forEach((name, index) => {
+                    if (type == index + 1) {
+                        result = name;
+                        return;
+                    }
+                })
+                return result;
             }
         },
         watch: {
             activity_id() {
+                this.content_show = false;
                 this.getActivityDetail().then(data => {
                     this.type = data.data.type;
+                    this.content_show = true;
                 });
                 this.getFreeTimes();
             },

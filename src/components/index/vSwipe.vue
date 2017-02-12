@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
     .v-swipe {
         height: pxTorem(300);
@@ -22,6 +22,7 @@
         SwipeItem
     } from 'vue-swipe';
     export default {
+        name:'vSwipe',
         components: {
             Swipe,
             SwipeItem

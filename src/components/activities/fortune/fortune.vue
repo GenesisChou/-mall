@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .fortune {
         position: relative;
@@ -14,9 +14,7 @@
         width: pxTorem(462);
         height: pxTorem(133);
         transform: translateX(-50%);
-        transform: -webkit-translateX(-50%);
-        transform: -moz-translateX(-50%);
-        transform: -ms-translateX(-50%);
+        -webkit-transform:translateX(-50%);
     }
     
     table {

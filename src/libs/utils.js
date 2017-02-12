@@ -1,6 +1,20 @@
 module.exports = {
+    isInArray(name, arr) {
+        let result = false;
+        arr.forEach(item => {
+            if (item == name) {
+                result = true;
+                return;
+            }
+        })
+        return result;
+    },
     setTitle(title) {
         document.title = title;
+    },
+    getTypeOf(value){
+        let temp=Object.prototype.toString.call(value);
+        return  temp.substr(0,temp.length-1).split(/\s+/)[1];
     },
     getParameterByName(name, url) {
         if (!url) url = window.location.href;
@@ -10,6 +24,9 @@ module.exports = {
         if (!results) return null;
         if (!results[2]) return '';
         return decodeURIComponent(results[2].replace(/\+/g, " "));
+    },
+    scrollToTop() {
+        window.scrollTo(0, 0);
     },
     //获取滚动条距顶部高度
     getScrollTop() {
@@ -40,6 +57,12 @@ module.exports = {
     touchBottom() {
         var utils = this;
         return utils.getScrollTop() + utils.getClientHeight() >= utils.getScrollHeight();
+    },
+    isEmptyObject(obj) {
+        for (var key in obj) {
+            return false;
+        }
+        return true;
     },
     setSessionStorage(key, obj) {
         sessionStorage.setItem(key, JSON.stringify(obj));

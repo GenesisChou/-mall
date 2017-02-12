@@ -1,4 +1,4 @@
-<style lang='sass' scoped>
+<style lang='scss' scoped>
 @import '../../assets/scss/variable.scss';
 .edit-address {
     height: pxTorem(800);
@@ -112,7 +112,6 @@
             margin-right: pxTorem(20);
             border-radius: 50%;
             -webkit-box-shadow: inset 0 0 pxTorem(10) $gray-light;
-            -moz-box-shadow: inset 0 0 pxTorem(10) $gray-light;
             box-shadow: inset 0 0 pxTorem(10) $gray-light;
         }
         .radio.active {
@@ -146,7 +145,7 @@
                     </li>
                     <li>
                         <label for='phone'>手机号码</label>
-                        <input id='phone' type='number' placeholder="手机或固定电话" v-model='receive_infor.phone'>
+                        <input id='phone' type='tel' placeholder="手机或固定电话" v-model='receive_infor.phone'>
                     </li>
                 </ul>
                 <footer class='footer text-center'>
@@ -177,6 +176,7 @@
 </template>
 <script>
 export default {
+    name:'vAddressEdit',
     props: {
         togglePopup: Function,
         show: {
@@ -253,8 +253,6 @@ export default {
                             this.address_id.province = address.province_id;
                             this.address_id.city = address.city_id;
                             this.address_id.country = address.country_id;
-
-
                             this.getCityList(address.province_id);
                             this.getCountryList(address.city_id);
                             this.receive_infor.province = address.province;
