@@ -42,13 +42,11 @@
 </style>
 <template>
     <v-modal :show='show' :toggle-modal='toggleModal'>
-        <div class='v-list-choose'>
-            <ul>
-                <li v-for='item in list' @click='event(item)'>
-                    <i :class='["radio",{active:isActive(item)}]'></i> <span>{{item[attribute]}}</span>
-                </li>
-            </ul>
-        </div>
+        <ul class='v-list-choose' ref='list'>
+            <li v-for='item in list' @click='event(item)'>
+                <i :class='["radio",{active:isActive(item)}]'></i> <span>{{item[attribute]}}</span>
+            </li>
+        </ul>
     </v-modal>
 </template>
 <script>
@@ -70,10 +68,26 @@
             },
             attribute: String,
             callback: Function,
-            isActive:Function
+            isActive: Function
+        },
+        data() {
+            return {
+                position: 0
+            }
+        },
+        watch: {
+            show(value) {
+                if (value) {
+                    // this.$refs.list.scrollTo(0, this.position);
+                    console.log(this.$refs.list);
+                    // window.scrollTo(0, 0);
+                } else {
+                    this.position = this.$refs.list.scrollTop;
+                }
+            }
         },
         methods: {
-            event(item){
+            event(item) {
                 this.callback(item);
                 this.toggleModal();
             }

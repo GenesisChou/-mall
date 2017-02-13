@@ -114,16 +114,16 @@
                 </li>
             </ul>
         </form>
-        <v-date :show='show_birth' :toggle-modal='toggleBirth' :value='birth' :change-date='changeBirth'></v-date>
+        <v-date-picker :show='show_birth' :toggle-modal='toggleBirth' :value='birth' :callback='changeBirth'></v-date-picker>
     </div>
 </template>
 <script>
-    import vDate from 'components/vDate.vue';
+    import vDatePicker from 'components/vDatePicker.vue';
     import vAddress from 'components/vAddress.vue';
     export default {
         name: 'editUser',
         components: {
-            vDate,
+            vDatePicker,
             vAddress,
         },
         data() {

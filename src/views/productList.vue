@@ -29,6 +29,7 @@
         position: absolute;
         right: 0;
         top: 50%;
+        transform: translateY( -50%);
         -webkit-transform: translateY( -50%);
         line-height: pxTorem(18);
         right: pxTorem(20);

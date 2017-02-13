@@ -1,21 +1,19 @@
 <style lang='scss' scoped>
     @import '../assets/scss/variable';
-    .v-alert {
-        .v-alert-content {
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            width: pxTorem(600);
-            font-size: pxTorem(28);
-            text-align: center;
-            padding: pxTorem(20);
-            background-color: $white;
-            transform: translate(-50%, -50%);
-            -webkit-transform: translate(-50%, -50%);
-            border-radius: pxTorem(10);
-            background-color: $white;
-            z-index: 11;
-        }
+    .v-alert-content {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        width: pxTorem(600);
+        font-size: pxTorem(28);
+        text-align: center;
+        padding: pxTorem(20);
+        background-color: $white;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        border-radius: pxTorem(10);
+        background-color: $white;
+        z-index: 11;
         .icon {
             width: pxTorem(60);
             height: pxTorem(60);
@@ -40,15 +38,6 @@
             line-height: pxTorem(78);
             font-size: pxTorem(30);
         }
-        .bg-cover {
-            position: fixed;
-            left: 0;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, .5);
-            z-index: 10;
-        }
         .close {
             position: absolute;
             right: pxTorem(5);
@@ -59,7 +48,7 @@
     }
 </style>
 <template>
-    <section class='v-alert'>
+    <v-modal :show='show' :toggle-modal='func' :cover-close='false'>
         <div v-show='show' class='v-alert-content '>
             <img v-if='type=="img"' class='pic' :src='img' alt="">
             <i v-else :class='["icon","text-red","iconfont","text-bold",icon_class]'></i>
@@ -67,13 +56,15 @@
             <button class='btn btn-red btn-large' @click='func()'>{{btn_text}}</button>
             <i v-if='close_btn' class='close iconfont icon-error-circle' @click='close()'></i>
         </div>
-        <div v-show='show' class='bg-cover'>
-        </div>
-    </section>
+    </v-modal>
 </template>
 <script>
+    import vModal from 'components/vModal.vue';
     export default {
-        name:'vAlert',
+        name: 'vAlert',
+        components: {
+            vModal
+        },
         computed: {
             alert() {
                 return this.$store.state.v_alert;

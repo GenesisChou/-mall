@@ -4,7 +4,7 @@
 </style>
 <template>
     <div id="app">
-        <keep-alive exclude='activity_detail'>
+        <keep-alive exclude='my_account,activity_detail'>
             <router-view></router-view>
         </keep-alive>
         <v-alert></v-alert>

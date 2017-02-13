@@ -134,7 +134,7 @@
                         userid: APP.USER_ID
                     }).then((response) => {
                         let data = response.data;
-                        this.province_list = data.data;
+                        this.province_list = data.data||[];
                         if (resolve) {
                             resolve();
                         }
@@ -149,7 +149,7 @@
                         userid: APP.USER_ID
                     }).then((response) => {
                         let data = response.data;
-                        this.city_list = data.data;
+                        this.city_list = data.data||[];
                         if (resolve) {
                             resolve();
                         }
@@ -164,7 +164,7 @@
                         userid: APP.USER_ID
                     }).then((response) => {
                         let data = response.data;
-                        this.country_list = data.data;
+                        this.country_list = data.data||[];
                         if (resolve) {
                             resolve();
                         }

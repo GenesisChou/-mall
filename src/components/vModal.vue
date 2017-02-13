@@ -22,10 +22,10 @@
 <template>
     <div class='v-modal'>
         <!-- <transition name='fade'> -->
-            <div v-if='show' @click='close()' class='bg-cover'>
+            <div v-show='show' @click='close()' class='bg-cover'>
             </div>
         <!-- </transition> -->
-        <div v-if='show' class='content '>
+        <div v-show='show' class='content '>
             <slot></slot>
         </div>
     </div>

@@ -1,20 +1,18 @@
 <style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
-    .v-confirm {
-        .v-confirm-content {
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            width: pxTorem(600);
-            border-radius: pxTorem(10);
-            overflow: hidden;
-            text-align: center;
-            margin-left: pxTorem(-300);
-            margin-top: pxTorem(-137);
-            z-index: 11;
-        }
+    .v-confirm-content {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        width: pxTorem(600);
+        border-radius: pxTorem(10);
+        overflow: hidden;
+        text-align: center;
+        margin-left: pxTorem(-300);
+        margin-top: pxTorem(-137);
+        z-index: 11;
         .msg {
-            height:pxTorem(190);
+            height: pxTorem(190);
             line-height: pxTorem(190);
             background-color: $white;
         }
@@ -41,19 +39,10 @@
             border-top: 1px solid $red;
             color: $white;
         }
-        .bg-cover {
-            position: fixed;
-            left: 0;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, .5);
-            z-index: 10;
-        }
     }
 </style>
 <template>
-    <section class='v-confirm'>
+    <v-modal :show='show' :toggleModal='func' :cover-close='false'>
         <transition name='scale'>
             <div v-show='show' class='v-confirm-content'>
                 <h3 class=' msg'>{{msg}}</h3>
@@ -63,23 +52,26 @@
                 </div>
             </div>
         </transition>
-        <div v-show='show' class='bg-cover'> </div>
-    </section>
-</template>
+    </v-modal>
+   </template>
 <script>
+    import vModal from 'components/vModal.vue';
     export default {
         name: 'v-confirm',
-        computed:{
-            confirm(){
+        components: {
+            vModal
+        },
+        computed: {
+            confirm() {
                 return this.$store.state.v_confirm;
             },
-            show(){
+            show() {
                 return this.confirm.show;
             },
-            msg(){
+            msg() {
                 return this.confirm.msg;
             },
-            callback(){
+            callback() {
                 return this.confirm.callback;
             }
         },

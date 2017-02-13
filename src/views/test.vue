@@ -11,6 +11,7 @@
         <img class='img' src="">
         <v-load-more></v-load-more>
         <button class='btn btn-red' @click='toggleAlert'>alert</button>
+        <button class='btn btn-red' @click='toggleConfirm'>confirm</button>
     </div>
 </template>
 <script>
@@ -53,7 +54,6 @@
             },
             toggleConfirm() {
                 this.$store.dispatch('toggleConfirm', {
-                    show: true,
                     msg: 'hello world'
                 })
             }

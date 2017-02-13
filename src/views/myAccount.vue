@@ -110,7 +110,7 @@
             </i>
         </header>
         <v-block-text text='积分明细' type='bg-white'></v-block-text>
-        <ul class='record-list'>
+        <ul class='record-list' ref='list'>
             <li v-for='item in integral_list'>
                 <div class='pull-left'>
                     <h4>{{item.name}}</h4>
@@ -140,12 +140,19 @@
 </template>
 <script>
     export default {
-        name: 'my_integral',
+        name: 'myAccount',
         data() {
             return {
                 modal: false,
-                integral_param: '',
-                integral_list: '',
+                params: {
+                    p: 1,
+                    r: APP.PERPAGE,
+                    total: 0,
+                    token: APP.TOKEN,
+                    userid: APP.USER_ID,
+                    media_id: APP.MEDIA_ID,
+                },
+                integral_list: [],
                 support_show: false
             }
         },
@@ -160,10 +167,18 @@
                 return this.$store.state.user;
             }
         },
-        activated() {
+        mounted() {
+            this.support_show = false;
             this.getIntegralList().then(() => {
                 this.support_show = true;
             });
+            let list = this.$refs.list;
+            list.addEventListener('scroll', () => {
+                if (this.params.p < this.params.total && list.clientHeight + list.scrollTop == list.scrollHeight) {
+                    this.params.p++;
+                    this.getIntegralList()
+                }
+            })
         },
         methods: {
             toggleModal() {
@@ -172,18 +187,14 @@
             //——获取积分明细列表
             getIntegralList() {
                 return new Promise((resolve) => {
-                    this.$store.dispatch('toggleLoading');
-                    this.$http.post(`${APP.HOST}/integral_list/${APP.USER_ID}`, {
-                        token: APP.TOKEN,
-                        userid: APP.USER_ID
-                    }).then((response) => {
-                        this.$store.dispatch('toggleLoading');
-                        this.integral_list = response.data.data;
+                    this.$http.post(`${APP.HOST}/integral_list/${APP.USER_ID}`, this.params).then((response) => {
+                        let data=response.data;
+                        this.integral_list = this.integral_list.concat(data.data.list);
+                        this.params.total=data.data.total;
                         if (resolve) {
                             resolve();
                         }
                     }, (response) => {
-                        this.$store.dispatch('toggleLoading');
 
                     })
 
