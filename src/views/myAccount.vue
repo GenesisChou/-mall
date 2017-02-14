@@ -122,7 +122,7 @@
             </li>
             <v-support v-if='support_show'></v-support>
         </ul>
-        <v-modal :toggle-modal='toggleModal' :show='modal'>
+        <v-modal v-model='modal'>
             <div class='modal-content'>
                 <header>
                     <p>您可以通过以下途径赚取积分：</p>
@@ -172,13 +172,19 @@
             this.getIntegralList().then(() => {
                 this.support_show = true;
             });
-            let list = this.$refs.list;
-            list.addEventListener('scroll', () => {
-                if (this.params.p < this.params.total && list.clientHeight + list.scrollTop == list.scrollHeight) {
+            let list = this.$refs.list,
+                scroll = true;
+            list.addEventListener('scroll', utils.debounce(() => {
+                if (scroll &&
+                    this.params.p < this.params.total &&
+                    list.clientHeight + list.scrollTop >= list.scrollHeight - 100) {
+                    scroll = false;
                     this.params.p++;
-                    this.getIntegralList()
+                    this.getIntegralList().then(() => {
+                        scroll = true;
+                    })
                 }
-            })
+            }, 500, 500))
         },
         methods: {
             toggleModal() {
@@ -188,9 +194,9 @@
             getIntegralList() {
                 return new Promise((resolve) => {
                     this.$http.post(`${APP.HOST}/integral_list/${APP.USER_ID}`, this.params).then((response) => {
-                        let data=response.data;
+                        let data = response.data;
                         this.integral_list = this.integral_list.concat(data.data.list);
-                        this.params.total=data.data.total;
+                        this.params.total = data.data.total;
                         if (resolve) {
                             resolve();
                         }

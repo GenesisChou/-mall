@@ -232,32 +232,7 @@
                     day_limit: 0,
                     today: 0
                 },
-                article_list: [{
-                        title: '杭州两名市管领杭州两',
-                        button: '点击观看',
-                        is_read: false
-                    },
-                    {
-                        title: '杭州两名市管领杭州两名市管领杭州两名市管领杭州两名市管领杭州两名市管领',
-                        button: '点击阅读',
-                        is_read: false
-                    },
-                    {
-                        title: '杭州两名市管领杭州两名市管领杭州两名市管领杭州两名市管领杭州两名市管领',
-                        button: '点击观看',
-                        is_read: true
-                    },
-                    {
-                        title: '杭州两名市管领杭州两名市管领',
-                        button: '点击分享',
-                        is_read: true
-                    },
-                    {
-                        title: '杭州两名市管领杭州两',
-                        button: '点击观看',
-                        is_read: false
-                    },
-                ]
+                article_list: []
             }
         },
         computed: {
@@ -295,7 +270,7 @@
                     this.$store.dispatch('toggleLoading');
                     this.$http.post(`${APP.HOST}/checkin/${APP.USER_ID}`, {
                         token: APP.TOKEN,
-                        userid: APP.USER_ID,
+                        user_id: APP.USER_ID,
                         media_id: APP.MEDIA_ID
                     }).then((response) => {
                         let data = response.data;
@@ -317,7 +292,7 @@
                 this.$store.dispatch('toggleLoading');
                 this.$http.post(`${APP.HOST}/get_checkin_param/${APP.USER_ID}`, {
                     token: APP.TOKEN,
-                    userid: APP.USER_ID,
+                    user_id: APP.USER_ID,
                     media_id: APP.MEDIA_ID
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
@@ -329,54 +304,50 @@
             },
             //获取提交资料积分参数
             getSubmitParam() {
-                console.log('getSubmit');
-                // this.$http.post(`${APP.HOST}/get_submit_param/${APP.USER_ID}`, {
-                //     token: APP.TOKEN,
-                //     userid: APP.USER_ID,
-                //     media_id: APP.MEDIA_ID
-                // }).then((response) => {
-                //     let data = response.data;
-                //     this.submit_param = data.data.integral;
-                // })
+                this.$http.post(`${APP.HOST}/get_submit_param/${APP.USER_ID}`, {
+                    token: APP.TOKEN,
+                    user_id: APP.USER_ID,
+                    media_id: APP.MEDIA_ID
+                }).then((response) => {
+                    let data = response.data;
+                    this.submit_param.integral = data.data.integral;
+                })
 
             },
             //获取阅读文章积分参数
             getReadParam() {
-                console.log('getReadParam')
-                // this.$http.post(`${app.host}/get_read_param/${app.user_id}`, {
-                //     token: app.token,
-                //     userid: app.user_id,
-                //     media_id: app.media_id
-                // }).then((response) => {
-                //     let data = response.data;
-                //     this.read_param = data.data;
-                // })
+                this.$http.post(`${APP.HOST}/get_read_param/${APP.USER_ID}`, {
+                    token: APP.TOKEN,
+                    user_id: APP.USER_ID,
+                    media_id: APP.MEDIA_ID
+                }).then((response) => {
+                    let data = response.data;
+                    this.read_param = data.data;
+                })
             },
             //获取文章列表
             getArticleList() {
-                console.log('getArticleList')
-                // this.$http.post(`${app.host}/article_list/${app.user_id}`, {
-                //     token: app.token,
-                //     userid: app.user_id,
-                //     media_id: app.media_id
-                // }).then((response) => {
-                //     let data = response.data;
-                //     this.article_list = data.data.list;
-                // })
+                this.$http.post(`${APP.HOST}/article_list/${APP.USER_ID}`, {
+                    token: APP.TOKEN,
+                    user_id: APP.USER_ID,
+                    media_id: APP.MEDIA_ID
+                }).then((response) => {
+                    let data = response.data;
+                    this.article_list = data.data;
+                })
             },
-            //阅读文章取积分
+            //阅读文章
             readArticle(article_id) {
-                console.log('readArticle')
-                // this.$http.post(`${app.host}/read_article/${article_id}`, {
-                //     token: app.token,
-                //     userid: app.user_id,
-                //     media_id: app.media_id
-                // }).then((response) => {
-                //     let data = response.data;
-                //     if (data.status == APP.SUCCESS) {
-                //         this.$store.dispatch('getUserInfor')
-                //     }
-                // })
+                this.$http.post(`${APP.HOST}/read_article/${article_id}`, {
+                    token: APP.TOKEN,
+                    user_id: APP.USER_ID,
+                    media_id: APP.MEDIA_ID
+                }).then((response) => {
+                    let data = response.data;
+                    if (data.status == APP.SUCCESS) {
+                        this.$store.dispatch('getUserInfor')
+                    }
+                })
 
             }
 

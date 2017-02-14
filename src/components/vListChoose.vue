@@ -41,7 +41,7 @@
     }
 </style>
 <template>
-    <v-modal :show='show' :toggle-modal='toggleModal'>
+    <v-modal v-model='show'>
         <ul class='v-list-choose' ref='list'>
             <li v-for='item in list' @click='event(item)'>
                 <i :class='["radio",{active:isActive(item)}]'></i> <span>{{item[attribute]}}</span>
@@ -72,19 +72,9 @@
         },
         data() {
             return {
-                position: 0
             }
         },
         watch: {
-            show(value) {
-                if (value) {
-                    // this.$refs.list.scrollTo(0, this.position);
-                    console.log(this.$refs.list);
-                    // window.scrollTo(0, 0);
-                } else {
-                    this.position = this.$refs.list.scrollTop;
-                }
-            }
         },
         methods: {
             event(item) {

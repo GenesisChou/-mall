@@ -25,25 +25,27 @@
             vLoadMore,
         },
         data() {
-            return {}
+            return {
+                test:''
+            }
         },
         mounted() {
-            let img = document.getElementsByTagName('img')[0];
-            let start_x=0,start_y=0;
-            img.addEventListener('touchstart', (event) => {
-                let target = event.target,
-                    startPoint = event.touches[0];
-                start_x = startPoint.clientX,
-                    start_y = startPoint.clientY;
-            })
-            img.addEventListener('touchend', (event) => {
-                let stopPoint = event.changedTouches[0],
-                    stop_x = stopPoint.clientX,
-                    stop_y = stopPoint.clientY;
-                let off_x = stop_x - start_x,
-                    off_y = stop_y - start_y;
-                console.log('touchend', off_x, off_y);
-            })
+            // let img = document.getElementsByTagName('img')[0];
+            // let start_x=0,start_y=0;
+            // img.addEventListener('touchstart', (event) => {
+            //     let target = event.target,
+            //         startPoint = event.touches[0];
+            //     start_x = startPoint.clientX,
+            //         start_y = startPoint.clientY;
+            // })
+            // img.addEventListener('touchend', (event) => {
+            //     let stopPoint = event.changedTouches[0],
+            //         stop_x = stopPoint.clientX,
+            //         stop_y = stopPoint.clientY;
+            //     let off_x = stop_x - start_x,
+            //         off_y = stop_y - start_y;
+            //     console.log('touchend', off_x, off_y);
+            // })
         },
         methods: {
             toggleAlert() {

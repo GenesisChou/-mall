@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '../vuex/store.js';
-import setWeChatTitle from 'libs/setTitle.js';
 import titles from 'libs/titles.js';
 Vue.use(VueRouter);
 const router = new VueRouter({
@@ -68,7 +67,7 @@ const fixList = ['index', 'product_list', 'order_list','subject_detail'];
 router.beforeEach((to, from, next) => {
     titles.forEach(item => {
         if (item.name == to.name) {
-            setWeChatTitle(item.title);
+            utils.setTitle(item.title);
             return;
         }
     })
@@ -82,8 +81,3 @@ router.beforeEach((to, from, next) => {
     next();
 });
 module.exports = router;
-// router.afterEach((to, from) => {
-//     let url = location.href;
-//     url = `${url.split('#/')[0]}#${to.fullPath}`;
-//     setWeChatConfig(Vue, url);
-// });

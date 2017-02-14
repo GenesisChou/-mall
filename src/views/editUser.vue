@@ -89,7 +89,7 @@
                 </li>
                 <li>
                     <label for='birth'>出生年月</label>
-                    <input id='birth' @click='toggleBirth' readonly v-model='birthday'>
+                    <v-date-picker v-model='birthday'></v-date-picker>
                 </li>
                 <li>
                     <label for='phone'>手机号</label>
@@ -114,12 +114,11 @@
                 </li>
             </ul>
         </form>
-        <v-date-picker :show='show_birth' :toggle-modal='toggleBirth' :value='birth' :callback='changeBirth'></v-date-picker>
     </div>
 </template>
 <script>
-    import vDatePicker from 'components/vDatePicker.vue';
     import vAddress from 'components/vAddress.vue';
+    import vDatePicker from 'components/vDatePicker.vue';
     export default {
         name: 'editUser',
         components: {
@@ -273,12 +272,6 @@
                         return;
                     }
                 })
-            },
-            changeBirth(value) {
-                this.birth = value;
-            },
-            toggleBirth() {
-                this.show_birth = !this.show_birth;
             },
         }
     }

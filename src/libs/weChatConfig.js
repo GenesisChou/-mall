@@ -6,6 +6,7 @@ module.exports = function (Vue) {
     getSignature(url).then((data) => {
         init(data.data);
     });
+
     function init(data) {
         let title = APP.TITLE;
         let link = url;
@@ -122,8 +123,6 @@ module.exports = function (Vue) {
             media_id: APP.MEDIA_ID
         }).then((response) => {
             store.dispatch('getUserInfor');
-        }, (response) => {
-
         });
     }
 

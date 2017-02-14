@@ -153,7 +153,7 @@
                 </footer>
             </form>
         </v-popup>
-        <v-modal :show='modal' :toggle-modal='toggleModal' :cover-close='true'>
+        <v-modal v-model='modal'>
             <div class='modal-content'>
                 <ul v-if='current_type=="province"'>
                     <li  v-for='province in province_list' @click='selectAddress("province",province.province,province.provinceid)'>
@@ -166,8 +166,8 @@
                     </li>
                 </ul>
                 <ul v-if='current_type=="country"'>
-                    <li  v-for='country in country_list' @click='selectAddress("country",country.area,country.areaid)'>
-                        <i :class='["radio",address_id.country==country.areaid?"active":""]'></i> <span>{{country.area}}</span>
+                    <li  v-for='country in country_list' @click='selectAddress("country",country.country,country.countryid)'>
+                        <i :class='["radio",address_id.country==country.countryid?"active":""]'></i> <span>{{country.country}}</span>
                     </li>
                 </ul>
             </div>
@@ -429,7 +429,7 @@ export default {
         },
         //获取区县
         getCountryList(id) {
-            this.$http.post(`${APP.HOST}/area_list/${id}`, {
+            this.$http.post(`${APP.HOST}/country_list/${id}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID
             }).then((response) => {

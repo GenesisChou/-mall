@@ -104,7 +104,7 @@
                 if (!this.is_read) {
                     this.callback(this.id);
                 }
-                location.href = this.url;
+                // location.href = this.url;
             }
         }
     }

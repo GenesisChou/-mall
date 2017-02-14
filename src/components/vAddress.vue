@@ -159,7 +159,7 @@
             //获取区县
             getCountryList(id) {
                 return new Promise(resolve => {
-                    this.$http.post(`${APP.HOST}/area_list/${id}`, {
+                    this.$http.post(`${APP.HOST}/country_list/${id}`, {
                         token: APP.TOKEN,
                         userid: APP.USER_ID
                     }).then((response) => {

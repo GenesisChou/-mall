@@ -42,7 +42,7 @@
     }
 </style>
 <template>
-    <v-modal :show='show' :toggleModal='func' :cover-close='false'>
+    <v-modal v-model='show' :cover-close='false'>
         <transition name='scale'>
             <div v-show='show' class='v-confirm-content'>
                 <h3 class=' msg'>{{msg}}</h3>

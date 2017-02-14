@@ -48,7 +48,7 @@
     }
 </style>
 <template>
-    <v-modal :show='show' :toggle-modal='func' :cover-close='false'>
+    <v-modal v-model='show' :cover-close='false'>
         <div v-show='show' class='v-alert-content '>
             <img v-if='type=="img"' class='pic' :src='img' alt="">
             <i v-else :class='["icon","text-red","iconfont","text-bold",icon_class]'></i>
@@ -96,11 +96,14 @@
             icon_class() {
                 if (this.type == 'suprise') {
                     return 'icon-warn';
-                } else if (this.type == 'correct') {
+                }
+                if (this.type == 'correct') {
                     return 'icon-correct-circle-hollow';
-                } else if (this.type == 'error') {
+                }
+                if (this.type == 'error') {
                     return 'icon-error-circle';
-                } else if (this.type == 'img') {
+                }
+                if (this.type == 'img') {
                     return '';
                 }
             },

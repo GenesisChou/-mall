@@ -27,7 +27,7 @@
     }
 </style>
 <template>
-    <div v-if='content_show' class='activity-detail'>
+    <div class='activity-detail'>
         <header>
             <keep-alive>
                 <!-- is：活动类型 freshFreeTimes:刷新免费活动次数 ：notice:剩余次数／消耗积分提示 ：toOrderDetail:订单详情跳转 -->
@@ -78,7 +78,6 @@
                 activity_detail: '',
                 free_times: '',
                 activity_type: '',
-                content_show: false
             }
         },
         computed: {
@@ -109,10 +108,8 @@
         },
         watch: {
             activity_id() {
-                this.content_show = false;
                 this.getActivityDetail().then(data => {
                     this.type = data.data.type;
-                    this.content_show = true;
                 });
                 this.getFreeTimes();
             },
