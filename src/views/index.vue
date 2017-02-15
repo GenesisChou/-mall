@@ -21,6 +21,12 @@
                 background-color: darken($white, 10%);
             }
             .v-badage {
+                display:flex;
+                display:-webkit-flex;
+                align-items:center;
+                -webkit-align-items:center;
+                justify-content: center;
+                -webkit-justify-content: center;
                 width: pxTorem(50);
                 height: pxTorem(50);
                 position: absolute;
@@ -30,9 +36,6 @@
                 color: $red;
                 border-radius: 50%;
                 border: 2px solid $red;
-                text-align: center;
-                line-height: pxTorem(50);
-                font-weight: bold;
                 box-sizing: content-box;
                 z-index: 1;
                 transform: scale(0.5);
@@ -127,7 +130,7 @@
             </router-link>
             <router-link :to='{name:"order_list"}' tag='li'>
                 <i class=' icon-order-unsolved iconfont  '></i>
-                <div v-if='user.unfinished_order_count>0' class='v-badage'>{{user.unfinished_order_count}}</div>
+                <b v-if='user.unfinished_order_count>0' class='v-badage'>{{user.unfinished_order_count}}</b>
                 <p>我的订单</p>
             </router-link>
             <router-link :to='{name:"product_list"}' tag='li'>

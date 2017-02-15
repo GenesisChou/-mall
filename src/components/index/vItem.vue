@@ -22,12 +22,17 @@
             height: pxTorem(200);
         }
         span {
+            display: flex;
+            display: -webkit-flex;
+            align-items: center;
+            -webkit-align-items: center;
+            justify-content: center;
+            -webkit-justify-content: center;
             position: absolute;
             left: pxTorem(-60);
             top: pxTorem(25);
             width: pxTorem(200);
             height: pxTorem(30);
-            line-height: pxTorem(30);
             color: $white;
             background-color: $red;
             font-size: pxTorem(20);
@@ -78,7 +83,7 @@
 </template>
 <script>
     export default {
-        name:'vItem',
+        name: 'vItem',
         props: {
             item: Object,
             type: String

@@ -46,6 +46,7 @@
             top: pxTorem(5);
             font-weight: bold;
             font-size: pxTorem(40);
+            color:$black;
         }
     }
 </style>

@@ -34,21 +34,21 @@
             margin: pxTorem(40) auto;
             background-color: #fefafa;
         }
-        span{
-            font-size:pxTorem(28);
+        span {
+            font-size: pxTorem(28);
         }
-        h1{
-            display:inline;
-            color:$red;
+        h1 {
+            display: inline;
+            color: $red;
         }
     }
     
     .single-button {
         padding: pxTorem(20) pxTorem(75);
         button {
-            width:100%;
-            height:pxTorem(80);
-            line-height:pxTorem(80);
+            width: 100%;
+            height: pxTorem(80);
+            line-height: pxTorem(80);
             display: block;
             text-align: center;
             color: $white;
@@ -56,6 +56,10 @@
     }
     
     .address-selected {
+        display: flex;
+        display: -webkit-flex;
+        align-items: center;
+        -webkit-align-items: center;
         position: relative;
         padding: pxTorem(55) pxTorem(70) pxTorem(55) 0;
         font-size: pxTorem(28);
@@ -64,9 +68,10 @@
         overflow: hidden;
         background-color: $white;
         .location {
-            width: pxTorem(110);
-            text-align: center;
-            line-height: pxTorem(110);
+            // width: pxTorem(110);
+            // text-align: center;
+            // line-height: pxTorem(110);
+            padding:0 pxTorem(35);
         }
         .arrows {
             position: absolute;
@@ -81,11 +86,19 @@
                 margin-right: pxTorem(10);
             }
         }
-        .iconfont{
-            font-size:pxTorem(36);
+        .address-detail {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .iconfont {
+            font-size: pxTorem(36);
         }
     }
     
+       
     .input-box {
         padding: pxTorem(30);
         input {
@@ -165,7 +178,7 @@
                                     <span> <label>收货信息:</label>{{default_address.contact}}</span>
                                     <span class='pull-right'>{{default_address.phone}}</span>
                                 </p>
-                                <p>
+                                <p class='address-detail'>
                                     <label>收货地址:</label> {{default_address.province}} {{default_address.city}} {{default_address.country}}
                                     {{default_address.address}}
                                 </p>
@@ -190,15 +203,15 @@
                             <i class='iconfont icon-location'></i>
                         </div>
                         <div class='address-content clearfix'>
-                            <p>
+                            <p class='address-detail'>
                                 <label>取货地址:</label> {{order_detail.take_address}}
                             </p>
                         </div>
                     </div>
                     <v-divider text='输入取货码'></v-divider>
                     <div class='input-box'>
-                        <input type="text" v-model='receive_code' :disabled='order_detail.status==3||order_detail.status==4'>
-                        <button v-if='order_detail.status==2' class='btn btn-red pull-right ' @click='receiveOrder'>确认</button>
+                        <input type="text" v-model='take_wordh' :disabled='order_detail.status==3||order_detail.status==4'>
+                        <button v-if='order_detail.status==2' class='btn btn-red pull-right ' @click='takeGoods'>确认</button>
                         <button v-if='order_detail.status==3' class='btn  pull-right '>已取货</button>
                         <button v-if='order_detail.status==4' class='btn  pull-right '>已逾期</button>
                     </div>
@@ -242,7 +255,7 @@
                 popup_edit: false,
                 popup_select: false,
                 loaded: false,
-                receive_code: '',
+                take_wordh: '',
                 content_show: false
             };
         },
@@ -374,12 +387,12 @@
                 })
             },
             //领取订单
-            receiveOrder() {
+            takeGoods() {
                 this.$store.dispatch('toggleLoading');
-                this.$http.post(`${APP.HOST}/receive_order/${this.order_id}`, {
+                this.$http.post(`${APP.HOST}/take_goods/${this.order_id}`, {
                     token: APP.TOKEN,
                     userid: APP.USER_ID,
-                    id: this.default_address.id
+                    take_word: this.take_word
                 }).then((response) => {
                     let data = response.data;
                     this.$store.dispatch('toggleLoading');
