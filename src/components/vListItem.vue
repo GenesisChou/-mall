@@ -19,13 +19,19 @@
         .describe {
             display: table-cell;
             vertical-align: middle;
-            span:nth-child(1) {
+            h1 {
                 overflow: hidden;
                 text-overflow: ellipsis;
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
                 margin-bottom: pxTorem(7);
+            }
+            h5.gray {
+                color: $gray;
+            }
+            h5.red {
+                color: $red;
             }
         }
     }
@@ -40,8 +46,8 @@
             <img :src='img' />
         </div>
         <div class='describe'>
-            <span class='text-huge '>{{title}}</span>
-            <span :class='color'>{{titleDupty}}</span>
+            <h1>{{title}}</h1>
+            <h5 :class='color'>{{titleDupty}}</h5>
         </div>
     </div>
 </template>
@@ -60,13 +66,13 @@
             titleDupty: String,
             color: {
                 type: String,
-                default: 'text-gray'
+                default: 'gray'
             },
             img: String,
             active: {
                 type: Boolean,
                 default: true
             }
-        }
+        },
     };
 </script>

@@ -34,6 +34,9 @@
                 }
             }
         }
+        .iconfont{
+            font-size:pxTorem(36);
+        }
         .badage {
             width: pxTorem(50);
             height: pxTorem(50);
@@ -69,7 +72,7 @@
     <div class='order-list'>
         <ul class='tabs list-inline'>
             <li v-for='(tab,$index) in tabs' @click='switchTab($index+1)' :class='{active:$index+1==current_tab}'>
-                <i :class='["text-huge","iconfont",getIconType($index)]'>
+                <i :class='["iconfont",getIconType($index)]'>
                 <h6>{{tab.name}}</h6>
                 <span class='badage' v-if='$index==0&&user.unfinished_order_count>0'>{{user.unfinished_order_count}}</span>
             </li>

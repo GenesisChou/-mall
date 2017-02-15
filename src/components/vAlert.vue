@@ -14,10 +14,12 @@
         border-radius: pxTorem(10);
         background-color: $white;
         z-index: 11;
-        .icon {
+        .iconfont {
             width: pxTorem(60);
             height: pxTorem(60);
             font-size: pxTorem(40);
+            font-weight:bold;
+            color:$red;
         }
         .pic {
             width: pxTorem(300);
@@ -30,12 +32,12 @@
             text-align: center;
             width: pxTorem(400);
         }
-        .btn {
+        button{
             width: pxTorem(300);
-            height: pxTorem(78);
+            height: pxTorem(80);
             margin: 0 auto;
             margin-bottom: pxTorem(30);
-            line-height: pxTorem(78);
+            line-height: pxTorem(80);
             font-size: pxTorem(30);
         }
         .close {
@@ -49,11 +51,11 @@
 </style>
 <template>
     <v-modal v-model='show' :cover-close='false'>
-        <div v-show='show' class='v-alert-content '>
+        <div v-if='show' class='v-alert-content '>
             <img v-if='type=="img"' class='pic' :src='img' alt="">
-            <i v-else :class='["icon","text-red","iconfont","text-bold",icon_class]'></i>
+            <i v-else :class='["iconfont",icon_class]'></i>
             <h3 class='msg'>{{msg}}</h3>
-            <button class='btn btn-red btn-large' @click='func()'>{{btn_text}}</button>
+            <button class='btn btn-red' @click='func()'>{{btn_text}}</button>
             <i v-if='close_btn' class='close iconfont icon-error-circle' @click='close()'></i>
         </div>
     </v-modal>

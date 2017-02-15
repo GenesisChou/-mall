@@ -6,10 +6,11 @@
     left: 0;
     right: 0;
     border-top: 1px solid $gray-light;
+    background-color:$white;
 }
 </style>
 <template>
-    <div class='v-sticky bg-white'>
+    <div class='v-sticky'>
         <slot></slot>
     </div>
 </template>

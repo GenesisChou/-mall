@@ -1,7 +1,5 @@
 import vLoadMore from 'components/vLoadMore.vue';
 import vSupport from 'components/vSupport.vue';
-import vBadage from 'components/vBadage.vue';
-import vBlockText from 'components/vBlockText.vue';
 import vDivider from 'components/vDivider.vue';
 import vListItem from 'components/vListItem.vue';
 import vModal from 'components/vModal.vue';
@@ -13,8 +11,6 @@ import vBackTop from 'components/vBackTop.vue';
 module.exports = {
     vLoadMore,
     vSupport,
-    vBadage,
-    vBlockText,
     vDivider,
     vListItem,
     vModal,

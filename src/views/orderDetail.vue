@@ -20,24 +20,35 @@
                 }
             }
         }
-        .ticket {
-            border-top: 1px solid $gray-light;
-            border-bottom: 1px solid $gray-light;
-            .ticket-box {
-                width: pxTorem(608);
-                height: pxTorem(66);
-                line-height: pxTorem(66);
-                border: 1px solid $red;
-                padding-left: pxTorem(20);
-                margin: pxTorem(40) auto;
-                background-color: #fefafa;
-            }
+    }
+    
+    .ticket {
+        border-top: 1px solid $gray-light;
+        border-bottom: 1px solid $gray-light;
+        .ticket-box {
+            width: pxTorem(608);
+            height: pxTorem(66);
+            line-height: pxTorem(66);
+            border: 1px solid $red;
+            padding-left: pxTorem(20);
+            margin: pxTorem(40) auto;
+            background-color: #fefafa;
+        }
+        span{
+            font-size:pxTorem(28);
+        }
+        h1{
+            display:inline;
+            color:$red;
         }
     }
     
     .single-button {
         padding: pxTorem(20) pxTorem(75);
-        a {
+        button {
+            width:100%;
+            height:pxTorem(80);
+            line-height:pxTorem(80);
             display: block;
             text-align: center;
             color: $white;
@@ -69,6 +80,9 @@
             label {
                 margin-right: pxTorem(10);
             }
+        }
+        .iconfont{
+            font-size:pxTorem(36);
         }
     }
     
@@ -103,15 +117,15 @@
                 <!--商品为优惠券时 -->
                 <div v-if='product_type==1||product_type==6' class='ticket'>
                     <div class='ticket-box'>
-                        <span class='text-large'>优惠券:</span>
-                        <span class='text-red text-huge'>
+                        <span>优惠券:</span>
+                        <h1>
                             <template v-if='product_type==1'>
                                 {{order_detail.ticket_id}}
                             </template>
                             <template v-if='product_type==6'>
                                 {{product_detail.ticket_id}}
                             </template>
-                        </span>
+                        </h1>
                     </div>
                 </div>
                 <v-simditor>
@@ -126,7 +140,7 @@
                     </ul>
                 </v-simditor>
                 <div v-if='product_type==5' class='single-button'>
-                    <a class='btn btn-red btn-block btn-large ' :href='product_detail.url'> 前往使用 </a>
+                    <button class='btn btn-red' :href='product_detail.url'> 前往使用 </button>
                 </div>
             </template>
             <!-- 商品为实物时 -->
@@ -137,14 +151,14 @@
                     <template v-if='order_detail.status==1&&!address_list.length'>
                         <v-address-edit :show='popup_edit' :toggle-popup='toggleEdit'></v-address-edit>
                         <div class='single-button'>
-                            <button class='btn btn-red btn-block btn-large ' @click='toggleEdit'>+ 请填写收货地址</button>
+                            <button class='btn btn-red' @click='toggleEdit'>+ 请填写收货地址</button>
                         </div>
                     </template>
                     <!-- 有地址 -->
                     <template v-else>
                         <section class='address-selected ' @click='toggleSelect'>
                             <div class='location pull-left'>
-                                <i class='iconfont icon-location  text-huge'></i>
+                                <i class='iconfont icon-location '></i>
                             </div>
                             <div class='address-content clearfix'>
                                 <p>
@@ -156,7 +170,7 @@
                                     {{default_address.address}}
                                 </p>
                                 <div v-if='!order_checked' class='arrows'>
-                                    <i class='iconfont icon-arrows-right text-bold text-huge'></i>
+                                    <i class='iconfont icon-arrows-right'></i>
                                 </div>
                             </div>
                         </section>
@@ -164,7 +178,7 @@
                         <!-- status!=1时为已确认地址 -->
                         <v-logistics v-if='order_detail.status!=1' :order-detail='order_detail'></v-logistics>
                         <div v-if='!order_checked' class='single-button'>
-                            <button class='btn btn-red btn-block btn-large ' @click='updateOrderAddress'>确认地址</button>
+                            <button class='btn btn-red' @click='updateOrderAddress'>确认地址</button>
                         </div>
                         <v-address-select :show='popup_select' :toggle-popup='toggleSelect' :default-id='default_address.id>>0'></v-address-select>
                     </template>
@@ -173,7 +187,7 @@
                 <template v-if='send_type==2'>
                     <div class='address-selected '>
                         <div class='location pull-left'>
-                            <i class='iconfont icon-location  text-huge'></i>
+                            <i class='iconfont icon-location'></i>
                         </div>
                         <div class='address-content clearfix'>
                             <p>
@@ -181,15 +195,13 @@
                             </p>
                         </div>
                     </div>
-                    <!--
                     <v-divider text='输入取货码'></v-divider>
                     <div class='input-box'>
                         <input type="text" v-model='receive_code' :disabled='order_detail.status==3||order_detail.status==4'>
-                        <button v-if='order_detail.status==2' class='btn btn-red pull-right text-normal' @click='receiveOrder'>确认</button>
-                        <button v-if='order_detail.status==3' class='btn  pull-right text-normal'>已取货</button>
-                        <button v-if='order_detail.status==4' class='btn  pull-right text-normal'>已逾期</button>
+                        <button v-if='order_detail.status==2' class='btn btn-red pull-right ' @click='receiveOrder'>确认</button>
+                        <button v-if='order_detail.status==3' class='btn  pull-right '>已取货</button>
+                        <button v-if='order_detail.status==4' class='btn  pull-right '>已逾期</button>
                     </div>
-                    -->
                     <v-simditor>
                         <v-divider v-if='product_detail.content_use' text='领取说明'></v-divider>
                         <article v-if='product_detail.content_use' class='introduction' v-html='product_detail.content_use'> </article>

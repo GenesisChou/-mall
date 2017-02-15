@@ -2,10 +2,11 @@
     @import '../../../assets/scss/variable.scss';
     .v-quiz {
         background-color: rgb(243, 243, 243);
-        padding: pxTorem(14) pxTorem(64) pxTorem(36) pxTorem(64);
+        padding-bottom: pxTorem(36);
     }
     
     .head {
+        text-align: center;
         img {
             width: pxTorem(493);
             height: pxTorem(193);
@@ -13,89 +14,102 @@
     }
     
     .panel {
-        margin-top: pxTorem(10);
+        width: pxTorem(620);
+        height: auto;
+        margin: pxTorem(10) auto;
         border-radius: pxTorem(20);
         box-shadow: pxTorem(5) pxTorem(5) pxTorem(5) rgba(0, 0, 0, .1);
-        .panel-head {
-            line-height: pxTorem(72);
-            background-color: $red;
-            border-top-left-radius: pxTorem(20);
-            border-top-right-radius: pxTorem(20);
-        }
-        .panel-content {
-            padding: pxTorem(35) pxTorem(55) pxTorem(100) pxTorem(50);
-            .quiz {
-                margin-bottom: pxTorem(35);
-            }
-            .answers {
-                font-size: pxTorem(30);
-                margin-bottom: pxTorem(50);
-                input[type='radio'] {
-                    display: none;
-                }
-                label {
-                    display: block;
-                    padding: pxTorem(18) 0;
-                }
-                label:before {
-                    content: "";
-                    display: inline-block;
-                    width: pxTorem(25);
-                    height: pxTorem(25);
-                    margin-right: pxTorem(25);
-                    border: pxTorem(3) solid $gray;
-                    border-radius: 50%;
-                    transform: translateY(pxTorem(3));
-                    -webkit-transform: translateY(pxTorem(3));
-                }
-                input[type="radio"]:checked+label:before {
-                    background: $gray;
-                }
-            }
-            .submit {
-                width: pxTorem(350);
-                font-size: pxTorem(30);
-            }
+        background-color: $white;
+        font-size: pxTorem(36);
+    }
+    
+    .panel-head {
+        line-height: pxTorem(72);
+        text-align: center;
+        color: $white;
+        background-color: $red;
+        border-top-left-radius: pxTorem(20);
+        border-top-right-radius: pxTorem(20);
+    }
+    
+    .panel-content {
+        padding: pxTorem(35) pxTorem(50) 0 pxTorem(50);
+        .quiz {
+            margin-bottom: pxTorem(35);
         }
     }
     
-    .free-time-message {
-        position: absolute;
-        left: 50%;
-        bottom: 6%;
-        transform: translateX(-50%);
-        -webkit-transform: translateX(-50%);
+    .answers {
+        font-size: pxTorem(30);
+        color: $gray;
+        list-style: none;
+        li {
+            list-style: none;
+        }
+        input[type='radio'] {
+            display: none;
+        }
+        label {
+            display: block;
+            padding: pxTorem(18) 0;
+        }
+        label:before {
+            content: "";
+            display: inline-block;
+            width: pxTorem(25);
+            height: pxTorem(25);
+            margin-right: pxTorem(25);
+            border: pxTorem(3) solid $gray;
+            border-radius: 50%;
+            transform: translateY(pxTorem(3));
+            -webkit-transform: translateY(pxTorem(3));
+        }
+        input[type="radio"]:checked+label:before {
+            background: $gray;
+        }
+    }
+    
+    .panel-footer {
+        text-align: center;
+        margin-top: pxTorem(30);
+        button {
+            width: pxTorem(350);
+            height: pxTorem(80);
+            line-height: pxTorem(80);
+            font-size: pxTorem(30);
+        }
+        h5{
+            padding:pxTorem(30);
+        }
     }
 </style>
 <template>
     <div class='v-quiz '>
-        <div class='head text-center'>
+        <header class='head'>
             <img src='./images/quiz.png' alt="">
-        </div>
-        <div v-for='(item,$index) in activityDetail.questions' class='body'>
-            <div v-if='current_number==$index' class='panel bg-white text-huge '>
-                <div class='panel-head text-center text-white'>
+        </header>
+        <template v-for='(item,$index) in activityDetail.questions'>
+            <main v-if='current_number==$index' class='panel'>
+                <h1 class='panel-head'>
                     第{{$index+1}}题
-                </div>
-                <div class='panel-content '>
-                    <div class='quiz '>
+                </h1>
+                <section class='panel-content '>
+                    <article class='quiz '>
                         {{item.question}}
-                    </div>
-                    <div class='answers text-gray '>
-                        <div class='answer ' v-for='answer in item.answers'>
+                    </article>
+                    <ul class='answers'>
+                        <li v-for='answer in item.answers'>
                             <input type='radio' :id='answer.id' :value='answer.id' v-model='answer_id'>
                             <label :for='answer.id'>{{answer.option}}</label>
-                        </div>
-                    </div>
-                    <div class='text-center'>
-                        <button class='btn btn-red btn-large submit ' @click='submitAnswer()'>提交答案</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class='free-time-message'>
-            {{notice}}
-        </div>
+                        </li>
+                    </ul>
+                </section>
+                <footer class='panel-footer'>
+                    <button class='btn btn-red' @click='submitAnswer()'>提交答案</button>
+                    <h5>{{notice}}</h5>
+                </footer>
+            </main>
+        </template>
     </div>
 </template>
 <script>
@@ -130,7 +144,7 @@
                     this.$store.dispatch('toggleAlert', {
                         msg: result.name,
                         type: 'error',
-                        callback:()=>{
+                        callback: () => {
                             this.init();
                         }
                     });

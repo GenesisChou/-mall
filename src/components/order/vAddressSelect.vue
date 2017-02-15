@@ -5,6 +5,7 @@
         background: $white;
         .header {
             line-height: pxTorem(135);
+            text-align: center;
         }
         .address-list {
             overflow-y: scroll;
@@ -29,20 +30,28 @@
                     float: left;
                     max-width: pxTorem(523);
                     margin-top: pxTorem(15);
-                }
-                .iconfont {
-                    line-height: pxTorem(107);
-                    &:first-child {
-                        float: left;
-                        margin-right: pxTorem(10);
-                    }
-                    &:last-child {
-                        float: right;
+                    h6 {
+                        color: $gray;
                     }
                 }
+                .iconfont {}
                 .new-address {
                     float: left;
                     line-height: pxTorem(107);
+                }
+            }
+            .iconfont {
+                font-size: pxTorem(36);
+                line-height: pxTorem(107);
+                &:first-child {
+                    float: left;
+                    margin-right: pxTorem(10);
+                }
+                &:last-child {
+                    float: right;
+                }
+                &.icon-correct-circle {
+                    color: $red;
                 }
             }
         }
@@ -50,7 +59,10 @@
             height: pxTorem(158);
             line-height: pxTorem(158);
             padding: 0 pxTorem(73);
-            .btn {
+            button {
+                width: 100%;
+                height: pxTorem(80);
+                line-height: pxTorem(80);
                 text-indent: pxTorem(12);
                 letter-spacing: pxTorem(12);
             }
@@ -61,30 +73,32 @@
     <section class='v-address-select'>
         <v-popup :show='show' :toggle-popup='togglePopup'>
             <div class='select-address'>
-                <header class='header text-center text-huge'>
-                    请选择收货地址
+                <header class='header'>
+                    <h1>
+                        请选择收货地址
+                    </h1>
                 </header>
                 <ul class='address-list'>
                     <li v-for='address in address_list'>
-                        <i v-if='address.id==selected_id' class='iconfont icon-correct-circle  text-huge text-red'></i>
-                        <i v-else class='iconfont icon-correct-circle-hollow  text-huge'></i>
+                        <i v-if='address.id==selected_id' class='iconfont icon-correct-circle'></i>
+                        <i v-else class='iconfont icon-correct-circle-hollow'></i>
                         <div class='address' @click='selectAddress(address.id)'>
                             <h4 class='text-ellipsis'>{{address.contact}},{{address.phone}}</h4>
-                            <h6 class='text-gray text-ellipsis'>{{address.province}} {{address.city}} {{address.country}} {{address.address}}</h6>
+                            <h6 class='text-ellipsis'>{{address.province}} {{address.city}} {{address.country}} {{address.address}}</h6>
                         </div>
-                        <i class='iconfont icon-edit  text-huge' @click='editAddress(address.id)'></i>
-                        <!-- <i class='iconfont icon-error  text-huge' @click='deleteAddress(address.id)'></i> -->
+                        <i class='iconfont icon-edit ' @click='editAddress(address.id)'></i>
+                        <!-- <i class='iconfont icon-error ' @click='deleteAddress(address.id)'></i> -->
                     </li>
                     <li @click='insertAddress'>
-                        <i class='iconfont icon-plus-circle text-huge '></i>
+                        <i class='iconfont icon-plus-circle '></i>
                         <div class='new-address'>
                             新增收货地址
                         </div>
-                        <i class='iconfont icon-arrows-right  text-huge text-bold'></i>
+                        <i class='iconfont icon-arrows-right'></i>
                     </li>
                 </ul>
                 <footer class='footer'>
-                    <button class='btn btn-large btn-red btn-block' @click='save'>保存</button>
+                    <button class='btn btn-red' @click='save'>保存</button>
                 </footer>
             </div>
         </v-popup>

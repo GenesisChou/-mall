@@ -39,7 +39,7 @@
             <template v-for='tab in tabs'>
                 <router-link v-for='item in tab.items' :to='getRouter(item)' tag='div'>
                     <v-list-item v-show='current_tab=="全部"||current_tab==tab.name' :title='item.name' :title-dupty='~~item.integral+"积分"' :img='item.pic'
-                        color='text-red'></v-list-item>
+                        color='red'></v-list-item>
                 </router-link>
             </template>
         </main>

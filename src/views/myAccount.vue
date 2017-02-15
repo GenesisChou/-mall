@@ -1,6 +1,6 @@
 <style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
-    .my-integral {
+    .my-account {
         height: 100%;
     }
     
@@ -41,6 +41,11 @@
         }
     }
     
+.block-text {
+    height: pxTorem(100);
+    line-height: pxTorem(100);
+    text-align: center;
+}
     .record-list {
         position: absolute;
         top: pxTorem(388);
@@ -68,6 +73,9 @@
                 line-height: pxTorem(100);
             }
         }
+        h6 {
+            color: $gray;
+        }
     }
     
     .modal-content {
@@ -84,16 +92,21 @@
             padding-top: pxTorem(50);
         }
         button {
+            height: pxTorem(80);
+            line-height: pxTorem(80);
             width: pxTorem(300);
         }
         img {
             width: pxTorem(410);
             height: pxTorem(157);
         }
+        .iconfont {
+            font-size: pxTorem(26);
+        }
     }
 </style>
 <template>
-    <div class='my-integral '>
+    <div class='my-account '>
         <header class='header'>
             <div class='avater'>
                 <img :src='user.headimg'>
@@ -109,12 +122,14 @@
                 赚取积分?
             </i>
         </header>
-        <v-block-text text='积分明细' type='bg-white'></v-block-text>
+        <h4 class='block-text'>
+            积分明细
+        </h4>
         <ul class='record-list' ref='list'>
             <li v-for='item in integral_list'>
                 <div class='pull-left'>
                     <h4>{{item.name}}</h4>
-                    <h6 class='text-gray'>
+                    <h6>
                         {{item.create_time}}
                     </h6>
                 </div>
@@ -125,14 +140,11 @@
         <v-modal v-model='modal'>
             <div class='modal-content'>
                 <header>
-                    <p>您可以通过以下途径赚取积分：</p>
-                    <p>1.点击右上角的'...'</p>
-                    <p>2.选择 <i class=' icon-share iconfont text-normal '></i> 或 <i class=' icon-timeline iconfont text-normal '></i>                        即可
-                    </p>
+                    您可以通过以下途径赚取积分：<br> 1.点击右上角的'...' <br> 2.选择 <i class=' icon-share iconfont '></i> 或 <i class=' icon-timeline iconfont '></i>                    即可
                     <img src='../assets/images/share.png'>
                 </header>
                 <footer>
-                    <button class='btn btn-red btn-large' @click='toggleModal()'>知道了</button>
+                    <button class='btn btn-red' @click='toggleModal()'>知道了</button>
                 </footer>
             </div>
         </v-modal>

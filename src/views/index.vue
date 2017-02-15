@@ -20,6 +20,24 @@
             &:active {
                 background-color: darken($white, 10%);
             }
+            .v-badage {
+                width: pxTorem(50);
+                height: pxTorem(50);
+                position: absolute;
+                right: pxTorem(45);
+                top: pxTorem(0);
+                background-color: $white;
+                color: $red;
+                border-radius: 50%;
+                border: 2px solid $red;
+                text-align: center;
+                line-height: pxTorem(50);
+                font-weight: bold;
+                box-sizing: content-box;
+                z-index: 1;
+                transform: scale(0.5);
+                -webkit-transform: scale(0.5);
+            }
         }
         .iconfont {
             display: block;
@@ -94,10 +112,6 @@
             }
         }
     }
-    
-    .hot-list {
-        overflow: hidden;
-    }
 </style>
 <template>
     <div class='index '>
@@ -113,7 +127,7 @@
             </router-link>
             <router-link :to='{name:"order_list"}' tag='li'>
                 <i class=' icon-order-unsolved iconfont  '></i>
-                <v-badage :num='user.unfinished_order_count'></v-badage>
+                <div v-if='user.unfinished_order_count>0' class='v-badage'>{{user.unfinished_order_count}}</div>
                 <p>我的订单</p>
             </router-link>
             <router-link :to='{name:"product_list"}' tag='li'>
@@ -128,7 +142,7 @@
                     name:"subject_detail",
                     query:{subject_id:(subject_list[0].id).toString() }}' tag='div'>
                     <img :src='subject_list[0].pic_main'>
-                    </router-link>
+                </router-link>
             </div>
             <div class='right'>
                 <router-link :to='{
@@ -143,7 +157,7 @@
                 </router-link>
             </div>
         </div>
-        <main class='hot-list'>
+        <main class='clearfix'>
             <!-- 热门推荐 -->
             <v-item v-for='item in hot_commend' :item='item' type='commend'></v-item>
             <!-- 热门 -->
@@ -180,7 +194,6 @@
                 },
                 scroll_event: '',
                 support_show: false,
-                subject_show: false
             }
         },
         computed: {
@@ -193,7 +206,7 @@
             subject_show() {
                 return this.subject_list.length >= 3;
             }
-        }, //beforeRouteEnter无法获取实例this
+        },
         activated() {
             let position = utils.getSessionStorage('position:' + this.$route.name);
             if (position) {
@@ -240,7 +253,6 @@
                     this.hot_commend = data.data;
                 }, (response) => {});
             },
-            //  热门商品和活动列表，用于首页列表
             getHotItems() {
                 return new Promise((resolve, reject) => {
                     this.$http.post(`${APP.HOST}/hot_item`, this.params).then((response) => {
@@ -271,11 +283,5 @@
                 }, 500, 500);
             },
         },
-        filters: {
-            toString(value) {
-                return value.toString()
-            }
-        }
-
     };
 </script>

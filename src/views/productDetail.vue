@@ -16,6 +16,7 @@
             line-height: pxTorem(100);
             padding-left: pxTorem(55);
             background: rgba(0, 0, 0, .5);
+            color:$white;
         }
     }
     
@@ -49,6 +50,9 @@
             border: 0;
             border-radius: 0;
         }
+        .integral {
+            color: $red
+        }
         .btn-disable {
             color: $white;
             background-color: #838385;
@@ -61,9 +65,9 @@
     <div class='product-detail'>
         <header v-show='content_show' class='header '>
             <img :src='product_detail.pic_banner' />
-            <div class='cover text-white '>
-                <p class='text-huge text-ellipsis'>{{product_name}}</p>
-            </div>
+            <h1 class='cover text-ellipsis'>
+                {{product_name}}
+            </h1>
         </header>
         <article v-show='content_show' class='main '>
             <div class='introduction'>
@@ -83,7 +87,7 @@
         <v-sticky>
             <footer class='footer '>
                 <h4 class='pull-left'>
-                    单价：<span class='text-red'>{{integral}}</span>积分
+                    单价：<span class='integral'>{{integral}}</span>积分
                 </h4>
                 <button v-if='integral_enough' class='btn-red pull-right' @click='exchange'>兑换</button>
                 <button v-else class='btn-disable pull-right'>积分不足</button>
@@ -119,8 +123,8 @@
         watch: {
             product_id() {
                 this.content_show = false;
-                this.getProductDetail().then(()=>{
-                    this.content_show=true;
+                this.getProductDetail().then(() => {
+                    this.content_show = true;
                 });
             },
             order_detail_id() {
@@ -152,7 +156,7 @@
                         this.$store.dispatch('toggleLoading');
                         let data = response.data;
                         this.product_detail = data.data;
-                        if(resolve){
+                        if (resolve) {
                             resolve();
                         }
                     }, (response) => {

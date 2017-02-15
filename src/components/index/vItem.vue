@@ -13,7 +13,7 @@
         }
     }
     
-    header {
+    .head {
         position: relative;
         margin: 0 auto;
         overflow: hidden;
@@ -38,7 +38,7 @@
         }
     }
     
-    main {
+    .message {
         margin-top: pxTorem(30);
         h2 {
             color: #1d1e1d;
@@ -60,20 +60,20 @@
 </style>
 <template>
     <div class='v-item' @click='router'>
-        <header>
+        <header class='head'>
             <span v-if='item.script'>
                 {{item.script}}
                 </span>
             <img :src='item.pic'>
         </header>
-        <main>
+        <footer class='message'>
             <h2 class='text-ellipsis'>{{item.name}}</h2>
             <h4 class='text-ellipsis'>{{item.sub_name}}</h4>
             <span>{{item.integral>>0}}积分</span>
             <strong>
                  {{item.label}}
              </strong>
-        </main>
+        </footer>
     </div>
 </template>
 <script>

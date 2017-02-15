@@ -19,9 +19,16 @@
         >li {
             width: 50%;
             text-align: center;
+            font-size:pxTorem(36);
             &:nth-child(1) {
                 position: relative;
             }
+        }
+        .active{
+            color:$red;
+        }
+        .iconfont{
+            font-weight:bold;
         }
     }
     
@@ -42,24 +49,24 @@
 <template>
     <div class='product-list'>
         <div class='search-box'>
-            <v-search :search='searchProduct' :params='params'></v-search>
+            <v-search :search='searchProduct'  v-model='params.sword'></v-search>
         </div>
         <div class='fill'></div>
         <ul class='sort list-inline'>
-            <li class=' text-huge' @click='sortByIntegral'>
-                <span :class='[sort_type!="count"&&sort_type?"text-red":""]'>消耗积分排序</span>
+            <li @click='sortByIntegral'>
+                <span :class='[sort_type!="count"&&sort_type?"active":""]'>消耗积分排序</span>
                 <div class='arrows'>
-                    <i :class='["icon-arrows-up","iconfont","text-bold",sort_type=="integral-up"?"text-red":""]'></i>
-                    <i :class='["icon-arrows-down","iconfont","text-bold",sort_type=="integral-down"?"text-red":""]'></i>
+                    <i :class='["icon-arrows-up","iconfont",sort_type=="integral-up"?"active":""]'></i>
+                    <i :class='["icon-arrows-down","iconfont",sort_type=="integral-down"?"active":""]'></i>
                 </div>
             </li>
-            <li :class='["text-huge",sort_type=="count"?"text-red":""]' @click='sortByCount'>
+            <li :class='[sort_type=="count"?"active":""]' @click='sortByCount'>
                 兑换量优先
             </li>
         </ul>
         <router-link :to='{name:"product_detail",query:{product_id:product.id,integral:product.integral>>0}}' v-for='product in product_list'
             tag='div'>
-            <v-list-item :title='product.name' :title-dupty='~~product.integral+"积分"' :img='product.pic_thumb' color='text-red'></v-list-item>
+            <v-list-item :title='product.name' :title-dupty='~~product.integral+"积分"' :img='product.pic_thumb' color='red'></v-list-item>
             </router-link>
             <v-load-more v-if='busy'></v-load-more>
             <v-support v-if='support_show'></v-support>

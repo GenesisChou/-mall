@@ -1,6 +1,9 @@
 <style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
-    header {
+    .text-red{
+        color:$red;
+    }
+    .head {
         >div {
             height: pxTorem(460);
         }
@@ -17,7 +20,7 @@
             &:nth-child(2) {
                 margin: pxTorem(30) 0 pxTorem(10) 0;
             }
-        }
+                  }
     }
     
     .check-button {
@@ -163,7 +166,7 @@
 </style>
 <template>
     <div v-if='loaded' class='check-in'>
-        <header>
+        <header class='head'>
             <div v-if='user.ischecked'>
                 <h2>您已连续签到</h2>
                 <div class='calendar'>
@@ -197,7 +200,7 @@
                 <h4>填写个人资料
                     <span class='pull-right'>+{{submit_param.integral}}</span>
                 </h4>
-                <h5 class='text-sliver'>首次完善个人资料可获得积分</h5>
+                <h5>首次完善个人资料可获得积分</h5>
             </div>
         </router-link>
         <div class='notice'>

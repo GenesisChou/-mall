@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '../vuex/store.js';
-import titles from 'libs/titles.js';
 Vue.use(VueRouter);
 const router = new VueRouter({
     routes: [{
@@ -63,19 +62,25 @@ const router = new VueRouter({
 });
 utils.setTitle(APP.TITLE);
 //需要固定滚动条位置的页面
-const fixList = ['index', 'product_list', 'order_list','subject_detail'];
+const fixList = ['index', 'product_list', 'order_list', 'subject_detail'],
+    titles = {
+        index: APP.TITLE,
+        product_list: '所有商品',
+        product_detail: '商品详情',
+        activity_detail: '活动详情',
+        my_account: '我的账户',
+        order_list: '兑换记录',
+        order_detail: '订单详情',
+        subject_detail: '每日上新',
+        earn_integral: '赚取积分',
+    }
 router.beforeEach((to, from, next) => {
-    titles.forEach(item => {
-        if (item.name == to.name) {
-            utils.setTitle(item.title);
-            return;
-        }
-    })
+    utils.setTitle(titles[to.name])
     if (utils.isInArray(from.name, fixList)) {
         utils.setSessionStorage('position:' + from.name, utils.getScrollTop());
     }
     if (!utils.isInArray(to.name, fixList)) {
-        window.scrollTo(0, 0);
+        utils.scrollToTop();
     }
     store.dispatch('pageView', to.name);
     next();

@@ -26,13 +26,17 @@
             background: rgba(0, 0, 0, .5);
             z-index: 1;
         }
+        .iconfont{
+            font-size:pxTorem(36);
+            font-weight:bold;
+        }
     }
 </style>
 <template>
     <div class='v-popup'>
         <transition name='popup'>
             <div v-show='show' class='v-popup-content' >
-                <i class='close-popup iconfont icon-error text-bold text-huge' @click='close()'></i>
+                <i class='close-popup iconfont icon-error' @click='close()'></i>
                 <slot></slot>
             </div>
         </transition>

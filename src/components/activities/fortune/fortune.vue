@@ -69,7 +69,7 @@
     <div class='fortune'>
         <img class='title' src='./images/title.png'>
         <table>
-            <tr class='list-inline'>
+            <tr>
                 <td :class='{active:current_index==0}'>
                     <img :src='awards[0].pic'>
                     <h6> {{awards[0].name}} </h6>
@@ -83,7 +83,7 @@
                     <h6> {{awards[2].name}} </h6>
                 </td>
             </tr>
-            <tr class='list-inline'>
+            <tr>
                 <td :class='{active:current_index==7}'>
                     <img :src='awards[7].pic'>
                     <h6> {{awards[7].name}} </h6>
@@ -97,7 +97,7 @@
                     <h6> {{awards[3].name}} </h6>
                 </td>
             </tr>
-            <tr class='list-inline'>
+            <tr>
                 <td :class='{active:current_index==6}'>
                     <img :src='awards[6].pic'>
                     <h6> {{awards[6].name}} </h6>

@@ -57,6 +57,9 @@
             transform: translateX(-50%);
             -webkit-transform: translateX(-50%);
         }
+        h3{
+            text-align:center;
+        }
         &.active {
             border-top: pxTorem(5) solid $white;
             animation: down 1.5s linear;
@@ -131,14 +134,14 @@
             <source src="http://xunlei.sc.chinaz.com/files/download/sound1/201410/5018.wav" type="audio/mpeg" />
         </audio>
         <img class='flower' src='./images/flower.png'>
-        <div :class='["top",{active:this.shaking}]'>
+        <header :class='["top",{active:this.shaking}]'>
             <img class='shake' src='./images/shake_top.png'>
-        </div>
-        <div :class='["bottom",{active:this.shaking}]'>
+        </header>
+        <footer :class='["bottom",{active:this.shaking}]'>
             <img class='shake' src='./images/shake_bottom.png'>
-            <h3 class='text-center'>{{notice}}</h3>
+            <h3>{{notice}}</h3>
             <!--<button class='btn btn-red' @click='start'>shake</button>-->
-        </div>
+        </footer>
     </div>
 </template>
 <script>
@@ -206,10 +209,13 @@
                 }, this.animation_time);
             }
         },
-        mounted() {
+        activated(){
             this.init();
             this.deviceEvent = this.getDeviceEvent();
             window.addEventListener('devicemotion', this.deviceEvent);
+        },
+        deactivated(){
+            window.removeEventListener('devicemotion',this.deviceEvent);
         },
         methods: {
             init() {
@@ -248,9 +254,6 @@
             },
             start() {
                 if (this.state != 'ready') return;
-                // this.state = 'start';
-                // this.state = 'shaking';
-                // this.is_win = false;
                 this.$http.post(`${APP.HOST}/shake_activity/${this.id}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID
@@ -272,7 +275,6 @@
             },
             sound() {
                 this.$refs.audio.play();
-                // this.audio.play();
             },
             shake() {
                 this.shaking = true;
