@@ -9,7 +9,7 @@
     }
 </style>
 <template>
-    <swipe class='v-swipe'>
+    <swipe class='v-swipe' :auto=5000 :speed=500>
         <swipe-item v-for='slide in slides'>
             <img @click='bannerView(slide);' :src="slide.pic">
         </swipe-item>
