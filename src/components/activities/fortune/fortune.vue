@@ -165,15 +165,10 @@
                         };
                     } else {
                         this.alert = {
-                            // close_btn: true,
-                            type: 'img',
-                            img: result.pic_thumb,
                             msg: result.name,
-                            // callback: this.toOrderDetail(result.id),
-                            // callback_close: () => {
-                            //     this.init(this.stop_position);
-                            // },
-                            // btn_text: '查看'
+                            callback: () => {
+                                this.init(this.stop_position);
+                            },
                         };
 
                     }

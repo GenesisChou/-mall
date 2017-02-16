@@ -55,7 +55,7 @@
         <div v-if='show' class='v-alert-content '>
             <img v-if='type=="img"' class='pic' :src='img' alt="">
             <i v-else :class='["iconfont",icon_class]'></i>
-            <h3 class='msg'>{{msg}}</h3>
+            <h3 v-if='msg' class='msg'>{{msg}}</h3>
             <button class='btn btn-red' @click='func()'>{{btn_text}}</button>
             <i v-if='close_btn' class='close iconfont icon-error-circle' @click='close()'></i>
         </div>
