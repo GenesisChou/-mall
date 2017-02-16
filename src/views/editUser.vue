@@ -173,13 +173,11 @@
         },
         created() {
             this.init(this.default_address);
-        },
-        mounted() {
             this.birth = {
                 year: this.user.year || '',
                 month: this.user.month || '',
                 day: this.user.day || ''
-            };
+            }
         },
         methods: {
             //初始化地址列表

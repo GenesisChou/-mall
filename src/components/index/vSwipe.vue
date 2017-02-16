@@ -16,7 +16,7 @@
     </swipe>
 </template>
 <script>
-    import './vSwipe.css';
+    import 'style/vSwipe.scss';
     import {
         Swipe,
         SwipeItem

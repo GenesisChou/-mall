@@ -14,7 +14,7 @@
         width: pxTorem(462);
         height: pxTorem(133);
         transform: translateX(-50%);
-        -webkit-transform:translateX(-50%);
+        -webkit-transform: translateX(-50%);
     }
     
     table {
@@ -138,6 +138,9 @@
         computed: {
             awards() {
                 return this.activityDetail.table_items;
+            },
+            is_win() {
+                return this.activity_result.is_win || false;
             }
         },
         created() {
@@ -148,17 +151,32 @@
                 if (value == 'start') {
                     let result = this.activity_result;
                     this.freshFreeTimes();
-                    this.alert = {
-                        close_btn: true,
-                        type: 'img',
-                        img: result.pic_thumb,
-                        msg: '获得' + result.name,
-                        callback: this.toOrderDetail(result.id),
-                        callback_close: () => {
-                            this.init(this.stop_position);
-                        },
-                        btn_text: '查看'
-                    };
+                    if (result.is_win) {
+                        this.alert = {
+                            close_btn: true,
+                            type: 'img',
+                            img: result.pic_thumb,
+                            msg: '获得' + result.name,
+                            callback: this.toOrderDetail(result.id),
+                            callback_close: () => {
+                                this.init(this.stop_position);
+                            },
+                            btn_text: '查看'
+                        };
+                    } else {
+                        this.alert = {
+                            // close_btn: true,
+                            type: 'img',
+                            img: result.pic_thumb,
+                            msg: result.name,
+                            // callback: this.toOrderDetail(result.id),
+                            // callback_close: () => {
+                            //     this.init(this.stop_position);
+                            // },
+                            // btn_text: '查看'
+                        };
+
+                    }
                     this.stop_position = this.getPosition(this.activity_result.name);
                     let _this = this, //执行环境
                         stop_position = this.stop_position, //停止位置
@@ -172,6 +190,7 @@
                     setTimeout(() => {
                         step();
                     }, interval);
+
                     function step() {
                         if (time < speed_buffer) {
                             interval = _this.speedUp(interval, speed_interval);
@@ -221,11 +240,11 @@
                 this.current_index = (this.current_index + 1) % this.grid_num;
             },
             getPosition(name) {
-                let stop_position=0;
-                this.awards.forEach((award,index)=>{
-                    if(award.name==name){
-                       stop_position=index; 
-                       return true;
+                let stop_position = 0;
+                this.awards.forEach((award, index) => {
+                    if (award.name == name) {
+                        stop_position = index;
+                        return true;
                     }
                 })
                 return stop_position;

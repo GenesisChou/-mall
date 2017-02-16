@@ -5,7 +5,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
     entry: {
         app: './src/main.js',
-        vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk', 'scriptjs','vue-swipe']
+        vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk', 'scriptjs', 'vue-swipe']
     },
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -30,6 +30,9 @@ module.exports = {
         }, {
             test: /\.css$/,
             loaders: ['style-loader', 'css-loader']
+        }, {
+            test: /\.scss$/,
+            loaders: ['style-loader', 'css-loader', 'sass-loader']
         }, {
             test: /\.js$/,
             loader: 'babel-loader',
@@ -59,7 +62,9 @@ module.exports = {
         alias: {
             components: path.resolve(__dirname, './src/components'),
             libs: path.resolve(__dirname, './src/libs'),
-            views: path.resolve(__dirname, './src/views')
+            views: path.resolve(__dirname, './src/views'),
+            images: path.resolve(__dirname, './src/assets/images'),
+            style: path.resolve(__dirname, './src/assets/scss'),
         }
     },
     devServer: {

@@ -72,6 +72,7 @@ const fixList = ['index', 'product_list', 'order_list', 'subject_detail'],
         order_list: '兑换记录',
         order_detail: '订单详情',
         subject_detail: '每日上新',
+        edit_user:'填写个人资料',
         earn_integral: '赚取积分',
     }
 router.beforeEach((to, from, next) => {

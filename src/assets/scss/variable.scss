@@ -1,14 +1,12 @@
 @function pxTorem($px){
     @return $px /75 * 1rem;
 }
-
-/******中性色********/
 $black:#333;
 $gray-light:#f3f3f3;
 $sliver:#a3a3a3;
 $gray:#666666;
 $white:#ffffff;
-/********基础色*********/
+
 $red:#de443b;
 $pink:#f86e6e;
 $yellow:#feca5e;

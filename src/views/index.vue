@@ -2,29 +2,38 @@
     @import '../assets/scss/variable.scss';
     .index {
         overflow: hidden;
-        background-color: $gray-light;
+        background-color: #f2f3f4;
     }
     
     .icon-list {
-        margin: pxTorem(20) 0;
+        margin-bottom: pxTorem(15);
+        border-bottom: 1px solid #d3d4d6;
         overflow: hidden;
-        color: $gray;
+        color: #666;
+        background-color: $white;
+        font-size: pxTorem(24);
         li {
-            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            display: -webkit-flex;
+            -webkit-flex-direction: column;
+            -webkit-justify-content: center;
+            -webkit-align-items: center;
             width: 25%;
-            height: pxTorem(138);
             float: left;
+            height: pxTorem(190);
+            position: relative;
             text-align: center;
-            font-size: pxTorem(24);
-            background-color: $white;
             &:active {
                 background-color: darken($white, 10%);
             }
             .v-badage {
-                display:flex;
-                display:-webkit-flex;
-                align-items:center;
-                -webkit-align-items:center;
+                display: flex;
+                display: -webkit-flex;
+                align-items: center;
+                -webkit-align-items: center;
                 justify-content: center;
                 -webkit-justify-content: center;
                 width: pxTorem(50);
@@ -42,49 +51,18 @@
                 -webkit-transform: scale(0.5);
             }
         }
-        .iconfont {
-            display: block;
-            width: 100%;
-            height: pxTorem(80);
-            padding-top: pxTorem(10);
-            font-size: pxTorem(50);
+        .icon {
+            width: pxTorem(95);
+            height: pxTorem(95);
+            margin-bottom: pxTorem(15);
         }
-        .icon-money {
-            color: rgb(14, 75, 171);
-        }
-        .icon-check-in {
-            font-size: pxTorem(43);
-            padding-top: pxTorem(15);
-            color: rgb(42, 170, 24);
-        }
-        .icon-order-unsolved {
-            color: rgb(202, 84, 70);
-        }
-        .icon-product {
-            color: rgb(231, 143, 65);
-        }
-    }
-    
-    .v-item:nth-child(1) {
-        border-top: 0;
-    }
-    
-    .v-item:nth-child(2) {
-        border-top: 0;
-    }
-    
-    .v-item:nth-child(2n-1) {
-        border-left: 0;
-    }
-    
-    .v-item:nth-child(2n) {
-        border-right: 0;
     }
     
     .subject {
         margin-bottom: pxTorem(20);
         overflow: hidden;
         background-color: $white;
+        padding: pxTorem(7.5);
         img {
             width: 100%;
             height: 100%;
@@ -102,16 +80,14 @@
             div {
                 width: 100%;
                 height: 100%;
+                padding: pxTorem(7.5);
             }
         }
         .right {
-            border-left: 1px solid $gray-light;
             div {
                 width: 100%;
                 height: 50%;
-                &:nth-child(1) {
-                    border-bottom: 1px solid $gray-light;
-                }
+                padding: pxTorem(7.5);
             }
         }
     }
@@ -121,20 +97,22 @@
         <v-swipe></v-swipe>
         <ul class='list-inline icon-list'>
             <router-link :to='{name:"my_account"}' tag='li'>
-                <i class=' icon-money iconfont  '></i>
+                <img class='icon' src='../assets/images/myAccount.png'>
                 <p>我的账户</p>
             </router-link>
             <router-link :to='{name:"earn_integral"}' tag='li'>
-                <i class=' icon-check-in iconfont  '></i>
+                <img class='icon' src='../assets/images/earnIntegral.png'>
                 <p>赚取积分</p>
             </router-link>
             <router-link :to='{name:"order_list"}' tag='li'>
-                <i class=' icon-order-unsolved iconfont  '></i>
+                <img class='icon' src='../assets/images/myOrder.png'>
+                <!--
                 <b v-if='user.unfinished_order_count>0' class='v-badage'>{{user.unfinished_order_count}}</b>
+                -->
                 <p>我的订单</p>
             </router-link>
             <router-link :to='{name:"product_list"}' tag='li'>
-                <i class=' icon-product iconfont  '></i>
+                <img class='icon' src='../assets/images/allProduct.png'>
                 <p>所有商品</p>
             </router-link>
         </ul>
@@ -173,7 +151,7 @@
 </template>
 <script>
     import vSwipe from 'components/index/vSwipe.vue'
-    import vItem from 'components/index/vItem.vue'
+    import vItem from 'components/index/vItem'
     export default {
         name: 'index',
         components: {

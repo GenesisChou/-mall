@@ -4,29 +4,12 @@
         position: fixed;
         right: pxTorem(50);
         bottom: pxTorem(50);
-        width: pxTorem(70);
-        height: pxTorem(70);
-        line-height: pxTorem(70);
-        text-align: center;
-        border-radius: 50%;
-        color: $white;
-        background-color: $red;
-        box-shadow: pxTorem(2) pxTorem(5) pxTorem(10) rgba(0, 15, 15, .3);
-        &:active {
-            background-color: darken($red, 10%);
-        }
-        .iconfont {
-            font-size: pxTorem(24);
-            font-weight: bold;
-        }
+        width: pxTorem(94);
+        height: pxTorem(94);
     }
 </style>
 <template>
-    <transition name='fade'>
-        <div v-show='show' class=' v-back-top ' @click='backTop'>
-            <i class=' icon-arrows-up iconfont'></i>
-        </div>
-    </transition>
+    <img v-show='show' @click='backTop' :src='img' class=' v-back-top '>
 </template>
 <script>
     export default {
@@ -35,6 +18,7 @@
             return {
                 show: false,
                 scrollEvent: '',
+                img: require('../assets/images/backTop.png')
             }
         },
         watch: {
@@ -42,7 +26,7 @@
                 //离开解除滚动事件
                 if (this.scrollEvent) {
                     window.removeEventListener('scroll', this.scrollEvent);
-                    this.scrollEvent='';
+                    this.scrollEvent = '';
                 } else {
                     //进入绑定滚动事件
                     this.scrollEvent = this.getScrollEvent();
