@@ -26,8 +26,8 @@
 <template>
     <div class='v-address'>
         <input id='province' placeholder="请选择省" v-model='province' readonly @click='toggleProvince'>
-        <input v-if='city_list.length>0' id='city' placeholder="请选择市" v-model='city' readonly @click='toggleCity'>
-        <input v-if='city_list.length>0||country_list.length>0' id='country' placeholder="请选择区县" v-model='country' readonly @click='toggleCountry'>
+        <input  id='city' placeholder="请选择市" v-model='city' readonly @click='toggleCity'>
+        <input  id='country' placeholder="请选择区县" v-model='country' readonly @click='toggleCountry'>
         <v-list-choose :show='show_province' :toggle-modal='toggleProvince' :list='province_list' attribute='province' :callback='listEvent'
             :is-active='isActive'></v-list-choose>
         <v-list-choose :show='show_city' :toggle-modal='toggleCity' :list='city_list' attribute='city' :callback='listEvent' :is-active='isActive'></v-list-choose>
@@ -189,7 +189,9 @@
                 this.show_city = !this.show_city;
             },
             toggleCountry() {
+                if(this.city_id){
                 this.show_country = !this.show_country;
+                }
             }
 
 

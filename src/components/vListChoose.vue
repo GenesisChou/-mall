@@ -41,7 +41,7 @@
     }
 </style>
 <template>
-    <v-modal v-model='show'>
+    <v-modal v-model='show' :toggle-modal='toggleModal'>
         <ul class='v-list-choose' ref='list'>
             <li v-for='item in list' @click='event(item)'>
                 <i :class='["radio",{active:isActive(item)}]'></i> <span>{{item[attribute]}}</span>
@@ -68,7 +68,8 @@
             },
             attribute: String,
             callback: Function,
-            isActive: Function
+            isActive: Function,
+            value:Boolean
         },
         data() {
             return {
@@ -80,6 +81,7 @@
             event(item) {
                 this.callback(item);
                 this.toggleModal();
+                // this.$emit('input',!this.value);
             }
         },
     }

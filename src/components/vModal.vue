@@ -22,7 +22,7 @@
 </style>
 <template>
     <div class='v-modal'>
-        <div v-show='value' @click='close' class='bg-cover' >
+        <div v-show='value' @click='close' class='bg-cover'>
         </div>
         <div v-show='value' class='content '>
             <slot></slot>
@@ -36,12 +36,17 @@
                 type: Boolean,
                 default: true
             },
-            value: Boolean
+            value: Boolean,
+            toggleModal: Function
         },
         methods: {
             close() {
                 if (this.coverClose && event.target.className == 'bg-cover') {
-                    this.$emit('input',false);
+                    if (this.toggleModal) {
+                        this.toggleModal();
+                    } else {
+                        this.$emit('input', false);
+                    }
                 }
             }
         }

@@ -89,7 +89,8 @@
                 </li>
                 <li>
                     <label for='birth'>出生年月</label>
-                    <v-date-picker v-model='birthday'></v-date-picker>
+                    <!--<v-date-picker v-model='birthday'></v-date-picker>-->
+                    <input type='date' v-model='birthday' format="yyyy-MM-dd">
                 </li>
                 <li>
                     <label for='phone'>手机号</label>
@@ -102,7 +103,7 @@
                 </li>
                 <li class='select-address'>
                     <label for='province'>收货地址</label>
-                    <v-address :address='{province,city,country}' :id='{province_id,city_id,country_id}' :change-id='changeId' :change-name='changeName'></v-address>
+                    <v-address   :address='{province,city,country}' :id='{province_id,city_id,country_id}' :change-id='changeId' :change-name='changeName'></v-address>
                 </li>
                 <li>
                     <label for='address'></label>
