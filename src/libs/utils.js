@@ -127,4 +127,7 @@ module.exports = {
     reloadApp() {
         location.reload();
     },
+    pxTorem(value){
+        return value/75+'rem';
+    }
 };

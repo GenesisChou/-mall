@@ -1,217 +1,244 @@
 <style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
-    .text-red{
-        color:$red;
+    .text-red {
+        color: $red;
     }
+    
     .head {
-        >div {
-            height: pxTorem(460);
-        }
-        h4 {
-            text-align: center;
-        }
-        h2 {
-            font-size: pxTorem(34);
-            text-align: center;
-            &:nth-child(1) {
-                height: pxTorem(100);
-                line-height: pxTorem(100);
-            }
-            &:nth-child(2) {
-                margin: pxTorem(30) 0 pxTorem(10) 0;
-            }
-                  }
-    }
-    
-    .check-button {
-        width: pxTorem(278);
-        height: pxTorem(284);
-        margin: auto;
-        background-image: url('../assets/images/check.png');
+        width: 100%;
+        height: pxTorem(770);
+        padding-top: pxTorem(70);
+        position: relative;
+        background-image: url('../assets/images/yellowBg.png');
         background-repeat: no-repeat;
         background-size: 100%;
-    }
-    
-    .calendar {
-        width: pxTorem(364);
-        height: pxTorem(326);
-        margin: auto;
-        padding-top: pxTorem(90);
-        text-align: center;
-        background-image: url('../assets/images/calendar.png');
-        background-repeat: no-repeat;
-        background-size: 100%;
-        strong {
-            font-size: pxTorem(150);
-        }
-        span {
-            font-size: pxTorem(35);
-        }
-    }
-    
-    .date {
-        margin: pxTorem(70) pxTorem(37);
-        padding: pxTorem(28) pxTorem(50);
-        font-size: pxTorem(24);
-        // border: 1px solid $gray-light;
-        border-radius: pxTorem(10);
-        color: $gray;
-        li {
-            width: 14.28%;
-            height: 100%;
+        .message {
+            padding-top: pxTorem(25);
             text-align: center;
-            &:nth-child(1) {
-                .circle {
-                    background-color: $sliver;
-                    color: $white;
-                    border: 1px solid $sliver;
+            h5 {
+                text-shadow: 0 pxTorem(4) pxTorem(4) rgba(209, 172, 0, 0.68);
+                font-weight: bold;
+                color: $white;
+                span {
+                    color: #ff5004;
+                    font-size: pxTorem(30);
                 }
             }
-            &:nth-child(2) {
-                color: $red;
-                .circle {
-                    background-color: $white;
-                    color: $red;
-                    border: 1px solid $red;
-                }
-                .circle.active {
-                    position: relative;
-                    background-color: $red;
-                    color: $white;
-                }
+            h6 {
+                color: #9d7035;
             }
         }
     }
     
-    .circle {
-        margin: 0 auto pxTorem(20) auto;
-        width: pxTorem(68);
-        height: pxTorem(68);
-        line-height: pxTorem(66);
-        background-color: $white;
+    .circle-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        display: -webkit-flex;
+        -webkit-align-items: center;
+        -webkit-justify-content: center;
+        width: pxTorem(234);
+        height: pxTorem(234);
+        margin: auto;
+        background-color: rgba(255, 255, 255, 0.62);
         border-radius: 50%;
-        border: 1px solid $gray;
-        font-size: pxTorem(20);
+        .circle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            display: -webkit-flex;
+            -webkit-align-items: center;
+            -webkit-justify-content: center;
+            -webkit-flex-direction: column;
+            width: pxTorem(194);
+            height: pxTorem(194);
+            border-radius: 50%;
+        }
+        .circle.white {
+            box-shadow: 0 pxTorem(3) pxTorem(5) rgba(193, 63, 7, 0.51);
+            background-color: $white;
+            color: #ff5004;
+            h1 {
+                font-size: pxTorem(44);
+                border-bottom: 1px solid #ff5004;
+            }
+        }
+        .circle.red {
+            font-size: pxTorem(57);
+            font-weight: 500;
+            color: $white;
+            box-shadow: 0 pxTorem(3) pxTorem(5) rgba(193, 63, 7, 0.75);
+            background-color: #ff5004;
+        }
     }
     
-    .rotate-leave-active {
-        animation: rotate-back 1s linear;
-    }
-    
-    .rotate-enter-active {
-        animation: rotate-front 1s linear;
-    }
-    
-    @keyframes rotate-back {
-        0% {
-            transform: rotateY(0deg);
+    .progress {
+        position: absolute;
+        width: 100%;
+        height: pxTorem(160);
+        bottom: pxTorem(10);
+        .line {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: pxTorem(-321.5);
+            margin-top: pxTorem(-6);
+            width: pxTorem(643);
+            height: pxTorem(12);
+            box-shadow: 0 pxTorem(2) 1px rgba(43, 167, 169, 0.75);
+            background-color: #14bcbf;
+            z-index: 1;
         }
-        50% {
-            transform: rotateY(90deg);
-            visibility: hidden;
+        .check-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-direction: column;
+            position: absolute;
+            height: pxTorem(160);
+            left: pxTorem(44);
+            color: $white;
+            &.active {
+                .circle {
+                    background-color: #ff5004;
+                }
+            }
         }
-        100% {
-            transform: rotateY(180deg);
-            visibility: hidden;
+        .check-item.active:nth-child(3):before {
+            content: '';
+            position: absolute;
+            left: pxTorem(-80);
+            top: 50%;
+            margin-top: pxTorem(-6);
+            width: pxTorem(110);
+            height: pxTorem(12);
+            background-color: #ff5004;
+            z-index: 2;
         }
-    }
-    
-    @keyframes rotate-front {
-        0% {
-            transform: rotateY(180deg);
-            visibility: hidden;
-        }
-        50% {
-            transform: rotateY(270deg);
-            visibility: hidden;
-        }
-        100% {
-            transform: rotateY(360deg);
+        .circle {
+            position: absolute;
+            top: 50%;
+            width: pxTorem(25);
+            height: pxTorem(25);
+            margin-top: pxTorem(-12.5);
+            box-shadow: 0 pxTorem(3) 1px rgba(43, 167, 169, 0.75);
+            background-color: #2aa6a8;
+            border-radius: 50%;
+            z-index: 3;
         }
     }
     
     .edit-user {
-        overflow: hidden;
-        height: pxTorem(100);
-        .icon {
-            float: left;
-            width: pxTorem(100);
-            height: pxTorem(100);
-            i {
-                display: block;
-                width: pxTorem(50);
-                height: pxTorem(50);
-                background-color: $red;
-                border-radius: 50%;
-                margin: pxTorem(10) auto;
-            }
+        display: flex;
+        align-items: center;
+        display: -webkit-flex;
+        -webkit-align-items: center;
+        height: pxTorem(107);
+        padding-left: pxTorem(35);
+        background-color: #d0eff1;
+        border-top: 1px solid #a78179;
+        &:active {
+            background-color: darken(#d0eff1, 10%);
         }
-        .message {
-            overflow: hidden;
-            padding-right: pxTorem(50);
+        img {
+            width: pxTorem(71);
+            height: pxTorem(53);
+            margin-right: pxTorem(20);
+        }
+        h2 {
+            color: #ff5004;
+        }
+        h6 {
+            color: #a78179;
         }
     }
     
     .notice {
-        padding: pxTorem(20) pxTorem(50);
-        background-color: $gray-light;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        display: -webkit-flex;
+        -webkit-justify-content: center;
+        -webkit-flex-direction: column;
+        height: pxTorem(106);
+        padding-left: pxTorem(35);
+        font-size: pxTorem(28);
+        span {
+            color: #ff5004;
+        }
     }
     
-    .mission-list {
+    .space {
+        height: pxTorem(15);
+        background-color: #4dd3d6;
+    }
+    
+    .article-list {
+        color: #a78179;
+        background-color: #d0eff1;
+        border-top: 1px solid #a78179;
         ul,
         li {
             list-style: none;
         }
+        li:active {
+            background-color: darken(#d0eff1, 10%);
+        }
     }
 </style>
 <template>
-    <div v-if='loaded' class='check-in'>
+    <div v-if='loaded' class='earn-integral'>
         <header class='head'>
-            <div v-if='user.ischecked'>
-                <h2>您已连续签到</h2>
-                <div class='calendar'>
-                    <strong>{{user.checkin_days}}</strong>
-                    <span> 天</span>
+            <div v-if='user.ischecked' class='circle-button'>
+                <div class='circle white'>
+                    <h1>已签到</h1>
+                    <h4>连续{{user.checkin_days}}天</h4>
                 </div>
             </div>
-            <div v-else>
-                <h2></h2>
-                <div @click='checkIn' class='check-button'>
+            <div v-else @click='checkIn' class='circle-button'>
+                <div class='circle red'>
+                    签到
                 </div>
-            </div>
-            <h2>
-                <span v-if='!user.ischecked'>今日</span>
-                <span v-else>明日</span> 签到可领取
-                <span class='text-red'>{{integral}}</span> 积分
-            </h2>
-            <h4>连续签到有更多惊喜哦</h4>
-        </header>
-        <ul class='date list-inline'>
-            <li v-for='(item,$index) in check_in_params'>
-                <div :class='["circle",{active:$index==1&&user.ischecked}]'>{{item.integral}}</div>
-                <h6>{{item.day}}</h6>
-            </li>
-        </ul>
-        <router-link v-if='is_submit' :to='{name:"edit_user"}' tag='div' class='edit-user'>
-            <div class='icon'>
-                <i></i>
             </div>
             <div class='message'>
-                <h4>填写个人资料
-                    <span class='pull-right'>+{{submit_param.integral}}</span>
-                </h4>
-                <h5>首次完善个人资料可获得积分</h5>
+                <h5>
+                    <template v-if='!user.ischecked'>今日</template>
+                    <template v-else>明日</template> 签到可领取
+                    <span>{{integral}}</span> 积分
+                </h5>
+                <h6>连续签到有更多惊喜哦</h6>
+            </div>
+            <div class='progress'>
+                <div class='line'></div>
+                <div v-for='(item,$index) in check_in_params' :class='["check-item",{active:$index==0||(user.ischecked&&$index==1)}]' :style='getCircleStyle($index)'>
+                    <h6>{{item.integral}}</h6>
+                    <div class='circle'></div>
+                    <h6>{{item.day}}</h6>
+                </div>
+            </div>
+        </header>
+        <router-link v-if='is_submit' :to='{name:"edit_user"}' tag='div' class='edit-user'>
+            <img :src='editUser'>
+            <div>
+                <h2>填写个人资料 </h2>
+                <h6>首次完善个人资料可获得积分</h6>
             </div>
         </router-link>
-        <div class='notice'>
-            <h5>阅读一篇文稿<span class='text-red'>+{{read_param.integral}}</span>积分</h5>
-            <h5>每日最多可得<span class='text-red'>{{read_param.day_limit}}</span>积分,今日已获得<span class='text-red'>{{read_param.today}}积分</span></h5>
-        </div>
-        <ul class='mission-list'>
+        <div class='space'></div>
+        <ul class='article-list'>
+            <li class='notice'>
+                <p>
+                    阅读一篇文稿<span>{{read_param.integral}}</span>积分 </p>
+                <p>
+                    每日最多可得<span>{{read_param.day_limit}}</span>积分,今日已获得<span>{{read_param.today}}</span>积分
+                </p>
+            </li>
             <li v-for='article in article_list'>
                 <v-mission :article='article' :callback='readArticle'></v-mission>
             </li>
         </ul>
+        <v-support></v-support>
     </div>
 </template>
 <script>
@@ -235,7 +262,8 @@
                     day_limit: 0,
                     today: 0
                 },
-                article_list: []
+                article_list: [],
+                editUser: require('images/editUser.png')
             }
         },
         computed: {
@@ -352,6 +380,12 @@
                     }
                 })
 
+            },
+            getCircleStyle($index) {
+                let left = 30 + $index * 107;
+                return {
+                    left: utils.pxTorem(left)
+                }
             }
 
 
