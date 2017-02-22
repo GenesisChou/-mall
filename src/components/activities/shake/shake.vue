@@ -1,158 +1,164 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .v-shake {
-        overflow: hidden;
-        background-color: $sliver;
+        position: relative;
+        padding-bottom: pxTorem(84);
     }
     
-    .shake {
-        width: pxTorem(200);
-        height: pxTorem(130);
+    .banner {
+        width: pxTorem(750);
+        height: pxTorem(400);
     }
     
-    .flower {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: pxTorem(140);
-        height: pxTorem(140);
-        transform: translate(-50%, -50%);
-        -webkit-transform: translate(-50%, -50%);
-    }
-    
-    .top {
-        position: absolute;
-        bottom: 50%;
-        width: 100%;
-        height: 50%;
-        background-color: #2e3132;
-        z-index: 1;
-        .shake {
-            position: absolute;
-            left: 50%;
-            bottom: 0;
-            transform: translateX(-50%);
-            -webkit-transform: translateX(-50%);
-        }
-        &.active {
-            border-bottom: pxTorem(5) solid $white;
-            animation: up 1.5s linear;
-            -webkit-animation: up 1.5s linear;
-        }
-    }
-    
-    .bottom {
-        position: absolute;
-        top: 50%;
-        width: 100%;
-        height: 50%;
-        padding-top: pxTorem(150);
-        background-color: #2e3132;
+    .integral-message {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        display: -webkit-flex;
+        -webkit-align-items: center;
+        -webkit-justify-content: center;
+        padding-top: pxTorem(65);
         color: $white;
+        font-size: pxTorem(38);
+    }
+    
+    .shake-panel {
+        position: absolute;
+        left: 0;
+        top: pxTorem(308);
+        width: pxTorem(750);
+        height: pxTorem(798);
+        background-image: url('./images/shakePanel.png');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
         z-index: 1;
-        .shake {
-            position: absolute;
-            left: 50%;
-            top: 0;
-            transform: translateX(-50%);
-            -webkit-transform: translateX(-50%);
-        }
-        h3{
-            text-align:center;
-        }
+    }
+    
+    .hand {
+        position: absolute;
+        top: 22%;
+        left: 50%;
+        margin-left: pxTorem(-179);
+        width: pxTorem(348);
+        height: pxTorem(412);
+        transform: rotate(0deg);
+        transform-origin: bottom center;
+        -webkit-transform: rotate(0deg);
+        -webkit-transform-origin: bottom center;
         &.active {
-            border-top: pxTorem(5) solid $white;
-            animation: down 1.5s linear;
-            -webkit-animation: down 1.5s linear;
+            -webkit-animation: shake 1.5s linear infinite;
         }
     }
     
-    @keyframes up {
+    .notice {
+        position: absolute;
+        bottom: pxTorem(90);
+        left: 50%;
+        transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        padding-top: pxTorem(10);
+        text-align: center;
+        color: $white;
+        font-size: pxTorem(36);
+        width: pxTorem(586);
+        height: pxTorem(129);
+        background-image: url('./images/shakeNotice.png');
+        background-size: pxTorem(586) pxTorem(129);
+        background-repeat: no-repeat;
+        z-index: 1;
+        .number {
+            padding: 0 pxTorem(5);
+            color: #fde638;
+            font-size: pxTorem(44);
+        }
+    }
+    
+    .describe {
+        padding: 0 pxTorem(40);
+        padding-top: pxTorem(800);
+        .editor-style {
+            padding-top: pxTorem(20);
+            padding-bottom: pxTorem(40);
+            color: #ad0406 !important;
+        }
+    }
+    
+    @-webkit-keyframes shake {
         0% {
-            bottom: 50%;
+            -webkit-transform: rotate(0deg);
         }
-        40% {
-            bottom: 60%;
+        25% {
+            -webkit-transform: rotate(40deg);
         }
-        60% {
-            bottom: 60%;
+        50% {
+            -webkit-transform: rotate(0deg);
+        }
+        75% {
+            -webkit-transform: rotate(-40deg);
         }
         100% {
-            bottom: 50%;
+            -webkit-transform: rotate(0deg);
         }
     }
-    
-    @-webkit-keyframes up {
-        0% {
-            bottom: 50%;
-        }
-        40% {
-            bottom: 60%;
-        }
-        60% {
-            bottom: 60%;
-        }
-        100% {
-            bottom: 50%;
-        }
-    }
-    
-    @keyframes down {
-        0% {
-            top: 50%;
-        }
-        40% {
-            top: 60%;
-        }
-        60% {
-            top: 60%;
-        }
-        100% {
-            top: 50%;
-        }
-    }
-    
-    @-webkit-keyframes down {
-        0% {
-            top: 50%;
-        }
-        40% {
-            top: 60%;
-        }
-        60% {
-            top: 60%;
-        }
-        100% {
-            top: 50%;
-        }
-    }
-    
-   </style>
+</style>
 <template>
-    <div class='v-shake ' :style='shake_style'>
+    <div class='v-shake '>
+        <header>
+            <img class='banner' v-if='!activityDetail.pic_banner' :src='activityDetail.pic_banner'>
+            <img class='banner' v-else src='./images/shakeDefaultBanner.png'>
+        </header>
+        <main class='shake-panel'>
+            <div class='integral-message'>
+                现有积分:
+                <v-integral-box :integral='user.integral>>0' color='red'></v-integral-box>
+            </div>
+            <img :class='["hand",state=="shaking"?"active":""]' src="./images/shakeHand.png">
+            <div class='notice'>
+                <template v-if='freeTimes>0'>
+                    今天还有<span class='number'>{{freeTimes}}</span>次免费机会
+                </template>
+                <template v-else>
+                    每次消耗<span class='number'>{{activityDetail.integral>>0}}</span>积分
+                </template>
+            </div>
+        </main>
+        <article class='describe'>
+            <v-describe-title text='详细说明' color='red'></v-describe-title>
+            <v-simditor>
+                <section v-html='activityDetail.content'></section>
+            </v-simditor>
+            <v-describe-title text='概率说明' color='red'></v-describe-title>
+            <v-simditor>
+                <section v-html='activityDetail.content_prob'></section>
+            </v-simditor>
+            <v-describe-title text='奖项列表' color='red'></v-describe-title>
+        </article>
+        <footer>
+            <v-aword-box :awords='activityDetail.items' color='red'></v-aword-box>
+        </footer>
         <audio ref='audio'>
             <source src="http://xunlei.sc.chinaz.com/files/download/sound1/201410/5018.wav" type="audio/mpeg" />
         </audio>
-        <img class='flower' src='./images/flower.png'>
-        <header :class='["top",{active:this.shaking}]'>
-            <img class='shake' src='./images/shake_top.png'>
-        </header>
-        <footer :class='["bottom",{active:this.shaking}]'>
-            <img class='shake' src='./images/shake_bottom.png'>
-            <h3>{{notice}}</h3>
-            <!--<button class='btn btn-red' @click='start'>shake</button>-->
-        </footer>
     </div>
 </template>
 <script>
+    import vDescribeTitle from '../vDescribeTitle.vue';
+    import vIntegralBox from '../vIntegralBox.vue';
+    import vAwordBox from '../vAwordBox.vue';
     export default {
         name: 'shake',
+        components: {
+            vDescribeTitle,
+            vIntegralBox,
+            vAwordBox
+        },
         props: {
             freshFreeTimes: Function,
             activityDetail: Object,
             id: Number,
             notice: String,
-            toOrderDetail: Function
+            toOrderDetail: Function,
+            freeTimes: Number
         },
         data() {
             return {
@@ -166,12 +172,8 @@
             }
         },
         computed: {
-            shake_style() {
-                return {
-                    width: '100%',
-                    height: utils.getClientHeight() + 'px',
-                    position: 'relative',
-                }
+            user() {
+                return this.$store.state.user;
             }
         },
         watch: {
@@ -209,13 +211,13 @@
                 }, this.animation_time);
             }
         },
-        activated(){
+        activated() {
             this.init();
             this.deviceEvent = this.getDeviceEvent();
             window.addEventListener('devicemotion', this.deviceEvent);
         },
-        deactivated(){
-            window.removeEventListener('devicemotion',this.deviceEvent);
+        deactivated() {
+            window.removeEventListener('devicemotion', this.deviceEvent);
         },
         methods: {
             init() {

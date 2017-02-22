@@ -43,11 +43,11 @@
     }
 </style>
 <template>
-    <div class='v-mission'>
+    <div class='v-mission' @click='router()'>
         <h4 ref='title' class='title' :style='style'>
             {{title}}
         </h4>
-        <a @click='router()' :class='{read:is_read}'>{{btn_text}}</a>
+        <a  :class='{read:is_read}'>{{btn_text}}</a>
     </div>
 </template>
 <script>
@@ -73,10 +73,10 @@
                 return this.article.url;
             },
             button() {
-                return this.article.button||'点击阅读';
+                return this.article.button;
             },
             is_read() {
-                return this.article.is_read;
+                return this.article.is_read==1;
             },
             btn_text() {
                 return this.is_read ? '已完成' : this.button;

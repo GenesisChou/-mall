@@ -1,8 +1,9 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .game {
+        position:relative;
         width: 100%;
-        min-height: pxTorem(720);
+        height:pxTorem(400);
     }
     
     .start {

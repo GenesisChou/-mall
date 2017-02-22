@@ -1,101 +1,179 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .v-quiz {
-        background-color: rgb(243, 243, 243);
-        padding-bottom: pxTorem(36);
+        padding-bottom: pxTorem(84);
+        background-image: url('./images/quizBackground.png');
+        background-size: pxTorem(750) pxTorem(2235);
+        background-color: #f7be14;
     }
     
-    .head {
-        text-align: center;
-        img {
-            width: pxTorem(493);
-            height: pxTorem(193);
-        }
+    .banner {
+        width: pxTorem(750);
+        height: pxTorem(400);
     }
     
     .panel {
-        width: pxTorem(620);
+        position: relative;
+        width: pxTorem(591);
         height: auto;
-        margin: pxTorem(10) auto;
-        border-radius: pxTorem(20);
-        box-shadow: pxTorem(5) pxTorem(5) pxTorem(5) rgba(0, 0, 0, .1);
+        margin: pxTorem(45) auto 0 auto;
+        border-radius: pxTorem(40);
+        border: pxTorem(13) solid #6a3c05;
         background-color: $white;
-        font-size: pxTorem(36);
     }
     
     .panel-head {
-        line-height: pxTorem(72);
-        text-align: center;
-        color: $white;
-        background-color: $red;
-        border-top-left-radius: pxTorem(20);
-        border-top-right-radius: pxTorem(20);
+        position: absolute;
+        left: 50%;
+        top: -10%;
+        width: pxTorem(400);
+        height: pxTorem(175);
+        background-image: url('./images/quizPanelHead.png');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        transform: translateX(-50%);
+        color: #e65413;
+        z-index: 1;
+    }
+    
+    .integral-message {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        display: -webkit-flex;
+        -webkit-align-items: center;
+        -webkit-justify-content: center;
+        width: 100%;
+        height: 100%;
+        font-size: pxTorem(38);
     }
     
     .panel-content {
-        padding: pxTorem(35) pxTorem(50) 0 pxTorem(50);
+        padding-bottom: pxTorem(80);
+        color: #6f3a04;
         .quiz {
-            margin-bottom: pxTorem(35);
+            position:relative;
+            padding: pxTorem(90) pxTorem(60) pxTorem(40) pxTorem(60);
+            font-size: pxTorem(30);
+        }
+        .number {
+            position:absolute;
+            left:pxTorem(20);
+            top:pxTorem(83);
+            color: #e65413;
+            font-size: pxTorem(36);
         }
     }
     
     .answers {
-        font-size: pxTorem(30);
-        color: $gray;
+        display: flex;
+        flex-wrap: wrap;
+        display: -webkit-flex;
+        -webkit-flex-wrap: wrap;
+        font-size: pxTorem(34);
+        color: #6f3a04;
         list-style: none;
         li {
             list-style: none;
+            width: 50%;
+            text-align: center;
+            label {
+                display: block;
+            }
         }
         input[type='radio'] {
             display: none;
         }
-        label {
-            display: block;
-            padding: pxTorem(18) 0;
-        }
         label:before {
             content: "";
             display: inline-block;
-            width: pxTorem(25);
-            height: pxTorem(25);
-            margin-right: pxTorem(25);
-            border: pxTorem(3) solid $gray;
-            border-radius: 50%;
-            transform: translateY(pxTorem(3));
-            -webkit-transform: translateY(pxTorem(3));
+            width: pxTorem(44);
+            height: pxTorem(44);
+            margin-right: pxTorem(30);
+            background-image: url('./images/circle.png');
+            background-size: 100% 100%;
+            transform: translateY(pxTorem(5));
         }
         input[type="radio"]:checked+label:before {
-            background: $gray;
+            background-image: url('./images/selectedCircle.png');
         }
     }
     
     .panel-footer {
-        text-align: center;
-        margin-top: pxTorem(30);
-        button {
-            width: pxTorem(350);
-            height: pxTorem(80);
-            line-height: pxTorem(80);
-            font-size: pxTorem(30);
+        position: absolute;
+        left: 0;
+        bottom: pxTorem(-85);
+        width: 100%;
+        .notice {
+            width: pxTorem(520);
+            height: pxTorem(134);
+            text-align: center;
+            margin: 0 auto;
+            padding-top: pxTorem(30);
+            background-image: url('./images/quizNotice.png');
+            background-size: pxTorem(563) pxTorem(134);
+            background-repeat: no-repeat;
+            color: #6f3a04;
+            font-size: pxTorem(24);
+            .number {
+                padding: 0 pxTorem(5);
+                font-size: pxTorem(30);
+                color: #f9bd16;
+            }
         }
-        h5{
-            padding:pxTorem(30);
+    }
+    
+    .submit {
+        position: relative;
+        display: block;
+        width: pxTorem(322);
+        height: pxTorem(82);
+        line-height: pxTorem(82);
+        margin: pxTorem(60) auto;
+        box-shadow: pxTorem(4) pxTorem(3) pxTorem(5) 1px rgba(67, 160, 9, 0.68);
+        border-radius: pxTorem(31);
+        text-align: center;
+        font-size: pxTorem(40);
+        background-color: #62be11;
+        color: $white;
+        &:after {
+            content: '';
+            position: absolute;
+            right: pxTorem(10);
+            top: pxTorem(10);
+            width: pxTorem(29);
+            height: pxTorem(25);
+            background-image: url('./images/buttonLight.png');
+            background-size: 100% 100%;
+        }
+    }
+    
+    .describe {
+        padding: 0 pxTorem(40);
+        .editor-style {
+            padding-top: pxTorem(20);
+            padding-bottom: pxTorem(40);
+            color: #6a3c05;
         }
     }
 </style>
 <template>
     <div class='v-quiz '>
-        <header class='head'>
-            <img src='./images/quiz.png' alt="">
+        <header>
+            <img class='banner' v-if='!activityDetail.pic_banner' :src='activityDetail.pic_banner'>
+            <img class='banner' v-else src='./images/quizDefaultBanner.png'>
         </header>
         <template v-for='(item,$index) in activityDetail.questions'>
             <main v-if='current_number==$index' class='panel'>
-                <h1 class='panel-head'>
-                    第{{$index+1}}题
-                </h1>
-                <section class='panel-content '>
+                <header class='panel-head'>
+                    <div class='integral-message'>
+                        现有积分:
+                        <v-integral-box :integral='user.integral>>0' color='white'></v-integral-box>
+                    </div>
+                </header>
+                <main class='panel-content '>
                     <article class='quiz '>
-                        {{item.question}}
+                        <span class='number'>{{$index+1}}.</span> {{item.question}}
                     </article>
                     <ul class='answers'>
                         <li v-for='answer in item.answers'>
@@ -103,24 +181,49 @@
                             <label :for='answer.id'>{{answer.option}}</label>
                         </li>
                     </ul>
-                </section>
+                </main>
                 <footer class='panel-footer'>
-                    <button class='btn btn-red' @click='submitAnswer()'>提交答案</button>
-                    <h5>{{notice}}</h5>
+                    <div v-if='freeTimes>0' class=' notice '>今天还有<span class='number'>{{freeTimes}}</span>次免费机会</div>
+                    <div v-else class=' notice '>每次消耗<span class='number'>{{activityDetail.integral>>0}}</span>积分</div>
                 </footer>
             </main>
+            <a class='submit' @click='submitAnswer'>提交答案</a>
         </template>
+        <article class='describe'>
+            <v-describe-title text='详细说明' color='green'></v-describe-title>
+            <v-simditor>
+                <section v-html='activityDetail.content'></section>
+            </v-simditor>
+            <v-describe-title text='概率说明' color='green'></v-describe-title>
+            <v-simditor>
+                <section v-html='activityDetail.content_prob'></section>
+            </v-simditor>
+            <v-describe-title text='奖项列表' color='green'></v-describe-title>
+        </article>
+        <footer>
+            <v-aword-box :awords='activityDetail.items' color='green'></v-aword-box>
+        </footer>
+
     </div>
 </template>
 <script>
+    import vDescribeTitle from '../vDescribeTitle.vue';
+    import vIntegralBox from '../vIntegralBox.vue';
+    import vAwordBox from '../vAwordBox.vue';
     export default {
         name: 'quiz',
+        components: {
+            vDescribeTitle,
+            vIntegralBox,
+            vAwordBox
+        },
         props: {
             activityDetail: Object,
             freshFreeTimes: Function,
             id: Number,
             notice: String,
-            toOrderDetail: Function
+            toOrderDetail: Function,
+            freeTimes: Number
         },
         data() {
             return {
@@ -132,6 +235,11 @@
                 is_win: '', //判断是否中奖
                 activity_result: {}
             };
+        },
+        computed: {
+            user() {
+                return this.$store.state.user;
+            }
         },
         watch: {
             is_right(value) {

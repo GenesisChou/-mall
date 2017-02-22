@@ -1,65 +1,181 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .v-scrap {
+        padding-bottom: pxTorem(84);
+        background-color: #4dd3d6;
+        background-image: url('./images/scrapBackground.png');
+        background-size: pxTorem(750) pxTorem(1968);
+        background-position: pxTorem(0) pxTorem(-130);
+        background-repeat: no-repeat;
+    }
+    
+    header {
         position: relative;
-        height: pxTorem(600);
-        background: url('./images/scrap.png') no-repeat;
-        background-size: 100%;
+    }
+    
+    .banner {
+        width: pxTorem(750);
+        height: pxTorem(400);
+    }
+    
+    .banner-cover {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: pxTorem(750);
+        height: pxTorem(61);
+        z-index: 1;
+    }
+    
+    .derocation {
+        position: absolute;
+        left: 0;
+        top: pxTorem(-35);
+        width: pxTorem(746);
+        height: pxTorem(446);
+        z-index: 2;
+    }
+    
+    main {
+        position: relative;
+        width: pxTorem(564);
+        height: pxTorem(308);
+        margin: 0 auto;
+        margin-bottom: pxTorem(140);
+        background-image: url('./images/scrapPanel.png');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+    
+    .integral-message {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        display: -webkit-flex;
+        -webkit-align-items: center;
+        -webkit-justify-content: center;
+        height: pxTorem(82);
+        color: $white;
+        font-size: pxTorem(38);
     }
     
     #lotteryContainer {
         position: absolute;
-        overflow: auto;
-        width: pxTorem(500);
-        height: pxTorem(200);
-        left: pxTorem(138);
-        top: pxTorem(310);
-        background: $gray-light;
+        left: pxTorem(15);
+        top: pxTorem(85);
     }
-    
-    #start {
+    .scrap-cover{
+        width:pxTorem(540);
+        height:pxTorem(190);
+        margin-left:pxTorem(15);
+    }
+    .start {
         position: absolute;
         left: 50%;
-        top: 50%;
+        top: 55%;
         transform: translate(-50%, -50%);
         -webkit-transform: translate(-50%, -50%);
-        padding: 0;
-        width: pxTorem(180);
-        height: pxTorem(68);
-        line-height: pxTorem(68);
-        font-size: pxTorem(30);
-        text-indent: pxTorem(12);
-        letter-spacing: pxTorem(12);
+        width: pxTorem(227);
+        height: pxTorem(78);
+        line-height: pxTorem(78);
+        box-shadow: 0 pxTorem(5) pxTorem(8) 1px rgba(215, 65, 0, 0.75);
+        border-radius: pxTorem(10);
+        background-color: #ff5004;
+        text-align: center;
+        font-size: pxTorem(36);
+        color: $white;
     }
     
-    .free-time-message {
+    .notice {
         position: absolute;
-        left: 50%;
-        top: 75%;
-        transform: translateX(-45%);
-        -webkit-transform: translateX(-45%);
+        left: 0;
+        bottom:10%;
+        width: 100%;
         z-index: 2;
+        text-align: center;
+        color: #a78179;
+        .number {
+            padding: 0 pxTorem(5);
+            font-size: pxTorem(30);
+            color: #ff5004;
+        }
+    }
+    
+    .describe {
+        padding: 0 pxTorem(40);
+        .editor-style {
+            padding-top: pxTorem(20);
+            padding-bottom: pxTorem(40);
+            color: $white;
+        }
     }
 </style>
 <template>
-    <!--<div class='v-scrap' :style='bg_img'>-->
     <div class='v-scrap'>
-        <div id='lotteryContainer'>
-            <button class='btn btn-red' id='start' @click='start'>开始</button>
-        </div>
-        <div v-if='state=="ready"' class='free-time-message'>{{notice}}</div>
+        <header>
+            <template v-if='!activityDetail.pic_banner'>
+                <img class='banner' :src='activityDetail.pic_banner'>
+                <img class='banner-cover' src='./images/bannerCover.png'>
+            </template>
+            <template v-else>
+                <img class='banner' src='./images/scrapDefaultBanner.png'>
+                <img class='derocation' src='./images/derocation.png'>
+            </template>
+        </header>
+        <main>
+            <div class='integral-message'>
+                现有积分:
+                <v-integral-box :integral='user.integral>>0' color='black'></v-integral-box>
+            </div>
+            <div id='lotteryContainer'> </div>
+            <img class='scrap-cover' src='./images/scrapCover.png' ref='cover'>
+            <a v-if='state=="ready"' class='start' @click='start'>开始刮奖</a>
+            <h5 v-if='state=="ready" ' class='notice'>
+                <template v-if='freeTimes>0'>
+                    今天还有<span class='number'>{{freeTimes}}</span>次免费机会
+                </template>
+                <template v-else>
+                    每次消耗<span class='number'>{{activityDetail.integral>>0}}</span>积分
+                </template>
+            </h5>
+
+        </main>
+        <article class='describe'>
+            <v-describe-title text='详细说明' color='blue'></v-describe-title>
+            <v-simditor>
+                <section v-html='activityDetail.content'></section>
+            </v-simditor>
+            <v-describe-title text='概率说明' color='blue'></v-describe-title>
+            <v-simditor>
+                <section v-html='activityDetail.content_prob'></section>
+            </v-simditor>
+            <v-describe-title text='奖项列表' color='blue'></v-describe-title>
+        </article>
+        <footer>
+            <v-aword-box :awords='activityDetail.items' color='blue'></v-aword-box>
+        </footer>
+
     </div>
 </template>
 <script>
-    import Lottery from 'libs/lottery.js'
+    import Lottery from './lottery.js'
+    import vDescribeTitle from '../vDescribeTitle.vue';
+    import vIntegralBox from '../vIntegralBox.vue';
+    import vAwordBox from '../vAwordBox.vue';
     export default {
         name: 'scrap',
+        components: {
+            vDescribeTitle,
+            vIntegralBox,
+            vAwordBox
+        },
         props: {
             freshFreeTimes: Function,
             activityDetail: Object,
             id: Number,
             notice: String,
-            toOrderDetail: Function
+            toOrderDetail: Function,
+            freeTimes: Number
         },
         data() {
             return {
@@ -70,6 +186,11 @@
                 is_win: '', //判断是否中奖
                 activity_result: {}
             };
+        },
+        computed: {
+            user() {
+                return this.$store.state.user;
+            }
         },
         watch: {
             draw_percent(value) {
@@ -157,10 +278,11 @@
             },
             //设置画布
             setLottery(str) {
-                this.lottery = new Lottery('lotteryContainer', '#ddd', 'color', this.pxTorem(500), this.pxTorem(200), (
-                    draw_percent) => {
-                    this.draw_percent = draw_percent;
-                });
+                this.lottery = new Lottery('lotteryContainer', this.$refs.cover, 'image', this.pxTorem(540),
+                    this.pxTorem(190), (
+                        draw_percent) => {
+                        this.draw_percent = draw_percent;
+                    });
                 this.lottery.init(str, 'text');
             },
             pxTorem(value) {

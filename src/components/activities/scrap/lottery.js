@@ -24,7 +24,7 @@ Lottery.prototype = {
         }
         return ele;
     },
-    getTransparentPercent: function(ctx, width, height) {
+    getTransparentPercent: function (ctx, width, height) {
         var imgData = ctx.getImageData(0, 0, width, height),
             pixles = imgData.data,
             transPixs = [];
@@ -61,20 +61,20 @@ Lottery.prototype = {
         var moveEvtName = device ? 'touchmove' : 'mousemove';
         if (!device) {
             var isMouseDown = false;
-            document.addEventListener('mouseup', function(e) {
+            document.addEventListener('mouseup', function (e) {
                 isMouseDown = false;
             }, false);
         } else {
-            document.addEventListener("touchmove", function(e) {
+            document.addEventListener("touchmove", function (e) {
                 if (isMouseDown) {
                     e.preventDefault();
                 }
             }, false);
-            document.addEventListener('touchend', function(e) {
+            document.addEventListener('touchend', function (e) {
                 isMouseDown = false;
             }, false);
         }
-        this.mask.addEventListener(clickEvtName, function(e) {
+        this.mask.addEventListener(clickEvtName, function (e) {
             isMouseDown = true;
             var docEle = document.documentElement;
             if (!_this.clientRect) {
@@ -88,7 +88,7 @@ Lottery.prototype = {
             _this.drawPoint(x, y);
         }, false);
 
-        this.mask.addEventListener(moveEvtName, function(e) {
+        this.mask.addEventListener(moveEvtName, function (e) {
             if (!device && !isMouseDown) {
                 return false;
             }
@@ -125,7 +125,7 @@ Lottery.prototype = {
         if (this.lotteryType == 'image') {
             var image = new Image(),
                 _this = this;
-            image.onload = function() {
+            image.onload = function () {
                 _this.width = this.width;
                 _this.height = this.height;
                 _this.resizeCanvas(_this.background, this.width, this.height);
@@ -153,13 +153,16 @@ Lottery.prototype = {
             this.maskCtx.fillRect(0, 0, this.width, this.height);
             this.maskCtx.globalCompositeOperation = 'destination-out';
         } else if (this.coverType == 'image') {
-            var image = new Image(),
-                _this = this;
-            image.onload = function() {
-                _this.maskCtx.drawImage(this, 0, 0);
-                _this.maskCtx.globalCompositeOperation = 'destination-out';
-            }
-            image.src = this.cover;
+            // var image = new Image(),
+            //     _this = this;
+            // image.onload = function () {
+            //     _this.maskCtx.drawImage(this, 0, 0);
+            //     _this.maskCtx.globalCompositeOperation = 'destination-out';
+            // }
+            // image.src = this.cover;
+            this.maskCtx.drawImage(this.cover, 0, 0,this.width,this.height);
+            this.maskCtx.globalCompositeOperation = 'destination-out';
+
         }
     },
     init(lottery, lotteryType) {

@@ -4,54 +4,17 @@
         width: 100%;
         height: 100%;
     }
-    
-    header {
-        position: relative;
-    }
-    
-    article {
-        padding: 0 pxTorem(55);
-        overflow: hidden;
-        .introduction {
-            padding: pxTorem(50) 0;
-            .title {
-                padding: pxTorem(30) 0;
-            }
-        }
-    }
-    
-    footer.aword-list {
-        .v-list-item:last-child {
-            border-bottom: 0;
-        }
-    }
 </style>
 <template>
     <div class='activity-detail'>
-        <header>
-            <keep-alive>
-                <!-- is：活动类型 freshFreeTimes:刷新免费活动次数 ：notice:剩余次数／消耗积分提示 ：toOrderDetail:订单详情跳转 -->
-                <component :is='activity_type' :fresh-free-times='freshFreeTimes' :activity-detail='activity_detail' :id='activity_id>>0'
-                    :notice='notice' :to-order-detail='toOrderDetail'>
-                    </component>
-            </keep-alive>
-        </header>
-        <article>
-            <div class='introduction'>
-                <template v-if='activity_detail'>
-                    <v-simditor>
-                        <v-divider v-if='activity_detail.content' text='详细说明'></v-divider>
-                        <section v-html='activity_detail.content'></section>
-                        <v-divider v-if='activity_detail.content_prob' text='概率说明'></v-divider>
-                        <section v-html='activity_detail.content_prob'></section>
-                    </v-simditor>
-                    <v-divider v-if='aword_list' text='奖品列表'></v-divider>
-                </template>
-            </div>
-        </article>
-        <footer class='aword-list'>
-            <v-list-item v-for='aword in aword_list' :active=false :title='aword.name' :title-dupty='aword.desc' :img='aword.pic'></v-list-item>
-        </footer>
+        <keep-alive>
+            <!-- is：活动类型 freshFreeTimes:刷新免费活动次数 ：notice:剩余次数／消耗积分提示 ：toOrderDetail:订单详情跳转 -->
+            <component :is='activity_type' :free-times='free_times>>0' :fresh-free-times='freshFreeTimes' :activity-detail='activity_detail'
+                :id='activity_id>>0' :notice='notice' :to-order-detail='toOrderDetail'>
+            </component>
+        </keep-alive>
+        <v-support v-if='activity_detail'></v-support>
+    </div>
 </template>
 <script>
     import {

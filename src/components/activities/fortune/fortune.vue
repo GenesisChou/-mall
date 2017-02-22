@@ -1,128 +1,181 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .fortune {
-        position: relative;
-        background-color: #ffc21c;
-        height: pxTorem(650);
-        padding-top: pxTorem(150);
+        padding-bottom: pxTorem(84);
+        background-color: #fdf860;
+        background-image: url('./images/fortuneBackground.png');
+        background-size: pxTorem(750) pxTorem(1380);
+        background-position: pxTorem(0) pxTorem(400);
+        background-repeat: no-repeat;
     }
     
-    .title {
-        position: absolute;
-        top: pxTorem(10);
-        left: 50%;
-        width: pxTorem(462);
-        height: pxTorem(133);
-        transform: translateX(-50%);
-        -webkit-transform: translateX(-50%);
+    .banner {
+        width: pxTorem(750);
+        height: pxTorem(400);
+    }
+    
+    .panel {
+        width: pxTorem(623);
+        height: pxTorem(809);
+        margin: pxTorem(10) auto pxTorem(58) auto;
+        background-image: url('./images/panel.png');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+    
+    .integral-message {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        display: -webkit-flex;
+        -webkit-align-items: center;
+        -webkit-justify-content: center;
+        height: pxTorem(100);
+        color: $white;
+        font-size: pxTorem(38);
     }
     
     table {
-        border-spacing: pxTorem(10);
         margin: 0 auto;
-        background-color: #c43700;
-        border: pxTorem(10) solid #c43700;
-        border-radius: pxTorem(10);
+        padding-top: pxTorem(70);
+        border-spacing: pxTorem(10);
     }
     
     td {
-        width: pxTorem(208);
-        height: pxTorem(136);
-        background-color: $white;
-        border-radius: pxTorem(10);
+        width: pxTorem(169);
+        height: pxTorem(169);
         vertical-align: middle;
         text-align: center;
-        &.active {
-            background-color: #edd900;
-        }
+        background-image: url('./images/panelItem.png');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
         img {
             width: pxTorem(115);
             height: pxTorem(75);
             margin-bottom: pxTorem(10);
         }
-        h6 {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-            color: $gray;
-            font-size: pxTorem(22);
+        &.center {
+            background-image: url('./images/startButton.png');
+        }
+        &.active {
+            background-image: url('./images/panelItemActive.png');
+        }
+        &.center.active {
+            background-image: url('./images/startButtonActive.png');
         }
     }
     
-    td.button {
-        background-color: #edd900;
-        h2 {
-            font-size: pxTorem(32);
-            padding-bottom: pxTorem(10);
+    .notice {
+        padding-top: pxTorem(30);
+        text-align: center;
+        color: #b50300;
+        .number {
+            padding: 0 pxTorem(3);
+            color: #ffff66;
+            font-size: pxTorem(34);
         }
-        h5 {
-            color: $gray;
-        }
-        &:active {
-            background-color: darken(#edd900, 10%);
+    }
+    
+    .describe {
+        padding: 0 pxTorem(40);
+        .editor-style {
+            padding-top: pxTorem(20);
+            padding-bottom: pxTorem(40);
+            color: #ad0406 !important;
         }
     }
 </style>
 <template>
     <div class='fortune'>
-        <img class='title' src='./images/title.png'>
-        <table>
-            <tr>
-                <td :class='{active:current_index==0}'>
-                    <img :src='awards[0].pic'>
-                    <h6> {{awards[0].name}} </h6>
-                </td>
-                <td :class='{active:current_index==1}'>
-                    <img :src='awards[1].pic'>
-                    <h6> {{awards[1].name}} </h6>
-                </td>
-                <td :class='{active:current_index==2}'>
-                    <img :src='awards[2].pic'>
-                    <h6> {{awards[2].name}} </h6>
-                </td>
-            </tr>
-            <tr>
-                <td :class='{active:current_index==7}'>
-                    <img :src='awards[7].pic'>
-                    <h6> {{awards[7].name}} </h6>
-                </td>
-                <td class='button' @click='start'>
-                    <h2><strong>点击抽奖</strong></h2>
-                    <h5>{{notice}}</h5>
-                </td>
-                <td :class='{active:current_index==3}'>
-                    <img :src='awards[3].pic'>
-                    <h6> {{awards[3].name}} </h6>
-                </td>
-            </tr>
-            <tr>
-                <td :class='{active:current_index==6}'>
-                    <img :src='awards[6].pic'>
-                    <h6> {{awards[6].name}} </h6>
-                </td>
-                <td :class='{active:current_index==5}'>
-                    <img :src='awards[5].pic'>
-                    <h6> {{awards[5].name}} </h6>
-                </td>
-                <td :class='{active:current_index==4}'>
-                    <img :src='awards[4].pic'>
-                    <h6> {{awards[4].name}} </h6>
-                </td>
-            </tr>
-        </table>
+        <header>
+            <img class='banner' v-if='!activityDetail.pic_banner' :src='activityDetail.pic_banner'>
+            <img class='banner' v-else src='./images/fortuneDefaultBanner.png'>
+        </header>
+        <main>
+            <div class='panel'>
+                <div class='integral-message'>
+                    现有积分:
+                    <v-integral-box :integral='user.integral>>0' color='red'></v-integral-box>
+                </div>
+                <table>
+                    <tr>
+                        <td :class='{active:current_index==0}'>
+                            <img :src='awards[0].pic'>
+                        </td>
+                        <td :class='{active:current_index==1}'>
+                            <img :src='awards[1].pic'>
+                        </td>
+                        <td :class='{active:current_index==2}'>
+                            <img :src='awards[2].pic'>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td :class='{active:current_index==7}'>
+                            <img :src='awards[7].pic'>
+                        </td>
+                        <td :class='["center",state=="start"?"active":""]' @click='start'>
+
+                        </td>
+                        <td :class='{active:current_index==3}'>
+                            <img :src='awards[3].pic'>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td :class='{active:current_index==6}'>
+                            <img :src='awards[6].pic'>
+                        </td>
+                        <td :class='{active:current_index==5}'>
+                            <img :src='awards[5].pic'>
+                        </td>
+                        <td :class='{active:current_index==4}'>
+                            <img :src='awards[4].pic'>
+                        </td>
+                    </tr>
+                </table>
+                <h5 class='notice'>
+                    <template v-if='freeTimes>0'>
+                        今天还有<span class='number'>{{freeTimes}}</span>次免费机会
+                    </template>
+                    <template v-else>
+                        每次消耗<span class='number'>{{activityDetail.integral>>0}}</span>积分
+                    </template>
+                </h5>
+            </div>
+        </main>
+        <article class='describe'>
+            <v-describe-title text='详细说明' color='red'></v-describe-title>
+            <v-simditor>
+                <section v-html='activityDetail.content'></section>
+            </v-simditor>
+            <v-describe-title text='概率说明' color='red'></v-describe-title>
+            <v-simditor>
+                <section v-html='activityDetail.content_prob'></section>
+            </v-simditor>
+            <v-describe-title text='奖项列表' color='red'></v-describe-title>
+        </article>
+        <footer>
+            <v-aword-box :awords='activityDetail.items' color='red'></v-aword-box>
+        </footer>
     </div>
 </template>
 <script>
+    import vDescribeTitle from '../vDescribeTitle.vue';
+    import vIntegralBox from '../vIntegralBox.vue';
+    import vAwordBox from '../vAwordBox.vue';
     export default {
         name: 'fortune',
+        components: {
+            vDescribeTitle,
+            vIntegralBox,
+            vAwordBox
+        },
         props: {
             freshFreeTimes: Function,
+            freeTimes: Number,
             activityDetail: Object,
             id: Number,
             notice: String,
-            toOrderDetail: Function
+            toOrderDetail: Function,
         },
         data() {
             return {
@@ -141,7 +194,10 @@
             },
             is_win() {
                 return this.activity_result.is_win || false;
-            }
+            },
+            user() {
+                return this.$store.state.user;
+            },
         },
         created() {
             this.init();
