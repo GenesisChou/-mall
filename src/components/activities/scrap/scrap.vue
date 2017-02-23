@@ -8,16 +8,16 @@
         background-position: pxTorem(0) pxTorem(-130);
         background-repeat: no-repeat;
     }
-    
+
     header {
         position: relative;
     }
-    
+
     .banner {
         width: pxTorem(750);
         height: pxTorem(400);
     }
-    
+
     .banner-cover {
         position: absolute;
         left: 0;
@@ -26,7 +26,7 @@
         height: pxTorem(61);
         z-index: 1;
     }
-    
+
     .derocation {
         position: absolute;
         left: 0;
@@ -35,7 +35,7 @@
         height: pxTorem(446);
         z-index: 2;
     }
-    
+
     main {
         position: relative;
         width: pxTorem(564);
@@ -46,7 +46,7 @@
         background-size: 100% 100%;
         background-repeat: no-repeat;
     }
-    
+
     .integral-message {
         display: flex;
         align-items: center;
@@ -58,17 +58,19 @@
         color: $white;
         font-size: pxTorem(38);
     }
-    
+
     #lotteryContainer {
         position: absolute;
         left: pxTorem(15);
         top: pxTorem(85);
     }
-    .scrap-cover{
-        width:pxTorem(540);
-        height:pxTorem(190);
-        margin-left:pxTorem(15);
+
+    .scrap-cover {
+        width: pxTorem(540);
+        height: pxTorem(190);
+        margin-left: pxTorem(15);
     }
+
     .start {
         position: absolute;
         left: 50%;
@@ -85,11 +87,11 @@
         font-size: pxTorem(36);
         color: $white;
     }
-    
+
     .notice {
         position: absolute;
         left: 0;
-        bottom:10%;
+        bottom: 10%;
         width: 100%;
         z-index: 2;
         text-align: center;
@@ -100,7 +102,7 @@
             color: #ff5004;
         }
     }
-    
+
     .describe {
         padding: 0 pxTorem(40);
         .editor-style {
@@ -175,7 +177,8 @@
             id: Number,
             notice: String,
             toOrderDetail: Function,
-            freeTimes: Number
+            freeTimes: Number,
+            toggleDialog: Function
         },
         data() {
             return {
@@ -202,7 +205,7 @@
                 if (value == 'start') {
                     this.freshFreeTimes();
                 } else if (value == 'stop') {
-                    this.$store.dispatch('toggleAlert', this.alert);
+                    this.toggleDialog(this.alert);
                 }
             },
             is_win(value) {
@@ -210,10 +213,10 @@
                 let result = this.activity_result;
                 if (value) {
                     this.alert = {
-                        close_btn: true,
-                        type: 'img',
+                        type: 'success',
                         img: result.pic_thumb,
                         msg: '获得' + result.name,
+                        btn_text: '查看',
                         callback: this.toOrderDetail(result.id),
                         callback_close: () => {
                             let canvas = document.getElementsByTagName('canvas');
@@ -223,11 +226,11 @@
                             });
                             this.init();
                         },
-                        btn_text: '查看'
                     };
                 } else {
                     this.alert = {
-                        msg: result.name,
+                        msg:'很遗憾,未中奖',
+                        btn_text: '再来一次',
                         callback: () => {
                             let canvas = document.getElementsByTagName('canvas');
                             canvas = Array.prototype.slice.call(canvas);
@@ -267,7 +270,7 @@
                         this.state = 'start';
                         this.is_win = this.activity_result.is_win;
                     } else {
-                        this.$store.dispatch('toggleAlert', {
+                        this.toggleDialog({
                             msg: data.info
                         })
                     }

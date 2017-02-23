@@ -24,7 +24,7 @@
             <div class='circle front' slot='front'>hello wolrd</div>
             <div class='circle back' slot='back'>fuck off</div>
         </v-rotate>
-        <v-dialog v-model='dialogShow'  ></v-dialog>
+        <v-dialog v-model='dialogShow'  :dialog='test'></v-dialog>
     </div>
 </template>
 <script>
@@ -44,7 +44,12 @@
         data() {
             return {
                 test: '',
-                dialogShow:false
+                dialogShow:false,
+                test:{
+                    callback(){
+                        alert('hello wolrd')
+                    }
+                }
             }
         },
         mounted() {
@@ -79,6 +84,9 @@
             },
             toggleDialog() {
                 this.dialogShow=!this.dialogShow;
+            },
+            test(){
+                alert('hello wolrd');
             }
 
         }

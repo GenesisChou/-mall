@@ -1,22 +1,33 @@
 <style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
     .activity-detail {
+        display: flex;
+        flex-direction: column;
+        display: -webkit-flex;
+        -webkit-flex-direction: column;
         width: 100%;
-        height: 100%;
+        min-height: 100%;
+    }
+    .content {
+        flex: 1;
     }
 </style>
 <template>
     <div class='activity-detail'>
-        <keep-alive>
-            <!-- is：活动类型 freshFreeTimes:刷新免费活动次数 ：notice:剩余次数／消耗积分提示 ：toOrderDetail:订单详情跳转 -->
-            <component :is='activity_type' :free-times='free_times>>0' :fresh-free-times='freshFreeTimes' :activity-detail='activity_detail'
-                :id='activity_id>>0' :notice='notice' :to-order-detail='toOrderDetail'>
-            </component>
-        </keep-alive>
+        <div class='content'>
+            <keep-alive>
+                <!-- is：活动类型 freshFreeTimes:刷新免费活动次数 ：notice:剩余次数／消耗积分提示 ：toOrderDetail:订单详情跳转 -->
+                <component :is='activity_type' :free-times='free_times>>0' :fresh-free-times='freshFreeTimes' :activity-detail='activity_detail'
+                    :id='activity_id>>0' :notice='notice' :to-order-detail='toOrderDetail' :toggleDialog='toggleDialog'>
+                </component>
+            </keep-alive>
+        </div>
+        <v-dialog v-model='dialog_show' :dialog='dialog'></v-dialog>
         <v-support v-if='activity_detail'></v-support>
     </div>
 </template>
 <script>
+    import vDialog from 'components/activities/vDialog.vue';
     import {
         quiz,
         scrap,
@@ -28,6 +39,7 @@
 
         name: 'activityDetail',
         components: {
+            vDialog,
             quiz,
             scrap,
             game,
@@ -41,6 +53,8 @@
                 activity_detail: '',
                 free_times: '',
                 activity_type: '',
+                dialog_show: false,
+                dialog: {}
             }
         },
         computed: {
@@ -130,6 +144,10 @@
                     })
                 }
             },
+            toggleDialog(dialog) {
+                this.dialog = dialog;
+                this.dialog_show = !this.dialog_show;
+            }
         }
     };
 </script>

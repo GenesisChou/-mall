@@ -144,10 +144,10 @@
         .check-item.active:nth-child(3):before {
             content: '';
             position: absolute;
-            left: pxTorem(-80);
+            left: pxTorem(-85);
             top: 50%;
             margin-top: pxTorem(-6);
-            width: pxTorem(110);
+            width: pxTorem(100);
             height: pxTorem(12);
             background-color: #ff5004;
             z-index: 2;

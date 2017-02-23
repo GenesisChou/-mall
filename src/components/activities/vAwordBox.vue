@@ -4,6 +4,7 @@
         position: relative;
         width: pxTorem(728);
         height: pxTorem(235);
+        padding: pxTorem(45) pxTorem(20) 0 pxTorem(15);
         margin: pxTorem(48) auto 0 auto;
         background-size: 100% 100%;
         background-repeat: no-repeat;
@@ -17,19 +18,16 @@
             background-image: url('./blueAwordBox.png');
         }
         ul {
-            position: absolute;
-            left: pxTorem(15);
-            top: pxTorem(54);
-            display: flex;
-            display: -webkit-flex;
-            width: pxTorem(700);
+            width: 100%;
             overflow-x: scroll;
+            white-space: nowrap;
             &::-webkit-scrollbar {
                 display: none;
             }
         }
         .aword {
             list-style: none;
+            display: inline-block;
             height: pxTorem(160);
             padding: pxTorem(5);
             margin: 0 pxTorem(17.5);
@@ -42,7 +40,7 @@
                 width: pxTorem(145);
                 height: pxTorem(42);
                 line-height: pxTorem(42);
-                text-align:center;
+                text-align: center;
             }
             &.red {
                 background-color: #fe7a6f;

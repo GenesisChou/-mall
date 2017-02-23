@@ -171,14 +171,14 @@ Lottery.prototype = {
         this.drawLottery();
     },
     setText(text) {
-        var fontSize = this.pxTorem(30);
+        var fontSize = this.pxTorem(36);
         this.backCtx.fillStyle = "#fff";
         this.backCtx.beginPath();
         this.backCtx.fillRect(0, 0, this.width, this.height);
         this.backCtx.closePath();
-        this.backCtx.font = 'Bold ' + fontSize + 'px Microsoft Yahei';
+        this.backCtx.font = 'Bold ' + fontSize + 'px  PingFangSc-Light';
         this.backCtx.textAlign = 'center';
-        this.backCtx.fillStyle = '#F60';
+        this.backCtx.fillStyle = '#ff5004';
         this.backCtx.fillText(text, this.width / 2, this.height / 2 + fontSize / 2);
         this.backCtx.restore();
     },

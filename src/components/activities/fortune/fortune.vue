@@ -176,6 +176,7 @@
             id: Number,
             notice: String,
             toOrderDetail: Function,
+            toggleDialog:Function
         },
         data() {
             return {
@@ -209,8 +210,7 @@
                     this.freshFreeTimes();
                     if (result.is_win) {
                         this.alert = {
-                            close_btn: true,
-                            type: 'img',
+                            type: 'success',
                             img: result.pic_thumb,
                             msg: '获得' + result.name,
                             callback: this.toOrderDetail(result.id),
@@ -222,6 +222,7 @@
                     } else {
                         this.alert = {
                             msg: result.name,
+                            btn_text:'再来一次',
                             callback: () => {
                                 this.init(this.stop_position);
                             },
@@ -257,7 +258,7 @@
                         setTimeout(step, interval);
                     }
                 } else if (value == 'stop') {
-                    this.$store.dispatch('toggleAlert', this.alert);
+                    this.toggleDialog(this.alert);
                 }
             }
         },
@@ -280,7 +281,7 @@
                         this.activity_result = data.data;
                         this.state = 'start';
                     } else {
-                        this.$store.dispatch('toggleAlert', {
+                        this.toggleDialog({
                             msg: data.info
                         })
                     }

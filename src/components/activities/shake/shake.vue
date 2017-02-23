@@ -4,12 +4,12 @@
         position: relative;
         padding-bottom: pxTorem(84);
     }
-    
+
     .banner {
         width: pxTorem(750);
         height: pxTorem(400);
     }
-    
+
     .integral-message {
         display: flex;
         align-items: center;
@@ -21,7 +21,7 @@
         color: $white;
         font-size: pxTorem(38);
     }
-    
+
     .shake-panel {
         position: absolute;
         left: 0;
@@ -33,7 +33,7 @@
         background-repeat: no-repeat;
         z-index: 1;
     }
-    
+
     .hand {
         position: absolute;
         top: 22%;
@@ -46,10 +46,10 @@
         -webkit-transform: rotate(0deg);
         -webkit-transform-origin: bottom center;
         &.active {
-            -webkit-animation: shake 1.5s linear infinite;
+            -webkit-animation: shake 1.5s  linear;
         }
     }
-    
+
     .notice {
         position: absolute;
         bottom: pxTorem(90);
@@ -72,7 +72,7 @@
             font-size: pxTorem(44);
         }
     }
-    
+
     .describe {
         padding: 0 pxTorem(40);
         padding-top: pxTorem(800);
@@ -82,7 +82,7 @@
             color: #ad0406 !important;
         }
     }
-    
+
     @-webkit-keyframes shake {
         0% {
             -webkit-transform: rotate(0deg);
@@ -123,6 +123,11 @@
             </div>
         </main>
         <article class='describe'>
+            <!--
+            <h1>
+                <button class='btn' @click='start'>start</button>
+            </h1>
+            -->
             <v-describe-title text='详细说明' color='red'></v-describe-title>
             <v-simditor>
                 <section v-html='activityDetail.content'></section>
@@ -158,7 +163,8 @@
             id: Number,
             notice: String,
             toOrderDetail: Function,
-            freeTimes: Number
+            freeTimes: Number,
+            toggleDialog: Function
         },
         data() {
             return {
@@ -188,10 +194,9 @@
                     setTimeout(() => {
                         this.$store.dispatch('toggleLoading');
                         if (value) {
-                            this.$store.dispatch('toggleAlert', {
-                                close_btn: true,
+                            this.toggleDialog({
                                 msg: '获得' + result.name,
-                                type: 'img',
+                                type: 'success',
                                 img: result.pic_thumb,
                                 btn_text: '查看',
                                 callback: this.toOrderDetail(result.id),
@@ -200,8 +205,9 @@
                                 },
                             });
                         } else {
-                            this.$store.dispatch('toggleAlert', {
-                                msg: result.name,
+                            this.toggleDialog({
+                                msg: '很遗憾,未摇中',
+                                btn_text: '再来一次',
                                 callback: () => {
                                     this.init();
                                 },
@@ -266,7 +272,7 @@
                         this.activity_result = data.data;
                         this.is_win = this.activity_result.is_win;
                     } else {
-                        this.$store.dispatch('toggleAlert', {
+                        this.toggleDialog({
                             msg: data.info,
                             callback: () => {
                                 this.init();

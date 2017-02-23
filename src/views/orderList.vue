@@ -1,96 +1,118 @@
 <style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
     .order-list {
+        display: flex;
+        flex-direction: column;
+        display: -webkit-flex;
+        -webkit-flex-direction: column;
+        width: 100%;
         min-height: 100%;
-        padding: pxTorem(20) 0;
-        background-color: $gray-light;
+        padding-top: pxTorem(20);
+        background-color: #f2f3f4;
     }
-    
+
+    .content {
+        flex: 1;
+    }
+
     .tabs {
+        display: flex;
+        display: -webkit-flex;
         background-color: $white;
         margin-bottom: pxTorem(20);
+        border-bottom: 1px solid #d3d4d6;
         li {
-            position: relative;
-            width: 25%;
-            height: pxTorem(110);
-            padding-top: pxTorem(10);
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            -webkit-flex: 1;
+            display: -webkit-flex;
+            -webkit-align-items: center;
+            -webkit-justify-content: center;
+            -webkit-flex-direction: column;
+            height: pxTorem(128);
             text-align: center;
-            border-right: 1px solid $gray-light;
-            &:nth-child(4) {
-                border-right: none;
-            }
-            &:active {
-                background-color: darken($white, 2%);
-            }
+            list-style: none;
+            position: relative;
             &.active {
-                color: $white;
-                background-color: $red;
-                .badage {
-                    color: $white;
-                    border: 2px solid $white;
-                }
-                &:active {
-                    background-color: darken($red, 10%);
+                color: #ff5000;
+                &:before {
+                    content: '';
+                    position: absolute;
+                    left: 17.5%;
+                    bottom: 0;
+                    width: 65%;
+                    height: pxTorem(4);
+                    background-color: #ff5000;
                 }
             }
         }
-        .iconfont{
-            font-size:pxTorem(36);
+        .iconfont {
+            font-size: pxTorem(50);
         }
         .badage {
-            width: pxTorem(50);
-            height: pxTorem(50);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            display: -webkit-flex;
+            -webkit-align-items: center;
+            -webkit-justify-content: center;
+            width: pxTorem(36);
+            height: pxTorem(36);
             position: absolute;
-            right: pxTorem(10);
-            top: 0;
-            color: $red;
+            right: pxTorem(50);
+            top: pxTorem(10);
+            color: #ff5000;
             border-radius: 50%;
-            border: 2px solid $red;
             text-align: center;
-            line-height: pxTorem(50);
-            font-weight: bold;
             box-sizing: content-box;
+            border: pxTorem(3) solid #ff5000;
+            background-color: #ffffff;
+            font-size: pxTorem(24);
+            transform: scale(0.8);
+            -webkit-transform: scale(0.8);
             z-index: 1;
-            transform: scale(0.5);
-            transform: -webkit-scale(0.5);
         }
     }
-    
+
     .v-order {
         &:active {
             background-color: darken($white, 2%);
         }
-        footer {
-            border-top: 1px solid $gray-light;
-            margin: 0 pxTorem(30);
-            font-size: pxTorem(24);
-            line-height: pxTorem(66);
-        }
+    }
+
+    .v-order-footer {
+        padding-left: pxTorem(30);
+        line-height: pxTorem(66);
+        border-top: 1px solid #f2f3f4;
+        border-bottom: 1px solid #d3d4d6;
+        color: #ff5000;
     }
 </style>
 <template>
     <div class='order-list'>
-        <ul class='tabs list-inline'>
-            <li v-for='(tab,$index) in tabs' @click='switchTab($index+1)' :class='{active:$index+1==current_tab}'>
-                <i :class='["iconfont",getIconType($index)]'>
-                <h6>{{tab.name}}</h6>
-                <span class='badage' v-if='$index==0&&user.unfinished_order_count>0'>{{user.unfinished_order_count}}</span>
-            </li>
-        </ul>
-        <ul>
-            <router-link v-for='order in order_list[current_type]' 
-                        :to='{name:"order_detail",
+        <div class='content'>
+            <ul class='tabs'>
+                <li v-for='(tab,$index) in tabs' @click='switchTab($index+1)' :class='{active:$index+1==current_tab}'>
+                    <i :class='["iconfont",getIconType($index)]'></i>
+                    <h6>{{tab.name}}</h6>
+                    <span class='badage' v-if='$index==0&&user.unfinished_order_count>0'>{{user.unfinished_order_count}}</span>
+                </li>
+            </ul>
+            <ul>
+                <router-link v-for='order in order_list[current_type]' :to='{name:"order_detail",
                         query:{order_id:parseInt(order.id)}}' tag='li'>
-                <v-order :img='order.product_pic' 
-                         :id='order.orderid' 
-                         :integral='order.integral>>0' 
-                         :name='order.product'>
-                    <footer>
-                        {{order.tips}}
-                    </footer>
-                </v-order>
-            </router-link>
-        </ul>
+                    <v-order :img='order.product_pic' :id='order.orderid' :integral='order.integral>>0' :name='order.product'>
+                        <h6 class='v-order-footer'>
+                            {{order.tips}}
+                        </h6>
+                    </v-order>
+                </router-link>
+            </ul>
+
+        </div>
         <v-load-more v-if='busy'></v-load-more>
         <v-support></v-support>
         <v-back-top></v-back-top>
@@ -116,16 +138,16 @@
                 scroll_events: {},
                 tabs: [{
                     type: 'unsolved',
-                    name: '待处理订单'
+                    name: '待处理'
                 }, {
                     type: 'untransported',
-                    name: '待发货订单'
+                    name: '待发货'
                 }, {
                     type: 'solved',
-                    name: '已完成订单'
+                    name: '已完成'
                 }, {
                     type: 'expired',
-                    name: '已逾期订单'
+                    name: '已逾期'
                 }],
                 busy: false,
             }
@@ -168,13 +190,13 @@
                 })
             }
         },
-        beforeRouteEnter(to,from,next){
-              //当从订单详情返回至订单列表时绑定滚动事件
-              next(vm => {
-                if(from.name=='order_detail'){
-                     window.addEventListener('scroll', vm.scroll_events[vm.current_type]);
+        beforeRouteEnter(to, from, next) {
+            //当从订单详情返回至订单列表时绑定滚动事件
+            next(vm => {
+                if (from.name == 'order_detail') {
+                    window.addEventListener('scroll', vm.scroll_events[vm.current_type]);
                 }
-              })
+            })
         },
         activated() {
             let position = utils.getSessionStorage('position:' + this.$route.name);
@@ -189,7 +211,7 @@
             //离开页面后解除滚动事件
             window.removeEventListener('scroll', this.scroll_events[this.current_type]);
             //回到主页时重置所有状态
-            if(to.name=='index'){
+            if (to.name == 'index') {
                 this.init();
             }
             next();
@@ -253,11 +275,12 @@
             switchTab(tab) {
                 this.current_tab = tab;
             },
-            getIconType($index){
-                let icon_list=['icon-order-unsolved','icon-car','icon-order','icon-delete'],temp=''
-                icon_list.forEach((name,index)=>{
-                    if(index==$index){
-                        temp=name;
+            getIconType($index) {
+                let icon_list = ['icon-order-unsolved', 'icon-car', 'icon-order', 'icon-delete'],
+                    temp = ''
+                icon_list.forEach((name, index) => {
+                    if (index == $index) {
+                        temp = name;
                         return;
                     }
                 })

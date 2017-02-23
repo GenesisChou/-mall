@@ -10,34 +10,42 @@
         text-align: center;
         margin-left: pxTorem(-300);
         margin-top: pxTorem(-137);
+        background-color: $white;
         z-index: 11;
         .msg {
-            height: pxTorem(190);
-            line-height: pxTorem(190);
-            background-color: $white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            display: -webkit-flex;
+            -webkit-align-items: center;
+            -webkit-flex-direction: column;
+            -webkit-justify-content: center;
+            height: pxTorem(130);
         }
         .btns {
-            font-size: pxTorem(30);
-            overflow: hidden;
+            display:flex;
+            display: -webkit-flex;
+            border-top: 1px solid #d3d4d6;
         }
         .btn-left,
         .btn-right {
-            width: 50%;
-            height: pxTorem(84);
-            line-height: pxTorem(84);
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            -webkit-flex: 1;
+            display: -webkit-flex;
+            -webkit-align-items: center;
+            -webkit-justify-content: center;
+            height: pxTorem(100);
+            font-size: pxTorem(36);
+            text-align: center;
             text-indent: pxTorem(12);
             letter-spacing: pxTorem(12);
         }
-        .btn-left {
-            float: left;
-            border-top: 1px solid $gray-light;
-            background-color: $white;
-        }
         .btn-right {
-            float: right;
-            background-color: $red;
-            border-top: 1px solid $red;
-            color: $white;
+            color: #ff5000;
         }
     }
 </style>
@@ -45,7 +53,10 @@
     <v-modal v-model='show' :cover-close='false'>
         <transition name='scale'>
             <div v-show='show' class='v-confirm-content'>
-                <h3 class=' msg'>{{msg}}</h3>
+                <div class='msg'>
+                    <h3>{{msg}}</h3>
+                    <h3 v-if='msg_second'>{{msg_second}}</h3>
+                </div>
                 <div class='btns'>
                     <div class='btn-left' @click='close'>取消</div>
                     <div class='btn-right' @click='func()'>确定</div>
@@ -53,7 +64,7 @@
             </div>
         </transition>
     </v-modal>
-   </template>
+</template>
 <script>
     import vModal from 'components/vModal.vue';
     export default {
@@ -70,6 +81,9 @@
             },
             msg() {
                 return this.confirm.msg;
+            },
+            msg_second() {
+                return this.confirm.msg_second;
             },
             callback() {
                 return this.confirm.callback;

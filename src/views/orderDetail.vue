@@ -2,50 +2,82 @@
     @import '../assets/scss/variable.scss';
     .order-detail {
         min-height: 100%;
+        background-color: #f2f3f4;
         overflow: hidden;
-        background-color: $gray-light;
         .v-order {
             border: 0;
             margin-bottom: 0;
         }
-        .introduction {
-            padding: pxTorem(20);
-            margin: 0;
-            &:last-child {
-                padding: pxTorem(20) pxTorem(40);
-                border-bottom: 1px solid $gray-light;
-                box-sizing: border-box;
-                li {
-                    list-style: none;
-                }
+    }
+
+    .space {
+        width: 100%;
+        height: pxTorem(20);
+        background-color: #f2f3f4;
+    }
+
+    .ticket {
+        padding: pxTorem(20) 0;
+        position: relative;
+        height: pxTorem(177);
+        background-image: url('../assets/images/ticket.png');
+        background-size: pxTorem(748) pxTorem(167);
+        background-position: 0 pxTorem(10);
+        background-color: $white;
+        span {
+            position: absolute;
+            top: 50%;
+            left: 40%;
+            color: #646565;
+            font-size: pxTorem(30);
+            transform: translateY(-50%);
+            -webkit-transform: translateY(-50%);
+        }
+    }
+
+    .take-goods {
+        h5 {
+            padding-left: pxTorem(30);
+            line-height: pxTorem(76);
+            color: #ff5000;
+            border-bottom: 1px solid #f2f3f4;
+            .iconfont {
+                font-size: pxTorem(30);
             }
         }
     }
-    
-    .ticket {
-        border-top: 1px solid $gray-light;
-        border-bottom: 1px solid $gray-light;
-        .ticket-box {
-            width: pxTorem(608);
-            height: pxTorem(66);
-            line-height: pxTorem(66);
-            border: 1px solid $red;
-            padding-left: pxTorem(20);
-            margin: pxTorem(40) auto;
-            background-color: #fefafa;
+
+    .take-goods-script {
+        position: absolute;
+        right: pxTorem(30);
+        top: pxTorem(76);
+        width: pxTorem(223);
+        height: pxTorem(126);
+    }
+
+    .introduction,
+    .announcement {
+        padding: 0 pxTorem(30);
+        h3 {
+            line-height: pxTorem(76);
+            color: #646565;
+            border-bottom: 1px solid #f2f3f4;
         }
-        span {
-            font-size: pxTorem(28);
-        }
-        h1 {
-            display: inline;
-            color: $red;
+        .content {
+            padding: pxTorem(20) 0;
         }
     }
-    
+
+    .introduction {
+        padding-bottom: pxTorem(20);
+    }
+
+
+
+
     .single-button {
         padding: pxTorem(20) pxTorem(75);
-        button {
+        .btn {
             width: 100%;
             height: pxTorem(80);
             line-height: pxTorem(80);
@@ -54,7 +86,7 @@
             color: $white;
         }
     }
-    
+
     .address-selected {
         display: flex;
         display: -webkit-flex;
@@ -68,10 +100,7 @@
         overflow: hidden;
         background-color: $white;
         .location {
-            // width: pxTorem(110);
-            // text-align: center;
-            // line-height: pxTorem(110);
-            padding:0 pxTorem(35);
+            padding: 0 pxTorem(35);
         }
         .arrows {
             position: absolute;
@@ -97,26 +126,59 @@
             font-size: pxTorem(36);
         }
     }
-    
-       
+
+
     .input-box {
         padding: pxTorem(30);
+        form {
+            display: flex;
+            display: -webkit-flex;
+            width: pxTorem(618);
+            height: pxTorem(75);
+            background-color: #fef6f5;
+            margin: 0 auto;
+        }
+        .form-control {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            -webkit-flex: 1;
+            display: -webkit-flex;
+            -webkit-align-items: center;
+            border: pxTorem(2) solid #f0c3c2;
+        }
+        label {
+            color: #3d4244;
+            font-size: pxTorem(32);
+            padding-left: pxTorem(20);
+        }
         input {
-            width: pxTorem(500);
-            border: 1px solid $gray-light;
-            color: $sliver;
+            flex: 1;
+            -webkit-flex: 1;
+            background: none;
+            border: none;
             text-indent: pxTorem(20);
+            color: #a9aaae;
+            font-size: pxTorem(30);
         }
-        .btn {
-            font-size: pxTorem(26);
-            padding-left: pxTorem(15);
-            padding-right: pxTorem(15);
+        .submit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            display: -webkit-flex;
+            -webkit-align-items: center;
+            -webkit-justify-content: center;
+            width: pxTorem(165);
+            height: 100%;
+            background-color: #f0c3c2;
+            color: $white;
+            font-size: pxTorem(34);
         }
-        .btn-receive {
+        .disable {
             background-color: $gray;
         }
     }
-    
+
     input[type="text"]:disabled {
         background-color: $gray-light;
     }
@@ -128,32 +190,37 @@
             <!--商品为虚拟物品时 -->
             <template v-if='is_virtual'>
                 <!--商品为优惠券时 -->
-                <div v-if='product_type==1||product_type==6' class='ticket'>
-                    <div class='ticket-box'>
-                        <span>优惠券:</span>
-                        <h1>
-                            <template v-if='product_type==1'>
-                                {{order_detail.ticket_id}}
-                            </template>
-                            <template v-if='product_type==6'>
-                                {{product_detail.ticket_id}}
-                            </template>
-                        </h1>
+                <template v-if='product_type==1||product_type==6'>
+                    <div class='space'></div>
+                    <section class='ticket'>
+                        <span v-if='product_type==1'> {{order_detail.ticket_id}} </span>
+                        <span v-if='product_type==6'> {{product_detail.ticket_id}} </span>
+                    </section>
+
+                </template>
+                <div class='space'></div>
+                <!-- 使用说明 -->
+                <section v-if='product_detail.content_use' class='introduction'>
+                    <h3>使用说明</h3>
+                    <div class='content'>
+                        <v-simditor>
+                            <article v-if='product_detail.content_use' v-html='product_detail.content_use'> </article>
+                        </v-simditor>
                     </div>
-                </div>
-                <v-simditor>
-                    <v-divider v-if='product_detail.content_use' text='使用说明'></v-divider>
-                    <article v-if='product_detail.content_use' class='introduction' v-html='product_detail.content_use'> </article>
-                    <v-divider text='重要声明'></v-divider>
-                    <ul class='introduction'>
-                        <li>1.除商品本身不能正常兑换外，商品一经兑换，积分概不退还，请用户在兑换前仔细阅读使用规则、使用说明、有效期等重要信息； </li>
-                        <li>2.除活动流程出现异常外，奖品一经发放，参与活动积分概不退还，请用户在参与活动前仔细阅读活动规则、活动说明等重要信息； </li>
-                        <li>3.通过非法途径获得积分后进行的正常兑换（参与活动）行为，或不按照商品使用规则进行兑换，商家有权不提供服务； </li>
-                        <li>4.凡以不正当手段（包括但不限于作弊、扰乱系统、实施网络攻击等）进行兑换，平台有权终止该次兑换。</li>
-                    </ul>
-                </v-simditor>
+                </section>
+                <div class='space'></div>
+                <!-- 重要声明 -->
+                <section class='announcement'>
+                    <h3>重要声明</h3>
+                    <div class='content'>
+                        <h5>1.除商品本身不能正常兑换外，商品一经兑换，积分概不退还，请用户在兑换前仔细阅读使用规则、使用说明、有效期等重要信息； </h5>
+                        <h5>2.除活动流程出现异常外，奖品一经发放，参与活动积分概不退还，请用户在参与活动前仔细阅读活动规则、活动说明等重要信息； </h5>
+                        <h5>3.通过非法途径获得积分后进行的正常兑换（参与活动）行为，或不按照商品使用规则进行兑换，商家有权不提供服务； </h5>
+                        <h5>4.凡以不正当手段（包括但不限于作弊、扰乱系统、实施网络攻击等）进行兑换，平台有权终止该次兑换。</h5>
+                    </div>
+                </section>
                 <div v-if='product_type==5' class='single-button'>
-                    <button class='btn btn-red' :href='product_detail.url'> 前往使用 </button>
+                    <a class='btn btn-red' :href='product_detail.url'> 前往使用 </a>
                 </div>
             </template>
             <!-- 商品为实物时 -->
@@ -198,37 +265,47 @@
                 </template>
                 <!-- 取货类型为自取时 -->
                 <template v-if='send_type==2'>
-                    <div class='address-selected '>
-                        <div class='location pull-left'>
-                            <i class='iconfont icon-location'></i>
+                    <img v-if='order_detail.status==3' class='take-goods-script' src="../assets/images/takeGoods.png" alt="">
+                    <div class=' space '></div>
+                    <!-- 取货 -->
+                    <section class='take-goods'>
+                        <h5> <i class='iconfont icon-location'></i> 取货地址: {{order_detail.take_address}} </h5>
+                        <main class='input-box'>
+                            <form>
+                                <div class='form-control'>
+                                    <label for=' take-goods '>取货码:</label>
+                                    <input type="text" id='take-goods' v-model='take_wordh' :disabled='order_detail.status==3||order_detail.status==4'>
+                                </div>
+                                <a v-if='order_detail.status==2' class='submit' @click='takeGoods'>确认</a>
+                                <a v-if='order_detail.status==4' class='submit disable'>已逾期</button>
+                            </form>
+                        </main>
+                    </section>
+                    <div class='space'></div>
+                    <!-- 领取说明 -->
+                    <section v-if='product_detail.content_use' class='introduction'>
+                        <h3>领取说明</h3>
+                        <div class='content'>
+                            <v-simditor>
+                                <article v-if='product_detail.content_use' v-html='product_detail.content_use'> </article>
+                            </v-simditor>
                         </div>
-                        <div class='address-content clearfix'>
-                            <p class='address-detail'>
-                                <label>取货地址:</label> {{order_detail.take_address}}
-                            </p>
+                    </section>
+                    <div class='space'></div>
+                    <!-- 重要声明 -->
+                    <section class='announcement'>
+                        <h3>重要声明</h3>
+                        <div class='content'>
+                            <h5>1.除商品本身不能正常兑换外，商品一经兑换，积分概不退还，请用户在兑换前仔细阅读使用规则、使用说明、有效期等重要信息； </h5>
+                            <h5>2.除活动流程出现异常外，奖品一经发放，参与活动积分概不退还，请用户在参与活动前仔细阅读活动规则、活动说明等重要信息； </h5>
+                            <h5>3.通过非法途径获得积分后进行的正常兑换（参与活动）行为，或不按照商品使用规则进行兑换，商家有权不提供服务； </h5>
+                            <h5>4.凡以不正当手段（包括但不限于作弊、扰乱系统、实施网络攻击等）进行兑换，平台有权终止该次兑换。</h5>
                         </div>
-                    </div>
-                    <v-divider text='输入取货码'></v-divider>
-                    <div class='input-box'>
-                        <input type="text" v-model='take_wordh' :disabled='order_detail.status==3||order_detail.status==4'>
-                        <button v-if='order_detail.status==2' class='btn btn-red pull-right ' @click='takeGoods'>确认</button>
-                        <button v-if='order_detail.status==3' class='btn  pull-right '>已取货</button>
-                        <button v-if='order_detail.status==4' class='btn  pull-right '>已逾期</button>
-                    </div>
-                    <v-simditor>
-                        <v-divider v-if='product_detail.content_use' text='领取说明'></v-divider>
-                        <article v-if='product_detail.content_use' class='introduction' v-html='product_detail.content_use'> </article>
-                        <v-divider text='重要声明'></v-divider>
-                        <ul class='introduction'>
-                            <li>1.除商品本身不能正常兑换外，商品一经兑换，积分概不退还，请用户在兑换前仔细阅读使用规则、使用说明、有效期等重要信息； </li>
-                            <li>2.除活动流程出现异常外，奖品一经发放，参与活动积分概不退还，请用户在参与活动前仔细阅读活动规则、活动说明等重要信息； </li>
-                            <li>3.通过非法途径获得积分后进行的正常兑换（参与活动）行为，或不按照商品使用规则进行兑换，商家有权不提供服务； </li>
-                            <li>4.凡以不正当手段（包括但不限于作弊、扰乱系统、实施网络攻击等）进行兑换，平台有权终止该次兑换。</li>
-                        </ul>
-                    </v-simditor>
+                    </section>
                 </template>
             </template>
         </v-order>
+        <v-support></v-support>
     </div>
 </template>
 <script>
@@ -242,7 +319,7 @@
             vOrder,
             vLogistics,
             vAddressEdit,
-            vAddressSelect
+            vAddressSelect,
         },
         data() {
             return {
@@ -256,7 +333,8 @@
                 popup_select: false,
                 loaded: false,
                 take_wordh: '',
-                content_show: false
+                content_show: false,
+                confirm_show:false
             };
         },
         computed: {
@@ -388,25 +466,30 @@
             },
             //领取订单
             takeGoods() {
-                this.$store.dispatch('toggleLoading');
-                this.$http.post(`${APP.HOST}/take_goods/${this.order_id}`, {
-                    token: APP.TOKEN,
-                    userid: APP.USER_ID,
-                    take_word: this.take_word
-                }).then((response) => {
-                    let data = response.data;
-                    this.$store.dispatch('toggleLoading');
-                    if (data.status == APP.SUCCESS) {
-                        this.getOrderDetail();
-                    } else {
-                        this.$store.dispatch('toggleAlert', {
-                            msg: data.info
-                        })
-                    }
-                }, (response) => {
-                    this.$store.dispatch('toggleLoading');
-
-                })
+                 this.$store.dispatch('toggleConfirm', {
+                    msg: '点击确认后不可修改',
+                    msg_second:'请核对无误后点击确认!',
+                    callback: () => {
+                        this.$store.dispatch('toggleLoading');
+                            this.$http.post(`${APP.HOST}/take_goods/${this.order_id}`, {
+                                token: APP.TOKEN,
+                                userid: APP.USER_ID,
+                                take_word: this.take_word
+                            }).then((response) => {
+                                let data = response.data;
+                                this.$store.dispatch('toggleLoading');
+                                if (data.status == APP.SUCCESS) {
+                                    this.getOrderDetail();
+                                } else {
+                                    this.$store.dispatch('toggleAlert', {
+                                        msg: data.info
+                                    })
+                                }
+                            }, (response) => {
+                                this.$store.dispatch('toggleLoading');
+                            })
+                        }
+                     });
             },
             toggleEdit() {
                 this.popup_edit = !this.popup_edit;
@@ -415,7 +498,7 @@
                 if (!this.order_checked) {
                     this.popup_select = !this.popup_select;
                 }
-            }
+            },
         }
 
 

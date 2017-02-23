@@ -19,6 +19,7 @@ const state = {
     v_confirm: {
         show: false,
         msg: '',
+        msg_second:'',
         callback: function () {}
     },
     v_loading: {
@@ -42,6 +43,7 @@ const mutations = {
     toggleConfirm(state, confirm = {}) {
         state.v_confirm.show = !state.v_confirm.show;
         state.v_confirm.msg = confirm.msg;
+        state.v_confirm.msg_second = confirm.msg_second;
         state.v_confirm.callback = confirm.callback;
 
     },

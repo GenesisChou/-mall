@@ -6,12 +6,12 @@
         background-size: pxTorem(750) pxTorem(2235);
         background-color: #f7be14;
     }
-    
+
     .banner {
         width: pxTorem(750);
         height: pxTorem(400);
     }
-    
+
     .panel {
         position: relative;
         width: pxTorem(591);
@@ -21,7 +21,7 @@
         border: pxTorem(13) solid #6a3c05;
         background-color: $white;
     }
-    
+
     .panel-head {
         position: absolute;
         left: 50%;
@@ -32,10 +32,11 @@
         background-size: 100% 100%;
         background-repeat: no-repeat;
         transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
         color: #e65413;
         z-index: 1;
     }
-    
+
     .integral-message {
         display: flex;
         align-items: center;
@@ -47,24 +48,24 @@
         height: 100%;
         font-size: pxTorem(38);
     }
-    
+
     .panel-content {
         padding-bottom: pxTorem(80);
         color: #6f3a04;
         .quiz {
-            position:relative;
+            position: relative;
             padding: pxTorem(90) pxTorem(60) pxTorem(40) pxTorem(60);
             font-size: pxTorem(30);
         }
         .number {
-            position:absolute;
-            left:pxTorem(20);
-            top:pxTorem(83);
+            position: absolute;
+            left: pxTorem(20);
+            top: pxTorem(83);
             color: #e65413;
             font-size: pxTorem(36);
         }
     }
-    
+
     .answers {
         display: flex;
         flex-wrap: wrap;
@@ -98,7 +99,7 @@
             background-image: url('./images/selectedCircle.png');
         }
     }
-    
+
     .panel-footer {
         position: absolute;
         left: 0;
@@ -122,7 +123,7 @@
             }
         }
     }
-    
+
     .submit {
         position: relative;
         display: block;
@@ -147,7 +148,7 @@
             background-size: 100% 100%;
         }
     }
-    
+
     .describe {
         padding: 0 pxTorem(40);
         .editor-style {
@@ -223,7 +224,8 @@
             id: Number,
             notice: String,
             toOrderDetail: Function,
-            freeTimes: Number
+            freeTimes: Number,
+            toggleDialog: Function
         },
         data() {
             return {
@@ -249,12 +251,12 @@
                 if (value) {
                     this.is_win = result.is_win;
                 } else {
-                    this.$store.dispatch('toggleAlert', {
+                    this.toggleDialog({
                         msg: result.name,
-                        type: 'error',
+                        btn_text: '继续答题',
                         callback: () => {
                             this.init();
-                        }
+                        },
                     });
                 }
             },
@@ -262,10 +264,10 @@
                 if (this.state != 'start') return;
                 let result = this.activity_result;
                 if (value) {
-                    this.$store.dispatch('toggleAlert', {
+                    this.toggleDialog({
                         close_btn: true,
                         msg: '获得' + result.name,
-                        type: 'img',
+                        type: 'success',
                         img: result.pic_thumb,
                         btn_text: '查看',
                         callback: this.toOrderDetail(result.id),
@@ -274,7 +276,7 @@
                         }
                     });
                 } else {
-                    this.$store.dispatch('toggleAlert', {
+                    this.toggleDialog({
                         msg: result.name,
                         callback: () => {
                             this.init();
@@ -298,8 +300,9 @@
             //提交答案
             submitAnswer() {
                 if (!this.answer_id) {
-                    this.$store.dispatch('toggleAlert', {
-                        msg: '请选择答案'
+                    this.toggleDialog({
+                        msg: '请选择答案',
+                        btn_text: '我知道了'
                     })
                     return;
                 }
@@ -317,7 +320,7 @@
                         this.activity_result = data.data;
                         this.is_right = this.activity_result.is_right;
                     } else {
-                        this.$store.dispatch('toggleAlert', {
+                        this.toggleDialog({
                             msg: data.info
                         });
                     }
