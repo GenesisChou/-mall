@@ -178,7 +178,7 @@ Lottery.prototype = {
         this.backCtx.closePath();
         this.backCtx.font = 'Bold ' + fontSize + 'px  PingFangSc-Light';
         this.backCtx.textAlign = 'center';
-        this.backCtx.fillStyle = '#ff5004';
+        this.backCtx.fillStyle = '#ff5000';
         this.backCtx.fillText(text, this.width / 2, this.height / 2 + fontSize / 2);
         this.backCtx.restore();
     },

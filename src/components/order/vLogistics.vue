@@ -1,16 +1,14 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
     .v-logistics {
+        margin-top: pxTorem(20);
         background-color: $white;
         font-size: pxTorem(28);
-        header {
-            height: pxTorem(90);
+        .title {
             line-height: pxTorem(90);
-            padding: 0 pxTorem(100);
+            padding-left: pxTorem(70);
             border-bottom: 1px solid $gray-light;
-            label {
-                float: right;
-            }
+            color: $orange;
         }
         .main {
             li {
@@ -54,8 +52,9 @@
 <template>
     <div v-if='!is_expired' class='v-logistics'>
         <header>
-            <span>物流信息</span>
-            <label>{{message}}</label>
+            <h4 class='title'>
+                {{message}}
+            </h4>
         </header>
         <ul class='main'>
             <li v-if='is_shiped' v-for='(item,$index) in logistics_list'>
@@ -101,7 +100,7 @@
             is_shiped() {
                 return this.orderDetail.status == 3;
             },
-            is_expired(){
+            is_expired() {
                 return this.orderDetail.status == 4;
             },
             message() {

@@ -1,10 +1,5 @@
 <style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
-    .index {
-        overflow: hidden;
-        background-color: #f2f3f4;
-    }
-    
     .icon-list {
         margin-bottom: pxTorem(15);
         border-bottom: 1px solid #d3d4d6;
@@ -145,7 +140,6 @@
             <v-item v-for='item in hot_items' :item='item' type='item'></v-item>
         </main>
         <v-load-more v-if='busy'></v-load-more>
-        <v-support v-if='support_show'></v-support>
         <v-back-top></v-back-top>
     </div>
 </template>
@@ -174,7 +168,6 @@
                     pro_st: ''
                 },
                 scroll_event: '',
-                support_show: false,
             }
         },
         computed: {
@@ -199,7 +192,6 @@
             this.getHotCommend();
             this.$store.dispatch('toggleLoading');
             this.getHotItems().then(() => {
-                this.support_show = true;
                 this.$store.dispatch('toggleLoading');
             }).catch(() => {
                 this.$store.dispatch('toggleLoading');

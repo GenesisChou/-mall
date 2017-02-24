@@ -9,12 +9,10 @@
     -webkit-justify-content:center;
     height:pxTorem(110);
     color:#a0a7ad;
-    background-color:#f2f3f4;
     .logo{
         width:pxTorem(60);
         height:pxTorem(35);
         margin-right:pxTorem(15);
-        transform:translateY(-5%);
     }
 }
 </style>

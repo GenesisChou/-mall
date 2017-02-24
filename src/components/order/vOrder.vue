@@ -1,9 +1,7 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
     .v-order {
-        margin-bottom: pxTorem(20);
-        border-bottom: 1px solid #f2f3f4;
-        background-color: $white;
+        border-bottom: 1px solid $gray-light;
     }
 
     .v-order-header {
@@ -11,8 +9,10 @@
         line-height: pxTorem(76);
         font-size: pxTorem(24);
         color: #646565;
+        background-color: $white;
         .iconfont {
             font-size: pxTorem(30);
+            margin-right:pxTorem(12);
         }
     }
 
@@ -22,8 +22,9 @@
         display: -webkit-flex;
         -webkit-align-items: center;
         height: pxTorem(155);
-        border-top: 1px solid #f2f3f4;
+        border-top: 1px solid $gray-light;
         padding: 0 pxTorem(30);
+        background-color: $white;
         .pic {
             width: pxTorem(160);
             height: pxTorem(120);
@@ -58,7 +59,7 @@
 <template>
     <div class='v-order'>
         <header class='v-order-header'>
-            <i class='iconfont  icon-order-unsolved'></i> 订单号：{{id}}
+            <i class='iconfont  icon-order'></i> 订单号：{{id}}
         </header>
         <main class='v-order-main'>
             <img class='pic' :src='img' />

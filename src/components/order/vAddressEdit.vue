@@ -1,86 +1,80 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
     .edit-address {
-        height: pxTorem(800);
-        background: $white;
+        display: flex;
+        flex-direction: column;
+        display: -webkit-flex;
+        -webkit-flex-direction: column;
+        height: pxTorem(640);
+        background: $gray-light;
         .header {
             text-align: center;
-            line-height: pxTorem(135);
-            margin: 0 pxTorem(53);
+            line-height: pxTorem(114);
             border-bottom: 1px solid $gray-light;
+            color: #3d4244;
+            background-color: $white;
         }
         .main {
+            flex: 1;
+            -webkit-flex: 1;
             padding: 0 pxTorem(53);
-            margin-top: pxTorem(80);
+            margin-bottom: pxTorem(30);
             list-style: none;
-            >li {
+            background-color: $white;
+            li {
+                display: flex;
+                align-items: center;
+                display: -webkit-flex;
+                -webkit-align-items: center;
+                height: pxTorem(95);
                 overflow: hidden;
+                border-bottom: 1px solid $gray-light;
+                &:last-child {
+                    border-bottom: none;
+                }
             }
-            >li:nth-child(2) {
+            li.address {
+                .form-control {
+                    position: relative;
+                }
+                .iconfont {
+                    position:absolute;
+                    right:pxTorem(13);
+                    top:pxTorem(13);
+                    font-size:0.2rem;
+                    font-weight:bold;
+                    color:$sliver;
+                }
                 input {
-                    float: left;
                     width: pxTorem(150);
-                    margin-right: pxTorem(10);
-                    &:nth-child(4) {
-                        margin-right: 0;
+                }
+                .form-control:last-child{
+                    .iconfont{
+                        right:pxTorem(-10);
                     }
                 }
             }
             label {
-                float: left;
                 width: pxTorem(150);
-                height: pxTorem(70);
-                line-height: pxTorem(70);
-                font-size: pxTorem(30);
-                text-align: left;
+                font-size: pxTorem(32);
+                color: #646565;
             }
             input {
-                width: pxTorem(470);
-                height: pxTorem(70);
-                line-height: pxTorem(70);
-                box-sizing: border-box;
-                color: $gray;
+                flex: 1;
+                -webkit-flex: 1;
+                color: #646565;
+                background: none;
                 border: 0;
-                font-size: pxTorem(26);
-                border-bottom: 1px solid $gray-light;
-                transition-duration: .5s;
-                &:focus {
-                    border-bottom: 1px solid $red;
-                }
-            }
-            .address {
-                input {
-                    width: 100%;
-                }
-            }
-            textarea {
-                width: pxTorem(470);
-                height: pxTorem(110);
-                margin-top: pxTorem(8);
-                line-height: pxTorem(50);
-                font-size: pxTorem(26);
-                border: 0;
-                border-bottom: 1px solid $gray-light;
-                color: $gray;
-                transition-duration: .5s;
-                &:focus {
-                    border-bottom: 1px solid $red;
-                }
+                font-size: pxTorem(28);
             }
         }
         .footer {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: pxTorem(158);
-            line-height: pxTorem(158);
-            padding: 0 pxTorem(73);
+            padding: pxTorem(20) 0;
             text-align: center;
-            button {
-                width: 100%;
-                height: pxTorem(80);
-                line-height: pxTorem(80);
+            background-color: $white;
+            .btn {
+                width: pxTorem(690);
+                height: pxTorem(72);
                 text-indent: pxTorem(12);
                 letter-spacing: pxTorem(12);
             }
@@ -121,7 +115,7 @@
             }
             .radio.active {
                 box-shadow: none;
-                border: pxTorem(10) solid $red;
+                border: pxTorem(10) solid $orange;
             }
         }
     }
@@ -139,22 +133,32 @@
                         <input id='contact' placeholder="收货人姓名" v-model='receive_infor.contact'>
                     </li>
                     <li>
+                        <label for='phone'>联系电话</label>
+                        <input id='phone' type='tel' placeholder="手机或固定电话" v-model='receive_infor.phone'>
+                    </li>
+                    <li class='address'>
                         <label for='province'>选择地址</label>
-                        <input id='province' @click='showAreaList("province")' placeholder="请选择省" v-model='receive_infor.province' readonly>
-                        <input @click='showAreaList("city")' id='city' placeholder="请选择市" v-model='receive_infor.city' readonly>
-                        <input @click='showAreaList("country")' id='country' placeholder="请选择区县" v-model='receive_infor.country' readonly>
+                        <div class='form-control'>
+                            <input id='province' @click='showAreaList("province")' placeholder="请选择省" v-model='receive_infor.province' readonly>
+                            <i v-if='!receive_infor.province' class=' iconfont icon-arrows-down'></i>
+                        </div>
+                        <div class='form-control'>
+                            <input @click='showAreaList("city")' id='city' placeholder="请选择市" v-model='receive_infor.city' readonly>
+                            <i v-if='!receive_infor.city' class=' iconfont icon-arrows-down'></i>
+                        </div>
+                        <div class='form-control'>
+                            <input @click='showAreaList("country")' id='country' placeholder="请选择区县" v-model='receive_infor.country' readonly>
+                            <i v-if='!receive_infor.country' class=' iconfont icon-arrows-down'></i>
+                        </div>
                     </li>
                     <li>
                         <label for='address'>详细地址</label>
-                        <textarea id='address' v-model='receive_infor.address' placeholder="请输入详细地址"></textarea>
-                    </li>
-                    <li>
-                        <label for='phone'>手机号码</label>
-                        <input id='phone' type='tel' placeholder="手机或固定电话" v-model='receive_infor.phone'>
+                        <input id='address' placeholder="请输入详细地址" v-model='receive_infor.address'>
                     </li>
                 </ul>
+                <div class='space'></div>
                 <footer class='footer'>
-                    <button class='btn btn-red' @click.prevent='save'>保存</button>
+                    <button class='btn btn-orange' @click.prevent='save'>保存</button>
                 </footer>
             </form>
         </v-popup>

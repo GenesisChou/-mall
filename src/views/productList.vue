@@ -6,18 +6,22 @@
         z-index: 1;
         background-color: $gray-light;
     }
-    
-    .fill {
-        height: pxTorem(100);
-    }
+    .space{
+        height:pxTorem(100);
+    } 
     
     .sort {
+        display:flex;
+        align-items:center;
+        display:-webkit-flex;
+        -webkit-align-items:center;
+        height: pxTorem(105);
         border-top: 1px solid $gray-light;
         border-bottom: 1px solid $gray-light;
-        height: pxTorem(105);
-        line-height: pxTorem(105);
-        >li {
-            width: 50%;
+        background-color:$white;
+        >div {
+            flex:1;
+            -webkit-flex:1;
             text-align: center;
             font-size:pxTorem(36);
             &:nth-child(1) {
@@ -51,25 +55,24 @@
         <div class='search-box'>
             <v-search :search='searchProduct'  v-model='params.sword'></v-search>
         </div>
-        <div class='fill'></div>
-        <ul class='sort list-inline'>
-            <li @click='sortByIntegral'>
+        <div class='space'></div>
+        <section class='sort'>
+            <div @click='sortByIntegral'>
                 <span :class='[sort_type!="count"&&sort_type?"active":""]'>消耗积分排序</span>
                 <div class='arrows'>
                     <i :class='["icon-arrows-up","iconfont",sort_type=="integral-up"?"active":""]'></i>
                     <i :class='["icon-arrows-down","iconfont",sort_type=="integral-down"?"active":""]'></i>
                 </div>
-            </li>
-            <li :class='[sort_type=="count"?"active":""]' @click='sortByCount'>
+            </div>
+            <div :class='[sort_type=="count"?"active":""]' @click='sortByCount'>
                 兑换量优先
-            </li>
-        </ul>
+            </div>
+        </section>
         <router-link :to='{name:"product_detail",query:{product_id:product.id,integral:product.integral>>0}}' v-for='product in product_list'
             tag='div'>
             <v-list-item :title='product.name' :title-dupty='~~product.integral+"积分"' :img='product.pic_thumb' color='red'></v-list-item>
             </router-link>
             <v-load-more v-if='busy'></v-load-more>
-            <v-support v-if='support_show'></v-support>
             <v-back-top></v-back-top>
     </div>
 </template>
@@ -96,7 +99,6 @@
                 },
                 sort_type: '',
                 scroll_event: '',
-                support_show: false
             };
         },
         computed: {
@@ -114,7 +116,6 @@
         created() {
             this.$store.dispatch('toggleLoading');
             this.getProductList().then(() => {
-                this.support_show = true;
                 this.$store.dispatch('toggleLoading');
             }).catch(() => {
                 this.$store.dispatch('toggleLoading');

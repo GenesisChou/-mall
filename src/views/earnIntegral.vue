@@ -20,7 +20,7 @@
                 font-weight: bold;
                 color: $white;
                 span {
-                    color: #ff5004;
+                    color: $orange;
                     font-size: pxTorem(30);
                 }
             }
@@ -94,10 +94,10 @@
         .circle.white {
             box-shadow: 0 pxTorem(3) pxTorem(5) rgba(193, 63, 7, 0.51);
             background-color: $white;
-            color: #ff5004;
+            color: $orange;
             h1 {
                 font-size: pxTorem(44);
-                border-bottom: 1px solid #ff5004;
+                border-bottom: 1px solid $orange;
             }
         }
         .circle.red {
@@ -105,7 +105,7 @@
             font-weight: 500;
             color: $white;
             box-shadow: 0 pxTorem(3) pxTorem(5) rgba(193, 63, 7, 0.75);
-            background-color: #ff5004;
+            background-color: $orange;
         }
     }
     
@@ -137,7 +137,7 @@
             color: $white;
             &.active {
                 .circle {
-                    background-color: #ff5004;
+                    background-color: $orange;
                 }
             }
         }
@@ -149,7 +149,7 @@
             margin-top: pxTorem(-6);
             width: pxTorem(100);
             height: pxTorem(12);
-            background-color: #ff5004;
+            background-color: $orange;
             z-index: 2;
         }
         .circle {
@@ -183,7 +183,7 @@
             margin-right: pxTorem(20);
         }
         h2 {
-            color: #ff5004;
+            color: $orange;
         }
         h6 {
             color: #a78179;
@@ -201,7 +201,7 @@
         padding-left: pxTorem(35);
         font-size: pxTorem(28);
         span {
-            color: #ff5004;
+            color: $orange;
         }
     }
     
@@ -276,7 +276,6 @@
                 <v-mission :article='article' :callback='readArticle'></v-mission>
             </li>
         </ul>
-        <v-support></v-support>
     </div>
 </template>
 <script>

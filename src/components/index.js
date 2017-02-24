@@ -1,22 +1,18 @@
 import vLoadMore from 'components/vLoadMore.vue';
-import vSupport from 'components/vSupport.vue';
 import vDivider from 'components/vDivider.vue';
 import vListItem from 'components/vListItem.vue';
 import vModal from 'components/vModal.vue';
 import vPopup from 'components/vPopup.vue';
 import vSimditor from 'components/vSimditor.vue';
 import vSpinner from 'components/vSpinner.vue';
-import vSticky from 'components/vSticky.vue';
 import vBackTop from 'components/vBackTop.vue';
 module.exports = {
     vLoadMore,
-    vSupport,
     vDivider,
     vListItem,
     vModal,
     vPopup,
     vSimditor,
     vSpinner,
-    vSticky,
     vBackTop
 }

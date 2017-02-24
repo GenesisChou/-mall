@@ -1,20 +1,10 @@
 <style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
     .order-list {
-        display: flex;
-        flex-direction: column;
-        display: -webkit-flex;
-        -webkit-flex-direction: column;
-        width: 100%;
         min-height: 100%;
         padding-top: pxTorem(20);
-        background-color: #f2f3f4;
     }
-
-    .content {
-        flex: 1;
-    }
-
+    
     .tabs {
         display: flex;
         display: -webkit-flex;
@@ -37,7 +27,7 @@
             list-style: none;
             position: relative;
             &.active {
-                color: #ff5000;
+                color: $orange;
                 &:before {
                     content: '';
                     position: absolute;
@@ -45,7 +35,7 @@
                     bottom: 0;
                     width: 65%;
                     height: pxTorem(4);
-                    background-color: #ff5000;
+                    background-color: $orange;
                 }
             }
         }
@@ -64,11 +54,11 @@
             position: absolute;
             right: pxTorem(50);
             top: pxTorem(10);
-            color: #ff5000;
+            color: $orange;
             border-radius: 50%;
             text-align: center;
             box-sizing: content-box;
-            border: pxTorem(3) solid #ff5000;
+            border: pxTorem(3) solid $orange;
             background-color: #ffffff;
             font-size: pxTorem(24);
             transform: scale(0.8);
@@ -76,45 +66,43 @@
             z-index: 1;
         }
     }
-
+    
     .v-order {
         &:active {
             background-color: darken($white, 2%);
         }
     }
-
+    
     .v-order-footer {
         padding-left: pxTorem(30);
+        margin-bottom: pxTorem(20);
         line-height: pxTorem(66);
-        border-top: 1px solid #f2f3f4;
+        border-top: 1px solid $gray-light;
         border-bottom: 1px solid #d3d4d6;
-        color: #ff5000;
+        color: $orange;
+        background-color: $white;
     }
 </style>
 <template>
     <div class='order-list'>
-        <div class='content'>
-            <ul class='tabs'>
-                <li v-for='(tab,$index) in tabs' @click='switchTab($index+1)' :class='{active:$index+1==current_tab}'>
-                    <i :class='["iconfont",getIconType($index)]'></i>
-                    <h6>{{tab.name}}</h6>
-                    <span class='badage' v-if='$index==0&&user.unfinished_order_count>0'>{{user.unfinished_order_count}}</span>
-                </li>
-            </ul>
-            <ul>
-                <router-link v-for='order in order_list[current_type]' :to='{name:"order_detail",
+        <ul class='tabs'>
+            <li v-for='(tab,$index) in tabs' @click='switchTab($index+1)' :class='{active:$index+1==current_tab}'>
+                <i :class='["iconfont",getIconType($index)]'></i>
+                <h6>{{tab.name}}</h6>
+                <span class='badage' v-if='$index==0&&user.unfinished_order_count>0'>{{user.unfinished_order_count}}</span>
+            </li>
+        </ul>
+        <ul>
+            <router-link v-for='order in order_list[current_type]' :to='{name:"order_detail",
                         query:{order_id:parseInt(order.id)}}' tag='li'>
-                    <v-order :img='order.product_pic' :id='order.orderid' :integral='order.integral>>0' :name='order.product'>
-                        <h6 class='v-order-footer'>
-                            {{order.tips}}
-                        </h6>
-                    </v-order>
-                </router-link>
-            </ul>
-
-        </div>
+                <v-order :img='order.product_pic' :id='order.orderid' :integral='order.integral>>0' :name='order.product'>
+                    <h6 class='v-order-footer'>
+                        {{order.tips}}
+                    </h6>
+                </v-order>
+            </router-link>
+        </ul>
         <v-load-more v-if='busy'></v-load-more>
-        <v-support></v-support>
         <v-back-top></v-back-top>
     </div>
 </template>
@@ -193,8 +181,24 @@
         beforeRouteEnter(to, from, next) {
             //当从订单详情返回至订单列表时绑定滚动事件
             next(vm => {
-                if (from.name == 'order_detail') {
-                    window.addEventListener('scroll', vm.scroll_events[vm.current_type]);
+                window.addEventListener('scroll', vm.scroll_events[vm.current_type]);
+                if (from.name == 'index') {
+                    let tab = vm.current_tab,
+                        type = vm.current_type;
+                    vm.$store.dispatch('toggleLoading');
+                    vm.getOrderList(tab, vm.params[type]).then((data) => {
+                        vm.$store.dispatch('toggleLoading');
+                        let p = data.data.p,
+                            total = data.data.total;
+                        vm.params[type].total = total;
+                        vm.order_list[type] = vm.order_list[type].concat(data.data.list);
+                        if (total > p) {
+                            vm.busy = true;
+                        }
+                    }).catch((data) => {
+                        vm.$store.dispatch('toggleLoading');
+                    })
+
                 }
             })
         },

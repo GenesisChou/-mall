@@ -3,52 +3,56 @@
     .header {
         height: pxTorem(400);
         position: relative;
-        img {
-            width: 100%;
-            height: 100%;
-        }
         .cover {
+            display: flex;
+            align-items: center;
+            display: -webkit-flex;
+            -webkit-align-items: center;
             position: absolute;
             left: 0;
             right: 0;
             bottom: 0;
             height: pxTorem(100);
-            line-height: pxTorem(100);
             padding-left: pxTorem(55);
             background: rgba(0, 0, 0, .5);
-            color:$white;
+            color: $white;
         }
-    }
-    
-    .fill {
-        height: pxTorem(150);
     }
     
     .main {
-        padding: 0 pxTorem(50);
-        .introduction {
-            margin-top: pxTorem(50);
-            .title {
-                padding: pxTorem(30) 0;
-            }
-        }
+        min-height: pxTorem(825);
+        padding: pxTorem(50);
+        background-color: $white;
     }
     
-    .footer {
-        height: pxTorem(100);
-        line-height: pxTorem(100);
+    .sticky {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-top: 1px solid $gray-light;
+        background-color: $white;
+        height: pxTorem(110);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        display: -webkit-flex;
+        -webkit-align-items: center;
+        -webkit-justify-content: space-between;
         padding-left: pxTorem(55);
-        button {
-            padding: 0;
+        z-index: 1;
+        a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            display: -webkit-flex;
+            -webkit-align-items: center;
+            -webkit-justify-content: center;
             width: pxTorem(180);
-            height: pxTorem(101);
-            line-height: pxTorem(101);
-            margin-top: pxTorem(-1);
+            height: pxTorem(110);
             font-size: pxTorem(30);
             text-indent: pxTorem(12);
             letter-spacing: pxTorem(12);
-            border: 0;
-            border-radius: 0;
         }
         .integral {
             color: $red
@@ -57,42 +61,37 @@
             color: $white;
             background-color: #838385;
             letter-spacing: 0;
-            text-indent: pxTorem(0);
+            text-indent: 0;
         }
     }
 </style>
 <template>
     <div class='product-detail'>
         <header v-show='content_show' class='header '>
-            <img :src='product_detail.pic_banner' />
+            <img class='img-responsive' :src='product_detail.pic_banner' />
             <h1 class='cover text-ellipsis'>
                 {{product_name}}
             </h1>
         </header>
         <article v-show='content_show' class='main '>
-            <div class='introduction'>
-                <v-simditor>
-                    <template v-if='product_detail.content'>
-                        <v-divider text='详细说明'></v-divider>
-                        <div v-html='product_detail.content'></div>
-                    </template>
-                    <template v-if='product_detail.content_use'>
-                        <v-divider text='使用说明'></v-divider>
-                        <div v-html='product_detail.content_use'></div>
-                    </template>
-                </v-simditor>
-            </div>
-            <div class='fill'></div>
+            <v-simditor>
+                <template v-if='product_detail.content'>
+                    <v-divider text='详细说明'></v-divider>
+                    <div v-html='product_detail.content'></div>
+                </template>
+                <template v-if='product_detail.content_use'>
+                    <v-divider text='使用说明'></v-divider>
+                    <div v-html='product_detail.content_use'></div>
+                </template>
+            </v-simditor>
         </article>
-        <v-sticky>
-            <footer class='footer '>
-                <h4 class='pull-left'>
-                    单价：<span class='integral'>{{integral}}</span>积分
-                </h4>
-                <button v-if='integral_enough' class='btn-red pull-right' @click='exchange'>兑换</button>
-                <button v-else class='btn-disable pull-right'>积分不足</button>
-            </footer>
-        </v-sticky>
+        <footer class='sticky'>
+            <h4 class='pull-left'>
+                单价：<span class='integral'>{{integral}}</span>积分
+            </h4>
+            <a v-if='integral_enough' class='btn-red pull-right' @click='exchange'>兑换</a>
+            <a v-else class='btn-disable pull-right'>积分不足</a>
+        </footer>
     </div>
 </template>
 <script>

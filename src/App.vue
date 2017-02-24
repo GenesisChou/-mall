@@ -1,27 +1,41 @@
 <style lang='scss'>
     @import './assets/scss/iconfont.css';
     @import './assets/scss/main.scss';
+    #app {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: $gray-light;
+    }
+    .app-content {
+        flex: 1;
+    }
 </style>
 <template>
     <div id="app">
-        <keep-alive exclude='myAccount,activityDetail,editUser'>
-            <router-view></router-view>
-        </keep-alive>
+        <div class="app-content">
+            <keep-alive exclude='myAccount,activityDetail,editUser'>
+                <router-view></router-view>
+            </keep-alive>
+        </div>
         <v-alert></v-alert>
         <v-confirm> </v-confirm>
         <v-loading></v-loading>
+        <v-support></v-support>
     </div>
 </template>
 <script>
     import vLoading from 'components/vLoading.vue';
     import vAlert from 'components/vAlert.vue';
     import vConfirm from 'components/vConfirm.vue';
+    import vSupport from 'components/vSupport.vue';
     export default {
         name: 'app',
         components: {
             vLoading,
             vAlert,
-            vConfirm
+            vConfirm,
+            vSupport
         },
         created() {
             this.$store.dispatch('getUserInfor', (response) => {

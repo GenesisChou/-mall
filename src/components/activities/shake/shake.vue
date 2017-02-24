@@ -3,6 +3,7 @@
     .v-shake {
         position: relative;
         padding-bottom: pxTorem(84);
+        background-color:$white;    
     }
 
     .banner {

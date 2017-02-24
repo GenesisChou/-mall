@@ -63,7 +63,7 @@
             color: #a9aaae;
         }
         .integral {
-            color: #ff5000;
+            color: $orange;
             border-bottom: 1px solid #d3d4d6;
             padding-top: pxTorem(3);
             padding-bottom: pxTorem(12);

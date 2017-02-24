@@ -1,9 +1,5 @@
 <style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
-    .my-account {
-        height: 100%;
-    }
-    
     .header {
         position: relative;
         height: pxTorem(288);
@@ -41,11 +37,13 @@
         }
     }
     
-.block-text {
-    height: pxTorem(100);
-    line-height: pxTorem(100);
-    text-align: center;
-}
+    .block-text {
+        height: pxTorem(100);
+        line-height: pxTorem(100);
+        text-align: center;
+        background-color:$white;
+    }
+    
     .record-list {
         position: absolute;
         top: pxTorem(388);
@@ -135,7 +133,6 @@
                 </div>
                 <span class='pull-right'>{{item.point|pointFormat}} </span>
             </li>
-            <v-support v-if='support_show'></v-support>
         </ul>
         <v-modal v-model='modal'>
             <div class='modal-content'>
@@ -165,7 +162,6 @@
                     media_id: APP.MEDIA_ID,
                 },
                 integral_list: [],
-                support_show: false
             }
         },
         filters: {
@@ -180,10 +176,7 @@
             }
         },
         mounted() {
-            this.support_show = false;
-            this.getIntegralList().then(() => {
-                this.support_show = true;
-            });
+            this.getIntegralList();
             let list = this.$refs.list,
                 scroll = true;
             list.addEventListener('scroll', utils.debounce(() => {

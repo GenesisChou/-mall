@@ -1,22 +1,7 @@
 <style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
-    .order-detail {
-        min-height: 100%;
-        background-color: #f2f3f4;
-        overflow: hidden;
-        .v-order {
-            border: 0;
-            margin-bottom: 0;
-        }
-    }
-
-    .space {
-        width: 100%;
-        height: pxTorem(20);
-        background-color: #f2f3f4;
-    }
-
     .ticket {
+        margin-top: pxTorem(20);
         padding: pxTorem(20) 0;
         position: relative;
         height: pxTorem(177);
@@ -24,6 +9,7 @@
         background-size: pxTorem(748) pxTorem(167);
         background-position: 0 pxTorem(10);
         background-color: $white;
+        border-bottom: 1px solid #d3d4d6;
         span {
             position: absolute;
             top: 50%;
@@ -34,19 +20,22 @@
             -webkit-transform: translateY(-50%);
         }
     }
-
+    
     .take-goods {
+        margin-top: pxTorem(20);
+        background-color: $white;
+        border-bottom: 1px solid #d3d4d6;
         h5 {
             padding-left: pxTorem(30);
             line-height: pxTorem(76);
-            color: #ff5000;
-            border-bottom: 1px solid #f2f3f4;
+            color: $orange;
+            border-bottom: 1px solid $gray-light;
             .iconfont {
                 font-size: pxTorem(30);
             }
         }
     }
-
+    
     .take-goods-script {
         position: absolute;
         right: pxTorem(30);
@@ -54,80 +43,104 @@
         width: pxTorem(223);
         height: pxTorem(126);
     }
-
+    
     .introduction,
     .announcement {
         padding: 0 pxTorem(30);
+        margin-top: pxTorem(20);
+        background-color: $white;
+        border-bottom: 1px solid #d3d4d6;
         h3 {
             line-height: pxTorem(76);
             color: #646565;
-            border-bottom: 1px solid #f2f3f4;
+            border-bottom: 1px solid $gray-light;
         }
         .content {
             padding: pxTorem(20) 0;
         }
     }
-
+    
     .introduction {
         padding-bottom: pxTorem(20);
     }
-
-
-
-
+    
     .single-button {
-        padding: pxTorem(20) pxTorem(75);
+        padding: pxTorem(20) 0;
+        text-align: center;
         .btn {
-            width: 100%;
-            height: pxTorem(80);
-            line-height: pxTorem(80);
-            display: block;
-            text-align: center;
-            color: $white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            display: -webkit-flex;
+            -webkit-align-items: center;
+            -webkit-justify-content: center;
+            width: pxTorem(517);
+            height: pxTorem(72);
+            margin: 0 auto;
+            color:$white;
         }
     }
-
-    .address-selected {
-        display: flex;
-        display: -webkit-flex;
-        align-items: center;
-        -webkit-align-items: center;
-        position: relative;
-        padding: pxTorem(55) pxTorem(70) pxTorem(55) 0;
-        font-size: pxTorem(28);
-        border-top: 1px solid $gray-light;
-        border-bottom: 1px solid $gray-light;
-        overflow: hidden;
+    
+    .address-box {
         background-color: $white;
-        .location {
-            padding: 0 pxTorem(35);
-        }
-        .arrows {
-            position: absolute;
-            right: pxTorem(15);
-            top: 50%;
-            transform: translateY(-50%);
-            -webkit-transform: translateY(-50%);
-        }
-        .address-content {
-            line-height: pxTorem(55);
-            label {
-                margin-right: pxTorem(10);
+        background-image: url('../assets/images/border.png');
+        background-size: pxTorem(744) pxTorem(4);
+        background-position: center bottom;
+        background-repeat: no-repeat;
+        .content {
+            display: flex;
+            align-items: center;
+            display: -webkit-flex;
+            -webkit-align-items: center;
+            height: pxTorem(164);
+            padding: 0 pxTorem(30);
+            margin-top: pxTorem(20);
+            .address-content {
+                flex: 1;
+                -webkit-flex: 1;
+                padding: 0 pxTorem(10);
+                label {
+                    margin-right: pxTorem(10);
+                }
+            }
+            .address-detail {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+            &.active {
+                color: $orange;
             }
         }
-        .address-detail {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
-        .iconfont {
-            font-size: pxTorem(36);
+    }
+    
+    .address-box.no-address {
+        .content {
+            .plus {
+                width: pxTorem(80);
+                height: pxTorem(80);
+                border-radius: pxTorem(10);
+                background-color: $orange;
+                background-image: url('../assets/images/plus.png');
+                background-size: pxTorem(43) pxTorem(43);
+                background-position: center center;
+                background-repeat: no-repeat;
+            }
+            .address-content {
+                padding-left: pxTorem(50);
+                color: #646565;
+                font-size: pxTorem(32);
+            }
+            .arrows {
+                color: $orange;
+                font-size: pxTorem(36);
+                font-weight: bold;
+            }
         }
     }
-
-
+    
     .input-box {
         padding: pxTorem(30);
         form {
@@ -178,7 +191,7 @@
             background-color: $gray;
         }
     }
-
+    
     input[type="text"]:disabled {
         background-color: $gray-light;
     }
@@ -191,14 +204,11 @@
             <template v-if='is_virtual'>
                 <!--商品为优惠券时 -->
                 <template v-if='product_type==1||product_type==6'>
-                    <div class='space'></div>
                     <section class='ticket'>
                         <span v-if='product_type==1'> {{order_detail.ticket_id}} </span>
                         <span v-if='product_type==6'> {{product_detail.ticket_id}} </span>
                     </section>
-
                 </template>
-                <div class='space'></div>
                 <!-- 使用说明 -->
                 <section v-if='product_detail.content_use' class='introduction'>
                     <h3>使用说明</h3>
@@ -208,7 +218,6 @@
                         </v-simditor>
                     </div>
                 </section>
-                <div class='space'></div>
                 <!-- 重要声明 -->
                 <section class='announcement'>
                     <h3>重要声明</h3>
@@ -220,7 +229,7 @@
                     </div>
                 </section>
                 <div v-if='product_type==5' class='single-button'>
-                    <a class='btn btn-red' :href='product_detail.url'> 前往使用 </a>
+                    <a class='btn btn-orange' :href='product_detail.url'> 前往使用 </a>
                 </div>
             </template>
             <!-- 商品为实物时 -->
@@ -230,43 +239,47 @@
                     <!-- 无地址 -->
                     <template v-if='order_detail.status==1&&!address_list.length'>
                         <v-address-edit :show='popup_edit' :toggle-popup='toggleEdit'></v-address-edit>
-                        <div class='single-button'>
-                            <button class='btn btn-red' @click='toggleEdit'>+ 请填写收货地址</button>
-                        </div>
+                        <section class='address-box no-address'>
+                            <div class='content'  @click='toggleEdit'>
+                                <div class='plus'> </div>
+                                <span class='address-content'>新增收货地址</span>
+                                <div class='arrows'>
+                                    <i class='iconfont icon-arrows-right'></i>
+                                </div>
+                            </div>
+                        </section>
                     </template>
                     <!-- 有地址 -->
                     <template v-else>
-                        <section class='address-selected ' @click='toggleSelect'>
-                            <div class='location pull-left'>
-                                <i class='iconfont icon-location '></i>
-                            </div>
-                            <div class='address-content clearfix'>
-                                <p>
-                                    <span> <label>收货信息:</label>{{default_address.contact}}</span>
-                                    <span class='pull-right'>{{default_address.phone}}</span>
-                                </p>
-                                <p class='address-detail'>
-                                    <label>收货地址:</label> {{default_address.province}} {{default_address.city}} {{default_address.country}}
-                                    {{default_address.address}}
-                                </p>
-                                <div v-if='!order_checked' class='arrows'>
-                                    <i class='iconfont icon-arrows-right'></i>
+                        <section class='address-box'>
+                            <div :class='["content",{active:!order_checked}]'  @click='toggleSelect' >
+                                <div class='location'>
+                                    <i class='iconfont icon-location '></i>
                                 </div>
+                                <div class='address-content '>
+                                    <h4>
+                                        <span><label>收货信息:</label>{{default_address.contact}}</span>
+                                        <span class='pull-right'>{{default_address.phone}}</span>
+                                    </h4>
+                                    <h4 class='address-detail'>
+                                        <label>收货地址:</label> {{default_address.province}} {{default_address.city}} {{default_address.country}}
+                                        {{default_address.address}}
+                                    </h4>
+                                </div>
+                            </div>
+                            <div v-if='!order_checked' class='single-button'>
+                                <button class='btn btn-orange' @click='updateOrderAddress'>确认地址</button>
                             </div>
                         </section>
                         <!-- 物流信息 -->
                         <!-- status!=1时为已确认地址 -->
                         <v-logistics v-if='order_detail.status!=1' :order-detail='order_detail'></v-logistics>
-                        <div v-if='!order_checked' class='single-button'>
-                            <button class='btn btn-red' @click='updateOrderAddress'>确认地址</button>
-                        </div>
                         <v-address-select :show='popup_select' :toggle-popup='toggleSelect' :default-id='default_address.id>>0'></v-address-select>
                     </template>
                 </template>
                 <!-- 取货类型为自取时 -->
                 <template v-if='send_type==2'>
                     <img v-if='order_detail.status==3' class='take-goods-script' src="../assets/images/takeGoods.png" alt="">
-                    <div class=' space '></div>
                     <!-- 取货 -->
                     <section class='take-goods'>
                         <h5> <i class='iconfont icon-location'></i> 取货地址: {{order_detail.take_address}} </h5>
@@ -281,7 +294,6 @@
                             </form>
                         </main>
                     </section>
-                    <div class='space'></div>
                     <!-- 领取说明 -->
                     <section v-if='product_detail.content_use' class='introduction'>
                         <h3>领取说明</h3>
@@ -291,7 +303,6 @@
                             </v-simditor>
                         </div>
                     </section>
-                    <div class='space'></div>
                     <!-- 重要声明 -->
                     <section class='announcement'>
                         <h3>重要声明</h3>
@@ -305,7 +316,6 @@
                 </template>
             </template>
         </v-order>
-        <v-support></v-support>
     </div>
 </template>
 <script>
@@ -334,7 +344,6 @@
                 loaded: false,
                 take_wordh: '',
                 content_show: false,
-                confirm_show:false
             };
         },
         computed: {
@@ -444,26 +453,32 @@
             },
             //确认订单地址
             updateOrderAddress() {
-                this.$store.dispatch('toggleLoading');
-                this.$http.post(`${APP.HOST}/update_order_address/${this.order_id}`, {
-                    token: APP.TOKEN,
-                    userid: APP.USER_ID,
-                    id: this.default_address.id
-                }).then((response) => {
-                    let data = response.data;
-                    this.$store.dispatch('toggleLoading');
-                    if (data.status == APP.SUCCESS) {
-                        this.getOrderDetail();
-                    } else {
-                        this.$store.dispatch('toggleAlert', {
-                            msg: data.info
+                this.$store.dispatch('toggleConfirm',{
+                    msg:'确认收货地址',
+                    callback:()=>{
+                        this.$store.dispatch('toggleLoading');
+                        this.$http.post(`${APP.HOST}/update_order_address/${this.order_id}`, {
+                            token: APP.TOKEN,
+                            userid: APP.USER_ID,
+                            id: this.default_address.id
+                        }).then((response) => {
+                            let data = response.data;
+                            this.$store.dispatch('toggleLoading');
+                            if (data.status == APP.SUCCESS) {
+                                this.getOrderDetail();
+                            } else {
+                                this.$store.dispatch('toggleAlert', {
+                                    msg: data.info
+                                })
+                            }
+                        }, (response) => {
+                            this.$store.dispatch('toggleLoading');
                         })
                     }
-                }, (response) => {
-                    this.$store.dispatch('toggleLoading');
 
                 })
-            },
+
+             },
             //领取订单
             takeGoods() {
                  this.$store.dispatch('toggleConfirm', {

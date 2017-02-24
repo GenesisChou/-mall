@@ -2,11 +2,15 @@
     @import '../../assets/scss/variable.scss';
     .v-integral-box {
         li {
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            display:-webkit-flex;
+            -webkit-align-items:center;
+            -webkit-justify-content:center;
             width: pxTorem(44);
             height: pxTorem(54);
             margin-left: pxTorem(10);
-            line-height: pxTorem(54);
-            text-align: center;
             color: $white;
             font-size: pxTorem(34);
             border-radius: pxTorem(10);

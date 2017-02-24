@@ -1,8 +1,13 @@
 <style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
     .v-load-more {
-        padding-top:pxTorem(30);
-        text-align: center;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        display:-webkit-flex;
+        -webkit-align-items:center;
+        -webkit-justify-content:center;
+        height:pxTorem(80);    
         color:#a0a7ad;
     }
 </style>

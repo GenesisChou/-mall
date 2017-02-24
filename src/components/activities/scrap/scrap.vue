@@ -82,7 +82,7 @@
         line-height: pxTorem(78);
         box-shadow: 0 pxTorem(5) pxTorem(8) 1px rgba(215, 65, 0, 0.75);
         border-radius: pxTorem(10);
-        background-color: #ff5004;
+        background-color: $orange;
         text-align: center;
         font-size: pxTorem(36);
         color: $white;
@@ -99,7 +99,7 @@
         .number {
             padding: 0 pxTorem(5);
             font-size: pxTorem(30);
-            color: #ff5004;
+            color: $orange;
         }
     }
 

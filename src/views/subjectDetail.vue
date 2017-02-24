@@ -43,7 +43,6 @@
                 </router-link>
             </template>
         </main>
-        <v-support></v-support>
         <v-back-top></v-back-top>
     </div>
 </template>

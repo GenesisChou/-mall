@@ -34,7 +34,7 @@
             margin-top: pxTorem(-25);
             border-radius: pxTorem(10);
             font-size: pxTorem(24);
-            background-color: #ff5004;
+            background-color: $orange;
             color: $white;
             &.read {
                 background-color: #4dd3d6;

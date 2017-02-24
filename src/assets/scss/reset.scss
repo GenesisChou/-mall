@@ -15,6 +15,9 @@ input,
 textarea {
     font-family: 'PingFangSc-Light', 'Source Sans Pro', 'Helvetica Neue','Microsoft Yahei' ,Arial, sans-serif;
 }
+input:-webkit-autofill{
+    background:none;
+}
 
 div,
 span,

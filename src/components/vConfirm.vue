@@ -45,7 +45,7 @@
             letter-spacing: pxTorem(12);
         }
         .btn-right {
-            color: #ff5000;
+            color: $orange;
         }
     }
 </style>

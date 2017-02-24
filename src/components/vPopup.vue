@@ -13,9 +13,9 @@
             position: absolute;
             right: 0;
             top: 0;
-            height: pxTorem(135);
-            line-height: pxTorem(135);
             padding-right: pxTorem(20);
+            padding-top: pxTorem(20);
+            color:$orange;
         }
         .bg-cover {
             position: fixed;
@@ -27,8 +27,7 @@
             z-index: 1;
         }
         .iconfont{
-            font-size:pxTorem(36);
-            font-weight:bold;
+            font-size:pxTorem(40);
         }
     }
 </style>
@@ -36,7 +35,7 @@
     <div class='v-popup'>
         <transition name='popup'>
             <div v-show='show' class='v-popup-content' >
-                <i class='close-popup iconfont icon-error' @click='close()'></i>
+                <i class='close-popup iconfont icon-close-circle' @click='close'></i>
                 <slot></slot>
             </div>
         </transition>
