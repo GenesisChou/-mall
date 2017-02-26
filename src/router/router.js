@@ -26,44 +26,89 @@ const router = new VueRouter({
         }, {
             path: '/product_detail',
             name: 'product_detail',
-            component: require('views/productDetail.vue')
+            // component: require('views/productDetail.vue')
+            component: resolve => {
+                require.ensure(['views/productDetail.vue'], () => {
+                    resolve(require('views/productDetail.vue'))
+                })
+            },
         },
         {
             path: '/activity_detail',
             name: 'activity_detail',
-            component: require('views/activityDetail.vue')
+            // component: require('views/activityDetail.vue')
+            component: resolve => {
+                require.ensure(['views/activityDetail.vue'], () => {
+                    resolve(require('views/activityDetail.vue'))
+                })
+            },
         }, {
             path: '/my_account',
             name: 'my_account',
-            component: require('views/myAccount.vue')
+            // component: require('views/myAccount.vue')
+            component: resolve => {
+                require.ensure(['views/myAccount.vue'], () => {
+                    resolve(require('views/myAccount.vue'))
+                })
+            },
 
         }, {
             path: '/order_list',
             name: 'order_list',
-            component: require('views/orderList.vue')
+            // component: require('views/orderList.vue')
+            component: resolve => {
+                require.ensure(['views/orderList.vue'], () => {
+                    resolve(require('views/orderList.vue'))
+                })
+            },
         }, {
             path: '/order_detail',
             name: 'order_detail',
-            component: require('views/orderDetail.vue')
+            // component: require('views/orderDetail.vue')
+            component: resolve => {
+                require.ensure(['views/orderDetail.vue'], () => {
+                    resolve(require('views/orderDetail.vue'))
+                })
+            },
         }, {
             path: '/subject_detail',
             name: 'subject_detail',
-            component: require('views/subjectDetail.vue')
+            // component: require('views/subjectDetail.vue')
+            component: resolve => {
+                require.ensure(['views/subjectDetail.vue'], () => {
+                    resolve(require('views/subjectDetail.vue'))
+                })
+            },
         },
         {
             path: '/earn_integral',
             name: 'earn_integral',
-            component: require('views/earnIntegral.vue')
+            // component: require('views/earnIntegral.vue')
+            component: resolve => {
+                require.ensure(['views/earnIntegral.vue'], () => {
+                    resolve(require('views/earnIntegral.vue'))
+                })
+            },
         },
         {
             path: '/edit_user',
             name: 'edit_user',
-            component: require('views/editUser.vue')
+            // component: require('views/editUser.vue')
+            component: resolve => {
+                require.ensure(['views/editUser.vue'], () => {
+                    resolve(require('views/editUser.vue'))
+                })
+            },
         },
         {
             path: '/test',
             name: 'test',
-            component: require('views/test.vue')
+            // component: require('views/test.vue')
+            component: resolve => {
+                require.ensure(['views/test.vue'], () => {
+                    resolve(require('views/test.vue'))
+                })
+            },
         },
         {
             path: '*',

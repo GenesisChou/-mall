@@ -69,7 +69,7 @@ function startApp(cache) {
     let VueResource = require('vue-resource');
     let store = require('./vuex/store.js');
     let FastClick = require('fastclick');
-    let setWeChatConfig=require('libs/weChatConfig.js');
+    let setWeChatConfig = require('libs/weChatConfig.js');
     APP.TOKEN = cache.TOKEN;
     APP.USER_ID = cache.USER_ID;
     APP.MEDIA_ID = cache.MEDIA_ID;

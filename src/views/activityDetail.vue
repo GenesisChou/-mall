@@ -38,7 +38,6 @@
                 activity_id: '',
                 activity_detail: '',
                 free_times: '',
-                activity_type: '',
                 dialog_show: false,
                 dialog: {}
             }

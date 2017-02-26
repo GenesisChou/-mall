@@ -18,12 +18,13 @@ var webpackConfig = {
             options: {
                 // vue-loader options go here
                 loaders: {
-                    // extra style file
+                    /*
                     scss: ExtractTextPlugin.extract({
                         loader: ['css-loader', 'sass-loader'],
                         fallbackLoader: 'style-loader' // <- this is a dep of vue-loader, so no need to explicitly install if using npm3
                     }),
-                    // sass:'style-loader!css-loader!sass-loader'
+                    */
+                    scss:'style-loader!css-loader!sass-loader'
                 }
             }
         }, {
@@ -73,7 +74,7 @@ var webpackConfig = {
         host: '0.0.0.0'
     },
     plugins: [
-        new ExtractTextPlugin('style.css'),
+        // new ExtractTextPlugin('style.css'),
         new webpack.ProvidePlugin({
             utils: path.resolve(__dirname, './src/libs/utils.js')
         }),

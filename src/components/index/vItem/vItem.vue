@@ -156,7 +156,6 @@
                 }
             }
         },
-
         methods: {
             router() {
                 if (this.type == 'commend') {

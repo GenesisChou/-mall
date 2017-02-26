@@ -286,7 +286,7 @@
                     return;
                 }
                 if (!this.game_loaded) {
-                    this.$store.dispatch('toggleAlert', {
+                    this.toggleDialog( {
                         msg: '请等待游戏完全载入'
                     });
                     return;
