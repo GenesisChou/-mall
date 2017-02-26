@@ -13,7 +13,7 @@
     </div>
 </template>
 <script>
-    import vDialog from 'components/activities/vDialog.vue';
+    import vDialog from 'components/activities/vDialog';
     import {
         quiz,
         scrap,

@@ -85,7 +85,7 @@ function startApp(cache) {
     new Vue({
         el: '#app',
         render: h => h(require('./APP.vue')),
-        router: require('libs/router.js'),
+        router: require('./router'),
         store
     });
 }

@@ -88,7 +88,7 @@
 <template>
     <div class='fortune'>
         <header>
-            <img class='banner' v-if='!activityDetail.pic_banner' :src='activityDetail.pic_banner'>
+            <img class='banner' v-if='activityDetail.pic_banner' :src='activityDetail.pic_banner'>
             <img class='banner' v-else src='./images/fortuneDefaultBanner.png'>
         </header>
         <main>
@@ -159,9 +159,9 @@
     </div>
 </template>
 <script>
-    import vDescribeTitle from '../vDescribeTitle.vue';
+    import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
-    import vAwordBox from '../vAwordBox.vue';
+    import vAwordBox from '../vAwordBox';
     export default {
         name: 'fortune',
         components: {

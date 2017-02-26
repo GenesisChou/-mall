@@ -161,7 +161,7 @@
 <template>
     <div class='v-quiz '>
         <header>
-            <img class='banner' v-if='!activityDetail.pic_banner' :src='activityDetail.pic_banner'>
+            <img class='banner' v-if='activityDetail.pic_banner' :src='activityDetail.pic_banner'>
             <img class='banner' v-else src='./images/quizDefaultBanner.png'>
         </header>
         <template v-for='(item,$index) in activityDetail.questions'>
@@ -208,9 +208,9 @@
     </div>
 </template>
 <script>
-    import vDescribeTitle from '../vDescribeTitle.vue';
+    import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
-    import vAwordBox from '../vAwordBox.vue';
+    import vAwordBox from '../vAwordBox';
     export default {
         name: 'quiz',
         components: {

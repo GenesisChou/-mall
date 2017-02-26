@@ -80,7 +80,7 @@
         .editor-style {
             padding-top: pxTorem(20);
             padding-bottom: pxTorem(40);
-            color: #ad0406 !important;
+            color: #ad0406;
         }
     }
 
@@ -105,7 +105,7 @@
 <template>
     <div class='v-shake '>
         <header>
-            <img class='banner' v-if='!activityDetail.pic_banner' :src='activityDetail.pic_banner'>
+            <img class='banner' v-if='activityDetail.pic_banner' :src='activityDetail.pic_banner'>
             <img class='banner' v-else src='./images/shakeDefaultBanner.png'>
         </header>
         <main class='shake-panel'>
@@ -148,9 +148,9 @@
     </div>
 </template>
 <script>
-    import vDescribeTitle from '../vDescribeTitle.vue';
+    import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
-    import vAwordBox from '../vAwordBox.vue';
+    import vAwordBox from '../vAwordBox';
     export default {
         name: 'shake',
         components: {

@@ -1,9 +1,13 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
+    .game-detail{
+        min-height:pxTorem(1215);
+        background-color:$white;
+    }
     .game {
-        position:relative;
+        position: relative;
         width: 100%;
-        height:pxTorem(400);
+        height: pxTorem(400);
     }
     
     .start {
@@ -42,30 +46,72 @@
         -webkit-transform: translateX(-50%);
         z-index: 2;
     }
+    
+    .describe {
+        padding: pxTorem(50) pxTorem(40) 0 pxTorem(40);
+        .editor-style {
+            padding-top: pxTorem(20);
+            padding-bottom: pxTorem(40);
+        }
+    }
+    
+    .describe.red {
+        .editor-style {
+            color: #ad0406;
+        }
+    }
+    .describe.green{
+        .editor-style{
+            color: #6a3c05;
+        }
+    }
 </style>
 <template>
-    <div class='game' :style='bg_img'>
-        <canvas id="canvas"></canvas>
-        <template v-if='state=="ready"'>
-            <div class='start' @click='startGame'></div>
-            <div class='cover'></div>
-            <div class='free-time-message'>{{notice}}</div>
-        </template>
+    <div class='game-detail' v-if='game'>
+        <main class='game' :style='bg_img' ref='container'>
+            <canvas id="canvas"></canvas>
+            <template v-if='state=="ready"'>
+                <div class='start' @click='startGame'></div>
+                <div class='cover'></div>
+                <div class='free-time-message'>{{notice}}</div>
+            </template>
+        </main>
+        <article v-if='state=="ready"' :class='["describe",color]'>
+            <v-describe-title text='详细说明' :color='color'></v-describe-title>
+            <v-simditor>
+                <section v-html='activityDetail.content'></section>
+            </v-simditor>
+            <v-describe-title text='概率说明' :color='color'></v-describe-title>
+            <v-simditor>
+                <section v-html='activityDetail.content_prob'></section>
+            </v-simditor>
+            <v-describe-title text='奖项列表' :color='color'></v-describe-title>
+        </article>
+        <footer v-if='state=="ready"'>
+            <v-aword-box :awords='activityDetail.items' :color='color'></v-aword-box>
+        </footer>
     </div>
 </template>
 <script>
     // import './game.js';
+    import vDescribeTitle from '../vDescribeTitle';
+    import vAwordBox from '../vAwordBox';
     export default {
-        components: {},
+        components: {
+            vDescribeTitle,
+            vAwordBox
+        },
         props: {
             freshFreeTimes: Function,
             activityDetail: Object,
             id: Number,
             notice: String,
-            toOrderDetail: Function
+            toOrderDetail: Function,
+            toggleDialog:Function
         },
         data() {
             return {
+                name: '',
                 game_id: '',
                 game: '',
                 state: '',
@@ -78,6 +124,33 @@
                 activity_result: {}
             }
         },
+        computed: {
+            color() {
+                let colors = [{
+                            name: '逝去的青春',
+                            color: 'red'
+                        }, {
+                            name: '棍子忍者',
+                            color: 'green'
+                        },
+                        {
+                            name: '开心消消乐',
+                            color: 'green'
+                        },
+                        {
+                            name: '逝去的青春',
+                            color: 'red'
+                        },
+                    ],
+                    color = 'red';
+                colors.forEach(item => {
+                    if (item.name === this.name) {
+                        color = item.color;
+                    }
+                })
+                return color;
+            },
+        },
         watch: {
             state(value) {
                 if (value == 'start') {
@@ -89,7 +162,7 @@
                     });
                 } else if (value == 'stop') {
                     AIR.Game.stopGame();
-                    this.$store.dispatch('toggleAlert', this.alert);
+                    this.toggleDialog(this.alert);
                 }
             },
             game_id(value) {
@@ -105,7 +178,7 @@
                      * 三消游戏  ：   r3FEflzD
                      * 棍子忍者  ：   uWr5e32D
                      */
-                    let name = data.data.name;
+                    this.name = data.data.name;
                     const game_list = [{
                             name: '开心消消乐',
                             code: 'r3FEflzD'
@@ -123,7 +196,7 @@
                         },
                     ];
                     game_list.forEach(item => {
-                        if (item.name == name) {
+                        if (item.name == this.name) {
                             this.game = item.code;
                             return;
                         }
@@ -142,20 +215,18 @@
             is_win(value) {
                 if (this.state != 'start') return;
                 let result = this.activity_result,
-                    game = this.$el,
                     old_canvas = document.getElementById('canvas'),
                     new_canvas = document.createElement('canvas');
                 new_canvas.setAttribute('id', 'canvas');
                 if (value) {
                     this.alert = {
-                        close_btn: true,
-                        type: 'img',
+                        type: 'success',
                         img: result.pic_thumb,
                         msg: '获得' + result.name,
                         callback: this.toOrderDetail(result.id),
                         callback_close: () => {
                             this.init();
-                            game.replaceChild(new_canvas, old_canvas);
+                            this.$refs.container.replaceChild(new_canvas, old_canvas);
                         },
                         btn_text: '查看'
                     };
@@ -164,7 +235,7 @@
                         msg: result.name,
                         callback: () => {
                             this.init();
-                            game.replaceChild(new_canvas, old_canvas);
+                            this.$refs.container.replaceChild(new_canvas, old_canvas);
                         }
                     }
                 }
@@ -209,7 +280,7 @@
             },
             startGame() {
                 if (!this.game) {
-                    this.$store.dispatch('toggleAlert', {
+                    this.toggleDialog({
                         msg: '该活动已下架'
                     });
                     return;
@@ -232,7 +303,7 @@
                         this.activity_result = data.data;
                         this.is_win = this.activity_result.is_win;
                     } else {
-                        this.$store.dispatch('toggleAlert', {
+                        this.toggleDialog({
                             msg: data.info
                         })
                     }

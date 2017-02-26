@@ -14,7 +14,7 @@
 <template>
     <div id="app">
         <div class="app-content">
-            <keep-alive exclude='myAccount,activityDetail,editUser'>
+            <keep-alive exclude='myAccount,activityDetail,orderDetail,editUser'>
                 <router-view></router-view>
             </keep-alive>
         </div>

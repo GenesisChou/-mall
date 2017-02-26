@@ -34,35 +34,7 @@
         position: relative;
         width: 100%;
         height: pxTorem(234);
-        .front,
-        .back {
-            transform-origin: pxTorem(117) 50%;
-            -webkit-transform-origin: pxTorem(117) 50%;
-            backface-visibility: hidden;
-            transition: ease 1.5s;
-            -webkit-transition: ease 1.5s;
-        }
-        .front {
-            transform: rotateY(0);
-            -webkit-transform: rotateY(0);
-        }
-        .back {
-            transform: rotateY(180deg);
-            -webkit-transform: rotateY(180deg);
-        }
     }
-    
-    .rotate.active {
-        .front {
-            transform: rotateY(180deg);
-            -webkit-transform: rotateY(180deg);
-        }
-        .back {
-            transform: rotateY(360deg);
-            -webkit-transform: rotateY(360deg);
-        }
-    }
-    
     .circle-button {
         display: flex;
         align-items: center;
@@ -226,18 +198,22 @@
 <template>
     <div v-if='loaded' class='earn-integral'>
         <header class='head'>
-            <div class='rotate' ref='rotate'>
-                <div v-if='user.ischecked' class='circle-button'>
-                    <div class='circle white'>
-                        <h1>已签到</h1>
-                        <h4>连续{{user.checkin_days}}天</h4>
+            <div class='rotate'>
+                <transition name='rotate'>
+                    <div v-if='user.ischecked' class='circle-button'>
+                        <div class='circle white'>
+                            <h1>已签到</h1>
+                            <h4>连续{{user.checkin_days}}天</h4>
+                        </div>
                     </div>
-                </div>
-                <div v-else class='circle-button'>
-                    <div class='circle red' @click='checkIn'>
-                        签到
+                </transition>
+                <transition name='rotate'>
+                    <div v-if='!user.ischecked' class='circle-button'>
+                        <div class='circle red' @click='checkIn'>
+                            签到
+                        </div>
                     </div>
-                </div>
+                </transition>
             </div>
             <div class='message'>
                 <h5>
@@ -256,7 +232,7 @@
                 </div>
             </div>
         </header>
-        <router-link  :to='{name:"edit_user"}' tag='div' class='edit-user'>
+        <router-link :to='{name:"edit_user"}' tag='div' class='edit-user'>
             <img :src='editUser'>
             <div>
                 <h2>填写个人资料 </h2>
@@ -334,7 +310,6 @@
         methods: {
             //签到
             checkIn() {
-                this.$refs.rotate.classList.add('active');
                 if (!this.user.ischecked) {
                     this.$store.dispatch('toggleLoading');
                     this.$http.post(`${APP.HOST}/checkin/${APP.USER_ID}`, {
@@ -345,7 +320,6 @@
                         let data = response.data;
                         this.$store.dispatch('toggleLoading');
                         if (data.status == APP.SUCCESS) {
-                            this.$refs.rotate.classList.add('active');
                             this.$store.dispatch('getUserInfor');
                         } else {
                             this.$store.dispatch('toggleAlert', {

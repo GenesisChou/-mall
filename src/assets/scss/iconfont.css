@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'iconfont';  /* project id 117685 */
-  src: url('//at.alicdn.com/t/font_3pefu3hvksqhncdi.eot');
-  src: url('//at.alicdn.com/t/font_3pefu3hvksqhncdi.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_3pefu3hvksqhncdi.woff') format('woff'),
-  url('//at.alicdn.com/t/font_3pefu3hvksqhncdi.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_3pefu3hvksqhncdi.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_htivhvu8bh85mi.eot');
+  src: url('//at.alicdn.com/t/font_htivhvu8bh85mi.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_htivhvu8bh85mi.woff') format('woff'),
+  url('//at.alicdn.com/t/font_htivhvu8bh85mi.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_htivhvu8bh85mi.svg#iconfont') format('svg');
 }
 .iconfont {
   font-family:"iconfont" !important;
@@ -26,6 +26,8 @@
 .icon-check-in:before{ content:"\e636"; }
 
 .icon-order-unsolved:before{ content:"\e60c"; }
+
+.icon-solved:before{ content:"\e61e"; }
 
 .icon-share:before{ content:"\e67e"; }
 

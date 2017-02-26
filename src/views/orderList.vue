@@ -280,7 +280,7 @@
                 this.current_tab = tab;
             },
             getIconType($index) {
-                let icon_list = ['icon-order-unsolved', 'icon-car', 'icon-order', 'icon-delete'],
+                let icon_list = ['icon-order-unsolved', 'icon-car', 'icon-solved', 'icon-delete'],
                     temp = ''
                 icon_list.forEach((name, index) => {
                     if (index == $index) {

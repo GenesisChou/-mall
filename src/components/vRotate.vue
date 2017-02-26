@@ -1,54 +1,44 @@
 <style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
-    .v-rotate {
-        width: pxTorem(300);
-        height: pxTorem(300);
-        position: relative;
-        .front {
-            position: absolute;
-            left: 0;
-            top: 0;
-            transform: rotateY(0);
-            transform-origin: pxTorem(50) 50%;
-            backface-visibility: hidden;
-            transition: 1s;
-        }
-        .back {
-            position: absolute;
-            left: 0;
-            top: 0;
-            transform: rotateY(180deg);
-            transform-origin: pxTorem(50) 50%;
-            backface-visibility: hidden;
-            transition: 1s;
-        }
+    .rotate-leave-active {
+        // -webkit-transform-origin: pxTorem(50) pxTorem(50);
+        backface-visibility: hidden;
+        transform: rotateY(180deg);
+        transition: 1s cubic-bezier(0.5, 1, 0.5, 1.3);
     }
     
-    .v-rotate.active {
-        .front {
-            transform: rotateY(180deg);
-        }
-        .back {
-            transform: rotateY(360deg);
-        }
+    .rotate-enter {
+        transform: rotateY(180deg);
+    }
+    
+    .rotate-enter-active {
+        -webkit-transform-origin: pxTorem(-50) 0;
+        backface-visibility: hidden;
+        transition: 1s cubic-bezier(0.5, 1, 0.5, 1.3);
+    }
+    
+    .rotate-enter-to {
+        transform: rotateY(360deg);
     }
 </style>
 <template>
-    <div class='v-rotate' ref='vRotate' @click='rotate'>
-        <div class='front'>
-            <slot name='front'></slot>
+    <div class='v-rotate' ref='vRotate'>
+        <transition name='rotate'>
+            <div v-if='value' class='front'>
+                <slot name='front'></slot>
+            </div>
+        </transition>
+        <transition name='rotate'>
+        <div v-if='!value' class="back">
+            <slot  name='back'></slot>
         </div>
-        <div class='back'>
-            <slot name='back'></slot>
-        </div>
+        </transition>
     </div>
 </template>
 <script>
     export default {
-        methods: {
-            rotate() {
-                this.$refs.vRotate.classList.add('active');
-            }
+        props: {
+            value: Boolean
         }
     }
 </script>

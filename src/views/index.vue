@@ -144,7 +144,7 @@
     </div>
 </template>
 <script>
-    import vSwipe from 'components/index/vSwipe.vue'
+    import vSwipe from 'components/index/vSwipe'
     import vItem from 'components/index/vItem'
     export default {
         name: 'index',

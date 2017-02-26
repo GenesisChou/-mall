@@ -1,8 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
-
-module.exports = {
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var webpackConfig = {
     entry: {
         app: './src/main.js',
         vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk', 'scriptjs', 'vue-swipe']
@@ -10,7 +9,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './dist'),
         publicPath: '/dist/',
-        filename: '[name].js'
+        filename: '[name].[hash].js'
     },
     module: {
         rules: [{
@@ -65,7 +64,8 @@ module.exports = {
             views: path.resolve(__dirname, './src/views'),
             images: path.resolve(__dirname, './src/assets/images'),
             style: path.resolve(__dirname, './src/assets/scss'),
-        }
+        },
+        extensions: ['.js', '.json', '.vue']
     },
     devServer: {
         historyApiFallback: true,
@@ -80,15 +80,13 @@ module.exports = {
         new webpack.ProvidePlugin({
             APP: path.resolve(__dirname, './src/libs/appConfig.js')
         }),
-
     ],
     // devtool: '#eval-source-map'
 };
-
 if (process.env.NODE_ENV === 'production') {
     // module.exports.devtool = '#source-map',
     // http://vue-loader.vuejs.org/en/workflow/production.html
-    module.exports.plugins = (module.exports.plugins || []).concat([
+    webpackConfig.plugins = (webpackConfig.plugins || []).concat([
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: '"production"'
@@ -102,10 +100,11 @@ if (process.env.NODE_ENV === 'production') {
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
-            filename: 'vendor.js'
+            filename: 'vendor.[hash].js'
         }),
         new webpack.LoaderOptionsPlugin({
             minimize: true
-        })
+        }),
     ]);
 }
+module.exports=webpackConfig;

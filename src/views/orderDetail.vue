@@ -21,29 +21,6 @@
         }
     }
     
-    .take-goods {
-        margin-top: pxTorem(20);
-        background-color: $white;
-        border-bottom: 1px solid #d3d4d6;
-        h5 {
-            padding-left: pxTorem(30);
-            line-height: pxTorem(76);
-            color: $orange;
-            border-bottom: 1px solid $gray-light;
-            .iconfont {
-                font-size: pxTorem(30);
-            }
-        }
-    }
-    
-    .take-goods-script {
-        position: absolute;
-        right: pxTorem(30);
-        top: pxTorem(76);
-        width: pxTorem(223);
-        height: pxTorem(126);
-    }
-    
     .introduction,
     .announcement {
         padding: 0 pxTorem(30);
@@ -67,6 +44,11 @@
     .single-button {
         padding: pxTorem(20) 0;
         text-align: center;
+        &.bg-white {
+            margin-top:pxTorem(20);
+            background-color: $white;
+            border-bottom: 1px solid #d3d4d6;
+        }
         .btn {
             display: flex;
             align-items: center;
@@ -77,7 +59,7 @@
             width: pxTorem(517);
             height: pxTorem(72);
             margin: 0 auto;
-            color:$white;
+            color: $white;
         }
     }
     
@@ -141,33 +123,50 @@
         }
     }
     
+    .take-goods {
+        margin-top: pxTorem(20);
+        background-color: $white;
+        border-bottom: 1px solid #d3d4d6;
+        h5 {
+            padding-left: pxTorem(30);
+            line-height: pxTorem(76);
+            color: $orange;
+            border-bottom: 1px solid $gray-light;
+            .iconfont {
+                font-size: pxTorem(30);
+            }
+        }
+    }
+    
     .input-box {
         padding: pxTorem(30);
         form {
-            display: flex;
-            display: -webkit-flex;
-            width: pxTorem(618);
-            height: pxTorem(75);
-            background-color: #fef6f5;
-            margin: 0 auto;
+            padding-left: pxTorem(20);
+            overflow: hidden;
         }
         .form-control {
-            flex: 1;
+            float: left;
             display: flex;
             align-items: center;
             -webkit-flex: 1;
             display: -webkit-flex;
             -webkit-align-items: center;
+            height: pxTorem(75);
+            padding-left: pxTorem(10);
             border: pxTorem(2) solid #f0c3c2;
+            background-color: #fef6f5;
+            &.disable {
+                background-color: $gray-light;
+                border: pxTorem(2) solid $gray;
+            }
         }
         label {
             color: #3d4244;
             font-size: pxTorem(32);
-            padding-left: pxTorem(20);
+            width: pxTorem(120);
         }
         input {
-            flex: 1;
-            -webkit-flex: 1;
+            width: pxTorem(300);
             background: none;
             border: none;
             text-indent: pxTorem(20);
@@ -175,14 +174,10 @@
             font-size: pxTorem(30);
         }
         .submit {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            display: -webkit-flex;
-            -webkit-align-items: center;
-            -webkit-justify-content: center;
-            width: pxTorem(165);
-            height: 100%;
+            float: left;
+            height: pxTorem(75);
+            padding: 0 pxTorem(50);
+            line-height: pxTorem(75);
             background-color: #f0c3c2;
             color: $white;
             font-size: pxTorem(34);
@@ -192,8 +187,12 @@
         }
     }
     
-    input[type="text"]:disabled {
-        background-color: $gray-light;
+    .take-goods-script {
+        position: absolute;
+        right: pxTorem(30);
+        top: pxTorem(76);
+        width: pxTorem(223);
+        height: pxTorem(126);
     }
 </style>
 <template>
@@ -228,7 +227,7 @@
                         <h5>4.凡以不正当手段（包括但不限于作弊、扰乱系统、实施网络攻击等）进行兑换，平台有权终止该次兑换。</h5>
                     </div>
                 </section>
-                <div v-if='product_type==5' class='single-button'>
+                <div v-if='product_type==5' class='single-button bg-white'>
                     <a class='btn btn-orange' :href='product_detail.url'> 前往使用 </a>
                 </div>
             </template>
@@ -240,7 +239,7 @@
                     <template v-if='order_detail.status==1&&!address_list.length'>
                         <v-address-edit :show='popup_edit' :toggle-popup='toggleEdit'></v-address-edit>
                         <section class='address-box no-address'>
-                            <div class='content'  @click='toggleEdit'>
+                            <div class='content' @click='toggleEdit'>
                                 <div class='plus'> </div>
                                 <span class='address-content'>新增收货地址</span>
                                 <div class='arrows'>
@@ -252,13 +251,13 @@
                     <!-- 有地址 -->
                     <template v-else>
                         <section class='address-box'>
-                            <div :class='["content",{active:!order_checked}]'  @click='toggleSelect' >
+                            <div :class='["content",{active:!order_checked}]' @click='toggleSelect'>
                                 <div class='location'>
                                     <i class='iconfont icon-location '></i>
                                 </div>
                                 <div class='address-content '>
                                     <h4>
-                                        <span><label>收货信息:</label>{{default_address.contact}}</span>
+                                        <span><label>收件人:</label>{{default_address.contact}}</span>
                                         <span class='pull-right'>{{default_address.phone}}</span>
                                     </h4>
                                     <h4 class='address-detail'>
@@ -285,12 +284,12 @@
                         <h5> <i class='iconfont icon-location'></i> 取货地址: {{order_detail.take_address}} </h5>
                         <main class='input-box'>
                             <form>
-                                <div class='form-control'>
-                                    <label for=' take-goods '>取货码:</label>
-                                    <input type="text" id='take-goods' v-model='take_wordh' :disabled='order_detail.status==3||order_detail.status==4'>
+                                <div :class='["form-control",{disable:order_detail.status==4}]'>
+                                    <label for='take-goods'>取货码:</label>
+                                    <input type="text" id='take-goods' placeholder='请输入' v-model='take_wordh' :disabled='order_detail.status==3||order_detail.status==4'>
                                 </div>
                                 <a v-if='order_detail.status==2' class='submit' @click='takeGoods'>确认</a>
-                                <a v-if='order_detail.status==4' class='submit disable'>已逾期</button>
+                                <a v-if='order_detail.status==4' class='submit disable'>已逾期</a>
                             </form>
                         </main>
                     </section>
@@ -320,11 +319,11 @@
 </template>
 <script>
     import vOrder from 'components/order/vOrder.vue'
-    import vLogistics from 'components/order/vLogistics.vue'
+    import vLogistics from 'components/order/vLogistics';
     import vAddressEdit from 'components/order/vAddressEdit.vue'
     import vAddressSelect from 'components/order/vAddressSelect.vue'
     export default {
-        name: 'order_detail',
+        name: 'orderDetail',
         components: {
             vOrder,
             vLogistics,
@@ -411,7 +410,7 @@
                 }
             }
         },
-        activated() {
+        created() {
             this.order_id = this.$route.query.order_id;
         },
         methods: {
@@ -453,9 +452,9 @@
             },
             //确认订单地址
             updateOrderAddress() {
-                this.$store.dispatch('toggleConfirm',{
-                    msg:'确认收货地址',
-                    callback:()=>{
+                this.$store.dispatch('toggleConfirm', {
+                    msg: '确认收货地址',
+                    callback: () => {
                         this.$store.dispatch('toggleLoading');
                         this.$http.post(`${APP.HOST}/update_order_address/${this.order_id}`, {
                             token: APP.TOKEN,
@@ -478,33 +477,33 @@
 
                 })
 
-             },
+            },
             //领取订单
             takeGoods() {
-                 this.$store.dispatch('toggleConfirm', {
+                this.$store.dispatch('toggleConfirm', {
                     msg: '点击确认后不可修改',
-                    msg_second:'请核对无误后点击确认!',
+                    msg_second: '请核对无误后点击确认!',
                     callback: () => {
                         this.$store.dispatch('toggleLoading');
-                            this.$http.post(`${APP.HOST}/take_goods/${this.order_id}`, {
-                                token: APP.TOKEN,
-                                userid: APP.USER_ID,
-                                take_word: this.take_word
-                            }).then((response) => {
-                                let data = response.data;
-                                this.$store.dispatch('toggleLoading');
-                                if (data.status == APP.SUCCESS) {
-                                    this.getOrderDetail();
-                                } else {
-                                    this.$store.dispatch('toggleAlert', {
-                                        msg: data.info
-                                    })
-                                }
-                            }, (response) => {
-                                this.$store.dispatch('toggleLoading');
-                            })
-                        }
-                     });
+                        this.$http.post(`${APP.HOST}/take_goods/${this.order_id}`, {
+                            token: APP.TOKEN,
+                            userid: APP.USER_ID,
+                            take_word: this.take_word
+                        }).then((response) => {
+                            let data = response.data;
+                            this.$store.dispatch('toggleLoading');
+                            if (data.status == APP.SUCCESS) {
+                                this.getOrderDetail();
+                            } else {
+                                this.$store.dispatch('toggleAlert', {
+                                    msg: data.info
+                                })
+                            }
+                        }, (response) => {
+                            this.$store.dispatch('toggleLoading');
+                        })
+                    }
+                });
             },
             toggleEdit() {
                 this.popup_edit = !this.popup_edit;

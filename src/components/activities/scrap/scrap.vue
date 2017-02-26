@@ -8,16 +8,16 @@
         background-position: pxTorem(0) pxTorem(-130);
         background-repeat: no-repeat;
     }
-
+    
     header {
         position: relative;
     }
-
+    
     .banner {
         width: pxTorem(750);
         height: pxTorem(400);
     }
-
+    
     .banner-cover {
         position: absolute;
         left: 0;
@@ -26,7 +26,7 @@
         height: pxTorem(61);
         z-index: 1;
     }
-
+    
     .derocation {
         position: absolute;
         left: 0;
@@ -35,7 +35,7 @@
         height: pxTorem(446);
         z-index: 2;
     }
-
+    
     main {
         position: relative;
         width: pxTorem(564);
@@ -46,7 +46,7 @@
         background-size: 100% 100%;
         background-repeat: no-repeat;
     }
-
+    
     .integral-message {
         display: flex;
         align-items: center;
@@ -58,28 +58,33 @@
         color: $white;
         font-size: pxTorem(38);
     }
-
+    
     #lotteryContainer {
         position: absolute;
         left: pxTorem(15);
         top: pxTorem(85);
     }
-
+    
     .scrap-cover {
         width: pxTorem(540);
         height: pxTorem(190);
         margin-left: pxTorem(15);
     }
-
+    
     .start {
         position: absolute;
         left: 50%;
         top: 55%;
         transform: translate(-50%, -50%);
         -webkit-transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        display: -webkit-flex;
+        -webkit-align-items: center;
+        -webkit-justify-content: center;
         width: pxTorem(227);
         height: pxTorem(78);
-        line-height: pxTorem(78);
         box-shadow: 0 pxTorem(5) pxTorem(8) 1px rgba(215, 65, 0, 0.75);
         border-radius: pxTorem(10);
         background-color: $orange;
@@ -87,7 +92,7 @@
         font-size: pxTorem(36);
         color: $white;
     }
-
+    
     .notice {
         position: absolute;
         left: 0;
@@ -102,7 +107,7 @@
             color: $orange;
         }
     }
-
+    
     .describe {
         padding: 0 pxTorem(40);
         .editor-style {
@@ -115,7 +120,7 @@
 <template>
     <div class='v-scrap'>
         <header>
-            <template v-if='!activityDetail.pic_banner'>
+            <template v-if='activityDetail.pic_banner'>
                 <img class='banner' :src='activityDetail.pic_banner'>
                 <img class='banner-cover' src='./images/bannerCover.png'>
             </template>
@@ -161,9 +166,9 @@
 </template>
 <script>
     import Lottery from './lottery.js'
-    import vDescribeTitle from '../vDescribeTitle.vue';
+    import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
-    import vAwordBox from '../vAwordBox.vue';
+    import vAwordBox from '../vAwordBox';
     export default {
         name: 'scrap',
         components: {
@@ -229,7 +234,7 @@
                     };
                 } else {
                     this.alert = {
-                        msg:'很遗憾,未中奖',
+                        msg: '很遗憾,未中奖',
                         btn_text: '再来一次',
                         callback: () => {
                             let canvas = document.getElementsByTagName('canvas');
