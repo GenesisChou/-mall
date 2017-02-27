@@ -7,8 +7,8 @@ const router = new VueRouter({
             path: '/',
             name: 'index',
             component: resolve => {
-                require.ensure(['views/index.vue'], () => {
-                    resolve(require('views/index.vue'))
+                require.ensure(['views/index'], () => {
+                    resolve(require('views/index'))
                 })
             },
             // component: require('views/index.vue')
@@ -17,8 +17,8 @@ const router = new VueRouter({
             name: 'product_list',
             // component: require('views/productList.vue')
             component: resolve => {
-                require.ensure(['views/productList.vue'], () => {
-                    resolve(require('views/productList.vue'))
+                require.ensure(['views/productList'], () => {
+                    resolve(require('views/productList'))
                 })
             },
 
@@ -28,8 +28,8 @@ const router = new VueRouter({
             name: 'product_detail',
             // component: require('views/productDetail.vue')
             component: resolve => {
-                require.ensure(['views/productDetail.vue'], () => {
-                    resolve(require('views/productDetail.vue'))
+                require.ensure(['views/productDetail'], () => {
+                    resolve(require('views/productDetail'))
                 })
             },
         },
@@ -38,8 +38,8 @@ const router = new VueRouter({
             name: 'activity_detail',
             // component: require('views/activityDetail.vue')
             component: resolve => {
-                require.ensure(['views/activityDetail.vue'], () => {
-                    resolve(require('views/activityDetail.vue'))
+                require.ensure(['views/activityDetail'], () => {
+                    resolve(require('views/activityDetail'))
                 })
             },
         }, {
@@ -47,8 +47,8 @@ const router = new VueRouter({
             name: 'my_account',
             // component: require('views/myAccount.vue')
             component: resolve => {
-                require.ensure(['views/myAccount.vue'], () => {
-                    resolve(require('views/myAccount.vue'))
+                require.ensure(['views/myAccount'], () => {
+                    resolve(require('views/myAccount'))
                 })
             },
 
@@ -57,8 +57,8 @@ const router = new VueRouter({
             name: 'order_list',
             // component: require('views/orderList.vue')
             component: resolve => {
-                require.ensure(['views/orderList.vue'], () => {
-                    resolve(require('views/orderList.vue'))
+                require.ensure(['views/orderList'], () => {
+                    resolve(require('views/orderList'))
                 })
             },
         }, {
@@ -66,8 +66,8 @@ const router = new VueRouter({
             name: 'order_detail',
             // component: require('views/orderDetail.vue')
             component: resolve => {
-                require.ensure(['views/orderDetail.vue'], () => {
-                    resolve(require('views/orderDetail.vue'))
+                require.ensure(['views/orderDetail'], () => {
+                    resolve(require('views/orderDetail'))
                 })
             },
         }, {
@@ -75,8 +75,8 @@ const router = new VueRouter({
             name: 'subject_detail',
             // component: require('views/subjectDetail.vue')
             component: resolve => {
-                require.ensure(['views/subjectDetail.vue'], () => {
-                    resolve(require('views/subjectDetail.vue'))
+                require.ensure(['views/subjectDetail'], () => {
+                    resolve(require('views/subjectDetail'))
                 })
             },
         },
@@ -85,8 +85,8 @@ const router = new VueRouter({
             name: 'earn_integral',
             // component: require('views/earnIntegral.vue')
             component: resolve => {
-                require.ensure(['views/earnIntegral.vue'], () => {
-                    resolve(require('views/earnIntegral.vue'))
+                require.ensure(['views/earnIntegral'], () => {
+                    resolve(require('views/earnIntegral'))
                 })
             },
         },
@@ -95,8 +95,8 @@ const router = new VueRouter({
             name: 'edit_user',
             // component: require('views/editUser.vue')
             component: resolve => {
-                require.ensure(['views/editUser.vue'], () => {
-                    resolve(require('views/editUser.vue'))
+                require.ensure(['views/editUser'], () => {
+                    resolve(require('views/editUser'))
                 })
             },
         },

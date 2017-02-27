@@ -28,7 +28,7 @@
     import vLoading from 'components/vLoading.vue';
     import vAlert from 'components/vAlert.vue';
     import vConfirm from 'components/vConfirm.vue';
-    import vSupport from 'components/vSupport.vue';
+    import vSupport from 'components/vSupport';
     export default {
         name: 'app',
         components: {
