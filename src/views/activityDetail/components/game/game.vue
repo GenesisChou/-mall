@@ -1,15 +1,22 @@
 <style lang='scss' scoped>
     @import '../../../../assets/scss/variable.scss';
-    .game-detail{
-        min-height:pxTorem(1215);
-        background-color:$white;
+    .game-detail {
+        min-height: pxTorem(1215);
+        background-color: $white;
     }
+    
     .game {
         position: relative;
         width: 100%;
         height: pxTorem(400);
     }
-    
+    .banner{
+        position:absolute;
+        left:0;
+        top:0;
+        width:100%;
+        height:100%;
+    }
     .start {
         position: absolute;
         left: 50%;
@@ -60,22 +67,23 @@
             color: #ad0406;
         }
     }
-    .describe.green{
-        .editor-style{
+    
+    .describe.green {
+        .editor-style {
             color: #6a3c05;
         }
     }
 </style>
 <template>
     <div class='game-detail' v-if='game'>
-        <main class='game'  ref='container'>
-            <img class='img-responsive' :src='activityDetail.pic_banner'>
-            <canvas id="canvas"></canvas>
+        <main class='game' ref='container'>
             <template v-if='state=="ready"'>
+                <img class='banner' :src='activityDetail.pic_banner'>
                 <div class='start' @click='startGame'></div>
                 <div class='cover'></div>
                 <div class='free-time-message'>{{notice}}</div>
             </template>
+            <canvas id="canvas"></canvas>
         </main>
         <article v-if='state=="ready"' :class='["describe",color]'>
             <v-describe-title text='详细说明' :color='color'></v-describe-title>
@@ -108,7 +116,7 @@
             id: Number,
             notice: String,
             toOrderDetail: Function,
-            toggleDialog:Function
+            toggleDialog: Function
         },
         data() {
             return {
@@ -282,7 +290,7 @@
                     return;
                 }
                 if (!this.game_loaded) {
-                    this.toggleDialog( {
+                    this.toggleDialog({
                         msg: '请等待游戏完全载入'
                     });
                     return;
