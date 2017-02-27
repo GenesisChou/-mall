@@ -35,6 +35,7 @@
         width: 100%;
         height: pxTorem(234);
     }
+    
     .circle-button {
         display: flex;
         align-items: center;
@@ -225,22 +226,22 @@
             </div>
             <div class='progress'>
                 <div class='line'></div>
-                <div v-for='(item,$index) in check_in_params' 
-                :class='["check-item",{active:$index==0||(user.ischecked&&$index==1)}]' 
-                :style='getCircleStyle($index)'>
+                <div v-for='(item,$index) in check_in_params' :class='["check-item",{active:$index==0||(user.ischecked&&$index==1)}]' :style='getCircleStyle($index)'>
                     <h6>{{item.integral}}</h6>
                     <div class='circle'></div>
                     <h6>{{item.day}}</h6>
                 </div>
             </div>
         </header>
-        <router-link :to='{name:"edit_user"}' tag='div' class='edit-user'>
-            <img src='./images/editUser.png'>
-            <div>
-                <h2>填写个人资料 </h2>
-                <h6>首次完善个人资料可获得积分</h6>
-            </div>
-        </router-link>
+        <template v-if='user.is_submit!= 1'>
+            <router-link :to='{name:"edit_user"}' tag='div' class='edit-user'>
+                <img src='./images/editUser.png'>
+                <div>
+                    <h2>填写个人资料 </h2>
+                    <h6>首次完善个人资料可获得积分</h6>
+                </div>
+            </router-link>
+        </template>
         <div class='space'></div>
         <ul class='article-list'>
             <li class='notice'>
@@ -283,9 +284,6 @@
         computed: {
             user() {
                 return this.$store.state.user;
-            },
-            is_submit() {
-                return this.user.is_submit == 1;
             },
             integral() {
                 if (this.check_in_params.length == 0) return 0;

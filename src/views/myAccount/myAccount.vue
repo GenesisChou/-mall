@@ -35,11 +35,11 @@
             right: pxTorem(20);
             font-style: normal;
         }
-        .edit-user{
-            padding:0 pxTorem(20);
-            color:$white;
-            background-color:$red;
-            border-radius:pxTorem(10);
+        .edit-user {
+            padding: 0 pxTorem(20);
+            color: $white;
+            background-color: $red;
+            border-radius: pxTorem(10);
         }
     }
     
@@ -47,7 +47,7 @@
         height: pxTorem(100);
         line-height: pxTorem(100);
         text-align: center;
-        background-color:$white;
+        background-color: $white;
     }
     
     .record-list {
@@ -118,9 +118,11 @@
             <div class='message'>
                 <p>{{user.nickname}}</p>
                 <p>积分: {{user.integral>>0}}</p>
-                <router-link :to='{name:"edit_user"}' tag='div'>
-                    <a class='edit-user'>完善资料赚积分</a>
-                </router-link>
+                <template v-if='user.is_submit!= 1'>
+                    <router-link :to='{name:"edit_user"}' tag='div'>
+                        <a class='edit-user'>完善资料赚积分</a>
+                    </router-link>
+                </template>
             </div>
             <i class='earn-integral' @click='toggleModal()'>
                 赚取积分?
