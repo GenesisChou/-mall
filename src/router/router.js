@@ -133,6 +133,11 @@ const fixList = ['index', 'product_list', 'order_list', 'subject_detail'],
         earn_integral: '赚取积分',
     }
 router.beforeEach((to, from, next) => {
+    if (!from.name) {
+        utils.setTitle(APP.TITLE);
+    } else {
+        utils.setTitle(titles[to.name])
+    }
     if (utils.isInArray(from.name, fixList)) {
         utils.setSessionStorage('position:' + from.name, utils.getScrollTop());
     }

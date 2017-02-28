@@ -25,8 +25,8 @@
     .panel-head {
         position: absolute;
         left: 50%;
-        top: -10%;
-        width: pxTorem(400);
+        top: pxTorem(-98);
+        width: pxTorem(450);
         height: pxTorem(175);
         background-image: url('./images/quizPanelHead.png');
         background-size: 100% 100%;
