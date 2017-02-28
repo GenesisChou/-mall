@@ -21,9 +21,10 @@
     .banner-cover {
         position: absolute;
         left: 0;
-        bottom: 0;
+        bottom: pxTorem(-4);
         width: pxTorem(750);
         height: pxTorem(61);
+        background:none;
         z-index: 1;
     }
     
@@ -120,8 +121,8 @@
 <template>
     <div class='v-scrap'>
         <header>
-            <template v-if='activityDetail.pic_banner'>
-                <img class='banner' :src='activityDetail.pic_banner'>
+            <template v-if='activityDetail.pic_icon'>
+                <img class='banner' :src='activityDetail.pic_icon'>
                 <img class='banner-cover' src='./images/bannerCover.png'>
             </template>
             <template v-else>

@@ -161,7 +161,7 @@
 <template>
     <div class='v-quiz '>
         <header>
-            <img class='banner' v-if='activityDetail.pic_banner' :src='activityDetail.pic_banner'>
+            <img class='banner' v-if='activityDetail.pic_icon' :src='activityDetail.pic_icon'>
             <img class='banner' v-else src='./images/quizDefaultBanner.png'>
         </header>
         <template v-for='(item,$index) in activityDetail.questions'>

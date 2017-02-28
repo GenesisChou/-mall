@@ -21,6 +21,7 @@
             width: 100%;
             overflow-x: scroll;
             white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
             &::-webkit-scrollbar {
                 display: none;
             }

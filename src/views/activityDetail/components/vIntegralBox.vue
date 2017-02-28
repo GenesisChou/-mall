@@ -2,12 +2,12 @@
     @import '../../../assets/scss/variable.scss';
     .v-integral-box {
         li {
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            display:-webkit-flex;
-            -webkit-align-items:center;
-            -webkit-justify-content:center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            display: -webkit-flex;
+            -webkit-align-items: center;
+            -webkit-justify-content: center;
             width: pxTorem(44);
             height: pxTorem(54);
             margin-left: pxTorem(10);
@@ -31,6 +31,8 @@
 </style>
 <template>
     <ul class='v-integral-box list-inline'>
+        <li v-if='million' :class='color'>{{million}}</li>
+        <li v-if='thousand' :class='color'>{{thousand}}</li>
         <li :class='color'>{{hundred}}</li>
         <li :class='color'>{{ten}}</li>
         <li :class='color'>{{one}}</li>
@@ -50,7 +52,13 @@
                 return this.integral % 100 / 10 >> 0
             },
             hundred() {
-                return this.integral / 100 >> 0;
+                return this.integral % 1000 / 100 >> 0;
+            },
+            thousand() {
+                return this.integral % 10000 / 1000 >> 0;
+            },
+            million() {
+                return this.integral % 100000 / 10000 >> 0;
             }
         }
     }

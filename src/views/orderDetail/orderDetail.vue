@@ -50,16 +50,8 @@
             border-bottom: 1px solid #d3d4d6;
         }
         .btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            display: -webkit-flex;
-            -webkit-align-items: center;
-            -webkit-justify-content: center;
             width: pxTorem(517);
             height: pxTorem(72);
-            margin: 0 auto;
-            color: $white;
         }
     }
     
@@ -228,7 +220,7 @@
                     </div>
                 </section>
                 <div v-if='product_type==5' class='single-button bg-white'>
-                    <a class='btn btn-orange' :href='product_detail.url'> 前往使用 </a>
+                    <button class='btn btn-orange' @click='useTicket(product_detail.url)' > 前往使用 </button>
                 </div>
             </template>
             <!-- 商品为实物时 -->
@@ -504,6 +496,10 @@
                         })
                     }
                 });
+            },
+            useTicket(url){
+                // event.preventDefault();
+                location.href=url;
             },
             toggleEdit() {
                 this.popup_edit = !this.popup_edit;

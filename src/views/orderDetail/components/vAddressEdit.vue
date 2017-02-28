@@ -86,6 +86,7 @@
         max-height: pxTorem(600);
         overflow: scroll;
         border-radius: pxTorem(10);
+        -webkit-overflow-scrolling: touch;
         &::-webkit-scrollbar {
             display: none;
         }
@@ -119,8 +120,7 @@
             }
         }
     }
-    
-   </style>
+</style>
 <template>
     <section class='v-address-edit'>
         <v-popup :callback='cancelEdit' :show='show' :toggle-popup='togglePopup'>

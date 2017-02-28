@@ -78,7 +78,7 @@
     <div class='game-detail' v-if='game'>
         <main class='game' ref='container'>
             <template v-if='state=="ready"'>
-                <img class='banner' :src='activityDetail.pic_banner'>
+                <img class='banner' :src='activityDetail.pic_icon'>
                 <div class='start' @click='startGame'></div>
                 <div class='cover'></div>
                 <div class='free-time-message'>{{notice}}</div>

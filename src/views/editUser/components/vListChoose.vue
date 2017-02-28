@@ -4,6 +4,7 @@
         background-color: $white;
         max-height: pxTorem(600);
         overflow: scroll;
+        -webkit-overflow-scrolling: touch;
         border-radius: pxTorem(10);
         &::-webkit-scrollbar {
             display: none;
@@ -69,14 +70,12 @@
             attribute: String,
             callback: Function,
             isActive: Function,
-            value:Boolean
+            value: Boolean
         },
         data() {
-            return {
-            }
+            return {}
         },
-        watch: {
-        },
+        watch: {},
         methods: {
             event(item) {
                 this.callback(item);

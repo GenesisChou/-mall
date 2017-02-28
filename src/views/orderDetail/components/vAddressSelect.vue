@@ -18,6 +18,7 @@
             flex: 1;
             -webkit-flex: 1;
             overflow-y: scroll;
+            -webkit-overflow-scrolling:touch;
             margin: 0 pxTorem(53);
             max-height: pxTorem(535);
             &::-webkit-scrollbar {

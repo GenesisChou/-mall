@@ -62,6 +62,7 @@ function wxLogin(media_id) {
         link += '&subject_id=' + product_id;
     }
     location.href = link;
+
 }
 
 function startApp(cache) {
@@ -82,6 +83,7 @@ function startApp(cache) {
     Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
     registerComponents(Vue);
     setWeChatConfig(Vue);
+    utils.setTitle(APP.TITLE);
     new Vue({
         el: '#app',
         render: h => h(require('./APP.vue')),

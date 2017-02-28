@@ -58,7 +58,7 @@
         bottom: 0;
         z-index: 1;
         overflow: scroll;
-        padding-top: pxTorem(30);
+        -webkit-overflow-scrolling: touch;
         background-color: $gray-light;
         &::-webkit-scrollbar {
             display: none;
@@ -118,11 +118,10 @@
             <div class='message'>
                 <p>{{user.nickname}}</p>
                 <p>积分: {{user.integral>>0}}</p>
-                <template v-if='user.is_submit!= 1'>
-                    <router-link :to='{name:"edit_user"}' tag='div'>
-                        <a class='edit-user'>完善资料赚积分</a>
-                    </router-link>
-                </template>
+                <router-link :to='{name:"edit_user"}' tag='div'>
+                    <a v-if='user.is_submit!= 1' class='edit-user'>完善资料赚积分</a>
+                    <a v-else class='edit-user'>修改资料</a>
+                </router-link>
             </div>
             <i class='earn-integral' @click='toggleModal()'>
                 赚取积分?

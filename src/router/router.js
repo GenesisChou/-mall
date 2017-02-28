@@ -100,6 +100,7 @@ const router = new VueRouter({
                 })
             },
         },
+        /*
         {
             path: '/test',
             name: 'test',
@@ -110,13 +111,13 @@ const router = new VueRouter({
                 })
             },
         },
+        */
         {
             path: '*',
             redirect: '/'
         }
     ],
 });
-utils.setTitle(APP.TITLE);
 //需要固定滚动条位置的页面
 const fixList = ['index', 'product_list', 'order_list', 'subject_detail'],
     titles = {
@@ -132,7 +133,6 @@ const fixList = ['index', 'product_list', 'order_list', 'subject_detail'],
         earn_integral: '赚取积分',
     }
 router.beforeEach((to, from, next) => {
-    utils.setTitle(titles[to.name])
     if (utils.isInArray(from.name, fixList)) {
         utils.setSessionStorage('position:' + from.name, utils.getScrollTop());
     }
