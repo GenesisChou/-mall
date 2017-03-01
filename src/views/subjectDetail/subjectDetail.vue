@@ -19,15 +19,52 @@
             display: -webkit-flex;
             align-items: center;
             -webkit-align-items: center;
-            justify-content:center;
-            -webkit-justify-content:center;
+            justify-content: center;
+            -webkit-justify-content: center;
             height: pxTorem(80);
             list-style: none;
-            background-color:$white;
+            background-color: $white;
             &.active {
                 color: $red;
             }
         }
+    }
+    
+    .v-list-item {
+        display: table;
+        width: 100%;
+        height: pxTorem(220);
+        border-bottom: 1px solid $gray-light;
+        background-color: $white;
+        .img {
+            display: table-cell;
+            width: pxTorem(280);
+            vertical-align: middle;
+            text-align: center;
+            img {
+                width: pxTorem(180);
+                height: pxTorem(140);
+            }
+        }
+        .describe {
+            display: table-cell;
+            padding-right: pxTorem(30);
+            vertical-align: middle;
+            text-align: justify;
+            h6 {
+                height: pxTorem(35);
+                line-height: pxTorem(35);
+                color: #a9aaae;
+            }
+            .integral {
+                padding-top: pxTorem(5);
+                color: $orange;
+            }
+        }
+    }
+    
+    .v-list-item:active {
+        background-color: darken($white, 5%);
     }
 </style>
 <template>
@@ -44,8 +81,20 @@
             </ul>
             <template v-for='tab in tabs'>
                 <router-link v-for='item in tab.items' :to='getRouter(item)' tag='div'>
+                    <div v-show='current_tab=="全部"||current_tab==tab.name' class='v-list-item'>
+                        <div class='img'>
+                            <img :src='item.pic' />
+                        </div>
+                        <div class='describe'>
+                            <h3 class='text-ellipsis'>{{item.name}}</h3>
+                            <h6 class='text-ellipsis'>{{item.sub_name}}</h6>
+                            <p class='integral'>{{item.integral>>0}}积分 </p>
+                        </div>
+                    </div>
+                    <!--
                     <v-list-item v-show='current_tab=="全部"||current_tab==tab.name' :title='item.name' :title-dupty='~~item.integral+"积分"' :img='item.pic'
                         color='red'></v-list-item>
+                        -->
                 </router-link>
             </template>
         </main>

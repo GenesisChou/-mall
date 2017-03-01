@@ -194,6 +194,17 @@
         li~:active {
             background-color: darken(#d0eff1, 10%);
         }
+        .empty {
+            background-color: #4dd3d6;
+            height: pxTorem(430);
+            padding-top: pxTorem(40);
+            text-align: center;
+            font-size: pxTorem(28);
+            color:$white;
+            &:active{
+                background-color:#4dd3d6;
+            }
+        }
     }
 </style>
 <template>
@@ -246,13 +257,18 @@
         <ul class='article-list'>
             <li class='notice'>
                 <p>
-                    阅读一篇文稿<span>{{read_param.integral}}</span>积分 </p>
+                    完成单个任务可获得<span>{{read_param.integral}}</span>积分 </p>
                 <p>
                     每日最多可得<span>{{read_param.day_limit}}</span>积分,今日已获得<span>{{read_param.today}}</span>积分
                 </p>
             </li>
-            <li v-for='article in article_list'>
-                <v-mission :article='article' :callback='readArticle'></v-mission>
+            <template v-if='article_list.length'>
+                <li v-for='article in article_list'>
+                    <v-mission :article='article' :callback='readArticle'></v-mission>
+                </li>
+            </template>
+            <li v-else class='empty'>
+                现在没有积分任务啦～
             </li>
         </ul>
     </div>

@@ -26,8 +26,14 @@
         }
         .message {
             float: left;
-            padding-top: pxTorem(30);
             line-height: pxTorem(50);
+            display: flex;
+            display: -webkit-flex;
+            flex-direction: column;
+            -webkit-flex-direction: column;
+            justify-content: center;
+            -webkit-justify-content: center;
+            height: pxTorem(160);
         }
         .earn-integral {
             position: absolute;
@@ -118,7 +124,7 @@
             <div class='message'>
                 <p>{{user.nickname}}</p>
                 <p>积分: {{user.integral>>0}}</p>
-                <router-link :to='{name:"edit_user"}'  tag='div'>
+                <router-link :to='{name:"edit_user"}' tag='div'>
                     <a v-if='user.is_submit!= 1' class='edit-user'>完善资料赚积分</a>
                     <a v-else class='edit-user'>修改资料</a>
                 </router-link>

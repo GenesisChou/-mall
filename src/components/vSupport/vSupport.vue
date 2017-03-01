@@ -9,16 +9,11 @@
         -webkit-justify-content: center;
         height: pxTorem(110);
         color: #a0a7ad;
-        .logo {
-            width: pxTorem(60);
-            height: pxTorem(35);
-            margin-right: pxTorem(15);
-        }
     }
 </style>
 <template>
     <h4 class='v-support'>
-        <img class='logo' src='./images/logo.png'> 由{{name}}提供技术支持
+        由{{name}}提供技术支持
     </h4>
 </template>
 <script>

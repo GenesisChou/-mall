@@ -37,10 +37,21 @@
                     height: pxTorem(4);
                     background-color: $orange;
                 }
+                .iconfont{
+                    color:$orange;
+                }
             }
         }
         .iconfont {
-            font-size: pxTorem(50);
+            font-size: pxTorem(55);
+            color:#666666;
+            &.icon-car{
+                transform:rotateY(180deg);
+                -webkit-transform:rotateY(180deg);
+            }
+        }
+        h6{
+            margin-top:pxTorem(-10);
         }
         .badage {
             display: flex;
