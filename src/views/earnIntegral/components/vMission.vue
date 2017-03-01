@@ -76,11 +76,11 @@
         methods: {
             router() {
                 event.preventDefault();
-                if (!this.is_read) {
-                    this.callback(this.id);
-                }
-                location.href = this.url;
-            }
+                this.callback(this.id).then(() => {
+                    location.href = this.url;
+                });
+            },
+
         }
     }
 </script>

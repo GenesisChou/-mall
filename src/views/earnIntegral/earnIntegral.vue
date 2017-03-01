@@ -182,9 +182,8 @@
         }
     }
     
-    
     .article-list {
-        margin-top:pxTorem(20);
+        margin-top: pxTorem(20);
         color: #a78179;
         background-color: #d0eff1;
         border-top: 1px solid #a78179;
@@ -382,17 +381,21 @@
             },
             //阅读文章
             readArticle(article_id) {
-                this.$http.post(`${APP.HOST}/read_article/${article_id}`, {
-                    token: APP.TOKEN,
-                    user_id: APP.USER_ID,
-                    media_id: APP.MEDIA_ID
-                }).then((response) => {
-                    let data = response.data;
-                    if (data.status == APP.SUCCESS) {
-                        this.$store.dispatch('getUserInfor')
-                    }
+                return new Promise(resolve => {
+                    this.$http.post(`${APP.HOST}/read_article/${article_id}`, {
+                        token: APP.TOKEN,
+                        user_id: APP.USER_ID,
+                        media_id: APP.MEDIA_ID
+                    }).then((response) => {
+                        let data = response.data;
+                        if (data.status == APP.SUCCESS) {
+                            this.$store.dispatch('getUserInfor')
+                        }
+                        if (resolve) {
+                            resolve();
+                        }
+                    })
                 })
-
             },
             getCircleStyle($index) {
                 let left = 30 + $index * 107;
