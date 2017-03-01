@@ -56,6 +56,7 @@
             position: relative;
             padding: pxTorem(90) pxTorem(60) pxTorem(40) pxTorem(60);
             font-size: pxTorem(30);
+            text-align:justify;
         }
         .number {
             position: absolute;

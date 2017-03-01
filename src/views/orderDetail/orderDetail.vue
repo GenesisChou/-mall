@@ -27,6 +27,7 @@
         margin-top: pxTorem(20);
         background-color: $white;
         border-bottom: 1px solid #d3d4d6;
+        text-align:justify;
         h3 {
             line-height: pxTorem(76);
             color: #646565;
