@@ -80,7 +80,9 @@
             width: 50%;
             text-align: center;
             label {
+                text-align:left;
                 display: block;
+                padding-left:pxTorem(37.5);
             }
         }
         input[type='radio'] {
