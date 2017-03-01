@@ -1,83 +1,84 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
+    .edit-user {
+        padding-top: pxTorem(30);
+    }
+    
     .main {
-        min-height: pxTorem(1215);
-        background-color: $white;
-        padding: 0 pxTorem(53);
-        padding-top: pxTorem(80);
+        flex: 1;
+        -webkit-flex: 1;
+        padding: 0 pxTorem(30);
         list-style: none;
-        >li {
+        background-color: $white;
+        border-bottom: 1px solid #d3d4d6;
+        li {
+            display: flex;
+            align-items: center;
+            display: -webkit-flex;
+            -webkit-align-items: center;
+            height: pxTorem(95);
             overflow: hidden;
-        }
-        .code {
-            input {
-                width: pxTorem(300);
-            }
-            button {
-                width: pxTorem(100);
-                height: pxTorem(50);
-                line-height: pxTorem(50);
-                transform: translate(pxTorem(30), pxTorem(10));
-                -webkit-transform: translate(pxTorem(30), pxTorem(10));
-            }
-        }
-        .select-address {
-            input {
-                float: left;
-                width: pxTorem(150);
-                margin-right: pxTorem(10);
-                &:nth-child(4) {
-                    margin-right: 0;
-                }
+            border-bottom: 1px solid $gray-light;
+            &:last-child {
+                align-items: flex-start;
+                -webkit-align-items: flex-start;
+                padding-top: pxTorem(22.5);
+                height: pxTorem(150);
+                border-bottom: none;
             }
         }
         label {
-            float: left;
             width: pxTorem(150);
-            height: pxTorem(70);
-            line-height: pxTorem(70);
-            font-size: pxTorem(30);
-            text-align: left;
+            font-size: pxTorem(32);
+            color: #646565;
         }
         input {
-            width: pxTorem(470);
-            height: pxTorem(70);
-            line-height: pxTorem(70);
-            box-sizing: border-box;
-            color: $gray;
+            flex: 1;
+            -webkit-flex: 1;
+            color: #646565;
+            background: none;
             border: 0;
-            font-size: pxTorem(26);
-            border-bottom: 1px solid $gray-light;
-            transition-duration: .5s;
-            &:focus {
-                border-bottom: 1px solid $red;
-            }
-        }
-        .address {
-            input {
-                width: 100%;
-            }
+            font-size: pxTorem(28);
         }
         textarea {
-            width: pxTorem(470);
-            height: pxTorem(110);
-            margin-top: pxTorem(8);
-            line-height: pxTorem(50);
-            font-size: pxTorem(26);
+            flex: 1;
+            -webkit-flex: 1;
+            font-size: pxTorem(28);
             border: 0;
-            border-bottom: 1px solid $gray-light;
-            color: $gray;
-            transition-duration: .5s;
-            &:focus {
-                border-bottom: 1px solid $red;
+            color: #646565;
+            text-align: justify;
+        }
+        .code {
+            .btn {
+                width: pxTorem(100);
             }
         }
     }
     
+    .footer {
+        padding: pxTorem(20) 0;
+        text-align: center;
+        background-color: $white;
+        .btn {
+            width: pxTorem(690);
+            height: pxTorem(72);
+            text-indent: pxTorem(12);
+            letter-spacing: pxTorem(12);
+        }
+    }
+    
     .operation {
-        padding: pxTorem(100) pxTorem(25) 0 pxTorem(150);
-        button {
-            width: pxTorem(100);
+        display: flex;
+        display: -webkit-flex;
+        -webkit-align-items: center;
+        -webkit-justify-content: center;
+        height: pxTorem(120);
+        margin-top: pxTorem(20);
+        background-color: $white;
+        border-bottom: 1px solid #d3d4d6;
+        .btn {
+            width: pxTorem(517);
+            height: pxTorem(72);
         }
     }
 </style>
@@ -91,7 +92,6 @@
                 </li>
                 <li>
                     <label for='birth'>出生年月</label>
-                    <!--<v-date-picker v-model='birthday'></v-date-picker>-->
                     <input type='date' v-model='birthday'>
                 </li>
                 <li>
@@ -100,32 +100,35 @@
                 </li>
                 <li class='code'>
                     <label for='code'>验证码</label>
-                    <input id='code' v-model='verification_code'>
-                    <button v-if='!in_vertication' class='btn btn-red' @click='getVerificationCode'>验证</button>
+                    <input id='code' v-model='verification_code' placeholder="请输入验证码">
+                    <button v-if='!in_vertication' class='btn btn-orange' @click='getVerificationCode'>验证</button>
                     <button v-else class='btn btn-gray' @click='getVerificationCode'>{{countdown}}秒</button>
                 </li>
-                <li class='select-address'>
+                <li class='address'>
                     <label for='province'>收货地址</label>
                     <v-address :address='{province,city,country}' :id='{province_id,city_id,country_id}' :change-id='changeId' :change-name='changeName'></v-address>
                 </li>
                 <li>
-                    <label for='address'></label>
-                    <textarea id='address' placeholder="请输入详细地址" v-model='address'></textarea>
-                </li>
-                <li class='operation'>
-                    <button class='btn btn-gray pull-left' @click='cancel'>取消</button>
-                    <button class='btn btn-red pull-right' @click='submit'>确认</button>
+                    <label for='address'>详细地址</label>
+                    <textarea id='address' placeholder="请填写详细地址 不少于5个字" v-model='address'></textarea>
                 </li>
             </ul>
+            <div class='operation'>
+                <button class='btn btn-orange ' @click='submit'>确认</button>
+            </div>
+
         </form>
+        <v-warn v-model='warn_show' :warn='warn'>></v-warn>
     </div>
 </template>
 <script>
+    import vWarn from './components/vWarn.vue';
     import vAddress from './components/vAddress.vue';
     export default {
         name: 'editUser',
         components: {
             vAddress,
+            vWarn
         },
         data() {
             return {
@@ -147,7 +150,9 @@
                 country_id: '',
                 in_vertication: false,
                 verification_code: '',
-                countdown: 60
+                countdown: 60,
+                warn: {},
+                warn_show: false
             }
         },
         computed: {
@@ -234,15 +239,16 @@
                     this.$store.dispatch('toggleLoading');
                     let data = response.data;
                     if (data.status == APP.SUCCESS) {
-                        this.$store.dispatch('toggleAlert', {
+                        this.toggleWarn({
                             msg: data.info,
                             btn_text: '确定',
                             callback: () => {
+                                this.$store.dispatch('getUserInfor');
                                 this.$router.go(-1)
                             }
                         })
                     } else {
-                        this.$store.dispatch('toggleAlert', {
+                        this.toggleWarn({
                             msg: data.info
                         })
                     }
@@ -274,7 +280,7 @@
                                 }
                             }, 1000)
                     } else {
-                        this.$store.dispatch('toggleAlert', {
+                        this.toggleWarn({
                             msg: data.info
                         })
                     }
@@ -298,6 +304,10 @@
                     }
                 })
             },
+            toggleWarn(warn) {
+                this.warn = warn;
+                this.warn_show = !this.warn_show;
+            }
         }
     }
 </script>

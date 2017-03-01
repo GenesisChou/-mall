@@ -1,33 +1,51 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .v-address {
-        float: left;
+        flex: 1;
+        -webkit-flex: 1;
+        display: flex;
+        display: -webkit-flex;
+        .form-control {
+            flex: 1;
+            -webkit-flex: 1;
+            position: relative;
+        }
+        .iconfont {
+            position: absolute;
+            right: pxTorem(13);
+            top: 50%;
+            font-size: pxTorem(24);
+            font-weight: bold;
+            color: $sliver;
+            transform: scale(0.7) translateY(-50%);
+            -webkit-transform: scale(0.7) translateY(-50%);
+            &.third {
+                right: 0;
+            }
+        }
         input {
-            float: left;
             width: pxTorem(150);
-            height: pxTorem(70);
-            line-height: pxTorem(70);
-            margin-right: pxTorem(10);
-            box-sizing: border-box;
-            color: $gray;
+            color: #646565;
+            background: none;
             border: 0;
-            font-size: pxTorem(26);
-            border-bottom: 1px solid $gray-light;
-            transition-duration: .5s;
-            &:focus {
-                border-bottom: 1px solid $red;
-            }
-            &:nth-child(4) {
-                margin-right: 0;
-            }
+            font-size: pxTorem(28);
         }
     }
 </style>
 <template>
     <div class='v-address'>
-        <input id='province' placeholder="请选择省" v-model='province' readonly @click='toggleProvince'>
-        <input  id='city' placeholder="请选择市" v-model='city' readonly @click='toggleCity'>
-        <input  id='country' placeholder="请选择区县" v-model='country' readonly @click='toggleCountry'>
+        <div class='form-control'>
+            <input id='province' placeholder="请选择省" v-model='province' readonly @click='toggleProvince'>
+            <i v-if='!province' class=' iconfont icon-arrows-down'></i>
+        </div>
+        <div class='form-control'>
+            <input id='city' placeholder="请选择市" v-model='city' readonly @click='toggleCity'>
+            <i v-if='!city' class=' iconfont icon-arrows-down'></i>
+        </div>
+        <div class='form-control'>
+            <input id='country' placeholder="请选择县" v-model='country' readonly @click='toggleCountry'>
+            <i v-if='!country' class=' iconfont icon-arrows-down third'></i>
+        </div>
         <v-list-choose :show='show_province' :toggle-modal='toggleProvince' :list='province_list' attribute='province' :callback='listEvent'
             :is-active='isActive'></v-list-choose>
         <v-list-choose :show='show_city' :toggle-modal='toggleCity' :list='city_list' attribute='city' :callback='listEvent' :is-active='isActive'></v-list-choose>
@@ -95,8 +113,8 @@
                     this.getCountryList(value);
                     this.changeId('country')
                     name = this.getAddressName('city', value, this.city_list);
-                }else{
-                    this.country_list=[];
+                } else {
+                    this.country_list = [];
                 }
                 this.changeName('city', name);
             },
@@ -134,7 +152,7 @@
                         userid: APP.USER_ID
                     }).then((response) => {
                         let data = response.data;
-                        this.province_list = data.data||[];
+                        this.province_list = data.data || [];
                         if (resolve) {
                             resolve();
                         }
@@ -149,7 +167,7 @@
                         userid: APP.USER_ID
                     }).then((response) => {
                         let data = response.data;
-                        this.city_list = data.data||[];
+                        this.city_list = data.data || [];
                         if (resolve) {
                             resolve();
                         }
@@ -164,7 +182,7 @@
                         userid: APP.USER_ID
                     }).then((response) => {
                         let data = response.data;
-                        this.country_list = data.data||[];
+                        this.country_list = data.data || [];
                         if (resolve) {
                             resolve();
                         }
@@ -189,8 +207,8 @@
                 this.show_city = !this.show_city;
             },
             toggleCountry() {
-                if(this.city_id){
-                this.show_country = !this.show_country;
+                if (this.city_id) {
+                    this.show_country = !this.show_country;
                 }
             }
 

@@ -36,7 +36,7 @@
             .radio.active {
                 box-shadow: none;
                 -webkit-box-shadow: none;
-                border: pxTorem(10) solid $red;
+                border: pxTorem(10) solid $orange;
             }
         }
     }

@@ -35,23 +35,25 @@
             }
             li.address {
                 .form-control {
+                    flex:1;
+                    -webkit-flex:1;
                     position: relative;
                 }
                 .iconfont {
                     position: absolute;
                     right: pxTorem(13);
-                    top: pxTorem(13);
-                    font-size: 0.2rem;
+                    top: 50%;
+                    font-size: pxTorem(24);
                     font-weight: bold;
                     color: $sliver;
+                    transform: scale(0.7) translateY(-50%);
+                    -webkit-transform: scale(0.7) translateY(-50%);
+                    &.third {
+                        right: 0;
+                    }
                 }
                 input {
                     width: pxTorem(150);
-                }
-                .form-control:last-child {
-                    .iconfont {
-                        right: pxTorem(-10);
-                    }
                 }
             }
             label {
@@ -148,8 +150,8 @@
                             <i v-if='!receive_infor.city' class=' iconfont icon-arrows-down'></i>
                         </div>
                         <div class='form-control'>
-                            <input @click='showAreaList("country")' id='country' placeholder="请选择区县" v-model='receive_infor.country' readonly>
-                            <i v-if='!receive_infor.country' class=' iconfont icon-arrows-down'></i>
+                            <input @click='showAreaList("country")' id='country' placeholder="请选择县" v-model='receive_infor.country' readonly>
+                            <i v-if='!receive_infor.country' class=' iconfont icon-arrows-down third'></i>
                         </div>
                     </li>
                     <li>
