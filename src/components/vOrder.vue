@@ -13,6 +13,7 @@
         .iconfont {
             font-size: pxTorem(30);
             margin-right:pxTorem(12);
+            vertical-align:middle;
         }
     }
 

@@ -9,15 +9,21 @@
     .tabs {
         display: flex;
         display: -webkit-flex;
+        align-items: center;
+        -webkit-align-items: center;
         border-bottom: 1px solid $gray-light;
         li {
             flex: 1;
             -webkit-flex: 1;
-            text-align: center;
+            display: flex;
+            display: -webkit-flex;
+            align-items: center;
+            -webkit-align-items: center;
+            justify-content:center;
+            -webkit-justify-content:center;
             height: pxTorem(80);
-            padding: 0 pxTorem(15);
-            line-height: pxTorem(80);
             list-style: none;
+            background-color:$white;
             &.active {
                 color: $red;
             }
@@ -124,7 +130,7 @@
                         name: "product_detail",
                         query: {
                             product_id: item.item_id,
-                            integral: item.integral>>0,
+                            integral: item.integral >> 0,
                             product_name: item.name,
                         }
                     };

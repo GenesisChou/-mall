@@ -67,12 +67,6 @@
         }
     }
     
-    .v-order {
-        &:active {
-            background-color: darken($white, 2%);
-        }
-    }
-    
     .v-order-footer {
         padding-left: pxTorem(30);
         margin-bottom: pxTorem(20);
@@ -139,7 +133,7 @@
                     name: '已逾期'
                 }],
                 busy: false,
-                has_entered:false
+                has_entered: false
             }
         },
         computed: {
@@ -150,10 +144,10 @@
         beforeRouteEnter(to, from, next) {
             //当从订单详情返回至订单列表时绑定滚动事件
             next(vm => {
-                if (from.name != 'order_detail'||!vm.has_entered) {
+                if (from.name != 'order_detail' || !vm.has_entered) {
                     vm.init();
                     vm.switchTab(1);
-                    vm.has_entered=true;
+                    vm.has_entered = true;
                 }
                 window.addEventListener('scroll', vm.scroll_events[vm.current_type]);
             })

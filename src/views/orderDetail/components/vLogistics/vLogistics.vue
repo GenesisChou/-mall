@@ -5,9 +5,9 @@
         background-color: $white;
         font-size: pxTorem(28);
         .title {
-            line-height: pxTorem(90);
-            padding-left: pxTorem(70);
-            border-bottom: 1px solid #d3d4d6;
+            line-height: pxTorem(77);
+            padding-left: pxTorem(73);
+            border-bottom: 1px solid $gray-light;
             color: $orange;
         }
         .main {
@@ -22,26 +22,41 @@
                 list-style: none;
                 height: pxTorem(120);
             }
-            .circle {
+        }
+        .circle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            display: -webkit-flex;
+            -webkit-align-items: center;
+            -webkit-justify-content: center;
+            position: relative;
+            width: pxTorem(108);
+            height: 100%;
+            .icon {
                 position: relative;
                 width: pxTorem(20);
                 height: pxTorem(20);
-                margin: 0 pxTorem(40);
                 z-index: 1;
             }
             .line {
                 position: absolute;
-                left: pxTorem(180+98/2);
-                top: pxTorem(-120/2);
+                left: 50%;
+                top: -50%;
                 width: 1px;
-                height: pxTorem(120);
+                height: 1.5rem;
                 background-color: #d3d4d6;
+                transform: translateX(-50%);
+                -webkit-transform: translateX(-50%);
                 z-index: 0;
             }
         }
         .date {
-            width: pxTorem(180);
+            width: pxTorem(170);
             text-align: right;
+            h5 {
+                padding-bottom: pxTorem(8);
+            }
         }
         .detail {
             flex: 1;
@@ -49,13 +64,12 @@
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
+            padding-right: pxTorem(30);
             color: #a9aaae;
             overflow: hidden;
             text-overflow: ellipsis;
             font-size: pxTorem(24);
-            &.active {
-                color: $red;
-            }
+            text-align: justify;
         }
     }
 </style>
@@ -81,7 +95,9 @@
                     <h5><strong>{{orderDetail.update_time | getTime}}</strong></h5>
                     <h6>{{orderDetail.update_time | getDate}}</h6>
                 </div>
-                <img class='circle' src='./images/circleArrow.png'></img>
+                <div class='circle'>
+                    <img class='icon' src='./images/circleArrow.png'></img>
+                </div>
                 <div class='detail'> 仓库正在打包，请耐心等待! </div>
             </li>
         </ul>

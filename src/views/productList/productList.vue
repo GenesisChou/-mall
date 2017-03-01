@@ -6,33 +6,34 @@
         z-index: 1;
         background-color: $gray-light;
     }
-    .space{
-        height:pxTorem(100);
-    } 
+    
+    .space {
+        height: pxTorem(100);
+    }
     
     .sort {
-        display:flex;
-        align-items:center;
-        display:-webkit-flex;
-        -webkit-align-items:center;
+        display: flex;
+        align-items: center;
+        display: -webkit-flex;
+        -webkit-align-items: center;
         height: pxTorem(105);
         border-top: 1px solid $gray-light;
         border-bottom: 1px solid $gray-light;
-        background-color:$white;
+        background-color: $white;
         >div {
-            flex:1;
-            -webkit-flex:1;
+            flex: 1;
+            -webkit-flex: 1;
             text-align: center;
-            font-size:pxTorem(36);
+            font-size: pxTorem(36);
             &:nth-child(1) {
                 position: relative;
             }
         }
-        .active{
-            color:$red;
+        .active {
+            color: $red;
         }
-        .iconfont{
-            font-weight:bold;
+        .iconfont {
+            font-weight: bold;
         }
     }
     
@@ -53,7 +54,7 @@
 <template>
     <div class='product-list'>
         <div class='search-box'>
-            <v-search :search='searchProduct'  v-model='params.sword'></v-search>
+            <v-search :search='searchProduct' v-model='params.sword'></v-search>
         </div>
         <div class='space'></div>
         <section class='sort'>
@@ -71,9 +72,9 @@
         <router-link :to='{name:"product_detail",query:{product_id:product.id,integral:product.integral>>0}}' v-for='product in product_list'
             tag='div'>
             <v-list-item :title='product.name' :title-dupty='~~product.integral+"积分"' :img='product.pic_thumb' color='red'></v-list-item>
-            </router-link>
-            <v-load-more v-if='busy'></v-load-more>
-            <v-back-top></v-back-top>
+        </router-link>
+        <v-load-more v-if='busy'></v-load-more>
+        <v-back-top></v-back-top>
     </div>
 </template>
 <script>
@@ -201,6 +202,8 @@
                     }).catch(() => {
                         this.$store.dispatch('toggleLoading');
                     });
+                } else {
+                    this.$store.dispatch('toggleLoading');
                 }
             },
             getScrollEvent() {

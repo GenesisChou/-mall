@@ -4,11 +4,14 @@
     #app {
         min-height: 100%;
         display: flex;
+        display: -webkit-flex;
         flex-direction: column;
+        -webkit-flex-direction: column;
         background-color: $gray-light;
     }
     .app-content {
         flex: 1;
+        -webkit-flex: 1;
     }
 </style>
 <template>

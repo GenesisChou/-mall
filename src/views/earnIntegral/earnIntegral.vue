@@ -1,7 +1,7 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
-    .text-red {
-        color: $red;
+    .earn-integral {
+        background-color: #4dd3d6;
     }
     
     .head {
@@ -101,9 +101,13 @@
         }
         .check-item {
             display: flex;
+            display: -webkit-flex;
             align-items: center;
+            -webkit-align-items: center;
             justify-content: space-around;
+            -webkit-justify-content: space-around;
             flex-direction: column;
+            -webkit-flex-direction: column;
             position: absolute;
             height: pxTorem(160);
             left: pxTorem(44);
@@ -178,12 +182,9 @@
         }
     }
     
-    .space {
-        height: pxTorem(15);
-        background-color: #4dd3d6;
-    }
     
     .article-list {
+        margin-top:pxTorem(20);
         color: #a78179;
         background-color: #d0eff1;
         border-top: 1px solid #a78179;

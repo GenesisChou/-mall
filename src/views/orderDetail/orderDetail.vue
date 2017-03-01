@@ -42,10 +42,13 @@
     }
     
     .single-button {
-        padding: pxTorem(20) 0;
-        text-align: center;
+        height: pxTorem(120);
+        display: flex;
+        display: -webkit-flex;
+        -webkit-align-items: center;
+        -webkit-justify-content: center;
         &.bg-white {
-            margin-top:pxTorem(20);
+            margin-top: pxTorem(20);
             background-color: $white;
             border-bottom: 1px solid #d3d4d6;
         }
@@ -61,21 +64,25 @@
         background-size: pxTorem(744) pxTorem(4);
         background-position: center bottom;
         background-repeat: no-repeat;
+        .location {
+            width: pxTorem(73);
+            padding-left: pxTorem(30);
+            .iconfont {
+                font-size: pxTorem(30);
+            }
+        }
         .content {
             display: flex;
             align-items: center;
             display: -webkit-flex;
             -webkit-align-items: center;
-            height: pxTorem(164);
-            padding: 0 pxTorem(30);
+            height: pxTorem(157);
             margin-top: pxTorem(20);
             .address-content {
                 flex: 1;
                 -webkit-flex: 1;
-                padding: 0 pxTorem(10);
-                label {
-                    margin-right: pxTorem(10);
-                }
+                padding-right: pxTorem(30);
+                overflow: hidden;
             }
             .address-detail {
                 overflow: hidden;
@@ -83,10 +90,18 @@
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
+                text-align: justify;
+                color: #646565;
             }
             &.active {
                 color: $orange;
+                .address-detail {
+                    color: $orange;
+                }
             }
+        }
+        .single-button {
+            border-top: 1px solid $gray-light;
         }
     }
     
@@ -220,7 +235,7 @@
                     </div>
                 </section>
                 <div v-if='product_type==5' class='single-button bg-white'>
-                    <button class='btn btn-orange' @click='useTicket(product_detail.url)' > 前往使用 </button>
+                    <button class='btn btn-orange' @click='useTicket(product_detail.url)'> 前往使用 </button>
                 </div>
             </template>
             <!-- 商品为实物时 -->
@@ -249,7 +264,7 @@
                                 </div>
                                 <div class='address-content '>
                                     <h4>
-                                        <span><label>收件人:</label>{{default_address.contact}}</span>
+                                        <span><label>收件人:</label> {{default_address.contact}}</span>
                                         <span class='pull-right'>{{default_address.phone}}</span>
                                     </h4>
                                     <h4 class='address-detail'>
@@ -333,7 +348,7 @@
                 popup_edit: false,
                 popup_select: false,
                 loaded: false,
-                take_code:'',
+                take_code: '',
                 content_show: false,
             };
         },
@@ -374,6 +389,7 @@
                     temp.province = this.order_detail.province;
                     temp.city = this.order_detail.city;
                     temp.country = this.order_detail.country;
+                    temp.address = this.order_detail.address;
 
                 }
                 return temp;
@@ -497,9 +513,9 @@
                     }
                 });
             },
-            useTicket(url){
+            useTicket(url) {
                 // event.preventDefault();
-                location.href=url;
+                location.href = url;
             },
             toggleEdit() {
                 this.popup_edit = !this.popup_edit;

@@ -118,7 +118,7 @@
             <div class='message'>
                 <p>{{user.nickname}}</p>
                 <p>积分: {{user.integral>>0}}</p>
-                <router-link :to='{name:"edit_user"}' tag='div'>
+                <router-link :to='{name:"edit_user"}'  tag='div'>
                     <a v-if='user.is_submit!= 1' class='edit-user'>完善资料赚积分</a>
                     <a v-else class='edit-user'>修改资料</a>
                 </router-link>

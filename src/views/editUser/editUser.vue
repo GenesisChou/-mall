@@ -1,8 +1,8 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
     .main {
-        min-height:pxTorem(1215);
-        background-color:$white;
+        min-height: pxTorem(1215);
+        background-color: $white;
         padding: 0 pxTorem(53);
         padding-top: pxTorem(80);
         list-style: none;
@@ -92,7 +92,7 @@
                 <li>
                     <label for='birth'>出生年月</label>
                     <!--<v-date-picker v-model='birthday'></v-date-picker>-->
-                    <input type='date' v-model='birthday' format="yyyy-MM-dd">
+                    <input type='date' v-model='birthday'>
                 </li>
                 <li>
                     <label for='phone'>手机号</label>
@@ -101,18 +101,19 @@
                 <li class='code'>
                     <label for='code'>验证码</label>
                     <input id='code' v-model='verification_code'>
-                    <button class='btn btn-red' @click='getVerificationCode'>验证</button>
+                    <button v-if='!in_vertication' class='btn btn-red' @click='getVerificationCode'>验证</button>
+                    <button v-else class='btn btn-gray' @click='getVerificationCode'>{{countdown}}秒</button>
                 </li>
                 <li class='select-address'>
                     <label for='province'>收货地址</label>
-                    <v-address   :address='{province,city,country}' :id='{province_id,city_id,country_id}' :change-id='changeId' :change-name='changeName'></v-address>
+                    <v-address :address='{province,city,country}' :id='{province_id,city_id,country_id}' :change-id='changeId' :change-name='changeName'></v-address>
                 </li>
                 <li>
                     <label for='address'></label>
                     <textarea id='address' placeholder="请输入详细地址" v-model='address'></textarea>
                 </li>
                 <li class='operation'>
-                    <button class='btn pull-left' @click='reset'>重置</button>
+                    <button class='btn btn-gray pull-left' @click='cancel'>取消</button>
                     <button class='btn btn-red pull-right' @click='submit'>确认</button>
                 </li>
             </ul>
@@ -144,7 +145,9 @@
                 province_id: '',
                 city_id: '',
                 country_id: '',
+                in_vertication: false,
                 verification_code: '',
+                countdown: 60
             }
         },
         computed: {
@@ -203,10 +206,11 @@
                 })
                 this.birthday = this.user.birthday;
             },
-            //重置表单
-            reset() {
+            //取消 一群傻屌
+            cancel() {
                 event.preventDefault();
-                this.$refs.form.reset();
+                this.$router.go(-1)
+                // this.$refs.form.reset();
             },
             //提交表单
             submit() {
@@ -229,9 +233,19 @@
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
                     let data = response.data;
-                    this.$store.dispatch('toggleAlert', {
-                        msg: data.info
-                    })
+                    if (data.status == APP.SUCCESS) {
+                        this.$store.dispatch('toggleAlert', {
+                            msg: data.info,
+                            btn_text: '确定',
+                            callback: () => {
+                                this.$router.go(-1)
+                            }
+                        })
+                    } else {
+                        this.$store.dispatch('toggleAlert', {
+                            msg: data.info
+                        })
+                    }
                 }, (response) => {
                     this.$store.dispatch('toggleLoading');
                 })
@@ -247,7 +261,19 @@
                     phone: this.phone
                 }).then((response) => {
                     let data = response.data;
-                    if (data.status != APP.SUCCESS) {
+                    if (data.status == APP.SUCCESS) {
+                        this.in_vertication = true;
+                        let time = 0,
+                            timer = setInterval(() => {
+                                time += 1000;
+                                this.countdown--;
+                                if (time > 60 * 1000) {
+                                    this.in_vertication = false;
+                                    this.countdown = 60;
+                                    clearInterval(timer);
+                                }
+                            }, 1000)
+                    } else {
                         this.$store.dispatch('toggleAlert', {
                             msg: data.info
                         })
