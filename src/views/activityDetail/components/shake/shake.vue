@@ -3,14 +3,14 @@
     .v-shake {
         position: relative;
         padding-bottom: pxTorem(84);
-        background-color:$white;    
+        background-color: $white;
     }
-
+    
     .banner {
         width: pxTorem(750);
         height: pxTorem(400);
     }
-
+    
     .integral-message {
         display: flex;
         align-items: center;
@@ -22,7 +22,7 @@
         color: $white;
         font-size: pxTorem(38);
     }
-
+    
     .shake-panel {
         position: absolute;
         left: 0;
@@ -34,7 +34,7 @@
         background-repeat: no-repeat;
         z-index: 1;
     }
-
+    
     .hand {
         position: absolute;
         top: 22%;
@@ -47,10 +47,10 @@
         -webkit-transform: rotate(0deg);
         -webkit-transform-origin: bottom center;
         &.active {
-            -webkit-animation: shake 1.5s  linear;
+            -webkit-animation: shake 1.5s linear;
         }
     }
-
+    
     .notice {
         position: absolute;
         bottom: pxTorem(90);
@@ -73,7 +73,7 @@
             font-size: pxTorem(44);
         }
     }
-
+    
     .describe {
         padding: 0 pxTorem(40);
         padding-top: pxTorem(800);
@@ -83,7 +83,7 @@
             color: #ad0406;
         }
     }
-
+    
     @-webkit-keyframes shake {
         0% {
             -webkit-transform: rotate(0deg);
@@ -124,7 +124,7 @@
             </div>
         </main>
         <article class='describe'>
-        <!--
+            <!--
             <h1>
                 <button class='btn' @click='start'>start</button>
             </h1>
@@ -263,13 +263,13 @@
             },
             start() {
                 if (this.state != 'ready') return;
+                this.state = 'shaking';
                 this.$http.post(`${APP.HOST}/shake_activity/${this.id}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID
                 }).then((response) => {
                     let data = response.data;
                     if (data.status == APP.SUCCESS) {
-                        this.state = 'shaking';
                         this.activity_result = data.data;
                         this.is_win = this.activity_result.is_win;
                     } else {
