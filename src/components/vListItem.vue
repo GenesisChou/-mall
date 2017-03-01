@@ -18,7 +18,9 @@
         }
         .describe {
             display: table-cell;
+            padding-right: pxTorem(30);
             vertical-align: middle;
+            text-align: justify;
             h1 {
                 overflow: hidden;
                 text-overflow: ellipsis;
