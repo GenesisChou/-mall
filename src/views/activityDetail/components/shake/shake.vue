@@ -124,7 +124,7 @@
             </div>
         </main>
         <article class='describe'>
-            <!--
+        <!--
             <h1>
                 <button class='btn' @click='start'>start</button>
             </h1>
