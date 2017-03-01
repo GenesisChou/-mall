@@ -86,7 +86,9 @@
                     <h5><strong>{{item.datetime | getTime}}</strong></h5>
                     <h6>{{item.datetime | getDate}}</h6>
                 </div>
-                <img class='circle' src='./images/circleArrow.png'></img>
+                <div class='circle'>
+                    <img class='icon' src='./images/circleArrow.png'></img>
+                </div>
                 <i v-show='$index>0' class='line'></i>
                 <div class='detail'> {{item.remark}} </div>
             </li>

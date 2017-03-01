@@ -20,6 +20,7 @@
         ul {
             width: 100%;
             overflow-x: scroll;
+            -webkit-overflow-x: scroll;
             white-space: nowrap;
             -webkit-overflow-scrolling: touch;
             &::-webkit-scrollbar {

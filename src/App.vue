@@ -7,8 +7,9 @@
         display: -webkit-flex;
         flex-direction: column;
         -webkit-flex-direction: column;
-        background-color: $gray-light;
+        background-color: #f2f3f4;
     }
+    
     .app-content {
         flex: 1;
         -webkit-flex: 1;
