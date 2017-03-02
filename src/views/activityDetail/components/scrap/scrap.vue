@@ -203,7 +203,7 @@
         },
         watch: {
             draw_percent(value) {
-                if (this.state == 'start' && value > 40) {
+                if (this.state == 'start' && value > 60) {
                     this.state = 'stop';
                 }
             },
