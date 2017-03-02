@@ -171,7 +171,7 @@ Lottery.prototype = {
         this.drawLottery();
     },
     setText(text) {
-        var fontSize = this.pxTorem(36);
+        var fontSize = this.pxTorem(32);
         this.backCtx.fillStyle = "#fff";
         this.backCtx.beginPath();
         this.backCtx.fillRect(0, 0, this.width, this.height);

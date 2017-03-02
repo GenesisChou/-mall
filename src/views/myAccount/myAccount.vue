@@ -1,117 +1,89 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
     .header {
-        position: relative;
-        height: pxTorem(288);
+        display: flex;
+        display: -webkit-flex;
+        align-items: center;
+        -webkit-align-items: center;
+        flex-direction: column;
+        -webkit-flex-direction: column;
+        justify-content: center;
+        -webkit-justify-content: center;
+        width: 100%;
+        height: pxTorem(398);
+        background-color: $white;
         background-image: url('./images/myAccountBackground.png');
         background-repeat: no-repeat;
         background-size: 100%;
-        font-size: pxTorem(30);
-        padding-top: pxTorem(64);
         color: $white;
+        text-align: center;
         .avater {
-            background-color: $white;
+            background-color: #f4f4f4;
             border-radius: 50%;
-            width: pxTorem(160);
-            height: pxTorem(160);
-            margin-left: pxTorem(134);
-            margin-right: pxTorem(30);
+            width: pxTorem(134);
+            height: pxTorem(134);
+            margin-bottom: pxTorem(10);
             overflow: hidden;
-            border: pxTorem(10) solid $white;
-            float: left;
-            img {
-                width: 100%;
-                height: 100%;
-            }
-        }
-        .message {
-            float: left;
-            line-height: pxTorem(50);
-            display: flex;
-            display: -webkit-flex;
-            flex-direction: column;
-            -webkit-flex-direction: column;
-            justify-content: center;
-            -webkit-justify-content: center;
-            height: pxTorem(160);
-        }
-        .earn-integral {
-            position: absolute;
-            top: pxTorem(20);
-            right: pxTorem(20);
-            font-style: normal;
+            border: pxTorem(6) solid #f4f4f4;
         }
         .edit-user {
-            padding: 0 pxTorem(20);
+            display: flex;
+            display: -webkit-flex;
+            align-items: center;
+            -webkit-align-items: center;
+            justify-content: center;
+            -webkit-justify-content: center;
+            width: pxTorem(217);
+            height: pxTorem(66);
+            margin-top: pxTorem(20);
             color: $white;
-            background-color: $red;
-            border-radius: pxTorem(10);
+            background-color: rgba(255, 255, 255, .35);
+            border-radius: pxTorem(33);
+            border: 1px solid $white;
         }
     }
     
     .block-text {
-        height: pxTorem(100);
-        line-height: pxTorem(100);
+        line-height: pxTorem(88);
         text-align: center;
         background-color: $white;
+        color: $orange;
+        border-bottom: 1px solid #d4d4d6;
     }
     
     .record-list {
         position: absolute;
-        top: pxTorem(388);
+        top: pxTorem(508);
         left: 0;
         right: 0;
-        bottom: 0;
+        bottom: pxTorem(110);
         z-index: 1;
+        padding: 0 pxTorem(30);
         overflow: scroll;
         -webkit-overflow-scrolling: touch;
-        background-color: $gray-light;
+        background-color: $white;
         &::-webkit-scrollbar {
             display: none;
         }
         li {
+            display: flex;
+            display: -webkit-flex;
+            align-items: center;
+            -webkit-align-items: center;
+            justify-content: space-between;
+            -webkit-justify-content: space-between;
             height: pxTorem(100);
-            padding: 0 pxTorem(38);
-            border-bottom: 1px solid #c8c8c8;
             list-style: none;
-            overflow: hidden;
-            div {
-                line-height: pxTorem(45);
-                padding-top: pxTorem(5);
-            }
-            span {
-                line-height: pxTorem(100);
-            }
+        }
+        h3 {
+            color: #646565;
         }
         h6 {
-            color: $gray;
+            color: #a9aaae;
         }
-    }
-    
-    .modal-content {
-        width: pxTorem(600);
-        padding: pxTorem(50) pxTorem(68);
-        border-radius: pxTorem(10);
-        background-color: $white;
-        header {
-            font-size: pxTorem(28);
-            line-height: 1rem;
-        }
-        footer {
-            text-align: center;
-            padding-top: pxTorem(50);
-        }
-        button {
-            height: pxTorem(80);
-            line-height: pxTorem(80);
-            width: pxTorem(300);
-        }
-        img {
-            width: pxTorem(410);
-            height: pxTorem(157);
-        }
-        .iconfont {
-            font-size: pxTorem(26);
+        span {
+            font-size: pxTorem(30);
+            color: #646565;
         }
     }
 </style>
@@ -119,45 +91,29 @@
     <div class='my-account '>
         <header class='header'>
             <div class='avater'>
-                <img :src='user.headimg'>
+                <img class='img-responsive' :src='user.headimg'>
             </div>
-            <div class='message'>
-                <p>{{user.nickname}}</p>
-                <p>积分: {{user.integral>>0}}</p>
-                <router-link :to='{name:"edit_user"}' tag='div'>
-                    <a v-if='user.is_submit!= 1' class='edit-user'>完善资料赚积分</a>
-                    <a v-else class='edit-user'>修改资料</a>
-                </router-link>
-            </div>
-            <i class='earn-integral' @click='toggleModal()'>
-                赚取积分?
-            </i>
+            <p>{{user.nickname}}</p>
+            <p>积分: {{user.integral>>0}}</p>
+            <router-link :to='{name:"edit_user"}' tag='div'>
+                <a v-if='user.is_submit!= 1' class='edit-user'>完善资料赚积分</a>
+                <a v-else class='edit-user'>修改资料</a>
+            </router-link>
         </header>
         <h4 class='block-text'>
             积分明细
         </h4>
-        <ul class='record-list' ref='list'>
-            <li v-for='item in integral_list'>
-                <div class='pull-left'>
-                    <h4>{{item.name}}</h4>
-                    <h6>
-                        {{item.create_time}}
-                    </h6>
-                </div>
-                <span class='pull-right'>{{item.point|pointFormat}} </span>
-            </li>
-        </ul>
-        <v-modal v-model='modal'>
-            <div class='modal-content'>
-                <header>
-                    您可以通过以下途径赚取积分：<br> 1.点击右上角的'...' <br> 2.选择 <i class=' icon-share iconfont '></i> 或 <i class=' icon-timeline iconfont '></i>                    即可
-                    <img src='./images/share.png'>
-                </header>
-                <footer>
-                    <button class='btn btn-red' @click='toggleModal()'>知道了</button>
-                </footer>
-            </div>
-        </v-modal>
+        <main>
+            <ul class='record-list' ref='list'>
+                <li v-for='item in integral_list'>
+                    <div class='pull-left'>
+                        <h3>{{item.name}}</h3>
+                        <h6> {{item.create_time}} </h6>
+                    </div>
+                    <span class='pull-right'>{{item.point|pointFormat}} </span>
+                </li>
+            </ul>
+        </main>
     </div>
 </template>
 <script>
@@ -165,7 +121,7 @@
         name: 'myAccount',
         data() {
             return {
-                modal: false,
+                // modal: false,
                 params: {
                     p: 1,
                     r: APP.PERPAGE,
@@ -205,9 +161,9 @@
             }, 500, 500))
         },
         methods: {
-            toggleModal() {
-                this.modal = !this.modal;
-            },
+            // toggleModal() {
+            //     this.modal = !this.modal;
+            // },
             //——获取积分明细列表
             getIntegralList() {
                 return new Promise((resolve) => {
