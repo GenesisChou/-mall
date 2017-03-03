@@ -264,7 +264,7 @@
                     每日最多可得<span>{{read_param.day_limit}}</span>积分,今日已获得<span>{{read_param.today}}</span>积分
                 </p>
             </li>
-            <template v-if='!article_list.length'>
+            <template v-if='article_list.length'>
                 <li v-for='article in article_list'>
                     <v-mission :article='article' :callback='readArticle'></v-mission>
                 </li>
