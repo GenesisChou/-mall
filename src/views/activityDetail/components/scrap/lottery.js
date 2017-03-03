@@ -48,7 +48,8 @@ Lottery.prototype = {
         radgrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
         // this.maskCtx.fillStyle = radgrad;
         this.maskCtx.fillStyle = '#fff';
-        this.maskCtx.arc(x, y, this.pxTorem(40), 0, Math.PI * 2, true);
+        // this.maskCtx.arc(x, y, this.pxTorem(40), 0, Math.PI * 2, true);
+        this.maskCtx.arc(x, y, this.pxTorem(30), 0, Math.PI * 2, true);
         this.maskCtx.fill();
         if (this.drawPercentCallback) {
             this.drawPercentCallback.call(null, this.getTransparentPercent(this.maskCtx, this.width, this.height));
@@ -171,12 +172,13 @@ Lottery.prototype = {
         this.drawLottery();
     },
     setText(text) {
-        var fontSize = this.pxTorem(32);
+        var fontSize = this.pxTorem(30);
         this.backCtx.fillStyle = "#fff";
         this.backCtx.beginPath();
         this.backCtx.fillRect(0, 0, this.width, this.height);
         this.backCtx.closePath();
-        this.backCtx.font = 'Bold ' + fontSize + 'px  PingFangSc-Light';
+        // this.backCtx.font = 'Bold ' + fontSize + 'px  PingFangSc-Light';
+        this.backCtx.font = fontSize + 'px  PingFangSc-Light';
         this.backCtx.textAlign = 'center';
         this.backCtx.fillStyle = '#ff5000';
         this.backCtx.fillText(text, this.width / 2, this.height / 2 + fontSize / 2);

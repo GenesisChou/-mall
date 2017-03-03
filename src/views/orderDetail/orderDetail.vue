@@ -1,47 +1,5 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
-    .ticket {
-        margin-top: pxTorem(20);
-        padding: pxTorem(20) 0;
-        position: relative;
-        height: pxTorem(177);
-        background-image: url('./images/ticket.png');
-        background-size: pxTorem(748) pxTorem(167);
-        background-position: 0 pxTorem(10);
-        background-color: $white;
-        border-bottom: 1px solid #d3d4d6;
-        span {
-            position: absolute;
-            top: 50%;
-            left: 40%;
-            color: #646565;
-            font-size: pxTorem(30);
-            transform: translateY(-50%);
-            -webkit-transform: translateY(-50%);
-        }
-    }
-    
-    .introduction,
-    .announcement {
-        padding: 0 pxTorem(30);
-        margin-top: pxTorem(20);
-        background-color: $white;
-        border-bottom: 1px solid #d3d4d6;
-        text-align:justify;
-        h3 {
-            line-height: pxTorem(76);
-            color: #646565;
-            border-bottom: 1px solid $gray-light;
-        }
-        .content {
-            padding: pxTorem(20) 0;
-        }
-    }
-    
-    .introduction {
-        padding-bottom: pxTorem(20);
-    }
-    
     .single-button {
         height: pxTorem(120);
         display: flex;
@@ -210,31 +168,11 @@
             <!--商品为虚拟物品时 -->
             <template v-if='is_virtual'>
                 <!--商品为优惠券时 -->
-                <template v-if='product_type==1||product_type==6'>
-                    <section class='ticket'>
-                        <span v-if='product_type==1'> {{order_detail.ticket_id}} </span>
-                        <span v-if='product_type==6'> {{product_detail.ticket_id}} </span>
-                    </section>
-                </template>
+                <v-ticket v-if='product_type==1||product_type==6' :type='product_type' :order-detail='order_detail' :product-detail='product_detail'></v-ticket>
                 <!-- 使用说明 -->
-                <section v-if='product_detail.content_use' class='introduction'>
-                    <h3>使用说明</h3>
-                    <div class='content'>
-                        <v-simditor>
-                            <article v-if='product_detail.content_use' v-html='product_detail.content_use'> </article>
-                        </v-simditor>
-                    </div>
-                </section>
+                <v-introduction v-if='product_detail.content_use' title='使用说明' :content='product_detail.content_use'></v-introduction>
                 <!-- 重要声明 -->
-                <section class='announcement'>
-                    <h3>重要声明</h3>
-                    <div class='content'>
-                        <h5>1.除商品本身不能正常兑换外，商品一经兑换，积分概不退还，请用户在兑换前仔细阅读使用规则、使用说明、有效期等重要信息； </h5>
-                        <h5>2.除活动流程出现异常外，奖品一经发放，参与活动积分概不退还，请用户在参与活动前仔细阅读活动规则、活动说明等重要信息； </h5>
-                        <h5>3.通过非法途径获得积分后进行的正常兑换（参与活动）行为，或不按照商品使用规则进行兑换，商家有权不提供服务； </h5>
-                        <h5>4.凡以不正当手段（包括但不限于作弊、扰乱系统、实施网络攻击等）进行兑换，平台有权终止该次兑换。</h5>
-                    </div>
-                </section>
+                <v-announcement></v-announcement>
                 <div v-if='product_type==5' class='single-button bg-white'>
                     <button class='btn btn-orange' @click='useTicket(product_detail.url)'> 前往使用 </button>
                 </div>
@@ -302,24 +240,9 @@
                         </main>
                     </section>
                     <!-- 领取说明 -->
-                    <section v-if='product_detail.content_use' class='introduction'>
-                        <h3>领取说明</h3>
-                        <div class='content'>
-                            <v-simditor>
-                                <article v-if='product_detail.content_use' v-html='product_detail.content_use'> </article>
-                            </v-simditor>
-                        </div>
-                    </section>
+                    <v-introduction v-if='product_detail.content_use' title='领取说明' :content='product_detail.content_use'></v-introduction>
                     <!-- 重要声明 -->
-                    <section class='announcement'>
-                        <h3>重要声明</h3>
-                        <div class='content'>
-                            <h5>1.除商品本身不能正常兑换外，商品一经兑换，积分概不退还，请用户在兑换前仔细阅读使用规则、使用说明、有效期等重要信息； </h5>
-                            <h5>2.除活动流程出现异常外，奖品一经发放，参与活动积分概不退还，请用户在参与活动前仔细阅读活动规则、活动说明等重要信息； </h5>
-                            <h5>3.通过非法途径获得积分后进行的正常兑换（参与活动）行为，或不按照商品使用规则进行兑换，商家有权不提供服务； </h5>
-                            <h5>4.凡以不正当手段（包括但不限于作弊、扰乱系统、实施网络攻击等）进行兑换，平台有权终止该次兑换。</h5>
-                        </div>
-                    </section>
+                    <v-announcement></v-announcement>
                 </template>
             </template>
         </v-order>
@@ -329,6 +252,9 @@
     import vLogistics from './components/vLogistics';
     import vAddressEdit from './components/vAddressEdit.vue';
     import vAddressSelect from './components/vAddressSelect.vue';
+    import vAnnouncement from './components/vAnnouncement.vue';
+    import vIntroduction from './components/vIntroduction.vue';
+    import vTicket from './components/vTicket';
     import vOrder from 'components/vOrder.vue';
     export default {
         name: 'orderDetail',
@@ -336,6 +262,9 @@
             vOrder,
             vLogistics,
             vAddressEdit,
+            vAnnouncement,
+            vIntroduction,
+            vTicket,
             vAddressSelect,
         },
         data() {

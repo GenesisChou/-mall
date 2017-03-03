@@ -1,61 +1,31 @@
 @font-face {
   font-family: 'iconfont';  /* project id 117685 */
-  src: url('//at.alicdn.com/t/font_7fxevmfb62giizfr.eot');
-  src: url('//at.alicdn.com/t/font_7fxevmfb62giizfr.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_7fxevmfb62giizfr.woff') format('woff'),
-  url('//at.alicdn.com/t/font_7fxevmfb62giizfr.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_7fxevmfb62giizfr.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_scc46xwgl6k49529.eot');
+  src: url('//at.alicdn.com/t/font_scc46xwgl6k49529.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_scc46xwgl6k49529.woff') format('woff'),
+  url('//at.alicdn.com/t/font_scc46xwgl6k49529.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_scc46xwgl6k49529.svg#iconfont') format('svg');
 }
+
 .iconfont {
   font-family:"iconfont" !important;
   font-size:16px;
   font-style:normal;
   -webkit-font-smoothing: antialiased;
-  -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-close-circle:before{ content:"\e724"; }
+.icon-solved:before { content: "\e61e"; }
 
-.icon-drag-up:before{ content:"\e61d"; }
+.icon-close-circle:before { content: "\e724"; }
 
-.icon-money:before{ content:"\e654"; }
-
-.icon-product:before{ content:"\e635"; }
-
-.icon-check-in:before{ content:"\e636"; }
-
-.icon-order-unsolved:before{ content:"\e60c"; }
-
-.icon-solved:before{ content:"\e61e"; }
-
-.icon-share:before{ content:"\e67e"; }
-
-.icon-timeline:before{ content:"\e647"; }
-
-.icon-edit:before { content: "\e611"; }
-
-.icon-cart:before { content: "\e600"; }
+.icon-plus-circle:before { content: "\e728"; }
 
 .icon-error:before { content: "\e602"; }
 
-.icon-collection:before { content: "\e603"; }
-
 .icon-delete:before { content: "\e604"; }
 
-.icon-scan:before { content: "\e605"; }
-
-.icon-config:before { content: "\e607"; }
-
-.icon-sound:before { content: "\e608"; }
-
-.icon-time:before { content: "\e609"; }
-
 .icon-location:before { content: "\e60a"; }
-
-.icon-home:before { content: "\e60b"; }
-
-.icon-refresh:before { content: "\e60c"; }
 
 .icon-search:before { content: "\e60d"; }
 
@@ -64,10 +34,6 @@
 .icon-correct-circle-hollow:before { content: "\e60f"; }
 
 .icon-order:before { content: "\e610"; }
-
-.icon-user:before { content: "\e612"; }
-
-.icon-drag-down:before { content: "\e613"; }
 
 .icon-arrows-up:before { content: "\e614"; }
 
@@ -79,12 +45,13 @@
 
 .icon-right:before { content: "\e618"; }
 
-.icon-message:before { content: "\e619"; }
+.icon-order-unsolved:before { content: "\e60c"; }
 
 .icon-error-circle:before { content: "\e61c"; }
 
 .icon-correct-circle:before { content: "\e64a"; }
 
+.icon-edit:before { content: "\e611"; }
+
 .icon-car:before { content: "\e61b"; }
 
-.icon-plus-circle:before { content: "\e728"; }

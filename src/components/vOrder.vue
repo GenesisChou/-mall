@@ -1,8 +1,5 @@
 <style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
-    .v-order {
-        border-bottom: 1px solid $gray-light;
-    }
 
     .v-order-header {
         padding-left: pxTorem(30);

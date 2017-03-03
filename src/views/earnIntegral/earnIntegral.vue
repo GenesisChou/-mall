@@ -6,7 +6,7 @@
     
     .head {
         width: 100%;
-        height: pxTorem(770);
+        height: pxTorem(800);
         padding-top: pxTorem(70);
         position: relative;
         background-image: url('./images/yellowBg.png');
@@ -83,23 +83,15 @@
     }
     
     .progress {
+        display: flex;
+        display: -webkit-flex;
         position: absolute;
         width: 100%;
-        height: pxTorem(160);
-        bottom: pxTorem(10);
-        .line {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            margin-left: pxTorem(-321.5);
-            margin-top: pxTorem(-6);
-            width: pxTorem(643);
-            height: pxTorem(12);
-            box-shadow: 0 pxTorem(2) 1px rgba(43, 167, 169, 0.75);
-            background-color: #14bcbf;
-            z-index: 1;
-        }
+        padding: 0 pxTorem(15);
+        bottom: pxTorem(30);
         .check-item {
+            flex: 1;
+            -webkit-flex: 1;
             display: flex;
             display: -webkit-flex;
             align-items: center;
@@ -108,37 +100,49 @@
             -webkit-justify-content: space-around;
             flex-direction: column;
             -webkit-flex-direction: column;
-            position: absolute;
-            height: pxTorem(160);
-            left: pxTorem(44);
             color: $white;
             &.active {
                 .circle {
                     background-color: $orange;
                 }
+                h6 {
+                    color: $orange;
+                }
+            }
+            &:first-child {
+                .circle {
+                    color: #a78179;
+                    background-color: rgba(255, 255, 255, 0.4);
+                    background-size: 100%;
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                    box-shadow: 0 pxTorem(3) pxTorem(5) #42c0c3,0 pxTorem(-3) pxTorem(3) rgba(255,255,255,.8);
+                }
+                h6 {
+                    color: #a78179;
+                }
             }
         }
-        .check-item.active:nth-child(3):before {
-            content: '';
-            position: absolute;
-            left: pxTorem(-85);
-            top: 50%;
-            margin-top: pxTorem(-6);
-            width: pxTorem(100);
-            height: pxTorem(12);
-            background-color: $orange;
-            z-index: 2;
-        }
         .circle {
-            position: absolute;
-            top: 50%;
-            width: pxTorem(25);
-            height: pxTorem(25);
-            margin-top: pxTorem(-12.5);
-            box-shadow: 0 pxTorem(3) 1px rgba(43, 167, 169, 0.75);
-            background-color: #2aa6a8;
+            display: flex;
+            display: -webkit-flex;
+            align-items: center;
+            -webkit-align-items: center;
+            justify-content: center;
+            -webkit-justify-content: center;
+            width: pxTorem(90);
+            height: pxTorem(90);
+            margin-bottom: pxTorem(10);
             border-radius: 50%;
-            z-index: 3;
+            background-color: rgb(20, 188, 191);
+            font-size: pxTorem(30);
+            box-shadow: pxTorem(0) pxTorem(3) pxTorem(3) #1e9da1;
+            transition: .5s;
+            -webkit-transition: .5s;
+        }
+        h6 {
+            transition: .5s;
+            -webkit-transition: .5s;
         }
     }
     
@@ -150,7 +154,7 @@
         height: pxTorem(107);
         padding-left: pxTorem(35);
         background-color: #d0eff1;
-        border-top: 1px solid #a78179;
+        margin-bottom: pxTorem(20);
         &:active {
             background-color: darken(#d0eff1, 10%);
         }
@@ -179,14 +183,15 @@
         font-size: pxTorem(28);
         span {
             color: $orange;
+            padding: 0 pxTorem(5);
+            font-size: pxTorem(32);
         }
     }
     
     .article-list {
-        margin-top: pxTorem(20);
         color: #a78179;
         background-color: #d0eff1;
-        border-top: 1px solid #a78179;
+        border-top: 1px solid #d4d4d6;
         ul,
         li {
             list-style: none;
@@ -197,12 +202,12 @@
         .empty {
             background-color: #4dd3d6;
             height: pxTorem(430);
-            padding-top: pxTorem(40);
+            padding-top: pxTorem(80);
             text-align: center;
             font-size: pxTorem(28);
-            color:$white;
-            &:active{
-                background-color:#4dd3d6;
+            color:#8d8d8d;
+            &:active {
+                background-color: #4dd3d6;
             }
         }
     }
@@ -236,10 +241,8 @@
                 <h6>连续签到有更多惊喜哦</h6>
             </div>
             <div class='progress'>
-                <div class='line'></div>
-                <div v-for='(item,$index) in check_in_params' :class='["check-item",{active:$index==0||(user.ischecked&&$index==1)}]' :style='getCircleStyle($index)'>
-                    <h6>{{item.integral}}</h6>
-                    <div class='circle'></div>
+                <div v-for='(item,$index) in check_in_params' :class='["check-item",{active:user.ischecked&&$index==1}]'>
+                    <div class='circle'> {{item.integral}} </div>
                     <h6>{{item.day}}</h6>
                 </div>
             </div>
@@ -253,7 +256,6 @@
                 </div>
             </router-link>
         </template>
-        <div class='space'></div>
         <ul class='article-list'>
             <li class='notice'>
                 <p>
@@ -262,7 +264,7 @@
                     每日最多可得<span>{{read_param.day_limit}}</span>积分,今日已获得<span>{{read_param.today}}</span>积分
                 </p>
             </li>
-            <template v-if='article_list.length'>
+            <template v-if='!article_list.length'>
                 <li v-for='article in article_list'>
                     <v-mission :article='article' :callback='readArticle'></v-mission>
                 </li>
@@ -309,11 +311,6 @@
                 return this.check_in_params[2]['integral'].substring(1);
             }
         },
-        watch: {
-            check_in_params() {
-                this.loaded = true;
-            },
-        },
         activated() {
             this.getArticleList();
             this.getReadParam();
@@ -357,6 +354,7 @@
                     this.$store.dispatch('toggleLoading');
                     let data = response.data;
                     this.check_in_params = data.data;
+                    this.loaded=true;
                 }, (response) => {
                     this.$store.dispatch('toggleLoading');
                 })
@@ -412,15 +410,8 @@
                         }
                     })
                 })
-            },
-            getCircleStyle($index) {
-                let left = 30 + $index * 107;
-                return {
-                    left: utils.pxTorem(left)
-                }
+
             }
-
-
         }
     }
 </script>

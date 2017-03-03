@@ -45,10 +45,6 @@
         .iconfont {
             font-size: pxTorem(55);
             color:#666666;
-            &.icon-car{
-                transform:rotateY(180deg);
-                -webkit-transform:rotateY(180deg);
-            }
         }
         h6{
             margin-top:pxTorem(-10);

@@ -14,7 +14,7 @@
         input {
             width: pxTorem(610);
             border: 0;
-            text-indent: 27px;
+            text-indent: pxTorem(27);
             color: $sliver;
             font-size: pxTorem(28);
         }

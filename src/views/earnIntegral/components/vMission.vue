@@ -9,14 +9,11 @@
         -webkit-justify-content: space-between;
         position: relative;
         height: pxTorem(110);
-        overflow: hidden;
-        border-top: 1px solid #a78179;
-        font-weight: 500;
+        margin:0 pxTorem(30);
+        border-top: 1px solid #d4d4d6;
         .title {
             width: 70%;
-            max-height: 80%;
-            padding-left: pxTorem(35);
-            overflow: hidden;
+            font-weight:500;
         }
         a {
             display: flex;
@@ -27,7 +24,6 @@
             -webkit-justify-content: center;
             width: pxTorem(115);
             height: pxTorem(50);
-            margin-right: pxTorem(35);
             border-radius: pxTorem(10);
             font-size: pxTorem(24);
             background-color: $orange;

@@ -9,6 +9,7 @@
         -webkit-justify-content: center;
         height: pxTorem(110);
         color: #a0a7ad;
+        border-top:1px solid #d4d4d6;
     }
 </style>
 <template>

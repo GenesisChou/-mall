@@ -1,6 +1,3 @@
-<style lang='scss' scoped>
-    @import '../../assets/scss/variable.scss';
-</style>
 <template>
     <div class='activity-detail'>
         <keep-alive>
@@ -14,20 +11,32 @@
 </template>
 <script>
     import vDialog from './components/vDialog';
+    /*
     import fortune from './components/fortune';
     import quiz from './components/quiz';
     import shake from './components/shake';
     import scrap from './components/scrap';
     import game from './components/game';
+    */
     export default {
         name: 'activityDetail',
         components: {
             vDialog,
-            quiz,
-            scrap,
-            game,
-            shake,
-            fortune
+            quiz: (resolve) => {
+                require(['./components/quiz'], resolve)
+            },
+            scrap: (resolve) => {
+                require(['./components/scrap'], resolve)
+            },
+            game: (resolve) => {
+                require(['./components/game'], resolve)
+            },
+            shake: (resolve) => {
+                require(['./components/shake'], resolve)
+            },
+            fortune: (resolve) => {
+                require(['./components/fortune'], resolve)
+            }
         },
         data() {
             return {
@@ -43,9 +52,6 @@
             notice() {
                 return this.free_times > 0 ? `您还剩余${this.free_times}次免费机会` :
                     `消耗积分${this.activity_detail.integral >> 0}`;
-            },
-            aword_list() {
-                return this.activity_detail.items;
             },
             activity_type() {
                 /*  1:刮刮卡
@@ -65,16 +71,13 @@
                 return result;
             }
         },
-        watch: {
-            activity_id() {
-                this.getActivityDetail().then(data => {
-                    this.type = data.data.type;
-                });
-                this.getFreeTimes();
-            },
-        },
         created() {
             this.activity_id = this.$route.query.activity_id;
+            this.getActivityDetail().then(data => {
+                this.type = data.data.type;
+            });
+            this.getFreeTimes();
+
         },
         methods: {
             //获取活动详情

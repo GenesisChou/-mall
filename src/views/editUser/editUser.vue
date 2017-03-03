@@ -73,18 +73,25 @@
         -webkit-align-items: center;
         -webkit-justify-content: center;
         height: pxTorem(120);
+        padding: 0 pxTorem(30);
         margin-top: pxTorem(20);
         background-color: $white;
         border-bottom: 1px solid #d3d4d6;
         .btn {
-            width: pxTorem(517);
+            width: 100%;
             height: pxTorem(72);
         }
+    }
+    
+    img.money {
+        width: pxTorem(68);
+        height: pxTorem(47);
+        margin-right: pxTorem(20);
     }
 </style>
 <template>
     <div v-if='content_show' class='edit-user'>
-        <form ref='form'>
+        <div>
             <ul class='main'>
                 <li>
                     <label for='contact'>姓名</label>
@@ -101,8 +108,10 @@
                 <li class='code'>
                     <label for='code'>验证码</label>
                     <input id='code' v-model='verification_code' placeholder="请输入验证码">
-                    <button v-if='!in_vertication' class='btn btn-orange' @click='getVerificationCode'>验证</button>
-                    <button v-else class='btn btn-gray' @click='getVerificationCode'>{{countdown}}秒</button>
+                    <button :class='["btn",in_vertication?"btn-gray":"btn-orange"]' @click='getVerificationCode'>
+                        <template v-if='in_vertication'>{{countdown}}秒</template> 
+                        <template v-else>验证</template> 
+                    </button>
                 </li>
                 <li class='address'>
                     <label for='province'>收货地址</label>
@@ -114,30 +123,34 @@
                 </li>
             </ul>
             <div class='operation'>
-                <button class='btn btn-orange ' @click='submit'>确认</button>
+                <button v-if='submit_avaliable' class='btn btn-orange ' @click='submit'>确认</button>
+                <button v-else class='btn btn-gray' disabled='disabled'>确认</button>
             </div>
-
-        </form>
-        <v-warn v-model='warn_show' :warn='warn'>></v-warn>
+            <!--
+            <button @click='toggleNotice({msg:"fuck you"})'>noticebalabala</button>
+            <button @click='toggleWarn({msg:"fuck you"})'>warn</button> 
+            -->
+        </div>
+        <v-warn v-model='warn_show' :warn='warn'></v-warn>
+        <v-notice v-model='notice_show'>
+            <img v-if='notice.type=="img"' class='money' src='./images/money.png'>
+            <h3>{{notice.msg}}</h3>
+        </v-notice>
     </div>
 </template>
 <script>
     import vWarn from './components/vWarn.vue';
+    import vNotice from './components/vNotice.vue';
     import vAddress from './components/vAddress.vue';
     export default {
         name: 'editUser',
         components: {
             vAddress,
-            vWarn
+            vWarn,
+            vNotice,
         },
         data() {
             return {
-                show_birth: false,
-                birth: {
-                    year: '',
-                    month: '',
-                    day: ''
-                },
                 province: '',
                 city: '',
                 country: '',
@@ -152,7 +165,9 @@
                 verification_code: '',
                 countdown: 60,
                 warn: {},
-                warn_show: false
+                warn_show: false,
+                notice: {},
+                notice_show: false,
             }
         },
         computed: {
@@ -165,15 +180,20 @@
             is_submit() {
                 return this.$store.state.user.is_submit == 1;
             },
+            submit_avaliable() {
+                if (this.birthday &&
+                    this.province &&
+                    this.address.length >= 5 &&
+                    this.phone &&
+                    this.contact &&
+                    this.verification_code) {
+                    return true;
+                }
+                return false;
+            },
             default_address() {
                 return this.user.default_address || {};
             },
-            birth_format() {
-                if (this.birth.year && this.birth.month && this.birth.day) {
-                    return `${this.birth.year}-${this.birth.month}-${this.birth.day}`;
-                }
-                return '';
-            }
         },
         watch: {
             default_address(value) {
@@ -182,11 +202,6 @@
         },
         created() {
             this.init(this.default_address);
-            this.birth = {
-                year: this.user.year || '',
-                month: this.user.month || '',
-                day: this.user.day || ''
-            }
         },
         methods: {
             //初始化地址列表
@@ -237,16 +252,23 @@
                     verification_code: this.verification_code
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
-                    let data = response.data;
+                    let data = response.data,
+                        msg = data.data.message;
                     if (data.status == APP.SUCCESS) {
-                        this.toggleWarn({
-                            msg: data.info,
-                            btn_text: '确定',
-                            callback: () => {
-                                this.$store.dispatch('getUserInfor');
-                                this.$router.go(-1)
-                            }
-                        })
+                        if (this.is_submit) {
+                            this.toggleNotice({
+                                msg
+                            })
+                        } else {
+                            this.toggleNotice({
+                                msg,
+                                type: 'img'
+                            })
+                        }
+                        this.$store.dispatch('getUserInfor');
+                        setTimeout(() => {
+                            this.$router.go(-1)
+                        }, 2000)
                     } else {
                         this.toggleWarn({
                             msg: data.info
@@ -255,7 +277,6 @@
                 }, (response) => {
                     this.$store.dispatch('toggleLoading');
                 })
-
 
             },
             //获取验证码
@@ -304,9 +325,21 @@
                     }
                 })
             },
-            toggleWarn(warn) {
+            toggleWarn(warn = {}) {
+                event.preventDefault();
                 this.warn = warn;
                 this.warn_show = !this.warn_show;
+            },
+            toggleNotice(notice = {}) {
+                event.preventDefault();
+                /*
+                this.notice={
+                    msg:'+20积分',
+                    type:'img'
+                };
+                */
+                this.notice = notice;
+                this.notice_show = !this.notice_show;
             }
         }
     }

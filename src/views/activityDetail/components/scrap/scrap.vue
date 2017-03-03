@@ -24,7 +24,7 @@
         bottom: pxTorem(-4);
         width: pxTorem(750);
         height: pxTorem(61);
-        background:none;
+        background: none;
         z-index: 1;
     }
     
@@ -193,7 +193,8 @@
                 alert: {},
                 lottery: '', //画布实例
                 is_win: '', //判断是否中奖
-                activity_result: {}
+                area: 70,
+                activity_result: {},
             };
         },
         computed: {
@@ -203,7 +204,7 @@
         },
         watch: {
             draw_percent(value) {
-                if (this.state == 'start' && value > 65) {
+                if (this.state == 'start' && value > this.area) {
                     this.state = 'stop';
                 }
             },
@@ -211,7 +212,12 @@
                 if (value == 'start') {
                     this.freshFreeTimes();
                 } else if (value == 'stop') {
-                    this.toggleDialog(this.alert);
+                    // this.toggleDialog(this.alert);
+                    this.$store.dispatch('toggleLoading');
+                    setTimeout(() => {
+                        this.$store.dispatch('toggleLoading');
+                        this.toggleDialog(this.alert);
+                    }, 1500)
                 }
             },
             is_win(value) {
