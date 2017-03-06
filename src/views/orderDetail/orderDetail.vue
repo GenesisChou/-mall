@@ -25,7 +25,6 @@
         background-repeat: no-repeat;
         .location {
             width: pxTorem(73);
-            padding-left: pxTorem(30);
             .iconfont {
                 font-size: pxTorem(30);
             }
@@ -37,10 +36,10 @@
             -webkit-align-items: center;
             height: pxTorem(157);
             margin-top: pxTorem(20);
+            padding:0 pxTorem(30);
             .address-content {
                 flex: 1;
                 -webkit-flex: 1;
-                padding-right: pxTorem(30);
                 overflow: hidden;
             }
             .address-detail {
