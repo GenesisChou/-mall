@@ -190,13 +190,14 @@
         },
         created() {
             this.getHotCommend();
+            this.getHotAdcolumn();
+            this.getSubjectList();
             this.$store.dispatch('toggleLoading');
             this.getHotItems().then(() => {
                 this.$store.dispatch('toggleLoading');
             }).catch(() => {
                 this.$store.dispatch('toggleLoading');
             });
-            this.getSubjectList();
             this.scroll_event = this.getScrollEvent();
         },
         beforeRouteLeave(to, from, next) {
@@ -225,6 +226,13 @@
                     let data = response.data;
                     this.hot_commend = data.data;
                 }, (response) => {});
+            },
+            getHotAdcolumn() {
+                this.$http.post(`${APP.HOST}/hot_adcolumn`, {
+                    token: APP.TOKEN,
+                    userid: APP.USER_ID,
+                    media_id: APP.MEDIA_ID
+                }).then((response) => {}, (response) => {});
             },
             getHotItems() {
                 return new Promise((resolve, reject) => {

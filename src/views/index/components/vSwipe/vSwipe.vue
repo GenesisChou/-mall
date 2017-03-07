@@ -47,6 +47,8 @@
                 }, (response) => {});
             },
             routerLink(banner) {
+                location.href=banner.url;
+                /*
                 if (banner.type == 1) {
                     let subject_id = utils.getParameterByName('subject_id', banner.url);
                     if (subject_id) {
@@ -90,6 +92,7 @@
                     };
                 }
                 this.$router.push(router);
+                */
             },
             bannerView(banner) {
                 this.$store.dispatch('bannerView', banner.id);

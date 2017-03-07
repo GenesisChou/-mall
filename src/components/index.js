@@ -6,6 +6,7 @@ import vPopup from 'components/vPopup';
 import vSimditor from 'components/vSimditor';
 import vSpinner from 'components/vSpinner';
 import vBackTop from 'components/vBackTop';
+import vIntroduction from 'components/vIntroduction';
 module.exports = {
     vLoadMore,
     vDivider,
@@ -14,5 +15,6 @@ module.exports = {
     vPopup,
     vSimditor,
     vSpinner,
-    vBackTop
+    vBackTop,
+    vIntroduction
 }

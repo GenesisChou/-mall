@@ -1,28 +1,34 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
-    .header {
+    .banner {
+        width: pxTorem(750);
         height: pxTorem(400);
-        position: relative;
-        .cover {
-            display: flex;
-            align-items: center;
-            display: -webkit-flex;
-            -webkit-align-items: center;
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: pxTorem(100);
-            padding-left: pxTorem(55);
-            background: rgba(0, 0, 0, .5);
-            color: $white;
+    }
+    
+    .title {
+        display: flex;
+        display: -webkit-flex;
+        justify-content: center;
+        -webkit-justify-content: center;
+        flex-direction: column;
+        -webkit-flex-direction: column;
+        height: pxTorem(140);
+        padding-left: pxTorem(30);
+        background-color: $white;
+        border-bottom: 1px solid #d3d4d6;
+        h1 {
+            font-size: pxTorem(34);
+        }
+        h3 {
+            color: $orange;
+        }
+        .number {
+            font-size: pxTorem(36);
         }
     }
     
     .main {
-        min-height: pxTorem(825);
-        padding: pxTorem(50);
-        background-color: $white;
+        padding-bottom: pxTorem(100);
     }
     
     .sticky {
@@ -30,67 +36,66 @@
         bottom: 0;
         left: 0;
         right: 0;
-        border-top: 1px solid $gray-light;
-        background-color: $white;
-        height: pxTorem(110);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        display: -webkit-flex;
-        -webkit-align-items: center;
-        -webkit-justify-content: space-between;
-        padding-left: pxTorem(55);
         z-index: 1;
+        padding: 0 pxTorem(30) pxTorem(30) pxTorem(30);
+        text-align: center;
+        background-color: $white;
+        border-bottom: 1px solid $gray-light;
+        box-shadow: 0 0 0 #000, 0 0 pxTorem(15) #ddd;
         a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            display: -webkit-flex;
-            -webkit-align-items: center;
-            -webkit-justify-content: center;
-            width: pxTorem(180);
-            height: pxTorem(110);
-            font-size: pxTorem(30);
-            text-indent: pxTorem(12);
-            letter-spacing: pxTorem(12);
-        }
-        .integral {
-            color: $red
-        }
-        .btn-disable {
+            display: block;
+            width: 100%;
+            height: pxTorem(100);
+            line-height: pxTorem(100);
+            font-size: pxTorem(40);
             color: $white;
-            background-color: #838385;
-            letter-spacing: 0;
-            text-indent: 0;
+            border-radius: pxTorem(10);
+        }
+        h6 {
+            display:flex;
+            display:-webkit-flex;
+            -webkit-align-items:center;
+            justify-content:center;
+            -webkit-justify-content:center;
+            height:pxTorem(66);
+            color: #646565;
+            .iconfont{
+                color:#ff9817;
+                margin-right:pxTorem(5);
+            }
+        }
+        .exchange {
+            margin-top: pxTorem(30);
+            background-color: #ff5000;
+        }
+        .lack {
+            background-color: #ff9817;
         }
     }
 </style>
 <template>
     <div class='product-detail'>
         <header v-show='content_show' class='header '>
-            <img class='img-responsive' :src='product_detail.pic_banner' />
-            <h1 class='cover text-ellipsis'>
-                {{product_name}}
-            </h1>
+            <img class='banner' :src='product_detail.pic_banner' />
+            <div class='title'>
+                <h1 class='text-ellipsis'>{{product_name}}</h1>
+                <h3><span class='number'>{{integral}}</span>积分</h3>
+            </div>
         </header>
-        <article v-show='content_show' class='main '>
-            <v-simditor>
-                <template v-if='product_detail.content'>
-                    <v-divider text='详细说明'></v-divider>
-                    <div v-html='product_detail.content'></div>
-                </template>
-                <template v-if='product_detail.content_use'>
-                    <v-divider text='使用说明'></v-divider>
-                    <div v-html='product_detail.content_use'></div>
-                </template>
-            </v-simditor>
-        </article>
-        <footer class='sticky'>
-            <h4 class='pull-left'>
-                单价：<span class='integral'>{{integral}}</span>积分
-            </h4>
-            <a v-if='integral_enough' class='btn-red pull-right' @click='exchange'>兑换</a>
-            <a v-else class='btn-disable pull-right'>积分不足</a>
+        <main v-show='content_show' class='main'>
+            <v-introduction v-if='product_detail.content' title='详细说明' :content='product_detail.content'></v-introduction>
+            <v-introduction v-if='product_detail.content_use' title='使用说明' :content='product_detail.content_use'></v-introduction>
+        </main>
+        <footer v-show='content_show' class='sticky'>
+            <a class='exchange' v-if='integral_enough' @click='exchange'>立即兑换</a>
+            <template v-else>
+                <h6>
+                    <i class='iconfont icon-warn'></i> 您的积分不足
+                </h6>
+                <router-link :to='{name:"earn_integral"}' tag='a' class='lack'>
+                    去赚取更多的积分>>
+                </router-link>
+            </template>
         </footer>
     </div>
 </template>

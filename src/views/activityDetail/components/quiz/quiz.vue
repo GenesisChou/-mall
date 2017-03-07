@@ -1,6 +1,7 @@
 <style lang='scss' scoped>
     @import '../../../../assets/scss/variable.scss';
     .v-quiz {
+        min-height: pxTorem(1250);
         padding-bottom: pxTorem(84);
         background-image: url('./images/quizBackground.png');
         background-size: pxTorem(750) pxTorem(2235);

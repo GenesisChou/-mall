@@ -11,13 +11,6 @@
 </template>
 <script>
     import vDialog from './components/vDialog';
-    /*
-    import fortune from './components/fortune';
-    import quiz from './components/quiz';
-    import shake from './components/shake';
-    import scrap from './components/scrap';
-    import game from './components/game';
-    */
     export default {
         name: 'activityDetail',
         components: {
@@ -36,6 +29,9 @@
             },
             fortune: (resolve) => {
                 require(['./components/fortune'], resolve)
+            },
+            egg: (resolve) => {
+                require(['./components/egg'], resolve)
             }
         },
         data() {
@@ -58,10 +54,12 @@
                     2:有奖问答
                     3:游戏
                     4:摇一摇
-                    5:大转盘 */
+                    5:大转盘 
+                    6:砸金蛋 
+                    */
                 let type = this.type,
                     result = '';
-                const type_list = ['scrap', 'quiz', 'game', 'shake', 'fortune'];
+                const type_list = ['scrap', 'quiz', 'game', 'shake', 'fortune', 'egg'];
                 type_list.forEach((name, index) => {
                     if (type == index + 1) {
                         result = name;

@@ -1,6 +1,7 @@
 <style lang='scss' scoped>
     @import '../../../../assets/scss/variable.scss';
     .v-scrap {
+        min-height: pxTorem(1250);
         padding-bottom: pxTorem(84);
         background-color: #4dd3d6;
         background-image: url('./images/scrapBackground.png');

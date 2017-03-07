@@ -1,6 +1,7 @@
 <style lang='scss' scoped>
     @import '../../../../assets/scss/variable.scss';
     .fortune {
+        min-height: pxTorem(1250);
         padding-bottom: pxTorem(84);
         background-color: #fdf860;
         background-image: url('./images/fortuneBackground.png');
@@ -81,7 +82,7 @@
         .editor-style {
             padding-top: pxTorem(20);
             padding-bottom: pxTorem(40);
-            color: #ad0406 !important;
+            color: #ad0406;
         }
     }
 </style>

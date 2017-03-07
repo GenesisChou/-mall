@@ -1,7 +1,8 @@
 <style lang='scss' scoped>
     @import '../../../../assets/scss/variable.scss';
     .game-detail {
-        min-height: pxTorem(1215);
+        min-height: pxTorem(1250);
+        padding-bottom: pxTorem(84);
         background-color: $white;
     }
     

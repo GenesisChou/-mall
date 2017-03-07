@@ -2,6 +2,7 @@
     @import '../../../../assets/scss/variable.scss';
     .v-shake {
         position: relative;
+        min-height: pxTorem(1250);
         padding-bottom: pxTorem(84);
         background-color: $white;
     }

@@ -49,7 +49,6 @@
     }
     
     .message {
-        // height:pxTorem(142);
         position: relative;
         padding-top: pxTorem(15);
         overflow:hidden;
