@@ -228,13 +228,11 @@
             },
             //取消 一群傻屌
             cancel() {
-                event.preventDefault();
                 this.$router.go(-1)
                 // this.$refs.form.reset();
             },
             //提交表单
             submit() {
-                event.preventDefault();
                 this.$store.dispatch('toggleLoading')
                 this.$http.post(`${APP.HOST}/user_submit/${APP.USER_ID}`, {
                     token: APP.TOKEN,
@@ -281,7 +279,6 @@
             },
             //获取验证码
             getVerificationCode() {
-                event.preventDefault();
                 this.$http.post(`${APP.HOST}/verification_sm/${APP.USER_ID}`, {
                     token: APP.TOKEN,
                     userid: APP.USER_ID,
@@ -326,18 +323,10 @@
                 })
             },
             toggleWarn(warn = {}) {
-                event.preventDefault();
                 this.warn = warn;
                 this.warn_show = !this.warn_show;
             },
             toggleNotice(notice = {}) {
-                event.preventDefault();
-                /*
-                this.notice={
-                    msg:'+20积分',
-                    type:'img'
-                };
-                */
                 this.notice = notice;
                 this.notice_show = !this.notice_show;
             }
