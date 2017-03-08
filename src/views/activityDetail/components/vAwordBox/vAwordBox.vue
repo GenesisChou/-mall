@@ -14,6 +14,9 @@
         &.green {
             background-image: url('./images/greenAwordBox.png');
         }
+        &.aquamarine {
+            background-image: url('./images/aquamarineAwordBox.png');
+        }
         &.blue {
             background-image: url('./images/blueAwordBox.png');
         }
@@ -50,8 +53,11 @@
             &.green {
                 background-color: #78cc1e;
             }
-            &.blue {
+            &.aquamarine {
                 background-color: #2ba7a9;
+            }
+            &.blue{
+                background-color:#29cfff;
             }
         }
     }

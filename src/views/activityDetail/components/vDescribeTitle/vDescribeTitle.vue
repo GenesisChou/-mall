@@ -1,12 +1,13 @@
 <style lang='scss' scoped>
     @import '../../../../assets/scss/variable.scss';
     .v-describe-title {
-        width:pxTorem(214);
-        height:pxTorem(58);
-        background-size:100% 100%; 
+        width: pxTorem(214);
+        height: pxTorem(58);
+        background-size: 100% 100%;
         background-repeat: no-repeat;
         color: #ffffd0;
         font-size: pxTorem(32);
+        font-weight:500;
         padding-left: pxTorem(18);
         padding-top: pxTorem(5);
         &.red {
@@ -15,8 +16,12 @@
         &.green {
             background-image: url('./images/greenTitle.png');
         }
-        &.blue{
+        &.blue {
+            color:#fc4c60;
             background-image: url('./images/blueTitle.png');
+        }
+        &.aquamarine {
+            background-image: url('./images/aquamarineTitle.png');
         }
     }
 </style>

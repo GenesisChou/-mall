@@ -32,7 +32,13 @@
             },
             egg: (resolve) => {
                 require(['./components/egg'], resolve)
-            }
+            },
+            machine: (resolve) => {
+                require(['./components/machine'], resolve)
+            },
+            treasure: (resolve) => {
+                require(['./components/treasure'], resolve)
+            },
         },
         data() {
             return {
@@ -56,10 +62,12 @@
                     4:摇一摇
                     5:大转盘 
                     6:砸金蛋 
+                    7:老虎机
+                    8:海底捞
                     */
                 let type = this.type,
                     result = '';
-                const type_list = ['scrap', 'quiz', 'game', 'shake', 'fortune', 'egg'];
+                const type_list = ['scrap', 'quiz', 'game', 'shake', 'fortune', 'egg', 'machine', 'treasure'];
                 type_list.forEach((name, index) => {
                     if (type == index + 1) {
                         result = name;

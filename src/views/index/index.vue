@@ -212,8 +212,8 @@
                     media_id: APP.MEDIA_ID
                 }).then((response) => {
                     let data = response.data;
-                    if (data.data.list.length >= 3) {
-                        this.subject_list = data.data.list;
+                    if (data.data.length >= 3) {
+                        this.subject_list = data.data;
                     }
                 }, (response) => {});
             },

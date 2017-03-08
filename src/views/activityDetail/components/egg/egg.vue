@@ -1,6 +1,6 @@
 <style lang='scss' scoped>
     @import '../../../../assets/scss/variable.scss';
-    .egg {
+    .v-egg {
         min-height: pxTorem(1250);
         padding-bottom: pxTorem(84);
         background-color: #fdf860;
@@ -110,9 +110,10 @@
 </style>
 
 <template>
-    <div class='egg'>
+    <div class='v-egg'>
         <header class='header'>
-            <img class='img-responsive' src='./images/eggDefaultBanner.png'>
+            <img v-if='activityDetail.pic_icon' :src='activityDetail.pic_icon' class='img-responsive'>
+            <img v-else class='img-responsive' src='./images/eggDefaultBanner.png'>
         </header>
         <img class='background' src="./images/eggBackground.png">
         <main class='main'>

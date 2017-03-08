@@ -10,7 +10,7 @@
             -webkit-justify-content: center;
             width: pxTorem(44);
             height: pxTorem(54);
-            margin-left: pxTorem(10);
+            margin-left: pxTorem(5);
             color: $white;
             font-size: pxTorem(34);
             border-radius: pxTorem(10);
@@ -26,6 +26,10 @@
             background-color: #fff9d5;
             border: pxTorem(2) solid #6b3906;
             color: #e65413;
+        }
+        li.pink{
+            background-color:#f33748;
+            border:none;
         }
     }
 </style>
