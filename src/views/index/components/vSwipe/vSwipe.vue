@@ -22,7 +22,7 @@
         SwipeItem
     } from 'vue-swipe';
     export default {
-        name:'vSwipe',
+        name: 'vSwipe',
         components: {
             Swipe,
             SwipeItem
@@ -47,28 +47,10 @@
                 }, (response) => {});
             },
             routerLink(banner) {
-                location.href=banner.url;
-                /*
-                if (banner.type == 1) {
-                    let subject_id = utils.getParameterByName('subject_id', banner.url);
-                    if (subject_id) {
-                        let router = {
-                            name: "subject_detail",
-                            query: {
-                                subject_id,
-                            }
-                        };
-                        this.$router.push(router);
-                    } else {
-                        location.href = banner.url;
-                    }
-                    return;
-                }
                 let activity_id = utils.getParameterByName('activity_id', banner.url),
                     product_id = utils.getParameterByName('product_id', banner.url),
                     subject_id = utils.getParameterByName('subject_id', banner.url),
                     router = {};
-
                 if (activity_id) {
                     router = {
                         name: "activity_detail",
@@ -90,9 +72,10 @@
                             subject_id,
                         }
                     };
+                } else {
+                    location.href = banner.url;
                 }
                 this.$router.push(router);
-                */
             },
             bannerView(banner) {
                 this.$store.dispatch('bannerView', banner.id);
