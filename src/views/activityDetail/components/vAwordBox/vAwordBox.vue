@@ -22,6 +22,8 @@
         }
         ul {
             width: 100%;
+            overflow-y: hidden;
+            -webkit-overflow-y: hidden;
             overflow-x: scroll;
             -webkit-overflow-x: scroll;
             white-space: nowrap;
