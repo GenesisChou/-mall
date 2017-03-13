@@ -375,7 +375,7 @@
                 }
             },
             is_win(value) {
-                if(this.state=='ready') return;
+                if (this.state == 'ready') return;
                 let result = this.activity_result;
                 this.freshFreeTimes();
                 if (value) {
@@ -406,6 +406,7 @@
         },
         mounted() {
             this.chests = this.$refs.chests.children;
+
         },
         methods: {
             init() {
@@ -439,8 +440,7 @@
                         })
                     }
                 }, (response) => {})
-
-            }
+            },
 
         }
     }

@@ -9,22 +9,23 @@ const state = {
     v_alert: {
         type: 'suprise',
         show: false,
-        close_btn:false,
+        close_btn: false,
         msg: '',
         btn_text: '',
         img: '',
         callback: function () {},
-        callback_close:function(){}
+        callback_close: function () {}
     },
     v_confirm: {
         show: false,
         msg: '',
-        msg_second:'',
+        msg_second: '',
         callback: function () {}
     },
     v_loading: {
         show: false
     },
+    busy: false
 };
 
 const mutations = {
@@ -49,6 +50,9 @@ const mutations = {
     },
     toggleLoading(state) {
         state.v_loading.show = !state.v_loading.show;
+    },
+    toggleBusy(state, type) {
+        state.busy = type||false;
     },
     //获取用户信息
     getUserInfor(state, callback) {
@@ -113,7 +117,6 @@ const mutations = {
             subject_id,
             media_id: APP.MEDIA_ID,
         });
-
     }
 };
 const actions = {
@@ -145,6 +148,11 @@ const actions = {
     }, callback) {
         commit('getAddressList', callback);
     },
+    toggleBusy({
+        commit
+    }, type) {
+        commit('toggleBusy', type);
+    },
     pageView({
         commit
     }, page_id) {
@@ -164,7 +172,7 @@ const actions = {
         commit
     }, subject_id) {
         commit('subjectView', subject_id);
-    }
+    },
 };
 const store = new Vuex.Store({
     state,

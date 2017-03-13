@@ -9,7 +9,7 @@
 </style>
 <template>
     <h4 class='v-support'>
-        由{{name}}提供技术支持
+    由{{name}}提供技术支持
     </h4>
 </template>
 <script>
@@ -18,6 +18,9 @@
         computed: {
             name() {
                 return APP.NAME;
+            },
+            busy(){
+                return this.$store.state.busy;
             }
         },
     }

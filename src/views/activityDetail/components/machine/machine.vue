@@ -118,6 +118,7 @@
         .group {
             flex: 1;
             -webkit-flex: 1;
+            height: pxTorem(400);
             border-right: pxTorem(6) solid #fdc713;
             overflow: hidden;
             &:last-child {
@@ -126,11 +127,15 @@
         }
         .awords {
             position: relative;
-            top: pxTorem((410-600)/2);
+            top: -25%;
             li {
+                display: flex;
+                display: -webkit-flex;
+                align-items: center;
+                -webkit-align-items: center;
+                justify-content: center;
+                -webkit-justify-content: center;
                 height: pxTorem(200);
-                padding-top: pxTorem(10);
-                text-align: center;
             }
             img {
                 width: pxTorem(180);
@@ -315,69 +320,32 @@
                         this.toggleDialog(this.alert);
                     }, 1000)
                 } else if (value == 'rotating') {
-                    let vm = this;
                     if (this.is_win) {
                         let name = this.activity_result.name,
                             stop_num = this.getPosition(name, this.activityDetail.items);
-                            /*
-                        rotate(0, stop_num);
-                        rotate(1, stop_num, 500);
-                        rotate(2, stop_num, 1000);
-                        */
-                        rotate(0, 1);
-                        rotate(1, 2, 500);
-                        rotate(2, 0, 1000);
+                        this.rotate(0, stop_num);
+                        this.rotate(1, stop_num, 800);
+                        this.rotate(2, stop_num, 1600, () => {
+                            setTimeout(() => {
+                                this.toggleDialog(this.alert)
+                            }, 500)
+                        });
                     } else {
-                        const num = vm.activityDetail.items.length;
-                        rotate(0, Math.floor(Math.random() * (num + 1)));
-                        rotate(1, Math.floor(Math.random() * (num + 1)), 500);
-                        rotate(2, Math.floor(Math.random() * (num + 1)), 1000);
-                    }
-
-                    function rotate(group_num, stop_num, delay_time = 0) {
-                        const origin_top = 0,
-                            max_top = vm.activityDetail.items.length - 1,
-                            max_turn = 8;
-                        let top = origin_top,
-                            turn = 0,
-                            timer = '';
-                        setTimeout(() => {
-                            timer = setInterval(() => {
-                                if (turn > max_turn && top < -stop_num + 1) {
-                                    clearInterval(timer);
-                                    if (!stop_num) {
-                                        timer = setInterval(() => {
-                                            vm.groups[group_num].style.marginTop = (top * 100) +
-                                                '%';
-                                            top -= 0.1;
-                                            if (top < -max_top) {
-                                                clearInterval(timer);
-                                                if (group_num == 2) {
-                                                    setTimeout(() => {
-                                                        vm.toggleDialog(vm.alert);
-                                                    }, 500);
-                                                }
-                                            }
-                                        }, 10)
-                                    } else if (group_num == 2) {
-                                        setTimeout(() => {
-                                            vm.toggleDialog(vm.alert);
-                                        }, 500);
-                                    }
-                                }
-                                vm.groups[group_num].style.marginTop = (top * 100) + '%';
-                                top -= 0.1;
-                                if (top < -(max_top + 1)) {
-                                    turn++;
-                                    top = origin_top;
-                                }
-                            }, 10);
-                        }, delay_time)
+                        //获取三个不重复的数字组成的数组
+                        const random_array = this.createRandomArray();
+                        console.log(random_array);
+                        this.rotate(0, random_array[0]);
+                        this.rotate(1, random_array[1], 800);
+                        this.rotate(2, random_array[2], 1600, () => {
+                            setTimeout(() => {
+                                this.toggleDialog(this.alert);
+                            }, 500)
+                        });
                     }
                 }
             },
             is_win(value) {
-                if(this.state=='ready') return;
+                if (this.state == 'ready') return;
                 let result = this.activity_result;
                 this.freshFreeTimes();
                 if (value) {
@@ -415,11 +383,6 @@
         },
         methods: {
             init() {
-                if (this.state) {
-                    for (let i = 0; i < 3; i++) {
-                        this.groups[i].style.marginTop = (top * 100) + '%';
-                    }
-                }
                 this.state = 'ready';
                 this.alert = {};
                 this.is_win = '';
@@ -448,6 +411,56 @@
                 }, (response) => {})
 
             },
+            rotate(group_num, stop_num, delay_time = 0, callback) {
+                this.loop(group_num, stop_num, delay_time, () => {
+                    this.stop(group_num, stop_num).then(() => {
+                        if (callback) {
+                            callback();
+                        }
+                    });
+                });
+            },
+            loop(group_num, stop_num, delay_time, callback) {
+                let current_top = 0,
+                    current_turn = 0,
+                    turns = 8;
+                const limit_top = (this.activityDetail.items.length - 1) * 100;
+                setTimeout(() => {
+                    const timer = setInterval(() => {
+                        this.groups[group_num].style.marginTop = `-${current_top}%`;
+                        current_top += 10;
+                        if (current_top > limit_top + 100) {
+                            current_top = 0;
+                            if (++current_turn > turns) {
+                                clearInterval(timer);
+                                this.groups[group_num].style.marginTop = 0;
+                                if (callback) {
+                                    callback();
+                                }
+                            }
+                        }
+                    }, 10);
+                }, delay_time);
+            },
+            stop(group_num, stop_num) {
+                return new Promise(resolve => {
+                    let current_top = 0;
+                    const timer = setInterval(() => {
+                        this.groups[group_num].style.marginTop = `-${current_top}%`;
+                        current_top += 10;
+                        if (stop_num == 0) {
+                            stop_num = this.activityDetail.items.length;
+                        }
+                        if (current_top > (stop_num - 1) * 100) {
+                            clearInterval(timer);
+                            if (resolve) {
+                                resolve();
+                            }
+                        }
+                    }, 10);
+                })
+
+            },
             getPosition(name, awords) {
                 let stop_num = 0;
                 awords.forEach((award, index) => {
@@ -458,6 +471,23 @@
                 })
                 return stop_num;
             },
+            createRandomArray() {
+                let temp = {},
+                    result = [],
+                    state = true,
+                    limit = this.activityDetail.items.length;
+                while (state) {
+                    let random = Math.floor(Math.random() * limit);
+                    if (!temp[random]) {
+                        temp[random] = true;
+                        result.push(random);
+                    }
+                    if (result.length == 3) {
+                        state = false;
+                    }
+                }
+                return result;
+            }
         },
 
     }

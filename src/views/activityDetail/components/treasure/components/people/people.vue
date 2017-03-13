@@ -69,9 +69,9 @@
         &.one {
             -webkit-animation: one 1s ease-in forwards;
         }
-        // &.two {
-        //     -webkit-transform: rotateX(180deg) rotate(-60deg);
-        // }
+        &.two {
+            -webkit-transform: rotateX(180deg) rotate(-60deg);
+        }
     }
     
     @-webkit-keyframes ready {
