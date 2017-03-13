@@ -39,8 +39,9 @@
             padding: 0 pxTorem(15);
             height: pxTorem(66);
             line-height: pxTorem(66);
-            font-size: pxTorem(44);
+            font-size: pxTorem(38);
             text-align: center;
+            font-weight:500;
             color: #ffe433;
         }
         .circle {

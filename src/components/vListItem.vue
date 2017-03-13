@@ -1,80 +1,66 @@
 <style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
     .v-list-item {
-        display: table;
-        width: 100%;
-        height: pxTorem(220);
-        border-bottom: 1px solid $gray-light;
+        padding: 0 pxTorem(30);
         background-color: $white;
-        .img {
-            display: table-cell;
-            width: pxTorem(280);
-            vertical-align: middle;
-            text-align: center;
-            img {
-                width: pxTorem(180);
-                height: pxTorem(140);
-            }
-        }
-        .describe {
-            display: table-cell;
-            padding-right: pxTorem(30);
-            vertical-align: middle;
-            text-align: justify;
-            h1 {
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
-                margin-bottom: pxTorem(7);
-            }
-            h5.gray {
-                color: $gray;
-            }
-            h5.red {
-                color: $red;
-            }
+        &:active {
+            background-color: darken($white, 5%);
         }
     }
     
-    .v-list-item.active:active {
-        background-color: darken($white, 5%);
+    .container {
+        display: flex;
+        display: -webkit-flex;
+        align-items: center;
+        -webkit-align-items: center;
+        height: pxTorem(208);
+        border-bottom: 1px solid $gray-light;
+        .img {
+            width: pxTorem(249);
+            height: pxTorem(169);
+            margin-left: pxTorem(10);
+            margin-right: pxTorem(60);
+        }
+        .describe {
+            flex: 1;
+            -webkit-flex: 1;
+            text-align: justify;
+        }
+        h2 {
+            height: pxTorem(46);
+            line-height: pxTorem(46);
+        }
+        h6 {
+            height: pxTorem(40);
+            line-height: pxTorem(40);
+            color: #babbbe;
+        }
+        .integral {
+            padding-top: pxTorem(10);
+            color: $orange;
+        }
     }
 </style>
 <template>
-    <div :class='["v-list-item",{active:active}]'>
-        <div class='img'>
-            <img :src='img' />
-        </div>
-        <div class='describe'>
-            <h1>{{title}}</h1>
-            <h5 :class='color'>{{titleDupty}}</h5>
+    <div class='v-list-item'>
+        <div class='container'>
+            <img class='img' :src='img' />
+            <div class='describe'>
+                <h2 class='text-ellipsis'>{{title}}</h2>
+                <h6 class='text-ellipsis'>{{titleDupty}}</h6>
+                <h3 class='integral'>{{integral}}积分</h3>
+            </div>
         </div>
     </div>
 </template>
 <script>
     export default {
         name: 'vListItem',
-        /*
-            @title:主标题
-            @titleDuty:副标题
-            @color:副标题颜色
-            @img:图片链接
-            @active:点击时是否变色
-        */
         props: {
+            img: String,
             title: String,
             titleDupty: String,
-            color: {
-                type: String,
-                default: 'gray'
-            },
-            img: String,
-            active: {
-                type: Boolean,
-                default: true
-            }
+            integral: Number
         },
     };
 </script>

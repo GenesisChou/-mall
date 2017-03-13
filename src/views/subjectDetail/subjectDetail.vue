@@ -1,9 +1,18 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
+    .subject-detail {
+        padding-bottom: pxTorem(20);
+    }
+    
     header {
-        width: 100%;
-        height: pxTorem(350);
+        width: pxTorem(750);
+        height: pxTorem(300);
         background-color: $gray-light;
+    }
+    
+    ul,
+    li {
+        list-style: none;
     }
     
     .tabs {
@@ -11,7 +20,8 @@
         display: -webkit-flex;
         align-items: center;
         -webkit-align-items: center;
-        border-bottom: 1px solid $gray-light;
+        border-bottom: 1px solid #d3d4d6;
+        margin-bottom: pxTorem(20);
         li {
             flex: 1;
             -webkit-flex: 1;
@@ -21,50 +31,26 @@
             -webkit-align-items: center;
             justify-content: center;
             -webkit-justify-content: center;
+            position: relative;
             height: pxTorem(80);
-            list-style: none;
             background-color: $white;
+            font-size: pxTorem(30);
+            color: #a9aaae;
             &.active {
-                color: $red;
-            }
-        }
-    }
-    
-    .v-list-item {
-        display: table;
-        width: 100%;
-        height: pxTorem(220);
-        border-bottom: 1px solid $gray-light;
-        background-color: $white;
-        .img {
-            display: table-cell;
-            width: pxTorem(280);
-            vertical-align: middle;
-            text-align: center;
-            img {
-                width: pxTorem(180);
-                height: pxTorem(140);
-            }
-        }
-        .describe {
-            display: table-cell;
-            padding-right: pxTorem(30);
-            vertical-align: middle;
-            text-align: justify;
-            h6 {
-                height: pxTorem(35);
-                line-height: pxTorem(35);
-                color: #a9aaae;
-            }
-            .integral {
-                padding-top: pxTorem(5);
                 color: $orange;
             }
+            &.active:after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 65%;
+                height: pxTorem(5);
+                transform: translateX(-50%);
+                -webkit-transform: translateX(-50%);
+                background-color: $orange;
+            }
         }
-    }
-    
-    .v-list-item:active {
-        background-color: darken($white, 5%);
     }
 </style>
 <template>
@@ -79,24 +65,11 @@
                     {{tab.name}}
                 </li>
             </ul>
-            <template v-for='tab in tabs'>
-                <router-link v-for='item in tab.items' :to='getRouter(item)' tag='div'>
-                    <div v-show='current_tab=="全部"||current_tab==tab.name' class='v-list-item'>
-                        <div class='img'>
-                            <img :src='item.pic' />
-                        </div>
-                        <div class='describe'>
-                            <h3 class='text-ellipsis'>{{item.name}}</h3>
-                            <h6 class='text-ellipsis'>{{item.sub_name}}</h6>
-                            <p class='integral'>{{item.integral>>0}}积分 </p>
-                        </div>
-                    </div>
-                    <!--
-                    <v-list-item v-show='current_tab=="全部"||current_tab==tab.name' :title='item.name' :title-dupty='~~item.integral+"积分"' :img='item.pic'
-                        color='red'></v-list-item>
-                        -->
+            <ul v-for='tab in tabs'>
+                <router-link v-for='item in tab.items' :to='getRouter(item)' tag='li' v-show='current_tab=="全部"||current_tab==tab.name'>
+                    <v-list-item :title='item.name' :title-dupty='item.sub_name' :integral='item.integral>>0' :img='item.pic'></v-list-item>
                 </router-link>
-            </template>
+            </ul>
         </main>
         <v-back-top></v-back-top>
     </div>

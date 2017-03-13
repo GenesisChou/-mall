@@ -62,6 +62,7 @@
         overflow: scroll;
         -webkit-overflow-scrolling: touch;
         background-color: $white;
+        border-bottom: 1px solid #d4d4d6;
         &::-webkit-scrollbar {
             display: none;
         }

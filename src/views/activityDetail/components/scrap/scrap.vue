@@ -210,20 +210,18 @@
                 }
             },
             state(value) {
-                if (value == 'start') {
-                    this.freshFreeTimes();
-                } else if (value == 'stop') {
-                    // this.toggleDialog(this.alert);
+                if (value == 'stop') {
                     this.$store.dispatch('toggleLoading');
                     setTimeout(() => {
                         this.$store.dispatch('toggleLoading');
                         this.toggleDialog(this.alert);
-                    }, 1500)
+                    }, 1000)
                 }
             },
             is_win(value) {
-                if (this.state != 'start') return;
+                if (this.state == 'ready') return;
                 let result = this.activity_result;
+                this.freshFreeTimes();
                 if (value) {
                     this.alert = {
                         type: 'success',
@@ -279,8 +277,8 @@
                     this.$store.dispatch('toggleLoading');
                     let data = response.data;
                     if (data.status == APP.SUCCESS) {
-                        this.activity_result = data.data;
                         this.state = 'start';
+                        this.activity_result = data.data;
                         this.is_win = this.activity_result.is_win;
                     } else {
                         this.toggleDialog({

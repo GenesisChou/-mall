@@ -9,7 +9,6 @@
         &.bg-white {
             margin-top: pxTorem(20);
             background-color: $white;
-            border-bottom: 1px solid #d3d4d6;
         }
         .btn {
             width: pxTorem(517);
@@ -171,7 +170,7 @@
                 <!-- 使用说明 -->
                 <v-introduction v-if='product_detail.content_use' title='使用说明' :content='product_detail.content_use'></v-introduction>
                 <!-- 重要声明 -->
-                <v-announcement></v-announcement>
+                <v-announcement :has-border='product_type==5'></v-announcement>
                 <div v-if='product_type==5' class='single-button bg-white'>
                     <button class='btn btn-orange' @click='useTicket(product_detail.url)'> 前往使用 </button>
                 </div>
@@ -241,7 +240,7 @@
                     <!-- 领取说明 -->
                     <v-introduction v-if='product_detail.content_use' title='领取说明' :content='product_detail.content_use'></v-introduction>
                     <!-- 重要声明 -->
-                    <v-announcement></v-announcement>
+                    <v-announcement :has-border='false'></v-announcement>
                 </template>
             </template>
         </v-order>

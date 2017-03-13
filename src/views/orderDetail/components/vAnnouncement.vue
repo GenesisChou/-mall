@@ -13,10 +13,13 @@
         .content {
             padding: pxTorem(20) 0;
         }
+        &.border {
+            border-bottom: 1px solid #d3d4d6;
+        }
     }
 </style>
 <template>
-    <section class='v-announcement'>
+    <section :class='["v-announcement",{border:hasBorder}]'>
         <h3>重要声明</h3>
         <div class='content'>
             <h5>1.除商品本身不能正常兑换外，商品一经兑换，积分概不退还，请用户在兑换前仔细阅读使用规则、使用说明、有效期等重要信息； </h5>
@@ -27,7 +30,13 @@
     </section>
 </template>
 <script>
-export default{
-    name:'vAnnouncement'
-}
+    export default {
+        name: 'vAnnouncement',
+        props: {
+            hasBorder: {
+                type: Boolean,
+                default: true,
+            }
+        }
+    }
 </script>

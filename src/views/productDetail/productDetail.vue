@@ -20,10 +20,20 @@
             font-size: pxTorem(34);
         }
         h3 {
+            display: inline-block;
             color: $orange;
         }
         .number {
             font-size: pxTorem(36);
+        }
+        s {
+            padding-left: 0.4rem;
+            color:#6e6f6f;
+            transform: scale(0.6) translateY(10%);
+            -webkit-transform: scale(0.6) translateY(10%);
+            display: inline-block;
+            transform-origin: left;
+            -webkit-transform-origin: left;
         }
     }
     
@@ -52,16 +62,16 @@
             border-radius: pxTorem(10);
         }
         h6 {
-            display:flex;
-            display:-webkit-flex;
-            -webkit-align-items:center;
-            justify-content:center;
-            -webkit-justify-content:center;
-            height:pxTorem(66);
+            display: flex;
+            display: -webkit-flex;
+            -webkit-align-items: center;
+            justify-content: center;
+            -webkit-justify-content: center;
+            height: pxTorem(66);
             color: #646565;
-            .iconfont{
-                color:#ff9817;
-                margin-right:pxTorem(5);
+            .iconfont {
+                color: #ff9817;
+                margin-right: pxTorem(5);
             }
         }
         .exchange {
@@ -79,7 +89,9 @@
             <img class='banner' :src='product_detail.pic_banner' />
             <div class='title'>
                 <h1 class='text-ellipsis'>{{product_name}}</h1>
-                <h3><span class='number'>{{integral}}</span>积分</h3>
+                <h3><span class='number'>{{integral}}</span>积分
+                    <s>¥{{product_detail.price}}</s>
+                </h3>
             </div>
         </header>
         <main v-show='content_show' class='main'>

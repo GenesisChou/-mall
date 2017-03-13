@@ -25,9 +25,8 @@
     }
     
     .shake-panel {
-        position: absolute;
-        left: 0;
-        top: pxTorem(308);
+        position: relative;
+        top: pxTorem(-90);
         width: pxTorem(750);
         height: pxTorem(798);
         background-image: url('./images/shakePanel.png');
@@ -77,7 +76,6 @@
     
     .describe {
         padding: 0 pxTorem(40);
-        padding-top: pxTorem(800);
         .editor-style {
             padding-top: pxTorem(20);
             padding-bottom: pxTorem(40);

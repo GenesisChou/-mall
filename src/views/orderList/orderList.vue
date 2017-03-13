@@ -37,17 +37,17 @@
                     height: pxTorem(4);
                     background-color: $orange;
                 }
-                .iconfont{
-                    color:$orange;
+                .iconfont {
+                    color: $orange;
                 }
             }
         }
         .iconfont {
             font-size: pxTorem(55);
-            color:#666666;
+            color: #666666;
         }
-        h6{
-            margin-top:pxTorem(-10);
+        h6 {
+            margin-top: pxTorem(-10);
         }
         .badage {
             display: flex;
@@ -83,6 +83,13 @@
         color: $orange;
         background-color: $white;
     }
+    
+    li:last-child .v-order-footer {
+        margin-bottom: 0;
+        &.no-border {
+            border-bottom: none;
+        }
+    }
 </style>
 <template>
     <div class='order-list'>
@@ -94,10 +101,11 @@
             </li>
         </ul>
         <ul>
-            <router-link v-for='order in order_list[current_type]' :to='{name:"order_detail",
+            <router-link v-for='(order,$index) in order_list[current_type]' :to='{name:"order_detail",
                         query:{order_id:parseInt(order.id)}}' tag='li'>
                 <v-order :img='order.product_pic' :id='order.orderid' :integral='order.integral>>0' :name='order.product'>
-                    <h6 class='v-order-footer'>
+
+                    <h6 :class='["v-order-footer",{"no-border":$index==order_list[current_type].length-1&&!busy}]'>
                         {{order.tips}}
                     </h6>
                 </v-order>

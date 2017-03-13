@@ -1,14 +1,9 @@
 <style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
     .v-load-more {
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        display:-webkit-flex;
-        -webkit-align-items:center;
-        -webkit-justify-content:center;
-        height:pxTorem(80);    
-        color:#a0a7ad;
+        line-height: pxTorem(80);
+        color: #a0a7ad;
+        text-align:center;
     }
 </style>
 <template>

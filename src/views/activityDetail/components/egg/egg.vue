@@ -32,30 +32,41 @@
     }
     
     .eggs {
+        display: flex;
+        display: -webkit-flex;
+        flex-wrap: wrap;
+        -webkit-flex-wrap: wrap;
+        position: relative;
         margin-top: pxTorem(70);
-        td {
+        li {
             position: relative;
             width: pxTorem(250);
             height: pxTorem(250);
+            list-style: none;
             background-image: url('./images/egg.png');
             background-size: pxTorem(202) pxTorem(200);
             background-position: center center;
             background-repeat: no-repeat;
+            &.active {
+                transform: translateY(-20%);
+                -webkit-transform: translateY(-20%);
+            }
+            &.broken {
+                background-image: url('./images/brokenEgg.png');
+            }
         }
-        td.active {
-            background-image: url('./images/brokenEgg.png');
-        }
-        td.active:after {
-            content: '';
+        .hammer {
             position: absolute;
             width: pxTorem(108);
             height: pxTorem(87);
-            top: pxTorem(-35);
-            left: pxTorem(250/2-108/2+30);
-            background-image: url('./images/hammer.png');
-            background-size: 100%;
+            top: pxTorem(-150);
+            left: pxTorem(750-108);
+            transition: 1s linear;
+            -webkit-transition: 1s linear;
             -webkit-transform-origin: right bottom;
-            -webkit-animation: break 1.5s linear;
+            &.active {
+                -webkit-animation: hammer 1s linear infinite;
+            }
         }
     }
     
@@ -90,7 +101,7 @@
         z-index: 0;
     }
     
-    @-webkit-keyframes break {
+    @-webkit-keyframes hammer {
         0% {
             -webkit-transform: rotate(0deg);
         }
@@ -121,18 +132,10 @@
                 现有积分:
                 <v-integral-box :integral='user.integral>>0' color='red'></v-integral-box>
             </div>
-            <table class='eggs'>
-                <tr>
-                    <td :class='{active:active_num==1}' @click='breakEgg(1)'> </td>
-                    <td :class='{active:active_num==2}' @click='breakEgg(2)'> </td>
-                    <td :class='{active:active_num==3}' @click='breakEgg(3)'> </td>
-                </tr>
-                <tr>
-                    <td :class='{active:active_num==4}' @click='breakEgg(4)'> </td>
-                    <td :class='{active:active_num==5}' @click='breakEgg(5)'> </td>
-                    <td :class='{active:active_num==6}' @click='breakEgg(6)'> </td>
-                </tr>
-            </table>
+            <ul class='eggs' ref='eggs'>
+                <li v-for='(egg,$index) in 6' :class='{active:active_num==$index+1}' @click='start($index+1)'> </li>
+                <img class='hammer' src='./images/hammer.png' ref='hammer'>
+            </ul>
             <h2 class='notice'>
                 <template v-if='freeTimes>0'>
                     今天还有<span class='number'>{{freeTimes}}</span>次免费机会
@@ -183,7 +186,12 @@
                 state: '',
                 activity_result: {},
                 active_num: '',
+                broken_num: '',
+                egg_number: 6,
+                eggs: '',
+                hammer: '',
                 is_win: '',
+                timer: ''
             }
         },
         computed: {
@@ -192,64 +200,107 @@
             }
         },
         watch: {
+            state(value) {
+                if (value == 'ready') {
+                    this.timer = setInterval(() => {
+                        this.active_num = ++this.active_num % (this.egg_number + 1) || 1;
+                    }, 600);
+                } else if (value == 'start') {
+                    this.active_num = 0;
+                    clearInterval(this.timer);
+                }
+            },
+            broken_num(value, old_value) {
+                if (value) {
+                    let left = 0,
+                        top = 0;
+                    if (value >= 1 && value <= 3) {
+                        left = (value - 1) * 250;
+                    } else if (value >= 4 && value <= 6) {
+                        left = (value - 4) * 250;
+                        top = 250;
+                    }
+                    // this.hammer.style.visibility = 'visible';
+                    this.hammer.style.left = utils.pxTorem(100 + left);
+                    this.hammer.style.top = utils.pxTorem(-40 + top);
+                    //1秒后锤子开启动画 之后蛋破裂2次 弹出弹框
+                    setTimeout(() => {
+                        this.hammer.classList.toggle('active');
+                        let time = 0;
+                        const timer = setInterval(() => {
+                            this.eggs[value - 1].classList.toggle('broken');
+                            if (++time >= 3) {
+                                clearInterval(timer);
+                                this.hammer.classList.toggle('active');
+                            }
+                        }, 300);
+                    }, 1000);
+
+                } else if (old_value) {
+                    if (this.eggs) {
+                        this.eggs[old_value - 1].classList.toggle('broken');
+                    }
+                    this.hammer.style.left = utils.pxTorem(750 - 108);
+                    this.hammer.style.top = utils.pxTorem(-150);
+                    // this.hammer.style.visibility = 'hidden';
+
+                }
+
+            },
             is_win(value) {
                 if (this.state != 'start') return;
                 let result = this.activity_result;
                 this.freshFreeTimes();
-                if (value) {
-                    setTimeout(() => {
-                        this.$store.dispatch('toggleLoading');
-                        setTimeout(() => {
-                            this.$store.dispatch('toggleLoading');
-                            this.toggleDialog({
-                                type: 'success',
-                                img: result.pic_thumb,
-                                msg: '获得' + result.name,
-                                callback: this.toOrderDetail(result.id),
-                                callback_close: () => {
-                                    this.init();
-                                },
-                                btn_text: '查看'
-                            });
-                        }, 1500);
-                    }, 1500);
-                } else {
-                    setTimeout(() => {
-                        this.$store.dispatch('toggleLoading');
-                        setTimeout(() => {
-                            this.$store.dispatch('toggleLoading');
-                            this.toggleDialog({
-                                msg: result.name,
-                                btn_text: '再来一次',
-                                callback: () => {
-                                    this.init();
-                                },
-                            });
-                        }, 1500);
-                    }, 1500);
-                }
+                setTimeout(() => {
+                    if (value) {
+                        this.toggleDialog({
+                            type: 'success',
+                            img: result.pic_thumb,
+                            msg: '获得' + result.name,
+                            callback: this.toOrderDetail(result.id),
+                            callback_close: () => {
+                                this.init();
+                            },
+                            btn_text: '查看'
+                        });
+                    } else {
+                        this.toggleDialog({
+                            msg: '很遗憾,未砸中',
+                            btn_text: '再来一次',
+                            callback: () => {
+                                this.init();
+                            },
+                        });
+                    }
+                }, 3000);
             }
         },
         created() {
             this.init();
         },
+        mounted() {
+            this.eggs = this.$refs.eggs.querySelectorAll('li');
+            this.hammer = this.$refs.hammer;
+        },
         methods: {
             init() {
+                if (this.eggs) {}
                 this.state = 'ready';
                 this.activity_result = {};
                 this.active_num = 0;
+                this.broken_num = 0;
                 this.is_win = '';
             },
-            breakEgg(num) {
+            start(num) {
                 if (this.state != 'ready') return;
                 this.state = 'start';
-                this.active_num = num;
                 this.$http.post(`${APP.HOST}/turntable_activity/${this.id}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID
                 }).then((response) => {
                     let data = response.data;
                     if (data.status == APP.SUCCESS) {
+                        this.broken_num = num;
                         this.activity_result = data.data;
                         this.is_win = this.activity_result.is_win;
                     } else {
@@ -258,7 +309,7 @@
                         })
                     }
                 }, (response) => {})
-            }
+            },
         }
     }
 </script>

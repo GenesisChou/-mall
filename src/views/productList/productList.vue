@@ -1,14 +1,15 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
-    .search-box {
-        padding: pxTorem(17) pxTorem(30);
-        position: fixed;
-        z-index: 1;
-        background-color: $gray-light;
+    .product-list{
+        padding-bottom:pxTorem(20);
+    }
+    .space {
+        height: pxTorem(112);
     }
     
-    .space {
-        height: pxTorem(100);
+    ul,
+    li {
+        list-style: none;
     }
     
     .sort {
@@ -16,21 +17,22 @@
         align-items: center;
         display: -webkit-flex;
         -webkit-align-items: center;
-        height: pxTorem(105);
-        border-top: 1px solid $gray-light;
-        border-bottom: 1px solid $gray-light;
+        height: pxTorem(82);
+        margin-bottom: pxTorem(20);
+        border-bottom: 1px solid #d3d4d6;
         background-color: $white;
+        color: #babbbe;
         >div {
             flex: 1;
             -webkit-flex: 1;
             text-align: center;
-            font-size: pxTorem(36);
+            font-size: pxTorem(30);
             &:nth-child(1) {
                 position: relative;
             }
         }
         .active {
-            color: $red;
+            color: $orange;
         }
         .iconfont {
             font-weight: bold;
@@ -44,35 +46,58 @@
         transform: translateY( -50%);
         -webkit-transform: translateY( -50%);
         line-height: pxTorem(18);
-        right: pxTorem(20);
-        i {
-            font-size: pxTorem(18);
-            display: block;
+        right: pxTorem(70);
+        .up,
+        .down {
+            width: 0;
+            height: 0;
+            border: pxTorem(9) solid #a9aaae;
+        }
+        .up {
+            border-left-color: transparent;
+            border-right-color: transparent;
+            border-top-color: transparent;
+            margin-bottom: pxTorem(6);
+            &.active {
+                border-bottom-color: $orange;
+            }
+        }
+        .down {
+            border-left-color: transparent;
+            border-right-color: transparent;
+            border-bottom-color: transparent;
+            &.active {
+                border-top-color: $orange;
+            }
         }
     }
 </style>
 <template>
     <div class='product-list'>
-        <div class='search-box'>
-            <v-search :search='searchProduct' v-model='params.sword'></v-search>
-        </div>
+        <v-search :search='searchProduct' v-model='params.sword'></v-search>
         <div class='space'></div>
         <section class='sort'>
             <div @click='sortByIntegral'>
                 <span :class='[sort_type!="count"&&sort_type?"active":""]'>消耗积分排序</span>
                 <div class='arrows'>
+                    <div :class='["up",{active:sort_type=="integral-up"}]'></div>
+                    <div :class='["down",{active:sort_type=="integral-down"}]'></div>
+                    <!--
                     <i :class='["icon-arrows-up","iconfont",sort_type=="integral-up"?"active":""]'></i>
                     <i :class='["icon-arrows-down","iconfont",sort_type=="integral-down"?"active":""]'></i>
+                    -->
                 </div>
             </div>
             <div :class='[sort_type=="count"?"active":""]' @click='sortByCount'>
                 兑换量优先
             </div>
         </section>
-        <router-link :to='{name:"product_detail",query:{product_id:product.id,integral:product.integral>>0}}' v-for='product in product_list'
-            tag='div'>
-            <v-list-item :title='product.name' :title-dupty='~~product.integral+"积分"' :img='product.pic_thumb' color='red'></v-list-item>
-        </router-link>
+        <ul class='list'>
+            <router-link :to='{name:"product_detail",query:{product_id:product.id,integral:product.integral>>0}}' v-for='product in product_list'
+                tag='li'>
+                <v-list-item :title='product.name' :title-dupty='product.name' :integral='product.integral>>0' :img='product.pic_thumb'></v-list-item>
+            </router-link>
+        </ul>
         <v-load-more v-if='busy'></v-load-more>
         <v-back-top></v-back-top>
     </div>

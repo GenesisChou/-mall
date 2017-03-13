@@ -27,9 +27,13 @@
             border: pxTorem(2) solid #6b3906;
             color: #e65413;
         }
-        li.pink{
-            background-color:#f33748;
-            border:none;
+        li.pink {
+            background-color: #f33748;
+            border: none;
+        }
+        li.blue {
+            background-color: #89deee;
+            border: none;
         }
     }
 </style>

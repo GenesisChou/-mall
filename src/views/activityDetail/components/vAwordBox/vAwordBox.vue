@@ -20,6 +20,9 @@
         &.blue {
             background-image: url('./images/blueAwordBox.png');
         }
+        &.navy {
+            background-image: url('./images/navyAwordBox.png');
+        }
         ul {
             width: 100%;
             overflow-y: hidden;
@@ -58,8 +61,11 @@
             &.aquamarine {
                 background-color: #2ba7a9;
             }
-            &.blue{
-                background-color:#29cfff;
+            &.blue {
+                background-color: #29cfff;
+            }
+            &.navy {
+                background-color: #399fae;
             }
         }
     }

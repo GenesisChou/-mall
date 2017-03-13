@@ -222,7 +222,7 @@
                         };
                     } else {
                         this.alert = {
-                            msg: result.name,
+                            msg: '很遗憾,未中奖',
                             btn_text:'再来一次',
                             callback: () => {
                                 this.init(this.stop_position);

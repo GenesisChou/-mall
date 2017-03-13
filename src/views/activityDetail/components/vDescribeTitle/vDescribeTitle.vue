@@ -20,6 +20,10 @@
             color:#fc4c60;
             background-image: url('./images/blueTitle.png');
         }
+        &.navy{
+            color:#007f96;
+            background-image: url('./images/blueTitle.png');
+        }
         &.aquamarine {
             background-image: url('./images/aquamarineTitle.png');
         }

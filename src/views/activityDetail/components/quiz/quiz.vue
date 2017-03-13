@@ -256,7 +256,7 @@
                     this.is_win = result.is_win;
                 } else {
                     this.toggleDialog({
-                        msg: result.name,
+                        msg: '回答错误',
                         btn_text: '继续答题',
                         callback: () => {
                             this.init();

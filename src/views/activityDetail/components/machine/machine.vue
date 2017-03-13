@@ -125,8 +125,8 @@
             }
         }
         .awords {
-            transform: translateY(pxTorem((410-600)/2));
-            -webkit-transform: translateY(pxTorem((410-600)/2));
+            position: relative;
+            top: pxTorem((410-600)/2);
             li {
                 height: pxTorem(200);
                 padding-top: pxTorem(10);
@@ -161,23 +161,24 @@
             transform: translateY(-50%);
             -webkit-transform: translateY(-50%);
         }
-        .line:before,.line:after {
-            content:'';
+        .line:before,
+        .line:after {
+            content: '';
             position: absolute;
-            top:50%;
+            top: 50%;
             width: pxTorem(14);
             height: pxTorem(14);
             border-radius: 50%;
-            background-color:#76e6f7;
+            background-color: #76e6f7;
             box-shadow: 0 pxTorem(5) pxTorem(5) #4a93f0;
             transform: translateY(-50%);
             -webkit-transform: translateY(-50%);
         }
-        .line:before{
-            left:pxTorem(-7);
+        .line:before {
+            left: pxTorem(-7);
         }
-        .line:after{
-            right:pxTorem(-7);
+        .line:after {
+            right: pxTorem(-7);
         }
     }
     
@@ -205,17 +206,13 @@
                     现有积分:
                     <v-integral-box :integral='user.integral>>0' color='pink'></v-integral-box>
                 </header>
-                <ul class='container'>
+                <ul class='container' ref='container'>
                     <img class='shadow' src='./images/machineShadow.png'></img>
                     <li class='group'>
                         <ul class='awords'>
                             <li v-for='aword in activityDetail.items'>
                                 <img :src='aword.pic'>
                             </li>
-                        </ul>
-                    </li>
-                    <li class='group'>
-                        <ul class='awords'>
                             <li v-for='aword in activityDetail.items'>
                                 <img :src='aword.pic'>
                             </li>
@@ -223,6 +220,20 @@
                     </li>
                     <li class='group'>
                         <ul class='awords'>
+                            <li v-for='aword in activityDetail.items'>
+                                <img :src='aword.pic'>
+                            </li>
+                            <li v-for='aword in activityDetail.items'>
+                                <img :src='aword.pic'>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class='group'>
+                        <ul class='awords'>
+                            <li v-for='aword in activityDetail.items'>
+                                <img :src='aword.pic'>
+                            </li>
                             <li v-for='aword in activityDetail.items'>
                                 <img :src='aword.pic'>
                             </li>
@@ -232,7 +243,7 @@
 
                 </ul>
                 <footer class='notice'>
-                    <template v-if='!freeTimes>0'>
+                    <template v-if='freeTimes>0'>
                         今天还有<span class='number'>{{freeTimes}}</span>次免费机会
                     </template>
                     <template v-else>
@@ -242,7 +253,7 @@
             </div>
             <div class='operation'>
                 <div class='line'></div>
-                <img src='./images/machineButton.png'>
+                <img @click='start' src='./images/machineButton.png'>
             </div>
         </main>
         <article class='describe'>
@@ -287,7 +298,7 @@
                 alert: {},
                 is_win: '', //判断是否中奖
                 activity_result: {},
-                aword_height: 200
+                groups: '',
             }
         },
         computed: {
@@ -295,13 +306,159 @@
                 return this.$store.state.user;
             }
         },
+        watch: {
+            state(value) {
+                if (value == 'stop') {
+                    this.$store.dispatch('toggleLoading');
+                    setTimeout(() => {
+                        this.$store.dispatch('toggleLoading');
+                        this.toggleDialog(this.alert);
+                    }, 1000)
+                } else if (value == 'rotating') {
+                    let vm = this;
+                    if (this.is_win) {
+                        let name = this.activity_result.name,
+                            stop_num = this.getPosition(name, this.activityDetail.items);
+                            /*
+                        rotate(0, stop_num);
+                        rotate(1, stop_num, 500);
+                        rotate(2, stop_num, 1000);
+                        */
+                        rotate(0, 1);
+                        rotate(1, 2, 500);
+                        rotate(2, 0, 1000);
+                    } else {
+                        const num = vm.activityDetail.items.length;
+                        rotate(0, Math.floor(Math.random() * (num + 1)));
+                        rotate(1, Math.floor(Math.random() * (num + 1)), 500);
+                        rotate(2, Math.floor(Math.random() * (num + 1)), 1000);
+                    }
+
+                    function rotate(group_num, stop_num, delay_time = 0) {
+                        const origin_top = 0,
+                            max_top = vm.activityDetail.items.length - 1,
+                            max_turn = 8;
+                        let top = origin_top,
+                            turn = 0,
+                            timer = '';
+                        setTimeout(() => {
+                            timer = setInterval(() => {
+                                if (turn > max_turn && top < -stop_num + 1) {
+                                    clearInterval(timer);
+                                    if (!stop_num) {
+                                        timer = setInterval(() => {
+                                            vm.groups[group_num].style.marginTop = (top * 100) +
+                                                '%';
+                                            top -= 0.1;
+                                            if (top < -max_top) {
+                                                clearInterval(timer);
+                                                if (group_num == 2) {
+                                                    setTimeout(() => {
+                                                        vm.toggleDialog(vm.alert);
+                                                    }, 500);
+                                                }
+                                            }
+                                        }, 10)
+                                    } else if (group_num == 2) {
+                                        setTimeout(() => {
+                                            vm.toggleDialog(vm.alert);
+                                        }, 500);
+                                    }
+                                }
+                                vm.groups[group_num].style.marginTop = (top * 100) + '%';
+                                top -= 0.1;
+                                if (top < -(max_top + 1)) {
+                                    turn++;
+                                    top = origin_top;
+                                }
+                            }, 10);
+                        }, delay_time)
+                    }
+                }
+            },
+            is_win(value) {
+                if(this.state=='ready') return;
+                let result = this.activity_result;
+                this.freshFreeTimes();
+                if (value) {
+                    this.alert = {
+                        type: 'success',
+                        img: result.pic_thumb,
+                        msg: '获得' + result.name,
+                        btn_text: '查看',
+                        callback: this.toOrderDetail(result.id),
+                        callback_close: () => {
+                            this.init();
+                        },
+                    };
+                } else {
+                    this.alert = {
+                        msg: '很遗憾,未抽中',
+                        btn_text: '再来一次',
+                        callback: () => {
+                            this.init();
+                        }
+                    };
+                }
+            }
+        },
+        deactivated() {
+            if (this.timer) {
+                clearInterval(this.timer);
+            }
+        },
+        created() {
+            this.init();
+        },
+        mounted() {
+            this.groups = this.$refs.container.querySelectorAll('.awords');
+        },
         methods: {
             init() {
+                if (this.state) {
+                    for (let i = 0; i < 3; i++) {
+                        this.groups[i].style.marginTop = (top * 100) + '%';
+                    }
+                }
                 this.state = 'ready';
                 this.alert = {};
                 this.is_win = '';
                 this.activity_result = {};
             },
-        }
+            start() {
+                if (this.state != 'ready') return;
+                this.state = 'start';
+                this.$http.post(`${APP.HOST}/hot_pot_activity/${this.id}`, {
+                    token: APP.TOKEN,
+                    user_id: APP.USER_ID
+                }).then((response) => {
+                    let data = response.data;
+                    if (data.status == APP.SUCCESS) {
+                        this.activity_result = data.data;
+                        this.is_win = this.activity_result.is_win;
+                        this.state = 'rotating';
+                    } else {
+                        this.toggleDialog({
+                            msg: data.info,
+                            callback: () => {
+                                this.init();
+                            }
+                        })
+                    }
+                }, (response) => {})
+
+            },
+            getPosition(name, awords) {
+                let stop_num = 0;
+                awords.forEach((award, index) => {
+                    if (award.name == name) {
+                        stop_num = index;
+                        return true;
+                    }
+                })
+                return stop_num;
+            },
+        },
+
     }
 </script>
