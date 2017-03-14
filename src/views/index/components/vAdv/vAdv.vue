@@ -24,12 +24,13 @@
             margin-right:pxTorem(20);
         }
         main {
-            padding: pxTorem(10) pxTorem(20);
+            padding: pxTorem(10) 0;
+            text-align:center;
             background-color: #f7f7f7;
         }
         .banner {
-            width: pxTorem(688);
-            height: pxTorem(193);
+            width: pxTorem(702);
+            height: pxTorem(192);
         }
     }
 </style>
