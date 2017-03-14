@@ -255,7 +255,6 @@
                 //type 1 外链 type 2 详情
                 const type = subject.type;
                 if (type == 1) {
-                    alert('fuck');
                     location.href = subject.url;
                 } else if (type == 2) {
                     this.$router.push({
