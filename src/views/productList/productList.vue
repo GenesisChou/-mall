@@ -129,11 +129,6 @@
                 return this.params.total > this.params.p;
             }
         },
-        watch: {
-            busy(value) {
-                this.$store.dispatch('toggleBusy',value);
-            }
-        },
         activated() {
             let position = utils.getSessionStorage('position:' + this.$route.name);
             if (position) {

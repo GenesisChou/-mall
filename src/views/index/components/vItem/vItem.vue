@@ -7,7 +7,7 @@
         background-color: $white;
         overflow: hidden;
         &:active {
-            background-color: darken($white, 5%);
+            background-color: darken($white, 2%);
         }
     }
     
@@ -51,14 +51,14 @@
     .message {
         position: relative;
         padding-top: pxTorem(15);
-        overflow:hidden;
-        h5{
-            height:pxTorem(40);
-            line-height:pxTorem(40);
+        overflow: hidden;
+        h5 {
+            height: pxTorem(40);
+            line-height: pxTorem(40);
         }
         h6 {
-            height:pxTorem(35);
-            line-height:pxTorem(35);
+            height: pxTorem(35);
+            line-height: pxTorem(35);
             color: #a9aaae;
         }
         .integral {
@@ -105,33 +105,13 @@
         },
         computed: {
             icon() {
-                const label_list = [{
-                    name: '兑换',
-                    img: require('./images/exchange.png')
-                }, {
-                    name: '刮卡',
-                    img: require('./images/scrap.png')
-                }, {
-                    name: '问答',
-                    img: require('./images/quiz.png')
-                }, {
-                    name: '摇一摇',
-                    img: require('./images/shake.png')
-                }, {
-                    name: '游戏',
-                    img: require('./images/game.png')
-                }, {
-                    name: '转盘',
-                    img: require('./images/fortune.png')
-                }];
-                let label = this.item.label,
-                    result = '';
-                label_list.forEach(item => {
-                    if (item.name == label) {
-                        result = item.img;
+                if (this.item.type == 2) {
+                    if (this.item.item_type == 3) {
+                        return require('./images/game.png');
                     }
-                })
-                return result || require('./images/exchange.png');
+                    return require('./images/activity.png');
+                }
+                return require('./images/exchange.png');
             },
             router_link() {
                 if (this.item.type == 1) {

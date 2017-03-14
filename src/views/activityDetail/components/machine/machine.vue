@@ -335,8 +335,8 @@
                         const random_array = this.createRandomArray();
                         console.log(random_array);
                         this.rotate(0, random_array[0]);
-                        this.rotate(1, random_array[1], 800);
-                        this.rotate(2, random_array[2], 1600, () => {
+                        this.rotate(1, random_array[1], 1000);
+                        this.rotate(2, random_array[2], 2000, () => {
                             setTimeout(() => {
                                 this.toggleDialog(this.alert);
                             }, 500)

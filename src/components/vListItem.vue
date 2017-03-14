@@ -4,7 +4,7 @@
         padding: 0 pxTorem(30);
         background-color: $white;
         &:active {
-            background-color: darken($white, 5%);
+            background-color: darken($white, 2%);
         }
     }
     

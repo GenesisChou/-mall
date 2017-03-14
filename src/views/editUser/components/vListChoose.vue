@@ -23,7 +23,7 @@
                 border-bottom: 1px solid $gray-light;
             }
             &:active {
-                background-color: darken($white, 10%);
+                background-color: darken($white, 5%);
             }
             .radio {
                 width: pxTorem(30);

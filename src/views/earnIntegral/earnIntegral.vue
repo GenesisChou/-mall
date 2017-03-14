@@ -11,7 +11,7 @@
         position: relative;
         background-image: url('./images/yellowBg.png');
         background-repeat: no-repeat;
-        background-size: 100%;
+        background-size: pxTorem(750) pxTorem(620);
         .message {
             padding-top: pxTorem(25);
             text-align: center;
@@ -28,6 +28,22 @@
                 color: #9d7035;
             }
         }
+    }
+    
+    .back {
+        position: absolute;
+        left: pxTorem(30);
+        top: pxTorem(30);
+        display: flex;
+        display: -webkit-flex;
+        justify-content: center;
+        -webkit-justify-content: center;
+        align-items: center;
+        -webkit-align-items: center;
+        width: pxTorem(115);
+        height: pxTorem(50);
+        font-size: pxTorem(24);
+        box-shadow: 0 pxTorem(5) pxTorem(5) #d56a10;
     }
     
     .rotate {
@@ -116,7 +132,7 @@
                     background-size: 100%;
                     background-position: center center;
                     background-repeat: no-repeat;
-                    box-shadow: 0 pxTorem(3) pxTorem(5) #42c0c3,0 pxTorem(-3) pxTorem(3) rgba(255,255,255,.8);
+                    box-shadow: 0 pxTorem(3) pxTorem(5) #42c0c3, 0 pxTorem(-3) pxTorem(3) rgba(255, 255, 255, .8);
                 }
                 h6 {
                     color: #a78179;
@@ -205,7 +221,7 @@
             padding-top: pxTorem(80);
             text-align: center;
             font-size: pxTorem(28);
-            color:#8d8d8d;
+            color: #8d8d8d;
             &:active {
                 background-color: #4dd3d6;
             }
@@ -215,6 +231,9 @@
 <template>
     <div v-if='loaded' class='earn-integral'>
         <header class='head'>
+            <router-link v-if='back_show' :to='{name:"index"}' class='back btn-orange btn' tag='div'>
+                返回首页
+            </router-link>
             <div class='rotate'>
                 <transition name='rotate'>
                     <div v-if='user.ischecked' class='circle-button'>
@@ -297,6 +316,7 @@
                     today: 0
                 },
                 article_list: [],
+                back_show: false
             }
         },
         computed: {
@@ -312,12 +332,16 @@
             }
         },
         activated() {
+            this.back_show = this.$route.query.back_show || false;
             this.getArticleList();
             this.getReadParam();
         },
         created() {
             this.getCheckInParams();
             this.getSubmitParam();
+        },
+        deactivated() {
+            this.back_show = false;
         },
         methods: {
             //签到
@@ -354,7 +378,7 @@
                     this.$store.dispatch('toggleLoading');
                     let data = response.data;
                     this.check_in_params = data.data;
-                    this.loaded=true;
+                    this.loaded = true;
                 }, (response) => {
                     this.$store.dispatch('toggleLoading');
                 })

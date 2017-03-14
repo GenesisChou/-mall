@@ -43,22 +43,13 @@
        border-radius: pxTorem(10);
        font-size: pxTorem(30);
    }
-   
-   .btn-red {
-       background-color: $red;
-       border-color: $red;
-       color: $white;
-       &:active {
-           background-color: darken($red, 10%);
-       }
-   }
-   
+     
    .btn-orange {
        background-color: $orange;
        border-color: $orange;
        color: $white;
        &:active {
-           background-color: darken($orange, 10%);
+           background-color: darken($orange, 5%);
        }
    }
    

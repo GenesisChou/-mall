@@ -22,7 +22,7 @@
             position: relative;
             text-align: center;
             &:active {
-                background-color: darken($white, 10%);
+                background-color: darken($white, 2%);
             }
             .v-badage {
                 display: flex;
@@ -57,8 +57,9 @@
         margin-bottom: pxTorem(20);
         overflow: hidden;
         background-color: $white;
+        border-bottom: 1px solid #d3d4d6;
         img:active {
-            background-color: darken($white, 5%);
+            background-color: darken($white, 2%);
         }
         .left,
         .right {
@@ -108,7 +109,7 @@
                 <p>所有商品</p>
             </router-link>
         </ul>
-        <!-- 专题列表 -->
+        <!-- 专题 -->
         <div v-if='subject_show' class='subject'>
             <img class='left' @click='routerLink(subject_list[0])' :src='subject_list[0].pic_main'>
             <div class='right'>
@@ -116,6 +117,9 @@
                 <img @click='routerLink(subject_list[2])' :src='subject_list[2].pic_second'>
             </div>
         </div>
+        <!-- 广告列表 -->
+        <v-adv v-for='adv in hot_adcolumn' :adv='adv'></v-adv>
+        <!-- balabala -->
         <main class='clearfix'>
             <!-- 热门推荐 -->
             <v-item v-for='item in hot_commend' :item='item' type='commend'></v-item>
@@ -129,16 +133,19 @@
 <script>
     import vSwipe from './components/vSwipe';
     import vItem from './components/vItem';
+    import vAdv from './components/vAdv';
     export default {
         name: 'index',
         components: {
             vSwipe,
             vItem,
+            vAdv
         },
         data() {
             return {
                 hot_items: [],
                 hot_commend: [],
+                hot_adcolumn: [],
                 subject_list: [],
                 params: {
                     p: 1,
@@ -164,11 +171,6 @@
                 return this.subject_list.length >= 3;
             }
         },
-        watch: {
-            busy(value) {
-                this.$store.dispatch('toggleBusy', value);
-            }
-        },
         activated() {
             let position = utils.getSessionStorage('position:' + this.$route.name);
             if (position) {
@@ -178,7 +180,7 @@
         },
         created() {
             this.getHotCommend();
-            // this.getHotAdcolumn();
+            this.getHotAdcolumn();
             this.getSubjectList();
             this.$store.dispatch('toggleLoading');
             this.getHotItems().then(() => {
@@ -203,7 +205,7 @@
                     if (data.data.length >= 3) {
                         this.subject_list = data.data;
                     }
-                }, (response) => {});
+                });
             },
             getHotCommend() {
                 this.$http.post(`${APP.HOST}/hot_commend`, {
@@ -213,14 +215,17 @@
                 }).then((response) => {
                     let data = response.data;
                     this.hot_commend = data.data;
-                }, (response) => {});
+                });
             },
             getHotAdcolumn() {
                 this.$http.post(`${APP.HOST}/hot_adcolumn`, {
                     token: APP.TOKEN,
                     userid: APP.USER_ID,
                     media_id: APP.MEDIA_ID
-                }).then((response) => {}, (response) => {});
+                }).then((response) => {
+                    let data = response.data;
+                    this.hot_adcolumn = data.data;
+                });
             },
             getHotItems() {
                 return new Promise((resolve, reject) => {
@@ -235,8 +240,6 @@
                     }, (response) => {
                         reject();
                     });
-
-
                 })
             },
             getScrollEvent() {

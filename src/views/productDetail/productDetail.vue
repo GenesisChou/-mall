@@ -78,13 +78,13 @@
             margin-top: pxTorem(30);
             background-color: #ff5000;
             &:active {
-                background-color:darken(#ff5000,5%);
+                background-color: darken(#ff5000, 5%);
             }
         }
         .lack {
             background-color: #ff9817;
             &:active {
-                background-color:darken(#ff9817,5%);
+                background-color: darken(#ff9817, 5%);
             }
         }
     }
@@ -110,7 +110,7 @@
                 <h6>
                     <i class='iconfont icon-warn'></i> 您的积分不足
                 </h6>
-                <router-link :to='{name:"earn_integral"}' tag='div' class='lack'>
+                <router-link :to='{name:"earn_integral",query:{back_show:true}}' tag='div' class='lack'>
                     去赚取更多的积分>>
                 </router-link>
             </template>

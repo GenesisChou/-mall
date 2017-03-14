@@ -14,14 +14,22 @@ body {
 input,
 textarea {
     background: none;
-    -webkit-appearance:none;  
+    -webkit-appearance: none;
     font-family: 'PingFangSc-Light', 'Source Sans Pro', 'Helvetica Neue', 'Microsoft Yahei', Arial, sans-serif;
 }
-input[type=date] {  
-    background-color:transparent;  
-    filter: alpha(opacity=0); /*androd*/  
-} 
 
+input[type=date] {
+    background-color: transparent;
+    filter: alpha(opacity=0);
+    /*androd*/
+}
+
+a,
+button,
+input {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-user-modify: read-write-plaintext-only;
+}
 
 div,
 span,
@@ -125,7 +133,6 @@ table {
         vertical-align: middle;
     }
 }
-
 
 a,
 a:link,

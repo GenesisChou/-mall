@@ -25,7 +25,6 @@ const state = {
     v_loading: {
         show: false
     },
-    busy: false
 };
 
 const mutations = {
@@ -50,9 +49,6 @@ const mutations = {
     },
     toggleLoading(state) {
         state.v_loading.show = !state.v_loading.show;
-    },
-    toggleBusy(state, type) {
-        state.busy = type||false;
     },
     //获取用户信息
     getUserInfor(state, callback) {
@@ -148,12 +144,7 @@ const actions = {
     }, callback) {
         commit('getAddressList', callback);
     },
-    toggleBusy({
-        commit
-    }, type) {
-        commit('toggleBusy', type);
-    },
-    pageView({
+     pageView({
         commit
     }, page_id) {
         commit('pageView', page_id);

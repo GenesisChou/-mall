@@ -1,5 +1,10 @@
 <style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
+    .v-order.active:active {
+        .v-order-header,.v-order-main,.v-order-footer {
+            background-color: darken($white, 2%);
+        }
+    }
     .v-order-header {
         padding-left: pxTorem(30);
         line-height: pxTorem(76);
@@ -57,7 +62,7 @@
     }
 </style>
 <template>
-    <div class='v-order'>
+    <div :class='["v-order",{active:active}]'>
         <header class='v-order-header'>
             <i class='iconfont  icon-order'></i> 订单号：{{id}}
         </header>
@@ -83,9 +88,13 @@
             id: String,
             integral: Number,
             name: String,
-            hasBorder:{
-                type:Boolean,
-                default:false
+            hasBorder: {
+                type: Boolean,
+                default: false
+            },
+            active: {
+                type: Boolean,
+                default: false
             }
         }
     }
