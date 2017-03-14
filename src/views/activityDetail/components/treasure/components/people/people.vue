@@ -70,7 +70,9 @@
             -webkit-animation: one 1s ease-in forwards;
         }
         &.two {
-            -webkit-transform: rotateX(180deg) rotate(-60deg);
+            width: pxTorem(230);
+            // -webkit-transform: rotateX(180deg) rotate(-60deg);
+            -webkit-animation: two 1s ease-in forwards;
         }
     }
     
@@ -94,6 +96,15 @@
             -webkit-transform: rotateX(180deg) rotate(-80deg);
         }
     }
+    
+    @-webkit-keyframes two {
+        0% {
+            -webkit-transform: rotateX(180deg);
+        }
+        100% {
+            -webkit-transform: rotateX(180deg) rotate(-100deg);
+        }
+    }
 </style>
 <template>
     <div class='v-people'>
@@ -106,7 +117,7 @@
     export default {
         name: 'vPeople',
         props: {
-            state: String
+            action: String
         },
         data() {
             return {
@@ -114,12 +125,8 @@
             }
         },
         watch: {
-            state(value) {
-                if (value == "fishing") {
-                    this.type = 'one';
-                } else if (value == 'ready') {
-                    this.type = 'ready';
-                }
+            action(value) {
+                this.type = value || 'ready';
             }
         }
     }

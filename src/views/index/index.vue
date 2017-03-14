@@ -57,32 +57,29 @@
         margin-bottom: pxTorem(20);
         overflow: hidden;
         background-color: $white;
-        padding: pxTorem(7.5);
-        img {
-            width: 100%;
-            height: 100%;
+        img:active {
+            background-color: darken($white, 5%);
         }
-        >div {
-            float: left;
+        .left,
+        .right {
             width: 50%;
             height: pxTorem(400);
         }
-        .left div:active,
-        .right div:active {
-            background-color: darken($white, 5%);
-        }
         .left {
-            div {
-                width: 100%;
-                height: 100%;
-                padding: pxTorem(7.5);
-            }
+            padding: pxTorem(15);
+            padding-right: pxTorem(7.5);
         }
         .right {
-            div {
+            float: right;
+            img {
                 width: 100%;
                 height: 50%;
-                padding: pxTorem(7.5);
+            }
+            img:first-child {
+                padding: pxTorem(15) pxTorem(15) pxTorem(7.5) pxTorem(7.5);
+            }
+            img:last-child {
+                padding: pxTorem(7.5) pxTorem(15) pxTorem(15) pxTorem(7.5);
             }
         }
     }
@@ -113,24 +110,10 @@
         </ul>
         <!-- 专题列表 -->
         <div v-if='subject_show' class='subject'>
-            <div class='left'>
-                <router-link :to='{
-                    name:"subject_detail",
-                    query:{subject_id:(subject_list[0].id).toString() }}' tag='div'>
-                    <img :src='subject_list[0].pic_main'>
-                </router-link>
-            </div>
+            <img class='left' @click='routerLink(subject_list[0])' :src='subject_list[0].pic_main'>
             <div class='right'>
-                <router-link :to='{
-                    name:"subject_detail",
-                    query:{subject_id:(subject_list[1].id).toString()}}' tag='div'>
-                    <img :src='subject_list[1].pic_second'>
-                </router-link>
-                <router-link :to='{
-                    name:"subject_detail",
-                    query:{subject_id:(subject_list[2].id).toString()}}' tag='div'>
-                    <img :src='subject_list[2].pic_second'>
-                </router-link>
+                <img @click='routerLink(subject_list[1])' :src='subject_list[1].pic_second'>
+                <img @click='routerLink(subject_list[2])' :src='subject_list[2].pic_second'>
             </div>
         </div>
         <main class='clearfix'>
@@ -181,6 +164,11 @@
                 return this.subject_list.length >= 3;
             }
         },
+        watch: {
+            busy(value) {
+                this.$store.dispatch('toggleBusy', value);
+            }
+        },
         activated() {
             let position = utils.getSessionStorage('position:' + this.$route.name);
             if (position) {
@@ -190,7 +178,7 @@
         },
         created() {
             this.getHotCommend();
-            this.getHotAdcolumn();
+            // this.getHotAdcolumn();
             this.getSubjectList();
             this.$store.dispatch('toggleLoading');
             this.getHotItems().then(() => {
@@ -263,6 +251,21 @@
                     }
                 }, 500, 500);
             },
+            routerLink(subject) {
+                //type 1 外链 type 2 详情
+                const type = subject.type;
+                if (type == 1) {
+                    alert('fuck');
+                    location.href = subject.url;
+                } else if (type == 2) {
+                    this.$router.push({
+                        name: "subject_detail",
+                        query: {
+                            subject_id: subject.id,
+                        }
+                    });
+                }
+            }
         },
     };
 </script>

@@ -1,6 +1,5 @@
 <style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
-
     .v-order-header {
         padding-left: pxTorem(30);
         line-height: pxTorem(76);
@@ -9,11 +8,11 @@
         background-color: $white;
         .iconfont {
             font-size: pxTorem(30);
-            margin-right:pxTorem(12);
-            vertical-align:middle;
+            margin-right: pxTorem(12);
+            vertical-align: middle;
         }
     }
-
+    
     .v-order-main {
         display: flex;
         align-items: center;
@@ -23,6 +22,9 @@
         border-top: 1px solid $gray-light;
         padding: 0 pxTorem(30);
         background-color: $white;
+        &.border {
+            border-bottom: 1px solid #d3d4d6;
+        }
         .pic {
             width: pxTorem(160);
             height: pxTorem(120);
@@ -59,7 +61,7 @@
         <header class='v-order-header'>
             <i class='iconfont  icon-order'></i> 订单号：{{id}}
         </header>
-        <main class='v-order-main'>
+        <main :class='["v-order-main",{border:hasBorder}]'>
             <img class='pic' :src='img' />
             <div class='describe'>
                 <h2 class='text-ellipsis'>{{name}}</h2>
@@ -80,7 +82,11 @@
             img: String,
             id: String,
             integral: Number,
-            name: String
+            name: String,
+            hasBorder:{
+                type:Boolean,
+                default:false
+            }
         }
     }
 </script>

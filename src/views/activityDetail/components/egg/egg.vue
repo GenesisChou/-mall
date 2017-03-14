@@ -294,7 +294,7 @@
             start(num) {
                 if (this.state != 'ready') return;
                 this.state = 'start';
-                this.$http.post(`${APP.HOST}/turntable_activity/${this.id}`, {
+                this.$http.post(`${APP.HOST}/smashing_eggs_activity/${this.id}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID
                 }).then((response) => {

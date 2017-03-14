@@ -83,13 +83,6 @@
         color: $orange;
         background-color: $white;
     }
-    
-    li:last-child .v-order-footer {
-        margin-bottom: 0;
-        &.no-border {
-            border-bottom: none;
-        }
-    }
 </style>
 <template>
     <div class='order-list'>
@@ -105,7 +98,7 @@
                         query:{order_id:parseInt(order.id)}}' tag='li'>
                 <v-order :img='order.product_pic' :id='order.orderid' :integral='order.integral>>0' :name='order.product'>
 
-                    <h6 :class='["v-order-footer",{"no-border":$index==order_list[current_type].length-1&&!busy}]'>
+                    <h6 class='v-order-footer'>
                         {{order.tips}}
                     </h6>
                 </v-order>
@@ -155,6 +148,11 @@
             user() {
                 return this.$store.state.user;
             },
+        },
+        watch: {
+            busy(value) {
+                this.$store.dispatch('toggleBusy', value);
+            }
         },
         beforeRouteEnter(to, from, next) {
             //当从订单详情返回至订单列表时绑定滚动事件

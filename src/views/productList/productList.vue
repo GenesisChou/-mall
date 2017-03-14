@@ -1,8 +1,5 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
-    .product-list{
-        padding-bottom:pxTorem(20);
-    }
     .space {
         height: pxTorem(112);
     }
@@ -71,6 +68,10 @@
             }
         }
     }
+    
+    .list li:last-child {
+        margin-bottom: pxTorem(20);
+    }
 </style>
 <template>
     <div class='product-list'>
@@ -82,10 +83,6 @@
                 <div class='arrows'>
                     <div :class='["up",{active:sort_type=="integral-up"}]'></div>
                     <div :class='["down",{active:sort_type=="integral-down"}]'></div>
-                    <!--
-                    <i :class='["icon-arrows-up","iconfont",sort_type=="integral-up"?"active":""]'></i>
-                    <i :class='["icon-arrows-down","iconfont",sort_type=="integral-down"?"active":""]'></i>
-                    -->
                 </div>
             </div>
             <div :class='[sort_type=="count"?"active":""]' @click='sortByCount'>
@@ -130,6 +127,11 @@
         computed: {
             busy() {
                 return this.params.total > this.params.p;
+            }
+        },
+        watch: {
+            busy(value) {
+                this.$store.dispatch('toggleBusy',value);
             }
         },
         activated() {

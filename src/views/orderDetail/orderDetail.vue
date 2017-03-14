@@ -162,7 +162,7 @@
 <template>
     <div v-show='content_show' class='order-detail '>
         <!-- 订单详情 -->
-        <v-order :img='order_detail.product_pic' :id='order_detail.orderid' :integral='order_detail.integral>>0' :name='order_detail.product'>
+        <v-order :img='order_detail.product_pic' :id='order_detail.orderid' :integral='order_detail.integral>>0' :name='order_detail.product' :has-border='true'>
             <!--商品为虚拟物品时 -->
             <template v-if='is_virtual'>
                 <!--商品为优惠券时 -->

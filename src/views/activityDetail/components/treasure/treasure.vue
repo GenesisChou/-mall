@@ -53,8 +53,8 @@
     
     .chest {
         position: absolute;
-        width: pxTorem(150);
-        height: pxTorem(147);
+        width: pxTorem(135);
+        height: pxTorem(132);
         background-image: url('./images/chest.png');
         background-size: 100%;
         background-repeat: no-repeat;
@@ -65,55 +65,53 @@
         &:nth-child(1) {
             left: pxTorem(20);
             top: pxTorem(320);
-            transform: scale(0.9);
-            -webkit-transform: scale(0.9);
             opacity: 0.7;
         }
         &:nth-child(2) {
             left: pxTorem(80);
             top: pxTorem(120);
-            transform: scale(0.9);
-            -webkit-transform: scale(0.9);
             -webkit-animation-delay: -1s;
         }
         &:nth-child(3) {
-            left: pxTorem(220);
-            top: 0;
-            transform: scale(0.9);
+            left: pxTorem(240);
+            top: pxTorem(20);
+            width: pxTorem(120);
+            height: pxTorem(117.6);
             opacity: 0.7;
-            -webkit-transform: scale(0.9);
             -webkit-animation-delay: -3.4s;
         }
         &:nth-child(4) {
             left: pxTorem(210);
             top: pxTorem(250);
-            transform: scale(0.9);
-            -webkit-transform: scale(0.9);
             -webkit-animation-delay: -3.8s;
         }
         &:nth-child(5) {
             left: pxTorem(430);
             top: pxTorem(70);
+            width: pxTorem(120);
+            height: pxTorem(117.6);
             opacity: 0.7;
-            transform: scale(0.8);
-            -webkit-transform: scale(0.8);
             -webkit-animation-delay: -1.2s;
         }
         &:nth-child(6) {
             left: pxTorem(375);
             top: pxTorem(110);
+            width: pxTorem(150);
+            height: pxTorem(147);
             -webkit-animation-delay: -2.4s;
         }
         &:nth-child(7) {
             left: pxTorem(560);
             top: pxTorem(250);
+            width: pxTorem(150);
+            height: pxTorem(147);
             -webkit-animation-delay: -4.6s;
         }
         &:nth-child(8) {
             left: pxTorem(600);
             top: pxTorem(20);
-            transform: scale(0.8);
-            -webkit-transform: scale(0.8);
+            width: pxTorem(120);
+            height: pxTorem(117.6);
             -webkit-animation-delay: -1.2s;
         }
     }
@@ -269,9 +267,10 @@
 <template>
     <div class='v-treasure'>
         <header class='header'>
-            <img class='banner' src='./images/treasureDefaultBanner.png'>
+            <img class='banner' v-if='activityDetail.pic_icon' :src='activityDetail.pic_icon'>
+            <img class='banner' v-else src='./images/treasureDefaultBanner.png'>
             <img class='wave' src='./images/wave.png'>
-            <v-people :state='state'></v-people>
+            <v-people :action='action'></v-people>
         </header>
         <main class='main'>
             <section class='container'>
@@ -342,7 +341,8 @@
                 is_win: '',
                 activity_result: {},
                 chests: '',
-                random: ''
+                random: '',
+                action: ''
             }
         },
         computed: {
@@ -359,9 +359,18 @@
                         this.toggleDialog(this.alert);
                     }, 1000)
                 } else if (value == 'fishing') {
-                    this.random = 3 + Math.floor(Math.random() * 3);
+                    this.action = Math.random() > 0.5 ? 'one' : 'two';
                     let time = 0;
-                    if (this.random == 3) {
+                    if (this.action == 'one') {
+                        this.random = 3 + Math.floor(Math.random()*3);
+                    }else if(this.action=='two'){
+                        this.random = 1 + Math.floor(Math.random()*2);
+                    }
+                    if (this.random == 1) {
+                        time = 900;
+                    } else if (this.random == 2) {
+                        time = 600;
+                    } else if (this.random == 3) {
                         time = 900;
                     } else if (this.random == 4) {
                         time = 600;
@@ -406,7 +415,6 @@
         },
         mounted() {
             this.chests = this.$refs.chests.children;
-
         },
         methods: {
             init() {
@@ -415,6 +423,7 @@
                     this.random = '';
                 }
                 this.state = 'ready';
+                this.action = 'ready';
                 this.alert = {};
                 this.is_win = '';
                 this.activity_result = {};

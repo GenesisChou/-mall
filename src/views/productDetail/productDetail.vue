@@ -28,7 +28,7 @@
         }
         s {
             padding-left: 0.4rem;
-            color:#6e6f6f;
+            color: #6e6f6f;
             transform: scale(0.6) translateY(10%);
             -webkit-transform: scale(0.6) translateY(10%);
             display: inline-block;
@@ -52,7 +52,7 @@
         background-color: $white;
         border-bottom: 1px solid $gray-light;
         box-shadow: 0 0 0 #000, 0 0 pxTorem(15) #ddd;
-        a {
+        >div {
             display: block;
             width: 100%;
             height: pxTorem(100);
@@ -77,9 +77,15 @@
         .exchange {
             margin-top: pxTorem(30);
             background-color: #ff5000;
+            &:active {
+                background-color:darken(#ff5000,5%);
+            }
         }
         .lack {
             background-color: #ff9817;
+            &:active {
+                background-color:darken(#ff9817,5%);
+            }
         }
     }
 </style>
@@ -99,12 +105,12 @@
             <v-introduction v-if='product_detail.content_use' title='使用说明' :content='product_detail.content_use'></v-introduction>
         </main>
         <footer v-show='content_show' class='sticky'>
-            <a class='exchange' v-if='integral_enough' @click='exchange'>立即兑换</a>
+            <div class='exchange' v-if='integral_enough' @click='exchange'>立即兑换</div>
             <template v-else>
                 <h6>
                     <i class='iconfont icon-warn'></i> 您的积分不足
                 </h6>
-                <router-link :to='{name:"earn_integral"}' tag='a' class='lack'>
+                <router-link :to='{name:"earn_integral"}' tag='div' class='lack'>
                     去赚取更多的积分>>
                 </router-link>
             </template>

@@ -11,7 +11,7 @@
 <template>
     <swipe class='v-swipe' :auto=5000 :speed=500>
         <swipe-item v-for='slide in slides'>
-            <img @click='bannerView(slide);' :src="slide.pic">
+            <img @click='routerLink(slide);' :src="slide.pic">
         </swipe-item>
     </swipe>
 </template>
@@ -47,39 +47,40 @@
                 }, (response) => {});
             },
             routerLink(banner) {
-                let activity_id = utils.getParameterByName('activity_id', banner.url),
-                    product_id = utils.getParameterByName('product_id', banner.url),
-                    subject_id = utils.getParameterByName('subject_id', banner.url),
-                    router = {};
-                if (activity_id) {
-                    router = {
-                        name: "activity_detail",
-                        query: {
-                            activity_id,
-                        }
-                    };
-                } else if (product_id) {
-                    router = {
-                        name: "product_detail",
-                        query: {
-                            product_id,
-                        }
-                    };
-                } else if (subject_id) {
-                    router = {
-                        name: "subject_detail",
-                        query: {
-                            subject_id,
-                        }
-                    };
-                } else {
-                    location.href = banner.url;
+                //1 外链    2 活动    3 商品     4 专题
+                const type = banner.type,
+                    id = banner.item_id;
+                let router = null;
+                this.$store.dispatch('bannerView', id);
+                switch (type) {
+                    case 1:
+                        location.href = banner.url;
+                        break;
+                    case 2:
+                        this.$router.push({
+                            name: "activity_detail",
+                            query: {
+                                activity_id: id,
+                            }
+                        });
+                        break;
+                    case 3:
+                        this.$router.push({
+                            name: "product_detail",
+                            query: {
+                                product_id: id,
+                            }
+                        });
+                        break;
+                    case 4:
+                        this.$router.push({
+                            name: "subject_detail",
+                            query: {
+                                subject_id: id,
+                            }
+                        });
+                        break;
                 }
-                this.$router.push(router);
-            },
-            bannerView(banner) {
-                this.$store.dispatch('bannerView', banner.id);
-                this.routerLink(banner);
             },
         }
 

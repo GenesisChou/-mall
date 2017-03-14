@@ -4,6 +4,7 @@
         line-height: pxTorem(80);
         color: #a0a7ad;
         text-align:center;
+        border-top: 1px solid #d4d4d6;
     }
 </style>
 <template>

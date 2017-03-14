@@ -26,7 +26,7 @@
         z-index: 2;
     }
     
-    .default-banner {
+    .banner {
         position: absolute;
         width: pxTorem(750);
         height: pxTorem(434);
@@ -202,7 +202,7 @@
         <img class='background' src='./images/machineBackground.png'>
         <header class='header'>
             <img v-if='activityDetail.pic_icon' :src='activityDetail.pic_icon' class='img-responsive'>
-            <img v-else class='default-banner' src='./images/machineDefaultBanner.png'>
+            <img v-else class='banner' src='./images/machineDefaultBanner.png'>
             <img class='banner-decoration' src='./images/machineDecoration.png'>
         </header>
         <main>
@@ -324,8 +324,8 @@
                         let name = this.activity_result.name,
                             stop_num = this.getPosition(name, this.activityDetail.items);
                         this.rotate(0, stop_num);
-                        this.rotate(1, stop_num, 800);
-                        this.rotate(2, stop_num, 1600, () => {
+                        this.rotate(1, stop_num, 1000);
+                        this.rotate(2, stop_num, 2000, () => {
                             setTimeout(() => {
                                 this.toggleDialog(this.alert)
                             }, 500)
@@ -391,7 +391,7 @@
             start() {
                 if (this.state != 'ready') return;
                 this.state = 'start';
-                this.$http.post(`${APP.HOST}/hot_pot_activity/${this.id}`, {
+                this.$http.post(`${APP.HOST}/slot_machine_activity/${this.id}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID
                 }).then((response) => {
