@@ -15,6 +15,7 @@
             align-items: center;
             -webkit-align-items: center;
             height: pxTorem(64);
+            padding-left:pxTorem(27);
             color: #ff5f17;
         }
         .icon {
