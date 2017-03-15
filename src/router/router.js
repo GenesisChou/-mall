@@ -100,7 +100,6 @@ const router = new VueRouter({
                 })
             },
         },
-        /*
         {
             path: '/test',
             name: 'test',
@@ -111,7 +110,6 @@ const router = new VueRouter({
                 })
             },
         },
-        */
         {
             path: '*',
             redirect: '/'

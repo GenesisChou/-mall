@@ -39,11 +39,14 @@
             padding-top: pxTorem(10);
             color: $orange;
         }
+        &.no-border{
+            border-bottom:none;
+        }
     }
 </style>
 <template>
     <div class='v-list-item'>
-        <div class='container'>
+        <div :class='["container",{"no-border":noBorder}]'>
             <img class='img' :src='img' />
             <div class='describe'>
                 <h2 class='text-ellipsis'>{{title}}</h2>
@@ -60,7 +63,11 @@
             img: String,
             title: String,
             titleDupty: String,
-            integral: Number
+            integral: Number,
+            noBorder:{
+                type:Boolean,
+                default:false
+            }
         },
     };
 </script>

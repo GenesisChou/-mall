@@ -11,10 +11,7 @@
     
     .sort {
         display: flex;
-        align-items: center;
         display: -webkit-flex;
-        -webkit-align-items: center;
-        height: pxTorem(82);
         margin-bottom: pxTorem(20);
         border-bottom: 1px solid #d3d4d6;
         background-color: $white;
@@ -22,7 +19,13 @@
         >div {
             flex: 1;
             -webkit-flex: 1;
-            text-align: center;
+            display: flex;
+            display: -webkit-flex;
+            align-items: center;
+            -webkit-align-items: center;
+            justify-content: center;
+            -webkit-justify-content: center;
+            height: pxTorem(82);
             font-size: pxTorem(30);
             &:nth-child(1) {
                 position: relative;
@@ -90,9 +93,9 @@
             </div>
         </section>
         <ul class='list'>
-            <router-link :to='{name:"product_detail",query:{product_id:product.id,integral:product.integral>>0}}' v-for='product in product_list'
+            <router-link v-for='(product,$index) in product_list' :to='{name:"product_detail",query:{product_id:product.id,integral:product.integral>>0}}'
                 tag='li'>
-                <v-list-item :title='product.name' :title-dupty='product.name' :integral='product.integral>>0' :img='product.pic_thumb'></v-list-item>
+                <v-list-item :title='product.name' :title-dupty='product.name' :integral='product.integral>>0' :img='product.pic_thumb' :no-border='$index==product_list.length-1'></v-list-item>
             </router-link>
         </ul>
         <v-load-more v-if='busy'></v-load-more>

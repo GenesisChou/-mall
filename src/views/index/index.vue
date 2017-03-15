@@ -61,28 +61,27 @@
         img:active {
             background-color: darken($white, 2%);
         }
-        .left,
         .right {
             width: 50%;
-            height: pxTorem(400);
+            height: pxTorem(200);
+            float: right;
         }
-        .left {
+        img:nth-child(1) {
+            width: 50%;
+            height: pxTorem(400);
             padding: pxTorem(15);
             padding-right: pxTorem(7.5);
+            float: left;
         }
-        .right {
-            float: right;
-            img {
-                width: 100%;
-                height: 50%;
-            }
-            img:first-child {
-                padding: pxTorem(15) pxTorem(15) pxTorem(7.5) pxTorem(7.5);
-            }
-            img:last-child {
-                padding: pxTorem(7.5) pxTorem(15) pxTorem(15) pxTorem(7.5);
-            }
+        img:nth-child(2) {
+            padding: pxTorem(15) pxTorem(15) pxTorem(7.5) pxTorem(7.5);
         }
+        img:nth-child(3) {
+            padding: pxTorem(7.5) pxTorem(15) pxTorem(15) pxTorem(7.5);
+        }
+    }
+    .advs li{
+        list-style:none;
     }
 </style>
 <template>
@@ -111,14 +110,16 @@
         </ul>
         <!-- 专题 -->
         <div v-if='subject_show' class='subject'>
-            <img class='left' @click='routerLink(subject_list[0])' :src='subject_list[0].pic_main'>
-            <div class='right'>
-                <img @click='routerLink(subject_list[1])' :src='subject_list[1].pic_second'>
-                <img @click='routerLink(subject_list[2])' :src='subject_list[2].pic_second'>
-            </div>
+            <img @click='routerLink(subject_list[0])' :src='subject_list[0].pic_main'>
+            <img class='right' @click='routerLink(subject_list[1])' :src='subject_list[1].pic_second'>
+            <img class='right' @click='routerLink(subject_list[2])' :src='subject_list[2].pic_second'>
         </div>
         <!-- 广告列表 -->
-        <v-adv v-for='adv in hot_adcolumn' :adv='adv'></v-adv>
+        <ul class='advs'>
+            <li v-for='adv in hot_adcolumn'>
+                <v-adv :adv='adv'></v-adv>
+            </li>
+        </ul>
         <!-- balabala -->
         <main class='clearfix'>
             <!-- 热门推荐 -->

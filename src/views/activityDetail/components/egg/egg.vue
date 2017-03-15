@@ -284,7 +284,6 @@
         },
         methods: {
             init() {
-                if (this.eggs) {}
                 this.state = 'ready';
                 this.activity_result = {};
                 this.active_num = 0;
@@ -305,7 +304,10 @@
                         this.is_win = this.activity_result.is_win;
                     } else {
                         this.toggleDialog({
-                            msg: data.info
+                            msg: data.info,
+                            callback: () => {
+                                this.init();
+                            },
                         })
                     }
                 }, (response) => {})
