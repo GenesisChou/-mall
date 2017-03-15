@@ -54,41 +54,31 @@
     }
     
     .subject {
-        display: flex;
-        display: -webkit-flex;
-        align-items: center;
-        -webkit-align-items: center;
-        justify-content: space-between;
-        -webkit-justify-content: space-between;
         width: pxTorem(750);
-        height: pxTorem(378);
-        padding: pxTorem(10);
+        height: pxTorem(376);
         margin-bottom: pxTorem(20);
         overflow: hidden;
         background-color: $white;
         border-bottom: 1px solid #d3d4d6;
-        .right {
-            display: flex;
-            display: -webkit-flex;
-            flex-direction: column;
-            -webkit-flex-direction: column;
-            justify-content: space-between;
-            -webkit-justify-content: space-between;
-            align-items: center;
-            -webkit-align-items: center;
-            width: pxTorem(358);
-            height: pxTorem(350);
-            float: right;
-            img {
-                width: pxTorem(358);
-                height: pxTorem(170);
-                float: right;
-            }
-        }
         .left {
-            width: pxTorem(358);
-            height: pxTorem(350);
+            width: 50%;
+            height: 100%;
+            padding:pxTorem(15) pxTorem(7.5) pxTorem(15) pxTorem(10);
             float: left;
+        }
+        .right {
+            width: 50%;
+            height: 50%;
+            float: right;
+        }
+        img:active{
+            background-color:darken($white,2%);
+        }
+        img:nth-child(2){
+            padding:pxTorem(15) pxTorem(10) pxTorem(5) pxTorem(7.5);
+        }
+        img:nth-child(3){
+            padding:pxTorem(5) pxTorem(10) pxTorem(15) pxTorem(7.5);
         }
     }
     
@@ -123,10 +113,8 @@
         <!-- 专题 -->
         <div v-if='subject_show' class='subject'>
             <img class='left' @click='routerLink(subject_list[0])' :src='subject_list[0].pic_main'>
-            <div class='right'>
-                <img @click='routerLink(subject_list[1])' :src='subject_list[1].pic_second'>
-                <img @click='routerLink(subject_list[2])' :src='subject_list[2].pic_second'>
-            </div>
+            <img class='right' @click='routerLink(subject_list[1])' :src='subject_list[1].pic_second'>
+            <img class='right' @click='routerLink(subject_list[2])' :src='subject_list[2].pic_second'>
         </div>
         <!-- 广告列表 -->
         <ul class='advs'>
