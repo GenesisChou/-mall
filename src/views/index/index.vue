@@ -54,34 +54,46 @@
     }
     
     .subject {
+        display: flex;
+        display: -webkit-flex;
+        align-items: center;
+        -webkit-align-items: center;
+        justify-content: space-between;
+        -webkit-justify-content: space-between;
+        width: pxTorem(750);
+        height: pxTorem(378);
+        padding: pxTorem(10);
         margin-bottom: pxTorem(20);
         overflow: hidden;
         background-color: $white;
         border-bottom: 1px solid #d3d4d6;
-        img:active {
-            background-color: darken($white, 2%);
-        }
         .right {
-            width: 50%;
-            height: pxTorem(200);
+            display: flex;
+            display: -webkit-flex;
+            flex-direction: column;
+            -webkit-flex-direction: column;
+            justify-content: space-between;
+            -webkit-justify-content: space-between;
+            align-items: center;
+            -webkit-align-items: center;
+            width: pxTorem(358);
+            height: pxTorem(350);
             float: right;
+            img {
+                width: pxTorem(358);
+                height: pxTorem(170);
+                float: right;
+            }
         }
-        img:nth-child(1) {
-            width: 50%;
-            height: pxTorem(400);
-            padding: pxTorem(15);
-            padding-right: pxTorem(7.5);
+        .left {
+            width: pxTorem(358);
+            height: pxTorem(350);
             float: left;
         }
-        img:nth-child(2) {
-            padding: pxTorem(15) pxTorem(15) pxTorem(7.5) pxTorem(7.5);
-        }
-        img:nth-child(3) {
-            padding: pxTorem(7.5) pxTorem(15) pxTorem(15) pxTorem(7.5);
-        }
     }
-    .advs li{
-        list-style:none;
+    
+    .advs li {
+        list-style: none;
     }
 </style>
 <template>
@@ -110,9 +122,11 @@
         </ul>
         <!-- 专题 -->
         <div v-if='subject_show' class='subject'>
-            <img @click='routerLink(subject_list[0])' :src='subject_list[0].pic_main'>
-            <img class='right' @click='routerLink(subject_list[1])' :src='subject_list[1].pic_second'>
-            <img class='right' @click='routerLink(subject_list[2])' :src='subject_list[2].pic_second'>
+            <img class='left' @click='routerLink(subject_list[0])' :src='subject_list[0].pic_main'>
+            <div class='right'>
+                <img @click='routerLink(subject_list[1])' :src='subject_list[1].pic_second'>
+                <img @click='routerLink(subject_list[2])' :src='subject_list[2].pic_second'>
+            </div>
         </div>
         <!-- 广告列表 -->
         <ul class='advs'>

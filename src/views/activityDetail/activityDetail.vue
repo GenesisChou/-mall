@@ -1,3 +1,9 @@
+<style lang='scss' scoped>
+.activity-detail{
+    overflow:hidden;
+}
+    
+</style>
 <template>
     <div class='activity-detail'>
         <keep-alive>

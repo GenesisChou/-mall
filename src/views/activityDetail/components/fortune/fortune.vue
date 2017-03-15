@@ -16,6 +16,7 @@
     }
     
     .panel {
+        position:relative;
         width: pxTorem(623);
         height: pxTorem(809);
         margin: pxTorem(10) auto pxTorem(58) auto;
@@ -38,17 +39,17 @@
     
     table {
         margin: 0 auto;
-        padding-top: pxTorem(70);
-        border-spacing: pxTorem(10);
+        padding-top: pxTorem(72);
     }
     
     td {
-        width: pxTorem(169);
-        height: pxTorem(169);
+        width: pxTorem(178);
+        height: pxTorem(178);
         vertical-align: middle;
         text-align: center;
         background-image: url('./images/panelItem.png');
-        background-size: 100% 100%;
+        background-size: pxTorem(155) pxTorem(155);
+        background-position: center;
         background-repeat: no-repeat;
         img {
             width: pxTorem(115);
@@ -56,6 +57,7 @@
             margin-bottom: pxTorem(10);
         }
         &.center {
+            background-size: 100% 100%;
             background-image: url('./images/startButton.png');
         }
         &.active {
@@ -67,7 +69,11 @@
     }
     
     .notice {
-        padding-top: pxTorem(30);
+        position: absolute;
+        bottom: pxTorem(15);
+        left: 50%;
+        transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
         text-align: center;
         color: #b50300;
         .number {
@@ -177,7 +183,7 @@
             id: Number,
             notice: String,
             toOrderDetail: Function,
-            toggleDialog:Function
+            toggleDialog: Function
         },
         data() {
             return {
@@ -223,7 +229,7 @@
                     } else {
                         this.alert = {
                             msg: '很遗憾,未中奖',
-                            btn_text:'再来一次',
+                            btn_text: '再来一次',
                             callback: () => {
                                 this.init(this.stop_position);
                             },
