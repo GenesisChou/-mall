@@ -1,36 +1,22 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
     .icon-list {
+        @include list-inline;
         margin-bottom: pxTorem(15);
         border-bottom: 1px solid #d3d4d6;
-        overflow: hidden;
         color: #666;
         background-color: $white;
         font-size: pxTorem(24);
         li {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            display: -webkit-flex;
-            -webkit-flex-direction: column;
-            -webkit-justify-content: center;
-            -webkit-align-items: center;
+            @include active;
+            @include flex-center;
+            @include flex-direction(column);
             width: 25%;
-            float: left;
             height: pxTorem(190);
             position: relative;
             text-align: center;
-            &:active {
-                background-color: darken($white, 2%);
-            }
             .v-badage {
-                display: flex;
-                display: -webkit-flex;
-                align-items: center;
-                -webkit-align-items: center;
-                justify-content: center;
-                -webkit-justify-content: center;
+                @include flex-center;
                 width: pxTorem(50);
                 height: pxTorem(50);
                 position: absolute;
@@ -63,7 +49,7 @@
         .left {
             width: 50%;
             height: 100%;
-            padding:pxTorem(15) pxTorem(7.5) pxTorem(15) pxTorem(10);
+            padding: pxTorem(15) pxTorem(7.5) pxTorem(15) pxTorem(10);
             float: left;
         }
         .right {
@@ -71,25 +57,30 @@
             height: 50%;
             float: right;
         }
-        img:active{
-            background-color:darken($white,2%);
+        img {
+            @include active;
         }
-        img:nth-child(2){
-            padding:pxTorem(15) pxTorem(10) pxTorem(5) pxTorem(7.5);
+        img:nth-child(2) {
+            padding: pxTorem(15) pxTorem(10) pxTorem(5) pxTorem(7.5);
         }
-        img:nth-child(3){
-            padding:pxTorem(5) pxTorem(10) pxTorem(15) pxTorem(7.5);
+        img:nth-child(3) {
+            padding: pxTorem(5) pxTorem(10) pxTorem(15) pxTorem(7.5);
         }
     }
     
     .advs li {
         list-style: none;
     }
+    
+    .main {
+        @include clearfix;
+        background-color: $white;
+    }
 </style>
 <template>
     <div class='index '>
         <v-swipe></v-swipe>
-        <ul class='list-inline icon-list'>
+        <ul class='icon-list'>
             <router-link :to='{name:"my_account"}' tag='li'>
                 <img class='icon' src='./images/myAccount.png'>
                 <p>我的账户</p>
@@ -123,7 +114,7 @@
             </li>
         </ul>
         <!-- balabala -->
-        <main class='clearfix'>
+        <main class='main'>
             <!-- 热门推荐 -->
             <v-item v-for='item in hot_commend' :item='item' type='commend'></v-item>
             <!-- 热门 -->
@@ -137,12 +128,14 @@
     import vSwipe from './components/vSwipe';
     import vItem from './components/vItem';
     import vAdv from './components/vAdv';
+    import vBackTop from 'components/vBackTop';
     export default {
         name: 'index',
         components: {
             vSwipe,
             vItem,
-            vAdv
+            vAdv,
+            vBackTop
         },
         data() {
             return {
@@ -259,9 +252,28 @@
             },
             routerLink(subject) {
                 //type 1 外链 type 2 详情
-                const type = subject.type;
+                const type = subject.type,
+                    url = subject.url;
                 if (type == 1) {
-                    location.href = subject.url;
+                    const product_id = utils.getParameterByName('product_id',url),
+                        activity_id = utils.getParameterByName('activity_id',url);
+                    if (product_id) {
+                        this.$router.push({
+                            name: "product_detail",
+                            query: {
+                                product_id
+                            }
+                        });
+                    } else if (activity_id) {
+                        this.$router.push({
+                            name: "activity_detail",
+                            query: {
+                                activity_id
+                            }
+                        });
+                    } else {
+                        location.href = subject.url;
+                    }
                 } else if (type == 2) {
                     this.$router.push({
                         name: "subject_detail",

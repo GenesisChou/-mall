@@ -1,14 +1,12 @@
 <style lang='scss' scoped>
     @import '../../../../assets/scss/variable.scss';
     .v-item {
+        @include active;
+        @include clearfix;
         width: 50%;
         float: left;
         padding: pxTorem(20) pxTorem(37);
         background-color: $white;
-        overflow: hidden;
-        &:active {
-            background-color: darken($white, 2%);
-        }
     }
     
     .head {
@@ -20,11 +18,7 @@
             height: pxTorem(200);
         }
         span {
-            display: flex;
-            display: -webkit-flex;
-            align-items: center;
-            -webkit-align-items: center;
-            -webkit-justify-content: center;
+            @include flex-center;
             position: absolute;
             left: 0;
             top: 0;

@@ -1,13 +1,10 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .v-address {
-        flex: 1;
-        -webkit-flex: 1;
-        display: flex;
-        display: -webkit-flex;
+        @include flex;
+        @include flexbox;
         .form-control {
-            flex: 1;
-            -webkit-flex: 1;
+            @include flex;
             position: relative;
         }
         .iconfont {

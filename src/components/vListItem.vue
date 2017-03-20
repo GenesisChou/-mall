@@ -1,18 +1,13 @@
 <style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
     .v-list-item {
+        @include active;
         padding: 0 pxTorem(30);
         background-color: $white;
-        &:active {
-            background-color: darken($white, 2%);
-        }
     }
     
     .container {
-        display: flex;
-        display: -webkit-flex;
-        align-items: center;
-        -webkit-align-items: center;
+        @include flex-center-v;
         height: pxTorem(208);
         border-bottom: 1px solid $gray-light;
         .img {
@@ -22,8 +17,7 @@
             margin-right: pxTorem(60);
         }
         .describe {
-            flex: 1;
-            -webkit-flex: 1;
+            @include flex;
             text-align: justify;
         }
         h2 {
@@ -39,8 +33,8 @@
             padding-top: pxTorem(10);
             color: $orange;
         }
-        &.no-border{
-            border-bottom:none;
+        &.no-border {
+            border-bottom: none;
         }
     }
 </style>
@@ -64,9 +58,9 @@
             title: String,
             titleDupty: String,
             integral: Number,
-            noBorder:{
-                type:Boolean,
-                default:false
+            noBorder: {
+                type: Boolean,
+                default: false
             }
         },
     };

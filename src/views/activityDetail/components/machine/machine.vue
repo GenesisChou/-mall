@@ -52,18 +52,13 @@
         background-size: 100% 100%;
         background-repeat: no-repeat;
         .integral-message {
+            @include flex-center;
             position: absolute;
             top: pxTorem(-40);
             left: 50%;
-            margin-left: pxTorem(-416/2);
-            display: flex;
-            display: -webkit-flex;
-            align-items: center;
-            -webkit-align-items: center;
-            justify-content: center;
-            -webkit-justify-content: center;
             width: pxTorem(416);
             height: pxTorem(85);
+            margin-left: pxTorem(-416/2);
             background-color: #fdc713;
             border-radius: pxTorem(10);
             box-shadow: 0 pxTorem(5) pxTorem(5) #fbab07;
@@ -72,18 +67,13 @@
             z-index: 1;
         }
         .notice {
+            @include flex-center;
             position: absolute;
             bottom: pxTorem(-20);
             left: 50%;
-            margin-left: pxTorem(-320/2);
-            display: flex;
-            display: -webkit-flex;
-            align-items: center;
-            -webkit-align-items: center;
-            justify-content: center;
-            -webkit-justify-content: center;
             width: pxTorem(320);
             height: pxTorem(63);
+            margin-left: pxTorem(-320/2);
             background-color: #76e6f7;
             border-radius: pxTorem(10);
             box-shadow: 0 pxTorem(5) pxTorem(5) #367fe5;
@@ -97,8 +87,7 @@
             }
         }
         .container {
-            display: flex;
-            display: -webkit-flex;
+            @include flexbox;
             position: relative;
             background-color: $white;
             width: 100%;
@@ -116,8 +105,7 @@
             z-index: 2;
         }
         .group {
-            flex: 1;
-            -webkit-flex: 1;
+            @include flex;
             height: pxTorem(400);
             border-right: pxTorem(6) solid #fdc713;
             overflow: hidden;
@@ -129,12 +117,7 @@
             position: relative;
             top: -25%;
             li {
-                display: flex;
-                display: -webkit-flex;
-                align-items: center;
-                -webkit-align-items: center;
-                justify-content: center;
-                -webkit-justify-content: center;
+                @include flex-center;
                 height: pxTorem(200);
             }
             img {

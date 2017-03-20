@@ -11,15 +11,10 @@
             z-index: 5;
         }
         .content {
+            @include flex-center;
             position: fixed;
             left: 50%;
             top: 50%;
-            display:flex;
-            display:-webkit-flex;
-            align-items:center;
-            -webkit-align-items:center;
-            justify-content:center;
-            -webkit-justify-content:center;
             width:pxTorem(315);
             height:pxTorem(67);
             margin-left:pxTorem(-315/2);

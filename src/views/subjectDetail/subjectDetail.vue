@@ -16,21 +16,12 @@
     }
     
     .tabs {
-        display: flex;
-        display: -webkit-flex;
-        align-items: center;
-        -webkit-align-items: center;
+        @include flex-center-v;
         border-bottom: 1px solid #d3d4d6;
         margin-bottom: pxTorem(20);
         li {
-            flex: 1;
-            -webkit-flex: 1;
-            display: flex;
-            display: -webkit-flex;
-            align-items: center;
-            -webkit-align-items: center;
-            justify-content: center;
-            -webkit-justify-content: center;
+            @include flex;
+            @include flex-center;
             position: relative;
             height: pxTorem(80);
             background-color: $white;
@@ -72,12 +63,15 @@
                 </router-link>
             </ul>
         </main>
-        <v-back-top></v-back-top>
     </div>
 </template>
 <script>
+    import vListItem from 'components/vListItem.vue';
     export default {
         name: 'subjectDetail',
+        components:{
+            vListItem
+        },
         data() {
             return {
                 subject_id: '',

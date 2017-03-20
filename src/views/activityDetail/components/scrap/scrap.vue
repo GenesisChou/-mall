@@ -50,12 +50,7 @@
     }
     
     .integral-message {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        display: -webkit-flex;
-        -webkit-align-items: center;
-        -webkit-justify-content: center;
+        @include flex-center;
         height: pxTorem(82);
         color: $white;
         font-size: pxTorem(38);
@@ -74,17 +69,12 @@
     }
     
     .start {
+        @include flex-center;
         position: absolute;
         left: 50%;
         top: 55%;
         transform: translate(-50%, -50%);
         -webkit-transform: translate(-50%, -50%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        display: -webkit-flex;
-        -webkit-align-items: center;
-        -webkit-justify-content: center;
         width: pxTorem(227);
         height: pxTorem(78);
         box-shadow: 0 pxTorem(5) pxTorem(8) 1px rgba(215, 65, 0, 0.75);

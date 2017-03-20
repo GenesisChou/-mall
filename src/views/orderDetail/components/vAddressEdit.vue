@@ -1,10 +1,8 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .edit-address {
-        display: flex;
-        flex-direction: column;
-        display: -webkit-flex;
-        -webkit-flex-direction: column;
+        @include flexbox;
+        @include flex-direction(column);
         height: pxTorem(640);
         background: $gray-light;
         .header {
@@ -15,17 +13,13 @@
             background-color: $white;
         }
         .main {
-            flex: 1;
-            -webkit-flex: 1;
+            @include flex;
             padding: 0 pxTorem(53);
             margin-bottom: pxTorem(30);
             list-style: none;
             background-color: $white;
             li {
-                display: flex;
-                align-items: center;
-                display: -webkit-flex;
-                -webkit-align-items: center;
+                @include flex-center-v;
                 height: pxTorem(95);
                 overflow: hidden;
                 border-bottom: 1px solid $gray-light;
@@ -35,8 +29,7 @@
             }
             li.address {
                 .form-control {
-                    flex:1;
-                    -webkit-flex:1;
+                    @include flex;
                     position: relative;
                 }
                 .iconfont {
@@ -62,8 +55,7 @@
                 color: #646565;
             }
             input {
-                flex: 1;
-                -webkit-flex: 1;
+                @include flex;
                 color: #646565;
                 background: none;
                 border: 0;
@@ -93,6 +85,7 @@
             display: none;
         }
         li {
+            @include active($white,5%);
             width: pxTorem(400);
             height: pxTorem(70);
             line-height: pxTorem(70);
@@ -102,9 +95,6 @@
             border-bottom: 1px solid $gray-light;
             &:last-child {
                 border-bottom: 1px solid $gray-light;
-            }
-            span {
-                /*margin-left: pxTorem(30);*/
             }
             .radio {
                 display: inline-block;
@@ -187,8 +177,14 @@
     </section>
 </template>
 <script>
+import vModal from 'components/vModal.vue';
+import vPopup from 'components/vPopup.vue';
     export default {
         name: 'vAddressEdit',
+        components:{
+            vPopup,
+            vModal
+        },
         props: {
             togglePopup: Function,
             show: {

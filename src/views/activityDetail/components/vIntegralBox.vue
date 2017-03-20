@@ -1,13 +1,9 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .v-integral-box {
+        @include list-inline;
         li {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            display: -webkit-flex;
-            -webkit-align-items: center;
-            -webkit-justify-content: center;
+            @include flex-center;
             width: pxTorem(44);
             height: pxTorem(54);
             margin-left: pxTorem(5);
@@ -38,7 +34,7 @@
     }
 </style>
 <template>
-    <ul class='v-integral-box list-inline'>
+    <ul class='v-integral-box'>
         <li v-if='million' :class='color'>{{million}}</li>
         <li v-if='thousand' :class='color'>{{thousand}}</li>
         <li :class='color'>{{hundred}}</li>

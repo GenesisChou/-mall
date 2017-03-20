@@ -100,16 +100,26 @@ const router = new VueRouter({
                 })
             },
         },
-        {
-            path: '/test',
-            name: 'test',
-            // component: require('views/test.vue')
-            component: resolve => {
-                require.ensure(['views/test.vue'], () => {
-                    resolve(require('views/test.vue'))
-                })
-            },
-        },
+        // {
+        //     path: '/recharge',
+        //     name: 'recharge',
+        //     // component: require('views/test.vue')
+        //     component: resolve => {
+        //         require.ensure(['views/recharge'], () => {
+        //             resolve(require('views/recharge'))
+        //         })
+        //     },
+        // },
+        // {
+        //     path: '/test',
+        //     name: 'test',
+        //     // component: require('views/test.vue')
+        //     component: resolve => {
+        //         require.ensure(['views/test.vue'], () => {
+        //             resolve(require('views/test.vue'))
+        //         })
+        //     },
+        // },
         {
             path: '*',
             redirect: '/'
@@ -129,6 +139,7 @@ const fixList = ['index', 'product_list', 'order_list', 'subject_detail'],
         subject_detail: '每日上新',
         edit_user: '填写个人资料',
         earn_integral: '赚取积分',
+        recharge: '流量充值'
     }
 router.beforeEach((to, from, next) => {
     if (!from.name) {

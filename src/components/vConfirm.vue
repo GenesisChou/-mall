@@ -13,31 +13,18 @@
         background-color: $white;
         z-index: 11;
         .msg {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            display: -webkit-flex;
-            -webkit-align-items: center;
-            -webkit-flex-direction: column;
-            -webkit-justify-content: center;
+            @include flex-center;
+            @include flex-direction(column);
             height: pxTorem(130);
         }
         .btns {
-            display:flex;
-            display: -webkit-flex;
+            @include flexbox;
             border-top: 1px solid #d3d4d6;
         }
         .btn-left,
         .btn-right {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            -webkit-flex: 1;
-            display: -webkit-flex;
-            -webkit-align-items: center;
-            -webkit-justify-content: center;
+            @include flex;
+            @include flex-center;
             height: pxTorem(100);
             font-size: pxTorem(36);
             text-align: center;

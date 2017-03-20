@@ -9,8 +9,8 @@ function Lottery(id, cover, coverType, width, height, drawPercentCallback) {
     this.maskCtx = null;
     this.lottery = null;
     this.lotteryType = 'image';
-    this.width = width || this.pxTorem(300);
-    this.height = height || this.pxTorem(100);
+    this.width = width || this.getSize(300);
+    this.height = height || this.getSize(100);
     this.clientRect = null;
     this.drawPercentCallback = drawPercentCallback;
     this.clientWidth = utils.getClientWidth();
@@ -43,13 +43,13 @@ Lottery.prototype = {
     },
     drawPoint(x, y) {
         this.maskCtx.beginPath();
-        var radgrad = this.maskCtx.createRadialGradient(x, y, 0, x, y, this.pxTorem(40));
+        var radgrad = this.maskCtx.createRadialGradient(x, y, 0, x, y, this.getSize(40));
         radgrad.addColorStop(0, 'rgba(0,0,0,0.6)');
         radgrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
         // this.maskCtx.fillStyle = radgrad;
         this.maskCtx.fillStyle = '#fff';
-        // this.maskCtx.arc(x, y, this.pxTorem(40), 0, Math.PI * 2, true);
-        this.maskCtx.arc(x, y, this.pxTorem(30), 0, Math.PI * 2, true);
+        // this.maskCtx.arc(x, y, this.getSize(40), 0, Math.PI * 2, true);
+        this.maskCtx.arc(x, y, this.getSize(30), 0, Math.PI * 2, true);
         this.maskCtx.fill();
         if (this.drawPercentCallback) {
             this.drawPercentCallback.call(null, this.getTransparentPercent(this.maskCtx, this.width, this.height));
@@ -172,7 +172,7 @@ Lottery.prototype = {
         this.drawLottery();
     },
     setText(text) {
-        var fontSize = this.pxTorem(30);
+        var fontSize = this.getSize(30);
         this.backCtx.fillStyle = "#fff";
         this.backCtx.beginPath();
         this.backCtx.fillRect(0, 0, this.width, this.height);
@@ -184,7 +184,7 @@ Lottery.prototype = {
         this.backCtx.fillText(text, this.width / 2, this.height / 2 + fontSize / 2);
         this.backCtx.restore();
     },
-    pxTorem(value) {
+    getSize(value) {
         return value * this.clientWidth / 750;
     }
 }

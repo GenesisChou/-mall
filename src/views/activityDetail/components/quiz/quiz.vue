@@ -7,12 +7,12 @@
         background-size: pxTorem(750) pxTorem(2235);
         background-color: #f7be14;
     }
-
+    
     .banner {
         width: pxTorem(750);
         height: pxTorem(400);
     }
-
+    
     .panel {
         position: relative;
         width: pxTorem(591);
@@ -22,7 +22,7 @@
         border: pxTorem(13) solid #6a3c05;
         background-color: $white;
     }
-
+    
     .panel-head {
         position: absolute;
         left: 50%;
@@ -37,19 +37,14 @@
         color: #e65413;
         z-index: 1;
     }
-
+    
     .integral-message {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        display: -webkit-flex;
-        -webkit-align-items: center;
-        -webkit-justify-content: center;
+        @include flex-center;
         width: 100%;
         height: 100%;
         font-size: pxTorem(38);
     }
-
+    
     .panel-content {
         padding-bottom: pxTorem(80);
         color: #6f3a04;
@@ -57,7 +52,7 @@
             position: relative;
             padding: pxTorem(90) pxTorem(60) pxTorem(40) pxTorem(60);
             font-size: pxTorem(30);
-            text-align:justify;
+            text-align: justify;
         }
         .number {
             position: absolute;
@@ -67,12 +62,10 @@
             font-size: pxTorem(36);
         }
     }
-
+    
     .answers {
-        display: flex;
-        flex-wrap: wrap;
-        display: -webkit-flex;
-        -webkit-flex-wrap: wrap;
+        @include flexbox;
+        @include flex-wrap(wrap);
         font-size: pxTorem(34);
         color: #6f3a04;
         list-style: none;
@@ -81,9 +74,9 @@
             width: 50%;
             text-align: center;
             label {
-                text-align:left;
+                text-align: left;
                 display: block;
-                padding-left:pxTorem(37.5);
+                padding-left: pxTorem(37.5);
             }
         }
         input[type='radio'] {
@@ -103,7 +96,7 @@
             background-image: url('./images/selectedCircle.png');
         }
     }
-
+    
     .panel-footer {
         position: absolute;
         left: 0;
@@ -127,7 +120,7 @@
             }
         }
     }
-
+    
     .submit {
         position: relative;
         display: block;
@@ -152,7 +145,7 @@
             background-size: 100% 100%;
         }
     }
-
+    
     .describe {
         padding: 0 pxTorem(40);
         .editor-style {

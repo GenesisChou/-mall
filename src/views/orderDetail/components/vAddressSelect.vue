@@ -1,10 +1,8 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .select-address {
-        display: flex;
-        flex-direction: column;
-        display: -webkit-flex;
-        -webkit-flex-direction: column;
+        @include flexbox;
+        @include flex-direction(column);
         height: pxTorem(640);
         background: $white;
         .header {
@@ -15,16 +13,14 @@
             background-color: $white;
         }
         .address-list {
-            flex: 1;
-            -webkit-flex: 1;
+            @include flex;
             overflow-y: scroll;
-            -webkit-overflow-scrolling:touch;
+            -webkit-overflow-scrolling: touch;
             margin: 0 pxTorem(53);
             max-height: pxTorem(535);
             &::-webkit-scrollbar {
                 display: none;
             }
-            /*margin-bottom: pxTorem(25);*/
             li {
                 height: pxTorem(107);
                 list-style: none;
@@ -119,10 +115,12 @@
 </template>
 <script>
     import vAddressEdit from './vAddressEdit.vue'
+    import vPopup from 'components/vPopup.vue';
     export default {
         name: 'vAddressSelect',
         components: {
-            vAddressEdit
+            vAddressEdit,
+            vPopup
         },
         props: {
             togglePopup: Function,

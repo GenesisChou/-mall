@@ -5,23 +5,18 @@
     }
     
     .main {
-        flex: 1;
-        -webkit-flex: 1;
+        @include flex;
         padding: 0 pxTorem(30);
         list-style: none;
         background-color: $white;
         border-bottom: 1px solid #d3d4d6;
         li {
-            display: flex;
-            align-items: center;
-            display: -webkit-flex;
-            -webkit-align-items: center;
+            @include flex-center-v;
             height: pxTorem(95);
             overflow: hidden;
             border-bottom: 1px solid $gray-light;
             &:last-child {
-                align-items: flex-start;
-                -webkit-align-items: flex-start;
+                @include align-items(flex-start);
                 padding-top: pxTorem(22.5);
                 height: pxTorem(150);
                 border-bottom: none;
@@ -33,16 +28,14 @@
             color: #646565;
         }
         input {
-            flex: 1;
-            -webkit-flex: 1;
+            @include flex;
             color: #646565;
             background: none;
             border: 0;
             font-size: pxTorem(28);
         }
         textarea {
-            flex: 1;
-            -webkit-flex: 1;
+            @include flex;
             font-size: pxTorem(28);
             border: 0;
             color: #646565;
@@ -68,10 +61,7 @@
     }
     
     .operation {
-        display: flex;
-        display: -webkit-flex;
-        -webkit-align-items: center;
-        -webkit-justify-content: center;
+        @include flex-center;
         height: pxTorem(120);
         padding: 0 pxTorem(30);
         margin-top: pxTorem(20);

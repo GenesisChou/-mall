@@ -31,15 +31,10 @@
     }
     
     .back {
+        @include flex-center;
         position: absolute;
         left: pxTorem(30);
         top: pxTorem(30);
-        display: flex;
-        display: -webkit-flex;
-        justify-content: center;
-        -webkit-justify-content: center;
-        align-items: center;
-        -webkit-align-items: center;
         width: pxTorem(115);
         height: pxTorem(50);
         font-size: pxTorem(24);
@@ -53,12 +48,7 @@
     }
     
     .circle-button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        display: -webkit-flex;
-        -webkit-align-items: center;
-        -webkit-justify-content: center;
+        @include flex-center;
         width: pxTorem(234);
         height: pxTorem(234);
         position: absolute;
@@ -68,14 +58,8 @@
         background-color: rgba(255, 255, 255, 0.62);
         border-radius: 50%;
         .circle {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            display: -webkit-flex;
-            -webkit-align-items: center;
-            -webkit-justify-content: center;
-            -webkit-flex-direction: column;
+            @include flex-center;
+            @include flex-direction(column);
             width: pxTorem(194);
             height: pxTorem(194);
             border-radius: 50%;
@@ -99,23 +83,16 @@
     }
     
     .progress {
-        display: flex;
-        display: -webkit-flex;
+        @include flexbox;
         position: absolute;
         width: 100%;
         padding: 0 pxTorem(15);
         bottom: pxTorem(30);
         .check-item {
-            flex: 1;
-            -webkit-flex: 1;
-            display: flex;
-            display: -webkit-flex;
-            align-items: center;
-            -webkit-align-items: center;
-            justify-content: space-around;
-            -webkit-justify-content: space-around;
-            flex-direction: column;
-            -webkit-flex-direction: column;
+            @include flex;
+            @include flex-center-v;
+            @include justify-content(space-around);
+            @include flex-direction(column);
             color: $white;
             &.active {
                 .circle {
@@ -140,12 +117,7 @@
             }
         }
         .circle {
-            display: flex;
-            display: -webkit-flex;
-            align-items: center;
-            -webkit-align-items: center;
-            justify-content: center;
-            -webkit-justify-content: center;
+            @include flex-center;
             width: pxTorem(90);
             height: pxTorem(90);
             margin-bottom: pxTorem(10);
@@ -163,17 +135,12 @@
     }
     
     .edit-user {
-        display: flex;
-        align-items: center;
-        display: -webkit-flex;
-        -webkit-align-items: center;
+        @include flex-center-v;
+        @include active(#d0eff1,10%);
         height: pxTorem(107);
         padding-left: pxTorem(35);
         background-color: #d0eff1;
         margin-bottom: pxTorem(20);
-        &:active {
-            background-color: darken(#d0eff1, 10%);
-        }
         img {
             width: pxTorem(71);
             height: pxTorem(53);
@@ -188,12 +155,8 @@
     }
     
     .notice {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        display: -webkit-flex;
-        -webkit-justify-content: center;
-        -webkit-flex-direction: column;
+        @include flex-center-h;
+        @include flex-direction(column);
         height: pxTorem(106);
         padding-left: pxTorem(35);
         font-size: pxTorem(28);

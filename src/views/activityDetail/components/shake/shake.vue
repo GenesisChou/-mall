@@ -13,12 +13,7 @@
     }
     
     .integral-message {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        display: -webkit-flex;
-        -webkit-align-items: center;
-        -webkit-justify-content: center;
+        @include flex-center;
         padding-top: pxTorem(65);
         color: $white;
         font-size: pxTorem(38);

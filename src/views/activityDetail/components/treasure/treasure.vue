@@ -186,10 +186,7 @@
     }
     
     .operation {
-        display: flex;
-        display: -webkit-flex;
-        justify-content: center;
-        -webkit-justify-content: center;
+        @include flex-center-h;
         position: relative;
         width: pxTorem(750);
         height: pxTorem(138);
@@ -203,14 +200,8 @@
             z-index: 1;
         }
         .integral-message {
-            display: flex;
-            display: -webkit-flex;
-            flex-direction: column;
-            -webkit-flex-direction: column;
-            justify-content: center;
-            -webkit-justify-content: center;
-            align-items: center;
-            -webkit-align-items: center;
+            @include flex-center;
+            @include flex-direction(column);
             position: relative;
             width: pxTorem(243);
             height: pxTorem(130);
@@ -362,9 +353,9 @@
                     this.action = Math.random() > 0.5 ? 'one' : 'two';
                     let time = 0;
                     if (this.action == 'one') {
-                        this.random = 3 + Math.floor(Math.random()*3);
-                    }else if(this.action=='two'){
-                        this.random = 1 + Math.floor(Math.random()*2);
+                        this.random = 3 + Math.floor(Math.random() * 3);
+                    } else if (this.action == 'two') {
+                        this.random = 1 + Math.floor(Math.random() * 2);
                     }
                     if (this.random == 1) {
                         time = 900;

@@ -12,24 +12,14 @@
         }
         .main {
             li {
+                @include flex-center;
                 position: relative;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                display: -webkit-flex;
-                -webkit-align-items: center;
-                -webkit-justify-content: center;
                 list-style: none;
                 height: pxTorem(120);
             }
         }
         .circle {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            display: -webkit-flex;
-            -webkit-align-items: center;
-            -webkit-justify-content: center;
+            @include flex-center;
             position: relative;
             width: pxTorem(108);
             height: 100%;
@@ -59,15 +49,10 @@
             }
         }
         .detail {
-            flex: 1;
-            -webkit-flex: 1;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
+            @include flex;
+            @include text-ellipsis(2);
             padding-right: pxTorem(30);
             color: #a9aaae;
-            overflow: hidden;
-            text-overflow: ellipsis;
             font-size: pxTorem(24);
             text-align: justify;
         }

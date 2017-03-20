@@ -16,7 +16,7 @@
     }
     
     .panel {
-        position:relative;
+        position: relative;
         width: pxTorem(623);
         height: pxTorem(809);
         margin: pxTorem(10) auto pxTorem(58) auto;
@@ -26,12 +26,7 @@
     }
     
     .integral-message {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        display: -webkit-flex;
-        -webkit-align-items: center;
-        -webkit-justify-content: center;
+        @include flex-center;
         height: pxTorem(100);
         color: $white;
         font-size: pxTorem(38);

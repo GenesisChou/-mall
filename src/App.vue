@@ -2,17 +2,14 @@
     @import './assets/scss/iconfont.css';
     @import './assets/scss/main.scss';
     #app {
+        @include flexbox;
+        @include flex-direction(column);
         min-height: 100%;
-        display: flex;
-        display: -webkit-flex;
-        flex-direction: column;
-        -webkit-flex-direction: column;
         background-color: #f2f3f4;
     }
     
     .app-content {
-        flex: 1;
-        -webkit-flex: 1;
+        @include flex;
     }
 </style>
 <template>

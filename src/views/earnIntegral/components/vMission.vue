@@ -1,12 +1,8 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .v-mission {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        display: -webkit-flex;
-        -webkit-align-items: center;
-        -webkit-justify-content: space-between;
+        @include flex-center-v;
+        @include justify-content(space-between);
         position: relative;
         height: pxTorem(110);
         margin:0 pxTorem(30);
@@ -16,12 +12,7 @@
             font-weight:500;
         }
         a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            display: -webkit-flex;
-            -webkit-align-items: center;
-            -webkit-justify-content: center;
+            @include flex-center;
             width: pxTorem(115);
             height: pxTorem(50);
             border-radius: pxTorem(10);

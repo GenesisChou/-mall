@@ -1,14 +1,15 @@
-@function pxTorem($px){
-    @return $px /75 * 1rem;
-}
 $black:#333;
 $gray-light:#f2f3f4;
 $sliver:#a3a3a3;
 $gray:#666666;
 $white:#ffffff;
-$orange:#ff5000;;
+$orange:#ff5000;
 $red:#de443b;
-$pink:#f86e6e;
 $yellow:#feca5e;
 $green:#79cabc;
 $blue:#20a0ff;
+@function pxTorem($px) {
+    @return $px /75 * 1rem;
+}
+@import './mixin.scss';
+@import './flexbox.scss';

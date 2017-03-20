@@ -6,22 +6,14 @@
     }
     
     .tabs {
-        display: flex;
-        display: -webkit-flex;
+        @include flexbox;
         background-color: $white;
         margin-bottom: pxTorem(20);
         border-bottom: 1px solid #d3d4d6;
         li {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            -webkit-flex: 1;
-            display: -webkit-flex;
-            -webkit-align-items: center;
-            -webkit-justify-content: center;
-            -webkit-flex-direction: column;
+            @include flex-center;
+            @include flex;
+            @include flex-direction(column);
             height: pxTorem(128);
             text-align: center;
             list-style: none;
@@ -50,12 +42,7 @@
             margin-top: pxTorem(-10);
         }
         .badage {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            display: -webkit-flex;
-            -webkit-align-items: center;
-            -webkit-justify-content: center;
+            @include flex-center;
             width: pxTorem(36);
             height: pxTorem(36);
             position: absolute;
@@ -109,11 +96,13 @@
     </div>
 </template>
 <script>
-    import vOrder from 'components/vOrder.vue'
+    import vOrder from 'components/vOrder.vue';
+    import vBackTop from 'components/vBackTop';
     export default {
         name: 'orderList',
         components: {
             vOrder,
+            vBackTop
         },
         data() {
             return {

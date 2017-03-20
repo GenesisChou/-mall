@@ -19,12 +19,9 @@
     }
     
     .v-warn-content {
-        display: flex;
-        display: -webkit-flex;
-        flex-direction: column;
-        -webkit-flex-direction: column;
-        justify-content: space-between;
-        -webkit-justify-content: space-between;
+        @include flexbox;
+        @include flex-direction(column);
+        @include justify-content(space-between);
         width: pxTorem(600);
         height: pxTorem(230);
         margin-left: pxTorem(-600/2);
@@ -32,12 +29,7 @@
         background-color: $white;
         border-radius: pxTorem(30);
         .message {
-            display: flex;
-            display: -webkit-flex;
-            align-items: center;
-            -webkit-align-items: center;
-            justify-content: center;
-            -webkit-justify-content: center;
+            @include flex-center;
             height: pxTorem(130);
             color: #3d4244;
             h3 {

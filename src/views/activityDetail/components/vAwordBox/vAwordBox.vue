@@ -23,17 +23,12 @@
         &.navy {
             background-image: url('./images/navyAwordBox.png');
         }
-        ul {
+        .wrapper {
             width: 100%;
-            overflow-y: hidden;
-            -webkit-overflow-y: hidden;
-            overflow-x: scroll;
-            -webkit-overflow-x: scroll;
+            overflow-x: hidden;
+        }
+        ul {
             white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-            &::-webkit-scrollbar {
-                display: none;
-            }
         }
         .aword {
             list-style: none;
@@ -73,17 +68,21 @@
 
 <template>
     <div :class='["v-aword-box",color]'>
-        <ul>
-            <li :class='["aword",color]' v-for='aword in awords'>
-                <img :src='aword.pic'>
-                <h6 class='text-ellipsis'>
-                    {{aword.name}}
-                </h6>
-            </li>
-        </ul>
+        <div class='wrapper'>
+            <ul ref='scroller'>
+                <li :class='["aword",color]' v-for='aword in awords'>
+                    <img :src='aword.pic'>
+                    <h6 class='text-ellipsis'>
+                        {{aword.name}}
+                    </h6>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 <script>
+    import Transform from 'alloytouch/transformjs/transform.js';
+    import AlloyTouch from 'alloytouch/alloy_touch.js';
     export default {
         props: {
             awords: {
@@ -91,7 +90,31 @@
                 type: Array
             },
             color: String
+        },
+        mounted() {
+            const scroller = this.$refs.scroller,
+                length = this.awords.length;
+            let min = 0;
+            if (length > 3) {
+                const width = scroller.firstElementChild.offsetWidth + this.getSize(35);
+                min = -(width * length - utils.getClientWidth() + 50);
+            }
+            Transform(scroller);
+            new AlloyTouch({
+                touch: '.wrapper',
+                vertical: false,
+                target: scroller,
+                property: 'translateX',
+                min,
+                max: 0
+            })
+        },
+        methods: {
+            getSize(value) {
+                return value * utils.getClientWidth() / 750;
+            }
         }
+
 
     }
 </script>

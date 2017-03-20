@@ -1,14 +1,8 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
     .header {
-        display: flex;
-        display: -webkit-flex;
-        align-items: center;
-        -webkit-align-items: center;
-        flex-direction: column;
-        -webkit-flex-direction: column;
-        justify-content: center;
-        -webkit-justify-content: center;
+        @include flex-center;
+        @include flex-direction(column);
         width: 100%;
         height: pxTorem(398);
         background-color: $white;
@@ -27,12 +21,7 @@
             border: pxTorem(6) solid #f4f4f4;
         }
         .edit-user {
-            display: flex;
-            display: -webkit-flex;
-            align-items: center;
-            -webkit-align-items: center;
-            justify-content: center;
-            -webkit-justify-content: center;
+            @include flex-center;
             width: pxTorem(217);
             height: pxTorem(66);
             margin-top: pxTorem(20);
@@ -67,12 +56,8 @@
             display: none;
         }
         li {
-            display: flex;
-            display: -webkit-flex;
-            align-items: center;
-            -webkit-align-items: center;
-            justify-content: space-between;
-            -webkit-justify-content: space-between;
+            @include flex-center-v;
+            @include justify-content(space-between);
             height: pxTorem(100);
             list-style: none;
         }

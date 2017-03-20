@@ -1,11 +1,8 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
     .single-button {
+        @include flex-center;
         height: pxTorem(120);
-        display: flex;
-        display: -webkit-flex;
-        -webkit-align-items: center;
-        -webkit-justify-content: center;
         &.bg-white {
             margin-top: pxTorem(20);
             background-color: $white;
@@ -29,24 +26,16 @@
             }
         }
         .content {
-            display: flex;
-            align-items: center;
-            display: -webkit-flex;
-            -webkit-align-items: center;
+            @include flex-center-v;
             height: pxTorem(157);
             margin-top: pxTorem(20);
-            padding:0 pxTorem(30);
+            padding: 0 pxTorem(30);
             .address-content {
-                flex: 1;
-                -webkit-flex: 1;
+                @include flex;
                 overflow: hidden;
             }
             .address-detail {
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
+                @include text-ellipsis(2);
                 text-align: justify;
                 color: #646565;
             }
@@ -109,12 +98,9 @@
             overflow: hidden;
         }
         .form-control {
+            @include flex-center-v;
+            @include flex;
             float: left;
-            display: flex;
-            align-items: center;
-            -webkit-flex: 1;
-            display: -webkit-flex;
-            -webkit-align-items: center;
             height: pxTorem(75);
             padding-left: pxTorem(10);
             border: pxTorem(2) solid #f0c3c2;
@@ -162,7 +148,8 @@
 <template>
     <div v-show='content_show' class='order-detail '>
         <!-- 订单详情 -->
-        <v-order :img='order_detail.product_pic' :id='order_detail.orderid' :integral='order_detail.integral>>0' :name='order_detail.product' :has-border='true'>
+        <v-order :img='order_detail.product_pic' :id='order_detail.orderid' :integral='order_detail.integral>>0' :name='order_detail.product'
+            :has-border='true'>
             <!--商品为虚拟物品时 -->
             <template v-if='is_virtual'>
                 <!--商品为优惠券时 -->
@@ -250,6 +237,7 @@
     import vLogistics from './components/vLogistics';
     import vAddressEdit from './components/vAddressEdit.vue';
     import vAddressSelect from './components/vAddressSelect.vue';
+    import vIntroduction from 'components/vIntroduction.vue';
     import vAnnouncement from './components/vAnnouncement.vue';
     import vTicket from './components/vTicket';
     import vOrder from 'components/vOrder.vue';
@@ -259,6 +247,7 @@
             vOrder,
             vLogistics,
             vAddressEdit,
+            vIntroduction,
             vAnnouncement,
             vTicket,
             vAddressSelect,

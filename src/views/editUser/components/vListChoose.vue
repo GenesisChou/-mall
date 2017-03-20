@@ -10,10 +10,8 @@
             display: none;
         }
         li {
-            display: flex;
-            display: -webkit-flex;
-            align-items: center;
-            -webkit-align-items: center;
+            @include flex-center-v;
+            @include active($white, 5%);
             width: pxTorem(400);
             height: pxTorem(70);
             list-style: none;
@@ -21,9 +19,6 @@
             border-bottom: 1px solid $gray-light;
             &:last-child {
                 border-bottom: 1px solid $gray-light;
-            }
-            &:active {
-                background-color: darken($white, 5%);
             }
             .radio {
                 width: pxTorem(30);

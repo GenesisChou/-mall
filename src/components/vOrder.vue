@@ -1,10 +1,13 @@
 <style lang='scss' scoped>
     @import '../assets/scss/variable.scss';
     .v-order.active:active {
-        .v-order-header,.v-order-main,.v-order-footer {
+        .v-order-header,
+        .v-order-main,
+        .v-order-footer {
             background-color: darken($white, 2%);
         }
     }
+    
     .v-order-header {
         padding-left: pxTorem(30);
         line-height: pxTorem(76);
@@ -19,10 +22,7 @@
     }
     
     .v-order-main {
-        display: flex;
-        align-items: center;
-        display: -webkit-flex;
-        -webkit-align-items: center;
+        @include flex-center-v;
         height: pxTorem(155);
         border-top: 1px solid $gray-light;
         padding: 0 pxTorem(30);
@@ -35,14 +35,10 @@
             height: pxTorem(120);
         }
         .describe {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            -webkit-flex: 1;
-            display: -webkit-flex;
-            -webkit-flex-direction: column;
-            -webkit-justify-content: space-between;
+            @include flex;
+            @include flexbox;
+            @include flex-direction(column);
+            @include justify-content(center);
             height: 80%;
             padding-left: pxTorem(25);
             h2 {

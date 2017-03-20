@@ -10,21 +10,14 @@
     }
     
     .sort {
-        display: flex;
-        display: -webkit-flex;
+        @include flexbox;
         margin-bottom: pxTorem(20);
         border-bottom: 1px solid #d3d4d6;
         background-color: $white;
         color: #babbbe;
         >div {
-            flex: 1;
-            -webkit-flex: 1;
-            display: flex;
-            display: -webkit-flex;
-            align-items: center;
-            -webkit-align-items: center;
-            justify-content: center;
-            -webkit-justify-content: center;
+            @include flex;
+            @include flex-center;
             height: pxTorem(82);
             font-size: pxTorem(30);
             &:nth-child(1) {
@@ -103,11 +96,14 @@
     </div>
 </template>
 <script>
-    import vSearch from './components/vSearch.vue'
+    import vSearch from './components/vSearch.vue';
+    import vBackTop from 'components/vBackTop';
+    import vListItem from 'components/vListItem.vue';
     export default {
         name: 'productList',
         components: {
-            vSearch
+            vSearch,
+            vBackTop,vListItem
         },
         data() {
             return {

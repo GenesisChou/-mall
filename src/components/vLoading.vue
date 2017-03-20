@@ -14,8 +14,12 @@
 	</div>
 </template>
 <script>
+	import vSpinner from 'components/vSpinner.vue';
 	export default {
 		name:'vLoading',
+		components:{
+			vSpinner
+		},
 		computed: {
 			show(){
                 return this.$store.state.v_loading.show;

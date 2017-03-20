@@ -6,12 +6,8 @@
     }
     
     .title {
-        display: flex;
-        display: -webkit-flex;
-        justify-content: center;
-        -webkit-justify-content: center;
-        flex-direction: column;
-        -webkit-flex-direction: column;
+        @include flex-center-h;
+        @include flex-direction(column);
         height: pxTorem(140);
         padding-left: pxTorem(30);
         background-color: $white;
@@ -62,11 +58,7 @@
             border-radius: pxTorem(10);
         }
         h6 {
-            display: flex;
-            display: -webkit-flex;
-            -webkit-align-items: center;
-            justify-content: center;
-            -webkit-justify-content: center;
+            @include flex-center;
             height: pxTorem(66);
             color: #646565;
             .iconfont {
@@ -75,17 +67,13 @@
             }
         }
         .exchange {
+            @include active(#ff5000, 5%);
             margin-top: pxTorem(30);
             background-color: #ff5000;
-            &:active {
-                background-color: darken(#ff5000, 5%);
-            }
         }
         .lack {
+            @include active(#ff9817, 5%);
             background-color: #ff9817;
-            &:active {
-                background-color: darken(#ff9817, 5%);
-            }
         }
     }
 </style>
@@ -118,8 +106,12 @@
     </div>
 </template>
 <script>
+    import vIntroduction from 'components/vIntroduction.vue';
     export default {
         name: 'productDetail',
+        components:{
+            vIntroduction
+        },
         data() {
             return {
                 product_id: '',

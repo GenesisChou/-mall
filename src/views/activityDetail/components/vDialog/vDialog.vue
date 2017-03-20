@@ -35,6 +35,7 @@
             background-repeat: no-repeat;
         }
         .message {
+            @include text-ellipsis;
             width: 100%;
             padding: 0 pxTorem(15);
             height: pxTorem(66);
@@ -45,12 +46,7 @@
             color: #ffe433;
         }
         .circle {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            display: -webkit-flex;
-            -webkit-align-items: center;
-            -webkit-justify-content: center;
+            @include flex-center;
             width: pxTorem(230);
             height: pxTorem(230);
             margin: pxTorem(30) auto pxTorem(55);
@@ -88,7 +84,7 @@
             <div v-show='value' class='content '>
                 <div class='v-dialog-content '>
                     <div class='close' @click='close'></div>
-                    <h1 class='message text-ellipsis '>{{msg}}</h1>
+                    <h1 class='message '>{{msg}}</h1>
                     <div :class='["circle",type]'>
                         <img v-if='type=="success"' class='pic' :src='img'>
                     </div>

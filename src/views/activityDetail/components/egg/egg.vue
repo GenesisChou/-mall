@@ -16,12 +16,7 @@
     }
     
     .integral-message {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        display: -webkit-flex;
-        -webkit-align-items: center;
-        -webkit-justify-content: center;
+        @include flex-center;
         width: pxTorem(412);
         height: pxTorem(83);
         margin: 0 auto;
@@ -32,10 +27,8 @@
     }
     
     .eggs {
-        display: flex;
-        display: -webkit-flex;
-        flex-wrap: wrap;
-        -webkit-flex-wrap: wrap;
+        @include flexbox;
+        @include flex-wrap(wrap);
         position: relative;
         margin-top: pxTorem(70);
         li {
