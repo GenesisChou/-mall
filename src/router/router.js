@@ -100,26 +100,6 @@ const router = new VueRouter({
                 })
             },
         },
-        // {
-        //     path: '/recharge',
-        //     name: 'recharge',
-        //     // component: require('views/test.vue')
-        //     component: resolve => {
-        //         require.ensure(['views/recharge'], () => {
-        //             resolve(require('views/recharge'))
-        //         })
-        //     },
-        // },
-        // {
-        //     path: '/test',
-        //     name: 'test',
-        //     // component: require('views/test.vue')
-        //     component: resolve => {
-        //         require.ensure(['views/test.vue'], () => {
-        //             resolve(require('views/test.vue'))
-        //         })
-        //     },
-        // },
         {
             path: '*',
             redirect: '/'
@@ -127,26 +107,8 @@ const router = new VueRouter({
     ],
 });
 //需要固定滚动条位置的页面
-const fixList = ['index', 'product_list', 'order_list', 'subject_detail'],
-    titles = {
-        index: APP.TITLE,
-        product_list: '所有商品',
-        product_detail: '商品详情',
-        activity_detail: '活动详情',
-        my_account: '我的账户',
-        order_list: '兑换记录',
-        order_detail: '订单详情',
-        subject_detail: '每日上新',
-        edit_user: '填写个人资料',
-        earn_integral: '赚取积分',
-        recharge: '流量充值'
-    }
+const fixList = ['index', 'product_list', 'order_list', 'subject_detail'];
 router.beforeEach((to, from, next) => {
-    if (!from.name) {
-        utils.setTitle(APP.TITLE);
-    } else {
-        utils.setTitle(titles[to.name])
-    }
     if (utils.isInArray(from.name, fixList)) {
         utils.setSessionStorage('position:' + from.name, utils.getScrollTop());
     }
