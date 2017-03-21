@@ -185,7 +185,7 @@
                     <div v-else class=' notice '>每次消耗<span class='number'>{{activityDetail.integral>>0}}</span>积分</div>
                 </footer>
             </main>
-            <a class='submit' @click='submitAnswer'>提交答案</a>
+            <div class='submit' @click='submitAnswer'>提交答案</div>
         </template>
         <article class='describe'>
             <v-describe-title text='详细说明' color='green'></v-describe-title>

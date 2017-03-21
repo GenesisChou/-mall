@@ -128,7 +128,7 @@
             </div>
             <div id='lotteryContainer'> </div>
             <img class='scrap-cover' src='./images/scrapCover.png' ref='cover'>
-            <a v-if='state=="ready"' class='start' @click='start'>开始刮奖</a>
+            <div v-if='state=="ready"' class='start' @click='start'>开始刮奖</div>
             <h5 v-if='state=="ready" ' class='notice'>
                 <template v-if='freeTimes>0'>
                     今天还有<span class='number'>{{freeTimes}}</span>次免费机会

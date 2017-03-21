@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server  --inline --hot",
     "build": " cross-env NODE_ENV=production webpack --progress ",
-    "analyse": "cross-env NODE_ENV=production webpack --profile --json > stats.json",
-    "delete": "rm -rf dist index.html"
+    "analyse": "cross-env NODE_ENV=production webpack --profile --json > stats.json"
   },
   "dependencies": {
     "alloytouch": "^0.2.1",
