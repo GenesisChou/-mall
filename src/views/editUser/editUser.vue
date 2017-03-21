@@ -98,10 +98,10 @@
                 <li class='code'>
                     <label for='code'>验证码</label>
                     <input id='code' v-model='verification_code' placeholder="请输入验证码">
-                    <button :class='["btn",in_vertication?"btn-gray":"btn-orange"]' @click='getVerificationCode'>
+                    <div :class='["btn",in_vertication?"btn-gray":"btn-orange"]' @click='getVerificationCode'>
                         <template v-if='in_vertication'>{{countdown}}秒</template> 
                         <template v-else>验证</template> 
-                    </button>
+                    </div >
                 </li>
                 <li class='address'>
                     <label for='province'>收货地址</label>
