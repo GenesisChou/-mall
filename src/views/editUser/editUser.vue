@@ -43,6 +43,7 @@
         }
         .code {
             .btn {
+                text-align:center;
                 width: pxTorem(100);
             }
         }
