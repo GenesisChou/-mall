@@ -102,7 +102,6 @@
         },
         activated() {
             this.subject_id = this.$route.query.subject_id;
-            this.$store.dispatch('subjectView', this.subject_id);
             //保持滚动位置
             let position = utils.getSessionStorage('position:' + this.$route.name);
             if (position) {

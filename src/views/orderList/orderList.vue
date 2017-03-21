@@ -62,13 +62,14 @@
     }
     
     .v-order-footer {
-        padding-left: pxTorem(30);
+        padding:0 pxTorem(30);
         margin-bottom: pxTorem(20);
         line-height: pxTorem(66);
         border-top: 1px solid $gray-light;
         border-bottom: 1px solid #d3d4d6;
         color: $orange;
         background-color: $white;
+        text-align:justify;
     }
 </style>
 <template>

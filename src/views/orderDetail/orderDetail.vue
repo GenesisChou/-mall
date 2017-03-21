@@ -93,7 +93,7 @@
     
     .input-box {
         padding: pxTorem(30);
-        form {
+        .container {
             padding-left: pxTorem(20);
             overflow: hidden;
         }
@@ -102,7 +102,7 @@
             @include flex;
             float: left;
             height: pxTorem(75);
-            padding-left: pxTorem(10);
+            padding-left: pxTorem(30);
             border: pxTorem(2) solid #f0c3c2;
             background-color: #fef6f5;
             &.disable {
@@ -120,7 +120,7 @@
             background: none;
             border: none;
             text-indent: pxTorem(20);
-            color: #a9aaae;
+            color:$orange;
             font-size: pxTorem(30);
         }
         .submit {
@@ -154,6 +154,8 @@
             <template v-if='is_virtual'>
                 <!--商品为优惠券时 -->
                 <v-ticket v-if='product_type==1||product_type==6' :type='product_type' :order-detail='order_detail' :product-detail='product_detail'></v-ticket>
+                <!--商品为流量充值时 -->
+                <v-recharge v-if='product_type==8' :type='product_type' :get-order-detail='getOrderDetail' :order-detail='order_detail' :product-detail='product_detail'></v-recharge>
                 <!-- 使用说明 -->
                 <v-introduction v-if='product_detail.content_use' title='使用说明' :content='product_detail.content_use'></v-introduction>
                 <!-- 重要声明 -->
@@ -214,14 +216,14 @@
                     <section class='take-goods'>
                         <h5> <i class='iconfont icon-location'></i> 取货地址: {{order_detail.take_address}} </h5>
                         <main class='input-box' v-if='order_detail.status!=3'>
-                            <form>
+                            <div class='container'>
                                 <div :class='["form-control",{disable:order_detail.status==4}]'>
                                     <label for='take-goods'>取货码:</label>
                                     <input type="text" id='take-goods' placeholder='请输入' v-model='take_code' :disabled='order_detail.status==4'>
                                 </div>
-                                <a v-if='order_detail.status==2' class='submit' @click='takeGoods'>确认</a>
-                                <a v-if='order_detail.status==4' class='submit disable'>已逾期</a>
-                            </form>
+                                <div v-if='order_detail.status==2' class='submit' @click='takeGoods'>确认</div>
+                                <div v-if='order_detail.status==4' class='submit disable'>已逾期</div>
+                            </div>
                         </main>
                     </section>
                     <!-- 领取说明 -->
@@ -240,6 +242,7 @@
     import vIntroduction from 'components/vIntroduction.vue';
     import vAnnouncement from './components/vAnnouncement.vue';
     import vTicket from './components/vTicket';
+    import vRecharge from './components/vRecharge';
     import vOrder from 'components/vOrder.vue';
     export default {
         name: 'orderDetail',
@@ -250,6 +253,7 @@
             vIntroduction,
             vAnnouncement,
             vTicket,
+            vRecharge,
             vAddressSelect,
         },
         data() {
@@ -312,7 +316,7 @@
         },
         watch: {
             //order_type  1商品兑换 2活动
-            //product_type 1优惠券唯一码 2实物 3积分赠送 4谢谢参与 5优惠券链接 6优惠券通用码
+            //product_type 1优惠券唯一码 2实物 3积分赠送 4谢谢参与 5优惠券链接 6优惠券通用码 7福袋 8流量充值
             //status  1未确认地址 2已确认地址 3已发货
             //send_type 1快递 2自提
             order_id() {

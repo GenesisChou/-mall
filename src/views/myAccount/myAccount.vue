@@ -29,6 +29,9 @@
             background-color: rgba(255, 255, 255, .35);
             border-radius: pxTorem(33);
             border: 1px solid $white;
+            &:active {
+                opacity: 0.9;
+            }
         }
     }
     
@@ -51,7 +54,6 @@
         overflow: scroll;
         -webkit-overflow-scrolling: touch;
         background-color: $white;
-        border-bottom: 1px solid #d4d4d6;
         &::-webkit-scrollbar {
             display: none;
         }
@@ -81,9 +83,9 @@
             </div>
             <p>{{user.nickname}}</p>
             <p>积分: {{user.integral>>0}}</p>
-            <router-link :to='{name:"edit_user"}' tag='div'>
-                <a v-if='user.is_submit!= 1' class='edit-user'>完善资料赚积分</a>
-                <a v-else class='edit-user'>修改资料</a>
+            <router-link :to='{name:"edit_user"}' class='edit-user' tag='div'>
+                <template v-if='user.is_submit!= 1'>完善资料赚积分</template>
+                <template>修改资料</template>
             </router-link>
         </header>
         <h4 class='block-text'>

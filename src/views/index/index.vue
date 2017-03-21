@@ -254,9 +254,10 @@
                 //type 1 外链 type 2 详情
                 const type = subject.type,
                     url = subject.url;
+                this.$store.dispatch('subjectView', subject.id);
                 if (type == 1) {
-                    const product_id = utils.getParameterByName('product_id',url),
-                        activity_id = utils.getParameterByName('activity_id',url);
+                    const product_id = utils.getParameterByName('product_id', url),
+                        activity_id = utils.getParameterByName('activity_id', url);
                     if (product_id) {
                         this.$router.push({
                             name: "product_detail",

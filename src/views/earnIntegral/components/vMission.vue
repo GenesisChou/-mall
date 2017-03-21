@@ -11,7 +11,7 @@
             width: 70%;
             font-weight:500;
         }
-        a {
+        div {
             @include flex-center;
             width: pxTorem(115);
             height: pxTorem(50);
@@ -30,7 +30,7 @@
         <h4 ref='title' class='title'>
             {{title}}
         </h4>
-        <a :class='{read:is_read}'>{{btn_text}}</a>
+        <div :class='{read:is_read}'>{{btn_text}}</div>
     </div>
 </template>
 <script>

@@ -1,11 +1,12 @@
 @font-face {
   font-family: 'iconfont';  /* project id 117685 */
-  src: url('//at.alicdn.com/t/font_fkgnk7z7077ujtt9.eot');
-  src: url('//at.alicdn.com/t/font_fkgnk7z7077ujtt9.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_fkgnk7z7077ujtt9.woff') format('woff'),
-  url('//at.alicdn.com/t/font_fkgnk7z7077ujtt9.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_fkgnk7z7077ujtt9.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_yq9gegabx21kbj4i.eot');
+  src: url('//at.alicdn.com/t/font_yq9gegabx21kbj4i.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_yq9gegabx21kbj4i.woff') format('woff'),
+  url('//at.alicdn.com/t/font_yq9gegabx21kbj4i.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_yq9gegabx21kbj4i.svg#iconfont') format('svg');
 }
+
 .iconfont {
   font-family:"iconfont" !important;
   font-size:16px;
@@ -13,6 +14,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.icon-phone:before { content: "\e6c9"; }
 
 .icon-solved:before { content: "\e61e"; }
 

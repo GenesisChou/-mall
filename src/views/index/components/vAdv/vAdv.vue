@@ -51,6 +51,7 @@
                 const type = this.adv.type,
                     id = this.adv.item_id;
                 let router = null;
+                this.$store.dispatch('bannerView', id);
                 switch (type) {
                     case 1:
                         location.href = this.adv.url;

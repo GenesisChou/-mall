@@ -94,7 +94,7 @@
             overflow: hidden;
             border-bottom: 1px solid $gray-light;
             &:last-child {
-                border-bottom: 1px solid $gray-light;
+                border-bottom:none;
             }
             .radio {
                 display: inline-block;

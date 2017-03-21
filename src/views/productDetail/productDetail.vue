@@ -78,46 +78,52 @@
     }
 </style>
 <template>
-    <div class='product-detail'>
-        <header v-show='content_show' class='header '>
-            <img class='banner' :src='product_detail.pic_banner' />
-            <div class='title'>
-                <h1 class='text-ellipsis'>{{product_name}}</h1>
-                <h3><span class='number'>{{integral}}</span>积分
-                    <s>¥{{product_detail.price}}</s>
-                </h3>
-            </div>
-        </header>
-        <main v-show='content_show' class='main'>
-            <v-introduction v-if='product_detail.content' title='详细说明' :content='product_detail.content'></v-introduction>
-            <v-introduction v-if='product_detail.content_use' title='使用说明' :content='product_detail.content_use'></v-introduction>
-        </main>
-        <footer v-show='content_show' class='sticky'>
-            <div class='exchange' v-if='integral_enough' @click='exchange'>立即兑换</div>
-            <template v-else>
-                <h6>
-                    <i class='iconfont icon-warn'></i> 您的积分不足
-                </h6>
-                <router-link :to='{name:"earn_integral",query:{back_show:true}}' tag='div' class='lack'>
-                    去赚取更多的积分>>
-                </router-link>
-            </template>
-        </footer>
+    <div v-if='product_detail' class='product-detail'>
+        <template v-if='!is_recharge'>
+            <header class='header '>
+                <img class='banner' :src='product_detail.pic_banner' />
+                <div class='title'>
+                    <h1 class='text-ellipsis'>{{product_name}}</h1>
+                    <h3><span class='number'>{{integral}}</span>积分
+                        <s>¥{{product_detail.price}}</s>
+                    </h3>
+                </div>
+            </header>
+            <main class='main'>
+                <v-introduction v-if='product_detail.content' title='详细说明' :content='product_detail.content'></v-introduction>
+                <v-introduction v-if='product_detail.content_use' title='使用说明' :content='product_detail.content_use'></v-introduction>
+            </main>
+            <footer class='sticky'>
+                <div class='exchange' v-if='integral_enough' @click='exchange'>立即兑换</div>
+                <template v-else>
+                    <h6>
+                        <i class='iconfont icon-warn'></i> 您的积分不足
+                    </h6>
+                    <router-link :to='{name:"earn_integral",query:{back_show:true}}' tag='div' class='lack'>
+                        去赚取更多的积分>>
+                    </router-link>
+                </template>
+            </footer>
+        </template>
+        <recharge v-else :product-detail='product_detail'></recharge>
     </div>
 </template>
 <script>
     import vIntroduction from 'components/vIntroduction.vue';
+    import recharge from './components/recharge';
     export default {
         name: 'productDetail',
-        components:{
-            vIntroduction
+        components: {
+            vIntroduction,
+            recharge
         },
         data() {
             return {
                 product_id: '',
                 product_detail: '',
                 order_detail_id: '', //兑换成功后用于跳转订单详情的订单id
-                content_show: false
+                content_show: false,
+                is_recharge: false
             };
         },
         computed: {
@@ -135,12 +141,6 @@
             }
         },
         watch: {
-            product_id() {
-                this.content_show = false;
-                this.getProductDetail().then(() => {
-                    this.content_show = true;
-                });
-            },
             order_detail_id() {
                 this.$store.dispatch('getUserInfor');
                 this.$store.dispatch('toggleAlert', {
@@ -153,30 +153,28 @@
                 })
             }
         },
-        activated() {
+        created() {
             this.product_id = this.$route.query.product_id;
+            this.getProductDetail();
         },
         methods: {
             //获取商品详情
             getProductDetail() {
-                return new Promise((resolve, reject) => {
+                this.$store.dispatch('toggleLoading');
+                this.$http.post(`${APP.HOST}/product_detail_l/${this.product_id}`, {
+                    token: APP.TOKEN,
+                    media_id: APP.MEDIA_ID,
+                    user_id: APP.USER_ID,
+                    open_id: APP.OPEN_ID
+                }).then((response) => {
                     this.$store.dispatch('toggleLoading');
-                    this.$http.post(`${APP.HOST}/product_detail_l/${this.product_id}`, {
-                        token: APP.TOKEN,
-                        media_id: APP.MEDIA_ID,
-                        user_id: APP.USER_ID,
-                        open_id: APP.OPEN_ID
-                    }).then((response) => {
-                        this.$store.dispatch('toggleLoading');
-                        let data = response.data;
-                        this.product_detail = data.data;
-                        if (resolve) {
-                            resolve();
-                        }
-                    }, (response) => {
-                        this.$store.dispatch('toggleLoading');
-                    })
-
+                    let data = response.data;
+                    this.product_detail = data.data;
+                    if (this.product_detail.type == 8) {
+                        this.is_recharge = true;
+                    }
+                }, (response) => {
+                    this.$store.dispatch('toggleLoading');
                 })
             },
             //兑换

@@ -21,8 +21,8 @@
     .v-dialog-content {
         width: pxTorem(574);
         height: pxTorem(553);
-        margin-left:pxTorem(-574/2);
-        margin-top:pxTorem(-553/2);
+        margin-left: pxTorem(-574/2);
+        margin-top: pxTorem(-553/2);
         background-color: #eb4a4a;
         border-radius: pxTorem(30);
         .close {
@@ -42,7 +42,7 @@
             line-height: pxTorem(66);
             font-size: pxTorem(38);
             text-align: center;
-            font-weight:500;
+            font-weight: 500;
             color: #ffe433;
         }
         .circle {
@@ -63,7 +63,7 @@
                 height: pxTorem(119);
             }
         }
-        a {
+        .operation {
             display: block;
             width: pxTorem(180);
             height: pxTorem(59);
@@ -88,7 +88,7 @@
                     <div :class='["circle",type]'>
                         <img v-if='type=="success"' class='pic' :src='img'>
                     </div>
-                    <a @click='func'>{{btn_text}}</a>
+                    <div class='operation' @click='func'>{{btn_text}}</div>
                 </div>
             </div>
         </transition>

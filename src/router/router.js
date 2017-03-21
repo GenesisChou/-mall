@@ -100,6 +100,16 @@ const router = new VueRouter({
                 })
             },
         },
+        // {
+        //     path: '/test',
+        //     name: 'test',
+        //     // component: require('views/editUser.vue')
+        //     component: resolve => {
+        //         require.ensure(['views/test'], () => {
+        //             resolve(require('views/test'))
+        //         })
+        //     },
+        // },
         {
             path: '*',
             redirect: '/'

@@ -60,7 +60,7 @@
                     <div class='message'>
                         <h3> {{msg}} </h3>
                     </div>
-                    <a class='operation' @click='func'>{{btn_text}}</a>
+                    <div class='operation' @click='func'>{{btn_text}}</div>
                 </div>
             </div>
         </transition>
