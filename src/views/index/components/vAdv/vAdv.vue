@@ -49,7 +49,8 @@
             routerLink() {
                 //1 外链    2 活动    3 商品     4 专题
                 const type = this.adv.type,
-                    id = this.adv.item_id;
+                    id = this.adv.id,
+                    item_id = this.adv.item_id;
                 let router = null;
                 this.$store.dispatch('bannerView', id);
                 switch (type) {
@@ -60,7 +61,7 @@
                         this.$router.push({
                             name: "activity_detail",
                             query: {
-                                activity_id: id,
+                                activity_id: item_id,
                             }
                         });
                         break;
@@ -68,7 +69,7 @@
                         this.$router.push({
                             name: "product_detail",
                             query: {
-                                product_id: id,
+                                product_id: item_id,
                             }
                         });
                         break;
@@ -76,7 +77,7 @@
                         this.$router.push({
                             name: "subject_detail",
                             query: {
-                                subject_id: id,
+                                subject_id: item_id,
                             }
                         });
                         break;

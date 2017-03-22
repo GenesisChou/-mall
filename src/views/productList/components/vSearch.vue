@@ -44,10 +44,10 @@
 </style>
 <template>
     <div class='v-search'>
-        <div class='search-box'>
+        <form  class='search-box' action='javascript:return true;'>
             <i class='iconfont icon-search ' @click='search'></i>
             <input type='search' placeholder='请输入关键字进行过滤' :value='value' @input='updateValue' @keyup.enter='search'>
-        </div>
+        </form >
         <span @click='clear'>取消</span>
     </div>
 </template>

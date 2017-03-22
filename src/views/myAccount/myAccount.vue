@@ -34,7 +34,7 @@
             }
         }
     }
-    
+
     .block-text {
         line-height: pxTorem(88);
         text-align: center;
@@ -42,7 +42,7 @@
         color: $orange;
         border-bottom: 1px solid #d4d4d6;
     }
-    
+
     .record-list {
         position: absolute;
         top: pxTorem(508);
@@ -84,8 +84,8 @@
             <p>{{user.nickname}}</p>
             <p>积分: {{user.integral>>0}}</p>
             <router-link :to='{name:"edit_user"}' class='edit-user' tag='div'>
-                <template v-if='user.is_submit!= 1'>完善资料赚积分</template>
-                <template>修改资料</template>
+                <template v-if='user.is_submit==1'>修改资料</template>
+                <template v-else>完善资料赚积分</template>
             </router-link>
         </header>
         <h4 class='block-text'>
