@@ -18,16 +18,14 @@ var webpackConfig = {
             test: /\.vue$/,
             loader: 'vue-loader',
             options: {
-                // vue-loader options go here
                 loaders: {
-                    /*
-                    scss: ExtractTextPlugin.extract({
-                        loader: ['css-loader', 'sass-loader'],
-                        fallbackLoader: 'style-loader' // <- this is a dep of vue-loader, so no need to explicitly install if using npm3
-                    }),
-                    */
-                    scss: 'style-loader!css-loader!sass-loader'
-                }
+                    scss: 'style-loader!css-loader?minimize&-autoprefixer!sass-loader',
+                },
+                postcss: [
+                    require('autoprefixer')({
+                        browsers: ['last 5 versions']
+                    })
+                ]
             }
         }, {
             test: /\.css$/,

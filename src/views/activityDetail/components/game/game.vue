@@ -32,7 +32,6 @@
         background-position-x: inherit;
         z-index: 2;
         transform: translate(-50%, -50%);
-        -webkit-transform: translate(-50%, -50%);
     }
     
     .cover {
@@ -51,7 +50,6 @@
         left: 50%;
         top: 65%;
         transform: translateX(-50%);
-        -webkit-transform: translateX(-50%);
         z-index: 2;
     }
     

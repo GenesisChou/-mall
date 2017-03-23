@@ -59,7 +59,7 @@
         border-radius: 50%;
         .circle {
             @include flex-center;
-            @include flex-direction(column);
+            flex-direction: column;
             width: pxTorem(194);
             height: pxTorem(194);
             border-radius: 50%;
@@ -83,16 +83,16 @@
     }
 
     .progress {
-        @include flexbox;
+        display:flex;
         position: absolute;
         width: 100%;
         padding: 0 pxTorem(15);
         bottom: pxTorem(30);
         .check-item {
-            @include flex;
             @include flex-center-v;
-            @include justify-content(space-around);
-            @include flex-direction(column);
+            flex:1;
+            justify-content: space-around;
+            flex-direction: column;
             color: $white;
             &.active {
                 .circle {
@@ -126,11 +126,9 @@
             font-size: pxTorem(30);
             box-shadow: pxTorem(0) pxTorem(3) pxTorem(3) #1e9da1;
             transition: .5s;
-            -webkit-transition: .5s;
         }
         h6 {
             transition: .5s;
-            -webkit-transition: .5s;
         }
     }
 
@@ -157,7 +155,7 @@
 
     .notice {
         @include flex-center-h;
-        @include flex-direction(column);
+        flex-direction: column;
         height: pxTorem(106);
         padding-left: pxTorem(35);
         font-size: pxTorem(28);
@@ -194,7 +192,7 @@
 
     .article {
         @include flex-center-v;
-        @include justify-content(space-between);
+        justify-content: space-between;
         position: relative;
         height: pxTorem(110);
         margin: 0 pxTorem(30);
@@ -215,6 +213,25 @@
                 background-color: #4dd3d6;
             }
         }
+    }
+
+    .rotate-leave-active {
+        backface-visibility: hidden;
+        transform: rotateY(180deg);
+        transition: 1s cubic-bezier(0.5, 1, 0.5, 1.3);
+    }
+
+    .rotate-enter {
+        transform: rotateY(180deg);
+    }
+
+    .rotate-enter-active {
+        backface-visibility: hidden;
+        transition: 1s cubic-bezier(0.5, 1, 0.5, 1.3);
+    }
+
+    .rotate-enter-to {
+        transform: rotateY(360deg);
     }
 </style>
 <template>

@@ -7,7 +7,7 @@
     
     .title {
         @include flex-center-h;
-        @include flex-direction(column);
+        flex-direction:column;
         height: pxTorem(140);
         padding-left: pxTorem(30);
         background-color: $white;
@@ -26,10 +26,8 @@
             padding-left: 0.4rem;
             color: #6e6f6f;
             transform: scale(0.6) translateY(10%);
-            -webkit-transform: scale(0.6) translateY(10%);
             display: inline-block;
             transform-origin: left;
-            -webkit-transform-origin: left;
         }
     }
     

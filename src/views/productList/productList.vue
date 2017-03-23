@@ -10,14 +10,14 @@
     }
     
     .sort {
-        @include flexbox;
+        display: flex;
         margin-bottom: pxTorem(20);
         border-bottom: 1px solid #d3d4d6;
         background-color: $white;
         color: #babbbe;
         >div {
-            @include flex;
             @include flex-center;
+            flex:1;
             height: pxTorem(82);
             font-size: pxTorem(30);
             &:nth-child(1) {
@@ -37,7 +37,6 @@
         right: 0;
         top: 50%;
         transform: translateY( -50%);
-        -webkit-transform: translateY( -50%);
         line-height: pxTorem(18);
         right: pxTorem(70);
         .up,

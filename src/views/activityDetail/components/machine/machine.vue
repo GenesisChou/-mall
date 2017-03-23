@@ -87,7 +87,7 @@
             }
         }
         .container {
-            @include flexbox;
+            display:flex;
             position: relative;
             background-color: $white;
             width: 100%;
@@ -105,7 +105,7 @@
             z-index: 2;
         }
         .group {
-            @include flex;
+            flex:1;
             height: pxTorem(400);
             border-right: pxTorem(6) solid #fdc713;
             overflow: hidden;
@@ -147,7 +147,6 @@
             background-color: #76e6f7;
             box-shadow: 0 pxTorem(5) pxTorem(5) #4a93f0;
             transform: translateY(-50%);
-            -webkit-transform: translateY(-50%);
         }
         .line:before,
         .line:after {
@@ -160,7 +159,6 @@
             background-color: #76e6f7;
             box-shadow: 0 pxTorem(5) pxTorem(5) #4a93f0;
             transform: translateY(-50%);
-            -webkit-transform: translateY(-50%);
         }
         .line:before {
             left: pxTorem(-7);

@@ -14,17 +14,17 @@
         z-index: 11;
         .msg {
             @include flex-center;
-            @include flex-direction(column);
+            flex-direction:column;
             height: pxTorem(130);
         }
         .btns {
-            @include flexbox;
+            display:flex;
             border-top: 1px solid #d3d4d6;
         }
         .btn-left,
         .btn-right {
-            @include flex;
             @include flex-center;
+            flex:1;
             height: pxTorem(100);
             font-size: pxTorem(36);
             text-align: center;

@@ -25,12 +25,10 @@
                 height: pxTorem(30);
                 margin: 0 pxTorem(20);
                 border-radius: 50%;
-                -webkit-box-shadow: inset 0 0 pxTorem(10) $gray-light;
                 box-shadow: inset 0 0 pxTorem(10) $gray-light;
             }
             .radio.active {
                 box-shadow: none;
-                -webkit-box-shadow: none;
                 border: pxTorem(10) solid $orange;
             }
         }

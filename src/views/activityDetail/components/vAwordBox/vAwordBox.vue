@@ -49,6 +49,7 @@
                 height: pxTorem(42);
                 line-height: pxTorem(42);
                 text-align: center;
+                overflow:hidden;
             }
             &.red {
                 background-color: #fe7a6f;
@@ -78,7 +79,7 @@
             <ul ref='scroller'>
                 <li :class='["aword",color]' v-for='aword in awords'>
                     <img :src='aword.pic'>
-                    <h6 class='text-ellipsis'>
+                    <h6 >
                         {{aword.name}}
                     </h6>
                 </li>

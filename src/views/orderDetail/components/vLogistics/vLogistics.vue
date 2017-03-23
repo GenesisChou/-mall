@@ -37,7 +37,6 @@
                 height: 1.5rem;
                 background-color: #d3d4d6;
                 transform: translateX(-50%);
-                -webkit-transform: translateX(-50%);
                 z-index: 0;
             }
         }
@@ -49,7 +48,7 @@
             }
         }
         .detail {
-            @include flex;
+            flex:1;
             @include text-ellipsis(2);
             padding-right: pxTorem(30);
             color: #a9aaae;

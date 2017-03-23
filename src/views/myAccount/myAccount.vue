@@ -2,7 +2,7 @@
     @import '../../assets/scss/variable.scss';
     .header {
         @include flex-center;
-        @include flex-direction(column);
+        flex-direction: column;
         width: 100%;
         height: pxTorem(398);
         background-color: $white;
@@ -59,7 +59,7 @@
         }
         li {
             @include flex-center-v;
-            @include justify-content(space-between);
+            justify-content: space-between;
             height: pxTorem(100);
             list-style: none;
         }

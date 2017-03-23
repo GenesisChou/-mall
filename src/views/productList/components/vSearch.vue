@@ -2,7 +2,7 @@
     @import '../../../assets/scss/variable.scss';
     .v-search {
         @include flex-center-v;
-        @include justify-content(space-between);
+        justify-content: space-between;
         position: fixed;
         width: pxTorem(750);
         padding: pxTorem(20) pxTorem(30) pxTorem(20) pxTorem(40);
@@ -23,7 +23,7 @@
             color: #bababa;
         }
         input {
-            @include flex;
+            flex:1;
             width: pxTorem(610);
             border: 0;
             font-size: pxTorem(28);

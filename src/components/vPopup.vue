@@ -15,7 +15,7 @@
             top: 0;
             padding-right: pxTorem(20);
             padding-top: pxTorem(20);
-            color:$orange;
+            color: $orange;
         }
         .bg-cover {
             position: fixed;
@@ -26,20 +26,29 @@
             background: rgba(0, 0, 0, .5);
             z-index: 1;
         }
-        .iconfont{
-            font-size:pxTorem(40);
+        .iconfont {
+            font-size: pxTorem(40);
         }
+    }
+    .popup-enter-active,
+    .popup-leave-active {
+        transition: transform .5s;
+    }
+
+    .popup-enter,
+    .popup-leave-active {
+        transform: translate3d(0, 100%, 0);
     }
 </style>
 <template>
     <div class='v-popup'>
         <transition name='popup'>
-            <div v-show='show' class='v-popup-content' >
+            <div v-show='show' class='v-popup-content'>
                 <i class='close-popup iconfont icon-close-circle' @click='close'></i>
                 <slot></slot>
             </div>
         </transition>
-        <div  v-show='show' class='bg-cover'></div>
+        <div v-show='show' class='bg-cover'></div>
     </div>
 </template>
 <script>

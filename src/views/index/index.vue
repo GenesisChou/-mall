@@ -10,7 +10,7 @@
         li {
             @include active;
             @include flex-center;
-            @include flex-direction(column);
+            flex-direction:column;
             width: 25%;
             height: pxTorem(190);
             position: relative;
@@ -29,7 +29,6 @@
                 box-sizing: content-box;
                 z-index: 1;
                 transform: scale(0.5);
-                -webkit-transform: scale(0.5);
             }
         }
         .icon {

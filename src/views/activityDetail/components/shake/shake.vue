@@ -39,11 +39,8 @@
         height: pxTorem(412);
         transform: rotate(0deg);
         transform-origin: bottom center;
-        -webkit-transform: rotate(0deg);
-        -webkit-transform-origin: bottom center;
         &.active {
             animation: shake 1.5s linear;
-            -webkit-animation: shake 1.5s linear;
         }
     }
 
@@ -52,7 +49,6 @@
         bottom: pxTorem(90);
         left: 50%;
         transform: translateX(-50%);
-        -webkit-transform: translateX(-50%);
         padding-top: pxTorem(10);
         text-align: center;
         color: $white;
@@ -81,19 +77,19 @@
 
     @keyframes shake {
         0% {
-            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
         }
         25% {
-            -webkit-transform: rotate(40deg);
+            transform: rotate(40deg);
         }
         50% {
-            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
         }
         75% {
-            -webkit-transform: rotate(-40deg);
+            transform: rotate(-40deg);
         }
         100% {
-            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
         }
     }
 </style>

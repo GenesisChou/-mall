@@ -16,13 +16,13 @@
     }
     
     .container {
-        @include flexbox;
+        display:flex;
         padding: pxTorem(30) pxTorem(65);
     }
     
     .form-control {
         @include flex-center-v;
-        @include flex;
+        flex:1;
         width: pxTorem(450);
         height: pxTorem(75);
         border: pxTorem(2) solid #f0c3c2;
@@ -37,7 +37,7 @@
     }
     
     input {
-        @include flex;
+        flex:1;
         height: pxTorem(75);
         background: none;
         border: none;

@@ -19,9 +19,9 @@
     }
     
     .v-warn-content {
-        @include flexbox;
-        @include flex-direction(column);
-        @include justify-content(space-between);
+        display:flex;
+        flex-direction:column;
+        justify-content:space-between;
         width: pxTorem(600);
         height: pxTorem(230);
         margin-left: pxTorem(-600/2);
@@ -38,12 +38,7 @@
             }
         }
         .operation {
-            display: flex;
-            display: -webkit-flex;
-            align-items: center;
-            -webkit-align-items: center;
-            justify-content: center;
-            -webkit-justify-content: center;
+            @include flex-center;
             height: pxTorem(100);
             color: $orange;
             font-size: pxTorem(36);

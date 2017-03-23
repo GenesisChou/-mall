@@ -1,10 +1,10 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .v-address {
-        @include flex;
-        @include flexbox;
+        flex:1;
+        display:flex;
         .form-control {
-            @include flex;
+            flex:1;
             position: relative;
         }
         .iconfont {
@@ -15,7 +15,6 @@
             font-weight: bold;
             color: $sliver;
             transform: scale(0.7) translateY(-50%);
-            -webkit-transform: scale(0.7) translateY(-50%);
             &.third {
                 right: 0;
             }

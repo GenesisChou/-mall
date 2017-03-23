@@ -6,14 +6,14 @@
     }
     
     .tabs {
-        @include flexbox;
+        display:flex;
         background-color: $white;
         margin-bottom: pxTorem(20);
         border-bottom: 1px solid #d3d4d6;
         li {
             @include flex-center;
-            @include flex;
-            @include flex-direction(column);
+            flex:1;
+            flex-direction:column;
             height: pxTorem(128);
             text-align: center;
             list-style: none;
@@ -56,7 +56,6 @@
             background-color: #ffffff;
             font-size: pxTorem(24);
             transform: scale(0.8);
-            -webkit-transform: scale(0.8);
             z-index: 1;
         }
     }

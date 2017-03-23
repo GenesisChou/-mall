@@ -74,7 +74,6 @@
         left: 50%;
         top: 55%;
         transform: translate(-50%, -50%);
-        -webkit-transform: translate(-50%, -50%);
         width: pxTorem(227);
         height: pxTorem(78);
         box-shadow: 0 pxTorem(5) pxTorem(8) 1px rgba(215, 65, 0, 0.75);

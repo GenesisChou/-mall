@@ -1,59 +1,7 @@
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity .2s;
-    -webkit-transition: opacity .2s;
-}
-
-.fade-enter,
-.fade-leave-active {
-    opacity: 0;
-    -webkit-opacity: 0;
-}
-
 .scale-enter-active {
     transition: transform 0.2s;
-    -webkit-transition: transform 0.2s;
 }
 
 .scale-enter {
     transform: scale(0.8);
-    -webkit-transform: scale(0.8);
-}
-
-.popup-enter-active,
-.popup-leave-active {
-    transition: transform .5s;
-    -webkit-transition: transform .5s;
-}
-
-.popup-enter,
-.popup-leave-active {
-    transform:translate3d(0,100%,0); 
-    -webkit-transform:translate3d(0,100%,0); 
-}
-
-.rotate-leave-active {
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    transform: rotateY(180deg);
-    -webkit-transform: rotateY(180deg);
-    transition: 1s cubic-bezier(0.5, 1, 0.5, 1.3);
-    -webkit-transition: 1s cubic-bezier(0.5, 1, 0.5, 1.3);
-}
-
-.rotate-enter {
-    transform: rotateY(180deg);
-    -webkit-transform: rotateY(180deg);
-}
-
-.rotate-enter-active {
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    transition: 1s cubic-bezier(0.5, 1, 0.5, 1.3);
-    -webkit-transition: 1s cubic-bezier(0.5, 1, 0.5, 1.3);
-}
-
-.rotate-enter-to {
-    transform: rotateY(360deg);
-    -webkit-transform: rotateY(360deg);
 }

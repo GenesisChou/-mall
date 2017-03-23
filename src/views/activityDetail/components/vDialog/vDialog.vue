@@ -35,8 +35,8 @@
             background-repeat: no-repeat;
         }
         .message {
-            @include text-ellipsis;
             width: 100%;
+            overflow:hidden;
             padding: 0 pxTorem(15);
             height: pxTorem(66);
             line-height: pxTorem(66);

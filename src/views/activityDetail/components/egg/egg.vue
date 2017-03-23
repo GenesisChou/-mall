@@ -27,8 +27,8 @@
     }
     
     .eggs {
-        @include flexbox;
-        @include flex-wrap(wrap);
+        flex:1;
+        flex-wrap:wrap;
         position: relative;
         margin-top: pxTorem(70);
         li {
@@ -42,7 +42,6 @@
             background-repeat: no-repeat;
             &.active {
                 transform: translateY(-20%);
-                -webkit-transform: translateY(-20%);
             }
             &.broken {
                 background-image: url('./images/brokenEgg.png');
@@ -55,10 +54,9 @@
             top: pxTorem(-150);
             left: pxTorem(750-108);
             transition: 1s linear;
-            -webkit-transition: 1s linear;
-            -webkit-transform-origin: right bottom;
+            transform-origin: right bottom;
             &.active {
-                -webkit-animation: hammer 1s linear infinite;
+                animation: hammer 1s linear infinite;
             }
         }
     }
@@ -94,21 +92,21 @@
         z-index: 0;
     }
     
-    @-webkit-keyframes hammer {
+    @keyframes hammer {
         0% {
-            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
         }
         25% {
-            -webkit-transform: rotate(30deg);
+            transform: rotate(30deg);
         }
         50% {
-            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
         }
         75% {
-            -webkit-transform: rotate(30deg);
+            transform: rotate(30deg);
         }
         100% {
-            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
         }
     }
 </style>

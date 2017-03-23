@@ -20,8 +20,8 @@
         border-bottom: 1px solid #d3d4d6;
         margin-bottom: pxTorem(20);
         li {
-            @include flex;
             @include flex-center;
+            flex:1;
             position: relative;
             height: pxTorem(80);
             background-color: $white;
@@ -38,7 +38,6 @@
                 width: 65%;
                 height: pxTorem(5);
                 transform: translateX(-50%);
-                -webkit-transform: translateX(-50%);
                 background-color: $orange;
             }
         }

@@ -5,7 +5,7 @@
     }
     
     .main {
-        @include flex;
+        flex:1;
         padding: 0 pxTorem(30);
         list-style: none;
         background-color: $white;
@@ -16,7 +16,7 @@
             overflow: hidden;
             border-bottom: 1px solid $gray-light;
             &:last-child {
-                @include align-items(flex-start);
+                align-items:flex-start;
                 padding-top: pxTorem(22.5);
                 height: pxTorem(150);
                 border-bottom: none;
@@ -28,14 +28,14 @@
             color: #646565;
         }
         input {
-            @include flex;
+            flex:1;
             color: #646565;
             background: none;
             border: 0;
             font-size: pxTorem(28);
         }
         textarea {
-            @include flex;
+            flex:1;
             font-size: pxTorem(28);
             border: 0;
             color: #646565;

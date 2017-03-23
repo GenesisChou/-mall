@@ -68,7 +68,6 @@
         bottom: pxTorem(15);
         left: 50%;
         transform: translateX(-50%);
-        -webkit-transform: translateX(-50%);
         text-align: center;
         color: #b50300;
         .number {

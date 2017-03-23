@@ -31,7 +31,7 @@
             margin-top: pxTorem(20);
             padding: 0 pxTorem(30);
             .address-content {
-                @include flex;
+                flex:1;
                 overflow: hidden;
             }
             .address-detail {
@@ -99,7 +99,7 @@
         }
         .form-control {
             @include flex-center-v;
-            @include flex;
+            flex:1;
             float: left;
             height: pxTorem(75);
             padding-left: pxTorem(30);

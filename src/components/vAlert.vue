@@ -10,7 +10,6 @@
         padding: pxTorem(20);
         background-color: $white;
         transform: translate(-50%, -50%);
-        -webkit-transform: translate(-50%, -50%);
         border-radius: pxTorem(10);
         background-color: $white;
         z-index: 11;

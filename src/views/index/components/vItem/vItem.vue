@@ -29,9 +29,7 @@
             text-align: center;
             z-index: 1;
             transform: scale(0.67);
-            -webkit-transform: scale(0.67);
             transform-origin: 0 0 0;
-            -webkit-transform-origin: 0 0 0;
         }
         .red-arrows {
             position: absolute;

@@ -12,14 +12,14 @@
     
     .form-control {
         @include flex-center-v;
-        @include justify-content(space-between);
+        justify-content: space-between;
         height: pxTorem(92);
         margin: 0 pxTorem(24);
         padding: 0 pxTorem(16);
         border-bottom: 1px solid $gray-light;
         font-size: pxTorem(34);
         input {
-            @include flex;
+            flex:1;
             border: none;
         }
         span {
@@ -28,10 +28,10 @@
     }
     
     .flow-box {
-        @include flexbox;
-        @include justify-content(space-between);
-        @include align-content(space-between);
-        @include flex-wrap(wrap);
+        display:flex;
+        justify-content: space-between;
+        align-content: space-between;
+        flex-wrap: wrap;
         min-height: pxTorem(284);
         padding: pxTorem(30) pxTorem(40) 0 pxTorem(40);
         list-style: none;
@@ -77,7 +77,6 @@
             color: #c5c5c5;
             font-size: pxTorem(24);
             transform: scale(0.9);
-            -webkit-transform: scale(0.9);
         }
     }
     

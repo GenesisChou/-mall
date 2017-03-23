@@ -17,7 +17,6 @@
             color: #646565;
             font-size: pxTorem(30);
             transform: translateY(-50%);
-            -webkit-transform: translateY(-50%);
         }
     }
 </style>

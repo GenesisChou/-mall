@@ -7,7 +7,6 @@
         width: pxTorem(379);
         height: pxTorem(264);
         z-index: 1;
-        // -webkit-animation: ship 5s linear infinite;
     }
     
     .people {
@@ -17,18 +16,17 @@
         width: pxTorem(187);
         height: pxTorem(319);
         z-index: 3;
-        // -webkit-animation: ship 5s linear infinite;
     }
     
-    @-webkit-keyframes ship {
+    @keyframes ship {
         0% {
-            -webkit-transform: translateY(0%);
+            transform: translateY(0%);
         }
         50% {
-            -webkit-transform: translateY(-3%);
+            transform: translateY(-3%);
         }
         100% {
-            -webkit-transform: translateY(0%);
+            transform: translateY(0%);
         }
     }
     
@@ -41,7 +39,6 @@
         background-color: #831a27;
         z-index: 3;
         transform-origin: left;
-        -webkit-transform-origin: left;
         &:before {
             content: '';
             position: absolute;
@@ -64,19 +61,18 @@
             background-color: #831a27;
         }
         &.ready {
-            -webkit-animation: ready 1.5s linear infinite;
+            animation: ready 1.5s linear infinite;
         }
         &.one {
-            -webkit-animation: one 1s ease-in forwards;
+            animation: one 1s ease-in forwards;
         }
         &.two {
             width: pxTorem(230);
-            // -webkit-transform: rotateX(180deg) rotate(-60deg);
-            -webkit-animation: two 1s ease-in forwards;
+            animation: two 1s ease-in forwards;
         }
     }
     
-    @-webkit-keyframes ready {
+    @keyframes ready {
         0% {
             width: pxTorem(200);
         }
@@ -88,21 +84,21 @@
         }
     }
     
-    @-webkit-keyframes one {
+    @keyframes one {
         0% {
-            -webkit-transform: rotateX(180deg);
+            transform: rotateX(180deg);
         }
         100% {
-            -webkit-transform: rotateX(180deg) rotate(-80deg);
+            transform: rotateX(180deg) rotate(-80deg);
         }
     }
     
-    @-webkit-keyframes two {
+    @keyframes two {
         0% {
-            -webkit-transform: rotateX(180deg);
+            transform: rotateX(180deg);
         }
         100% {
-            -webkit-transform: rotateX(180deg) rotate(-100deg);
+            transform: rotateX(180deg) rotate(-100deg);
         }
     }
 </style>

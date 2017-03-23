@@ -1,8 +1,8 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .select-address {
-        @include flexbox;
-        @include flex-direction(column);
+        display:flex;
+        flex-direction:column;
         height: pxTorem(640);
         background: $white;
         .header {
@@ -13,9 +13,8 @@
             background-color: $white;
         }
         .address-list {
-            @include flex;
+            flex:1;
             overflow-y: scroll;
-            -webkit-overflow-scrolling: touch;
             margin: 0 pxTorem(53);
             max-height: pxTorem(535);
             &::-webkit-scrollbar {

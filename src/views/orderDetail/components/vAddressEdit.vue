@@ -1,8 +1,8 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .edit-address {
-        @include flexbox;
-        @include flex-direction(column);
+        display:flex;
+        flex-direction:column;
         height: pxTorem(640);
         background: $gray-light;
         .header {
@@ -13,7 +13,7 @@
             background-color: $white;
         }
         .main {
-            @include flex;
+            flex:1;
             padding: 0 pxTorem(53);
             margin-bottom: pxTorem(30);
             list-style: none;
@@ -29,7 +29,7 @@
             }
             li.address {
                 .form-control {
-                    @include flex;
+                    flex:1;
                     position: relative;
                 }
                 .iconfont {
@@ -40,7 +40,6 @@
                     font-weight: bold;
                     color: $sliver;
                     transform: scale(0.7) translateY(-50%);
-                    -webkit-transform: scale(0.7) translateY(-50%);
                     &.third {
                         right: 0;
                     }
@@ -55,7 +54,7 @@
                 color: #646565;
             }
             input {
-                @include flex;
+                flex:1;
                 color: #646565;
                 background: none;
                 border: 0;
@@ -103,7 +102,6 @@
                 line-height: pxTorem(70);
                 margin-right: pxTorem(20);
                 border-radius: 50%;
-                -webkit-box-shadow: inset 0 0 pxTorem(10) $gray-light;
                 box-shadow: inset 0 0 pxTorem(10) $gray-light;
             }
             .radio.active {

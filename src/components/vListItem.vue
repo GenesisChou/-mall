@@ -17,7 +17,7 @@
             margin-right: pxTorem(60);
         }
         .describe {
-            @include flex;
+            flex:1;
             text-align: justify;
         }
         h2 {

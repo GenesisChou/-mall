@@ -65,33 +65,203 @@
 
     .card {
         position: absolute;
+        top: pxTorem(286);
+        left: pxTorem(465);
         width: pxTorem(204);
         height: pxTorem(245);
         background-image: url('./images/card.png');
         background-repeat: no-repeat;
         background-size: 100%;
         list-style: none;
+        transition: .2s;
+        &.light {
+            background-image: url('./images/cardLight.png');
+            transform: translate(pxTorem(1), pxTorem(1));
+        }
+    }
+
+    .card.move {
         &:nth-child(1) {
+            animation: move-one .3s linear forwards;
+        }
+        &:nth-child(2) {
+            animation: move-two .3s linear .4s forwards;
+        }
+        &:nth-child(3) {
+            animation: move-three .3s linear .8s forwards;
+        }
+        &:nth-child(4) {
+            animation: move-four .3s linear 1.2s forwards;
+        }
+    }
+
+    .card.select {
+        z-index: 3;
+        &:nth-child(1) {
+            animation: select-one .2s linear forwards;
+        }
+        &:nth-child(2) {
+            animation: select-two .2s linear forwards;
+        }
+        &:nth-child(3) {
+            animation: select-three .2s linear forwards;
+        }
+        &:nth-child(4) {
+            animation: select-four .2s linear forwards;
+        }
+        &:nth-child(5) {
+            animation: select-five .2s linear forwards;
+        }
+    }
+
+    @keyframes move-one {
+        to {
             top: 0;
             left: pxTorem(116);
         }
-        &:nth-child(2) {
+    }
+
+    @keyframes select-one {
+        from {
+            top: 0;
+            left: pxTorem(116);
+        }
+        to {
+            top: 50%;
+            left: 50%;
+            margin-left: pxTorem(-204/2);
+            margin-top: pxTorem(-245/2);
+        }
+    }
+
+
+
+    @keyframes move-two {
+        to {
             top: 0;
             left: pxTorem(348);
         }
-        &:nth-child(3) {
+    }
+
+    @keyframes select-two {
+        from {
+            top: 0;
+            left: pxTorem(348);
+        }
+        to {
+            top: 50%;
+            left: 50%;
+            margin-left: pxTorem(-204/2);
+            margin-top: pxTorem(-245/2);
+        }
+    }
+
+
+    @keyframes move-three {
+        to {
             top: pxTorem(286);
             left: 0;
         }
-        &:nth-child(4) {
+    }
+
+    @keyframes select-three {
+        from {
+            top: pxTorem(286);
+            left: 0;
+        }
+        to {
+            top: 50%;
+            left: 50%;
+            margin-left: pxTorem(-204/2);
+            margin-top: pxTorem(-245/2);
+        }
+    }
+
+
+
+    @keyframes move-four {
+        to {
             top: pxTorem(286);
             left: pxTorem(232);
         }
-        &:nth-child(5) {
+    }
+
+    @keyframes select-four {
+        from {
             top: pxTorem(286);
-            left: pxTorem(465);
+            left: pxTorem(232);
+        }
+        to {
+            top: 50%;
+            left: 50%;
+            margin-left: pxTorem(-204/2);
+            margin-top: pxTorem(-245/2);
         }
     }
+
+    @keyframes select-five {
+        to {
+            top: 50%;
+            left: 50%;
+            margin-left: pxTorem(-204/2);
+            margin-top: pxTorem(-245/2);
+        }
+    }
+
+    .card.big {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 4;
+        width: pxTorem(204*1.5);
+        height: pxTorem(245*1.5);
+        margin-left: pxTorem(-204*1.5/2);
+        margin-top: pxTorem(-245*1.5/2);
+        animation: shake .8s linear;
+        animation-iteration-count: infinite;
+    }
+
+    @keyframes shake {
+        50% {
+            transform: rotate(0deg);
+        }
+        56.25% {
+            transform: rotate(-10deg);
+        }
+        62.5% {
+            transform: rotate(0deg);
+        }
+        68.75% {
+            transform: rotate(10deg);
+        }
+        75% {
+            transform: rotate(0deg);
+        }
+        81.25% {
+            transform: rotate(-10deg);
+        }
+        87.5% {
+            transform: rotate(0deg);
+        }
+        93.75% {
+            transform: rotate(10deg);
+        }
+        100% {
+            transform: rotate(0deg);
+        }
+    }
+
+
+    .cover {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, .5);
+        z-index: 2;
+    }
+
 
 
     .notice {
@@ -146,7 +316,8 @@
                 <v-integral-box :integral='user.integral>>0' color='linen'></v-integral-box>
             </div>
             <ul class='cards'>
-                <li class='card' v-for='i in 5'></li>
+                <li v-for='i in 5' :class='["card",{move:move},{light:light_num==i},{select:select_num==i}]' @click='start(i)'></li>
+                <li v-show='big_show' transition='display' class='card big'></li>
             </ul>
             <div class='notice'>
                 <div>
@@ -159,6 +330,7 @@
                 </div>
             </div>
         </main>
+        <div v-show='cover_show' class='cover'></div>
         <article class='describe'>
             <v-describe-title text='详细说明' color='brown'></v-describe-title>
             <v-simditor>
@@ -199,10 +371,16 @@
             return {
                 state: '',
                 activity_result: {},
+                card_num: 5,
                 light_num: '',
                 select_num: '',
                 cards: '',
+                cover_show: false,
+                big_show: false,
                 is_win: '',
+                dialog: {},
+                move: false,
+                timer: null,
             }
         },
         computed: {
@@ -211,7 +389,52 @@
             }
         },
         watch: {
-
+            state(value) {
+                if (value == 'ready') {
+                    setTimeout(() => {
+                        this.move = true;
+                        setTimeout(() => {
+                            this.timer = setInterval(() => {
+                                this.light_num = ++this.light_num % (this.card_num + 1) || 1;
+                            }, 600);
+                        }, 1500)
+                    }, 500)
+                } else if (value == 'start') {
+                    this.cover_show = true;
+                    setTimeout(() => {
+                        this.big_show = true;
+                    }, 25);
+                }
+            },
+            is_win(value) {
+                if (this.state == 'ready') return;
+                const result = this.activity_result;
+                this.freshFreeTimes();
+                if (value) {
+                    this.dialog = {
+                        type: 'success',
+                        img: result.pic_thumb,
+                        msg: '获得' + result.name,
+                        btn_text: '查看',
+                        callback: this.toOrderDetail(result.id),
+                        callback_close: () => {
+                            this.init();
+                        },
+                    };
+                } else {
+                    this.dialog = {
+                        msg: '很遗憾,未中奖',
+                        btn_text: '再来一次',
+                        callback: () => {
+                            this.init();
+                        }
+                    };
+                }
+                setTimeout(() => {
+                    this.big_show = false;
+                    this.toggleDialog(this.dialog);
+                }, 2000)
+            },
         },
         created() {
             this.init();
@@ -220,10 +443,38 @@
             init() {
                 this.state = 'ready';
                 this.activity_result = {};
+                this.move=false;
                 this.light_num = '';
                 this.select_num = '';
                 this.is_win = '';
+                this.cover_show = false;
+                this.big_show = false;
             },
+            start(num) {
+                if (this.state != 'ready') return;
+                this.state = 'block';
+                clearInterval(this.timer);
+                this.light_num = '';
+                this.$http.post(`${APP.HOST}/activity_order/${this.id}`, {
+                    token: APP.TOKEN,
+                    user_id: APP.USER_ID
+                }).then((response) => {
+                    let data = response.data;
+                    if (data.status == APP.SUCCESS) {
+                        this.state = 'start';
+                        this.select_num = num;
+                        this.activity_result = data.data;
+                        this.is_win = this.activity_result.is_win;
+                    } else {
+                        this.toggleDialog({
+                            msg: data.info,
+                            callback: () => {
+                                this.init();
+                            }
+                        })
+                    }
+                })
+            }
         }
     }
 </script>

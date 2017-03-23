@@ -35,10 +35,9 @@
             height: pxTorem(120);
         }
         .describe {
-            @include flex;
-            @include flexbox;
-            @include flex-direction(column);
-            @include justify-content(center);
+            @include flex-center-h;
+            flex:1;
+            flex-direction:column;
             height: 80%;
             padding-left: pxTorem(25);
             h2 {

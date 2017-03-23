@@ -33,7 +33,6 @@
         background-size: 100% 100%;
         background-repeat: no-repeat;
         transform: translateX(-50%);
-        -webkit-transform: translateX(-50%);
         color: #e65413;
         z-index: 1;
     }
@@ -64,8 +63,8 @@
     }
     
     .answers {
-        @include flexbox;
-        @include flex-wrap(wrap);
+        display:flex;
+        flex-wrap:wrap;
         font-size: pxTorem(34);
         color: #6f3a04;
         list-style: none;
