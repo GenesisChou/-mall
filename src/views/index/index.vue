@@ -38,7 +38,7 @@
             margin-bottom: pxTorem(15);
         }
     }
-    
+
     .subject {
         width: pxTorem(750);
         height: pxTorem(376);
@@ -57,9 +57,6 @@
             height: 50%;
             float: right;
         }
-        img {
-            @include active;
-        }
         img:nth-child(2) {
             padding: pxTorem(15) pxTorem(10) pxTorem(5) pxTorem(7.5);
         }
@@ -67,11 +64,11 @@
             padding: pxTorem(5) pxTorem(10) pxTorem(15) pxTorem(7.5);
         }
     }
-    
+
     .advs li {
         list-style: none;
     }
-    
+
     .main {
         @include clearfix;
         background-color: $white;
@@ -79,33 +76,18 @@
 </style>
 <template>
     <div class='index '>
+        <!-- 轮播 -->
         <v-swipe></v-swipe>
+        <!-- 功能区 -->
         <ul class='icon-list'>
-            <router-link :to='{name:"my_account"}' tag='li'>
-                <img class='icon' src='./images/myAccount.png'>
-                <p>我的账户</p>
-            </router-link>
-            <router-link :to='{name:"earn_integral"}' tag='li'>
-                <img class='icon' src='./images/earnIntegral.png'>
-                <p>赚取积分</p>
-            </router-link>
-            <router-link :to='{name:"order_list"}' tag='li'>
-                <img class='icon' src='./images/myOrder.png'>
-                <!--
-                <b v-if='user.unfinished_order_count>0' class='v-badage'>{{user.unfinished_order_count}}</b>
-                -->
-                <p>我的订单</p>
-            </router-link>
-            <router-link :to='{name:"product_list"}' tag='li'>
-                <img class='icon' src='./images/allProduct.png'>
-                <p>所有商品</p>
+            <router-link v-for='feature in features' :to='{name:feature.router}' tag='li'>
+                <img class='icon' :src='feature.icon'>
+                <p>{{feature.text}}</p>
             </router-link>
         </ul>
         <!-- 专题 -->
         <div v-if='subject_show' class='subject'>
-            <img class='left' @click='routerLink(subject_list[0])' :src='subject_list[0].pic_main'>
-            <img class='right' @click='routerLink(subject_list[1])' :src='subject_list[1].pic_second'>
-            <img class='right' @click='routerLink(subject_list[2])' :src='subject_list[2].pic_second'>
+            <img v-for='(subject,$index) in subject_list' :class='$index==0?"left":"right"' @click='routerLink(subject)' :src='$index==0?subject.pic_main:subject.pic_second'>
         </div>
         <!-- 广告列表 -->
         <ul class='advs'>
@@ -113,7 +95,7 @@
                 <v-adv :adv='adv'></v-adv>
             </li>
         </ul>
-        <!-- balabala -->
+        <!-- 热门列表 -->
         <main class='main'>
             <!-- 热门推荐 -->
             <v-item v-for='item in hot_commend' :item='item' type='commend'></v-item>
@@ -139,6 +121,7 @@
         },
         data() {
             return {
+                features: [],
                 hot_items: [],
                 hot_commend: [],
                 hot_adcolumn: [],
@@ -175,15 +158,31 @@
             window.addEventListener('scroll', this.scroll_event);
         },
         created() {
+            this.features = [{
+                    router: 'my_account',
+                    icon: require('./images/myAccount.png'),
+                    text: '我的账户'
+                },
+                {
+                    router: 'earn_integral',
+                    icon: require('./images/earnIntegral.png'),
+                    text: '赚取积分'
+                },
+                {
+                    router: 'order_list',
+                    icon: require('./images/myOrder.png'),
+                    text: '我的订单'
+                },
+                {
+                    router: 'product_list',
+                    icon: require('./images/allProduct.png'),
+                    text: '所有商品'
+                }
+            ]
             this.getHotCommend();
             this.getHotAdcolumn();
             this.getSubjectList();
-            this.$store.dispatch('toggleLoading');
-            this.getHotItems().then(() => {
-                this.$store.dispatch('toggleLoading');
-            }).catch(() => {
-                this.$store.dispatch('toggleLoading');
-            });
+            this.getHotItems();
             this.scroll_event = this.getScrollEvent();
         },
         beforeRouteLeave(to, from, next) {
@@ -224,7 +223,7 @@
                 });
             },
             getHotItems() {
-                return new Promise((resolve, reject) => {
+                return new Promise(resolve => {
                     this.$http.post(`${APP.HOST}/hot_item`, this.params).then((response) => {
                         let data = response.data;
                         this.params.total = data.data.total;
@@ -233,9 +232,8 @@
                         if (resolve) {
                             resolve();
                         }
-                    }, (response) => {
-                        reject();
                     });
+
                 })
             },
             getScrollEvent() {

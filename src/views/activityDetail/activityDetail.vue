@@ -1,8 +1,7 @@
 <style lang='scss' scoped>
-.activity-detail{
-    overflow:hidden;
-}
-    
+    .activity-detail {
+        overflow: hidden;
+    }
 </style>
 <template>
     <div class='activity-detail'>
@@ -45,12 +44,15 @@
             treasure: (resolve) => {
                 require(['./components/treasure'], resolve)
             },
+            card: (resolve) => {
+                require(['./components/card'], resolve)
+            }
         },
         data() {
             return {
-                type: '',
                 activity_id: '',
-                activity_detail: '',
+                activity_detail: {},
+                activity_type: '',
                 free_times: '',
                 dialog_show: false,
                 dialog: {}
@@ -61,35 +63,14 @@
                 return this.free_times > 0 ? `您还剩余${this.free_times}次免费机会` :
                     `消耗积分${this.activity_detail.integral >> 0}`;
             },
-            activity_type() {
-                /*  1:刮刮卡
-                    2:有奖问答
-                    3:游戏
-                    4:摇一摇
-                    5:大转盘 
-                    6:砸金蛋 
-                    7:老虎机
-                    8:海底捞
-                    */
-                let type = this.type,
-                    result = '';
-                const type_list = ['scrap', 'quiz', 'game', 'shake', 'fortune', 'egg', 'machine', 'treasure'];
-                type_list.forEach((name, index) => {
-                    if (type == index + 1) {
-                        result = name;
-                        return;
-                    }
-                })
-                return result;
-            }
         },
         created() {
             this.activity_id = this.$route.query.activity_id;
             this.getActivityDetail().then(data => {
-                this.type = data.data.type;
+                this.activity_type = this.getActivityType(data.data.type);
+                // this.activity_type ='card';
             });
             this.getFreeTimes();
-
         },
         methods: {
             //获取活动详情
@@ -140,6 +121,28 @@
                         }
                     })
                 }
+            },
+            getActivityType(type) {
+                /* 
+                1:刮刮卡
+                2:有奖问答
+                3:游戏
+                4:摇一摇
+                5:大转盘 
+                6:砸金蛋 
+                7:老虎机
+                8:海底捞
+                9:卡牌
+                */
+                let result = '';
+                const type_list = ['scrap', 'quiz', 'game', 'shake', 'fortune', 'egg', 'machine', 'treasure', 'card'];
+                type_list.forEach((name, index) => {
+                    if (type == index + 1) {
+                        result = name;
+                        return;
+                    }
+                })
+                return result || 'scrap';
             },
             toggleDialog(dialog) {
                 this.dialog = dialog;

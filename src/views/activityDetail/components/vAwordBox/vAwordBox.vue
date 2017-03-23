@@ -23,6 +23,9 @@
         &.navy {
             background-image: url('./images/navyAwordBox.png');
         }
+        &.brown {
+            background-image: url('./images/brownAwordBox.png');
+        }
         .wrapper {
             width: 100%;
             overflow-x: hidden;
@@ -61,6 +64,9 @@
             }
             &.navy {
                 background-color: #399fae;
+            }
+            &.brown{
+                background-color:#a26a01;
             }
         }
     }

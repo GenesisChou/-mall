@@ -6,19 +6,19 @@
         padding-bottom: pxTorem(84);
         background-color: $white;
     }
-    
+
     .banner {
         width: pxTorem(750);
         height: pxTorem(400);
     }
-    
+
     .integral-message {
         @include flex-center;
         padding-top: pxTorem(65);
         color: $white;
         font-size: pxTorem(38);
     }
-    
+
     .shake-panel {
         position: relative;
         top: pxTorem(-90);
@@ -29,7 +29,7 @@
         background-repeat: no-repeat;
         z-index: 1;
     }
-    
+
     .hand {
         position: absolute;
         top: 22%;
@@ -42,10 +42,11 @@
         -webkit-transform: rotate(0deg);
         -webkit-transform-origin: bottom center;
         &.active {
+            animation: shake 1.5s linear;
             -webkit-animation: shake 1.5s linear;
         }
     }
-    
+
     .notice {
         position: absolute;
         bottom: pxTorem(90);
@@ -68,7 +69,7 @@
             font-size: pxTorem(44);
         }
     }
-    
+
     .describe {
         padding: 0 pxTorem(40);
         .editor-style {
@@ -77,8 +78,8 @@
             color: #ad0406;
         }
     }
-    
-    @-webkit-keyframes shake {
+
+    @keyframes shake {
         0% {
             -webkit-transform: rotate(0deg);
         }
@@ -118,11 +119,6 @@
             </div>
         </main>
         <article class='describe'>
-            <!--
-            <h1>
-                <button class='btn' @click='start'>start</button>
-            </h1>
-            -->
             <v-describe-title text='详细说明' color='red'></v-describe-title>
             <v-simditor>
                 <section v-html='activityDetail.content'></section>

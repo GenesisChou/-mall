@@ -14,17 +14,17 @@ if (token) {
     };
     utils.setLocalStorage(media_id, cache);
     //本地测试用
-    // startApp(cache);
+    startApp(cache);
     //正式部署用
-    let link = `${APP.MALL_HOST}/?id=${media_id}#/`;
-    if (activity_id) {
-        link += 'activity_detail?activity_id=' + activity_id;
-    } else if (product_id) {
-        link += 'product_detail?product_id=' + product_id;
-    } else if (subject_id) {
-        link += 'subject_detail?subject_id=' + subject_id;
-    }
-    location.href = link;
+    // let link = `${APP.MALL_HOST}/?id=${media_id}#/`;
+    // if (activity_id) {
+    //     link += 'activity_detail?activity_id=' + activity_id;
+    // } else if (product_id) {
+    //     link += 'product_detail?product_id=' + product_id;
+    // } else if (subject_id) {
+    //     link += 'subject_detail?subject_id=' + subject_id;
+    // }
+    // location.href = link;
 } else {
     const media_id = utils.getParameterByName('id');
     const cache = utils.getLocalStorage(media_id);
@@ -69,7 +69,7 @@ function startApp(cache) {
     const store = require('./vuex/store.js');
     const FastClick = require('fastclick');
     const setWeChatConfig = require('libs/weChatConfig.js');
-    const globalComponents=require('components/components.js');
+    const globalComponents = require('components/components.js');
     APP.TOKEN = cache.TOKEN;
     APP.USER_ID = cache.USER_ID;
     APP.MEDIA_ID = cache.MEDIA_ID;
@@ -90,4 +90,3 @@ function startApp(cache) {
         store
     });
 }
-

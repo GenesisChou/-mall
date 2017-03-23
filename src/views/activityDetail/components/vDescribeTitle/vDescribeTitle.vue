@@ -27,6 +27,9 @@
         &.aquamarine {
             background-image: url('./images/aquamarineTitle.png');
         }
+        &.brown{
+            background-image: url('./images/brownTitle.png');
+        }
     }
 </style>
 <template>

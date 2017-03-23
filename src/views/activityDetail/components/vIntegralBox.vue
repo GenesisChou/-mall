@@ -31,6 +31,11 @@
             background-color: #89deee;
             border: none;
         }
+        li.linen {
+            background-color: #ffe594;
+            color: #e63805;
+            border: none;
+        }
     }
 </style>
 <template>

@@ -3,7 +3,7 @@
     .earn-integral {
         background-color: #4dd3d6;
     }
-    
+
     .head {
         width: 100%;
         height: pxTorem(800);
@@ -29,7 +29,7 @@
             }
         }
     }
-    
+
     .back {
         @include flex-center;
         position: absolute;
@@ -40,13 +40,13 @@
         font-size: pxTorem(24);
         box-shadow: 0 pxTorem(5) pxTorem(5) #d56a10;
     }
-    
+
     .rotate {
         position: relative;
         width: 100%;
         height: pxTorem(234);
     }
-    
+
     .circle-button {
         @include flex-center;
         width: pxTorem(234);
@@ -81,7 +81,7 @@
             background-color: $orange;
         }
     }
-    
+
     .progress {
         @include flexbox;
         position: absolute;
@@ -133,10 +133,11 @@
             -webkit-transition: .5s;
         }
     }
-    
+
     .edit-user {
         @include flex-center-v;
-        @include active(#d0eff1,10%);
+        @include active(#d0eff1,
+        10%);
         height: pxTorem(107);
         padding-left: pxTorem(35);
         background-color: #d0eff1;
@@ -153,7 +154,7 @@
             color: #a78179;
         }
     }
-    
+
     .notice {
         @include flex-center-h;
         @include flex-direction(column);
@@ -166,7 +167,7 @@
             font-size: pxTorem(32);
         }
     }
-    
+
     .article-list {
         color: #a78179;
         background-color: #d0eff1;
@@ -186,6 +187,31 @@
             font-size: pxTorem(28);
             color: #8d8d8d;
             &:active {
+                background-color: #4dd3d6;
+            }
+        }
+    }
+
+    .article {
+        @include flex-center-v;
+        @include justify-content(space-between);
+        position: relative;
+        height: pxTorem(110);
+        margin: 0 pxTorem(30);
+        border-top: 1px solid #d4d4d6;
+        .title {
+            width: 70%;
+            font-weight: 500;
+        }
+        div {
+            @include flex-center;
+            width: pxTorem(115);
+            height: pxTorem(50);
+            border-radius: pxTorem(10);
+            font-size: pxTorem(24);
+            background-color: $orange;
+            color: $white;
+            &.read {
                 background-color: #4dd3d6;
             }
         }
@@ -240,30 +266,27 @@
         </template>
         <ul class='article-list'>
             <li class='notice'>
-                <p>
-                    完成单个任务可获得<span>{{read_param.integral}}</span>积分 </p>
-                <p>
-                    每日最多可得<span>{{read_param.day_limit}}</span>积分,今日已获得<span>{{read_param.today}}</span>积分
-                </p>
+                <p> 完成单个任务可获得<span>{{read_param.integral}}</span>积分 </p>
+                <p> 每日最多可得<span>{{read_param.day_limit}}</span>积分,今日已获得<span>{{read_param.today}}</span>积分 </p>
             </li>
             <template v-if='article_list.length'>
                 <li v-for='article in article_list'>
-                    <v-mission :article='article' :callback='readArticle'></v-mission>
+                    <div class='article' @click='readArticle(article)'>
+                        <h4 class='title'>{{article.title}}</h4>
+                        <div :class='{read:article.is_read==1}'>{{article.is_read==1?'已完成':article.button}}</div>
+                    </div>
                 </li>
             </template>
             <li v-else class='empty'>
                 现在没有积分任务啦～
             </li>
         </ul>
+        <iframe v-if='frame_show' class='frame' :src='frame_url'></iframe>
     </div>
 </template>
 <script>
-    import vMission from './components/vMission.vue';
     export default {
         name: 'earnIntegral',
-        components: {
-            vMission
-        },
         data() {
             return {
                 check_in_params: [],
@@ -278,8 +301,10 @@
                     day_limit: 0,
                     today: 0
                 },
+                frame_link: '',
                 article_list: [],
-                back_show: false
+                back_show: false,
+                frame_show: false,
             }
         },
         computed: {
@@ -381,23 +406,18 @@
                 })
             },
             //阅读文章
-            readArticle(article_id) {
-                return new Promise(resolve => {
-                    this.$http.post(`${APP.HOST}/read_article/${article_id}`, {
-                        token: APP.TOKEN,
-                        user_id: APP.USER_ID,
-                        media_id: APP.MEDIA_ID
-                    }).then((response) => {
-                        let data = response.data;
-                        if (data.status == APP.SUCCESS) {
-                            this.$store.dispatch('getUserInfor')
-                        }
-                        if (resolve) {
-                            resolve();
-                        }
-                    })
+            readArticle(article) {
+                this.$http.post(`${APP.HOST}/read_article/${article.id}`, {
+                    token: APP.TOKEN,
+                    user_id: APP.USER_ID,
+                    media_id: APP.MEDIA_ID
+                }).then((response) => {
+                    let data = response.data;
+                    if (data.status == APP.SUCCESS && article.is_read == 2) {
+                        this.$store.dispatch('getUserInfor')
+                    }
+                    location.href = article.url;
                 })
-
             }
         }
     }
