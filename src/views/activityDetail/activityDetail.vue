@@ -15,37 +15,38 @@
     </div>
 </template>
 <script>
+    /*global APP */
     import vDialog from './components/vDialog';
     export default {
         name: 'activityDetail',
         components: {
             vDialog,
             quiz: (resolve) => {
-                require(['./components/quiz'], resolve)
+                require(['./components/quiz'], resolve);
             },
             scrap: (resolve) => {
-                require(['./components/scrap'], resolve)
+                require(['./components/scrap'], resolve);
             },
             game: (resolve) => {
-                require(['./components/game'], resolve)
+                require(['./components/game'], resolve);
             },
             shake: (resolve) => {
-                require(['./components/shake'], resolve)
+                require(['./components/shake'], resolve);
             },
             fortune: (resolve) => {
-                require(['./components/fortune'], resolve)
+                require(['./components/fortune'], resolve);
             },
             egg: (resolve) => {
-                require(['./components/egg'], resolve)
+                require(['./components/egg'], resolve);
             },
             machine: (resolve) => {
-                require(['./components/machine'], resolve)
+                require(['./components/machine'], resolve);
             },
             treasure: (resolve) => {
-                require(['./components/treasure'], resolve)
+                require(['./components/treasure'], resolve);
             },
             card: (resolve) => {
-                require(['./components/card'], resolve)
+                require(['./components/card'], resolve);
             }
         },
         data() {
@@ -56,12 +57,12 @@
                 free_times: '',
                 dialog_show: false,
                 dialog: {}
-            }
+            };
         },
         computed: {
             notice() {
-                return this.free_times > 0 ? `您还剩余${this.free_times}次免费机会` :
-                    `消耗积分${this.activity_detail.integral >> 0}`;
+                return this.free_times > 0 ? `您还剩余${this.free_times}次免费机会`
+                : `消耗积分${this.activity_detail.integral >> 0}`;
             },
         },
         created() {
@@ -84,16 +85,15 @@
                         open_id: APP.OPEN_ID
                     }).then((response) => {
                         this.$store.dispatch('toggleLoading');
-                        let data = response.data;
+                        const data = response.data;
                         this.activity_detail = data.data;
                         if (resolve) {
                             resolve(data);
                         }
                     }, (response) => {
                         this.$store.dispatch('toggleLoading');
-                    })
-
-                })
+                    });
+                });
             },
             //获取免费活动次数
             getFreeTimes() {
@@ -102,9 +102,9 @@
                     userid: APP.USER_ID,
                     activity_id: this.activity_id
                 }).then((response) => {
-                    let data = response.data;
+                    const data = response.data;
                     this.free_times = data.data.free_times;
-                })
+                });
             },
             //刷新免费次数 刷新用户信息
             freshFreeTimes() {
@@ -119,29 +119,19 @@
                         query: {
                             order_id: order_id
                         }
-                    })
-                }
+                    });
+                };
             },
             getActivityType(type) {
-                /* 
-                1:刮刮卡
-                2:有奖问答
-                3:游戏
-                4:摇一摇
-                5:大转盘 
-                6:砸金蛋 
-                7:老虎机
-                8:海底捞
-                9:卡牌
-                */
+                /* 1:刮刮卡 2:有奖问答 3:游戏 4:摇一摇 5:大转盘 6:砸金蛋 7:老虎机 8:海底捞 9:卡牌 */
                 let result = '';
                 const type_list = ['scrap', 'quiz', 'game', 'shake', 'fortune', 'egg', 'machine', 'treasure', 'card'];
                 type_list.forEach((name, index) => {
-                    if (type == index + 1) {
+                    if (type === index + 1) {
                         result = name;
                         return;
                     }
-                })
+                });
                 return result || 'scrap';
             },
             toggleDialog(dialog) {

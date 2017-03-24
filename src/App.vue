@@ -2,14 +2,14 @@
     @import './assets/scss/iconfont.css';
     @import './assets/scss/main.scss';
     #app {
-        display:flex;
-        flex-direction:column;
+        display: flex;
+        flex-direction: column;
         min-height: 100%;
         background-color: #f2f3f4;
     }
-    
+
     .app-content {
-        flex:1;
+        flex: 1;
     }
 </style>
 <template>
@@ -40,10 +40,10 @@
         },
         created() {
             this.$store.dispatch('getUserInfor', (response) => {
-                let data = response.data;
-                if (data.status == APP.SUCCESS) {
+                const data = response.data;
+                if (data.status === APP.SUCCESS) {
                     console.log('login success');
-                } else if (data.status == APP.LOGIN_FAILED) {
+                } else if (data.status === APP.LOGIN_FAILED) {
                     console.log(data.info);
                     utils.deleteLocalStorage(APP.MEDIA_ID);
                     utils.reloadApp();
@@ -51,10 +51,10 @@
                     console.log(data.info);
                     this.$store.dispatch('toggleAlert', {
                         msg: '网络断开连接'
-                    })
+                    });
                 }
             });
             document.documentElement.style.fontSize = `${document.documentElement.clientWidth / 10}px`;
-        },
-    }
+        }
+    };
 </script>

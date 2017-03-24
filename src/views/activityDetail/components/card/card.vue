@@ -93,6 +93,9 @@
         &:nth-child(4) {
             animation: move-four .3s linear 1.2s forwards;
         }
+        &:nth-child(5) {
+            animation: move-five .3s forwards;
+        }
     }
 
     .card.select {
@@ -121,6 +124,42 @@
         }
     }
 
+
+
+
+    @keyframes move-two {
+        to {
+            top: 0;
+            left: pxTorem(348);
+        }
+    }
+
+
+
+    @keyframes move-three {
+        to {
+            top: pxTorem(286);
+            left: 0;
+        }
+    }
+
+
+
+    @keyframes move-four {
+        to {
+            top: pxTorem(286);
+            left: pxTorem(232);
+        }
+    }
+
+    @keyframes move-five {
+        to {
+            top: pxTorem(286);
+            left: pxTorem(465);
+        }
+    }
+
+
     @keyframes select-one {
         from {
             top: 0;
@@ -131,15 +170,7 @@
             left: 50%;
             margin-left: pxTorem(-204/2);
             margin-top: pxTorem(-245/2);
-        }
-    }
-
-
-
-    @keyframes move-two {
-        to {
-            top: 0;
-            left: pxTorem(348);
+            opacity: 0;
         }
     }
 
@@ -153,14 +184,7 @@
             left: 50%;
             margin-left: pxTorem(-204/2);
             margin-top: pxTorem(-245/2);
-        }
-    }
-
-
-    @keyframes move-three {
-        to {
-            top: pxTorem(286);
-            left: 0;
+            opacity: 0;
         }
     }
 
@@ -174,15 +198,7 @@
             left: 50%;
             margin-left: pxTorem(-204/2);
             margin-top: pxTorem(-245/2);
-        }
-    }
-
-
-
-    @keyframes move-four {
-        to {
-            top: pxTorem(286);
-            left: pxTorem(232);
+            opacity: 0;
         }
     }
 
@@ -196,15 +212,21 @@
             left: 50%;
             margin-left: pxTorem(-204/2);
             margin-top: pxTorem(-245/2);
+            opacity: 0;
         }
     }
 
     @keyframes select-five {
+        from {
+            top: pxTorem(286);
+            left: pxTorem(465);
+        }
         to {
             top: 50%;
             left: 50%;
             margin-left: pxTorem(-204/2);
             margin-top: pxTorem(-245/2);
+            opacity: 0;
         }
     }
 
@@ -217,8 +239,14 @@
         height: pxTorem(245*1.5);
         margin-left: pxTorem(-204*1.5/2);
         margin-top: pxTorem(-245*1.5/2);
-        animation: shake .8s linear;
-        animation-iteration-count: infinite;
+        transition: .4s linear;
+        &.shake {
+            animation: shake .8s linear;
+            animation-iteration-count: infinite;
+        }
+        &.rotate {
+            transform: rotateY(-45deg);
+        }
     }
 
     @keyframes shake {
@@ -317,7 +345,7 @@
             </div>
             <ul class='cards'>
                 <li v-for='i in 5' :class='["card",{move:move},{light:light_num==i},{select:select_num==i}]' @click='start(i)'></li>
-                <li v-show='big_show' transition='display' class='card big'></li>
+                <li v-show='big_show' transition='display' :class='["card","big",big_card_state]'></li>
             </ul>
             <div class='notice'>
                 <div>
@@ -377,6 +405,7 @@
                 cards: '',
                 cover_show: false,
                 big_show: false,
+                big_card_state: '',
                 is_win: '',
                 dialog: {},
                 move: false,
@@ -431,9 +460,15 @@
                     };
                 }
                 setTimeout(() => {
-                    this.big_show = false;
-                    this.toggleDialog(this.dialog);
-                }, 2000)
+                    this.big_card_state = '';
+                    setTimeout(() => {
+                        this.big_card_state = 'rotate';
+                        setTimeout(() => {
+                            this.big_show = false;
+                            this.toggleDialog(this.dialog);
+                        }, 400)
+                    }, 50)
+                }, 1600)
             },
         },
         created() {
@@ -443,12 +478,13 @@
             init() {
                 this.state = 'ready';
                 this.activity_result = {};
-                this.move=false;
+                this.move = false;
                 this.light_num = '';
                 this.select_num = '';
                 this.is_win = '';
                 this.cover_show = false;
                 this.big_show = false;
+                this.big_card_state = 'shake';
             },
             start(num) {
                 if (this.state != 'ready') return;

@@ -49,7 +49,7 @@
                 height: pxTorem(42);
                 line-height: pxTorem(42);
                 text-align: center;
-                overflow:hidden;
+                overflow: hidden;
             }
             &.red {
                 background-color: #fe7a6f;
@@ -66,20 +66,21 @@
             &.navy {
                 background-color: #399fae;
             }
-            &.brown{
-                background-color:#a26a01;
+            &.brown {
+                background-color: #a26a01;
             }
         }
     }
 </style>
 
+;:c
 <template>
     <div :class='["v-aword-box",color]'>
         <div class='wrapper'>
             <ul ref='scroller'>
                 <li :class='["aword",color]' v-for='aword in awords'>
                     <img :src='aword.pic'>
-                    <h6 >
+                    <h6>
                         {{aword.name}}
                     </h6>
                 </li>
@@ -88,6 +89,7 @@
     </div>
 </template>
 <script>
+    /*global  utils:true*/
     import Transform from 'alloytouch/transformjs/transform.js';
     import AlloyTouch from 'alloytouch/alloy_touch.js';
     export default {
@@ -99,8 +101,8 @@
             color: String
         },
         mounted() {
-            const scroller = this.$refs.scroller,
-                length = this.awords.length;
+            const scroller = this.$refs.scroller;
+            const length = this.awords.length;
             let min = 0;
             if (length > 3) {
                 const width = scroller.firstElementChild.offsetWidth + this.getSize(35);
@@ -114,14 +116,13 @@
                 property: 'translateX',
                 min,
                 max: 0
-            })
+            });
         },
         methods: {
             getSize(value) {
                 return value * utils.getClientWidth() / 750;
             }
         }
-
-
-    }
+    };
 </script>
+;:c

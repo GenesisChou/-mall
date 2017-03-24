@@ -87,12 +87,12 @@
             width: pxTorem(44);
             height: pxTorem(44);
             margin-right: pxTorem(30);
-            background-image: url('./images/circle.png');
+            background-image: url('./images/quizCircle.png');
             background-size: 100% 100%;
             transform: translateY(pxTorem(5));
         }
         input[type="radio"]:checked+label:before {
-            background-image: url('./images/selectedCircle.png');
+            background-image: url('./images/quizCircleActive.png');
         }
     }
     
@@ -140,7 +140,7 @@
             top: pxTorem(10);
             width: pxTorem(29);
             height: pxTorem(25);
-            background-image: url('./images/buttonLight.png');
+            background-image: url('./images/quizButtonLight.png');
             background-size: 100% 100%;
         }
     }

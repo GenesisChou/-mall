@@ -1,89 +1,94 @@
-var path = require('path');
-var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var webpackConfig = {
-    entry: {
-        app: './src/main.js',
-        vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk', 'scriptjs', 'vue-swipe']
-    },
-    output: {
-        path: path.resolve(__dirname, './dist'),
-        publicPath: '/dist/',
-        filename: 'js/[name].js',
-        // filename: 'js/[name].[hash].js'
-    },
-    module: {
-        rules: [{
-            test: /\.vue$/,
-            loader: 'vue-loader',
-            options: {
-                loaders: {
-                    scss: 'style-loader!css-loader?minimize&-autoprefixer!sass-loader',
-                },
-                postcss: [
-                    require('autoprefixer')({
-                        browsers: ['last 5 versions']
-                    })
-                ]
-            }
-        }, {
-            test: /\.css$/,
-            loaders: ['style-loader', 'css-loader']
-        }, {
-            test: /\.scss$/,
-            loaders: ['style-loader', 'css-loader', 'sass-loader']
-        }, {
-            test: /\.js$/,
-            loader: 'babel-loader',
-            exclude: /node_modules/,
-            query: {
-                presets: ['es2015']
-            }
-        }, {
-            test: /\.json$/,
-            loader: "json-loader"
-        }, {
-            test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-            loader: "url-loader?limit=10000&minetype=application/font-woff"
-        }, {
-            test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-            loader: "file-loader"
-        }, {
-            test: /\.(png|jpg|gif|svg)$/,
-            loader: 'url-loader',
-            query: {
-                limit: 10000,
-                name: 'images/[name].[hash].[ext]'
-            }
-        }]
-    },
-    resolve: {
-        alias: {
-            components: path.resolve(__dirname, './src/components'),
-            libs: path.resolve(__dirname, './src/libs'),
-            views: path.resolve(__dirname, './src/views'),
-            images: path.resolve(__dirname, './src/assets/images'),
-            style: path.resolve(__dirname, './src/assets/scss'),
+var path = require('path'),
+    webpack = require('webpack'),
+    HtmlWebpackPlugin = require('html-webpack-plugin'),
+    webpackConfig = {
+        entry: {
+            app: './src/main.js',
+            vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk', 'scriptjs', 'vue-swipe']
         },
-        extensions: ['.js', '.json', '.vue']
-    },
-    devServer: {
-        // contentBase: './dist',
-        hot: true,
-        host: '0.0.0.0'
-    },
-    plugins: [
-        // new ExtractTextPlugin('style.css'),
-        new webpack.ProvidePlugin({
-            utils: path.resolve(__dirname, './src/libs/utils.js')
-        }),
-        new webpack.ProvidePlugin({
-            APP: path.resolve(__dirname, './src/libs/appConfig.js')
-        }),
-    ],
-    // devtool: '#eval-source-map'
-};
+        output: {
+            path: path.resolve(__dirname, './dist'),
+            publicPath: '/dist/',
+            filename: 'js/[name].js',
+            // filename: 'js/[name].[hash].js'
+        },
+        module: {
+            rules: [{
+                enforce: 'pre',
+                test: /.vue$/,
+                loader: 'eslint-loader',
+                exclude: /node_modules/
+            },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader',
+                options: {
+                    loaders: {
+                        scss: 'style-loader!css-loader?minimize&-autoprefixer!sass-loader',
+                    },
+                    postcss: [
+                        require('autoprefixer')({
+                            browsers: ['last 5 versions']
+                        })
+                    ]
+                }
+            }, {
+                test: /\.css$/,
+                loaders: ['style-loader', 'css-loader']
+            }, {
+                test: /\.scss$/,
+                loaders: ['style-loader', 'css-loader', 'sass-loader']
+            }, {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/,
+                query: {
+                    presets: ['es2015']
+                }
+            }, {
+                test: /\.json$/,
+                loader: 'json-loader'
+            }, {
+                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: 'url-loader?limit=10000&minetype=application/font-woff'
+            }, {
+                test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: 'file-loader'
+            }, {
+                test: /\.(png|jpg|gif|svg)$/,
+                loader: 'url-loader',
+                query: {
+                    limit: 10000,
+                    name: 'images/[name].[hash].[ext]'
+                }
+            }]
+        },
+        resolve: {
+            alias: {
+                components: path.resolve(__dirname, './src/components'),
+                libs: path.resolve(__dirname, './src/libs'),
+                views: path.resolve(__dirname, './src/views'),
+                images: path.resolve(__dirname, './src/assets/images'),
+                style: path.resolve(__dirname, './src/assets/scss'),
+            },
+            extensions: ['.js', '.json', '.vue']
+        },
+        devServer: {
+            // contentBase: './dist',
+            hot: true,
+            host: '0.0.0.0'
+        },
+        plugins: [
+            // new ExtractTextPlugin('style.css'),
+            new webpack.ProvidePlugin({
+                utils: path.resolve(__dirname, './src/libs/utils.js')
+            }),
+            new webpack.ProvidePlugin({
+                APP: path.resolve(__dirname, './src/libs/appConfig.js')
+            }),
+        ],
+        // devtool: '#eval-source-map'
+    };
 if (process.env.NODE_ENV === 'production') {
     // module.exports.devtool = '#source-map',
     // http://vue-loader.vuejs.org/en/workflow/production.html

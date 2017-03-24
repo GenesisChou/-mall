@@ -41,6 +41,7 @@
             height: 80%;
             padding-left: pxTorem(25);
             h2 {
+                @include text-ellipsis;
                 height: pxTorem(60);
                 line-height: pxTorem(60);
                 color: #3d4244;
@@ -64,7 +65,7 @@
         <main :class='["v-order-main",{border:hasBorder}]'>
             <img class='pic' :src='img' />
             <div class='describe'>
-                <h2 class='text-ellipsis'>{{name}}</h2>
+                <h2 >{{name}}</h2>
                 <p> {{integral}}积分
                     <span>x1</span>
                 </p>
@@ -92,5 +93,5 @@
                 default: false
             }
         }
-    }
+    };
 </script>

@@ -2,43 +2,25 @@ module.exports = {
     isInArray(name, arr) {
         let result = false;
         arr.forEach(item => {
-            if (item == name) {
+            if (item === name) {
                 result = true;
                 return;
             }
-        })
+        });
         return result;
     },
-    setTitle(title) {
-        document.title = title;
-        var mobile = navigator.userAgent.toLowerCase()
-        // if (/iphone|ipad|ipod/.test(mobile)) {
-        var iframe = document.createElement('iframe')
-        iframe.style.display = 'none'
-        // 替换成站标favicon路径或者任意存在的较小的图片即可
-        iframe.setAttribute('src', '')
-        var iframeCallback = function () {
-            setTimeout(function () {
-                iframe.removeEventListener('load', iframeCallback)
-                document.body.removeChild(iframe)
-            }, 0)
-        }
-        iframe.addEventListener('load', iframeCallback)
-        document.body.appendChild(iframe)
-        // }
-    },
     getTypeOf(value) {
-        let temp = Object.prototype.toString.call(value);
+        const temp = Object.prototype.toString.call(value);
         return temp.substr(0, temp.length - 1).split(/\s+/)[1];
     },
     getParameterByName(name, url) {
         if (!url) url = window.location.href;
-        name = name.replace(/[\[\]]/g, "\\$&");
-        let regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        name = name.replace(/[\[\]]/g, '\\$&');
+        const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
             results = regex.exec(url);
         if (!results) return null;
         if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, " "));
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
     },
     scrollToTop() {
         window.scrollTo(0, 0);
@@ -71,7 +53,7 @@ module.exports = {
     },
     touchBottom() {
         var utils = this;
-        return utils.getScrollTop() + utils.getClientHeight() == utils.getScrollHeight();
+        return utils.getScrollTop() + utils.getClientHeight() === utils.getScrollHeight();
     },
     isEmptyObject(obj) {
         for (var key in obj) {
@@ -93,10 +75,10 @@ module.exports = {
     },
     getTimeInterval(date_1, date_2, type) {
         var interval = Math.abs((date_2 - date_1) / 1000);
-        if (type == 'day') {
+        if (type === 'day') {
             return interval / 3600 / 24;
-        } else if (type == 'hour') {
-            return integral / 3600;
+        } else if (type === 'hour') {
+            return interval / 3600;
         }
     },
     deleteLocalStorage(key) {
@@ -104,10 +86,10 @@ module.exports = {
     },
     // 防抖函数
     debounce(fn, delay, mustRunDelay) {
-        var timer = null;
-        var t_start;
+        let timer = null,
+            t_start;
         return function () {
-            var context = this,
+            const context = this,
                 args = arguments,
                 t_curr = +new Date();
             clearTimeout(timer);

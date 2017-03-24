@@ -20,7 +20,7 @@
         width: pxTorem(623);
         height: pxTorem(809);
         margin: pxTorem(10) auto pxTorem(58) auto;
-        background-image: url('./images/panel.png');
+        background-image: url('./images/fortunePanel.png');
         background-size: 100% 100%;
         background-repeat: no-repeat;
     }
@@ -42,7 +42,7 @@
         height: pxTorem(178);
         vertical-align: middle;
         text-align: center;
-        background-image: url('./images/panelItem.png');
+        background-image: url('./images/fortunePanelItem.png');
         background-size: pxTorem(155) pxTorem(155);
         background-position: center;
         background-repeat: no-repeat;
@@ -53,13 +53,13 @@
         }
         &.center {
             background-size: 100% 100%;
-            background-image: url('./images/startButton.png');
+            background-image: url('./images/fortuneStartButton.png');
         }
         &.active {
-            background-image: url('./images/panelItemActive.png');
+            background-image: url('./images/fortunePanelItemActive.png');
         }
         &.center.active {
-            background-image: url('./images/startButtonActive.png');
+            background-image: url('./images/fortuneStartButtonActive.png');
         }
     }
     

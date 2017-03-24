@@ -1,23 +1,23 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
-    .space {
-        height: pxTorem(112);
+    .product-list {
+        @include clearfix;
     }
-    
+
     ul,
     li {
         list-style: none;
     }
-    
+
     .sort {
         display: flex;
-        margin-bottom: pxTorem(20);
+        margin: pxTorem(112) 0 pxTorem(20) 0;
         border-bottom: 1px solid #d3d4d6;
         background-color: $white;
         color: #babbbe;
         >div {
             @include flex-center;
-            flex:1;
+            flex: 1;
             height: pxTorem(82);
             font-size: pxTorem(30);
             &:nth-child(1) {
@@ -31,7 +31,7 @@
             font-weight: bold;
         }
     }
-    
+
     .arrows {
         position: absolute;
         right: 0;
@@ -63,7 +63,7 @@
             }
         }
     }
-    
+
     .list li:last-child {
         margin-bottom: pxTorem(20);
     }
@@ -71,7 +71,6 @@
 <template>
     <div class='product-list'>
         <v-search :search='searchProduct' v-model='params.sword'></v-search>
-        <div class='space'></div>
         <section class='sort'>
             <div @click='sortByIntegral'>
                 <span :class='[sort_type!="count"&&sort_type?"active":""]'>消耗积分排序</span>
@@ -102,7 +101,8 @@
         name: 'productList',
         components: {
             vSearch,
-            vBackTop,vListItem
+            vBackTop,
+            vListItem
         },
         data() {
             return {

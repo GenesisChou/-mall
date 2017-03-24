@@ -9,16 +9,16 @@
         background-position: pxTorem(0) pxTorem(-130);
         background-repeat: no-repeat;
     }
-    
+
     header {
         position: relative;
     }
-    
+
     .banner {
         width: pxTorem(750);
         height: pxTorem(400);
     }
-    
+
     .banner-cover {
         position: absolute;
         left: 0;
@@ -28,7 +28,7 @@
         background: none;
         z-index: 1;
     }
-    
+
     .derocation {
         position: absolute;
         left: 0;
@@ -37,7 +37,7 @@
         height: pxTorem(446);
         z-index: 2;
     }
-    
+
     main {
         position: relative;
         width: pxTorem(564);
@@ -48,26 +48,26 @@
         background-size: 100% 100%;
         background-repeat: no-repeat;
     }
-    
+
     .integral-message {
         @include flex-center;
         height: pxTorem(82);
         color: $white;
         font-size: pxTorem(38);
     }
-    
+
     #lotteryContainer {
         position: absolute;
         left: pxTorem(15);
         top: pxTorem(85);
     }
-    
+
     .scrap-cover {
         width: pxTorem(540);
         height: pxTorem(190);
         margin-left: pxTorem(15);
     }
-    
+
     .start {
         @include flex-center;
         position: absolute;
@@ -83,7 +83,7 @@
         font-size: pxTorem(36);
         color: $white;
     }
-    
+
     .notice {
         position: absolute;
         left: 0;
@@ -98,7 +98,7 @@
             color: $orange;
         }
     }
-    
+
     .describe {
         padding: 0 pxTorem(40);
         .editor-style {
@@ -156,7 +156,8 @@
     </div>
 </template>
 <script>
-    import Lottery from './lottery.js'
+/*global APP utils */
+    import Lottery from './lottery.js';
     import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
     import vAwordBox from '../vAwordBox';
@@ -178,13 +179,13 @@
         },
         data() {
             return {
-                state: '', //游戏状态
-                draw_percent: 0, //画布涂抹面积 大于一定值时触发弹窗
+                state: '', // 游戏状态
+                draw_percent: 0, // 画布涂抹面积 大于一定值时触发弹窗
                 alert: {},
-                lottery: '', //画布实例
-                is_win: '', //判断是否中奖
-                area: 70,
-                activity_result: {},
+                lottery: '', // 画布实例
+                is_win: '', // 判断是否中奖
+                area: 60,
+                activity_result: {}
             };
         },
         computed: {
@@ -194,22 +195,22 @@
         },
         watch: {
             draw_percent(value) {
-                if (this.state == 'start' && value > this.area) {
+                if (this.state === 'start' && value > this.area) {
                     this.state = 'stop';
                 }
             },
             state(value) {
-                if (value == 'stop') {
+                if (value === 'stop') {
                     this.$store.dispatch('toggleLoading');
                     setTimeout(() => {
                         this.$store.dispatch('toggleLoading');
                         this.toggleDialog(this.alert);
-                    }, 1000)
+                    }, 1000);
                 }
             },
             is_win(value) {
-                if (this.state == 'ready') return;
-                let result = this.activity_result;
+                if (this.state === 'ready') return;
+                const result = this.activity_result;
                 this.freshFreeTimes();
                 if (value) {
                     this.alert = {
@@ -222,10 +223,10 @@
                             let canvas = document.getElementsByTagName('canvas');
                             canvas = Array.prototype.slice.call(canvas);
                             canvas.forEach(item => {
-                                item.parentElement.removeChild(item)
+                                item.parentElement.removeChild(item);
                             });
                             this.init();
-                        },
+                        }
                     };
                 } else {
                     this.alert = {
@@ -235,7 +236,7 @@
                             let canvas = document.getElementsByTagName('canvas');
                             canvas = Array.prototype.slice.call(canvas);
                             canvas.forEach(item => {
-                                item.parentElement.removeChild(item)
+                                item.parentElement.removeChild(item);
                             });
                             this.init();
                         }
@@ -255,31 +256,30 @@
                 this.is_win = '';
                 this.activity_result = {};
             },
-            //开始活动
+            // 开始活动
             start() {
-                if (this.state != 'ready') return;
+                if (this.state !== 'ready') return;
                 this.$store.dispatch('toggleLoading');
                 this.$http.post(`${APP.HOST}/activity_order/${this.id}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
-                    let data = response.data;
-                    if (data.status == APP.SUCCESS) {
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS) {
                         this.state = 'start';
                         this.activity_result = data.data;
                         this.is_win = this.activity_result.is_win;
                     } else {
                         this.toggleDialog({
                             msg: data.info
-                        })
+                        });
                     }
                 }, (response) => {
                     this.$store.dispatch('toggleLoading');
-                })
-
+                });
             },
-            //设置画布
+            // 设置画布
             setLottery(str) {
                 this.lottery = new Lottery('lotteryContainer', this.$refs.cover, 'image', this.pxTorem(540),
                     this.pxTorem(190), (
@@ -290,7 +290,7 @@
             },
             pxTorem(value) {
                 return value * utils.getClientWidth() / 750;
-            },
-        },
+            }
+        }
     };
 </script>

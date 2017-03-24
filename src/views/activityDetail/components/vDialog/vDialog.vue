@@ -17,7 +17,7 @@
             z-index: 6
         }
     }
-    
+
     .v-dialog-content {
         width: pxTorem(574);
         height: pxTorem(553);
@@ -36,10 +36,10 @@
         }
         .message {
             width: 100%;
-            overflow:hidden;
-            padding: 0 pxTorem(15);
             height: pxTorem(66);
             line-height: pxTorem(66);
+            padding: 0 pxTorem(15);
+            overflow:hidden;
             font-size: pxTorem(38);
             text-align: center;
             font-weight: 500;

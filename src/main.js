@@ -1,17 +1,17 @@
-const token = utils.getParameterByName('token');
-const activity_id = utils.getParameterByName('activity_id'),
+const token = utils.getParameterByName('token'),
+    activity_id = utils.getParameterByName('activity_id'),
     product_id = utils.getParameterByName('product_id'),
     subject_id = utils.getParameterByName('subject_id');
 if (token) {
-    const media_id = utils.getParameterByName('mediaid');
-    const cache = {
-        TOKEN: token,
-        USER_ID: utils.getParameterByName('userid'),
-        MEDIA_ID: media_id,
-        OPEN_ID: utils.getParameterByName('open_id'),
-        DATE: new Date(),
-        TITLE: utils.getParameterByName('imall_title')
-    };
+    const media_id = utils.getParameterByName('mediaid'),
+        cache = {
+            TOKEN: token,
+            USER_ID: utils.getParameterByName('userid'),
+            MEDIA_ID: media_id,
+            OPEN_ID: utils.getParameterByName('open_id'),
+            DATE: new Date(),
+            TITLE: utils.getParameterByName('imall_title')
+        };
     utils.setLocalStorage(media_id, cache);
     //本地测试用
     startApp(cache);
@@ -26,8 +26,8 @@ if (token) {
     // }
     // location.href = link;
 } else {
-    const media_id = utils.getParameterByName('id');
-    const cache = utils.getLocalStorage(media_id);
+    const media_id = utils.getParameterByName('id'),
+        cache = utils.getLocalStorage(media_id);
     //无缓存
     if (!cache) {
         wxLogin(media_id);
@@ -43,9 +43,9 @@ if (token) {
 //判断是否过期
 //localstorage保存时间30天
 function cacheExpire(cache) {
-    const current_time = new Date();
-    const save_time = cache.Date;
-    const interval = utils.getTimeInterval(current_time, save_time, 'day');
+    const current_time = new Date(),
+        save_time = cache.Date,
+        interval = utils.getTimeInterval(current_time, save_time, 'day');
     return interval > 30;
 }
 //微信登陆
@@ -60,16 +60,15 @@ function wxLogin(media_id) {
         link += '&subject_id=' + product_id;
     }
     location.href = link;
-
 }
 
 function startApp(cache) {
-    const Vue = require('vue');
-    const VueResource = require('vue-resource');
-    const store = require('./vuex/store.js');
-    const FastClick = require('fastclick');
-    const setWeChatConfig = require('libs/weChatConfig.js');
-    const globalComponents = require('components/components.js');
+    const Vue = require('vue'),
+        VueResource = require('vue-resource'),
+        store = require('./vuex/store.js'),
+        FastClick = require('fastclick'),
+        setWeChatConfig = require('libs/weChatConfig.js'),
+        globalComponents = require('components/components.js');
     APP.TOKEN = cache.TOKEN;
     APP.USER_ID = cache.USER_ID;
     APP.MEDIA_ID = cache.MEDIA_ID;
@@ -82,7 +81,7 @@ function startApp(cache) {
     Vue.use(globalComponents);
     Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
     setWeChatConfig(Vue);
-    utils.setTitle(APP.TITLE);
+    document.title = APP.TITLE;
     new Vue({
         el: '#app',
         render: h => h(require('./APP.vue')),

@@ -1,4 +1,5 @@
 {
+  "version": "1.42",
   "name": "integral-mall-2",
   "description": "A Vue.js project",
   "author": "GenesisChou <447074838@qq.com>",
@@ -39,5 +40,8 @@
     "webpack-dev-server": "^2.1.0-beta.11",
     "weixin-js-sdk": "^1.0.7"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^3.18.0",
+    "eslint-loader": "^1.7.0"
+  }
 }
