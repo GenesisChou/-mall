@@ -33,5 +33,5 @@
             title: String,
             content: String
         }
-    }
+    };
 </script>

@@ -66,7 +66,7 @@
             value: Boolean
         },
         data() {
-            return {}
+            return {};
         },
         watch: {},
         methods: {
@@ -76,5 +76,5 @@
                 // this.$emit('input',!this.value);
             }
         },
-    }
+    };
 </script>

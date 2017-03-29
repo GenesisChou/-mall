@@ -1,1 +1,1 @@
-module.exports=require('./vLogistics.vue');
+module.exports = require('./vLogistics.vue');

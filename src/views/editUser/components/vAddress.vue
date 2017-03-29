@@ -1,10 +1,10 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .v-address {
-        flex:1;
-        display:flex;
+        flex: 1;
+        display: flex;
         .form-control {
-            flex:1;
+            flex: 1;
             position: relative;
         }
         .iconfont {
@@ -70,7 +70,7 @@
                 province_list: [],
                 city_list: [],
                 country_list: []
-            }
+            };
         },
         computed: {
             province() {
@@ -107,7 +107,7 @@
                 let name = '';
                 if (value) {
                     this.getCountryList(value);
-                    this.changeId('country')
+                    this.changeId('country');
                     name = this.getAddressName('city', value, this.city_list);
                 } else {
                     this.country_list = [];
@@ -133,12 +133,12 @@
         },
         methods: {
             listEvent(obj) {
-                let type = Object.keys(obj)[1];
+                const type = Object.keys(obj)[1];
                 this.changeId(type, obj[type + 'id']);
             },
             isActive(obj) {
-                let type = Object.keys(obj)[1];
-                return this[type + '_id'] == obj[type + 'id'];
+                const type = Object.keys(obj)[1];
+                return this[type + '_id'] === obj[type + 'id'];
             },
             //获取省份
             getProvinceList() {
@@ -147,13 +147,13 @@
                         token: APP.TOKEN,
                         userid: APP.USER_ID
                     }).then((response) => {
-                        let data = response.data;
+                        const data = response.data;
                         this.province_list = data.data || [];
                         if (resolve) {
                             resolve();
                         }
                     });
-                })
+                });
             },
             //获取城市
             getCityList(id) {
@@ -162,13 +162,13 @@
                         token: APP.TOKEN,
                         userid: APP.USER_ID
                     }).then((response) => {
-                        let data = response.data;
+                        const data = response.data;
                         this.city_list = data.data || [];
                         if (resolve) {
                             resolve();
                         }
                     }, (response) => {});
-                })
+                });
             },
             //获取区县
             getCountryList(id) {
@@ -177,23 +177,23 @@
                         token: APP.TOKEN,
                         userid: APP.USER_ID
                     }).then((response) => {
-                        let data = response.data;
+                        const data = response.data;
                         this.country_list = data.data || [];
                         if (resolve) {
                             resolve();
                         }
                     });
-                })
+                });
             },
             getAddressName(type, id, list) {
-                let attribute = type + 'id',
-                    result = '';
+                const attribute = type + 'id';
+                let result = '';
                 list.forEach(item => {
-                    if (item[attribute] == id) {
+                    if (item[attribute] === id) {
                         result = item[type];
                         return;
                     }
-                })
+                });
                 return result;
             },
             toggleProvince() {
@@ -207,8 +207,6 @@
                     this.show_country = !this.show_country;
                 }
             }
-
-
         }
-    }
+    };
 </script>

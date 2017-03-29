@@ -1,1 +1,1 @@
-module.exports=require('./index.vue');
+module.exports = require('./index.vue');

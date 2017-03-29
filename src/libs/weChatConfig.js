@@ -2,19 +2,19 @@ import wx from 'weixin-js-sdk';
 import store from '../vuex/store.js';
 module.exports = function (Vue) {
     // let url = encodeURIComponent(location.href.split('#')[0]);
-    let url = location.href.split('#')[0];
+    const url = location.href.split('#')[0];
     getSignature(url).then((data) => {
         init(data.data);
     });
 
     function init(data) {
-        let title = APP.TITLE;
-        let link = url;
-        let imgUrl = APP.LOGO;
-        let appId = APP.APPID;
-        let timestamp = data.timestamp;
-        let nonceStr = data.noncestr;
-        let signature = data.signature;
+        const title = APP.TITLE,
+            link = url,
+            imgUrl = APP.LOGO,
+            appId = APP.APPID,
+            timestamp = data.timestamp,
+            nonceStr = data.noncestr,
+            signature = data.signature;
         wx.config({
             // debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId, // 必填，公众号的唯一标识
@@ -76,7 +76,6 @@ module.exports = function (Vue) {
                 success() {
                     // 用户确认分享后执行的回调函数
                     share();
-
                 },
                 cancel() {
                     // 用户取消分享后执行的回调函数
@@ -91,7 +90,6 @@ module.exports = function (Vue) {
                 success() {
                     // 用户确认分享后执行的回调函数
                     share();
-
                 },
                 cancel() {
                     // 用户取消分享后执行的回调函数
@@ -106,7 +104,6 @@ module.exports = function (Vue) {
                 success() {
                     // 用户确认分享后执行的回调函数
                     share();
-
                 },
                 cancel() {
                     // 用户取消分享后执行的回调函数
@@ -134,10 +131,10 @@ module.exports = function (Vue) {
                 media_id: APP.MEDIA_ID,
                 url
             }).then((response) => {
-                let data = response.data;
-                if (data.status == APP.SUCCESS) {
+                const data = response.data;
+                if (data.status === APP.SUCCESS) {
                     if (resolve) {
-                        resolve(data)
+                        resolve(data);
                     }
                 }
             }, (response) => {
@@ -145,7 +142,6 @@ module.exports = function (Vue) {
                     reject(response.data);
                 }
             });
-
-        })
+        });
     }
 };

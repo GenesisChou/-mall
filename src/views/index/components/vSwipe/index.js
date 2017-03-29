@@ -1,1 +1,1 @@
-module.exports=require('./vSwipe.vue');
+module.exports = require('./vSwipe.vue');

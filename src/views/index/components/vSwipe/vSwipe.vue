@@ -30,7 +30,7 @@
         data() {
             return {
                 slides: []
-            }
+            };
         },
         created() {
             this.getHotBanners();
@@ -42,7 +42,7 @@
                     userid: APP.USER_ID,
                     media_id: APP.MEDIA_ID
                 }).then((response) => {
-                    let data = response.data;
+                    const data = response.data;
                     this.slides = data.data;
                 }, (response) => {});
             },
@@ -50,39 +50,38 @@
                 //1 外链    2 活动    3 商品     4 专题
                 const type = banner.type,
                     id = banner.item_id;
-                let router = null;
+                // let router = null;
                 this.$store.dispatch('bannerView', id);
                 switch (type) {
-                    case 1:
-                        location.href = banner.url;
-                        break;
-                    case 2:
-                        this.$router.push({
-                            name: "activity_detail",
-                            query: {
-                                activity_id: id,
-                            }
-                        });
-                        break;
-                    case 3:
-                        this.$router.push({
-                            name: "product_detail",
-                            query: {
-                                product_id: id,
-                            }
-                        });
-                        break;
-                    case 4:
-                        this.$router.push({
-                            name: "subject_detail",
-                            query: {
-                                subject_id: id,
-                            }
-                        });
-                        break;
+                case 1:
+                    location.href = banner.url;
+                    break;
+                case 2:
+                    this.$router.push({
+                        name: 'activity_detail',
+                        query: {
+                            activity_id: id,
+                        }
+                    });
+                    break;
+                case 3:
+                    this.$router.push({
+                        name: 'product_detail',
+                        query: {
+                            product_id: id,
+                        }
+                    });
+                    break;
+                case 4:
+                    this.$router.push({
+                        name: 'subject_detail',
+                        query: {
+                            subject_id: id,
+                        }
+                    });
+                    break;
                 }
             },
         }
-
-    }
+    };
 </script>

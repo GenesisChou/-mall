@@ -1,1 +1,1 @@
-module.exports=require('./vSimditor.vue');
+module.exports = require('./vSimditor.vue');

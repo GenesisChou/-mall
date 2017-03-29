@@ -42,9 +42,10 @@
                     margin-top: pxTorem(15);
                     h6 {
                         color: $gray;
+                        height:pxTorem(36);
+                        overflow:hidden;
                     }
                 }
-                .iconfont {}
                 .new-address {
                     float: left;
                     line-height: pxTorem(107);
@@ -90,8 +91,8 @@
                         <i v-if='address.id==selected_id' class='iconfont icon-correct-circle'></i>
                         <i v-else class='iconfont icon-correct-circle-hollow'></i>
                         <div class='address' @click='selectAddress(address.id)'>
-                            <h4 class='text-ellipsis'>{{address.contact}},{{address.phone}}</h4>
-                            <h6 class='text-ellipsis'>{{address.province}} {{address.city}} {{address.country}} {{address.address}}</h6>
+                            <h4>{{address.contact}},{{address.phone}}</h4>
+                            <h6>{{address.province}} {{address.city}} {{address.country}} {{address.address}}</h6>
                         </div>
                         <i class='iconfont icon-edit ' @click='editAddress(address.id)'></i>
                         <!-- <i class='iconfont icon-error ' @click='deleteAddress(address.id)'></i> -->
@@ -113,7 +114,7 @@
     </section>
 </template>
 <script>
-    import vAddressEdit from './vAddressEdit.vue'
+    import vAddressEdit from './vAddressEdit.vue';
     import vPopup from 'components/vPopup.vue';
     export default {
         name: 'vAddressSelect',
@@ -142,18 +143,18 @@
                 return this.$store.state.address_list;
             },
             save_address() {
-                return this.title == '修改收货地址' ? this.updateAddress : this.insertAddress;
+                return this.title === '修改收货地址' ? this.updateAddress : this.insertAddress;
             },
         },
         watch: {
             show(value) {
                 if (value) {
                     this.address_list.forEach((address) => {
-                        if (address.is_defaults == 1) {
+                        if (address.is_defaults === 1) {
                             this.selected_id = address.id;
                             return;
                         }
-                    })
+                    });
                 }
             }
         },
@@ -180,15 +181,15 @@
 
             //设置默认地址
             save() {
-                if (this.defaultId != this.selected_id) {
+                if (this.defaultId !== this.selected_id) {
                     this.setDefaultAddress(this.selected_id, (response) => {
-                        let data = response.data;
-                        if (data.status == APP.SUCCESS) {
+                        const data = response.data;
+                        if (data.status === APP.SUCCESS) {
                             this.togglePopup();
                         } else {
                             this.$store.dispatch('toggleConfirm', {
                                 msg: data.info,
-                            })
+                            });
                         }
                     });
                 } else {
@@ -208,35 +209,33 @@
                     if (callback) {
                         callback(response);
                     }
-                    if (response.data.status == APP.SUCCESS) {
+                    if (response.data.status === APP.SUCCESS) {
                         this.$store.dispatch('getAddressList');
                     }
-
                 }, (response) => {
                     this.$store.dispatch('toggleLoading');
-
-                })
+                });
             },
             deleteAddress(id) {
-                let address_list = this.address_list;
+                const address_list = this.address_list;
                 this.$store.dispatch('toggleConfirm', {
                     msg: '你确定要删除该地址吗?',
                     callback: () => {
                         this.$store.dispatch('toggleLoadinge', {
                             show: true
                         });
-                        let default_delete = this.deleteDefault(address_list, id);
+                        const default_delete = this.deleteDefault(address_list, id);
                         this.$http.post(`${APP.HOST}/address_delete/${id}`, {
                             token: APP.TOKEN,
                             userid: APP.USER_ID
                         }).then((response) => {
-                            let data = response.data;
+                            const data = response.data;
                             this.$store.dispatch('toggleConfirm');
-                            if (data.status == APP.SUCCESS) {
+                            if (data.status === APP.SUCCESS) {
                                 this.$store.dispatch('toggleLoadinge');
                                 this.$store.dispatch('toggleAlert', {
                                     msg: '删除地址成功'
-                                })
+                                });
                                 //若被删除的是默认地址,则选取删除后地址列表第一项为默认地址
                                 if (default_delete) {
                                     this.$store.dispatch('getAddressList', (address_list) => {
@@ -251,17 +250,17 @@
 
                                 this.$store.dispatch('toggleAlert', {
                                     msg: '删除地址失败'
-                                })
+                                });
                             }
                         }, (response) => {});
                     }
-                })
+                });
             },
             deleteDefault(address_list, id) {
                 let result = false;
                 for (var i = 0, len = address_list.length; i < len; i++) {
-                    let address = address_list[i];
-                    if (address.id == id && address.is_defaults == 1 && len > 1) {
+                    const address = address_list[i];
+                    if (address.id === id && address.is_defaults === 1 && len > 1) {
                         result = true;
                         break;
                     }
@@ -269,6 +268,5 @@
                 return result;
             },
         }
-    }
-</script>
+    };
 </script>

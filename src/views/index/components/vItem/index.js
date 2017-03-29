@@ -1,1 +1,1 @@
-module.exports=require('./vItem.vue');
+module.exports = require('./vItem.vue');

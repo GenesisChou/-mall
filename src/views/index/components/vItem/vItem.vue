@@ -8,7 +8,7 @@
         padding: pxTorem(20) pxTorem(37);
         background-color: $white;
     }
-    
+
     .head {
         position: relative;
         margin: 0 auto;
@@ -39,7 +39,7 @@
             height: pxTorem(33);
         }
     }
-    
+
     .message {
         position: relative;
         padding-top: pxTorem(15);
@@ -93,12 +93,12 @@
             type: String
         },
         data() {
-            return {}
+            return {};
         },
         computed: {
             icon() {
-                if (this.item.type == 2) {
-                    if (this.item.item_type == 3) {
+                if (this.item.type === 2) {
+                    if (this.item.item_type === 3) {
                         return require('./images/game.png');
                     }
                     return require('./images/activity.png');
@@ -106,9 +106,9 @@
                 return require('./images/exchange.png');
             },
             router_link() {
-                if (this.item.type == 1) {
+                if (this.item.type === 1) {
                     return {
-                        name: "product_detail",
+                        name: 'product_detail',
                         query: {
                             product_id: this.item.item_id,
                             integral: this.item.integral >> 0
@@ -116,26 +116,23 @@
                     };
                 }
 
-                if (this.item.type == 2) {
+                if (this.item.type === 2) {
                     return {
-                        name: "activity_detail",
+                        name: 'activity_detail',
                         query: {
                             activity_id: this.item.item_id,
                         }
                     };
-
                 }
             }
         },
         methods: {
             router() {
-                if (this.type == 'commend') {
+                if (this.type === 'commend') {
                     this.$store.dispatch('commendView', this.item.id);
                 }
-
                 this.$router.push(this.router_link);
             },
-
         },
-    }
+    };
 </script>

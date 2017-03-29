@@ -40,7 +40,7 @@
         },
         methods: {
             close() {
-                if (this.coverClose && event.target.className == 'bg-cover') {
+                if (this.coverClose && event.target.className === 'bg-cover') {
                     if (this.toggleModal) {
                         this.toggleModal();
                     } else {

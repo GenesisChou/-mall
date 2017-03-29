@@ -1,8 +1,8 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .edit-address {
-        display:flex;
-        flex-direction:column;
+        display: flex;
+        flex-direction: column;
         height: pxTorem(640);
         background: $gray-light;
         .header {
@@ -13,7 +13,7 @@
             background-color: $white;
         }
         .main {
-            flex:1;
+            flex: 1;
             padding: 0 pxTorem(53);
             margin-bottom: pxTorem(30);
             list-style: none;
@@ -29,7 +29,7 @@
             }
             li.address {
                 .form-control {
-                    flex:1;
+                    flex: 1;
                     position: relative;
                 }
                 .iconfont {
@@ -54,7 +54,7 @@
                 color: #646565;
             }
             input {
-                flex:1;
+                flex: 1;
                 color: #646565;
                 background: none;
                 border: 0;
@@ -73,7 +73,7 @@
             }
         }
     }
-    
+
     .modal-content {
         background-color: $white;
         max-height: pxTorem(600);
@@ -84,7 +84,7 @@
             display: none;
         }
         li {
-            @include active($white,5%);
+            @include active($white, 5%);
             width: pxTorem(400);
             height: pxTorem(70);
             line-height: pxTorem(70);
@@ -93,7 +93,7 @@
             overflow: hidden;
             border-bottom: 1px solid $gray-light;
             &:last-child {
-                border-bottom:none;
+                border-bottom: none;
             }
             .radio {
                 display: inline-block;
@@ -175,11 +175,11 @@
     </section>
 </template>
 <script>
-import vModal from 'components/vModal.vue';
-import vPopup from 'components/vPopup.vue';
+    import vModal from 'components/vModal.vue';
+    import vPopup from 'components/vPopup.vue';
     export default {
         name: 'vAddressEdit',
-        components:{
+        components: {
             vPopup,
             vModal
         },
@@ -215,7 +215,7 @@ import vPopup from 'components/vPopup.vue';
                     city: '',
                     country: ''
                 }
-            }
+            };
         },
         computed: {
             save() {
@@ -228,22 +228,22 @@ import vPopup from 'components/vPopup.vue';
                 return this.$store.state.address_list;
             },
             is_empty() {
-                let temp = this.receive_infor;
+                const temp = this.receive_infor;
                 if (temp.province || temp.address || temp.phone || temp.contact) {
                     return false;
                 }
                 return true;
             },
             is_defaults() {
-                if (this.address_list.length == 0) {
+                if (this.address_list.length === 0) {
                     return 1;
                 }
                 let result = 0;
                 this.address_list.forEach(address => {
-                    if (address.id == this.id) {
+                    if (address.id === this.id) {
                         result = address.is_defaults;
                     }
-                })
+                });
                 return result;
             }
         },
@@ -255,7 +255,7 @@ import vPopup from 'components/vPopup.vue';
                     //id大于0代表此时是修改地址状态
                     if (this.id > 0) {
                         this.address_list.forEach((address) => {
-                            if (address.id == this.id) {
+                            if (address.id === this.id) {
                                 this.address_id.province = address.province_id;
                                 this.address_id.city = address.city_id;
                                 this.address_id.country = address.country_id;
@@ -269,7 +269,7 @@ import vPopup from 'components/vPopup.vue';
                                 this.receive_infor.contact = address.contact;
                                 return;
                             }
-                        })
+                        });
                     }
                 }
             },
@@ -294,8 +294,8 @@ import vPopup from 'components/vPopup.vue';
                     country_id: this.address_id.country
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
-                    let data = response.data;
-                    if (data.status == APP.SUCCESS) {
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS) {
                         //重新获取地址列表
                         this.$store.dispatch('getAddressList');
                         setTimeout(() => {
@@ -310,8 +310,7 @@ import vPopup from 'components/vPopup.vue';
                     }
                 }, (response) => {
                     this.$store.dispatch('toggleLoading');
-
-                })
+                });
             },
             //更新地址
             updateAddress() {
@@ -332,9 +331,8 @@ import vPopup from 'components/vPopup.vue';
                     country_id: this.address_id.country
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
-
-                    let data = response.data;
-                    if (data.status == APP.SUCCESS) {
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS) {
                         //重新获取地址列表
                         this.$store.dispatch('getAddressList');
                         // this.$store.dispatch('toggleAlert', {
@@ -353,8 +351,7 @@ import vPopup from 'components/vPopup.vue';
                     }
                 }, (response) => {
                     this.$store.dispatch('toggleLoading');
-
-                })
+                });
             },
             //取消编辑
             cancelEdit() {
@@ -364,13 +361,12 @@ import vPopup from 'components/vPopup.vue';
             clearInput(type) {
                 this.receive_infor.country = '';
                 this.address_id.country = '';
-                if (type == 'city') {
+                if (type === 'city') {
                     return;
                 }
                 this.receive_infor.city = '';
                 this.address_id.city = '';
-
-                if (type == 'province') {
+                if (type === 'province') {
                     return;
                 }
                 this.address_id.province = '';
@@ -380,12 +376,12 @@ import vPopup from 'components/vPopup.vue';
                 this.receive_infor.phone = '';
             },
             showAreaList(type) {
-                if (type == 'city') {
+                if (type === 'city') {
                     if (!this.receive_infor.province) {
                         return;
                     }
                 }
-                if (type == 'country') {
+                if (type === 'country') {
                     if (!this.receive_infor.city) {
                         return;
                     }
@@ -394,22 +390,21 @@ import vPopup from 'components/vPopup.vue';
                 this.toggleModal();
             },
             selectAddress(type, name, id) {
-                if (type == 'province') {
-                    if (!this.address_id.province || this.address_id.province != id) {
+                if (type === 'province') {
+                    if (!this.address_id.province || this.address_id.province !== id) {
                         this.receive_infor.province = name;
                         this.address_id.province = id;
                         this.getCityList(id);
                         this.clearInput('province');
                     }
-
-                } else if (type == 'city') {
-                    if (!this.address_id.city || this.address_id.city != id) {
+                } else if (type === 'city') {
+                    if (!this.address_id.city || this.address_id.city !== id) {
                         this.receive_infor.city = name;
                         this.address_id.city = id;
                         this.getCountryList(id);
                         this.clearInput('city');
                     }
-                } else if (type == 'country') {
+                } else if (type === 'country') {
                     this.receive_infor.country = name;
                     this.address_id.country = id;
                 }
@@ -460,5 +455,5 @@ import vPopup from 'components/vPopup.vue';
                 this.modal = !this.modal;
             },
         }
-    }
+    };
 </script>

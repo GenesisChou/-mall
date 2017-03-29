@@ -7,6 +7,10 @@
         background-color: $white;
     }
 
+    .v-shake>header {
+        margin-bottom: pxTorem(-100);
+    }
+
     .banner {
         width: pxTorem(750);
         height: pxTorem(400);
@@ -21,9 +25,9 @@
 
     .shake-panel {
         position: relative;
-        top: pxTorem(-90);
         width: pxTorem(750);
         height: pxTorem(798);
+        margin-bottom: pxTorem(30);
         background-image: url('./images/shakePanel.png');
         background-size: 100% 100%;
         background-repeat: no-repeat;
@@ -162,7 +166,7 @@
                 deviceEvent: '',
                 shaking: false,
                 animation_time: 1500
-            }
+            };
         },
         computed: {
             user() {
@@ -171,8 +175,8 @@
         },
         watch: {
             is_win(value) {
-                if (this.state != 'shaking') return;
-                let result = this.activity_result;
+                if (this.state !== 'shaking') return;
+                const result = this.activity_result;
                 this.sound();
                 this.shake();
                 this.freshFreeTimes();
@@ -220,23 +224,23 @@
                 this.activity_result = {};
             },
             getDeviceEvent() {
-                let SHAKE_THRESHOLD = 3000,
-                    last_update = 0,
+                const SHAKE_THRESHOLD = 3000,
+                    _this = this;
+                let last_update = 0,
                     last_x = 0,
                     last_y = 0,
-                    last_z = 0,
-                    _this = this;
+                    last_z = 0;
                 return function (event) {
                     //acceleration:提供了设备在X,Y,Z轴方向上加速度的对象。加速度的单位为 m/s2。
-                    let acceleration = event.acceleration,
+                    const acceleration = event.acceleration,
                         curTime = new Date().getTime(),
                         diffTime = curTime - last_update;
                     if (diffTime > 100) {
                         last_update = curTime;
-                        let x = acceleration.x,
+                        const x = acceleration.x,
                             y = acceleration.y,
-                            z = acceleration.z;
-                        let speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
+                            z = acceleration.z,
+                            speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
                         if (speed > SHAKE_THRESHOLD) {
                             _this.start();
                         }
@@ -244,18 +248,17 @@
                         last_y = y;
                         last_z = z;
                     }
-
-                }
+                };
             },
             start() {
-                if (this.state != 'ready') return;
+                if (this.state !== 'ready') return;
                 this.state = 'shaking';
                 this.$http.post(`${APP.HOST}/shake_activity/${this.id}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID
                 }).then((response) => {
-                    let data = response.data;
-                    if (data.status == APP.SUCCESS) {
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS) {
                         this.activity_result = data.data;
                         this.is_win = this.activity_result.is_win;
                     } else {
@@ -264,9 +267,9 @@
                             callback: () => {
                                 this.init();
                             }
-                        })
+                        });
                     }
-                }, (response) => {})
+                }, (response) => {});
             },
             sound() {
                 this.$refs.audio.play();
@@ -279,5 +282,5 @@
             }
 
         }
-    }
+    };
 </script>

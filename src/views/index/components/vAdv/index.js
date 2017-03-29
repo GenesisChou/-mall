@@ -1,1 +1,1 @@
-module.exports=require('./vAdv.vue')
+module.exports = require('./vAdv.vue');

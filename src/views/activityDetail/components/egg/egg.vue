@@ -27,10 +27,11 @@
     }
     
     .eggs {
-        flex:1;
+        // flex:1;
+        display:flex;
         flex-wrap:wrap;
         position: relative;
-        margin-top: pxTorem(70);
+        margin-top: pxTorem(50);
         li {
             position: relative;
             width: pxTorem(250);
@@ -62,7 +63,7 @@
     }
     
     .notice {
-        padding-top: pxTorem(30);
+        padding-top: pxTorem(15);
         text-align: center;
         font-weight: 500;
         color: #ad0406;
@@ -86,7 +87,7 @@
     .background {
         position: absolute;
         left: 0;
-        top: pxTorem(335);
+        top: pxTorem(320);
         width: pxTorem(750);
         height: pxTorem(928);
         z-index: 0;

@@ -1,1 +1,1 @@
-module.exports=require('./earnIntegral.vue');
+module.exports = require('./earnIntegral.vue');

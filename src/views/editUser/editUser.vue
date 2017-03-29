@@ -3,9 +3,9 @@
     .edit-user {
         padding-top: pxTorem(30);
     }
-    
+
     .main {
-        flex:1;
+        flex: 1;
         padding: 0 pxTorem(30);
         list-style: none;
         background-color: $white;
@@ -16,7 +16,7 @@
             overflow: hidden;
             border-bottom: 1px solid $gray-light;
             &:last-child {
-                align-items:flex-start;
+                align-items: flex-start;
                 padding-top: pxTorem(22.5);
                 height: pxTorem(150);
                 border-bottom: none;
@@ -28,14 +28,14 @@
             color: #646565;
         }
         input {
-            flex:1;
+            flex: 1;
             color: #646565;
             background: none;
             border: 0;
             font-size: pxTorem(28);
         }
         textarea {
-            flex:1;
+            flex: 1;
             font-size: pxTorem(28);
             border: 0;
             color: #646565;
@@ -43,12 +43,18 @@
         }
         .code {
             .btn {
-                text-align:center;
+                text-align: center;
                 width: pxTorem(100);
             }
         }
+        .iconfont {
+            text-align: center;
+            width: pxTorem(60);
+            font-size: pxTorem(36);
+            color: #bababa;
+        }
     }
-    
+
     .footer {
         padding: pxTorem(20) 0;
         text-align: center;
@@ -60,7 +66,7 @@
             letter-spacing: pxTorem(12);
         }
     }
-    
+
     .operation {
         @include flex-center;
         height: pxTorem(120);
@@ -73,7 +79,7 @@
             height: pxTorem(72);
         }
     }
-    
+
     img.money {
         width: pxTorem(68);
         height: pxTorem(47);
@@ -87,22 +93,24 @@
                 <li>
                     <label for='contact'>姓名</label>
                     <input id='contact' placeholder="姓名" v-model='contact'>
+                    <i class='iconfont icon-close-circle' @click='clear("contact")'></i>
                 </li>
                 <li>
                     <label for='birth'>出生年月</label>
                     <input type='date' v-model='birthday'>
                 </li>
                 <li>
-                    <label for='phone'>手机号</label>
+                    <label for='phone'>联系电话</label>
                     <input id='phone' type='tel' placeholder="手机或固定电话" v-model='phone'>
+                    <i class='iconfont icon-close-circle' @click='clear("phone")'></i>
                 </li>
                 <li class='code'>
                     <label for='code'>验证码</label>
                     <input id='code' v-model='verification_code' placeholder="请输入验证码">
                     <div :class='["btn",in_vertication?"btn-gray":"btn-orange"]' @click='getVerificationCode'>
-                        <template v-if='in_vertication'>{{countdown}}秒</template> 
-                        <template v-else>验证</template> 
-                    </div >
+                        <template v-if='in_vertication'>{{countdown}}S</template>
+                        <template v-else>验证</template>
+                    </div>
                 </li>
                 <li class='address'>
                     <label for='province'>收货地址</label>
@@ -159,7 +167,7 @@
                 warn_show: false,
                 notice: {},
                 notice_show: false,
-            }
+            };
         },
         computed: {
             user() {
@@ -169,7 +177,7 @@
                 return !utils.isEmptyObject(this.user);
             },
             is_submit() {
-                return this.$store.state.user.is_submit == 1;
+                return this.$store.state.user.is_submit === 1;
             },
             submit_avaliable() {
                 if (this.birthday &&
@@ -195,9 +203,7 @@
             this.init(this.default_address);
         },
         methods: {
-            //初始化地址列表
-            //scen1:原地刷新 由watch实现初始化 
-            //scen2:从其他页面进入 由created实现初始化 
+            /*初始化地址列表 scen1:原地刷新 由watch实现初始化 scen2:从其他页面进入 由created实现初始化 */
             init(default_address) {
                 //防止重复初始化
                 if (utils.isEmptyObject(default_address)) return;
@@ -214,17 +220,15 @@
                 ];
                 address_config.forEach(config => {
                     this[config] = default_address[config];
-                })
+                });
                 this.birthday = this.user.birthday;
             },
-            //取消 一群傻屌
             cancel() {
-                this.$router.go(-1)
-                // this.$refs.form.reset();
+                this.$router.go(-1);
             },
             //提交表单
             submit() {
-                this.$store.dispatch('toggleLoading')
+                this.$store.dispatch('toggleLoading');
                 this.$http.post(`${APP.HOST}/user_submit/${APP.USER_ID}`, {
                     token: APP.TOKEN,
                     userid: APP.USER_ID,
@@ -241,32 +245,31 @@
                     verification_code: this.verification_code
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
-                    let data = response.data,
+                    const data = response.data,
                         msg = data.data.message;
-                    if (data.status == APP.SUCCESS) {
+                    if (data.status === APP.SUCCESS) {
                         if (this.is_submit) {
                             this.toggleNotice({
                                 msg
-                            })
+                            });
                         } else {
                             this.toggleNotice({
                                 msg,
                                 type: 'img'
-                            })
+                            });
                         }
                         this.$store.dispatch('getUserInfor');
                         setTimeout(() => {
-                            this.$router.go(-1)
-                        }, 2000)
+                            this.$router.go(-1);
+                        }, 2000);
                     } else {
                         this.toggleWarn({
                             msg: data.info
-                        })
+                        });
                     }
                 }, (response) => {
                     this.$store.dispatch('toggleLoading');
-                })
-
+                });
             },
             //获取验证码
             getVerificationCode() {
@@ -275,43 +278,46 @@
                     userid: APP.USER_ID,
                     phone: this.phone
                 }).then((response) => {
-                    let data = response.data;
-                    if (data.status == APP.SUCCESS) {
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS) {
                         this.in_vertication = true;
-                        let time = 0,
-                            timer = setInterval(() => {
-                                time += 1000;
-                                this.countdown--;
-                                if (time > 60 * 1000) {
-                                    this.in_vertication = false;
-                                    this.countdown = 60;
-                                    clearInterval(timer);
-                                }
-                            }, 1000)
+                        let time = 0;
+                        const timer = setInterval(() => {
+                            time += 1000;
+                            this.countdown--;
+                            if (time > 60 * 1000) {
+                                this.in_vertication = false;
+                                this.countdown = 60;
+                                clearInterval(timer);
+                            }
+                        }, 1000);
                     } else {
                         this.toggleWarn({
                             msg: data.info
-                        })
+                        });
                     }
-                })
+                });
             },
             changeName(type, name) {
-                let list = ['province', 'city', 'country'];
+                const list = ['province', 'city', 'country'];
                 list.forEach(item => {
-                    if (item == type) {
+                    if (item === type) {
                         this[item] = name;
                         return;
                     }
-                })
+                });
             },
             changeId(type, id) {
-                let list = ['province', 'city', 'country'];
+                const list = ['province', 'city', 'country'];
                 list.forEach(item => {
-                    if (item == type) {
+                    if (item === type) {
                         this[item + '_id'] = id;
                         return;
                     }
-                })
+                });
+            },
+            clear(type) {
+                this[type] = '';
             },
             toggleWarn(warn = {}) {
                 this.warn = warn;
@@ -322,5 +328,5 @@
                 this.notice_show = !this.notice_show;
             }
         }
-    }
+    };
 </script>

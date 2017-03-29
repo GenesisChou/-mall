@@ -9,6 +9,9 @@
         background-position: pxTorem(0) pxTorem(400);
         background-repeat: no-repeat;
     }
+    .fortune>header{
+        margin-bottom: pxTorem(-60);
+    }
     
     .banner {
         width: pxTorem(750);
@@ -19,7 +22,7 @@
         position: relative;
         width: pxTorem(623);
         height: pxTorem(809);
-        margin: pxTorem(10) auto pxTorem(58) auto;
+        margin: pxTorem(10) auto pxTorem(20) auto;
         background-image: url('./images/fortunePanel.png');
         background-size: 100% 100%;
         background-repeat: no-repeat;
@@ -89,7 +92,7 @@
 <template>
     <div class='fortune'>
         <header>
-            <img class='banner' v-if='activityDetail.pic_icon' :src='activityDetail.pic_icon'>
+            <img class='banner' v-if='!activityDetail.pic_icon' :src='activityDetail.pic_icon'>
             <img class='banner' v-else src='./images/fortuneDefaultBanner.png'>
         </header>
         <main>

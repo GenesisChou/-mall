@@ -1,1 +1,1 @@
-module.exports=require('./editUser.vue');
+module.exports = require('./editUser.vue');

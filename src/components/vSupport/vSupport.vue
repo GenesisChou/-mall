@@ -18,5 +18,5 @@
                 return APP.NAME;
             },
         },
-    }
+    };
 </script>

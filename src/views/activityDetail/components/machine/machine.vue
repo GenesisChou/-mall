@@ -15,6 +15,7 @@
         position: relative;
         width: pxTorem(750);
         height: pxTorem(400);
+        margin-bottom:pxTorem(-12);
     }
     
     .banner-decoration {
@@ -23,14 +24,11 @@
         top: 0;
         width: pxTorem(750);
         height: pxTorem(37);
-        z-index: 2;
     }
     
     .banner {
-        position: absolute;
         width: pxTorem(750);
         height: pxTorem(434);
-        z-index: 2;
     }
     
     .background {
@@ -39,7 +37,6 @@
         height: pxTorem(1026);
         left: 0;
         top: pxTorem(90);
-        z-index: 0;
     }
     
     .machine {
@@ -182,7 +179,7 @@
     <div class='v-machine'>
         <img class='background' src='./images/machineBackground.png'>
         <header class='header'>
-            <img v-if='activityDetail.pic_icon' :src='activityDetail.pic_icon' class='img-responsive'>
+            <img v-if='!activityDetail.pic_icon' :src='activityDetail.pic_icon' class='img-responsive'>
             <img v-else class='banner' src='./images/machineDefaultBanner.png'>
             <img class='banner-decoration' src='./images/machineDecoration.png'>
         </header>

@@ -15,8 +15,8 @@
         data() {
             return {
                 show: true,
-                dialog:{}
-            }
+                dialog: {}
+            };
         },
         methods: {},
         created() {
@@ -35,7 +35,6 @@
                 //     this.init();
                 // },
             };
-
         }
-    }
+    };
 </script>

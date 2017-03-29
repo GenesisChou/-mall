@@ -1,1 +1,1 @@
-module.exports=require('./activityDetail.vue');
+module.exports = require('./activityDetail.vue');

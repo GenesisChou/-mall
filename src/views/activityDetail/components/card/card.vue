@@ -6,6 +6,9 @@
         background-image: url('./images/cardBackground.png');
         background-size: pxTorem(750) pxTorem(15);
     }
+    .v-card>header{
+        margin-bottom:pxTorem(-26);
+    }
 
     .background-top {
         position: absolute;
@@ -419,16 +422,16 @@
         },
         watch: {
             state(value) {
-                if (value == 'ready') {
+                if (value === 'ready') {
                     setTimeout(() => {
                         this.move = true;
                         setTimeout(() => {
                             this.timer = setInterval(() => {
                                 this.light_num = ++this.light_num % (this.card_num + 1) || 1;
                             }, 600);
-                        }, 1500)
-                    }, 500)
-                } else if (value == 'start') {
+                        }, 1500);
+                    }, 500);
+                } else if (value === 'start') {
                     this.cover_show = true;
                     setTimeout(() => {
                         this.big_show = true;
@@ -436,7 +439,7 @@
                 }
             },
             is_win(value) {
-                if (this.state == 'ready') return;
+                if (this.state === 'ready') return;
                 const result = this.activity_result;
                 this.freshFreeTimes();
                 if (value) {
@@ -466,9 +469,9 @@
                         setTimeout(() => {
                             this.big_show = false;
                             this.toggleDialog(this.dialog);
-                        }, 400)
-                    }, 50)
-                }, 1600)
+                        }, 400);
+                    }, 50);
+                }, 1600);
             },
         },
         created() {
@@ -487,16 +490,16 @@
                 this.big_card_state = 'shake';
             },
             start(num) {
-                if (this.state != 'ready') return;
+                if (this.state !== 'ready') return;
                 this.state = 'block';
                 clearInterval(this.timer);
                 this.light_num = '';
-                this.$http.post(`${APP.HOST}/activity_order/${this.id}`, {
+                this.$http.post(`${APP.HOST}/card_activity/${this.id}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID
                 }).then((response) => {
-                    let data = response.data;
-                    if (data.status == APP.SUCCESS) {
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS) {
                         this.state = 'start';
                         this.select_num = num;
                         this.activity_result = data.data;
@@ -507,9 +510,9 @@
                             callback: () => {
                                 this.init();
                             }
-                        })
+                        });
                     }
-                })
+                });
             }
         }
     }

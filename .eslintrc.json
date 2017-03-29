@@ -9,17 +9,18 @@
         "utils": false,
         "location":false,
         "sessionStorage":false,
-        "localStorage":false
+        "localStorage":false,
+        "event":false
     },
     "rules": {
-        "semi": ["warn", "always"],
-        "indent": ["warn", 4],
+        "semi": ["error", "always"],
+        "indent": ["error", 4 ],
         "eol-last": "off",
         "space-before-function-paren": "off",
         "no-undef": "error",
         "camelcase": "off",
         "comma-dangle": "off",
         "spaced-comment": "off",
-        "one-var":["warn","always"]
+        "one-var":["error","always"]
     }
 }

@@ -96,16 +96,16 @@
                 return this.alert.close_btn;
             },
             icon_class() {
-                if (this.type == 'suprise') {
+                if (this.type === 'suprise') {
                     return 'icon-warn';
                 }
-                if (this.type == 'correct') {
+                if (this.type === 'correct') {
                     return 'icon-correct-circle-hollow';
                 }
-                if (this.type == 'error') {
+                if (this.type === 'error') {
                     return 'icon-error-circle';
                 }
-                if (this.type == 'img') {
+                if (this.type === 'img') {
                     return '';
                 }
             },
@@ -124,5 +124,5 @@
                 this.$store.dispatch('toggleAlert');
             }
         }
-    }
+    };
 </script>

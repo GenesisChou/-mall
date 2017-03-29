@@ -83,14 +83,14 @@
     }
 
     .progress {
-        display:flex;
+        display: flex;
         position: absolute;
         width: 100%;
         padding: 0 pxTorem(15);
         bottom: pxTorem(30);
         .check-item {
             @include flex-center-v;
-            flex:1;
+            flex: 1;
             justify-content: space-around;
             flex-direction: column;
             color: $white;
@@ -233,6 +233,22 @@
     .rotate-enter-to {
         transform: rotateY(360deg);
     }
+
+    .frame {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 2;
+        iframe {
+            width: 100%;
+            height: 100%;
+        }
+        .back {
+            z-index: 3;
+        }
+    }
 </style>
 <template>
     <div v-if='loaded' class='earn-integral'>
@@ -298,7 +314,10 @@
                 现在没有积分任务啦～
             </li>
         </ul>
-        <iframe v-if='frame_show' class='frame' :src='frame_url'></iframe>
+        <div class='frame' v-if='frame_show'>
+            <div class='back btn btn-orange' @click='toggleFrame'>返回</div>
+            <iframe :src='frame_link'></iframe>
+        </div>
     </div>
 </template>
 <script>
@@ -318,18 +337,18 @@
                     day_limit: 0,
                     today: 0
                 },
-                frame_link: '',
+                frame_link: 'http://www.baidu.com',
                 article_list: [],
                 back_show: false,
                 frame_show: false,
-            }
+            };
         },
         computed: {
             user() {
                 return this.$store.state.user;
             },
             integral() {
-                if (this.check_in_params.length == 0) return 0;
+                if (this.check_in_params.length === 0) return 0;
                 if (!this.user.ischecked) {
                     return this.check_in_params[1]['integral'].substring(1);
                 }
@@ -358,18 +377,18 @@
                         user_id: APP.USER_ID,
                         media_id: APP.MEDIA_ID
                     }).then((response) => {
-                        let data = response.data;
+                        const data = response.data;
                         this.$store.dispatch('toggleLoading');
-                        if (data.status == APP.SUCCESS) {
+                        if (data.status === APP.SUCCESS) {
                             this.$store.dispatch('getUserInfor');
                         } else {
                             this.$store.dispatch('toggleAlert', {
                                 msg: data.info
-                            })
+                            });
                         }
                     }, (response) => {
                         this.$store.dispatch('toggleLoading');
-                    })
+                    });
                 }
             },
             //获取签到记录
@@ -381,12 +400,12 @@
                     media_id: APP.MEDIA_ID
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
-                    let data = response.data;
+                    const data = response.data;
                     this.check_in_params = data.data;
                     this.loaded = true;
                 }, (response) => {
                     this.$store.dispatch('toggleLoading');
-                })
+                });
             },
             //获取提交资料积分参数
             getSubmitParam() {
@@ -395,10 +414,9 @@
                     user_id: APP.USER_ID,
                     media_id: APP.MEDIA_ID
                 }).then((response) => {
-                    let data = response.data;
+                    const data = response.data;
                     this.submit_param.integral = data.data.integral;
-                })
-
+                });
             },
             //获取阅读文章积分参数
             getReadParam() {
@@ -407,9 +425,9 @@
                     user_id: APP.USER_ID,
                     media_id: APP.MEDIA_ID
                 }).then((response) => {
-                    let data = response.data;
+                    const data = response.data;
                     this.read_param = data.data;
-                })
+                });
             },
             //获取文章列表
             getArticleList() {
@@ -418,24 +436,29 @@
                     user_id: APP.USER_ID,
                     media_id: APP.MEDIA_ID
                 }).then((response) => {
-                    let data = response.data;
+                    const data = response.data;
                     this.article_list = data.data;
-                })
+                });
             },
             //阅读文章
             readArticle(article) {
+                this.frame_link = article.url;
                 this.$http.post(`${APP.HOST}/read_article/${article.id}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID,
                     media_id: APP.MEDIA_ID
                 }).then((response) => {
-                    let data = response.data;
-                    if (data.status == APP.SUCCESS && article.is_read == 2) {
-                        this.$store.dispatch('getUserInfor')
+                    this.toggleFrame();
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS && article.is_read === 2) {
+                        this.$store.dispatch('getUserInfor');
                     }
-                    location.href = article.url;
-                })
+                    // location.href = article.url;
+                });
+            },
+            toggleFrame() {
+                this.frame_show = !this.frame_show;
             }
         }
-    }
+    };
 </script>

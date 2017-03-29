@@ -12,7 +12,7 @@
             height: pxTorem(72);
         }
     }
-    
+
     .address-box {
         background-color: $white;
         background-image: url('./images/border.png');
@@ -31,7 +31,7 @@
             margin-top: pxTorem(20);
             padding: 0 pxTorem(30);
             .address-content {
-                flex:1;
+                flex: 1;
                 overflow: hidden;
             }
             .address-detail {
@@ -50,7 +50,7 @@
             border-top: 1px solid $gray-light;
         }
     }
-    
+
     .address-box.no-address {
         .content {
             .plus {
@@ -75,7 +75,7 @@
             }
         }
     }
-    
+
     .take-goods {
         margin-top: pxTorem(20);
         background-color: $white;
@@ -90,16 +90,17 @@
             }
         }
     }
-    
+
     .input-box {
         padding: pxTorem(30);
         .container {
+            display: flex;
             padding-left: pxTorem(20);
             overflow: hidden;
         }
         .form-control {
             @include flex-center-v;
-            flex:1;
+            flex: 1;
             float: left;
             height: pxTorem(75);
             padding-left: pxTorem(30);
@@ -119,9 +120,9 @@
             width: pxTorem(300);
             background: none;
             border: none;
-            text-indent: pxTorem(20);
-            color:$orange;
-            font-size: pxTorem(30);
+            text-indent: 0;
+            color: $orange;
+            font-size: pxTorem(20);
         }
         .submit {
             float: left;
@@ -136,13 +137,32 @@
             background-color: $gray;
         }
     }
-    
+
     .take-goods-script {
         position: absolute;
         right: pxTorem(30);
         top: pxTorem(76);
         width: pxTorem(223);
         height: pxTorem(126);
+    }
+
+    .profile {
+        margin-top: pxTorem(20);
+        padding: pxTorem(23) 0;
+        background-color: $white;
+        .iconfont{
+            font-size:pxTorem(30);
+            margin-right:pxTorem(12);
+        }
+        .content {
+            @include flex-center;
+            width: pxTorem(619);
+            height: pxTorem(154);
+            margin: 0 auto;
+            border: 1px solid #f1d0cf;
+            background-color: #fef6f5;
+            color: $orange;
+        }
     }
 </style>
 <template>
@@ -171,7 +191,12 @@
                     <!-- 无地址 -->
                     <template v-if='order_detail.status==1&&!address_list.length'>
                         <v-address-edit :show='popup_edit' :toggle-popup='toggleEdit'></v-address-edit>
-                        <section class='address-box no-address'>
+                        <div class='profile'>
+                            <div class='content' @click='toggleEdit'>
+                                <i class='iconfont icon-plus'></i>完善个人信息
+                            </div>
+                        </div>
+                        <!--<section class='address-box no-address'>
                             <div class='content' @click='toggleEdit'>
                                 <div class='plus'> </div>
                                 <span class='address-content'>新增收货地址</span>
@@ -179,7 +204,7 @@
                                     <i class='iconfont icon-arrows-right'></i>
                                 </div>
                             </div>
-                        </section>
+                        </section>-->
                     </template>
                     <!-- 有地址 -->
                     <template v-else>
@@ -219,7 +244,7 @@
                             <div class='container'>
                                 <div :class='["form-control",{disable:order_detail.status==4}]'>
                                     <label for='take-goods'>取货码:</label>
-                                    <input type="text" id='take-goods' placeholder='请输入' v-model='take_code' :disabled='order_detail.status==4'>
+                                    <input type="text" id='take-goods' placeholder='到达取货地址后,由商家输入' v-model='take_code' :disabled='order_detail.status==4'>
                                 </div>
                                 <div v-if='order_detail.status==2' class='submit' @click='takeGoods'>确认</div>
                                 <div v-if='order_detail.status==4' class='submit disable'>已逾期</div>
@@ -273,14 +298,14 @@
         },
         computed: {
             is_virtual() {
-                return this.product_type && this.product_type != 2;
+                return this.product_type && this.product_type !== 2;
             },
             address_list() {
                 return this.$store.state.address_list || [];
             },
             //订单地址确认状态
             order_checked() {
-                return this.order_detail.status != 1;
+                return this.order_detail.status !== 1;
             },
             default_address() {
                 let temp = {
@@ -292,15 +317,15 @@
                     contact: ''
                 };
                 //订单类型为快递
-                if (this.send_type != 1) return temp;
-                if (this.order_detail.status == 1) {
+                if (this.send_type !== 1) return temp;
+                if (this.order_detail.status === 1) {
                     //若订单未确认 从地址列表内选取默认地址
                     this.address_list.forEach((address) => {
-                        if (address.is_defaults == 1) {
+                        if (address.is_defaults === 1) {
                             temp = address;
                             return;
                         }
-                    })
+                    });
                 } else {
                     //订单已确认,从订单详情内获取指定地址
                     temp.contact = this.order_detail.contact;
@@ -309,7 +334,6 @@
                     temp.city = this.order_detail.city;
                     temp.country = this.order_detail.country;
                     temp.address = this.order_detail.address;
-
                 }
                 return temp;
             },
@@ -322,17 +346,17 @@
             order_id() {
                 this.content_show = false;
                 this.getOrderDetail().then(() => {
-                    let data = this.order_detail;
+                    const data = this.order_detail;
                     this.product_id = data.product_id;
                     this.product_type = data.product_type;
                     this.send_type = data.send_type;
                     this.getProductDetail().then(() => {
                         this.content_show = true;
-                    })
+                    });
                 });
             },
             send_type(value) {
-                if (value == 1 && this.product_type == 2 && this.order_detail.status == 1) {
+                if (value === 1 && this.product_type === 2 && this.order_detail.status === 1) {
                     this.$store.dispatch('getAddressList');
                 }
             }
@@ -349,15 +373,15 @@
                         userid: APP.USER_ID
                     }).then((response) => {
                         this.$store.dispatch('toggleLoading');
-                        let data = response.data;
+                        const data = response.data;
                         this.order_detail = data.data;
                         if (resolve) {
                             resolve();
                         }
                     }, (response) => {
                         this.$store.dispatch('toggleLoading');
-                    })
-                })
+                    });
+                });
             },
             //获取订单内商品详情
             getProductDetail() {
@@ -366,16 +390,15 @@
                         token: APP.TOKEN,
                         userid: APP.USER_ID
                     }).then((response) => {
-                        let data = response.data;
+                        const data = response.data;
                         this.product_detail = data.data;
                         if (resolve) {
                             resolve();
                         }
                     }, (response) => {
 
-                    })
-
-                })
+                    });
+                });
             },
             //确认订单地址
             updateOrderAddress() {
@@ -388,22 +411,20 @@
                             userid: APP.USER_ID,
                             id: this.default_address.id
                         }).then((response) => {
-                            let data = response.data;
+                            const data = response.data;
                             this.$store.dispatch('toggleLoading');
-                            if (data.status == APP.SUCCESS) {
+                            if (data.status === APP.SUCCESS) {
                                 this.getOrderDetail();
                             } else {
                                 this.$store.dispatch('toggleAlert', {
                                     msg: data.info
-                                })
+                                });
                             }
                         }, (response) => {
                             this.$store.dispatch('toggleLoading');
-                        })
+                        });
                     }
-
-                })
-
+                });
             },
             //领取订单
             takeGoods() {
@@ -417,18 +438,18 @@
                             userid: APP.USER_ID,
                             take_word: this.take_code
                         }).then((response) => {
-                            let data = response.data;
+                            const data = response.data;
                             this.$store.dispatch('toggleLoading');
-                            if (data.status == APP.SUCCESS) {
+                            if (data.status === APP.SUCCESS) {
                                 this.getOrderDetail();
                             } else {
                                 this.$store.dispatch('toggleAlert', {
                                     msg: data.info
-                                })
+                                });
                             }
                         }, (response) => {
                             this.$store.dispatch('toggleLoading');
-                        })
+                        });
                     }
                 });
             },
@@ -445,7 +466,5 @@
                 }
             },
         }
-
-
     };
 </script>

@@ -97,7 +97,7 @@
         data() {
             return {
                 logistics_detail: {}
-            }
+            };
         },
         filters: {
             getDate(value) {
@@ -112,10 +112,10 @@
                 return this.orderDetail.id;
             },
             is_shiped() {
-                return this.orderDetail.status == 3;
+                return this.orderDetail.status === 3;
             },
             is_expired() {
-                return this.orderDetail.status == 4;
+                return this.orderDetail.status === 4;
             },
             message() {
                 if (this.is_shiped) {
@@ -140,13 +140,13 @@
                     token: APP.TOKEN,
                     userid: APP.USER_ID
                 }).then((response) => {
-                    let data = response.data;
+                    const data = response.data;
                     this.logistics_detail = data.data;
                     this.$store.dispatch('toggleLoading');
                 }, (response) => {
                     this.$store.dispatch('toggleLoading');
-                })
+                });
             },
         }
-    }
+    };
 </script>

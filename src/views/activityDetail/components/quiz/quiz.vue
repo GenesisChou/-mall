@@ -4,15 +4,18 @@
         min-height: pxTorem(1250);
         padding-bottom: pxTorem(84);
         background-image: url('./images/quizBackground.png');
-        background-size: pxTorem(750) pxTorem(2235);
-        background-color: #f7be14;
+        background-size: pxTorem(750) pxTorem(15);
     }
-    
+
+    .v-quiz>header {
+        margin-bottom: pxTorem(-30);
+    }
+
     .banner {
         width: pxTorem(750);
         height: pxTorem(400);
     }
-    
+
     .panel {
         position: relative;
         width: pxTorem(591);
@@ -22,7 +25,7 @@
         border: pxTorem(13) solid #6a3c05;
         background-color: $white;
     }
-    
+
     .panel-head {
         position: absolute;
         left: 50%;
@@ -36,14 +39,14 @@
         color: #e65413;
         z-index: 1;
     }
-    
+
     .integral-message {
         @include flex-center;
         width: 100%;
         height: 100%;
         font-size: pxTorem(38);
     }
-    
+
     .panel-content {
         padding-bottom: pxTorem(80);
         color: #6f3a04;
@@ -61,10 +64,10 @@
             font-size: pxTorem(36);
         }
     }
-    
+
     .answers {
-        display:flex;
-        flex-wrap:wrap;
+        display: flex;
+        flex-wrap: wrap;
         font-size: pxTorem(34);
         color: #6f3a04;
         list-style: none;
@@ -95,7 +98,7 @@
             background-image: url('./images/quizCircleActive.png');
         }
     }
-    
+
     .panel-footer {
         position: absolute;
         left: 0;
@@ -119,14 +122,14 @@
             }
         }
     }
-    
+
     .submit {
         position: relative;
         display: block;
         width: pxTorem(322);
         height: pxTorem(82);
         line-height: pxTorem(82);
-        margin: pxTorem(60) auto;
+        margin: pxTorem(60) auto pxTorem(50) auto;
         box-shadow: pxTorem(4) pxTorem(3) pxTorem(5) 1px rgba(67, 160, 9, 0.68);
         border-radius: pxTorem(31);
         text-align: center;
@@ -144,7 +147,7 @@
             background-size: 100% 100%;
         }
     }
-    
+
     .describe {
         padding: 0 pxTorem(40);
         .editor-style {
@@ -241,9 +244,9 @@
         },
         watch: {
             is_right(value) {
-                if (this.state != 'start') return;
+                if (this.state !== 'start') return;
                 this.freshFreeTimes();
-                let result = this.activity_result;
+                const result = this.activity_result;
                 if (value) {
                     this.is_win = result.is_win;
                 } else {
@@ -257,8 +260,8 @@
                 }
             },
             is_win(value) {
-                if (this.state != 'start') return;
-                let result = this.activity_result;
+                if (this.state !== 'start') return;
+                const result = this.activity_result;
                 if (value) {
                     this.toggleDialog({
                         close_btn: true,
@@ -299,7 +302,7 @@
                     this.toggleDialog({
                         msg: '请选择答案',
                         btn_text: '我知道了'
-                    })
+                    });
                     return;
                 }
                 this.$store.dispatch('toggleLoading');
@@ -310,8 +313,8 @@
                     user_id: APP.USER_ID
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
-                    let data = response.data;
-                    if (data.status == APP.SUCCESS) {
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS) {
                         this.state = 'start';
                         this.activity_result = data.data;
                         this.is_right = this.activity_result.is_right;
@@ -322,8 +325,7 @@
                     }
                 }, (response) => {
                     this.$store.dispatch('toggleLoading');
-                })
-
+                });
             },
         }
     };

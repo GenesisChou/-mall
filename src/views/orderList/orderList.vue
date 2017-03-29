@@ -4,18 +4,21 @@
         min-height: 100%;
         padding-top: pxTorem(20);
     }
-    
+
     .tabs {
-        display:flex;
+        display: flex;
         background-color: $white;
         margin-bottom: pxTorem(20);
         border-bottom: 1px solid #d3d4d6;
         li {
-            @include flex-center;
-            flex:1;
-            flex-direction:column;
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: column;
             height: pxTorem(128);
-            text-align: center;
+            padding-bottom:pxTorem(10);
+            padding-top:pxTorem(5);
             list-style: none;
             position: relative;
             &.active {
@@ -29,15 +32,39 @@
                     height: pxTorem(4);
                     background-color: $orange;
                 }
-                .iconfont {
-                    color: $orange;
-                }
             }
         }
-        .iconfont {
-            font-size: pxTorem(55);
-            color: #666666;
+        .icon {
+            width: pxTorem(74);
+            height: pxTorem(74);
+            background-size: 100%;
+            background-repeat: no-repeat;
         }
+        .icon.unsolved {
+            background-image: url('./images/unsolvedOrder.png');
+            &.active {
+                background-image: url('./images/activeUnsolvedOrder.png');
+            }
+        }
+        .icon.untransported {
+            background-image: url('./images/untransportedOrder.png');
+            &.active {
+                background-image: url('./images/activeUntransportedOrder.png');
+            }
+        }
+        .icon.solved {
+            background-image: url('./images/solvedOrder.png');
+            &.active {
+                background-image: url('./images/activeSolvedOrder.png');
+            }
+        }
+        .icon.expired {
+            background-image: url('./images/expiredOrder.png');
+            &.active {
+                background-image: url('./images/activeExpiredOrder.png');
+            }
+        }
+
         h6 {
             margin-top: pxTorem(-10);
         }
@@ -59,23 +86,24 @@
             z-index: 1;
         }
     }
-    
+
     .v-order-footer {
-        padding:0 pxTorem(30);
+        padding: 0 pxTorem(30);
         margin-bottom: pxTorem(20);
         line-height: pxTorem(66);
         border-top: 1px solid $gray-light;
         border-bottom: 1px solid #d3d4d6;
         color: $orange;
         background-color: $white;
-        text-align:justify;
+        text-align: justify;
     }
 </style>
 <template>
     <div class='order-list'>
         <ul class='tabs'>
             <li v-for='(tab,$index) in tabs' @click='switchTab($index+1)' :class='{active:$index+1==current_tab}'>
-                <i :class='["iconfont",getIconType($index)]'></i>
+                <!--<i :class='["iconfont",getIconType($index)]'></i>-->
+                <div :class='["icon",tab.type,{active:$index+1==current_tab}]'></div>
                 <h6>{{tab.name}}</h6>
                 <span class='badage' v-if='$index==0&&user.unfinished_order_count>0'>{{user.unfinished_order_count}}</span>
             </li>
@@ -131,7 +159,7 @@
                 }],
                 busy: false,
                 has_entered: false
-            }
+            };
         },
         computed: {
             user() {
@@ -141,16 +169,16 @@
         beforeRouteEnter(to, from, next) {
             //当从订单详情返回至订单列表时绑定滚动事件
             next(vm => {
-                if (from.name != 'order_detail' || !vm.has_entered) {
+                if (from.name !== 'order_detail' || !vm.has_entered) {
                     vm.init();
                     vm.switchTab(1);
                     vm.has_entered = true;
                 }
                 window.addEventListener('scroll', vm.scroll_events[vm.current_type]);
-            })
+            });
         },
         activated() {
-            let position = utils.getSessionStorage('position:' + this.$route.name);
+            const position = utils.getSessionStorage('position:' + this.$route.name);
             if (position) {
                 window.scrollTo(0, position);
             }
@@ -167,7 +195,7 @@
                 this.order_list.solved = [];
                 this.order_list.expired = [];
                 this.tabs.forEach((item, index) => {
-                    let type = item.type,
+                    const type = item.type,
                         tab = index + 1;
                     this.params[type] = {
                         p: 1,
@@ -176,8 +204,7 @@
                         token: APP.TOKEN,
                         userid: APP.USER_ID,
                         class: tab
-                    }
-
+                    };
                     this.scroll_events[type] = this.getScrollEvent(tab, this.params[type], (data) => {
                         this.order_list[type] = this.order_list[type].concat(data.data.list);
                     });
@@ -187,16 +214,17 @@
                 return new Promise((resolve, reject) => {
                     this.$http.post(`${APP.HOST}/order_list/${APP.USER_ID}/${tab}`, params).then((
                         response) => {
-                        let data = response.data;
+                        const data = response.data;
                         if (resolve) {
                             resolve(data);
                         }
                     }, (response) => {
+                        const data = response.data;
                         if (reject) {
                             reject(data);
                         }
-                    })
-                })
+                    });
+                });
             },
             //获取对应的滚动事件
             getScrollEvent(tab, params, success, failure) {
@@ -218,23 +246,22 @@
             switchTab(tab) {
                 this.current_tab = tab;
                 this.current_type = this.tabs[this.current_tab - 1].type;
-                let type = this.current_type;
+                const type = this.current_type;
                 //显示／隐藏加载更多
                 this.busy = this.params[type].total > this.params[type].p;
                 //添加当前目滚动事件 解除其余项滚动事件
                 this.tabs.forEach((item) => {
-                    if (item.type == type) {
+                    if (item.type === type) {
                         window.addEventListener('scroll', this.scroll_events[item.type]);
                     } else {
                         window.removeEventListener('scroll', this.scroll_events[item.type])
                     }
-                })
-                //仅当第一次切换选项卡时才执行操作 
+                });
                 if (this.params[type].total) return;
                 this.$store.dispatch('toggleLoading');
                 this.getOrderList(tab, this.params[type]).then((data) => {
                     this.$store.dispatch('toggleLoading');
-                    let p = data.data.p,
+                    const p = data.data.p,
                         total = data.data.total;
                     this.params[type].total = total;
                     this.order_list[type] = this.order_list[type].concat(data.data.list);
@@ -243,13 +270,13 @@
                     }
                 }).catch((data) => {
                     this.$store.dispatch('toggleLoading');
-                })
+                });
             },
             getIconType($index) {
-                let icon_list = ['icon-order-unsolved', 'icon-car', 'icon-solved', 'icon-delete'],
-                    temp = ''
+                const icon_list = ['icon-order-unsolved', 'icon-car', 'icon-solved', 'icon-delete'];
+                let temp = '';
                 icon_list.forEach((name, index) => {
-                    if (index == $index) {
+                    if (index === $index) {
                         temp = name;
                         return;
                     }

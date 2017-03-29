@@ -1,1 +1,1 @@
-module.exports=require('./vBackTop.vue');
+module.exports = require('./vBackTop.vue');

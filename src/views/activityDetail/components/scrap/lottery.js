@@ -42,31 +42,32 @@ Lottery.prototype = {
         canvas.getContext('2d').clearRect(0, 0, width, height);
     },
     drawPoint(x, y) {
-        this.maskCtx.beginPath();
-        var radgrad = this.maskCtx.createRadialGradient(x, y, 0, x, y, this.getSize(40));
-        radgrad.addColorStop(0, 'rgba(0,0,0,0.6)');
-        radgrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
-        // this.maskCtx.fillStyle = radgrad;
-        this.maskCtx.fillStyle = '#fff';
-        // this.maskCtx.arc(x, y, this.getSize(40), 0, Math.PI * 2, true);
-        this.maskCtx.arc(x, y, this.getSize(30), 0, Math.PI * 2, true);
-        this.maskCtx.fill();
+        // this.maskCtx.beginPath();
+        // var radgrad = this.maskCtx.createRadialGradient(x, y, 0, x, y, this.getSize(40));
+        // radgrad.addColorStop(0, 'rgba(0,0,0,0.6)');
+        // radgrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        // // this.maskCtx.fillStyle = radgrad;
+        // this.maskCtx.fillStyle = '#fff';
+        // // this.maskCtx.arc(x, y, this.getSize(40), 0, Math.PI * 2, true);
+        // this.maskCtx.arc(x, y, this.getSize(30), 0, Math.PI * 2, true);
+        // this.maskCtx.fill();
+        this.mastCtx.clearRect(0, 0, this.width, this.height);
         if (this.drawPercentCallback) {
             this.drawPercentCallback.call(null, this.getTransparentPercent(this.maskCtx, this.width, this.height));
         }
     },
     bindEvent() {
-        var _this = this;
-        var device = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
-        var clickEvtName = device ? 'touchstart' : 'mousedown';
-        var moveEvtName = device ? 'touchmove' : 'mousemove';
+        var _this = this,
+            device = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase())),
+            clickEvtName = device ? 'touchstart' : 'mousedown',
+            moveEvtName = device ? 'touchmove' : 'mousemove';
         if (!device) {
             var isMouseDown = false;
             document.addEventListener('mouseup', function (e) {
                 isMouseDown = false;
             }, false);
         } else {
-            document.addEventListener("touchmove", function (e) {
+            document.addEventListener('touchmove', function (e) {
                 if (isMouseDown) {
                     e.preventDefault();
                 }
@@ -84,8 +85,8 @@ Lottery.prototype = {
                     top: 0
                 };
             }
-            var x = (device ? e.touches[0].clientX : e.clientX) - _this.clientRect.left + docEle.scrollLeft - docEle.clientLeft;
-            var y = (device ? e.touches[0].clientY : e.clientY) - _this.clientRect.top + docEle.scrollTop - docEle.clientTop;
+            var x = (device ? e.touches[0].clientX : e.clientX) - _this.clientRect.left + docEle.scrollLeft - docEle.clientLeft,
+                y = (device ? e.touches[0].clientY : e.clientY) - _this.clientRect.top + docEle.scrollTop - docEle.clientTop;
             _this.drawPoint(x, y);
         }, false);
 
@@ -100,8 +101,8 @@ Lottery.prototype = {
                     top: 0
                 };
             }
-            var x = (device ? e.touches[0].clientX : e.clientX) - _this.clientRect.left + docEle.scrollLeft - docEle.clientLeft;
-            var y = (device ? e.touches[0].clientY : e.clientY) - _this.clientRect.top + docEle.scrollTop - docEle.clientTop;
+            var x = (device ? e.touches[0].clientX : e.clientX) - _this.clientRect.left + docEle.scrollLeft - docEle.clientLeft,
+                y = (device ? e.touches[0].clientY : e.clientY) - _this.clientRect.top + docEle.scrollTop - docEle.clientTop;
             _this.drawPoint(x, y);
         }, false);
     },
@@ -123,7 +124,7 @@ Lottery.prototype = {
         this.backCtx = this.backCtx || this.background.getContext('2d');
         this.maskCtx = this.maskCtx || this.mask.getContext('2d');
 
-        if (this.lotteryType == 'image') {
+        if (this.lotteryType === 'image') {
             var image = new Image(),
                 _this = this;
             image.onload = function () {
@@ -132,9 +133,9 @@ Lottery.prototype = {
                 _this.resizeCanvas(_this.background, this.width, this.height);
                 _this.backCtx.drawImage(this, 0, 0);
                 _this.drawMask();
-            }
+            };
             image.src = this.lottery;
-        } else if (this.lotteryType == 'text') {
+        } else if (this.lotteryType === 'text') {
             this.width = this.width;
             this.height = this.height;
             this.resizeCanvas(this.background, this.width, this.height);
@@ -149,11 +150,11 @@ Lottery.prototype = {
     },
     drawMask() {
         this.resizeCanvas(this.mask, this.width, this.height);
-        if (this.coverType == 'color') {
+        if (this.coverType === 'color') {
             this.maskCtx.fillStyle = this.cover;
             this.maskCtx.fillRect(0, 0, this.width, this.height);
             this.maskCtx.globalCompositeOperation = 'destination-out';
-        } else if (this.coverType == 'image') {
+        } else if (this.coverType === 'image') {
             // var image = new Image(),
             //     _this = this;
             // image.onload = function () {
@@ -161,9 +162,8 @@ Lottery.prototype = {
             //     _this.maskCtx.globalCompositeOperation = 'destination-out';
             // }
             // image.src = this.cover;
-            this.maskCtx.drawImage(this.cover, 0, 0,this.width,this.height);
+            this.maskCtx.drawImage(this.cover, 0, 0, this.width, this.height);
             this.maskCtx.globalCompositeOperation = 'destination-out';
-
         }
     },
     init(lottery, lotteryType) {
@@ -173,7 +173,7 @@ Lottery.prototype = {
     },
     setText(text) {
         var fontSize = this.getSize(30);
-        this.backCtx.fillStyle = "#fff";
+        this.backCtx.fillStyle = '#fff';
         this.backCtx.beginPath();
         this.backCtx.fillRect(0, 0, this.width, this.height);
         this.backCtx.closePath();
@@ -187,6 +187,6 @@ Lottery.prototype = {
     getSize(value) {
         return value * this.clientWidth / 750;
     }
-}
+};
 
 module.exports = Lottery;

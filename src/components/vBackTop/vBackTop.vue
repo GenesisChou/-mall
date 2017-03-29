@@ -18,7 +18,7 @@
             return {
                 show: false,
                 scrollEvent: '',
-            }
+            };
         },
         created() {
             this.scrollEvent = this.getScrollEvent();
@@ -27,23 +27,21 @@
         methods: {
             backTop() {
                 let height = utils.getScrollTop();
-                let timer = window.setInterval(() => {
+                const timer = window.setInterval(() => {
                     if (height >= 0) {
                         height -= 150;
                         window.scrollTo(0, height);
                     } else {
                         window.clearInterval(timer);
                     }
-                }, 10)
+                }, 10);
             },
             getScrollEvent() {
-                let clientHeight = utils.getClientHeight();
+                const clientHeight = utils.getClientHeight();
                 return utils.debounce(() => {
                     this.show = utils.getScrollTop() > 1.5 * clientHeight;
                 }, 500, 500);
-
             }
         },
-
-    }
+    };
 </script>

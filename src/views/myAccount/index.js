@@ -1,1 +1,1 @@
-module.exports=require('./myAccount.vue');
+module.exports = require('./myAccount.vue');

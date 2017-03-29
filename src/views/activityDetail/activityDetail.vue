@@ -61,8 +61,8 @@
         },
         computed: {
             notice() {
-                return this.free_times > 0 ? `您还剩余${this.free_times}次免费机会`
-                : `消耗积分${this.activity_detail.integral >> 0}`;
+                return this.free_times > 0 ? `您还剩余${this.free_times}次免费机会` :
+                    `消耗积分${this.activity_detail.integral >> 0}`;
             },
         },
         created() {
@@ -125,7 +125,9 @@
             getActivityType(type) {
                 /* 1:刮刮卡 2:有奖问答 3:游戏 4:摇一摇 5:大转盘 6:砸金蛋 7:老虎机 8:海底捞 9:卡牌 */
                 let result = '';
-                const type_list = ['scrap', 'quiz', 'game', 'shake', 'fortune', 'egg', 'machine', 'treasure', 'card'];
+                const type_list = ['scrap', 'quiz', 'game', 'shake', 'fortune', 'egg', 'machine', 'treasure',
+                    'doll', 'card', 'tear'
+                ];
                 type_list.forEach((name, index) => {
                     if (type === index + 1) {
                         result = name;

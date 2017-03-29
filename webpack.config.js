@@ -9,59 +9,63 @@ var path = require('path'),
         output: {
             path: path.resolve(__dirname, './dist'),
             publicPath: '/dist/',
-            filename: 'js/[name].js',
-            // filename: 'js/[name].[hash].js'
+            // filename: 'js/[name].js',
+            filename: 'js/[name].[hash].js'
         },
         module: {
-            rules: [{
-                enforce: 'pre',
-                test: /.vue$/,
-                loader: 'eslint-loader',
-                exclude: /node_modules/
-            },
-            {
-                test: /\.vue$/,
-                loader: 'vue-loader',
-                options: {
-                    loaders: {
-                        scss: 'style-loader!css-loader?minimize&-autoprefixer!sass-loader',
-                    },
-                    postcss: [
-                        require('autoprefixer')({
-                            browsers: ['last 5 versions']
-                        })
-                    ]
+            rules: [
+                /*
+                {
+                    enforce: 'pre',
+                    test: /.vue$/,
+                    loader: 'eslint-loader',
+                    exclude: /node_modules/
+                },
+                */
+                {
+                    test: /\.vue$/,
+                    loader: 'vue-loader',
+                    options: {
+                        loaders: {
+                            scss: 'style-loader!css-loader?minimize&-autoprefixer!sass-loader',
+                        },
+                        postcss: [
+                            require('autoprefixer')({
+                                browsers: ['last 5 versions']
+                            })
+                        ]
+                    }
+                }, {
+                    test: /\.css$/,
+                    loaders: ['style-loader', 'css-loader']
+                }, {
+                    test: /\.scss$/,
+                    loaders: ['style-loader', 'css-loader', 'sass-loader']
+                }, {
+                    test: /\.js$/,
+                    loader: 'babel-loader',
+                    exclude: /node_modules/,
+                    query: {
+                        presets: ['es2015']
+                    }
+                }, {
+                    test: /\.json$/,
+                    loader: 'json-loader'
+                }, {
+                    test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                    loader: 'url-loader?limit=10000&minetype=application/font-woff'
+                }, {
+                    test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                    loader: 'file-loader'
+                }, {
+                    test: /\.(png|jpg|gif|svg)$/,
+                    loader: 'url-loader',
+                    query: {
+                        limit: 10000,
+                        name: 'images/[name].[hash].[ext]'
+                    }
                 }
-            }, {
-                test: /\.css$/,
-                loaders: ['style-loader', 'css-loader']
-            }, {
-                test: /\.scss$/,
-                loaders: ['style-loader', 'css-loader', 'sass-loader']
-            }, {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/,
-                query: {
-                    presets: ['es2015']
-                }
-            }, {
-                test: /\.json$/,
-                loader: 'json-loader'
-            }, {
-                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'url-loader?limit=10000&minetype=application/font-woff'
-            }, {
-                test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'file-loader'
-            }, {
-                test: /\.(png|jpg|gif|svg)$/,
-                loader: 'url-loader',
-                query: {
-                    limit: 10000,
-                    name: 'images/[name].[hash].[ext]'
-                }
-            }]
+            ]
         },
         resolve: {
             alias: {
@@ -106,8 +110,8 @@ if (process.env.NODE_ENV === 'production') {
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
-            filename: 'js/vendor.js',
-            // filename: 'js/vendor.[hash].js'
+            // filename: 'js/vendor.js',
+            filename: 'js/vendor.[hash].js'
         }),
         new webpack.LoaderOptionsPlugin({
             minimize: true

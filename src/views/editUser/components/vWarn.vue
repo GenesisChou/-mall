@@ -102,13 +102,11 @@
             close() {
                 if (this.callback_close) {
                     this.callback_close();
-                } else if (this.type == 'faliure' && this.callback) {
+                } else if (this.type === 'faliure' && this.callback) {
                     this.callback();
                 }
                 this.$emit('input', false);
             }
         }
-
-
-    }
+    };
 </script>

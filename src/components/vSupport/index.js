@@ -1,1 +1,1 @@
-module.exports=require('./vSupport.vue');
+module.exports = require('./vSupport.vue');

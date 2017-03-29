@@ -119,7 +119,7 @@
                     media_id: APP.MEDIA_ID,
                 },
                 integral_list: [],
-            }
+            };
         },
         filters: {
             pointFormat(point) {
@@ -134,8 +134,8 @@
         },
         mounted() {
             this.getIntegralList();
-            let list = this.$refs.list,
-                scroll = true;
+            const list = this.$refs.list;
+            let scroll = true;
             list.addEventListener('scroll', utils.debounce(() => {
                 if (scroll &&
                     this.params.p < this.params.total &&
@@ -144,9 +144,9 @@
                     this.params.p++;
                     this.getIntegralList().then(() => {
                         scroll = true;
-                    })
+                    });
                 }
-            }, 500, 500))
+            }, 500, 500));
         },
         methods: {
             // toggleModal() {
@@ -156,7 +156,7 @@
             getIntegralList() {
                 return new Promise((resolve) => {
                     this.$http.post(`${APP.HOST}/integral_list/${APP.USER_ID}`, this.params).then((response) => {
-                        let data = response.data;
+                        const data = response.data;
                         this.integral_list = this.integral_list.concat(data.data.list);
                         this.params.total = data.data.total;
                         if (resolve) {
@@ -164,9 +164,8 @@
                         }
                     }, (response) => {
 
-                    })
-
-                })
+                    });
+                });
             }
         }
     };

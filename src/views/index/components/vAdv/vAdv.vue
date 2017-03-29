@@ -51,38 +51,37 @@
                 const type = this.adv.type,
                     id = this.adv.id,
                     item_id = this.adv.item_id;
-                let router = null;
                 this.$store.dispatch('bannerView', id);
                 switch (type) {
-                    case 1:
-                        location.href = this.adv.url;
-                        break;
-                    case 2:
-                        this.$router.push({
-                            name: "activity_detail",
-                            query: {
-                                activity_id: item_id,
-                            }
-                        });
-                        break;
-                    case 3:
-                        this.$router.push({
-                            name: "product_detail",
-                            query: {
-                                product_id: item_id,
-                            }
-                        });
-                        break;
-                    case 4:
-                        this.$router.push({
-                            name: "subject_detail",
-                            query: {
-                                subject_id: item_id,
-                            }
-                        });
-                        break;
+                case 1:
+                    location.href = this.adv.url;
+                    break;
+                case 2:
+                    this.$router.push({
+                        name: 'activity_detail',
+                        query: {
+                            activity_id: item_id,
+                        }
+                    });
+                    break;
+                case 3:
+                    this.$router.push({
+                        name: 'product_detail',
+                        query: {
+                            product_id: item_id,
+                        }
+                    });
+                    break;
+                case 4:
+                    this.$router.push({
+                        name: 'subject_detail',
+                        query: {
+                            subject_id: item_id,
+                        }
+                    });
+                    break;
                 }
             }
         }
-    }
+    };
 </script>

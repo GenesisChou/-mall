@@ -10,7 +10,7 @@
         li {
             @include active;
             @include flex-center;
-            flex-direction:column;
+            flex-direction: column;
             width: 25%;
             height: pxTorem(190);
             position: relative;
@@ -136,7 +136,7 @@
                     pro_st: ''
                 },
                 scroll_event: '',
-            }
+            };
         },
         computed: {
             user() {
@@ -150,7 +150,7 @@
             }
         },
         activated() {
-            let position = utils.getSessionStorage('position:' + this.$route.name);
+            const position = utils.getSessionStorage('position:' + this.$route.name);
             if (position) {
                 window.scrollTo(0, position);
             }
@@ -177,10 +177,10 @@
                     icon: require('./images/allProduct.png'),
                     text: '所有商品'
                 }
-            ]
+            ];
             this.getHotCommend();
             this.getHotAdcolumn();
-            this.getSubjectList();
+            this.getHotShowCase();
             this.getHotItems();
             this.scroll_event = this.getScrollEvent();
         },
@@ -189,13 +189,13 @@
             next();
         },
         methods: {
-            getSubjectList() {
-                this.$http.post(`${APP.HOST}/subject_list`, {
+            getHotShowCase() {
+                this.$http.post(`${APP.HOST}/hot_showcase`, {
                     token: APP.TOKEN,
                     userid: APP.USER_ID,
                     media_id: APP.MEDIA_ID
                 }).then((response) => {
-                    let data = response.data;
+                    const data = response.data;
                     if (data.data.length >= 3) {
                         this.subject_list = data.data;
                     }
@@ -207,7 +207,7 @@
                     userid: APP.USER_ID,
                     media_id: APP.MEDIA_ID
                 }).then((response) => {
-                    let data = response.data;
+                    const data = response.data;
                     this.hot_commend = data.data;
                 });
             },
@@ -217,14 +217,14 @@
                     userid: APP.USER_ID,
                     media_id: APP.MEDIA_ID
                 }).then((response) => {
-                    let data = response.data;
+                    const data = response.data;
                     this.hot_adcolumn = data.data;
                 });
             },
             getHotItems() {
                 return new Promise(resolve => {
                     this.$http.post(`${APP.HOST}/hot_item`, this.params).then((response) => {
-                        let data = response.data;
+                        const data = response.data;
                         this.params.total = data.data.total;
                         this.params.pro_st = data.data.pro_st;
                         this.hot_items = this.hot_items.concat(data.data.list);
@@ -232,8 +232,7 @@
                             resolve();
                         }
                     });
-
-                })
+                });
             },
             getScrollEvent() {
                 let scroll = true;
@@ -250,36 +249,38 @@
             routerLink(subject) {
                 //type 1 外链 type 2 详情
                 const type = subject.type,
-                    url = subject.url;
+                    id = subject.item_id;
                 this.$store.dispatch('subjectView', subject.id);
-                if (type == 1) {
-                    const product_id = utils.getParameterByName('product_id', url),
-                        activity_id = utils.getParameterByName('activity_id', url);
-                    if (product_id) {
-                        this.$router.push({
-                            name: "product_detail",
-                            query: {
-                                product_id
-                            }
-                        });
-                    } else if (activity_id) {
-                        this.$router.push({
-                            name: "activity_detail",
-                            query: {
-                                activity_id
-                            }
-                        });
-                    } else {
-                        location.href = subject.url;
-                    }
-                } else if (type == 2) {
+                switch (type) {
+                case 1:
+                    location.href = subject.url;
+                    break;
+                case 2:
                     this.$router.push({
-                        name: "subject_detail",
+                        name: 'activity_detail',
                         query: {
-                            subject_id: subject.id,
+                            activity_id: id,
                         }
                     });
+                    break;
+                case 3:
+                    this.$router.push({
+                        name: 'product_detail',
+                        query: {
+                            product_id: id,
+                        }
+                    });
+                    break;
+                case 4:
+                    this.$router.push({
+                        name: 'subject_detail',
+                        query: {
+                            subject_id: id,
+                        }
+                    });
+                    break;
                 }
+
             }
         },
     };
