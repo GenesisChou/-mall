@@ -49,7 +49,6 @@
         left: 0;
         right: 0;
         bottom: pxTorem(110);
-        z-index: 1;
         padding: 0 pxTorem(30);
         overflow: scroll;
         -webkit-overflow-scrolling: touch;
@@ -73,6 +72,12 @@
             font-size: pxTorem(30);
             color: #646565;
         }
+    }
+    .footer{
+        position:absolute;
+        bottom:0;
+        left:0;
+        right:0;
     }
 </style>
 <template>
@@ -102,6 +107,9 @@
                 </li>
             </ul>
         </main>
+        <footer class='footer'>
+            <v-support></v-support>
+        </footer>
     </div>
 </template>
 <script>

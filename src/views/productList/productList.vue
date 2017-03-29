@@ -2,6 +2,14 @@
     @import '../../assets/scss/variable.scss';
     .product-list {
         @include clearfix;
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        background-color: #f2f3f4;
+    }
+
+    .product-list-content {
+        flex: 1;
     }
 
     ul,
@@ -70,27 +78,29 @@
 </style>
 <template>
     <div class='product-list'>
-        <v-search :search='searchProduct' v-model='params.sword'></v-search>
-        <section class='sort'>
-            <div @click='sortByIntegral'>
-                <span :class='[sort_type!="count"&&sort_type?"active":""]'>消耗积分排序</span>
-                <div class='arrows'>
-                    <div :class='["up",{active:sort_type=="integral-up"}]'></div>
-                    <div :class='["down",{active:sort_type=="integral-down"}]'></div>
+        <div class='product-list-content'>
+            <v-search :search='searchProduct' v-model='params.sword'></v-search>
+            <section class='sort'>
+                <div @click='sortByIntegral'>
+                    <span :class='[sort_type!="count"&&sort_type?"active":""]'>消耗积分排序</span>
+                    <div class='arrows'>
+                        <div :class='["up",{active:sort_type=="integral-up"}]'></div>
+                        <div :class='["down",{active:sort_type=="integral-down"}]'></div>
+                    </div>
                 </div>
-            </div>
-            <div :class='[sort_type=="count"?"active":""]' @click='sortByCount'>
-                兑换量优先
-            </div>
-        </section>
-        <ul class='list'>
-            <router-link v-for='(product,$index) in product_list' :to='{name:"product_detail",query:{product_id:product.id,integral:product.integral>>0}}'
-                tag='li'>
-                <v-list-item :title='product.name' :title-dupty='product.name' :integral='product.integral>>0' :img='product.pic_thumb' :no-border='$index==product_list.length-1'></v-list-item>
-            </router-link>
-        </ul>
-        <v-load-more v-if='busy'></v-load-more>
+                <div :class='[sort_type=="count"?"active":""]' @click='sortByCount'>
+                    兑换量优先
+                </div>
+            </section>
+            <ul class='list'>
+                <router-link v-for='(product,$index) in product_list' :to='{name:"product_detail",query:{product_id:product.id,integral:product.integral>>0}}'
+                    tag='li'>
+                    <v-list-item :title='product.name' :title-dupty='product.name' :integral='product.integral>>0' :img='product.pic_thumb' :no-border='$index==product_list.length-1'></v-list-item>
+                </router-link>
+            </ul>
+        </div>
         <v-back-top></v-back-top>
+        <v-support :busy='busy'></v-support>
     </div>
 </template>
 <script>
@@ -128,7 +138,7 @@
             }
         },
         activated() {
-            let position = utils.getSessionStorage('position:' + this.$route.name);
+            const position = utils.getSessionStorage('position:' + this.$route.name);
             if (position) {
                 window.scrollTo(0, position);
             }
@@ -140,7 +150,7 @@
                 this.$store.dispatch('toggleLoading');
             }).catch(() => {
                 this.$store.dispatch('toggleLoading');
-            })
+            });
             this.scroll_event = this.getScrollEvent();
         },
         beforeRouteLeave(to, from, next) {
@@ -152,7 +162,7 @@
             getProductList() {
                 return new Promise((resolve, reject) => {
                     this.$http.post(`${APP.HOST}/all_product`, this.params).then((response) => {
-                        let data = response.data;
+                        const data = response.data;
                         if (resolve) {
                             resolve(data);
                         }
@@ -162,9 +172,8 @@
                         if (reject) {
                             reject();
                         }
-                    })
-
-                })
+                    });
+                });
             },
             //搜索商品
             searchProduct() {
@@ -178,7 +187,7 @@
                     this.product_list = data.data.list;
                 }).catch(() => {
                     this.$store.dispatch('toggleLoading');
-                })
+                });
             },
             //初始化参数
             initParams() {
@@ -192,7 +201,7 @@
             //消耗积分排序
             sortByIntegral() {
                 this.initParams();
-                if (this.sort_type == 'integral-up') {
+                if (this.sort_type === 'integral-up') {
                     this.sort_type = 'integral-down';
                     this.params._order = 'integral:DESC';
                 } else {
@@ -213,7 +222,7 @@
                 this.initParams();
                 this.params._order = 'used_count:DESC';
                 this.$store.dispatch('toggleLoading');
-                if (this.sort_type != 'count') {
+                if (this.sort_type !== 'count') {
                     this.sort_type = 'count';
                     this.getProductList().then((data) => {
                         this.product_list = [];

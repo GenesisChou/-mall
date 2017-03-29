@@ -1,8 +1,15 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
     .order-list {
+        display: flex;
+        flex-direction: column;
         min-height: 100%;
+        background-color: #f2f3f4;
         padding-top: pxTorem(20);
+    }
+
+    .order-list-content {
+        flex: 1;
     }
 
     .tabs {
@@ -17,8 +24,8 @@
             align-items: center;
             flex-direction: column;
             height: pxTorem(128);
-            padding-bottom:pxTorem(10);
-            padding-top:pxTorem(5);
+            padding-bottom: pxTorem(10);
+            padding-top: pxTorem(5);
             list-style: none;
             position: relative;
             &.active {
@@ -100,26 +107,28 @@
 </style>
 <template>
     <div class='order-list'>
-        <ul class='tabs'>
-            <li v-for='(tab,$index) in tabs' @click='switchTab($index+1)' :class='{active:$index+1==current_tab}'>
-                <!--<i :class='["iconfont",getIconType($index)]'></i>-->
-                <div :class='["icon",tab.type,{active:$index+1==current_tab}]'></div>
-                <h6>{{tab.name}}</h6>
-                <span class='badage' v-if='$index==0&&user.unfinished_order_count>0'>{{user.unfinished_order_count}}</span>
-            </li>
-        </ul>
-        <ul class='list'>
-            <router-link v-for='(order,$index) in order_list[current_type]' :to='{name:"order_detail",
+        <div class='order-list-content'>
+            <ul class='tabs'>
+                <li v-for='(tab,$index) in tabs' @click='switchTab($index+1)' :class='{active:$index+1==current_tab}'>
+                    <!--<i :class='["iconfont",getIconType($index)]'></i>-->
+                    <div :class='["icon",tab.type,{active:$index+1==current_tab}]'></div>
+                    <h6>{{tab.name}}</h6>
+                    <span class='badage' v-if='$index==0&&user.unfinished_order_count>0'>{{user.unfinished_order_count}}</span>
+                </li>
+            </ul>
+            <ul class='list'>
+                <router-link v-for='(order,$index) in order_list[current_type]' :to='{name:"order_detail",
                         query:{order_id:parseInt(order.id)}}' tag='li'>
-                <v-order :img='order.product_pic' :id='order.orderid' :integral='order.integral>>0' :name='order.product' :active='true'>
+                    <v-order :img='order.product_pic' :id='order.orderid' :integral='order.integral>>0' :name='order.product' :active='true'>
 
-                    <h6 class='v-order-footer'>
-                        {{order.tips}}
-                    </h6>
-                </v-order>
-            </router-link>
-        </ul>
-        <v-load-more v-if='busy'></v-load-more>
+                        <h6 class='v-order-footer'>
+                            {{order.tips}}
+                        </h6>
+                    </v-order>
+                </router-link>
+            </ul>
+        </div>
+        <v-support :busy='busy'></v-support>
         <v-back-top></v-back-top>
     </div>
 </template>

@@ -1,5 +1,16 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
+    .index {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        background-color: #f2f3f4;
+    }
+
+    .index-content {
+        flex: 1;
+    }
+
     .icon-list {
         @include list-inline;
         margin-bottom: pxTorem(15);
@@ -75,34 +86,36 @@
 </style>
 <template>
     <div class='index '>
-        <!-- 轮播 -->
-        <v-swipe></v-swipe>
-        <!-- 功能区 -->
-        <ul class='icon-list'>
-            <router-link v-for='feature in features' :to='{name:feature.router}' tag='li'>
-                <img class='icon' :src='feature.icon'>
-                <p>{{feature.text}}</p>
-            </router-link>
-        </ul>
-        <!-- 专题 -->
-        <div v-if='subject_show' class='subject'>
-            <img v-for='(subject,$index) in subject_list' :class='$index==0?"left":"right"' @click='routerLink(subject)' :src='$index==0?subject.pic_main:subject.pic_second'>
+        <div class='index-content'>
+            <!-- 轮播 -->
+            <v-swipe></v-swipe>
+            <!-- 功能区 -->
+            <ul class='icon-list'>
+                <router-link v-for='feature in features' :to='{name:feature.router}' tag='li'>
+                    <img class='icon' :src='feature.icon'>
+                    <p>{{feature.text}}</p>
+                </router-link>
+            </ul>
+            <!-- 专题 -->
+            <div v-if='subject_show' class='subject'>
+                <img v-for='(subject,$index) in subject_list' :class='$index==0?"left":"right"' @click='routerLink(subject)' :src='$index==0?subject.pic_main:subject.pic_second'>
+            </div>
+            <!-- 广告列表 -->
+            <ul class='advs'>
+                <li v-for='adv in hot_adcolumn'>
+                    <v-adv :adv='adv'></v-adv>
+                </li>
+            </ul>
+            <!-- 热门列表 -->
+            <main class='main'>
+                <!-- 热门推荐 -->
+                <v-item v-for='item in hot_commend' :item='item' type='commend'></v-item>
+                <!-- 热门 -->
+                <v-item v-for='item in hot_items' :item='item' type='item'></v-item>
+            </main>
         </div>
-        <!-- 广告列表 -->
-        <ul class='advs'>
-            <li v-for='adv in hot_adcolumn'>
-                <v-adv :adv='adv'></v-adv>
-            </li>
-        </ul>
-        <!-- 热门列表 -->
-        <main class='main'>
-            <!-- 热门推荐 -->
-            <v-item v-for='item in hot_commend' :item='item' type='commend'></v-item>
-            <!-- 热门 -->
-            <v-item v-for='item in hot_items' :item='item' type='item'></v-item>
-        </main>
-        <v-load-more v-if='busy'></v-load-more>
         <v-back-top></v-back-top>
+        <v-support :busy='busy'></v-support>
     </div>
 </template>
 <script>
@@ -252,33 +265,33 @@
                     id = subject.item_id;
                 this.$store.dispatch('subjectView', subject.id);
                 switch (type) {
-                case 1:
-                    location.href = subject.url;
-                    break;
-                case 2:
-                    this.$router.push({
-                        name: 'activity_detail',
-                        query: {
-                            activity_id: id,
-                        }
-                    });
-                    break;
-                case 3:
-                    this.$router.push({
-                        name: 'product_detail',
-                        query: {
-                            product_id: id,
-                        }
-                    });
-                    break;
-                case 4:
-                    this.$router.push({
-                        name: 'subject_detail',
-                        query: {
-                            subject_id: id,
-                        }
-                    });
-                    break;
+                    case 1:
+                        location.href = subject.url;
+                        break;
+                    case 2:
+                        this.$router.push({
+                            name: 'activity_detail',
+                            query: {
+                                activity_id: id,
+                            }
+                        });
+                        break;
+                    case 3:
+                        this.$router.push({
+                            name: 'product_detail',
+                            query: {
+                                product_id: id,
+                            }
+                        });
+                        break;
+                    case 4:
+                        this.$router.push({
+                            name: 'subject_detail',
+                            query: {
+                                subject_id: id,
+                            }
+                        });
+                        break;
                 }
 
             }

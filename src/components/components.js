@@ -1,8 +1,8 @@
-import vLoadMore from 'components/vLoadMore';
+import vSupport from 'components/vSupport';
 import vSimditor from 'components/vSimditor';
 const components = {
-    vLoadMore,
     vSimditor,
+    vSupport
 };
 module.exports.install = (Vue, options) => {
     Object.keys(components).forEach(name => {

@@ -1,5 +1,17 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
+    .order-detail {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        background-color: #f2f3f4;
+    }
+
+    .order-detail-content {
+        flex: 1;
+    }
+
+
     .single-button {
         @include flex-center;
         height: pxTorem(120);
@@ -150,9 +162,9 @@
         margin-top: pxTorem(20);
         padding: pxTorem(23) 0;
         background-color: $white;
-        .iconfont{
-            font-size:pxTorem(30);
-            margin-right:pxTorem(12);
+        .iconfont {
+            font-size: pxTorem(30);
+            margin-right: pxTorem(12);
         }
         .content {
             @include flex-center;
@@ -167,36 +179,37 @@
 </style>
 <template>
     <div v-show='content_show' class='order-detail '>
-        <!-- 订单详情 -->
-        <v-order :img='order_detail.product_pic' :id='order_detail.orderid' :integral='order_detail.integral>>0' :name='order_detail.product'
-            :has-border='true'>
-            <!--商品为虚拟物品时 -->
-            <template v-if='is_virtual'>
-                <!--商品为优惠券时 -->
-                <v-ticket v-if='product_type==1||product_type==6' :type='product_type' :order-detail='order_detail' :product-detail='product_detail'></v-ticket>
-                <!--商品为流量充值时 -->
-                <v-recharge v-if='product_type==8' :type='product_type' :get-order-detail='getOrderDetail' :order-detail='order_detail' :product-detail='product_detail'></v-recharge>
-                <!-- 使用说明 -->
-                <v-introduction v-if='product_detail.content_use' title='使用说明' :content='product_detail.content_use'></v-introduction>
-                <!-- 重要声明 -->
-                <v-announcement :has-border='product_type==5'></v-announcement>
-                <div v-if='product_type==5' class='single-button bg-white'>
-                    <button class='btn btn-orange' @click='useTicket(product_detail.url)'> 前往使用 </button>
-                </div>
-            </template>
-            <!-- 商品为实物时 -->
-            <template v-else>
-                <!-- 取货类型为快递 -->
-                <template v-if='send_type==1'>
-                    <!-- 无地址 -->
-                    <template v-if='order_detail.status==1&&!address_list.length'>
-                        <v-address-edit :show='popup_edit' :toggle-popup='toggleEdit'></v-address-edit>
-                        <div class='profile'>
-                            <div class='content' @click='toggleEdit'>
-                                <i class='iconfont icon-plus'></i>完善个人信息
+        <div class='order-detail-content'>
+            <!-- 订单详情 -->
+            <v-order :img='order_detail.product_pic' :id='order_detail.orderid' :integral='order_detail.integral>>0' :name='order_detail.product'
+                :has-border='true'>
+                <!--商品为虚拟物品时 -->
+                <template v-if='is_virtual'>
+                    <!--商品为优惠券时 -->
+                    <v-ticket v-if='product_type==1||product_type==6' :type='product_type' :order-detail='order_detail' :product-detail='product_detail'></v-ticket>
+                    <!--商品为流量充值时 -->
+                    <v-recharge v-if='product_type==8' :type='product_type' :get-order-detail='getOrderDetail' :order-detail='order_detail' :product-detail='product_detail'></v-recharge>
+                    <!-- 使用说明 -->
+                    <v-introduction v-if='product_detail.content_use' title='使用说明' :content='product_detail.content_use'></v-introduction>
+                    <!-- 重要声明 -->
+                    <v-announcement :has-border='product_type==5'></v-announcement>
+                    <div v-if='product_type==5' class='single-button bg-white'>
+                        <button class='btn btn-orange' @click='useTicket(product_detail.url)'> 前往使用 </button>
+                    </div>
+                </template>
+                <!-- 商品为实物时 -->
+                <template v-else>
+                    <!-- 取货类型为快递 -->
+                    <template v-if='send_type==1'>
+                        <!-- 无地址 -->
+                        <template v-if='order_detail.status==1&&!address_list.length'>
+                            <v-address-edit :show='popup_edit' :toggle-popup='toggleEdit'></v-address-edit>
+                            <div class='profile'>
+                                <div class='content' @click='toggleEdit'>
+                                    <i class='iconfont icon-plus'></i>完善个人信息
+                                </div>
                             </div>
-                        </div>
-                        <!--<section class='address-box no-address'>
+                            <!--<section class='address-box no-address'>
                             <div class='content' @click='toggleEdit'>
                                 <div class='plus'> </div>
                                 <span class='address-content'>新增收货地址</span>
@@ -205,59 +218,61 @@
                                 </div>
                             </div>
                         </section>-->
+                        </template>
+                        <!-- 有地址 -->
+                        <template v-else>
+                            <section class='address-box'>
+                                <div :class='["content",{active:!order_checked}]' @click='toggleSelect'>
+                                    <div class='location'>
+                                        <i class='iconfont icon-location '></i>
+                                    </div>
+                                    <div class='address-content '>
+                                        <h4>
+                                            <span><label>收件人:</label> {{default_address.contact}}</span>
+                                            <span class='pull-right'>{{default_address.phone}}</span>
+                                        </h4>
+                                        <h4 class='address-detail'>
+                                            <label>收货地址:</label> {{default_address.province}} {{default_address.city}} {{default_address.country}}
+                                            {{default_address.address}}
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div v-if='!order_checked' class='single-button'>
+                                    <button class='btn btn-orange' @click='updateOrderAddress'>确认地址</button>
+                                </div>
+                            </section>
+                            <!-- 物流信息 -->
+                            <!-- status!=1时为已确认地址 -->
+                            <v-logistics v-if='order_detail.status!=1' :order-detail='order_detail'></v-logistics>
+                            <v-address-select :show='popup_select' :toggle-popup='toggleSelect' :default-id='default_address.id>>0'></v-address-select>
+                        </template>
                     </template>
-                    <!-- 有地址 -->
-                    <template v-else>
-                        <section class='address-box'>
-                            <div :class='["content",{active:!order_checked}]' @click='toggleSelect'>
-                                <div class='location'>
-                                    <i class='iconfont icon-location '></i>
+                    <!-- 取货类型为自取时 -->
+                    <template v-if='send_type==2'>
+                        <img v-if='order_detail.status==3' class='take-goods-script' src="./images/takeGoods.png" alt="">
+                        <!-- 取货 -->
+                        <section class='take-goods'>
+                            <h5> <i class='iconfont icon-location'></i> 取货地址: {{order_detail.take_address}} </h5>
+                            <main class='input-box' v-if='order_detail.status!=3'>
+                                <div class='container'>
+                                    <div :class='["form-control",{disable:order_detail.status==4}]'>
+                                        <label for='take-goods'>取货码:</label>
+                                        <input type="text" id='take-goods' placeholder='到达取货地址后,由商家输入' v-model='take_code' :disabled='order_detail.status==4'>
+                                    </div>
+                                    <div v-if='order_detail.status==2' class='submit' @click='takeGoods'>确认</div>
+                                    <div v-if='order_detail.status==4' class='submit disable'>已逾期</div>
                                 </div>
-                                <div class='address-content '>
-                                    <h4>
-                                        <span><label>收件人:</label> {{default_address.contact}}</span>
-                                        <span class='pull-right'>{{default_address.phone}}</span>
-                                    </h4>
-                                    <h4 class='address-detail'>
-                                        <label>收货地址:</label> {{default_address.province}} {{default_address.city}} {{default_address.country}}
-                                        {{default_address.address}}
-                                    </h4>
-                                </div>
-                            </div>
-                            <div v-if='!order_checked' class='single-button'>
-                                <button class='btn btn-orange' @click='updateOrderAddress'>确认地址</button>
-                            </div>
+                            </main>
                         </section>
-                        <!-- 物流信息 -->
-                        <!-- status!=1时为已确认地址 -->
-                        <v-logistics v-if='order_detail.status!=1' :order-detail='order_detail'></v-logistics>
-                        <v-address-select :show='popup_select' :toggle-popup='toggleSelect' :default-id='default_address.id>>0'></v-address-select>
+                        <!-- 领取说明 -->
+                        <v-introduction v-if='product_detail.content_use' title='领取说明' :content='product_detail.content_use'></v-introduction>
+                        <!-- 重要声明 -->
+                        <v-announcement :has-border='false'></v-announcement>
                     </template>
                 </template>
-                <!-- 取货类型为自取时 -->
-                <template v-if='send_type==2'>
-                    <img v-if='order_detail.status==3' class='take-goods-script' src="./images/takeGoods.png" alt="">
-                    <!-- 取货 -->
-                    <section class='take-goods'>
-                        <h5> <i class='iconfont icon-location'></i> 取货地址: {{order_detail.take_address}} </h5>
-                        <main class='input-box' v-if='order_detail.status!=3'>
-                            <div class='container'>
-                                <div :class='["form-control",{disable:order_detail.status==4}]'>
-                                    <label for='take-goods'>取货码:</label>
-                                    <input type="text" id='take-goods' placeholder='到达取货地址后,由商家输入' v-model='take_code' :disabled='order_detail.status==4'>
-                                </div>
-                                <div v-if='order_detail.status==2' class='submit' @click='takeGoods'>确认</div>
-                                <div v-if='order_detail.status==4' class='submit disable'>已逾期</div>
-                            </div>
-                        </main>
-                    </section>
-                    <!-- 领取说明 -->
-                    <v-introduction v-if='product_detail.content_use' title='领取说明' :content='product_detail.content_use'></v-introduction>
-                    <!-- 重要声明 -->
-                    <v-announcement :has-border='false'></v-announcement>
-                </template>
-            </template>
-        </v-order>
+            </v-order>
+        </div>
+        <v-support></v-support>
     </div>
 </template>
 <script>

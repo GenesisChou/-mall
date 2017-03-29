@@ -9,15 +9,16 @@
         background-position: pxTorem(0) pxTorem(400);
         background-repeat: no-repeat;
     }
-    .fortune>header{
+
+    .fortune>header {
         margin-bottom: pxTorem(-60);
     }
-    
+
     .banner {
         width: pxTorem(750);
         height: pxTorem(400);
     }
-    
+
     .panel {
         position: relative;
         width: pxTorem(623);
@@ -27,19 +28,19 @@
         background-size: 100% 100%;
         background-repeat: no-repeat;
     }
-    
+
     .integral-message {
         @include flex-center;
         height: pxTorem(100);
         color: $white;
         font-size: pxTorem(38);
     }
-    
+
     table {
         margin: 0 auto;
         padding-top: pxTorem(72);
     }
-    
+
     td {
         width: pxTorem(178);
         height: pxTorem(178);
@@ -65,7 +66,7 @@
             background-image: url('./images/fortuneStartButtonActive.png');
         }
     }
-    
+
     .notice {
         position: absolute;
         bottom: pxTorem(15);
@@ -79,7 +80,7 @@
             font-size: pxTorem(34);
         }
     }
-    
+
     .describe {
         padding: 0 pxTorem(40);
         .editor-style {
@@ -186,12 +187,12 @@
             return {
                 state: '', //游戏状态
                 current_index: '', //当前激活索引
-                turn: '', //旋转次数 >3 
-                grid_num: '', //格子数 8
+                turn: '', // 旋转次数 
+                grid_num: '', // 格子数 
                 stop_position: '',
                 alert: {},
                 activity_result: {},
-            }
+            };
         },
         computed: {
             awards() {
@@ -209,8 +210,18 @@
         },
         watch: {
             state(value) {
-                if (value == 'start') {
-                    let result = this.activity_result;
+                if (value === 'start') {
+                    const result = this.activity_result,
+                        _this = this,
+                        stop_position = this.stop_position, //停止位置
+                        move_times = this.getMoveTimes(stop_position), //总循环次数
+                        speed_min = 500, //最小速度
+                        speed_max = 20, //最大速度
+                        speed_buffer = 10, //速度缓冲区
+                        speed_interval = Math.abs(speed_max - speed_min) / speed_buffer; //速度提升间隔
+                    let time = 0,
+                        interval = 500;
+
                     this.freshFreeTimes();
                     if (result.is_win) {
                         this.alert = {
@@ -231,27 +242,21 @@
                                 this.init(this.stop_position);
                             },
                         };
-
                     }
                     this.stop_position = this.getPosition(this.activity_result.name);
-                    let _this = this, //执行环境
-                        stop_position = this.stop_position, //停止位置
-                        move_times = this.getMoveTimes(stop_position), //总循环次数
-                        time = 0, //计数器
-                        speed_min = 500, //最小速度
-                        speed_max = 20, //最大速度
-                        interval = 500, //执行频率
-                        speed_buffer = 10, //速度缓冲区
-                        speed_interval = Math.abs(speed_max - speed_min) / speed_buffer; //速度提升间隔
                     setTimeout(() => {
                         step();
                     }, interval);
 
                     function step() {
                         if (time < speed_buffer) {
-                            interval = _this.speedUp(interval, speed_interval);
+                            // interval = _this.speedUp(interval, speed_interval);
+                            // speed up
+                            interval -= speed_interval;
                         } else if (time > move_times - speed_buffer) {
-                            interval = _this.speedDown(interval, speed_interval);
+                            // interval = _this.speedDown(interval, speed_interval);
+                            // speed down
+                            interval += speed_interval;
                         }
                         if (time >= move_times) {
                             _this.state = 'stop';
@@ -261,7 +266,7 @@
                         _this.move();
                         setTimeout(step, interval);
                     }
-                } else if (value == 'stop') {
+                } else if (value === 'stop') {
                     this.toggleDialog(this.alert);
                 }
             }
@@ -275,22 +280,21 @@
                 this.activity_result = {};
             },
             start() {
-                if (this.state != 'ready') return;
+                if (this.state !== 'ready') return;
                 this.$http.post(`${APP.HOST}/turntable_activity/${this.id}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID
                 }).then((response) => {
-                    let data = response.data;
-                    if (data.status == APP.SUCCESS) {
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS) {
                         this.activity_result = data.data;
                         this.state = 'start';
                     } else {
                         this.toggleDialog({
                             msg: data.info
-                        })
+                        });
                     }
-                }, (response) => {})
-
+                }, (response) => {});
             },
             move() {
                 this.current_index = (this.current_index + 1) % this.grid_num;
@@ -298,11 +302,11 @@
             getPosition(name) {
                 let stop_position = 0;
                 this.awards.forEach((award, index) => {
-                    if (award.name == name) {
+                    if (award.name === name) {
                         stop_position = index;
                         return true;
                     }
-                })
+                });
                 return stop_position;
             },
             getMoveTimes(stop_position) {
@@ -312,12 +316,6 @@
                 }
                 return step + this.turn * this.grid_num;
             },
-            speedUp(interval, speed_interval) {
-                return interval -= speed_interval;
-            },
-            speedDown(interval, speed_interval) {
-                return interval += speed_interval;
-            }
         }
-    }
+    };
 </script>

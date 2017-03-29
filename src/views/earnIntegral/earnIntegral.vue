@@ -244,6 +244,7 @@
         iframe {
             width: 100%;
             height: 100%;
+            overflow: scroll;
         }
         .back {
             z-index: 3;
@@ -252,69 +253,71 @@
 </style>
 <template>
     <div v-if='loaded' class='earn-integral'>
-        <header class='head'>
-            <router-link v-if='back_show' :to='{name:"index"}' class='back btn-orange btn' tag='div'>
-                返回首页
-            </router-link>
-            <div class='rotate'>
-                <transition name='rotate'>
-                    <div v-if='user.ischecked' class='circle-button'>
-                        <div class='circle white'>
-                            <h1>已签到</h1>
-                            <h4>连续{{user.checkin_days}}天</h4>
+        <main v-if='!frame_show'>
+            <header class='head'>
+                <router-link v-if='back_show' :to='{name:"index"}' class='back btn-orange btn' tag='div'>
+                    返回首页
+                </router-link>
+                <div class='rotate'>
+                    <transition name='rotate'>
+                        <div v-if='user.ischecked' class='circle-button'>
+                            <div class='circle white'>
+                                <h1>已签到</h1>
+                                <h4>连续{{user.checkin_days}}天</h4>
+                            </div>
                         </div>
-                    </div>
-                </transition>
-                <transition name='rotate'>
-                    <div v-if='!user.ischecked' class='circle-button'>
-                        <div class='circle red' @click='checkIn'>
-                            签到
+                    </transition>
+                    <transition name='rotate'>
+                        <div v-if='!user.ischecked' class='circle-button'>
+                            <div class='circle red' @click='checkIn'>
+                                签到
+                            </div>
                         </div>
-                    </div>
-                </transition>
-            </div>
-            <div class='message'>
-                <h5>
-                    <template v-if='!user.ischecked'>今日</template>
-                    <template v-else>明日</template> 签到可领取
-                    <span>{{integral}}</span> 积分
-                </h5>
-                <h6>连续签到有更多惊喜哦</h6>
-            </div>
-            <div class='progress'>
-                <div v-for='(item,$index) in check_in_params' :class='["check-item",{active:user.ischecked&&$index==1}]'>
-                    <div class='circle'> {{item.integral}} </div>
-                    <h6>{{item.day}}</h6>
+                    </transition>
                 </div>
-            </div>
-        </header>
-        <template v-if='user.is_submit!= 1'>
-            <router-link :to='{name:"edit_user"}' tag='div' class='edit-user'>
-                <img src='./images/editUser.png'>
-                <div>
-                    <h2>填写个人资料 </h2>
-                    <h6>首次完善个人资料可获得积分</h6>
+                <div class='message'>
+                    <h5>
+                        <template v-if='!user.ischecked'>今日</template>
+                        <template v-else>明日</template> 签到可领取
+                        <span>{{integral}}</span> 积分
+                    </h5>
+                    <h6>连续签到有更多惊喜哦</h6>
                 </div>
-            </router-link>
-        </template>
-        <ul class='article-list'>
-            <li class='notice'>
-                <p> 完成单个任务可获得<span>{{read_param.integral}}</span>积分 </p>
-                <p> 每日最多可得<span>{{read_param.day_limit}}</span>积分,今日已获得<span>{{read_param.today}}</span>积分 </p>
-            </li>
-            <template v-if='article_list.length'>
-                <li v-for='article in article_list'>
-                    <div class='article' @click='readArticle(article)'>
-                        <h4 class='title'>{{article.title}}</h4>
-                        <div :class='{read:article.is_read==1}'>{{article.is_read==1?'已完成':article.button}}</div>
+                <div class='progress'>
+                    <div v-for='(item,$index) in check_in_params' :class='["check-item",{active:user.ischecked&&$index==1}]'>
+                        <div class='circle'> {{item.integral}} </div>
+                        <h6>{{item.day}}</h6>
                     </div>
-                </li>
+                </div>
+            </header>
+            <template v-if='user.is_submit!= 1'>
+                <router-link :to='{name:"edit_user"}' tag='div' class='edit-user'>
+                    <img src='./images/editUser.png'>
+                    <div>
+                        <h2>填写个人资料 </h2>
+                        <h6>首次完善个人资料可获得积分</h6>
+                    </div>
+                </router-link>
             </template>
-            <li v-else class='empty'>
-                现在没有积分任务啦～
-            </li>
-        </ul>
-        <div class='frame' v-if='frame_show'>
+            <ul class='article-list'>
+                <li class='notice'>
+                    <p> 完成单个任务可获得<span>{{read_param.integral}}</span>积分 </p>
+                    <p> 每日最多可得<span>{{read_param.day_limit}}</span>积分,今日已获得<span>{{read_param.today}}</span>积分 </p>
+                </li>
+                <template v-if='article_list.length'>
+                    <li v-for='article in article_list'>
+                        <div class='article' @click='readArticle(article)'>
+                            <h4 class='title'>{{article.title}}</h4>
+                            <div :class='{read:article.is_read==1}'>{{article.is_read==1?'已完成':article.button}}</div>
+                        </div>
+                    </li>
+                </template>
+                <li v-else class='empty'>
+                    现在没有积分任务啦～
+                </li>
+            </ul>
+        </main>
+        <div class='frame' v-if='frame_show' style='overflow:auto;-webkit-overflow-scrolling:touch'>
             <div class='back btn btn-orange' @click='toggleFrame'>返回</div>
             <iframe :src='frame_link'></iframe>
         </div>
@@ -366,6 +369,7 @@
         },
         deactivated() {
             this.back_show = false;
+            this.frame_show = false;
         },
         methods: {
             //签到

@@ -81,7 +81,7 @@
                 <li :class='["aword",color]' v-for='aword in awords'>
                     <img :src='aword.pic'>
                     <h6>
-                        {{aword.name}}
+                        {{aword.name|filter}}
                     </h6>
                 </li>
             </ul>
@@ -101,8 +101,8 @@
             color: String
         },
         mounted() {
-            const scroller = this.$refs.scroller;
-            const length = this.awords.length;
+            const scroller = this.$refs.scroller,
+                length = this.awords.length;
             let min = 0;
             if (length > 3) {
                 const width = scroller.firstElementChild.offsetWidth + this.getSize(35);
@@ -121,6 +121,11 @@
         methods: {
             getSize(value) {
                 return value * utils.getClientWidth() / 750;
+            }
+        },
+        filters: {
+            filter(str) {
+                return str.length < 5 ? str : str.substr(0, 5) + '...';
             }
         }
     };

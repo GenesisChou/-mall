@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 const token = utils.getParameterByName('token'),
     activity_id = utils.getParameterByName('activity_id'),
     product_id = utils.getParameterByName('product_id'),
@@ -63,8 +65,7 @@ function wxLogin(media_id) {
 }
 
 function startApp(cache) {
-    const Vue = require('vue'),
-        VueResource = require('vue-resource'),
+    const VueResource = require('vue-resource'),
         store = require('./vuex/store.js'),
         FastClick = require('fastclick'),
         setWeChatConfig = require('libs/weChatConfig.js'),

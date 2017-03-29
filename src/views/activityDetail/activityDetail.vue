@@ -1,17 +1,27 @@
 <style lang='scss' scoped>
     .activity-detail {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        background-color: #f2f3f4;
         overflow: hidden;
+    }
+    .activity-detail-content{
+        flex:1;
     }
 </style>
 <template>
     <div class='activity-detail'>
-        <keep-alive>
-            <!-- is：活动类型 freshFreeTimes:刷新免费活动次数 ：notice:剩余次数／消耗积分提示 ：toOrderDetail:订单详情跳转 -->
-            <component :is='activity_type' :free-times='free_times>>0' :fresh-free-times='freshFreeTimes' :activity-detail='activity_detail'
-                :id='activity_id>>0' :notice='notice' :to-order-detail='toOrderDetail' :toggleDialog='toggleDialog'>
-            </component>
-        </keep-alive>
+        <div class='activity-detail-content'>
+            <keep-alive>
+                <!-- is：活动类型 freshFreeTimes:刷新免费活动次数 ：notice:剩余次数／消耗积分提示 ：toOrderDetail:订单详情跳转 -->
+                <component :is='activity_type' :free-times='free_times>>0' :fresh-free-times='freshFreeTimes' :activity-detail='activity_detail'
+                    :id='activity_id>>0' :notice='notice' :to-order-detail='toOrderDetail' :toggleDialog='toggleDialog'>
+                </component>
+            </keep-alive>
+        </div>
         <v-dialog v-model='dialog_show' :dialog='dialog'></v-dialog>
+        <v-support></v-support>
     </div>
 </template>
 <script>

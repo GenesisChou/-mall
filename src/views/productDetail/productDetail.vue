@@ -1,13 +1,19 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
+    .product-detail {
+        min-height: 100%;
+        padding-bottom:pxTorem(85);
+        background-color: #f2f3f4;
+    }
+
     .banner {
         width: pxTorem(750);
         height: pxTorem(400);
     }
-    
+
     .title {
         @include flex-center-h;
-        flex-direction:column;
+        flex-direction: column;
         height: pxTorem(140);
         padding-left: pxTorem(30);
         background-color: $white;
@@ -30,11 +36,11 @@
             transform-origin: left;
         }
     }
-    
+
     .main {
         padding-bottom: pxTorem(100);
     }
-    
+
     .sticky {
         position: fixed;
         bottom: 0;
@@ -148,7 +154,7 @@
                     img: this.product_detail.pic_thumb,
                     btn_text: '查看',
                     callback: this.toOrderDetail
-                })
+                });
             }
         },
         created() {
@@ -166,14 +172,14 @@
                     open_id: APP.OPEN_ID
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
-                    let data = response.data;
+                    const data = response.data;
                     this.product_detail = data.data;
-                    if (this.product_detail.type == 8) {
+                    if (this.product_detail.type === 8) {
                         this.is_recharge = true;
                     }
                 }, (response) => {
                     this.$store.dispatch('toggleLoading');
-                })
+                });
             },
             //兑换
             exchange() {
@@ -185,8 +191,8 @@
                         }).catch(data => {
                             this.$store.dispatch('toggleAlert', {
                                 msg: data.info,
-                            })
-                        })
+                            });
+                        });
                     }
                 });
             },
@@ -208,8 +214,8 @@
                     }, (response) => {
                         this.$store.dispatch('toggleLoading');
                         reject(response.data);
-                    })
-                })
+                    });
+                });
             },
             //路由跳转
             toOrderDetail() {
@@ -218,7 +224,7 @@
                     query: {
                         order_id: this.order_detail_id
                     }
-                })
+                });
             }
         }
     };

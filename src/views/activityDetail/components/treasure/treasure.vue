@@ -331,7 +331,7 @@
                 chests: '',
                 random: '',
                 action: ''
-            }
+            };
         },
         computed: {
             user() {
@@ -340,29 +340,29 @@
         },
         watch: {
             state(value) {
-                if (value == 'stop') {
+                if (value === 'stop') {
                     this.$store.dispatch('toggleLoading');
                     setTimeout(() => {
                         this.$store.dispatch('toggleLoading');
                         this.toggleDialog(this.alert);
-                    }, 1000)
-                } else if (value == 'fishing') {
+                    }, 1000);
+                } else if (value === 'fishing') {
                     this.action = Math.random() > 0.5 ? 'one' : 'two';
                     let time = 0;
-                    if (this.action == 'one') {
+                    if (this.action === 'one') {
                         this.random = 3 + Math.floor(Math.random() * 3);
-                    } else if (this.action == 'two') {
+                    } else if (this.action === 'two') {
                         this.random = 1 + Math.floor(Math.random() * 2);
                     }
-                    if (this.random == 1) {
+                    if (this.random === 1) {
                         time = 900;
-                    } else if (this.random == 2) {
+                    } else if (this.random === 2) {
                         time = 600;
-                    } else if (this.random == 3) {
+                    } else if (this.random === 3) {
                         time = 900;
-                    } else if (this.random == 4) {
+                    } else if (this.random === 4) {
                         time = 600;
-                    } else if (this.random == 5) {
+                    } else if (this.random === 5) {
                         time = 650;
                     }
                     setTimeout(() => {
@@ -372,8 +372,8 @@
                 }
             },
             is_win(value) {
-                if (this.state == 'ready') return;
-                let result = this.activity_result;
+                if (this.state === 'ready') return;
+                const result = this.activity_result;
                 this.freshFreeTimes();
                 if (value) {
                     this.alert = {
@@ -386,7 +386,6 @@
                             this.init();
                         },
                     };
-
                 } else {
                     this.alert = {
                         msg: '很遗憾,未捞中',
@@ -417,14 +416,14 @@
                 this.activity_result = {};
             },
             start() {
-                if (this.state != 'ready') return;
+                if (this.state !== 'ready') return;
                 this.state = 'start';
                 this.$http.post(`${APP.HOST}/hot_pot_activity/${this.id}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID
                 }).then((response) => {
-                    let data = response.data;
-                    if (data.status == APP.SUCCESS) {
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS) {
                         this.activity_result = data.data;
                         this.is_win = this.activity_result.is_win;
                         this.state = 'fishing';
@@ -434,9 +433,9 @@
                             callback: () => {
                                 this.init();
                             }
-                        })
+                        });
                     }
-                }, (response) => {})
+                }, (response) => {});
             },
 
         }
