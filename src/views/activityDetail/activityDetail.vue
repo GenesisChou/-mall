@@ -6,8 +6,9 @@
         background-color: #f2f3f4;
         overflow: hidden;
     }
-    .activity-detail-content{
-        flex:1;
+
+    .activity-detail-content {
+        flex: 1;
     }
 </style>
 <template>
@@ -57,6 +58,9 @@
             },
             card: (resolve) => {
                 require(['./components/card'], resolve);
+            },
+            tear: (resolve) => {
+                require(['./components/tear'], resolve);
             }
         },
         data() {
@@ -71,8 +75,8 @@
         },
         computed: {
             notice() {
-                return this.free_times > 0 ? `您还剩余${this.free_times}次免费机会` :
-                    `消耗积分${this.activity_detail.integral >> 0}`;
+                return this.free_times > 0 ? `您还剩余${this.free_times}次免费机会`
+                : `消耗积分${this.activity_detail.integral >> 0}`;
             },
         },
         created() {

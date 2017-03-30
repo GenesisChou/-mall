@@ -36,6 +36,10 @@
             color: #e63805;
             border: none;
         }
+        li.yellow{
+            background-color:#fecb35;
+            border:1px solid #ffb119;
+        }
     }
 </style>
 <template>
@@ -58,7 +62,7 @@
                 return this.integral % 10;
             },
             ten() {
-                return this.integral % 100 / 10 >> 0
+                return this.integral % 100 / 10 >> 0;
             },
             hundred() {
                 return this.integral % 1000 / 100 >> 0;
@@ -70,5 +74,5 @@
                 return this.integral % 100000 / 10000 >> 0;
             }
         }
-    }
+    };
 </script>

@@ -26,6 +26,9 @@
         &.brown {
             background-image: url('./images/brownAwordBox.png');
         }
+        &.emerald {
+            background-image: url('./images/emeraldAwordBox.png');
+        }
         .wrapper {
             width: 100%;
             overflow-x: hidden;
@@ -69,11 +72,12 @@
             &.brown {
                 background-color: #a26a01;
             }
+            &.emerald {
+                background-color: #019a88;
+            }
         }
     }
 </style>
-
-;:c
 <template>
     <div :class='["v-aword-box",color]'>
         <div class='wrapper'>
@@ -130,4 +134,3 @@
         }
     };
 </script>
-;:c

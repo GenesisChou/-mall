@@ -49,7 +49,9 @@
         left: 0;
         right: 0;
         bottom: pxTorem(110);
+        z-index: 1;
         padding: 0 pxTorem(30);
+        border-bottom: 1px solid #d4d4d6;
         overflow: scroll;
         -webkit-overflow-scrolling: touch;
         background-color: $white;
@@ -73,11 +75,13 @@
             color: #646565;
         }
     }
-    .footer{
-        position:absolute;
-        bottom:0;
-        left:0;
-        right:0;
+
+    .footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #f2f3f4;
     }
 </style>
 <template>
