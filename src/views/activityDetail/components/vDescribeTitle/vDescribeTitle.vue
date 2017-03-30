@@ -7,7 +7,7 @@
         background-repeat: no-repeat;
         color: #ffffd0;
         font-size: pxTorem(32);
-        font-weight:500;
+        font-weight: 500;
         padding-left: pxTorem(18);
         padding-top: pxTorem(5);
         &.red {
@@ -17,22 +17,25 @@
             background-image: url('./images/greenTitle.png');
         }
         &.blue {
-            color:#fc4c60;
+            color: #fc4c60;
             background-image: url('./images/blueTitle.png');
         }
-        &.navy{
-            color:#007f96;
+        &.navy {
+            color: #007f96;
             background-image: url('./images/blueTitle.png');
         }
         &.aquamarine {
             background-image: url('./images/aquamarineTitle.png');
         }
-        &.brown{
+        &.brown {
             background-image: url('./images/brownTitle.png');
         }
         &.palaceblue {
             color: $white;
             background-image: url('./images/palaceblueTitle.png');
+        }
+        &.emerald {
+            background-image: url('./images/emeraldTitle.png');
         }
     }
 </style>
@@ -47,5 +50,5 @@
             text: String,
             color: String
         }
-    }
+    };
 </script>

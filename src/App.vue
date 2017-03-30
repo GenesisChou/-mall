@@ -2,8 +2,8 @@
     @import './assets/scss/iconfont.css';
     @import './assets/scss/main.scss';
     #app {
+        width:100%;
         height: 100%;
-        background-color: #f2f3f4;
     }
 </style>
 <template>

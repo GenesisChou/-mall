@@ -1,0 +1,406 @@
+<style lang='scss' scoped>
+    @import '../../../../assets/scss/variable.scss';
+    .machine {
+        position: relative;
+        min-height: pxTorem(1250);
+        padding-bottom: pxTorem(84);
+        background: url('./images/tearBackground.png');
+        background-size: pxTorem(750) pxTorem(400);
+        ul,
+        li {
+            list-style: none;
+        }
+    }
+
+    .header {
+        position: relative;
+        width: pxTorem(750);
+        height: pxTorem(400);
+        margin-bottom: pxTorem(-150);
+    }
+
+    .banner-decoration {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: pxTorem(750);
+        height: pxTorem(37);
+    }
+
+    .banner {
+        width: pxTorem(750);
+        height: pxTorem(434);
+    }
+
+    .background {
+        position: absolute;
+        width: pxTorem(750);
+        height: pxTorem(1026);
+        left: 0;
+        top: pxTorem(90);
+    }
+
+    .machine-panel {
+        position: relative;
+        width: pxTorem(750);
+        height: pxTorem(908);
+        margin-bottom: pxTorem(30);
+        background-image: url('./images/tearPanel.png');
+        background-size: 100%;
+        overflow: hidden;
+        .integral-message {
+            @include flex-center;
+            margin-top: pxTorem(90);
+            font-size: pxTorem(38);
+            color: #fff907;
+            z-index: 1;
+        }
+    }
+
+    .notice {
+        @include flex-center;
+        position: absolute;
+        bottom: pxTorem(342);
+        left: 50%;
+        font-weight: 500;
+        color: $white;
+        z-index: 1;
+        transform: translateX(-50%);
+        .number {
+            padding: 0 pxTorem(5);
+            font-size: pxTorem(36);
+            color: #5a1909;
+        }
+    }
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        width: pxTorem(530);
+        height: pxTorem(148);
+        margin: pxTorem(77) auto 0 auto; // background-color: $white;
+        overflow: hidden;
+    }
+
+    .group {
+        position: absolute;
+        &:nth-child(1) {
+            left: 0;
+        }
+
+        &:nth-child(2) {
+            left: pxTorem(199);
+            .awards {
+                animation-delay: -3.33s;
+            }
+        }
+
+        &:nth-child(3) {
+            right: 0;
+            .awards {
+                animation-delay: -6.66s;
+            }
+        }
+    }
+
+    .awards {
+        animation: rotate 10s linear infinite;
+        li {
+            @include flex-center;
+            list-style: none;
+            width: pxTorem(135);
+            height: pxTorem(135);
+        }
+        img {
+            width: pxTorem(130);
+            height: pxTorem(101);
+        }
+    }
+
+
+    @keyframes rotate {
+        from {
+            transform: translateY(0);
+        }
+        to {
+            transform: translateY(-100%);
+        }
+    }
+
+    .tickets {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: pxTorem(350);
+        position: absolute;
+        padding: 0 pxTorem(87);
+        top: pxTorem(585);
+        overflow: hidden;
+    }
+
+    .ticket {
+        position: relative;
+        list-style: none;
+        &.active {
+            animation: move-fast 2s;
+        }
+        &.moving {
+            animation: move 1s infinite;
+        }
+        .top {
+            width: pxTorem(166);
+            height: pxTorem(60);
+            background: url('./images/tearTicket.png') no-repeat;
+            background-size: 100%;
+        }
+    }
+
+    .bottom {
+        width: pxTorem(166);
+        height: pxTorem(220);
+        background: url('./images/tearTicket.png') no-repeat;
+        background-position-y: pxTorem(-60);
+        background-size: 100%;
+        &:after {
+            content: '';
+            display: none;
+            position: absolute;
+            right: pxTorem(-48);
+            bottom: pxTorem(10);
+            width: pxTorem(93);
+            height: pxTorem(98);
+            background: url('./images/tearHand.png') no-repeat;
+            background-size: 100%;
+        }
+        &.select {
+            transform-origin: left top;
+            transition: .5s linear;
+            transition-delay: 1.2s;
+            transform: rotate(30deg);
+            &:after {
+                display: block;
+            }
+        }
+    }
+
+
+
+
+    @keyframes move {
+        0% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10%);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes move-fast {
+        0% {
+            transform: translateY(0);
+        }
+        10% {
+            transform: translateY(-10%);
+        }
+        20% {
+            transform: translateY(0);
+        }
+        30% {
+            transform: translateY(-10%);
+        }
+        40% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10%);
+        }
+        60% {
+            transform: translateY(0);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    .describe {
+        position: relative;
+        padding: 0 pxTorem(40);
+        .editor-style {
+            padding-top: pxTorem(20);
+            padding-bottom: pxTorem(40);
+            color: $white;
+        }
+    }
+</style>
+<template>
+    <div class='machine'>
+        <header class='header'>
+            <img v-if='!activityDetail.pic_icon' :src='activityDetail.pic_icon' class='img-responsive'>
+            <img v-else class='banner' src='./images/tearDefaultBanner.png'>
+        </header>
+        <main>
+            <div class='machine-panel'>
+                <header class='integral-message'>
+                    现有积分:
+                    <v-integral-box :integral='user.integral>>0' color='yellow'></v-integral-box>
+                </header>
+                <div class='container'>
+                    <div v-for='i in 3' class='group'>
+                        <ul v-for='j in 2' class='awards'>
+                            <li v-for='aword in activityDetail.items'>
+                                <img :src='aword.pic'>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class='notice'>
+                    <template v-if='freeTimes>0'>
+                        今天还有<span class='number'>{{freeTimes}}</span>次免费机会
+                    </template>
+                    <template v-else>
+                        每次消耗<span class='number'>{{activityDetail.integral>>0}}</span>积分
+                    </template>
+                </div>
+                <ul class='tickets'>
+                    <li v-for='(i,$index) in 3' :class='["ticket",ticket_state,{active:$index===select_num}]' @click='start($index)'>
+                        <div class='top'></div>
+                        <div :class='["bottom",{select:$index===select_num}]'></div>
+                    </li>
+                </ul>
+            </div>
+        </main>
+        <article class='describe'>
+            <v-describe-title text='详细说明' color='emerald'></v-describe-title>
+            <v-simditor>
+                <section v-html='activityDetail.content'></section>
+            </v-simditor>
+            <v-describe-title text='概率说明' color='emerald'></v-describe-title>
+            <v-simditor>
+                <section v-html='activityDetail.content_prob'></section>
+            </v-simditor>
+            <v-describe-title text='奖项列表' color='emerald'></v-describe-title>
+        </article>
+        <footer>
+            <v-aword-box :awords='activityDetail.items' color='emerald'></v-aword-box>
+        </footer>
+    </div>
+</template>
+<script>
+    import vDescribeTitle from '../vDescribeTitle';
+    import vIntegralBox from '../vIntegralBox.vue';
+    import vAwordBox from '../vAwordBox';
+    export default {
+        name: 'tear',
+        components: {
+            vDescribeTitle,
+            vIntegralBox,
+            vAwordBox
+        },
+        props: {
+            freshFreeTimes: Function,
+            activityDetail: Object,
+            id: Number,
+            notice: String,
+            toOrderDetail: Function,
+            freeTimes: Number,
+            toggleDialog: Function
+        },
+        data() {
+            return {
+                state: '', //游戏状态
+                alert: {},
+                activity_result: {},
+                groups: '',
+                select_num: ''
+            };
+        },
+        computed: {
+            user() {
+                return this.$store.state.user;
+            },
+            ticket_state() {
+                if (this.state === 'ready') {
+                    return 'moving';
+                } else if (this.state === 'start') {
+                    return '';
+                }
+            },
+
+        },
+        watch: {
+            state(value) {
+                if (value === 'start') {
+                    const result = this.activity_result,
+                        is_win = result.is_win;
+                    this.freshFreeTimes();
+                    if (is_win) {
+                        this.alert = {
+                            type: 'success',
+                            img: result.pic_thumb,
+                            msg: '获得' + result.name,
+                            btn_text: '查看',
+                            callback: this.toOrderDetail(result.id),
+                            callback_close: () => {
+                                this.init();
+                            },
+                        };
+                    } else {
+                        this.alert = {
+                            msg: '很遗憾,未抽中',
+                            btn_text: '再来一次',
+                            callback: () => {
+                                this.init();
+                            }
+                        };
+                    }
+                    setTimeout(() => {
+                        this.toggleDialog(this.alert);
+                    }, 2000);
+                }
+            },
+        },
+        deactivated() {
+            if (this.timer) {
+                clearInterval(this.timer);
+            }
+        },
+        created() {
+            this.init();
+        },
+        methods: {
+            init() {
+                this.state = 'ready';
+                this.alert = {};
+                this.activity_result = {};
+                this.select_num = '';
+            },
+            start(num) {
+                if (this.state !== 'ready') return;
+                this.state = 'block';
+                this.$http.post(`${APP.HOST}/ticket_activity/${this.id}`, {
+                    token: APP.TOKEN,
+                    user_id: APP.USER_ID
+                }).then((response) => {
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS) {
+                        this.activity_result = data.data;
+                        this.is_win = this.activity_result.is_win;
+                        this.state = 'start';
+                        this.select_num = num;
+                    } else {
+                        this.toggleDialog({
+                            msg: data.info,
+                            callback: () => {
+                                this.init();
+                            }
+                        });
+                    }
+                });
+            },
+        },
+    };
+</script>

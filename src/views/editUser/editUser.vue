@@ -1,7 +1,15 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
     .edit-user {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
         padding-top: pxTorem(30);
+        background-color: #f2f3f4;
+    }
+
+    .edit-user-content {
+        flex: 1;
     }
 
     .main {
@@ -88,53 +96,56 @@
 </style>
 <template>
     <div v-if='content_show' class='edit-user'>
-        <div>
-            <ul class='main'>
-                <li>
-                    <label for='contact'>姓名</label>
-                    <input id='contact' placeholder="姓名" v-model='contact'>
-                    <i class='iconfont icon-close-circle' @click='clear("contact")'></i>
-                </li>
-                <li>
-                    <label for='birth'>出生年月</label>
-                    <input type='date' v-model='birthday'>
-                </li>
-                <li>
-                    <label for='phone'>联系电话</label>
-                    <input id='phone' type='tel' placeholder="手机或固定电话" v-model='phone'>
-                    <i class='iconfont icon-close-circle' @click='clear("phone")'></i>
-                </li>
-                <li class='code'>
-                    <label for='code'>验证码</label>
-                    <input id='code' v-model='verification_code' placeholder="请输入验证码">
-                    <div :class='["btn",in_vertication?"btn-gray":"btn-orange"]' @click='getVerificationCode'>
-                        <template v-if='in_vertication'>{{countdown}}S</template>
-                        <template v-else>验证</template>
-                    </div>
-                </li>
-                <li class='address'>
-                    <label for='province'>收货地址</label>
-                    <v-address :address='{province,city,country}' :id='{province_id,city_id,country_id}' :change-id='changeId' :change-name='changeName'></v-address>
-                </li>
-                <li>
-                    <label for='address'>详细地址</label>
-                    <textarea id='address' placeholder="请填写详细地址 不少于5个字" v-model='address'></textarea>
-                </li>
-            </ul>
-            <div class='operation'>
-                <button v-if='submit_avaliable' class='btn btn-orange ' @click='submit'>确认</button>
-                <button v-else class='btn btn-gray' disabled='disabled'>确认</button>
-            </div>
-            <!--
+        <div class='edit-user-content'>
+            <div>
+                <ul class='main'>
+                    <li>
+                        <label for='contact'>姓名</label>
+                        <input id='contact' placeholder="姓名" v-model='contact'>
+                        <i class='iconfont icon-close-circle' @click='clear("contact")'></i>
+                    </li>
+                    <li>
+                        <label for='birth'>出生年月</label>
+                        <input type='date' v-model='birthday'>
+                    </li>
+                    <li>
+                        <label for='phone'>联系电话</label>
+                        <input id='phone' type='tel' placeholder="手机或固定电话" v-model='phone'>
+                        <i class='iconfont icon-close-circle' @click='clear("phone")'></i>
+                    </li>
+                    <li class='code'>
+                        <label for='code'>验证码</label>
+                        <input id='code' v-model='verification_code' placeholder="请输入验证码">
+                        <div :class='["btn",in_vertication?"btn-gray":"btn-orange"]' @click='getVerificationCode'>
+                            <template v-if='in_vertication'>{{countdown}}S</template>
+                            <template v-else>验证</template>
+                        </div>
+                    </li>
+                    <li class='address'>
+                        <label for='province'>收货地址</label>
+                        <v-address :address='{province,city,country}' :id='{province_id,city_id,country_id}' :change-id='changeId' :change-name='changeName'></v-address>
+                    </li>
+                    <li>
+                        <label for='address'>详细地址</label>
+                        <textarea id='address' placeholder="请填写详细地址 不少于5个字" v-model='address'></textarea>
+                    </li>
+                </ul>
+                <div class='operation'>
+                    <button v-if='submit_avaliable' class='btn btn-orange ' @click='submit'>确认</button>
+                    <button v-else class='btn btn-gray' disabled='disabled'>确认</button>
+                </div>
+                <!--
             <button @click='toggleNotice({msg:"fuck you"})'>noticebalabala</button>
             <button @click='toggleWarn({msg:"fuck you"})'>warn</button> 
             -->
+            </div>
+            <v-warn v-model='warn_show' :warn='warn'></v-warn>
+            <v-notice v-model='notice_show'>
+                <img v-if='notice.type=="img"' class='money' src='./images/money.png'>
+                <h3>{{notice.msg}}</h3>
+            </v-notice>
         </div>
-        <v-warn v-model='warn_show' :warn='warn'></v-warn>
-        <v-notice v-model='notice_show'>
-            <img v-if='notice.type=="img"' class='money' src='./images/money.png'>
-            <h3>{{notice.msg}}</h3>
-        </v-notice>
+        <v-support></v-support>
     </div>
 </template>
 <script>

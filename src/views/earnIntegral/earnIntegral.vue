@@ -1,7 +1,7 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
     .earn-integral {
-        background-color: #4dd3d6;
+        background-color: #f2f3f4;
     }
 
     .head {
@@ -80,6 +80,10 @@
             box-shadow: 0 pxTorem(3) pxTorem(5) rgba(193, 63, 7, 0.75);
             background-color: $orange;
         }
+    }
+
+    .main {
+        background-color: #4dd3d6;
     }
 
     .progress {
@@ -234,6 +238,10 @@
         transform: rotateY(360deg);
     }
 
+    .footer {
+        background-color: #f2f3f4;
+    }
+
     .frame {
         position: fixed;
         left: 0;
@@ -253,7 +261,7 @@
 </style>
 <template>
     <div v-if='loaded' class='earn-integral'>
-        <main v-if='!frame_show'>
+        <main v-if='!frame_show' class='main'>
             <header class='head'>
                 <router-link v-if='back_show' :to='{name:"index"}' class='back btn-orange btn' tag='div'>
                     返回首页
@@ -316,6 +324,9 @@
                     现在没有积分任务啦～
                 </li>
             </ul>
+            <footer class='footer'>
+                <v-support></v-support>
+            </footer>
         </main>
         <div class='frame' v-if='frame_show' style='overflow:auto;-webkit-overflow-scrolling:touch'>
             <div class='back btn btn-orange' @click='toggleFrame'>返回</div>

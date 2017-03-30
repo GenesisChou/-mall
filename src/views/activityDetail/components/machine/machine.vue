@@ -10,14 +10,14 @@
             list-style: none;
         }
     }
-    
+
     .header {
         position: relative;
         width: pxTorem(750);
         height: pxTorem(400);
-        margin-bottom:pxTorem(-12);
+        margin-bottom: pxTorem(-12);
     }
-    
+
     .banner-decoration {
         position: absolute;
         left: 0;
@@ -25,12 +25,12 @@
         width: pxTorem(750);
         height: pxTorem(37);
     }
-    
+
     .banner {
         width: pxTorem(750);
         height: pxTorem(434);
     }
-    
+
     .background {
         position: absolute;
         width: pxTorem(750);
@@ -38,7 +38,7 @@
         left: 0;
         top: pxTorem(90);
     }
-    
+
     .machine {
         position: relative;
         padding: pxTorem(32);
@@ -84,7 +84,7 @@
             }
         }
         .container {
-            display:flex;
+            display: flex;
             position: relative;
             background-color: $white;
             width: 100%;
@@ -102,7 +102,7 @@
             z-index: 2;
         }
         .group {
-            flex:1;
+            flex: 1;
             height: pxTorem(400);
             border-right: pxTorem(6) solid #fdc713;
             overflow: hidden;
@@ -123,7 +123,7 @@
             }
         }
     }
-    
+
     .operation {
         position: relative;
         width: pxTorem(750);
@@ -164,7 +164,7 @@
             right: pxTorem(-7);
         }
     }
-    
+
     .describe {
         position: relative;
         padding: 0 pxTorem(40);
@@ -179,7 +179,7 @@
     <div class='v-machine'>
         <img class='background' src='./images/machineBackground.png'>
         <header class='header'>
-            <img v-if='!activityDetail.pic_icon' :src='activityDetail.pic_icon' class='img-responsive'>
+            <img v-if='activityDetail.pic_icon' :src='activityDetail.pic_icon' class='img-responsive'>
             <img v-else class='banner' src='./images/machineDefaultBanner.png'>
             <img class='banner-decoration' src='./images/machineDecoration.png'>
         </header>
@@ -222,8 +222,6 @@
                             </li>
                         </ul>
                     </li>
-
-
                 </ul>
                 <footer class='notice'>
                     <template v-if='freeTimes>0'>
@@ -282,7 +280,7 @@
                 is_win: '', //判断是否中奖
                 activity_result: {},
                 groups: '',
-            }
+            };
         },
         computed: {
             user() {
@@ -291,40 +289,39 @@
         },
         watch: {
             state(value) {
-                if (value == 'stop') {
+                if (value === 'stop') {
                     this.$store.dispatch('toggleLoading');
                     setTimeout(() => {
                         this.$store.dispatch('toggleLoading');
                         this.toggleDialog(this.alert);
-                    }, 1000)
-                } else if (value == 'rotating') {
+                    }, 1000);
+                } else if (value === 'rotating') {
                     if (this.is_win) {
-                        let name = this.activity_result.name,
+                        const name = this.activity_result.name,
                             stop_num = this.getPosition(name, this.activityDetail.items);
                         this.rotate(0, stop_num);
                         this.rotate(1, stop_num, 1000);
                         this.rotate(2, stop_num, 2000, () => {
                             setTimeout(() => {
-                                this.toggleDialog(this.alert)
-                            }, 500)
+                                this.toggleDialog(this.alert);
+                            }, 500);
                         });
                     } else {
                         //获取三个不重复的数字组成的数组
                         const random_array = this.createRandomArray();
-                        console.log(random_array);
                         this.rotate(0, random_array[0]);
                         this.rotate(1, random_array[1], 1000);
                         this.rotate(2, random_array[2], 2000, () => {
                             setTimeout(() => {
                                 this.toggleDialog(this.alert);
-                            }, 500)
+                            }, 500);
                         });
                     }
                 }
             },
             is_win(value) {
-                if (this.state == 'ready') return;
-                let result = this.activity_result;
+                if (this.state === 'ready') return;
+                const result = this.activity_result;
                 this.freshFreeTimes();
                 if (value) {
                     this.alert = {
@@ -367,14 +364,14 @@
                 this.activity_result = {};
             },
             start() {
-                if (this.state != 'ready') return;
+                if (this.state !== 'ready') return;
                 this.state = 'start';
                 this.$http.post(`${APP.HOST}/slot_machine_activity/${this.id}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID
                 }).then((response) => {
-                    let data = response.data;
-                    if (data.status == APP.SUCCESS) {
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS) {
                         this.activity_result = data.data;
                         this.is_win = this.activity_result.is_win;
                         this.state = 'rotating';
@@ -384,10 +381,9 @@
                             callback: () => {
                                 this.init();
                             }
-                        })
+                        });
                     }
-                }, (response) => {})
-
+                }, (response) => {});
             },
             rotate(group_num, stop_num, delay_time = 0, callback) {
                 this.loop(group_num, stop_num, delay_time, () => {
@@ -400,9 +396,9 @@
             },
             loop(group_num, stop_num, delay_time, callback) {
                 let current_top = 0,
-                    current_turn = 0,
-                    turns = 8;
-                const limit_top = (this.activityDetail.items.length - 1) * 100;
+                    current_turn = 0;
+                const turns = 8,
+                    limit_top = (this.activityDetail.items.length - 1) * 100;
                 setTimeout(() => {
                     const timer = setInterval(() => {
                         this.groups[group_num].style.marginTop = `-${current_top}%`;
@@ -426,7 +422,7 @@
                     const timer = setInterval(() => {
                         this.groups[group_num].style.marginTop = `-${current_top}%`;
                         current_top += 10;
-                        if (stop_num == 0) {
+                        if (stop_num === 0) {
                             stop_num = this.activityDetail.items.length;
                         }
                         if (current_top > (stop_num - 1) * 100) {
@@ -436,37 +432,35 @@
                             }
                         }
                     }, 10);
-                })
-
+                });
             },
             getPosition(name, awords) {
                 let stop_num = 0;
                 awords.forEach((award, index) => {
-                    if (award.name == name) {
+                    if (award.name === name) {
                         stop_num = index;
                         return true;
                     }
-                })
+                });
                 return stop_num;
             },
             createRandomArray() {
-                let temp = {},
+                const temp = {},
                     result = [],
-                    state = true,
                     limit = this.activityDetail.items.length;
+                let state = true;
                 while (state) {
-                    let random = Math.floor(Math.random() * limit);
+                    const random = Math.floor(Math.random() * limit);
                     if (!temp[random]) {
                         temp[random] = true;
                         result.push(random);
                     }
-                    if (result.length == 3) {
+                    if (result.length === 3) {
                         state = false;
                     }
                 }
                 return result;
             }
         },
-
-    }
+    };
 </script>
