@@ -36,6 +36,10 @@
             color: #e63805;
             border: none;
         }
+        li.yellow {
+            background-color: #fdca46;
+            border: none;
+        }
     }
 </style>
 <template>

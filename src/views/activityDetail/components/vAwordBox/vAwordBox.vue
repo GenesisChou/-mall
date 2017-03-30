@@ -26,6 +26,9 @@
         &.brown {
             background-image: url('./images/brownAwordBox.png');
         }
+        &.palaceblue {
+            background-image: url('./images/palaceblueAwordBox.png');
+        }
         .wrapper {
             width: 100%;
             overflow-x: hidden;
@@ -69,11 +72,12 @@
             &.brown {
                 background-color: #a26a01;
             }
+            &.palaceblue {
+                background-color: #1081e1;
+            }
         }
     }
 </style>
-
-;:c
 <template>
     <div :class='["v-aword-box",color]'>
         <div class='wrapper'>

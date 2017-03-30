@@ -30,6 +30,10 @@
         &.brown{
             background-image: url('./images/brownTitle.png');
         }
+        &.palaceblue {
+            color: $white;
+            background-image: url('./images/palaceblueTitle.png');
+        }
     }
 </style>
 <template>
