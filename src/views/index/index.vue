@@ -170,7 +170,8 @@
             window.addEventListener('scroll', this.scroll_event);
         },
         created() {
-            this.features = [{
+            this.features = [
+                {
                     router: 'my_account',
                     icon: require('./images/myAccount.png'),
                     text: '我的账户'
@@ -265,35 +266,34 @@
                     id = subject.item_id;
                 this.$store.dispatch('subjectView', subject.id);
                 switch (type) {
-                    case 1:
-                        location.href = subject.url;
-                        break;
-                    case 2:
-                        this.$router.push({
-                            name: 'activity_detail',
-                            query: {
-                                activity_id: id,
-                            }
-                        });
-                        break;
-                    case 3:
-                        this.$router.push({
-                            name: 'product_detail',
-                            query: {
-                                product_id: id,
-                            }
-                        });
-                        break;
-                    case 4:
-                        this.$router.push({
-                            name: 'subject_detail',
-                            query: {
-                                subject_id: id,
-                            }
-                        });
-                        break;
+                case 1:
+                    location.href = subject.url;
+                    break;
+                case 2:
+                    this.$router.push({
+                        name: 'activity_detail',
+                        query: {
+                            activity_id: id,
+                        }
+                    });
+                    break;
+                case 3:
+                    this.$router.push({
+                        name: 'product_detail',
+                        query: {
+                            product_id: id,
+                        }
+                    });
+                    break;
+                case 4:
+                    this.$router.push({
+                        name: 'subject_detail',
+                        query: {
+                            subject_id: id,
+                        }
+                    });
+                    break;
                 }
-
             }
         },
     };

@@ -9,8 +9,8 @@ var path = require('path'),
         output: {
             path: path.resolve(__dirname, './dist'),
             publicPath: '/dist/',
-            // filename: 'js/[name].js',
-            filename: 'js/[name].[hash].js'
+            filename: 'js/[name].js',
+            // filename: 'js/[name].[hash].js'
         },
         module: {
             rules: [
@@ -96,6 +96,7 @@ var path = require('path'),
 if (process.env.NODE_ENV === 'production') {
     // module.exports.devtool = '#source-map',
     // http://vue-loader.vuejs.org/en/workflow/production.html
+    webpackConfig.output.filename = 'js/[name].[hash].js';
     webpackConfig.plugins = (webpackConfig.plugins || []).concat([
         new webpack.DefinePlugin({
             'process.env': {
