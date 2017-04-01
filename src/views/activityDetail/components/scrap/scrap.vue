@@ -184,7 +184,7 @@
                 alert: {},
                 lottery: '', // 画布实例
                 is_win: '', // 判断是否中奖
-                area: 60,
+                area: 40,
                 activity_result: {}
             };
         },

@@ -1,6 +1,7 @@
 <style lang='scss' scoped>
     @import '../../../../assets/scss/variable.scss';
     .v-treasure {
+        margin-top:pxTorem(-50);
         min-height: pxTorem(1250);
         padding-bottom: pxTorem(84);
         overflow: hidden;
@@ -47,7 +48,7 @@
     .container {
         position: relative;
         width: pxTorem(750);
-        height: pxTorem(583);
+        height: pxTorem(560);
         margin-top: pxTorem(80);
     }
     
@@ -190,7 +191,7 @@
         width: pxTorem(750);
         height: pxTorem(138);
         text-align: center;
-        margin-bottom: pxTorem(40);
+        margin-bottom: pxTorem(55);
         img {
             position: relative;
             width: pxTorem(243);
