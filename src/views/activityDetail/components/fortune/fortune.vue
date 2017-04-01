@@ -211,6 +211,7 @@
         watch: {
             state(value) {
                 if (value === 'start') {
+                    this.stop_position = this.getPosition(this.activity_result.name);
                     const result = this.activity_result,
                         _this = this,
                         stop_position = this.stop_position, //停止位置
@@ -243,7 +244,6 @@
                             },
                         };
                     }
-                    this.stop_position = this.getPosition(this.activity_result.name);
                     setTimeout(() => {
                         step();
                     }, interval);
@@ -281,6 +281,7 @@
             },
             start() {
                 if (this.state !== 'ready') return;
+                this.state = 'block';
                 this.$http.post(`${APP.HOST}/turntable_activity/${this.id}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID
@@ -314,6 +315,7 @@
                 if (step < 0) {
                     step = this.grid_num + step;
                 }
+                console.log(step + this.turn * this.grid_num);
                 return step + this.turn * this.grid_num;
             },
         }

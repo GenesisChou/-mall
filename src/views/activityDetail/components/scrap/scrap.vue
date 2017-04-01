@@ -156,7 +156,7 @@
     </div>
 </template>
 <script>
-/*global APP utils */
+    /*global APP utils */
     import Lottery from './lottery.js';
     import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
@@ -197,10 +197,7 @@
             draw_percent(value) {
                 if (this.state === 'start' && value > this.area) {
                     this.state = 'stop';
-                }
-            },
-            state(value) {
-                if (value === 'stop') {
+                    this.lottery.clear();
                     this.$store.dispatch('toggleLoading');
                     setTimeout(() => {
                         this.$store.dispatch('toggleLoading');

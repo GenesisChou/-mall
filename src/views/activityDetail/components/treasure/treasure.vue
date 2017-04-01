@@ -5,7 +5,7 @@
         padding-bottom: pxTorem(84);
         overflow: hidden;
         background-color: #00627f;
-        background-image: url('./images/treasureBackground.png');
+        background-image: url('./images/treasureBackground.jpg');
         background-size: pxTorem(750) pxTorem(1671);
         background-repeat: no-repeat;
         background-position: 0 pxTorem(465);
@@ -56,7 +56,7 @@
         width: pxTorem(135);
         height: pxTorem(132);
         background-image: url('./images/chest.png');
-        background-size: 100%;
+        background-size: 100% 100%;
         background-repeat: no-repeat;
         z-index: 1;
         transform-origin: left top;
