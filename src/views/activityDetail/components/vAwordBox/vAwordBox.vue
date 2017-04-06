@@ -1,5 +1,5 @@
 <style lang='scss' scoped>
-    @import '../../../../assets/scss/variable.scss';
+@import '../../../../assets/scss/variable.scss';
 .v-aword-box {
     position: relative;
     width: pxTorem(728);
@@ -75,14 +75,14 @@
         &.brown {
             background-color: #a26a01;
         }
-        <<<<<<< HEAD &.palaceblue {
+        &.palaceblue {
             background-color: #1081e1;
-            =======&.emerald {
-                background-color: #019a88;
-                >>>>>>> 1c8d673fa2015f6b738a29bf3d1b16672e4befa3
-            }
+        }
+        &.emerald {
+            background-color: #019a88;
         }
     }
+}
 </style>
 <template>
     <div :class='["v-aword-box",color]'>
