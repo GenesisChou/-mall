@@ -10,13 +10,13 @@
 
     .red-packet {
         position: relative;
-        width: pxTorem(594);
-        height: pxTorem(524);
-        background-image: url('./images/redPacket.png');
+        width: pxTorem(750);
+        height: pxTorem(527);
+        background: url('./images/redPacket.png') no-repeat;
         background-size: 100% 100%;
         .message {
             position: absolute;
-            bottom: pxTorem(30);
+            top: pxTorem(210);
             width: 100%;
             height: pxTorem(40);
             padding: 0 pxTorem(60);
@@ -27,23 +27,32 @@
         }
         .product {
             position: absolute;
-            left: pxTorem(56);
-            width: pxTorem(451);
-            height: pxTorem(241);
+            left: 50%;
+            top: pxTorem(310);
+            width: pxTorem(340);
+            height: pxTorem(194);
+            margin-left: pxTorem(-170);
+            padding: pxTorem(12);
             border-radius: pxTorem(10);
-            top: pxTorem(68);
             transition: 1s;
             transform-origin: center bottom;
+            background-color: $white;
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: pxTorem(10);
+            }
         }
         .product.active {
-            top: pxTorem(25);
-            transform: scale(1.3);
+            top: pxTorem(150);
+            transform: scale(1.8);
         }
     }
 
     .main {
         position: relative;
-        top: pxTorem(-80);
+        // top: pxTorem(-30);
+        top:0;
         width: pxTorem(634);
         padding-bottom: pxTorem(30);
         background-color: $white;
@@ -108,8 +117,11 @@
     <div v-show='show' class='common'>
         <transition name='enlarge'>
             <div v-if='!content_show&&redpacket_show' class='red-packet'>
-                <img :class='["product",{active:enlarge}]' :src='dialog.img'>
                 <h4 class='message'>{{dialog.msg}}</h4>
+                <div :class='["product",{active:enlarge}]'>
+                    <img :src='dialog.img'>
+                </div>
+
             </div>
         </transition>
         <main v-if='content_show' class='main'>

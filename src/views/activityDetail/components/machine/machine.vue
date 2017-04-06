@@ -15,7 +15,7 @@
         position: relative;
         width: pxTorem(750);
         height: pxTorem(400);
-        margin-bottom: pxTorem(-12);
+        margin-bottom: pxTorem(-60);
     }
 
     .banner-decoration {
