@@ -21,7 +21,7 @@
                 </component>
             </keep-alive>
         </div>
-        <v-dialog v-model='dialog_show' :dialog='dialog'></v-dialog>
+        <v-dialog :show='dialog_show' :dialog='dialog' :toggle-dialog='toggleDialog'></v-dialog>
         <v-support></v-support>
     </div>
 </template>
@@ -78,8 +78,8 @@
         },
         computed: {
             notice() {
-                return this.free_times > 0 ? `您还剩余${this.free_times}次免费机会`
-                : `消耗积分${this.activity_detail.integral >> 0}`;
+                return this.free_times > 0 ? `您还剩余${this.free_times}次免费机会` :
+                    `消耗积分${this.activity_detail.integral >> 0}`;
             },
         },
         created() {

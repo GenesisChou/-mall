@@ -4,7 +4,7 @@ var path = require('path'),
     webpackConfig = {
         entry: {
             app: './src/main.js',
-            vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk', 'scriptjs', 'vue-swipe']
+            vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk', 'scriptjs', 'vue-swipe', 'alloytouch']
         },
         output: {
             path: path.resolve(__dirname, './dist'),
@@ -96,6 +96,7 @@ var path = require('path'),
 if (process.env.NODE_ENV === 'production') {
     // module.exports.devtool = '#source-map',
     // http://vue-loader.vuejs.org/en/workflow/production.html
+    // webpackConfig.output.filename = 'js/[name].[hash].js';
     webpackConfig.plugins = (webpackConfig.plugins || []).concat([
         new webpack.DefinePlugin({
             'process.env': {

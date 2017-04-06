@@ -42,7 +42,7 @@
     .machine {
         position: relative;
         padding: pxTorem(32);
-        margin: pxTorem(66) auto;
+        margin: pxTorem(66) auto pxTorem(40) auto;
         width: pxTorem(740);
         height: pxTorem(525);
         background-image: url('./images/machinePanel.png');
@@ -129,7 +129,7 @@
         width: pxTorem(750);
         height: pxTorem(138);
         text-align: center;
-        margin-bottom: pxTorem(40);
+        margin-bottom: pxTorem(20);
         img {
             position: relative;
             width: pxTorem(243);

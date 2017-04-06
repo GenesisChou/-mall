@@ -1,11 +1,12 @@
 <style lang='scss' scoped>
     @import '../../../../assets/scss/variable.scss';
     .v-treasure {
+        margin-top:pxTorem(-50);
         min-height: pxTorem(1250);
         padding-bottom: pxTorem(84);
         overflow: hidden;
         background-color: #00627f;
-        background-image: url('./images/treasureBackground.png');
+        background-image: url('./images/treasureBackground.jpg');
         background-size: pxTorem(750) pxTorem(1671);
         background-repeat: no-repeat;
         background-position: 0 pxTorem(465);
@@ -47,7 +48,7 @@
     .container {
         position: relative;
         width: pxTorem(750);
-        height: pxTorem(583);
+        height: pxTorem(560);
         margin-top: pxTorem(80);
     }
     
@@ -56,7 +57,7 @@
         width: pxTorem(135);
         height: pxTorem(132);
         background-image: url('./images/chest.png');
-        background-size: 100%;
+        background-size: 100% 100%;
         background-repeat: no-repeat;
         z-index: 1;
         transform-origin: left top;
@@ -190,7 +191,7 @@
         width: pxTorem(750);
         height: pxTorem(138);
         text-align: center;
-        margin-bottom: pxTorem(40);
+        margin-bottom: pxTorem(55);
         img {
             position: relative;
             width: pxTorem(243);

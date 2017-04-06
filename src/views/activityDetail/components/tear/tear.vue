@@ -148,15 +148,16 @@
         &.moving {
             animation: move 1s infinite;
         }
-        .top {
-            width: pxTorem(166);
-            height: pxTorem(60);
-            background: url('./images/tearTicket.png') no-repeat;
-            background-size: 100%;
-        }
     }
 
-    .bottom {
+    .ticket-top {
+        width: pxTorem(166);
+        height: pxTorem(60);
+        background: url('./images/tearTicket.png') no-repeat;
+        background-size: 100%;
+    }
+
+    .ticket-bottom {
         width: pxTorem(166);
         height: pxTorem(220);
         background: url('./images/tearTicket.png') no-repeat;
@@ -267,8 +268,8 @@
                 </div>
                 <ul class='tickets'>
                     <li v-for='(i,$index) in 3' :class='["ticket",ticket_state,{active:$index===select_num}]' @click='start($index)'>
-                        <div class='top'></div>
-                        <div :class='["bottom",{select:$index===select_num}]'></div>
+                        <div class='ticket-top'></div>
+                        <div :class='["ticket-bottom",{select:$index===select_num}]'></div>
                     </li>
                 </ul>
             </div>
@@ -340,8 +341,9 @@
                     if (is_win) {
                         this.alert = {
                             type: 'success',
+                            style: 'reel',
                             img: result.pic_thumb,
-                            msg: '获得' + result.name,
+                            msg: result.name,
                             btn_text: '查看',
                             callback: this.toOrderDetail(result.id),
                             callback_close: () => {

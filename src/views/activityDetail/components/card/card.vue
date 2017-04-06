@@ -6,8 +6,9 @@
         background-image: url('./images/cardBackground.png');
         background-size: pxTorem(750) pxTorem(15);
     }
-    .v-card>header{
-        margin-bottom:pxTorem(-26);
+
+    .v-card>header {
+        margin-bottom: pxTorem(-26);
     }
 
     .background-top {
@@ -238,17 +239,56 @@
         left: 50%;
         top: 50%;
         z-index: 4;
-        width: pxTorem(204*1.5);
-        height: pxTorem(245*1.5);
-        margin-left: pxTorem(-204*1.5/2);
-        margin-top: pxTorem(-245*1.5/2);
-        transition: .4s linear;
+        width: pxTorem(329);
+        height: pxTorem(396);
+        margin-left: pxTorem(-329/2);
+        margin-top: pxTorem(-396/2);
+        transition: 1s cubic-bezier(0.5, 1, 0.5, 1.3);
+        backface-visibility: hidden;
+        // transform: rotateY(-180deg);
         &.shake {
             animation: shake .8s linear;
             animation-iteration-count: infinite;
         }
         &.rotate {
-            transform: rotateY(-45deg);
+            transform: rotateY(-180deg);
+        }
+    }
+
+    .card.big.reverse {
+        background: url('./images/pocker.png') no-repeat;
+        background-size: 100% 100%; // transform: rotateY(-180deg);
+        transform: rotateY(180deg);
+        animation: none;
+        overflow: hidden;
+        &.rotate {
+            transform: rotateY(0deg);
+        }
+        .message {
+            width: pxTorem(280);
+            height: pxTorem(30);
+            margin: pxTorem(100) auto 0 auto;
+            text-align: center;
+            transform: scale(22/24);
+            overflow: hidden;
+            color: #bc0225;
+        }
+        .decoration {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: pxTorem(147);
+            height: pxTorem(141);
+            z-index: 2;
+        }
+        .product {
+            position: absolute;
+            top: pxTorem(160);
+            left: 50%;
+            width: pxTorem(256);
+            height: pxTorem(118);
+            margin-left:pxTorem(-256/2);
+            z-index:1;
         }
     }
 
@@ -348,7 +388,13 @@
             </div>
             <ul class='cards'>
                 <li v-for='i in 5' :class='["card",{move:move},{light:light_num==i},{select:select_num==i}]' @click='start(i)'></li>
-                <li v-show='big_show' transition='display' :class='["card","big",big_card_state]'></li>
+                <!--<li v-show='big_show' transition='display' :class='["card","big",big_card_state]'></li>-->
+                <li v-show='big_show' :class='["card","big",big_card_state]'></li>
+                <li v-show='big_show' :class='["card","big","reverse",big_card_state]'>
+                    <h6 class='message'>获得{{activity_result.name}}</h6>
+                    <img class='product' :src='activity_result.pic_thumb'>
+                    <img class='decoration' src='./images/pockerDecoration.png'>
+                </li>
             </ul>
             <div class='notice'>
                 <div>
@@ -413,7 +459,7 @@
                 dialog: {},
                 move: false,
                 timer: null,
-            }
+            };
         },
         computed: {
             user() {
@@ -445,8 +491,9 @@
                 if (value) {
                     this.dialog = {
                         type: 'success',
+                        style: 'dice',
                         img: result.pic_thumb,
-                        msg: '获得' + result.name,
+                        msg: result.name,
                         btn_text: '查看',
                         callback: this.toOrderDetail(result.id),
                         callback_close: () => {
@@ -469,13 +516,14 @@
                         setTimeout(() => {
                             this.big_show = false;
                             this.toggleDialog(this.dialog);
-                        }, 400);
+                        }, 1000);
                     }, 50);
                 }, 1600);
             },
         },
         created() {
             this.init();
+            // this.big_show = true;
         },
         methods: {
             init() {
@@ -490,6 +538,10 @@
                 this.big_card_state = 'shake';
             },
             start(num) {
+                // this.light_num = '';
+                // this.select_num = num;
+                // this.state = 'start';
+                // this.is_win = true;
                 if (this.state !== 'ready') return;
                 this.state = 'block';
                 clearInterval(this.timer);

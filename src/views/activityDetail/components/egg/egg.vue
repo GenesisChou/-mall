@@ -5,16 +5,16 @@
         padding-bottom: pxTorem(84);
         background-color: #fdf860;
     }
-    
+
     .header {
         width: pxTorem(750);
         height: pxTorem(400);
     }
-    
+
     .main {
         position: relative;
     }
-    
+
     .integral-message {
         @include flex-center;
         width: pxTorem(412);
@@ -25,11 +25,11 @@
         color: $white;
         font-size: pxTorem(38);
     }
-    
+
     .eggs {
         // flex:1;
-        display:flex;
-        flex-wrap:wrap;
+        display: flex;
+        flex-wrap: wrap;
         position: relative;
         margin-top: pxTorem(50);
         li {
@@ -61,7 +61,7 @@
             }
         }
     }
-    
+
     .notice {
         padding-top: pxTorem(15);
         text-align: center;
@@ -73,7 +73,7 @@
             font-size: pxTorem(36);
         }
     }
-    
+
     .describe {
         position: relative;
         padding: pxTorem(50) pxTorem(40) 0 pxTorem(40);
@@ -83,7 +83,7 @@
             color: #ad0406;
         }
     }
-    
+
     .background {
         position: absolute;
         left: 0;
@@ -92,7 +92,7 @@
         height: pxTorem(928);
         z-index: 0;
     }
-    
+
     @keyframes hammer {
         0% {
             transform: rotate(0deg);
@@ -184,7 +184,7 @@
                 hammer: '',
                 is_win: '',
                 timer: ''
-            }
+            };
         },
         computed: {
             user() {
@@ -193,11 +193,11 @@
         },
         watch: {
             state(value) {
-                if (value == 'ready') {
+                if (value === 'ready') {
                     this.timer = setInterval(() => {
                         this.active_num = ++this.active_num % (this.egg_number + 1) || 1;
                     }, 600);
-                } else if (value == 'start') {
+                } else if (value === 'start') {
                     this.active_num = 0;
                     clearInterval(this.timer);
                 }
@@ -227,7 +227,6 @@
                             }
                         }, 300);
                     }, 1000);
-
                 } else if (old_value) {
                     if (this.eggs) {
                         this.eggs[old_value - 1].classList.toggle('broken');
@@ -235,13 +234,11 @@
                     this.hammer.style.left = utils.pxTorem(750 - 108);
                     this.hammer.style.top = utils.pxTorem(-150);
                     // this.hammer.style.visibility = 'hidden';
-
                 }
-
             },
             is_win(value) {
-                if (this.state != 'start') return;
-                let result = this.activity_result;
+                if (this.state !== 'start') return;
+                const result = this.activity_result;
                 this.freshFreeTimes();
                 setTimeout(() => {
                     if (value) {
@@ -283,14 +280,14 @@
                 this.is_win = '';
             },
             start(num) {
-                if (this.state != 'ready') return;
+                if (this.state !== 'ready') return;
                 this.state = 'start';
                 this.$http.post(`${APP.HOST}/smashing_eggs_activity/${this.id}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID
                 }).then((response) => {
-                    let data = response.data;
-                    if (data.status == APP.SUCCESS) {
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS) {
                         this.broken_num = num;
                         this.activity_result = data.data;
                         this.is_win = this.activity_result.is_win;
@@ -300,10 +297,10 @@
                             callback: () => {
                                 this.init();
                             },
-                        })
+                        });
                     }
-                }, (response) => {})
+                }, (response) => {});
             },
         }
-    }
+    };
 </script>

@@ -202,8 +202,11 @@
         margin: 0 pxTorem(30);
         border-top: 1px solid #d4d4d6;
         .title {
+            @include flex-center-v;
+            height: pxTorem(80);
             width: 70%;
             font-weight: 500;
+            overflow: hidden;
         }
         div {
             @include flex-center;
@@ -254,9 +257,15 @@
             height: 100%;
             overflow: scroll;
         }
-        .back {
-            z-index: 3;
-        }
+    }
+
+    .close-frame {
+        position: fixed;
+        right: pxTorem(30);
+        top: pxTorem(670);
+        width: pxTorem(94);
+        height: pxTorem(94);
+        z-index: 3;
     }
 </style>
 <template>
@@ -328,10 +337,14 @@
                 <v-support></v-support>
             </footer>
         </main>
-        <div class='frame' v-if='frame_show' style='overflow:auto;-webkit-overflow-scrolling:touch'>
-            <div class='back btn btn-orange' @click='toggleFrame'>返回</div>
-            <iframe :src='frame_link'></iframe>
-        </div>
+        <template v-if='frame_show'>
+            <div class='frame' style='overflow:auto;-webkit-overflow-scrolling:touch'>
+                <!--<div class='back btn btn-orange' @click='toggleFrame'>返回</div>-->
+                <iframe :src='frame_link'></iframe>
+            </div>
+            <img class='close-frame' src='./images/back.png' @click='toggleFrame'>
+
+        </template>
     </div>
 </template>
 <script>

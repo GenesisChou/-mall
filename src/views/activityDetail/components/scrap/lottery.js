@@ -42,16 +42,15 @@ Lottery.prototype = {
         canvas.getContext('2d').clearRect(0, 0, width, height);
     },
     drawPoint(x, y) {
-        // this.maskCtx.beginPath();
-        // var radgrad = this.maskCtx.createRadialGradient(x, y, 0, x, y, this.getSize(40));
-        // radgrad.addColorStop(0, 'rgba(0,0,0,0.6)');
-        // radgrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
-        // // this.maskCtx.fillStyle = radgrad;
-        // this.maskCtx.fillStyle = '#fff';
-        // // this.maskCtx.arc(x, y, this.getSize(40), 0, Math.PI * 2, true);
-        // this.maskCtx.arc(x, y, this.getSize(30), 0, Math.PI * 2, true);
-        // this.maskCtx.fill();
-        this.mastCtx.clearRect(0, 0, this.width, this.height);
+        this.maskCtx.beginPath();
+        var radgrad = this.maskCtx.createRadialGradient(x, y, 0, x, y, this.getSize(60));
+        radgrad.addColorStop(0, 'rgba(0,0,0,0.6)');
+        radgrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        // this.maskCtx.fillStyle = radgrad;
+        this.maskCtx.fillStyle = '#fff';
+        // this.maskCtx.arc(x, y, this.getSize(40), 0, Math.PI * 2, true);
+        this.maskCtx.arc(x, y, this.getSize(30), 0, Math.PI * 2, true);
+        this.maskCtx.fill();
         if (this.drawPercentCallback) {
             this.drawPercentCallback.call(null, this.getTransparentPercent(this.maskCtx, this.width, this.height));
         }
@@ -183,6 +182,9 @@ Lottery.prototype = {
         this.backCtx.fillStyle = '#ff5000';
         this.backCtx.fillText(text, this.width / 2, this.height / 2 + fontSize / 2);
         this.backCtx.restore();
+    },
+    clear() {
+        this.maskCtx.fillRect(0, 0, this.width, this.height);
     },
     getSize(value) {
         return value * this.clientWidth / 750;
