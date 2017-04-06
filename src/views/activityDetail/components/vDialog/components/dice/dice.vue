@@ -60,7 +60,7 @@
     }
 
     .enlarge-enter {
-        transform: scale(0.2); // top: pxTorem(-675);
+        transform: scale(0.5); // top: pxTorem(-675);
     }
 </style>
 <template>

@@ -23,7 +23,7 @@
     <div class='v-modal'>
         <div v-show='value' @click='close' class='bg-cover'>
         </div>
-        <div v-show='value' class='content '>
+        <div v-show='value' class='content'>
             <slot></slot>
         </div>
     </div>
@@ -36,7 +36,11 @@
                 default: true
             },
             value: Boolean,
-            toggleModal: Function
+            toggleModal: Function,
+            transition: {
+                type: String,
+                default: ''
+            }
         },
         methods: {
             close() {

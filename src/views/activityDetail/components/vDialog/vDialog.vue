@@ -33,6 +33,9 @@
             reel: (resolve) => {
                 require(['./components/reel'], resolve);
             },
+            money: (resolve) => {
+                require(['./components/money'], resolve);
+            },
             faliure
         },
         props: {

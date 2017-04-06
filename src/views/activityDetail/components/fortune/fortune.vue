@@ -51,8 +51,8 @@
         background-position: center;
         background-repeat: no-repeat;
         img {
-            width: pxTorem(115);
-            height: pxTorem(75);
+            width: pxTorem(130);
+            height: pxTorem(86);
             margin-bottom: pxTorem(10);
         }
         &.center {

@@ -1,140 +1,39 @@
 <style lang='scss' scoped>
-@import '../assets/scss/variable.scss';
-.sk-fading-circle {
-    width: pxTorem(90);
-    height:pxTorem(90);
-    position: relative;
-}
-
-.sk-fading-circle .sk-circle {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-}
-
-.sk-fading-circle .sk-circle:before {
-    content: '';
-    display: block;
-    width: 15%;
-    height: 15%;
-    background-color:$sliver ;
-    border-radius: 100%;
-    animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;
-}
-
-.sk-fading-circle .sk-circle2 {
-    transform: rotate(30deg);
-}
-
-.sk-fading-circle .sk-circle3 {
-    transform: rotate(60deg);
-}
-
-.sk-fading-circle .sk-circle4 {
-    transform: rotate(90deg);
-}
-
-.sk-fading-circle .sk-circle5 {
-    transform: rotate(120deg);
-}
-
-.sk-fading-circle .sk-circle6 {
-    transform: rotate(150deg);
-}
-
-.sk-fading-circle .sk-circle7 {
-    transform: rotate(180deg);
-}
-
-.sk-fading-circle .sk-circle8 {
-    transform: rotate(210deg);
-}
-
-.sk-fading-circle .sk-circle9 {
-    transform: rotate(240deg);
-}
-
-.sk-fading-circle .sk-circle10 {
-    transform: rotate(270deg);
-}
-
-.sk-fading-circle .sk-circle11 {
-    transform: rotate(300deg);
-}
-
-.sk-fading-circle .sk-circle12 {
-    transform: rotate(330deg);
-}
-
-.sk-fading-circle .sk-circle2:before {
-    animation-delay: -1.1s;
-}
-
-.sk-fading-circle .sk-circle3:before {
-    animation-delay: -1s;
-}
-
-.sk-fading-circle .sk-circle4:before {
-    animation-delay: -0.9s;
-}
-
-.sk-fading-circle .sk-circle5:before {
-    animation-delay: -0.8s;
-}
-
-.sk-fading-circle .sk-circle6:before {
-    animation-delay: -0.7s;
-}
-
-.sk-fading-circle .sk-circle7:before {
-    animation-delay: -0.6s;
-}
-
-.sk-fading-circle .sk-circle8:before {
-    animation-delay: -0.5s;
-}
-
-.sk-fading-circle .sk-circle9:before {
-    animation-delay: -0.4s;
-}
-
-.sk-fading-circle .sk-circle10:before {
-    animation-delay: -0.3s;
-}
-
-.sk-fading-circle .sk-circle11:before {
-    animation-delay: -0.2s;
-}
-
-.sk-fading-circle .sk-circle12:before {
-    animation-delay: -0.1s;
-}
-@keyframes sk-circleFadeDelay {
-    0%,
-    39%,
-    100% {
-        opacity: 0;
+    @import '../assets/scss/variable.scss';
+    .csshub-loading {
+        width: pxTorem(200*0.7);
+        height: pxTorem(200*0.7);
     }
-    40% {
-        opacity: 1;
+
+    .csshub-cls-1,
+    .csshub-cls-2 {
+        fill: none;
+        stroke-linecap: bevel;
+        stroke-linejoin: round;
     }
-}
+
+    .csshub-cls-1 {
+        stroke-width: pxTorem(4*0.7);
+    }
+
+    .csshub-cls-2 {
+        fill: none;
+        stroke: #ff5005;
+        stroke-width: pxTorem(8*0.7);
+    }
 </style>
 <template>
-    <div class="sk-fading-circle">
-        <div class="sk-circle1 sk-circle"></div>
-        <div class="sk-circle2 sk-circle"></div>
-        <div class="sk-circle3 sk-circle"></div>
-        <div class="sk-circle4 sk-circle"></div>
-        <div class="sk-circle5 sk-circle"></div>
-        <div class="sk-circle6 sk-circle"></div>
-        <div class="sk-circle7 sk-circle"></div>
-        <div class="sk-circle8 sk-circle"></div>
-        <div class="sk-circle9 sk-circle"></div>
-        <div class="sk-circle10 sk-circle"></div>
-        <div class="sk-circle11 sk-circle"></div>
-        <div class="sk-circle12 sk-circle"></div>
-    </div>
+    <svg class="csshub-loading" viewBox="-25 -25 100 100" preserveAspectRatio>
+        <defs>
+            <linearGradient id="gr-simple" x1="0" y1="0" x2="100%" y2="100%">
+                <stop stop-color="rgba(255,119,60,.2)" offset="10%" />
+                <stop stop-color="rgba(255,119,60,.7)" offset="90%" />
+            </linearGradient>
+        </defs>
+        <circle class="csshub-cls-1" cx="26" cy="27" r="26" stroke="url(#gr-simple)" />
+        <path class="csshub-cls-2" d="M25,0A24.92,24.92,0,0,1,42.68,7.32" transform="translate(1 2)">
+            <animateTransform attributeName="transform" type="rotate" dur="1s" from="0 26 27" to="360 26 27" repeatCount="indefinite"
+            />
+        </path>
+    </svg>
 </template>

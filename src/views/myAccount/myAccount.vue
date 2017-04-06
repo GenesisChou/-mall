@@ -1,14 +1,19 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
+    .my-account {
+        min-height: 100%;
+        background-color: #f2f3f4;
+    }
+
     .header {
         @include flex-center;
         flex-direction: column;
         width: 100%;
-        height: pxTorem(398);
+        height: pxTorem(400);
         background-color: $white;
         background-image: url('./images/myAccountBackground.png');
         background-repeat: no-repeat;
-        background-size: 100%;
+        background-size: 100% 100%;
         color: $white;
         text-align: center;
         .avater {
@@ -41,6 +46,7 @@
         background-color: $white;
         color: $orange;
         border-bottom: 1px solid #d4d4d6;
+        font-size:pxTorem(34);
     }
 
     .record-list {
@@ -73,6 +79,9 @@
         span {
             font-size: pxTorem(30);
             color: #646565;
+            &.pull-right{
+                color:$orange;
+            }
         }
     }
 
@@ -100,17 +109,15 @@
         <h4 class='block-text'>
             积分明细
         </h4>
-        <main>
-            <ul class='record-list' ref='list'>
-                <li v-for='item in integral_list'>
-                    <div class='pull-left'>
-                        <h3>{{item.name}}</h3>
-                        <h6> {{item.create_time}} </h6>
-                    </div>
-                    <span class='pull-right'>{{item.point|pointFormat}} </span>
-                </li>
-            </ul>
-        </main>
+        <ul class='record-list' ref='list'>
+            <li v-for='item in integral_list'>
+                <div class='pull-left'>
+                    <h3>{{item.name}}</h3>
+                    <h6> {{item.create_time}} </h6>
+                </div>
+                <span class='pull-right'>{{item.point|pointFormat}} </span>
+            </li>
+        </ul>
         <footer class='footer'>
             <v-support></v-support>
         </footer>

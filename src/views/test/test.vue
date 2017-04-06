@@ -3,14 +3,14 @@
 </style>
 <template>
     <div class='test'>
-        <v-dialog v-model='show' :dialog='dialog'></v-dialog>
+        <!--<v-spinner></v-spinner>-->
     </div>
 </template>
 <script>
-    import vDialog from 'views/activityDetail/components/vDialog';
+    import vSpinner from 'components/vSpinner.vue';
     export default {
         components: {
-            vDialog
+            vSpinner
         },
         data() {
             return {
@@ -20,21 +20,7 @@
         },
         methods: {},
         created() {
-            this.dialog = {
-                type: 'success',
-                // img: result.pic_thumb,
-                msg: '获得balabala',
-                btn_text: '查看',
-                // callback: this.toOrderDetail(result.id),
-                // callback_close: () => {
-                //     let canvas = document.getElementsByTagName('canvas');
-                //     canvas = Array.prototype.slice.call(canvas);
-                //     canvas.forEach(item => {
-                //         item.parentElement.removeChild(item)
-                //     });
-                //     this.init();
-                // },
-            };
+            // this.$store.dispatch('toggleLoading');
         }
     };
 </script>

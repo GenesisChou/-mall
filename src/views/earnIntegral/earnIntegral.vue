@@ -2,49 +2,56 @@
     @import '../../assets/scss/variable.scss';
     .earn-integral {
         background-color: #f2f3f4;
+        overflow: hidden;
     }
 
     .head {
-        width: 100%;
-        height: pxTorem(800);
+        width: pxTorem(750);
+        height: pxTorem(1158);
         padding-top: pxTorem(70);
         position: relative;
-        background-image: url('./images/yellowBg.png');
-        background-repeat: no-repeat;
-        background-size: pxTorem(750) pxTorem(620);
+        background: url('./images/earnIntegralBackground.png') no-repeat;
+        background-size: 100% 100%;
         .message {
-            padding-top: pxTorem(25);
+            padding-top: pxTorem(15);
+            text-shadow: 0 pxTorem(4) pxTorem(4) rgba(209, 172, 0, 0.68);
+            font-weight: 500;
+            color: $white;
             text-align: center;
-            h5 {
-                text-shadow: 0 pxTorem(4) pxTorem(4) rgba(209, 172, 0, 0.68);
-                font-weight: bold;
-                color: $white;
-                span {
-                    color: $orange;
-                    font-size: pxTorem(30);
-                }
-            }
-            h6 {
-                color: #9d7035;
+            img {
+                width: pxTorem(36);
+                height: pxTorem(38);
             }
         }
     }
 
     .back {
-        @include flex-center;
+        @include flex-center-h;
         position: absolute;
-        left: pxTorem(30);
-        top: pxTorem(30);
-        width: pxTorem(115);
-        height: pxTorem(50);
-        font-size: pxTorem(24);
-        box-shadow: 0 pxTorem(5) pxTorem(5) #d56a10;
+        top: 0;
+        width: pxTorem(160);
+        height: pxTorem(120); // padding-top: pxTorem(25);
+        padding-top: pxTorem(40);
+        font-size: pxTorem(24); // transform: scale(0.9);
+        color: #a78453;
+        background: url('./images/cloud.png') no-repeat;
+        background-size: pxTorem(139) pxTorem(91);
+        background-position: center center;
+        z-index: 2;
+        span {
+            transform: scale(0.9);
+        }
+        &:nth-child(2) {
+            left: pxTorem(580);
+        }
     }
+
 
     .rotate {
         position: relative;
         width: 100%;
         height: pxTorem(234);
+        z-index: 1;
     }
 
     .circle-button {
@@ -108,7 +115,7 @@
             }
             &:first-child {
                 .circle {
-                    color: #a78179;
+                    color: #a9aaae;
                     background-color: rgba(255, 255, 255, 0.4);
                     background-size: 100%;
                     background-position: center center;
@@ -116,7 +123,7 @@
                     box-shadow: 0 pxTorem(3) pxTorem(5) #42c0c3, 0 pxTorem(-3) pxTorem(3) rgba(255, 255, 255, .8);
                 }
                 h6 {
-                    color: #a78179;
+                    color: #a9aaae;
                 }
             }
         }
@@ -153,16 +160,15 @@
             color: $orange;
         }
         h6 {
-            color: #a78179;
+            color: #a9aaae;
         }
     }
 
     .notice {
         @include flex-center-h;
         flex-direction: column;
-        height: pxTorem(106);
-        padding-left: pxTorem(35);
-        font-size: pxTorem(28);
+        height: pxTorem(106); // padding-left: pxTorem(35);
+        padding: 0 pxTorem(35); // font-size: pxTorem(26);
         span {
             color: $orange;
             padding: 0 pxTorem(5);
@@ -171,7 +177,7 @@
     }
 
     .article-list {
-        color: #a78179;
+        color: #a9aaae;
         background-color: #d0eff1;
         border-top: 1px solid #d4d4d6;
         ul,
@@ -196,14 +202,14 @@
 
     .article {
         @include flex-center-v;
+        padding: pxTorem(20) 0;
         justify-content: space-between;
-        position: relative;
-        height: pxTorem(110);
+        position: relative; // height: pxTorem(110);
         margin: 0 pxTorem(30);
         border-top: 1px solid #d4d4d6;
         .title {
-            @include flex-center-v;
-            height: pxTorem(80);
+            @include flex-center-v; // height: pxTorem(80);
+            line-height: pxTorem(40);
             width: 70%;
             font-weight: 500;
             overflow: hidden;
@@ -267,18 +273,93 @@
         height: pxTorem(94);
         z-index: 3;
     }
+
+    .raiders {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: $white;
+        width: pxTorem(607); // height: pxTorem(408);
+        text-align: justify;
+        font-size: pxTorem(30);
+        border-radius: pxTorem(10);
+        ul {
+            // flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: pxTorem(40) pxTorem(47);
+            list-style: none;
+        }
+        li {
+            list-style: none;
+        }
+        footer {
+            @include flex-center;
+            @include active;
+            width: 100%;
+            height: pxTorem(104);
+            font-size: pxTorem(36);
+            color: $orange;
+            border-top: 1px solid #d3d4d6;
+        }
+    }
+
+    .dialog {
+        position: relative;
+        width: pxTorem(619);
+        height: pxTorem(664);
+        background-image: url('./images/checkinGift.png');
+        background-size: 100% 100%;
+        .close {
+            position: absolute;
+            right: pxTorem(-40);
+            top: pxTorem(-200);
+            width: pxTorem(68);
+            height: pxTorem(68);
+        }
+        .message {
+            position: absolute;
+            top: pxTorem(148);
+            left: 0;
+            width: 100%;
+            height: pxTorem(40);
+            padding: 0 pxTorem(40);
+            text-align: center;
+            color: $white;
+            overflow: hidden;
+        }
+        .product {
+            position: absolute;
+            top: pxTorem(222);
+            left: pxTorem(66);
+            width: pxTorem(490);
+            height: pxTorem(233);
+        }
+        .operation {
+            position: absolute;
+            left: 50%;
+            bottom: pxTorem(60);
+            width: pxTorem(380);
+            height: pxTorem(110);
+            margin-left: pxTorem(-190);
+        }
+    }
 </style>
 <template>
     <div v-if='loaded' class='earn-integral'>
         <main v-if='!frame_show' class='main'>
             <header class='head'>
-                <router-link v-if='back_show' :to='{name:"index"}' class='back btn-orange btn' tag='div'>
-                    返回首页
+                <router-link v-show='back_show' :to='{name:"index"}' class='back' tag='div'>
+                    <span>返回首页</span>
                 </router-link>
+                <div class='back' @click='toggleRaiders'>
+                    <span>签到攻略</span>
+                </div>
                 <div class='rotate'>
                     <transition name='rotate'>
                         <div v-if='user.ischecked' class='circle-button'>
-                            <div class='circle white'>
+                            <div class='circle white' @click='checkIn'>
                                 <h1>已签到</h1>
                                 <h4>连续{{user.checkin_days}}天</h4>
                             </div>
@@ -292,20 +373,11 @@
                         </div>
                     </transition>
                 </div>
-                <div class='message'>
-                    <h5>
-                        <template v-if='!user.ischecked'>今日</template>
-                        <template v-else>明日</template> 签到可领取
-                        <span>{{integral}}</span> 积分
-                    </h5>
-                    <h6>连续签到有更多惊喜哦</h6>
-                </div>
-                <div class='progress'>
-                    <div v-for='(item,$index) in check_in_params' :class='["check-item",{active:user.ischecked&&$index==1}]'>
-                        <div class='circle'> {{item.integral}} </div>
-                        <h6>{{item.day}}</h6>
-                    </div>
-                </div>
+                <p class='message'>
+                    连续签到有更多惊喜哦
+                    <img src='./images/foot.png'>
+                </p>
+                <v-progress :checkin-params='checkin_params'></v-progress>
             </header>
             <template v-if='user.is_submit!= 1'>
                 <router-link :to='{name:"edit_user"}' tag='div' class='edit-user'>
@@ -339,17 +411,44 @@
         </main>
         <template v-if='frame_show'>
             <div class='frame' style='overflow:auto;-webkit-overflow-scrolling:touch'>
-                <!--<div class='back btn btn-orange' @click='toggleFrame'>返回</div>-->
                 <iframe :src='frame_link'></iframe>
             </div>
             <img class='close-frame' src='./images/back.png' @click='toggleFrame'>
-
         </template>
+        <v-modal v-model='raiders_show'>
+            <div class='raiders'>
+                <ul>
+                    <li v-for='item in checkin_strategy'>
+                        {{item}}
+                    </li>
+                </ul>
+                <footer @click='toggleRaiders'>
+                    我知道了
+                </footer>
+            </div>
+        </v-modal>
+        <v-modal v-model='dialog_show'>
+            <div class='dialog'>
+                <img @click='toggleDialog' class='close' src='./images/close.png'>
+                <h4 class='message'>获得{{dialog.msg}}</h4>
+                <img class='product' :src='dialog.img'>
+                <div class='operation' @click='toOrderDetail'></div>
+            </div>
+        </v-modal>
+
     </div>
 </template>
 <script>
+    import vModal from 'components/vModal';
+    import vProgress from './components/vProgress';
+    import vDialog from 'views/activityDetail/components/vDialog';
     export default {
         name: 'earnIntegral',
+        components: {
+            vModal,
+            vProgress,
+            vDialog
+        },
         data() {
             return {
                 check_in_params: [],
@@ -358,28 +457,29 @@
                 submit_param: {
                     integral: 0
                 },
-                //
                 read_param: {
                     integral: 0,
                     day_limit: 0,
                     today: 0
                 },
-                frame_link: 'http://www.baidu.com',
+                dialog: {},
+                frame_link: '',
                 article_list: [],
                 back_show: false,
                 frame_show: false,
+                raiders_show: false,
+                dialog_show: false,
             };
         },
         computed: {
             user() {
                 return this.$store.state.user;
             },
-            integral() {
-                if (this.check_in_params.length === 0) return 0;
-                if (!this.user.ischecked) {
-                    return this.check_in_params[1]['integral'].substring(1);
-                }
-                return this.check_in_params[2]['integral'].substring(1);
+            checkin_strategy() {
+                return this.check_in_params.checkin_strategy || [];
+            },
+            checkin_params() {
+                return this.check_in_params.checkin_params || [];
             }
         },
         activated() {
@@ -394,6 +494,8 @@
         deactivated() {
             this.back_show = false;
             this.frame_show = false;
+            this.raiders_show = false;
+            this.dialog_show = false;
         },
         methods: {
             //签到
@@ -408,7 +510,16 @@
                         const data = response.data;
                         this.$store.dispatch('toggleLoading');
                         if (data.status === APP.SUCCESS) {
+                            const check_result = data.data;
+                            if (check_result.is_win) {
+                                this.toggleDialog({
+                                    msg: check_result.name,
+                                    img: check_result.pic_thumb,
+                                    order_id: check_result.id
+                                });
+                            }
                             this.$store.dispatch('getUserInfor');
+                            this.getCheckInParams();
                         } else {
                             this.$store.dispatch('toggleAlert', {
                                 msg: data.info
@@ -486,6 +597,22 @@
             },
             toggleFrame() {
                 this.frame_show = !this.frame_show;
+            },
+            toggleRaiders() {
+                this.raiders_show = !this.raiders_show;
+            },
+            toggleDialog(dialog = {}) {
+                this.dialog = dialog;
+                this.dialog_show = !this.dialog_show;
+            },
+            toOrderDetail() {
+                const order_id = this.dialog_order_id;
+                this.$router.push({
+                    name: 'order_detail',
+                    query: {
+                        order_id
+                    }
+                });
             }
         }
     };

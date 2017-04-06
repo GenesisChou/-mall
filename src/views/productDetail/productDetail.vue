@@ -205,8 +205,8 @@
                         user_id: APP.USER_ID
                     }).then((response) => {
                         this.$store.dispatch('toggleLoading');
-                        let data = response.data;
-                        if (data.status == APP.SUCCESS) {
+                        const data = response.data;
+                        if (data.status === APP.SUCCESS) {
                             resolve(data);
                         } else {
                             reject(data);

@@ -5,11 +5,17 @@
 		top: 50%;
 		z-index: 100;
 		transform: translate(-50%, -50%);
+		h6{
+			transform: translateY(-80%);
+			color:#c1c1c1;
+			text-align: center;
+		}
 	}
 </style>
 <template>
 	<div v-show='show' class='v-loading'>
 		<v-spinner></v-spinner>
+		<h6>努力加载中...</h6>
 	</div>
 </template>
 <script>

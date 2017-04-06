@@ -2,133 +2,128 @@
     @import '../../../../../../assets/scss/variable.scss';
     .common {
         position: fixed;
-        top: pxTorem(280);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         z-index: 6;
-        width: pxTorem(750);
-        height: pxTorem(675);
-        background: url('./images/commonBackground.png') no-repeat;
-        background-size: 100% 100%;
+    }
 
-        .product {
-            position: absolute;
-            left: pxTorem(170);
-            top: pxTorem(278);
-            width: pxTorem(410);
-            height: pxTorem(220);
-        }
+    .red-packet {
+        position: relative;
+        width: pxTorem(594);
+        height: pxTorem(524);
+        background-image: url('./images/redPacket.png');
+        background-size: 100% 100%;
         .message {
             position: absolute;
-            left: 50%;
-            bottom: pxTorem(112);
-            width: pxTorem(420);
-            height: pxTorem(42);
-            line-height: pxTorem(42);
-            font-weight: 500;
-            margin-left: pxTorem(-210);
-            color: $white;
+            bottom: pxTorem(30);
+            width: 100%;
+            height: pxTorem(40);
+            padding: 0 pxTorem(60);
             overflow: hidden;
             text-align: center;
-            font-size: pxTorem(29);
+            color: $white;
+            font-weight: 500;
         }
+        .product {
+            position: absolute;
+            left: pxTorem(56);
+            width: pxTorem(451);
+            height: pxTorem(241);
+            border-radius: pxTorem(10);
+            top: pxTorem(68);
+            transition: 1s;
+            transform-origin: center bottom;
+        }
+        .product.active {
+            top: pxTorem(25);
+            transform: scale(1.3);
+        }
+    }
 
+    .main {
+        position: relative;
+        top: pxTorem(-80);
+        width: pxTorem(634);
+        padding-bottom: pxTorem(30);
+        background-color: $white;
+        border-radius: pxTorem(10);
         .close {
+            @include flex-center;
             position: absolute;
-            right: pxTorem(30);
-            top: pxTorem(-253);
-            width: pxTorem(100);
-            height: pxTorem(100);
-            background: url('./images/close.png') no-repeat;
-            background-size: pxTorem(50) pxTorem(50);
-            background-position: center;
+            right: pxTorem(-40);
+            top: pxTorem(-40);
+            width: pxTorem(80);
+            height: pxTorem(80);
+            background-color: $white;
+            border-radius: 50%;
         }
-
+        .iconfont {
+            font-size: pxTorem(80);
+            color: $orange;
+            &:active {
+                color: darken($orange, 10%);
+            }
+        }
+        h1 {
+            text-align: center;
+            padding-top: pxTorem(30);
+            padding-bottom: pxTorem(20);
+        }
+        .container {
+            @include flex-center;
+            width: pxTorem(632);
+            height: pxTorem(358);
+            background-color: #f1f1f1;
+            img {
+                width: pxTorem(595);
+                height: pxTorem(318);
+                border-radius: pxTorem(10);
+            }
+        }
+        h4 {
+            color: $orange;
+            padding: pxTorem(20) pxTorem(36);
+        }
         .operation {
-            position: absolute;
-            left: 50%;
-            bottom: 0;
-            width: pxTorem(536);
-            height: pxTorem(94);
-            margin-left: pxTorem(-536/2);
-        }
-        .rope {
-            position: absolute;
-            left: 50%;
-            top: pxTorem(-480);
-            width: pxTorem(8);
-            height: pxTorem(515);
-            margin-left: pxTorem(-4);
-            background-color: #bc0225;
-        }
-
-        .money {
-            position: absolute;
-            left: 50%;
-            display: flex;
-            width: pxTorem(557);
-            height: pxTorem(233);
-            margin-left: pxTorem(-557/2);
-            .money-left,
-            .money-right {
-                width: 50%;
-                height: 100%;
-                background: url('./images/commonMoney.png') no-repeat;
-                background-size: pxTorem(557) pxTorem(233);
-            }
-            .money-right {
-                background-position-x: pxTorem(-557/2);
-            }
+            @include flex-center;
+            width: pxTorem(563);
+            height: pxTorem(88);
+            margin: pxTorem(30) auto;
+            font-size: pxTorem(38);
         }
     }
 
-
-    .left-enter-active {
+    .enlarge-enter-active {
         transform: scale(1);
-        transition: .7s;
-        transform-origin: right bottom;
+        transform-origin: center center;
+        transition: .2s;
     }
 
-    .left-enter {
-        transform: scale(.2);
-    }
-
-    .right-enter-active {
-        @extend .left-enter-active;
-        transform-origin: left bottom;
-    }
-
-    .right-enter {
-        @extend .left-enter;
-    }
-
-
-    .drop-enter-active {
-        top: pxTorem(280);
-        transition: .5s cubic-bezier(0.5, 1, 0.5, 1.1);
-    }
-
-    .drop-enter {
-        top: pxTorem(-675);
+    .enlarge-enter {
+        transform: scale(0.5); // top: pxTorem(-675);
     }
 </style>
 <template>
-    <transition name='drop'>
-        <div v-show='show' class='common'>
-            <div class='rope'>
+    <div v-show='show' class='common'>
+        <transition name='enlarge'>
+            <div v-if='!content_show&&redpacket_show' class='red-packet'>
+                <img :class='["product",{active:enlarge}]' :src='dialog.img'>
+                <h4 class='message'>{{dialog.msg}}</h4>
             </div>
-            <div class='money'>
-                <transition name='left'>
-                    <div v-show='money_show' class='money-left'></div>
-                </transition>
-                <transition name='right'>
-                    <div v-show='money_show' class='money-right'></div>
-                </transition>
+        </transition>
+        <main v-if='content_show' class='main'>
+            <div class='close' @click='close'>
+                <i class='iconfont icon-close-circle'></i>
             </div>
-            <div class='close' @click='close'></div>
-            <img class='product' :src='dialog.img'>
-            <h4 class='message'>{{dialog.msg}}</h4>
-            <div class='operation' @click='func'></div>
-        </div>
-    </transition>
+            <h1>{{dialog.msg}}</h1>
+            <div class='container'>
+                <img :src='dialog.img'>
+            </div>
+            <h4>{{dialog.msg}}</h4>
+            <div class='operation btn btn-orange' @click='func'>查看使用方法</div>
+        </main>
+    </div>
 </template>
 <script>
     export default {
@@ -144,14 +139,25 @@
         },
         data() {
             return {
-                money_show: false
+                redpacket_show: false,
+                content_show: false,
+                enlarge: false
             };
         },
         mounted() {
             if (this.show) {
                 setTimeout(() => {
-                    this.money_show = true;
-                }, 500);
+                    this.redpacket_show = true;
+                    setTimeout(() => {
+                        this.enlarge = true;
+                        setTimeout(() => {
+                            this.redpacket_show = false;
+                            setTimeout(() => {
+                                this.content_show = true;
+                            }, 50);
+                        }, 1350);
+                    }, 600);
+                }, 50);
             }
         }
     };

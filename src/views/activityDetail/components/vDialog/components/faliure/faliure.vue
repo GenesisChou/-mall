@@ -15,7 +15,7 @@
             float: right;
             width: pxTorem(50);
             height: pxTorem(50);
-            background-image: url('./images/close.png');
+            background-image: url('./images/faliureClose.png');
             background-size: pxTorem(34) pxTorem(34);
             background-position: left bottom;
             background-repeat: no-repeat;
@@ -52,14 +52,26 @@
             font-size: pxTorem(34);
         }
     }
+
+    .enlarge-enter-active {
+        transform: scale(1);
+        transform-origin: center center;
+        transition: .2s;
+    }
+
+    .enlarge-enter {
+        transform: scale(0.5); // top: pxTorem(-675);
+    }
 </style>
 <template>
-    <div v-if='show' class='faliure'>
-        <div class='close' @click='close'></div>
-        <h1 class='message '>{{dialog.msg||'谢谢参与'}}</h1>
-        <div class='circle'></div>
-        <div class='operation' @click='func'>{{dialog.btn_text||'关闭'}}</div>
-    </div>
+    <transition name='enlarge'>
+        <div v-if='show' class='faliure'>
+            <div class='close' @click='close'></div>
+            <h1 class='message '>{{dialog.msg||'谢谢参与'}}</h1>
+            <div class='circle'></div>
+            <div class='operation' @click='func'>{{dialog.btn_text||'关闭'}}</div>
+        </div>
+    </transition>
 </template>
 <script>
     export default {
