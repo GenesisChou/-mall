@@ -9,7 +9,7 @@
     }
 </style>
 <template>
-    <swipe class='v-swipe' :auto=5000 :speed=500>
+    <swipe v-if='slides.length>0' class='v-swipe' :auto=5000 :speed=500>
         <swipe-item v-for='slide in slides'>
             <img @click='routerLink(slide);' :src="slide.pic">
         </swipe-item>
@@ -43,7 +43,9 @@
                     media_id: APP.MEDIA_ID
                 }).then((response) => {
                     const data = response.data;
-                    this.slides = data.data;
+                    if (data.status === APP.SUCCESS) {
+                        this.slides = data.data;
+                    }
                 }, (response) => {});
             },
             routerLink(banner) {
