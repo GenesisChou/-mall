@@ -10,7 +10,8 @@
         "location":false,
         "sessionStorage":false,
         "localStorage":false,
-        "event":false
+        "event":false,
+        "AIR":false
     },
     "rules": {
         "semi": ["error", "always"],

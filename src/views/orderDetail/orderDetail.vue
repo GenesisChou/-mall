@@ -189,6 +189,8 @@
                     <v-ticket v-if='product_type==1||product_type==6' :type='product_type' :order-detail='order_detail' :product-detail='product_detail'></v-ticket>
                     <!--商品为流量充值时 -->
                     <v-recharge v-if='product_type==8' :type='product_type' :get-order-detail='getOrderDetail' :order-detail='order_detail' :product-detail='product_detail'></v-recharge>
+                    <!-- 详细说明 -->
+                    <v-introduction v-if='product_detail.content' title='详细说明' :content='product_detail.content'></v-introduction>
                     <!-- 使用说明 -->
                     <v-introduction v-if='product_detail.content_use' title='使用说明' :content='product_detail.content_use'></v-introduction>
                     <!-- 重要声明 -->
@@ -264,6 +266,8 @@
                                 </div>
                             </main>
                         </section>
+                        <!-- 详细说明 -->
+                        <v-introduction v-if='product_detail.content' title='详细说明' :content='product_detail.content'></v-introduction>
                         <!-- 领取说明 -->
                         <v-introduction v-if='product_detail.content_use' title='领取说明' :content='product_detail.content_use'></v-introduction>
                         <!-- 重要声明 -->

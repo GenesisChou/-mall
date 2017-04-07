@@ -163,7 +163,7 @@
                 if (value == 'start') {
                     this.freshFreeTimes();
                     // this.$parent.game_start = true;
-                    AIR.Game.startGame('#canvas', this.game);
+                    AIR.Game.startGame('#canvas', false,false,this.game,1,true);
                     AIR.Game.gameOver((score) => {
                         this.state = 'stop';
                     });
@@ -209,7 +209,7 @@
             },
             game(value) {
                 if (!value) return;
-                let url = `http://m.goldmiao.com/yngame/${value}.min.1.0.0.js`;
+                let url = `http://m.goldmiao.com/yngame/${value}.min.1.0.1.js`;
                 this.$script(url, () => {
                     console.log('game loaded');
                     this.game_loaded = true;
