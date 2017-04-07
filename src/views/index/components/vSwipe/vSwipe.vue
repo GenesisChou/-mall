@@ -9,7 +9,7 @@
     }
 </style>
 <template>
-    <swipe v-if='slides.length>0' class='v-swipe' :auto=5000 :speed=500>
+    <swipe  class='v-swipe' :auto=5000 :speed=500>
         <swipe-item v-for='slide in slides'>
             <img @click='routerLink(slide);' :src="slide.pic">
         </swipe-item>
