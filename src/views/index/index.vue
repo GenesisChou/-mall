@@ -96,16 +96,16 @@
             <!-- 轮播 -->
             <v-swipe></v-swipe>
             <!-- 功能区 -->
-                <ul class='icon-list'>
-                    <li v-for='icon in icon_list' @click='iconLink(icon)'>
-                        <img class='icon' :src='icon.pic'>
-                        <p>{{icon.name}}</p>
-                    </li>
-                    <!--<router-link v-for='feature in features' :to='{name:feature.router}' tag='li'>
+            <ul class='icon-list'>
+                <li v-for='icon in icon_list' @click='iconLink(icon)'>
+                    <img class='icon' :src='icon.pic'>
+                    <p>{{icon.name}}</p>
+                </li>
+                <!--<router-link v-for='feature in features' :to='{name:feature.router}' tag='li'>
                     <img class='icon' :src='feature.icon'>
                     <p>{{feature.text}}</p>
                 </router-link>-->
-                </ul>
+            </ul>
             <!-- 专题 -->
             <div v-if='subject_show' class='subject'>
                 <img v-for='(subject,$index) in subject_list' :class='$index==0?"left":"right"' @click='routerLink(subject)' :src='$index==0?subject.pic_main:subject.pic_second'>
@@ -252,7 +252,7 @@
                     media_id: APP.MEDIA_ID
                 }).then((response) => {
                     const data = response.data;
-                    if (data.data.length >= 3) {
+                    if (data.status === APP.SUCCESS && data.data.length >= 3) {
                         this.subject_list = data.data;
                     }
                 });
