@@ -17,6 +17,7 @@
         color: #666;
         background-color: $white;
         font-size: pxTorem(24);
+        margin-bottom:pxTorem(20);
         li {
             @include active;
             @include flex-center;
@@ -58,7 +59,7 @@
     .subject {
         width: pxTorem(750);
         height: pxTorem(376);
-        margin: pxTorem(15) 0 pxTorem(20) 0;
+        margin-bottom:pxTorem(20);
         overflow: hidden;
         background-color: $white;
         border-bottom: 1px solid #d3d4d6;
