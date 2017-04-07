@@ -469,8 +469,8 @@ export default {
             this.group = this.$refs.container.querySelectorAll('.award');
             for (let i = 0; i < this.group.length; i++) {
                 let award = {
-                    init_left: -(i-1) * 300 - 130,
-                    left: -(i-1) * 300 - 130,
+                    init_left: -(i-2) * 300 - 130,
+                    left: -(i-2) * 300 - 130,
                     caught: false,
                     pic: this.activityDetail.items[i % this.activityDetail.items.length].pic
                 };
