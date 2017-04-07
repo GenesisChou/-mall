@@ -90,7 +90,6 @@
         bottom: 0;
         left: 0;
         right: 0;
-        background-color: #f2f3f4;
     }
 </style>
 <template>

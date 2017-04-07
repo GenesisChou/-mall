@@ -116,11 +116,11 @@
             float: left;
             height: pxTorem(75);
             padding-left: pxTorem(30);
-            border: pxTorem(2) solid #f0c3c2;
+            border: 1px solid #f0c3c2;
             background-color: #fef6f5;
             &.disable {
                 background-color: $gray-light;
-                border: pxTorem(2) solid $gray;
+                border: 1px solid $gray;
             }
         }
         label {

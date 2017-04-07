@@ -12,18 +12,19 @@
     }
 
     .icon-list {
-        @include list-inline;
-        margin-bottom: pxTorem(15);
-        border-bottom: 1px solid #d3d4d6;
+        display: flex;
+        list-style: none; // border-bottom: 1px solid #d3d4d6;
         color: #666;
         background-color: $white;
         font-size: pxTorem(24);
         li {
             @include active;
             @include flex-center;
+            list-style: none;
             flex-direction: column;
             width: 25%;
             height: pxTorem(190);
+            overflow: hidden;
             position: relative;
             text-align: center;
             .v-badage {
@@ -42,6 +43,11 @@
                 transform: scale(0.5);
             }
         }
+        p {
+            width: 100%;
+            height: pxTorem(30);
+            overflow: hidden;
+        }
         .icon {
             width: pxTorem(95);
             height: pxTorem(95);
@@ -52,7 +58,7 @@
     .subject {
         width: pxTorem(750);
         height: pxTorem(376);
-        margin-bottom: pxTorem(20);
+        margin: pxTorem(15) 0 pxTorem(20) 0;
         overflow: hidden;
         background-color: $white;
         border-bottom: 1px solid #d3d4d6;
@@ -90,12 +96,16 @@
             <!-- 轮播 -->
             <v-swipe></v-swipe>
             <!-- 功能区 -->
-            <ul class='icon-list'>
-                <router-link v-for='feature in features' :to='{name:feature.router}' tag='li'>
+                <ul class='icon-list'>
+                    <li v-for='icon in icon_list' @click='iconLink(icon)'>
+                        <img class='icon' :src='icon.pic'>
+                        <p>{{icon.name}}</p>
+                    </li>
+                    <!--<router-link v-for='feature in features' :to='{name:feature.router}' tag='li'>
                     <img class='icon' :src='feature.icon'>
                     <p>{{feature.text}}</p>
-                </router-link>
-            </ul>
+                </router-link>-->
+                </ul>
             <!-- 专题 -->
             <div v-if='subject_show' class='subject'>
                 <img v-for='(subject,$index) in subject_list' :class='$index==0?"left":"right"' @click='routerLink(subject)' :src='$index==0?subject.pic_main:subject.pic_second'>
@@ -133,7 +143,7 @@
         },
         data() {
             return {
-                features: [],
+                icon_list: [],
                 hot_items: [],
                 hot_commend: [],
                 hot_adcolumn: [],
@@ -170,8 +180,8 @@
             window.addEventListener('scroll', this.scroll_event);
         },
         created() {
-            this.features = [
-                {
+            /*
+            this.features = [{
                     router: 'my_account',
                     icon: require('./images/myAccount.png'),
                     text: '我的账户'
@@ -192,6 +202,8 @@
                     text: '所有商品'
                 }
             ];
+            */
+            this.getIconList();
             this.getHotCommend();
             this.getHotAdcolumn();
             this.getHotShowCase();
@@ -203,6 +215,36 @@
             next();
         },
         methods: {
+            getIconList() {
+                this.$http.post(`${APP.HOST}/icon_list`, {
+                    token: APP.TOKEN,
+                    userid: APP.USER_ID,
+                    media_id: APP.MEDIA_ID
+                }).then((response) => {
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS && data.data) {
+                        for (let i = 0; i < 4; i++) {
+                            if (data.data[i]) {
+                                this.icon_list.push(data.data[i]);
+                            }
+                        }
+                    }
+                });
+            },
+            iconLink(icon) {
+                this.$http.post(`${APP.HOST}/icon_view/${icon.id}`, {
+                    token: APP.TOKEN,
+                    userid: APP.USER_ID,
+                    media_id: APP.MEDIA_ID
+                }).then((response) => {});
+                if (icon.is_inner_url === 1) {
+                    this.$router.push({
+                        name: icon.url
+                    });
+                } else if (icon.is_inner_url === 2) {
+                    location.href = icon.url;
+                }
+            },
             getHotShowCase() {
                 this.$http.post(`${APP.HOST}/hot_showcase`, {
                     token: APP.TOKEN,
@@ -266,33 +308,33 @@
                     id = subject.item_id;
                 this.$store.dispatch('subjectView', subject.id);
                 switch (type) {
-                case 1:
-                    location.href = subject.url;
-                    break;
-                case 2:
-                    this.$router.push({
-                        name: 'activity_detail',
-                        query: {
-                            activity_id: id,
-                        }
-                    });
-                    break;
-                case 3:
-                    this.$router.push({
-                        name: 'product_detail',
-                        query: {
-                            product_id: id,
-                        }
-                    });
-                    break;
-                case 4:
-                    this.$router.push({
-                        name: 'subject_detail',
-                        query: {
-                            subject_id: id,
-                        }
-                    });
-                    break;
+                    case 1:
+                        location.href = subject.url;
+                        break;
+                    case 2:
+                        this.$router.push({
+                            name: 'activity_detail',
+                            query: {
+                                activity_id: id,
+                            }
+                        });
+                        break;
+                    case 3:
+                        this.$router.push({
+                            name: 'product_detail',
+                            query: {
+                                product_id: id,
+                            }
+                        });
+                        break;
+                    case 4:
+                        this.$router.push({
+                            name: 'subject_detail',
+                            query: {
+                                subject_id: id,
+                            }
+                        });
+                        break;
                 }
             }
         },

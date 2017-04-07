@@ -606,7 +606,7 @@
                 this.dialog_show = !this.dialog_show;
             },
             toOrderDetail() {
-                const order_id = this.dialog_order_id;
+                const order_id = this.dialog.order_id;
                 this.$router.push({
                     name: 'order_detail',
                     query: {
