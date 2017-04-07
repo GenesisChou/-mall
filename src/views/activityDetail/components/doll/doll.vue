@@ -50,7 +50,6 @@
         margin: pxTorem(118) auto 0 auto;
         overflow: hidden;
         .claws {
-            @include flex-center;
             position: absolute;
             width: 100%;
             height: pxTorem(270);
@@ -65,43 +64,56 @@
                 position: absolute;
             }
             .claws-rod {
-                margin-top: pxTorem(-150);
-                height: pxTorem(270);
+                left: 50%;
+                top: pxTorem(-150);
+                width: pxTorem(89);
+                height: pxTorem(269);
+                margin-left: pxTorem(-89/2);
                 z-index: 3;
             }
             .claws-top-left {
-                width: pxTorem(41);
-                margin-left: pxTorem(-45);
+                left: 50%;
+                top: pxTorem(110);
+                width: pxTorem(40);
+                height: pxTorem(43);
+                margin-left: pxTorem(-60);
                 transition: all 0.2s linear;
                 &.active {
                     transform: rotate(15deg);
                 }
             }
             .claws-lower-left {
-                width: pxTorem(49);
-                margin-top: pxTorem(40);
-                margin-left: pxTorem(-42);
+                left: 50%;
+                top: pxTorem(145);
+                width: pxTorem(50);
+                height: pxTorem(55);
+                margin-left: pxTorem(-61);
                 transition: all 0.2s linear;
                 &.active {
-                    margin-left: pxTorem(-68);
+                    margin-left: pxTorem(-90);
                     transform: rotate(60deg);
                 }
             }
             .claws-top-right {
-                width: pxTorem(44);
-                margin-left: pxTorem(45);
+                left: 50%;
+                top: pxTorem(110);
+                width: pxTorem(40);
+                height: pxTorem(43);
+                margin-left: pxTorem(20);
                 transition: all 0.2s linear;
                 &.active {
                     transform: rotate(-15deg);
                 }
             }
             .claws-lower-right {
-                width: pxTorem(51);
-                margin-top: pxTorem(38);
-                margin-left: pxTorem(42);
+                left: 50%;
+                top: pxTorem(145);
+                width: pxTorem(50);
+                height: pxTorem(55);
+                margin-left: pxTorem(10);
                 transition: all 0.2s linear;
                 &.active {
-                    margin-left: pxTorem(68);
+                    margin-left: pxTorem(39);
                     transform: rotate(-60deg);
                 }
             }
@@ -125,7 +137,6 @@
             li {
                 @include flex-center;
                 position: absolute;
-                left: pxTorem(-130);
                 width: pxTorem(130);
                 height: pxTorem(152);
                 list-style: none;
@@ -201,28 +212,10 @@
         margin-top: 0;
     }
     50% {
-        margin-top: pxTorem(120);
+        margin-top: pxTorem(123);
     }
     100% {
         margin-top: 0;
-    }
-}
-
-@keyframes uncaught {
-    0% {
-        transform: translateX(0);
-    }
-    25% {
-        transform: translateX(20%);
-    }
-    50% {
-        transform: translateX(0);
-    }
-    75% {
-        transform: translateX(-20%);
-    }
-    100% {
-        transform: translateX(0);
     }
 }
 
@@ -378,15 +371,10 @@ export default {
             } else if (value === 'caught') {
                 if (this.is_win) {
                     const caught_number = this.getPosition(this.awards),
-                        random_type = Math.ceil(Math.random() * 3),
-                        delay_time = this.getDelayTime(caught_number, random_type);
+                        random_type = Math.ceil(Math.random() * 3);
                     this.caught_number = caught_number;
                     this.group[caught_number].childNodes[0].src = this.activity_result.pic_thumb;
-                    setTimeout(() => {
-                        this.claws.left = (random_type - 2) * 70;
-                        this.claws.active = true;
-                    }, delay_time - 820)
-                    this.beingCaught(caught_number, delay_time, () => {
+                    this.beingCaught(caught_number, random_type, () => {
                         setTimeout(() => {
                             this.toggleDialog(this.alert);
                         }, 500);
@@ -498,16 +486,16 @@ export default {
             let containerHeader = this.$refs.container.querySelector('header');
             const timer = setInterval(() => {
                 let current_left = this.claws.left;
-                containerHeader.style.left = `${current_left/75}rem`;
+                containerHeader.style.left = `${current_left}%`;
                 if (this.claws.active === false) {
                     if (this.claws.direction === 'right') {
-                        current_left += 0.7;
-                        if (current_left >= 140) {
+                        current_left += 0.12;
+                        if (current_left >= 25) {
                             this.claws.direction = 'left';
                         }
                     } else if (this.claws.direction === 'left') {
-                        current_left -= 0.7;
-                        if (current_left <= -140) {
+                        current_left -= 0.12;
+                        if (current_left <= -25) {
                             this.claws.direction = 'right';
                         }
                     }
@@ -559,22 +547,18 @@ export default {
             })
             return caught_number;
         },
-        getDelayTime(caught_number, random_type) {
-            let distance = 375 - 130 - this.awards[caught_number].left - 10;
-            if (random_type == 1) {
-                distance -= 70;
-            } else if (random_type == 3) {
-                distance += 70;
-            };
-            return distance / 1.5 * 10;
-        },
-        beingCaught(caught_number, delay_time, callback) {
+        beingCaught(caught_number, random_type, callback) {
             let current_top = 0;
-            const limit_top = -123;
-            setTimeout(() => {
-                this.awards[caught_number].caught = true;
-                this.group[caught_number].style['z-index'] = 2;
-                const timer = setInterval(() => {
+            const limit_top = -123,
+                active_left = (600 - 130)/2 + (random_type - 2) * 75; 
+            const timer = setInterval(() => {
+                if (this.awards[caught_number].left >= (active_left - 123)) {
+                    this.claws.left = (random_type - 2) * 12.5;
+                    this.claws.active = true;
+                }
+                if (this.awards[caught_number].left >= active_left) {
+                    this.awards[caught_number].caught = true;
+                    this.group[caught_number].style['z-index'] = 2;
                     this.group[caught_number].style.top = `${current_top/75}rem`;
                     current_top -= 1.5;
                     if (current_top < limit_top) {
@@ -583,8 +567,8 @@ export default {
                             callback();
                         }
                     }
-                }, 10)
-            }, delay_time)
+                }
+            }, 10);
         }
     }
 }
