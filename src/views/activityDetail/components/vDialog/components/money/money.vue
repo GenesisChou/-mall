@@ -2,7 +2,7 @@
     @import '../../../../../../assets/scss/variable.scss';
     .circle {
         position: fixed;
-        top: pxTorem(270);
+        top: pxTorem(230);
         z-index: 6;
         width: pxTorem(750);
         height: pxTorem(675);
@@ -102,7 +102,7 @@
 
 
     .drop-enter-active {
-        top: pxTorem(270);
+        top: pxTorem(230);
         transition: .5s cubic-bezier(0.5, 1, 0.5, 1.1);
     }
 

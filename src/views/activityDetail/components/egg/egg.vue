@@ -284,7 +284,7 @@
                 //     type: 'success',
                 //     msg: '获得澳洲品质牛排88元一份',
                 //     btn_text: 'fuck',
-                //     // style: 'money'
+                //     style: 'money'
                 // });
                 if (this.state !== 'ready') return;
                 this.state = 'start';
