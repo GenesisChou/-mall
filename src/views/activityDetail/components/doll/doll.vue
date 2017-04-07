@@ -54,9 +54,6 @@
             width: 100%;
             height: pxTorem(270);
             z-index: 2;
-            /*&.normal {
-                animation: uncaught 8s linear infinite;
-            }*/
             &.active {
                 animation: caught 1.64s linear;
             }
@@ -233,26 +230,32 @@
     position: absolute;
     width: pxTorem(750);
     bottom: pxTorem(60);
-    .dollClawsLeft {
+    .doll-claws-left {
         position: absolute;
         bottom: 0;
         width: pxTorem(150);
         height: pxTorem(172);
     }
-    .dollClawsRight {
+    .doll-claws-right {
         position: absolute;
         bottom: 0;
         right: 0;
         width: pxTorem(150);
         height: pxTorem(172);
     }
-    .dollButton {
+    .doll-button {
         position: absolute;
         left: 50%;
         bottom: pxTorem(20);
         margin-left: pxTorem(-500.74/2);
         width: pxTorem(500.74);
         height: pxTorem(86.78);
+        background-image: url('./images/dollButton.png');
+        background-size: 100% 100%;
+    }
+    .active {
+        background-image: url('./images/dollButtonActive.png');
+        background-size: 100% 100%;
     }
 }
 </style>
@@ -301,9 +304,9 @@
                     </div>
                 </section>
                 <div class="operation">
-                    <img class="dollButton" src='./images/dollButton.png' @click='start'>
-                    <img class="dollClawsLeft" src="./images/dollClawsLeft.png">
-                    <img class="dollClawsRight" src="./images/dollClawsRight.png">
+                    <img :class="['doll-button', state == 'ready'?'':'active']" @click='start'>
+                    <img class="doll-claws-left" src="./images/dollClawsLeft.png">
+                    <img class="doll-claws-right" src="./images/dollClawsRight.png">
                 </div>
             </div>
         </main>
@@ -466,8 +469,8 @@ export default {
             this.group = this.$refs.container.querySelectorAll('.award');
             for (let i = 0; i < this.group.length; i++) {
                 let award = {
-                    init_left: -i * 300 - 130,
-                    left: -i * 300 - 130,
+                    init_left: -(i-1) * 300 - 130,
+                    left: -(i-1) * 300 - 130,
                     caught: false,
                     pic: this.activityDetail.items[i % this.activityDetail.items.length].pic
                 };
