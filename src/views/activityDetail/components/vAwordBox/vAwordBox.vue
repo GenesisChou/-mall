@@ -135,7 +135,7 @@ export default {
     },
     filters: {
         filter(str) {
-            return str.length < 6 ? str : str.substr(0, 6) + '...';
+            return str.length < 5 ? str : str.substr(0, 5) + '...';
         }
     }
 };
