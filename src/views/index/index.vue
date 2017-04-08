@@ -17,7 +17,7 @@
         color: #666;
         background-color: $white;
         font-size: pxTorem(24);
-        margin-bottom:pxTorem(20);
+        margin-bottom: pxTorem(20);
         li {
             @include active;
             @include flex-center;
@@ -59,7 +59,7 @@
     .subject {
         width: pxTorem(750);
         height: pxTorem(376);
-        margin-bottom:pxTorem(20);
+        margin-bottom: pxTorem(20);
         overflow: hidden;
         background-color: $white;
         border-bottom: 1px solid #d3d4d6;
@@ -102,10 +102,6 @@
                     <img class='icon' :src='icon.pic'>
                     <p>{{icon.name}}</p>
                 </li>
-                <!--<router-link v-for='feature in features' :to='{name:feature.router}' tag='li'>
-                    <img class='icon' :src='feature.icon'>
-                    <p>{{feature.text}}</p>
-                </router-link>-->
             </ul>
             <!-- 专题 -->
             <div v-if='subject_show' class='subject'>
@@ -181,29 +177,6 @@
             window.addEventListener('scroll', this.scroll_event);
         },
         created() {
-            /*
-            this.features = [{
-                    router: 'my_account',
-                    icon: require('./images/myAccount.png'),
-                    text: '我的账户'
-                },
-                {
-                    router: 'earn_integral',
-                    icon: require('./images/earnIntegral.png'),
-                    text: '赚取积分'
-                },
-                {
-                    router: 'order_list',
-                    icon: require('./images/myOrder.png'),
-                    text: '我的订单'
-                },
-                {
-                    router: 'product_list',
-                    icon: require('./images/allProduct.png'),
-                    text: '所有商品'
-                }
-            ];
-            */
             this.getIconList();
             this.getHotCommend();
             this.getHotAdcolumn();

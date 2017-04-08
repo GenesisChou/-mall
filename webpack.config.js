@@ -111,8 +111,8 @@ if (process.env.NODE_ENV === 'production') {
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
-            filename: 'js/vendor.js',
-            // filename: 'js/vendor.[hash].js'
+            // filename: 'js/vendor.js',
+            filename: 'js/vendor.[hash].js'
         }),
         new webpack.LoaderOptionsPlugin({
             minimize: true
