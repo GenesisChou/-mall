@@ -378,7 +378,8 @@
     <div class='v-card'>
         <div class='background-top'></div>
         <header class='header'>
-            <img class='img-responsive' src='./images/cardDefaultBanner.png'>
+            <img v-if="activityDetail.pic_icon" :src="activityDetail.pic_icon" class="img-responsive">
+            <img v-else class='img-responsive' src='./images/cardDefaultBanner.png'>
             <img class='hands' src='./images/cardHands.png'>
         </header>
         <main class='main'>
