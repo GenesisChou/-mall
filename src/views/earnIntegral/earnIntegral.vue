@@ -193,7 +193,7 @@
             padding-top: pxTorem(80);
             text-align: center;
             font-size: pxTorem(28);
-            color: #8d8d8d;
+            color: #a9aaae;
             &:active {
                 background-color: #4dd3d6;
             }
@@ -484,10 +484,10 @@
         },
         activated() {
             this.back_show = this.$route.query.back_show || false;
-            this.getArticleList();
-            this.getReadParam();
         },
         created() {
+            this.getReadParam();
+            this.getArticleList();
             this.getCheckInParams();
             this.getSubmitParam();
         },
@@ -591,6 +591,8 @@
                     const data = response.data;
                     if (data.status === APP.SUCCESS && article.is_read === 2) {
                         this.$store.dispatch('getUserInfor');
+                        this.getArticleList();
+                        this.getReadParam();
                     }
                     // location.href = article.url;
                 });

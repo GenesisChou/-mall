@@ -51,7 +51,7 @@
             routerLink(banner) {
                 //1 外链    2 活动    3 商品     4 专题
                 const type = banner.type,
-                    id = banner.item_id;
+                    id = banner.id;
                 // let router = null;
                 this.$store.dispatch('bannerView', id);
                 switch (type) {
