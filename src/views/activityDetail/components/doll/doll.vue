@@ -54,9 +54,6 @@
             width: 100%;
             height: pxTorem(270);
             z-index: 2;
-            &.active {
-                animation: caught 1.64s linear;
-            }
             img {
                 position: absolute;
             }
@@ -281,7 +278,7 @@
                     </template>
                 </div>
                 <section class="container" ref="container">
-                    <header :class="[claws.active ? 'active' : 'normal','claws']">
+                    <header class="claws">
                         <img class="claws-rod" src="./images/dollClawsRod.png">
                         <img :class="[{active:claws.active},'claws-top-left']" src="./images/dollTopLeft.png">
                         <img :class="[{active:claws.active},'claws-lower-left']" src="./images/dollLowerLeft.png">
@@ -469,8 +466,8 @@ export default {
             this.group = this.$refs.container.querySelectorAll('.award');
             for (let i = 0; i < this.group.length; i++) {
                 let award = {
-                    init_left: -(i-2) * 300 - 130,
-                    left: -(i-2) * 300 - 130,
+                    init_left: -(i - 2) * 300 - 130,
+                    left: -(i - 2) * 300 - 130,
                     caught: false,
                     pic: this.activityDetail.items[i % this.activityDetail.items.length].pic
                 };
@@ -551,13 +548,29 @@ export default {
             return caught_number;
         },
         beingCaught(caught_number, random_type, callback) {
-            let current_top = 0;
+            let current_top = 0,
+                current_margin_top = 0,
+                direction = 'down',
+                containerHeader = this.$refs.container.querySelector('header');
             const limit_top = -123,
-                active_left = (600 - 130)/2 + (random_type - 2) * 75; 
+                limit_margin_top = 123,
+                active_left = (600 - 130) / 2 + (random_type - 2) * 75;
             const timer = setInterval(() => {
                 if (this.awards[caught_number].left >= (active_left - 123)) {
                     this.claws.left = (random_type - 2) * 12.5;
+                    containerHeader.style.marginTop = `${current_margin_top/75}rem`;
                     this.claws.active = true;
+                    if (direction === 'down') {
+                        current_margin_top += 1.5;
+                        if (current_margin_top > limit_margin_top) {
+                            direction = 'up';
+                        }
+                    } else if (direction === 'up') {
+                        current_margin_top -= 1.5;
+                        if (current_margin_top < 0) {
+                            clearInterval(timer);
+                        }
+                    }
                 }
                 if (this.awards[caught_number].left >= active_left) {
                     this.awards[caught_number].caught = true;
