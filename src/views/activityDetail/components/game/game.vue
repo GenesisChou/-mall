@@ -76,7 +76,7 @@
     }
 </style>
 <template>
-    <div class='game-detail'>
+    <div class='game-detail' v-if='game'>
         <main class='game' ref='container'>
             <template v-if='state=="ready"'>
                 <img class='banner' :src='activityDetail.pic_icon'>
@@ -123,6 +123,7 @@
             return {
                 name: '',
                 game_id: '',
+                game: '',
                 state: '',
                 is_win: '',
                 order_detail_id: '', //活动结束跳转id
@@ -134,7 +135,7 @@
         },
         computed: {
             color() {
-                const colors = [{
+                let colors = [{
                             name: '逝去的青春',
                             color: 'red'
                         }, {
@@ -151,6 +152,11 @@
                         },
                     ],
                     color = 'red';
+                colors.forEach(item => {
+                    if (item.name === this.name) {
+                        color = item.color;
+                    }
+                });
                 return color;
             },
         },
@@ -158,10 +164,10 @@
             state(value) {
                 if (value === 'start') {
                     this.freshFreeTimes();
+                    // this.$parent.game_start = true;
                     AIR.Game.startGame('#canvas', false, false, this.game, 1, true);
-                    AIR.Game.gameOver(score => {
+                    AIR.Game.gameOver((score) => {
                         this.state = 'stop';
-                        console.log(score);
                         AIR.Game.stopGame();
                         this.toggleDialog(this.alert);
                     });
@@ -169,10 +175,64 @@
             },
             game_id(value) {
                 this.getGameDetail(value).then(data => {
-                    this.$script(data.data.url, () => {
-                        console.log('game loaded');
-                        this.game_loaded = true;
+                    /*
+                     * 各个游戏的游戏代码为：
+                     * 接元宝游戏：   8Ew3kl53
+                     * 逝去的青春：   o3KdlWed
+                     * 三消游戏  ：   r3FEflzD
+                     * 棍子忍者  ：   uWr5e32D
+                     */
+                    this.name = data.data.name;
+                    const game_list = [{
+                            name: '开心消消乐',
+                            code: 'r3FEflzD'
+                        }, {
+                            name: '棍子忍者',
+                            code: 'uWr5e32D'
+                        },
+                        {
+                            name: '逝去的青春',
+                            code: 'o3KdlWed'
+                        },
+                        {
+                            name: '接金元宝',
+                            code: '8Ew3kl53'
+                        },
+                        {
+                            name: '颠球大赛',
+                            code: '6Uwfer9e'
+                        },
+                        {
+                            name: '猫落游戏',
+                            code: 'U49deE3'
+                        },
+                        {
+                            name: '双色小弹球',
+                            code: 'a3jeUdw8'
+                        },
+                        {
+                            name: '蛋糕制造者',
+                            code: 't8EwO4nh'
+                        },
+                        {
+                            name: '忍者跑酷',
+                            code: 'E1w9gp4i3'
+                        }
+                    ];
+                    game_list.forEach(item => {
+                        if (item.name === this.name) {
+                            this.game = item.code;
+                            return;
+                        }
                     });
+                });
+            },
+            game(value) {
+                if (!value) return;
+                const url = `http://m.goldmiao.com/yngame/${value}.min.1.0.1.js`;
+                this.$script(url, () => {
+                    console.log('game loaded');
+                    this.game_loaded = true;
                 });
             },
             is_win(value) {
@@ -211,6 +271,7 @@
             this.$script = require('scriptjs');
         },
         deactivated() {
+            //游戏开始后
             if (this.state === 'start') {
                 AIR.Game.stopGame();
                 console.log('game stopped');
@@ -230,7 +291,7 @@
                         token: APP.TOKEN,
                         user_id: APP.USER_ID
                     }).then((response) => {
-                        const data = response.data;
+                        let data = response.data;
                         if (resolve) {
                             resolve(data);
                         }
@@ -238,6 +299,12 @@
                 });
             },
             startGame() {
+                if (!this.game) {
+                    this.toggleDialog({
+                        msg: '该活动已下架'
+                    });
+                    return;
+                }
                 if (!this.game_loaded) {
                     this.toggleDialog({
                         msg: '请等待游戏完全载入'
@@ -265,5 +332,5 @@
                 });
             },
         }
-    }
+    };
 </script>
