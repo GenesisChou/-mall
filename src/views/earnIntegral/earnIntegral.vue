@@ -587,7 +587,8 @@
                     user_id: APP.USER_ID,
                     media_id: APP.MEDIA_ID
                 }).then((response) => {
-                    this.toggleFrame();
+                    // this.toggleFrame();
+                    location.href = article.url;
                     const data = response.data;
                     if (data.status === APP.SUCCESS && article.is_read === 2) {
                         this.$store.dispatch('getUserInfor');
