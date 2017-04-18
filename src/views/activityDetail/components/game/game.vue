@@ -5,19 +5,21 @@
         padding-bottom: pxTorem(84);
         background-color: $white;
     }
-    
+
     .game {
         position: relative;
         width: 100%;
         height: pxTorem(400);
     }
-    .banner{
-        position:absolute;
-        left:0;
-        top:0;
-        width:100%;
-        height:100%;
+
+    .banner {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
     }
+
     .start {
         position: absolute;
         left: 50%;
@@ -33,7 +35,7 @@
         z-index: 2;
         transform: translate(-50%, -50%);
     }
-    
+
     .cover {
         position: absolute;
         left: 0;
@@ -43,7 +45,7 @@
         background-color: rgba(0, 0, 0, .5);
         z-index: 1;
     }
-    
+
     .free-time-message {
         position: absolute;
         color: $white;
@@ -52,7 +54,7 @@
         transform: translateX(-50%);
         z-index: 2;
     }
-    
+
     .describe {
         padding: pxTorem(50) pxTorem(40) 0 pxTorem(40);
         .editor-style {
@@ -60,13 +62,13 @@
             padding-bottom: pxTorem(40);
         }
     }
-    
+
     .describe.red {
         .editor-style {
             color: #ad0406;
         }
     }
-    
+
     .describe.green {
         .editor-style {
             color: #6a3c05;
@@ -74,7 +76,7 @@
     }
 </style>
 <template>
-    <div class='game-detail' v-if='game'>
+    <div class='game-detail'>
         <main class='game' ref='container'>
             <template v-if='state=="ready"'>
                 <img class='banner' :src='activityDetail.pic_icon'>
@@ -121,7 +123,6 @@
             return {
                 name: '',
                 game_id: '',
-                game: '',
                 state: '',
                 is_win: '',
                 order_detail_id: '', //活动结束跳转id
@@ -129,11 +130,11 @@
                 script: null,
                 game_loaded: false,
                 activity_result: {}
-            }
+            };
         },
         computed: {
             color() {
-                let colors = [{
+                const colors = [{
                             name: '逝去的青春',
                             color: 'red'
                         }, {
@@ -150,74 +151,33 @@
                         },
                     ],
                     color = 'red';
-                colors.forEach(item => {
-                    if (item.name === this.name) {
-                        color = item.color;
-                    }
-                })
                 return color;
             },
         },
         watch: {
             state(value) {
-                if (value == 'start') {
+                if (value === 'start') {
                     this.freshFreeTimes();
-                    // this.$parent.game_start = true;
-                    AIR.Game.startGame('#canvas', false,false,this.game,1,true);
-                    AIR.Game.gameOver((score) => {
+                    AIR.Game.startGame('#canvas', false, false, this.game, 1, true);
+                    AIR.Game.gameOver(score => {
                         this.state = 'stop';
+                        console.log(score);
+                        AIR.Game.stopGame();
+                        this.toggleDialog(this.alert);
                     });
-                } else if (value == 'stop') {
-                    AIR.Game.stopGame();
-                    this.toggleDialog(this.alert);
                 }
             },
             game_id(value) {
                 this.getGameDetail(value).then(data => {
-                    /*
-                     * 各个游戏的游戏代码为：
-                     * 接元宝游戏：   8Ew3kl53
-                     * 逝去的青春：   o3KdlWed
-                     * 三消游戏  ：   r3FEflzD
-                     * 棍子忍者  ：   uWr5e32D
-                     */
-                    this.name = data.data.name;
-                    const game_list = [{
-                            name: '开心消消乐',
-                            code: 'r3FEflzD'
-                        }, {
-                            name: '棍子忍者',
-                            code: 'uWr5e32D'
-                        },
-                        {
-                            name: '逝去的青春',
-                            code: 'o3KdlWed'
-                        },
-                        {
-                            name: '接金元宝',
-                            code: '8Ew3kl53'
-                        },
-                    ];
-                    game_list.forEach(item => {
-                        if (item.name == this.name) {
-                            this.game = item.code;
-                            return;
-                        }
+                    this.$script(data.data.url, () => {
+                        console.log('game loaded');
+                        this.game_loaded = true;
                     });
-
-                });
-            },
-            game(value) {
-                if (!value) return;
-                let url = `http://m.goldmiao.com/yngame/${value}.min.1.0.1.js`;
-                this.$script(url, () => {
-                    console.log('game loaded');
-                    this.game_loaded = true;
                 });
             },
             is_win(value) {
-                if (this.state != 'start') return;
-                let result = this.activity_result,
+                if (this.state !== 'start') return;
+                const result = this.activity_result,
                     old_canvas = document.getElementById('canvas'),
                     new_canvas = document.createElement('canvas');
                 new_canvas.setAttribute('id', 'canvas');
@@ -240,9 +200,8 @@
                             this.init();
                             this.$refs.container.replaceChild(new_canvas, old_canvas);
                         }
-                    }
+                    };
                 }
-
             }
         },
         activated() {
@@ -252,9 +211,7 @@
             this.$script = require('scriptjs');
         },
         deactivated() {
-            //游戏开始后
-            //若游戏后结束前离开界面，手动停止游戏 
-            if (this.state == 'start') {
+            if (this.state === 'start') {
                 AIR.Game.stopGame();
                 console.log('game stopped');
             }
@@ -273,21 +230,14 @@
                         token: APP.TOKEN,
                         user_id: APP.USER_ID
                     }).then((response) => {
-                        let data = response.data;
+                        const data = response.data;
                         if (resolve) {
                             resolve(data);
                         }
-                    })
-
-                })
+                    });
+                });
             },
             startGame() {
-                if (!this.game) {
-                    this.toggleDialog({
-                        msg: '该活动已下架'
-                    });
-                    return;
-                }
                 if (!this.game_loaded) {
                     this.toggleDialog({
                         msg: '请等待游戏完全载入'
@@ -300,19 +250,19 @@
                     user_id: APP.USER_ID
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
-                    let data = response.data;
-                    if (data.status == APP.SUCCESS) {
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS) {
                         this.state = 'start';
                         this.activity_result = data.data;
                         this.is_win = this.activity_result.is_win;
                     } else {
                         this.toggleDialog({
                             msg: data.info
-                        })
+                        });
                     }
                 }, (response) => {
                     this.$store.dispatch('toggleLoading');
-                })
+                });
             },
         }
     }
