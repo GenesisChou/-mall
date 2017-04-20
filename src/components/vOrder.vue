@@ -31,8 +31,8 @@
             border-bottom: 1px solid #d3d4d6;
         }
         .pic {
-            width: pxTorem(160);
-            height: pxTorem(120);
+            width: pxTorem(133);
+            height: pxTorem(133);
         }
         .describe {
             @include flex-center-h;

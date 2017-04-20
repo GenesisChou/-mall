@@ -2,17 +2,19 @@
     @import '../assets/scss/variable.scss';
     .v-list-item {
         @include active;
+        width:pxTorem(750);
         padding: 0 pxTorem(30);
         background-color: $white;
+        overflow: hidden;
     }
     
     .container {
         @include flex-center-v;
-        height: pxTorem(208);
+        height: pxTorem(226);
         border-bottom: 1px solid $gray-light;
         .img {
-            width: pxTorem(249);
-            height: pxTorem(169);
+            width: pxTorem(185);
+            height: pxTorem(185);
             margin-left: pxTorem(10);
             margin-right: pxTorem(60);
         }

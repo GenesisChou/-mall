@@ -63,12 +63,12 @@
                 </ul>
                 <ul v-for='tab in tabs'>
                     <router-link v-for='(item,$index) in tab.items' :to='getRouter(item)' tag='li' v-show='current_tab=="全部"||current_tab==tab.name'>
-                        <v-list-item :title='item.name' :title-dupty='item.sub_name' :integral='item.integral>>0' :img='item.pic' :no-border='$index==tab.items.length-1'></v-list-item>
+                        <v-list-item :title='item.name' :title-dupty='item.sub_name' :integral='item.integral>>0' :img='item.pic' ></v-list-item>
                     </router-link>
                 </ul>
             </main>
         </div>
-        <v-support></v-support>
+        <v-support ></v-support>
     </div>
 </template>
 <script>

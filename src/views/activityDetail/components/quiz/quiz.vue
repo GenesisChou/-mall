@@ -124,7 +124,8 @@
     }
 
     .submit {
-        @include active(#62be11,5%);
+        @include active(#62be11,
+        5%);
         position: relative;
         display: block;
         width: pxTorem(322);
@@ -147,7 +148,7 @@
             border-radius: pxTorem(6);
             background-color: rgb(183, 233, 56);
             transform: rotate(30deg);
-            box-shadow: 0 0 pxTorem(4) 1px rgba(183, 233, 56,.3); //  width: pxTorem(29);
+            box-shadow: 0 0 pxTorem(4) 1px rgba(183, 233, 56, .3); //  width: pxTorem(29);
         }
     }
 
@@ -163,8 +164,7 @@
 <template>
     <div class='v-quiz '>
         <header class='header'>
-            <img class='banner' v-if='activityDetail.pic_icon' :src='activityDetail.pic_icon'>
-            <img class='banner' v-else src='./images/quizDefaultBanner.png'>
+            <img class='banner' :src='activityDetail.pic_banner'>
         </header>
         <template v-for='(item,$index) in activityDetail.questions'>
             <main v-if='current_number==$index' class='panel'>

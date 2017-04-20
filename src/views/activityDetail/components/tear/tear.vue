@@ -240,8 +240,7 @@
 <template>
     <div class='machine'>
         <header class='header'>
-            <img v-if='activityDetail.pic_icon' :src='activityDetail.pic_icon' class='img-responsive'>
-            <img v-else class='banner' src='./images/tearDefaultBanner.png'>
+            <img class='img-responsive' :src='activityDetail.pic_banner'>
         </header>
         <main>
             <div class='machine-panel'>

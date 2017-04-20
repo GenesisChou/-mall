@@ -99,8 +99,7 @@
 <template>
     <div class='v-shake '>
         <header>
-            <img class='banner' v-if='activityDetail.pic_icon' :src='activityDetail.pic_icon'>
-            <img class='banner' v-else src='./images/shakeDefaultBanner.png'>
+            <img class='banner'  :src='activityDetail.pic_banner'>
         </header>
         <main class='shake-panel'>
             <div class='integral-message'>

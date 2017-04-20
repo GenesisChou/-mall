@@ -90,8 +90,7 @@
 <template>
     <div class='fortune'>
         <header>
-            <img class='banner' v-if='activityDetail.pic_icon' :src='activityDetail.pic_icon'>
-            <img class='banner' v-else src='./images/fortuneDefaultBanner.png'>
+            <img class='banner' v-if='activityDetail.pic_banner' :src='activityDetail.pic_banner'>
         </header>
         <main>
             <div class='panel'>

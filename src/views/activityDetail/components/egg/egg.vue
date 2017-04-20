@@ -115,8 +115,7 @@
 <template>
     <div class='v-egg'>
         <header class='header'>
-            <img v-if='activityDetail.pic_icon' :src='activityDetail.pic_icon' class='img-responsive'>
-            <img v-else class='img-responsive' src='./images/eggDefaultBanner.png'>
+            <img class='img-responsive' :src='activityDetail.pic_banner'>
         </header>
         <img class='background' src="./images/eggBackground.png">
         <main class='main'>

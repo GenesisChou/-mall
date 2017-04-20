@@ -256,8 +256,7 @@
 <template>
     <div class='v-treasure'>
         <header class='header'>
-            <img class='banner' v-if='activityDetail.pic_icon' :src='activityDetail.pic_icon'>
-            <img class='banner' v-else src='./images/treasureDefaultBanner.png'>
+            <img class='banner'  :src='activityDetail.pic_banner'>
             <img class='wave' src='./images/wave.png'>
             <v-people :action='action' :state='state'></v-people>
         </header>

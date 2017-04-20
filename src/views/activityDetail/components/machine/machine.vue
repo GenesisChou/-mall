@@ -178,8 +178,7 @@
     <div class='v-machine'>
         <img class='background' src='./images/machineBackground.png'>
         <header class='header'>
-            <img v-if='activityDetail.pic_icon' :src='activityDetail.pic_icon' class='img-responsive'>
-            <img v-else class='banner' src='./images/machineDefaultBanner.png'>
+            <img class='img-responsive' :src='activityDetail.pic_banner'>
             <img class='banner-decoration' src='./images/machineDecoration.png'>
         </header>
         <main>

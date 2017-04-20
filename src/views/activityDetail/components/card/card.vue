@@ -46,7 +46,7 @@
     .hands {
         position: absolute;
         left: 0;
-        top: pxTorem(180);
+        top: pxTorem(165);
         width: pxTorem(750);
         height: pxTorem(533);
         z-index: 1;
@@ -63,7 +63,7 @@
         border-radius: pxTorem(10);
         color: $white;
         font-size: pxTorem(38);
-        z-index:2;
+        z-index: 2;
     }
 
     .cards {
@@ -383,8 +383,7 @@
     <div class='v-card'>
         <div class='background-top'></div>
         <header class='header'>
-            <img v-if='activityDetail.pic_icon' :src="activityDetail.pic_icon" class="banner">
-            <img v-else class='banner' src='./images/cardDefaultBanner.png'>
+            <img class='banner' :src='activityDetail.pic_banner'>
             <img class='hands' src='./images/cardHands.png'>
         </header>
         <main class='main'>

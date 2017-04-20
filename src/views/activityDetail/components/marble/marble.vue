@@ -9,7 +9,7 @@
     .header {
         position: relative;
         margin-bottom: pxTorem(-30);
-        z-index:1;
+        z-index: 1;
     }
 
     .banner {
@@ -19,37 +19,45 @@
 
     .circles {
         position: absolute;
-        left: 50%;
-        top: pxTorem(250);
-        width: pxTorem(1000);
-        height: pxTorem(1000); // margin-left:pxTorem(-500);
-        margin-left: pxTorem(-500);
-        border-radius: 50%;
-        background-color: #ff6840;
-        z-index:0;
-        &:before {
-            content: '';
+        left:0;
+        top:0;
+        width: pxTorem(750);
+        height: pxTorem(1140);
+        overflow:hidden;
+        .content {
             position: absolute;
             left: 50%;
-            top: 50%;
-            width: pxTorem(710);
-            height: pxTorem(710); // margin-left:pxTorem(-500);
-            margin-left: pxTorem(-710/2);
-            margin-top: pxTorem(-710/2);
+            top: pxTorem(250);
+            width: pxTorem(1000);
+            height: pxTorem(1000); // margin-left:pxTorem(-500);
+            margin-left: pxTorem(-500);
             border-radius: 50%;
-            background-color: #ff5644;
-        }
-        &:after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: pxTorem(472);
-            height: pxTorem(472); // margin-left:pxTorem(-500);
-            margin-left: pxTorem(-472/2);
-            margin-top: pxTorem(-472/2);
-            border-radius: 50%;
-            background-color: #fb716d;
+            background-color: #ff6840;
+            z-index: 0;
+            &:before {
+                content: '';
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                width: pxTorem(710);
+                height: pxTorem(710); // margin-left:pxTorem(-500);
+                margin-left: pxTorem(-710/2);
+                margin-top: pxTorem(-710/2);
+                border-radius: 50%;
+                background-color: #ff5644;
+            }
+            &:after {
+                content: '';
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                width: pxTorem(472);
+                height: pxTorem(472); // margin-left:pxTorem(-500);
+                margin-left: pxTorem(-472/2);
+                margin-top: pxTorem(-472/2);
+                border-radius: 50%;
+                background-color: #fb716d;
+            }
         }
     }
 
@@ -491,7 +499,6 @@
     .describe {
         position: relative;
         padding: pxTorem(50) pxTorem(40) 0 pxTorem(40);
-        background-color: #ff5644;
         .editor-style {
             padding-top: pxTorem(20);
             padding-bottom: pxTorem(40);
@@ -502,9 +509,11 @@
 <template>
     <div class='v-marble '>
         <header class='header'>
-            <img class='banner'  :src='activityDetail.pic_icon'>
+            <img class='banner' :src='activityDetail.pic_banner'>
         </header>
-        <div class='circles'></div>
+        <div class='circles'>
+            <div class='content'></div>
+        </div>
         <main>
             <div class='integral-message'>
                 现有积分:

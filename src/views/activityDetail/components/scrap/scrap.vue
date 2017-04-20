@@ -111,14 +111,8 @@
 <template>
     <div class='v-scrap'>
         <header>
-            <template v-if='activityDetail.pic_icon'>
-                <img class='banner' :src='activityDetail.pic_icon'>
-                <img class='banner-cover' src='./images/bannerCover.png'>
-            </template>
-            <template v-else>
-                <img class='banner' src='./images/scrapDefaultBanner.png'>
-                <img class='derocation' src='./images/derocation.png'>
-            </template>
+            <img class='banner' :src='activityDetail.pic_banner'>
+            <img class='banner-cover' src='./images/bannerCover.png'>
         </header>
         <main>
             <div class='integral-message'>

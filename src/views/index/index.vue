@@ -15,7 +15,6 @@
         display: flex;
         list-style: none; // border-bottom: 1px solid #d3d4d6;
         color: #666;
-        background-color: $white;
         font-size: pxTorem(24);
         margin-bottom: pxTorem(20);
         li {
@@ -28,6 +27,7 @@
             overflow: hidden;
             position: relative;
             text-align: center;
+        background-color: $white;
             .v-badage {
                 @include flex-center;
                 width: pxTorem(50);
