@@ -8,6 +8,9 @@
     margin: pxTorem(48) auto 0 auto;
     background-size: 100% 100%;
     background-repeat: no-repeat;
+    ul,li{
+        list-style:none;
+    }
     &.red {
         background-image: url('./images/redAwordBox.png');
     }
@@ -32,30 +35,33 @@
     &.emerald {
         background-image: url('./images/emeraldAwordBox.png');
     }
+    &.army {
+        background-image: url('./images/armyAwordBox.png');
+    }
     .wrapper {
         width: 100%;
         overflow-x: hidden;
     }
     ul {
         white-space: nowrap;
+        display:flex;
     }
     .aword {
-        list-style: none;
-        display: inline-block;
-        height: pxTorem(160);
-        padding: pxTorem(5);
-        margin: 0 pxTorem(17.5);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items:center;
+        width:pxTorem(147);
+        height:pxTorem(175);
+        margin:0 pxTorem(21);
+        padding:pxTorem(10) pxTorem(10) 0 pxTorem(10);
         img {
-            width: pxTorem(145);
-            height: pxTorem(113);
+            width: pxTorem(125);
+            height: pxTorem(125);
         }
         h6 {
             color: $white;
-            width: pxTorem(145);
-            height: pxTorem(42);
-            line-height: pxTorem(42);
-            text-align: center;
-            overflow: hidden;
+            font-size:pxTorem(22);
         }
         &.red {
             background-color: #fe7a6f;
@@ -80,6 +86,9 @@
         }
         &.emerald {
             background-color: #019a88;
+        }
+        &.army{
+            background-color:#1d7233;
         }
     }
 }

@@ -9,8 +9,8 @@ var path = require('path'),
         output: {
             path: path.resolve(__dirname, './dist'),
             publicPath: '/dist/',
-            // filename: 'js/[name].js',
-            filename: 'js/[name].[hash].js'
+            filename: 'js/[name].js',
+            // filename: 'js/[name].[hash].js'
         },
         module: {
             rules: [
@@ -91,7 +91,7 @@ var path = require('path'),
                 APP: path.resolve(__dirname, './src/libs/appConfig.js')
             }),
         ],
-        // devtool: '#eval-source-map'
+        devtool: '#eval-source-map'
     };
 if (process.env.NODE_ENV === 'production') {
     // module.exports.devtool = '#source-map',

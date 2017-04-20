@@ -7,13 +7,13 @@
         background-size: pxTorem(750) pxTorem(15);
     }
 
-    .v-quiz>header {
+    .header {
         margin-bottom: pxTorem(-30);
     }
 
     .banner {
         width: pxTorem(750);
-        height: pxTorem(400);
+        height: pxTorem(330);
     }
 
     .panel {
@@ -124,6 +124,7 @@
     }
 
     .submit {
+        @include active(#62be11,5%);
         position: relative;
         display: block;
         width: pxTorem(322);
@@ -140,11 +141,13 @@
             content: '';
             position: absolute;
             right: pxTorem(10);
-            top: pxTorem(10);
-            width: pxTorem(29);
-            height: pxTorem(25);
-            background-image: url('./images/quizButtonLight.png');
-            background-size: 100% 100%;
+            top: pxTorem(15);
+            width: pxTorem(26);
+            height: pxTorem(12);
+            border-radius: pxTorem(6);
+            background-color: rgb(183, 233, 56);
+            transform: rotate(30deg);
+            box-shadow: 0 0 pxTorem(4) 1px rgba(183, 233, 56,.3); //  width: pxTorem(29);
         }
     }
 
@@ -159,7 +162,7 @@
 </style>
 <template>
     <div class='v-quiz '>
-        <header>
+        <header class='header'>
             <img class='banner' v-if='activityDetail.pic_icon' :src='activityDetail.pic_icon'>
             <img class='banner' v-else src='./images/quizDefaultBanner.png'>
         </header>

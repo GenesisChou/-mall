@@ -10,13 +10,10 @@
         background-repeat: no-repeat;
     }
 
-    .fortune>header {
-        margin-bottom: pxTorem(-60);
-    }
 
     .banner {
         width: pxTorem(750);
-        height: pxTorem(400);
+        height: pxTorem(330);
     }
 
     .panel {
@@ -292,7 +289,10 @@
                         this.state = 'start';
                     } else {
                         this.toggleDialog({
-                            msg: data.info
+                            msg: data.info,
+                            callback: () => {
+                                this.init();
+                            }
                         });
                     }
                 }, (response) => {});

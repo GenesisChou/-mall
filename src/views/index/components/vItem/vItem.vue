@@ -5,43 +5,43 @@
         @include clearfix;
         width: 50%;
         float: left;
-        padding: pxTorem(20) pxTorem(37);
+        padding: pxTorem(20) 0;
         background-color: $white;
     }
 
     .head {
         position: relative;
         margin: 0 auto;
-        overflow: hidden;
+        width: pxTorem(310);
+        height: pxTorem(310);
         .img {
-            width: pxTorem(300);
-            height: pxTorem(200);
+            width: pxTorem(310);
+            height: pxTorem(310);
         }
         span {
-            @include flex-center;
             position: absolute;
             left: 0;
             top: 0;
-            width: pxTorem(70/0.67);
-            height: pxTorem(34/0.67);
-            color: $white;
-            font-size: pxTorem(24);
+            width: pxTorem(70);
+            height: pxTorem(34);
+            line-height: pxTorem(34);
             text-align: center;
+            color: $white;
+            font-size: pxTorem(16);
             z-index: 1;
-            transform: scale(0.67);
-            transform-origin: 0 0 0;
         }
         .red-arrows {
             position: absolute;
-            left: pxTorem(-27);
+            left: 0;
             top: 0;
-            width: pxTorem(109);
-            height: pxTorem(33);
+            width: pxTorem(86);
+            height: pxTorem(34);
         }
     }
 
     .message {
         position: relative;
+        padding:0 pxTorem(37);
         padding-top: pxTorem(15);
         overflow: hidden;
         h5 {
@@ -63,7 +63,7 @@
             position: absolute;
             width: pxTorem(47);
             height: pxTorem(47);
-            right: 0;
+            right: pxTorem(47/2);
             bottom: pxTorem(10);
         }
     }

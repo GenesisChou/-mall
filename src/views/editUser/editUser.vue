@@ -134,10 +134,8 @@
                     <button v-if='submit_avaliable' class='btn btn-orange ' @click='submit'>确认</button>
                     <button v-else class='btn btn-gray' disabled='disabled'>确认</button>
                 </div>
-                <!--
-            <button @click='toggleNotice({msg:"fuck you"})'>noticebalabala</button>
-            <button @click='toggleWarn({msg:"fuck you"})'>warn</button> 
-            -->
+            <!--<button @click='toggleNotice({msg:"fuck you"})'>noticebalabala</button>-->
+            <!--<button @click='toggleWarn({msg:"fuck you"})'>warn</button> -->
             </div>
             <v-warn v-model='warn_show' :warn='warn'></v-warn>
             <v-notice v-model='notice_show'>

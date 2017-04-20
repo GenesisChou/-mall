@@ -8,12 +8,12 @@
     }
 
     .v-shake>header {
-        margin-bottom: pxTorem(-100);
+        margin-bottom: pxTorem(-30);
     }
 
     .banner {
         width: pxTorem(750);
-        height: pxTorem(400);
+        height: pxTorem(330);
     }
 
     .integral-message {
@@ -28,9 +28,8 @@
         width: pxTorem(750);
         height: pxTorem(798);
         margin-bottom: pxTorem(30);
-        background-image: url('./images/shakePanel.png');
+        background: url('./images/shakePanel.png') no-repeat;
         background-size: 100% 100%;
-        background-repeat: no-repeat;
         z-index: 1;
     }
 

@@ -9,8 +9,8 @@
 
 .header {
     width: pxTorem(750);
-    height: pxTorem(400);
-    margin-bottom: pxTorem(-100);
+    height: pxTorem(330);
+    margin-bottom: pxTorem(-30);
 }
 
 .doll-panel {

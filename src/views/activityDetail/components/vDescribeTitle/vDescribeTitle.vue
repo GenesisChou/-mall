@@ -37,6 +37,10 @@
         &.emerald {
             background-image: url('./images/emeraldTitle.png');
         }
+        &.army{
+            color: $white;
+            background-image: url('./images/armyTitle.png');
+        }
     }
 </style>
 <template>

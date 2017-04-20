@@ -9,7 +9,7 @@ $yellow:#feca5e;
 $green:#79cabc;
 $blue:#20a0ff;
 @function pxTorem($px) {
-    @return $px /75 * 1rem;
+    @return $px /100 * 1rem;
 }
 
 @mixin flex-center {

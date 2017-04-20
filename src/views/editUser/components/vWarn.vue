@@ -27,7 +27,7 @@
         margin-left: pxTorem(-600/2);
         margin-top: pxTorem(-230/2);
         background-color: $white;
-        border-radius: pxTorem(30);
+        border-radius: pxTorem(10);
         .message {
             @include flex-center;
             height: pxTorem(130);
@@ -39,10 +39,13 @@
         }
         .operation {
             @include flex-center;
+            @include active($white,3%);
             height: pxTorem(100);
             color: $orange;
             font-size: pxTorem(36);
             border-top: 1px solid $gray-light;
+            border-bottom-left-radius: pxTorem(10);
+            border-bottom-right-radius: pxTorem(10);
         }
     }
 </style>

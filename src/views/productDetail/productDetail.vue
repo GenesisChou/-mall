@@ -8,7 +8,7 @@
 
     .banner {
         width: pxTorem(750);
-        height: pxTorem(400);
+        height: pxTorem(330);
     }
 
     .title {

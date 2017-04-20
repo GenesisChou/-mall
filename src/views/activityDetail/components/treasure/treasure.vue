@@ -9,19 +9,19 @@
         background-image: url('./images/treasureBackground.jpg');
         background-size: pxTorem(750) pxTorem(1671);
         background-repeat: no-repeat;
-        background-position: 0 pxTorem(465);
+        background-position: 0 pxTorem(395);
     }
     
     .header {
         position: relative;
         width: pxTorem(750);
-        height: pxTorem(400);
+        height: pxTorem(330);
     }
     
     .banner {
         position: absolute;
-        width: 100%;
-        height: 100%;
+        width: pxTorem(750);
+        height: pxTorem(330);
         z-index: 0;
     }
     
@@ -342,11 +342,11 @@
         watch: {
             state(value) {
                 if (value === 'stop') {
-                    this.$store.dispatch('toggleLoading');
+                    // this.$store.dispatch('toggleLoading');
                     setTimeout(() => {
-                        this.$store.dispatch('toggleLoading');
+                        // this.$store.dispatch('toggleLoading');
                         this.toggleDialog(this.alert);
-                    }, 1000);
+                    }, 1900);
                 } else if (value === 'fishing') {
                     this.action = Math.random() > 0.5 ? 'one' : 'two';
                     let time = 0;

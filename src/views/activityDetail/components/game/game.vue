@@ -6,10 +6,10 @@
         background-color: $white;
     }
 
-    .game {
+    .header {
         position: relative;
-        width: 100%;
-        height: pxTorem(400);
+        width:pxTorem(750);
+        height: pxTorem(330);
     }
 
     .banner {
@@ -77,7 +77,7 @@
 </style>
 <template>
     <div class='game-detail' v-if='game'>
-        <main class='game' ref='container'>
+        <header class='header' ref='container'>
             <template v-if='state=="ready"'>
                 <img class='banner' :src='activityDetail.pic_icon'>
                 <div class='start' @click='startGame'></div>
@@ -85,7 +85,7 @@
                 <div class='free-time-message'>{{notice}}</div>
             </template>
             <canvas id="canvas"></canvas>
-        </main>
+        </header>
         <article v-if='state=="ready"' :class='["describe",color]'>
             <v-describe-title text='详细说明' :color='color'></v-describe-title>
             <v-simditor>

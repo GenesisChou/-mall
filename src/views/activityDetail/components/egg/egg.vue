@@ -8,7 +8,7 @@
 
     .header {
         width: pxTorem(750);
-        height: pxTorem(400);
+        height: pxTorem(330);
     }
 
     .main {
@@ -87,7 +87,7 @@
     .background {
         position: absolute;
         left: 0;
-        top: pxTorem(320);
+        top: pxTorem(250);
         width: pxTorem(750);
         height: pxTorem(928);
         z-index: 0;

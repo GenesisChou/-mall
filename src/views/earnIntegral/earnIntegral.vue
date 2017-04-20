@@ -302,6 +302,8 @@
             font-size: pxTorem(36);
             color: $orange;
             border-top: 1px solid #d3d4d6;
+            border-bottom-left-radius: pxTorem(10);
+            border-bottom-right-radius: pxTorem(10);
         }
     }
 

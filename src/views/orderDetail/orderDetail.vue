@@ -51,6 +51,12 @@
                 text-align: justify;
                 color: #646565;
             }
+            .icon-arrows-right{
+                font-weight: bold;
+                font-size:pxTorem(32);
+                width:pxTorem(60);
+                text-align: right;
+            }
             &.active {
                 color: $orange;
                 .address-detail {
@@ -238,6 +244,7 @@
                                             {{default_address.address}}
                                         </h4>
                                     </div>
+                                    <i v-if='!order_checked' class='iconfont icon-arrows-right'></i>
                                 </div>
                                 <div v-if='!order_checked' class='single-button'>
                                     <button class='btn btn-orange' @click='updateOrderAddress'>确认地址</button>

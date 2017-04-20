@@ -1,10 +1,10 @@
 <style lang='scss' scoped>
     @import '../../../../assets/scss/variable.scss';
     .v-swipe {
-        height: pxTorem(300);
+        height: pxTorem(330);
         img {
-            width: 100%;
-            height: pxTorem(300);
+            width: pxTorem(750);
+            height: pxTorem(330);
         }
     }
 </style>

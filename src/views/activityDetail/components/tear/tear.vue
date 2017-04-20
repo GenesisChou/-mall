@@ -15,8 +15,8 @@
     .header {
         position: relative;
         width: pxTorem(750);
-        height: pxTorem(400);
-        margin-bottom: pxTorem(-150);
+        height: pxTorem(330);
+        margin-bottom: pxTorem(-100);
     }
 
     .banner-decoration {

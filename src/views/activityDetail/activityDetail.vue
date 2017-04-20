@@ -64,6 +64,9 @@
             },
             tear: (resolve) => {
                 require(['./components/tear'], resolve);
+            },
+            marble: (resolve) => {
+                require(['./components/marble'], resolve);
             }
         },
         data() {
@@ -143,7 +146,7 @@
                 /* 1:刮刮卡 2:有奖问答 3:游戏 4:摇一摇 5:大转盘 6:砸金蛋 7:老虎机 8:海底捞 9:抓娃娃机 10:翻纸牌 11:撕票机 */
                 let result = '';
                 const type_list = ['scrap', 'quiz', 'game', 'shake', 'fortune', 'egg', 'machine', 'treasure',
-                    'doll', 'card', 'tear'
+                    'doll', 'card', 'tear', 'marble'
                 ];
                 type_list.forEach((name, index) => {
                     if (type === index + 1) {
@@ -151,6 +154,7 @@
                         return;
                     }
                 });
+                // return 'marble';
                 return result || 'scrap';
             },
             toggleDialog(dialog) {

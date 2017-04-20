@@ -7,10 +7,6 @@
         background-size: pxTorem(750) pxTorem(15);
     }
 
-    .v-card>header {
-        margin-bottom: pxTorem(-26);
-    }
-
     .background-top {
         position: absolute;
         left: 0;
@@ -29,7 +25,15 @@
     .header {
         position: relative;
         width: pxTorem(750);
-        height: pxTorem(400);
+        height: pxTorem(330);
+        margin-bottom: pxTorem(-26);
+    }
+
+    .banner {
+        position: relative;
+        width: pxTorem(750);
+        height: pxTorem(330);
+        z-index: 2;
     }
 
     .main {
@@ -42,9 +46,10 @@
     .hands {
         position: absolute;
         left: 0;
-        top: pxTorem(250);
+        top: pxTorem(180);
         width: pxTorem(750);
         height: pxTorem(533);
+        z-index: 1;
     }
 
     .integral-message {
@@ -58,6 +63,7 @@
         border-radius: pxTorem(10);
         color: $white;
         font-size: pxTorem(38);
+        z-index:2;
     }
 
     .cards {
@@ -244,8 +250,7 @@
         margin-left: pxTorem(-329/2);
         margin-top: pxTorem(-396/2);
         transition: 1s cubic-bezier(0.5, 1, 0.5, 1.3);
-        backface-visibility: hidden;
-        // transform: rotateY(-180deg);
+        backface-visibility: hidden; // transform: rotateY(-180deg);
         &.shake {
             animation: shake .8s linear;
             animation-iteration-count: infinite;
@@ -287,8 +292,8 @@
             left: 50%;
             width: pxTorem(256);
             height: pxTorem(118);
-            margin-left:pxTorem(-256/2);
-            z-index:1;
+            margin-left: pxTorem(-256/2);
+            z-index: 1;
         }
     }
 
@@ -378,8 +383,8 @@
     <div class='v-card'>
         <div class='background-top'></div>
         <header class='header'>
-            <img v-if="activityDetail.pic_icon" :src="activityDetail.pic_icon" class="img-responsive">
-            <img v-else class='img-responsive' src='./images/cardDefaultBanner.png'>
+            <img v-if='activityDetail.pic_icon' :src="activityDetail.pic_icon" class="banner">
+            <img v-else class='banner' src='./images/cardDefaultBanner.png'>
             <img class='hands' src='./images/cardHands.png'>
         </header>
         <main class='main'>

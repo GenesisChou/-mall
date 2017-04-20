@@ -40,6 +40,7 @@
             background-size: 100% 100%;
         }
         .operation {
+            @include active(#ffe433,10%);
             display: block;
             width: pxTorem(180);
             height: pxTorem(59);

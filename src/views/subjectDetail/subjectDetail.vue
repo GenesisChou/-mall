@@ -12,10 +12,9 @@
         flex: 1;
     }
 
-    header {
+    .banner {
         width: pxTorem(750);
-        height: pxTorem(300);
-        background-color: $gray-light;
+        height: pxTorem(330);
     }
 
     ul,
@@ -54,9 +53,7 @@
 <template>
     <div v-show='content_show' class='subject-detail'>
         <div class='subject-detail-content'>
-            <header>
-                <img class='img-responsive' :src='subject_detail.pic'>
-            </header>
+            <img class='banner' :src='subject_detail.pic'>
             <main>
                 <ul v-if='tabs_show' class='tabs'>
                     <li :class='{active:current_tab=="全部"}' @click='switchTab("全部")'>全部</li>

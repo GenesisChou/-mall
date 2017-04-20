@@ -57,28 +57,27 @@
     }
 
     .subject {
-        width: pxTorem(750);
-        height: pxTorem(376);
+        // width: pxTorem(750);
+        // height: pxTorem(485);
         margin-bottom: pxTorem(20);
         overflow: hidden;
         background-color: $white;
         border-bottom: 1px solid #d3d4d6;
-        .left {
-            width: 50%;
-            height: 100%;
-            padding: pxTorem(15) pxTorem(7.5) pxTorem(15) pxTorem(10);
+        img:nth-child(1) {
+            width: pxTorem(456);
+            height: pxTorem(456);
+            margin: pxTorem(14) 0 pxTorem(14) pxTorem(28);
             float: left;
         }
-        .right {
-            width: 50%;
-            height: 50%;
+        img:nth-child(2),
+        img:nth-child(3) {
+            width: pxTorem(222);
+            height: pxTorem(222);
+            margin-right: pxTorem(28);
             float: right;
         }
         img:nth-child(2) {
-            padding: pxTorem(15) pxTorem(10) pxTorem(5) pxTorem(7.5);
-        }
-        img:nth-child(3) {
-            padding: pxTorem(5) pxTorem(10) pxTorem(15) pxTorem(7.5);
+            margin: pxTorem(14) pxTorem(28) pxTorem(12) 0;
         }
     }
 
@@ -105,7 +104,7 @@
             </ul>
             <!-- 专题 -->
             <div v-if='subject_show' class='subject'>
-                <img v-for='(subject,$index) in subject_list' :class='$index==0?"left":"right"' @click='routerLink(subject)' :src='$index==0?subject.pic_main:subject.pic_second'>
+                <img v-for='(subject,$index) in subject_list' @click='routerLink(subject)' :src='$index==0?subject.pic_main:subject.pic_second'>
             </div>
             <!-- 广告列表 -->
             <ul class='advs'>
