@@ -41,7 +41,7 @@
     .machine {
         position: relative;
         padding: pxTorem(32);
-        margin: pxTorem(66) auto pxTorem(40) auto;
+        margin: pxTorem(50) auto pxTorem(60) auto;
         width: pxTorem(740);
         height: pxTorem(525);
         background-image: url('./images/machinePanel.png');
@@ -109,7 +109,7 @@
                 border: none;
             }
         }
-        .awords {
+        .awards {
             position: relative;
             top: -25%;
             li {
@@ -128,7 +128,7 @@
         width: pxTorem(750);
         height: pxTorem(138);
         text-align: center;
-        margin-bottom: pxTorem(20);
+        margin-bottom: pxTorem(40);
         img {
             position: relative;
             width: pxTorem(243);
@@ -190,39 +190,42 @@
                 <ul class='container' ref='container'>
                     <img class='shadow' src='./images/machineShadow.png'></img>
                     <li class='group'>
-                        <ul class='awords'>
-                            <li v-for='aword in activityDetail.items'>
-                                <img :src='aword.pic'>
+                        <ul class='awards'>
+                            <li v-for='award in activityDetail.items'>
+                                <img :src='award.pic'>
                             </li>
-                            <li v-for='aword in activityDetail.items'>
-                                <img :src='aword.pic'>
+                            <li v-for='award in activityDetail.items'>
+                                <img :src='award.pic'>
                             </li>
                         </ul>
                     </li>
                     <li class='group'>
-                        <ul class='awords'>
-                            <li v-for='aword in activityDetail.items'>
-                                <img :src='aword.pic'>
+                        <ul class='awards'>
+                            <li v-for='award in activityDetail.items'>
+                                <img :src='award.pic'>
                             </li>
-                            <li v-for='aword in activityDetail.items'>
-                                <img :src='aword.pic'>
+                            <li v-for='award in activityDetail.items'>
+                                <img :src='award.pic'>
                             </li>
 
                         </ul>
                     </li>
                     <li class='group'>
-                        <ul class='awords'>
-                            <li v-for='aword in activityDetail.items'>
-                                <img :src='aword.pic'>
+                        <ul class='awards'>
+                            <li v-for='award in activityDetail.items'>
+                                <img :src='award.pic'>
                             </li>
-                            <li v-for='aword in activityDetail.items'>
-                                <img :src='aword.pic'>
+                            <li v-for='award in activityDetail.items'>
+                                <img :src='award.pic'>
                             </li>
                         </ul>
                     </li>
                 </ul>
                 <footer class='notice'>
-                    <template v-if='freeTimes>0'>
+                    <template v-if='isOff'>
+                        活动已结束！
+                    </template>
+                    <template v-else-if='freeTimes>0'>
                         今天还有<span class='number'>{{freeTimes}}</span>次免费机会
                     </template>
                     <template v-else>
@@ -247,20 +250,20 @@
             <v-describe-title text='奖项列表' color='blue'></v-describe-title>
         </article>
         <footer>
-            <v-aword-box :awords='activityDetail.items' color='blue'></v-aword-box>
+            <v-award-box :awards='activityDetail.items' color='blue'></v-award-box>
         </footer>
     </div>
 </template>
 <script>
     import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
-    import vAwordBox from '../vAwordBox';
+    import vAwardBox from '../vAwardBox';
     export default {
         name: 'machine',
         components: {
             vDescribeTitle,
             vIntegralBox,
-            vAwordBox
+            vAwardBox
         },
         props: {
             freshFreeTimes: Function,
@@ -269,7 +272,8 @@
             notice: String,
             toOrderDetail: Function,
             freeTimes: Number,
-            toggleDialog: Function
+            toggleDialog: Function,
+            isOff: Boolean
         },
         data() {
             return {
@@ -352,7 +356,7 @@
             this.init();
         },
         mounted() {
-            this.groups = this.$refs.container.querySelectorAll('.awords');
+            this.groups = this.$refs.container.querySelectorAll('.awards');
         },
         methods: {
             init() {
@@ -432,9 +436,9 @@
                     }, 10);
                 });
             },
-            getPosition(name, awords) {
+            getPosition(name, awards) {
                 let stop_num = 0;
-                awords.forEach((award, index) => {
+                awards.forEach((award, index) => {
                     if (award.name === name) {
                         stop_num = index;
                         return true;

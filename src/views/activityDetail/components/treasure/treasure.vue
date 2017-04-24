@@ -170,9 +170,10 @@
         position: absolute;
         bottom: pxTorem(75);
         left: 50%;
-        text-align: center;
         width: pxTorem(310);
         height: pxTorem(78);
+        line-height:pxTorem(65);
+        text-align:center;
         margin-left: pxTorem(-310/2);
         background-image: url('./images/treasureNotice.png');
         background-size: 100% 100%;
@@ -267,7 +268,10 @@
                     <div v-for='i in 8' class='chest'></div>
                 </div>
                 <div class='notice'>
-                    <template v-if='freeTimes>0'>
+                    <template v-if='isOff'>
+                        活动已结束！
+                    </template>
+                    <template v-else-if='freeTimes>0'>
                         今天还有<strong class='number'>{{freeTimes}}</strong>次免费机会
                     </template>
                     <template v-else>
@@ -296,21 +300,21 @@
             <v-describe-title text='奖项列表' color='navy'></v-describe-title>
         </article>
         <footer>
-            <v-aword-box :awords='activityDetail.items' color='navy'></v-aword-box>
+            <v-award-box :awords='activityDetail.items' color='navy'></v-award-box>
         </footer>
     </div>
 </template>
 <script>
     import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
-    import vAwordBox from '../vAwordBox';
+    import vAwardBox from '../vAwardBox';
     import vPeople from './components/people';
     export default {
         name: 'treasure',
         components: {
             vDescribeTitle,
             vIntegralBox,
-            vAwordBox,
+            vAwardBox,
             vPeople
         },
         props: {
@@ -320,7 +324,8 @@
             id: Number,
             notice: String,
             toOrderDetail: Function,
-            toggleDialog: Function
+            toggleDialog: Function,
+            isOff: Boolean
         },
         data() {
             return {

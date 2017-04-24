@@ -1,11 +1,11 @@
 <style lang='scss' scoped>
     @import '../../../../assets/scss/variable.scss';
-    .machine {
+    .v-tear {
         position: relative;
         min-height: pxTorem(1250);
         padding-bottom: pxTorem(84);
         background: url('./images/tearBackground.png');
-        background-size: pxTorem(750) pxTorem(400);
+        background-size: pxTorem(750) pxTorem(750);
         ul,
         li {
             list-style: none;
@@ -16,7 +16,7 @@
         position: relative;
         width: pxTorem(750);
         height: pxTorem(330);
-        margin-bottom: pxTorem(-100);
+        margin-bottom: pxTorem(-80);
     }
 
     .banner-decoration {
@@ -62,6 +62,7 @@
         position: absolute;
         bottom: pxTorem(342);
         left: 50%;
+        height:pxTorem(54);
         font-weight: 500;
         color: $white;
         z-index: 1;
@@ -113,8 +114,8 @@
             height: pxTorem(135);
         }
         img {
-            width: pxTorem(130);
-            height: pxTorem(101);
+            width: pxTorem(120);
+            height: pxTorem(120);
         }
     }
 
@@ -238,7 +239,7 @@
     }
 </style>
 <template>
-    <div class='machine'>
+    <div class='v-tear'>
         <header class='header'>
             <img class='img-responsive' :src='activityDetail.pic_banner'>
         </header>
@@ -251,14 +252,17 @@
                 <div class='container'>
                     <div v-for='i in 3' class='group'>
                         <ul v-for='j in 2' class='awards'>
-                            <li v-for='aword in activityDetail.items'>
-                                <img :src='aword.pic'>
+                            <li v-for='award in activityDetail.items'>
+                                <img :src='award.pic'>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class='notice'>
-                    <template v-if='freeTimes>0'>
+                    <template v-if='isOff'>
+                        活动已结束！
+                    </template>
+                    <template v-else-if='freeTimes>0'>
                         今天还有<span class='number'>{{freeTimes}}</span>次免费机会
                     </template>
                     <template v-else>
@@ -285,20 +289,20 @@
             <v-describe-title text='奖项列表' color='emerald'></v-describe-title>
         </article>
         <footer>
-            <v-aword-box :awords='activityDetail.items' color='emerald'></v-aword-box>
+            <v-award-box :awords='activityDetail.items' color='emerald'></v-award-box>
         </footer>
     </div>
 </template>
 <script>
     import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
-    import vAwordBox from '../vAwordBox';
+    import vAwardBox from '../vAwardBox';
     export default {
         name: 'tear',
         components: {
             vDescribeTitle,
             vIntegralBox,
-            vAwordBox
+            vAwardBox
         },
         props: {
             freshFreeTimes: Function,
@@ -307,7 +311,8 @@
             notice: String,
             toOrderDetail: Function,
             freeTimes: Number,
-            toggleDialog: Function
+            toggleDialog: Function,
+            isOff: Boolean
         },
         data() {
             return {

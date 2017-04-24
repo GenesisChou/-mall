@@ -1,1 +1,1 @@
-module.exports=require('./scrap.vue');
+module.exports = require('./scrap.vue');

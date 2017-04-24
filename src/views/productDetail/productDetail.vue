@@ -2,7 +2,7 @@
     @import '../../assets/scss/variable.scss';
     .product-detail {
         min-height: 100%;
-        padding-bottom:pxTorem(85);
+        padding-bottom: pxTorem(85);
         background-color: #f2f3f4;
     }
 
@@ -74,6 +74,10 @@
             @include active(#ff5000, 5%);
             margin-top: pxTorem(30);
             background-color: #ff5000;
+            &.disable {
+                @include active(#b5b5b5, 5%);
+                background-color: #b5b5b5;
+            }
         }
         .lack {
             @include active(#ff9817, 5%);
@@ -98,7 +102,8 @@
                 <v-introduction v-if='product_detail.content_use' title='使用说明' :content='product_detail.content_use'></v-introduction>
             </main>
             <footer class='sticky'>
-                <div class='exchange' v-if='integral_enough' @click='exchange'>立即兑换</div>
+                <div class='exchange disable' v-if='exchange_unavaliable'>商品已兑换光</div>
+                <div class='exchange' v-else-if='integral_enough' @click='exchange'>立即兑换</div>
                 <template v-else>
                     <h6>
                         <i class='iconfont icon-warn'></i> 您的积分不足
@@ -133,6 +138,10 @@
         computed: {
             user() {
                 return this.$store.state.user;
+            },
+            exchange_unavaliable() {
+                //库存<=0，下架状态
+                return this.product_detail.stocks <= 0 || this.product_detail.status === 1;
             },
             integral_enough() {
                 return (this.user.integral) >> 0 >= this.integral;
@@ -188,6 +197,7 @@
                     callback: () => {
                         this.order().then(data => {
                             this.order_detail_id = data.data.id;
+                            this.getProductDetail();
                         }).catch(data => {
                             this.$store.dispatch('toggleAlert', {
                                 msg: data.info,

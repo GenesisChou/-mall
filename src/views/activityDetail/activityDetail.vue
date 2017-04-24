@@ -17,7 +17,7 @@
             <keep-alive>
                 <!-- is：活动类型 freshFreeTimes:刷新免费活动次数 ：notice:剩余次数／消耗积分提示 ：toOrderDetail:订单详情跳转 -->
                 <component :is='activity_type' :free-times='free_times>>0' :fresh-free-times='freshFreeTimes' :activity-detail='activity_detail'
-                    :id='activity_id>>0' :notice='notice' :to-order-detail='toOrderDetail' :toggleDialog='toggleDialog'>
+                    :id='activity_id>>0' :notice='notice' :to-order-detail='toOrderDetail' :toggleDialog='toggleDialog' :is-off='is_off'>
                 </component>
             </keep-alive>
         </div>
@@ -84,6 +84,9 @@
                 return this.free_times > 0 ? `您还剩余${this.free_times}次免费机会` :
                     `消耗积分${this.activity_detail.integral >> 0}`;
             },
+            is_off() {
+                return this.activity_detail.status === 1;
+            }
         },
         created() {
             this.activity_id = this.$route.query.activity_id;

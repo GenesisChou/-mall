@@ -1,4 +1,4 @@
-var path = require('path'),
+const path = require('path'),
     webpack = require('webpack'),
     HtmlWebpackPlugin = require('html-webpack-plugin'),
     webpackConfig = {
@@ -36,6 +36,10 @@ var path = require('path'),
                         ]
                     }
                 }, {
+                    test: /\.html$/,
+                    loaders: 'vue-loader'
+
+                }, {
                     test: /\.css$/,
                     loaders: ['style-loader', 'css-loader']
                 }, {
@@ -48,7 +52,8 @@ var path = require('path'),
                     query: {
                         presets: ['es2015']
                     }
-                }, {
+                },
+                {
                     test: /\.json$/,
                     loader: 'json-loader'
                 }, {
@@ -69,6 +74,7 @@ var path = require('path'),
         },
         resolve: {
             alias: {
+                vue: 'vue/dist/vue.js',
                 components: path.resolve(__dirname, './src/components'),
                 libs: path.resolve(__dirname, './src/libs'),
                 views: path.resolve(__dirname, './src/views'),
@@ -91,7 +97,7 @@ var path = require('path'),
                 APP: path.resolve(__dirname, './src/libs/appConfig.js')
             }),
         ],
-        devtool: '#eval-source-map'
+        // devtool: '#eval-source-map'
     };
 if (process.env.NODE_ENV === 'production') {
     // module.exports.devtool = '#source-map',
@@ -117,16 +123,16 @@ if (process.env.NODE_ENV === 'production') {
         new webpack.LoaderOptionsPlugin({
             minimize: true
         }),
-        new HtmlWebpackPlugin({ //根据模板插入css/js等生成最终HTML
-            filename: '../index.html', //生成的html存放路径，相对于 path
-            template: './template/index.html', //html模板路径
-            inject: true, //允许插件修改哪些内容，包括head与body
-            hash: false, //为静态资源生成hash值
-            minify: { //压缩HTML文件
-                removeComments: true, //移除HTML中的注释
-                collapseWhitespace: true //删除空白符与换行符
-            }
-        })
+        // new HtmlWebpackPlugin({ //根据模板插入css/js等生成最终HTML
+        //     filename: path.resolve(__dirname, 'index.html'), //生成的html存放路径，相对于 path
+        //     template: path.resolve(__dirname, 'template/index.html'), //html模板路径
+        //     inject: true, //允许插件修改哪些内容，包括head与body
+        //     hash: false, //为静态资源生成hash值
+        //     minify: { //压缩HTML文件
+        //         removeComments: true, //移除HTML中的注释
+        //         collapseWhitespace: true //删除空白符与换行符
+        //     }
+        // })
     ]);
 }
 module.exports = webpackConfig;

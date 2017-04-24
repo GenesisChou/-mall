@@ -7,9 +7,6 @@
         background-size: pxTorem(750) pxTorem(15);
     }
 
-    .header {
-        margin-bottom: pxTorem(-30);
-    }
 
     .banner {
         width: pxTorem(750);
@@ -48,7 +45,7 @@
     }
 
     .panel-content {
-        padding-bottom: pxTorem(80);
+        padding-bottom: pxTorem(40);
         color: #6f3a04;
         .quiz {
             position: relative;
@@ -101,27 +98,29 @@
 
     .panel-footer {
         position: absolute;
-        left: 0;
+        left: 5%;
         bottom: pxTorem(-85);
-        width: 100%;
-        .notice {
-            width: pxTorem(520);
-            height: pxTorem(134);
-            text-align: center;
-            margin: 0 auto;
-            padding-top: pxTorem(30);
-            background-image: url('./images/quizNotice.png');
-            background-size: pxTorem(563) pxTorem(134);
-            background-repeat: no-repeat;
-            color: #6f3a04;
-            font-size: pxTorem(24);
-            .number {
-                padding: 0 pxTorem(5);
-                font-size: pxTorem(30);
-                color: #f9bd16;
-            }
+        width: pxTorem(563);
+        height: pxTorem(134);
+        background: url('./images/quizNotice.png') no-repeat;
+        background-size: pxTorem(563) pxTorem(134);
+    }
+
+    .notice {
+        @include flex-center;
+        position: absolute;
+        bottom: pxTorem(-36);
+        position:relative;
+        height: pxTorem(60);
+        color: #6f3a04;
+        font-size: pxTorem(24);
+        .number {
+            padding: 0 pxTorem(5);
+            font-size: pxTorem(30);
+            color: #f9bd16;
         }
     }
+
 
     .submit {
         @include active(#62be11,
@@ -186,9 +185,13 @@
                     </ul>
                 </main>
                 <footer class='panel-footer'>
-                    <div v-if='freeTimes>0' class=' notice '>今天还有<span class='number'>{{freeTimes}}</span>次免费机会</div>
-                    <div v-else class=' notice '>每次消耗<span class='number'>{{activityDetail.integral>>0}}</span>积分</div>
                 </footer>
+
+                <div class='notice'>
+                    <template v-if='isOff'>活动已结束!</template>
+                    <template v-else-if='freeTimes>0'>今天还有<span class='number'>{{freeTimes}}</span>次免费机会</template>
+                    <template v-else>每次消耗<span class='number'>{{activityDetail.integral>>0}}</span>积分</template>
+                </div>
             </main>
             <div class='submit' @click='submitAnswer'>提交答案</div>
         </template>
@@ -204,7 +207,7 @@
             <v-describe-title text='奖项列表' color='green'></v-describe-title>
         </article>
         <footer>
-            <v-aword-box :awords='activityDetail.items' color='green'></v-aword-box>
+            <v-award-box :awords='activityDetail.items' color='green'></v-award-box>
         </footer>
 
     </div>
@@ -212,13 +215,13 @@
 <script>
     import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
-    import vAwordBox from '../vAwordBox';
+    import vAwardBox from '../vAwardBox';
     export default {
         name: 'quiz',
         components: {
             vDescribeTitle,
             vIntegralBox,
-            vAwordBox
+            vAwardBox
         },
         props: {
             activityDetail: Object,
@@ -227,7 +230,8 @@
             notice: String,
             toOrderDetail: Function,
             freeTimes: Number,
-            toggleDialog: Function
+            toggleDialog: Function,
+            isOff: Boolean
         },
         data() {
             return {

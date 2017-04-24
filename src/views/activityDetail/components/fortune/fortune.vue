@@ -20,7 +20,7 @@
         position: relative;
         width: pxTorem(623);
         height: pxTorem(809);
-        margin: pxTorem(10) auto pxTorem(20) auto;
+        margin: 0 auto pxTorem(40) auto;
         background-image: url('./images/fortunePanel.png');
         background-size: 100% 100%;
         background-repeat: no-repeat;
@@ -134,7 +134,10 @@
                     </tr>
                 </table>
                 <h5 class='notice'>
-                    <template v-if='freeTimes>0'>
+                    <template v-if='isOff'>
+                        活动已结束！
+                    </template>
+                    <template v-else-if='freeTimes>0'>
                         今天还有<span class='number'>{{freeTimes}}</span>次免费机会
                     </template>
                     <template v-else>
@@ -155,20 +158,20 @@
             <v-describe-title text='奖项列表' color='red'></v-describe-title>
         </article>
         <footer>
-            <v-aword-box :awords='activityDetail.items' color='red'></v-aword-box>
+            <v-award-box :awords='activityDetail.items' color='red'></v-award-box>
         </footer>
     </div>
 </template>
 <script>
     import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
-    import vAwordBox from '../vAwordBox';
+    import vAwardBox from '../vAwardBox';
     export default {
         name: 'fortune',
         components: {
             vDescribeTitle,
             vIntegralBox,
-            vAwordBox
+            vAwardBox
         },
         props: {
             freshFreeTimes: Function,
@@ -177,7 +180,8 @@
             id: Number,
             notice: String,
             toOrderDetail: Function,
-            toggleDialog: Function
+            toggleDialog: Function,
+            isOff: Boolean
         },
         data() {
             return {

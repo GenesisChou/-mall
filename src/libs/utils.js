@@ -110,6 +110,6 @@ module.exports = {
         location.reload();
     },
     pxTorem(value) {
-        return value / 75 + 'rem';
+        return value / 100 + 'rem';
     }
 };

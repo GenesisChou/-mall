@@ -1,6 +1,6 @@
 <style lang='scss' scoped>
 @import '../../../../assets/scss/variable.scss';
-.v-aword-box {
+.v-award-box {
     position: relative;
     width: pxTorem(728);
     height: pxTorem(235);
@@ -12,31 +12,31 @@
         list-style:none;
     }
     &.red {
-        background-image: url('./images/redAwordBox.png');
+        background-image: url('./images/redAwardBox.png');
     }
     &.green {
-        background-image: url('./images/greenAwordBox.png');
+        background-image: url('./images/greenAwardBox.png');
     }
     &.aquamarine {
-        background-image: url('./images/aquamarineAwordBox.png');
+        background-image: url('./images/aquamarineAwardBox.png');
     }
     &.blue {
-        background-image: url('./images/blueAwordBox.png');
+        background-image: url('./images/blueAwardBox.png');
     }
     &.navy {
-        background-image: url('./images/navyAwordBox.png');
+        background-image: url('./images/navyAwardBox.png');
     }
     &.brown {
-        background-image: url('./images/brownAwordBox.png');
+        background-image: url('./images/brownAwardBox.png');
     }
     &.palaceblue {
-        background-image: url('./images/palaceblueAwordBox.png');
+        background-image: url('./images/palaceblueAwardBox.png');
     }
     &.emerald {
-        background-image: url('./images/emeraldAwordBox.png');
+        background-image: url('./images/emeraldAwardBox.png');
     }
     &.army {
-        background-image: url('./images/armyAwordBox.png');
+        background-image: url('./images/armyAwardBox.png');
     }
     .wrapper {
         width: 100%;
@@ -46,7 +46,7 @@
         white-space: nowrap;
         display:flex;
     }
-    .aword {
+    .award {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -94,13 +94,13 @@
 }
 </style>
 <template>
-    <div :class='["v-aword-box",color]'>
+    <div :class='["v-award-box",color]'>
         <div class='wrapper'>
             <ul ref='scroller'>
-                <li :class='["aword",color]' v-for='aword in awords'>
-                    <img :src='aword.pic'>
+                <li :class='["award",color]' v-for='award in awords'>
+                    <img :src='award.pic'>
                     <h6>
-                        {{aword.name|filter}}
+                        {{award.name|filter}}
                     </h6>
                 </li>
             </ul>

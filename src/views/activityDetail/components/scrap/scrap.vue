@@ -112,7 +112,6 @@
     <div class='v-scrap'>
         <header>
             <img class='banner' :src='activityDetail.pic_banner'>
-            <img class='banner-cover' src='./images/bannerCover.png'>
         </header>
         <main>
             <div class='integral-message'>
@@ -123,7 +122,10 @@
             <img class='scrap-cover' src='./images/scrapCover.png' ref='cover'>
             <div v-if='state=="ready"' class='start' @click='start'>开始刮奖</div>
             <h5 v-if='state=="ready" ' class='notice'>
-                <template v-if='freeTimes>0'>
+                <template v-if='isOff'>
+                    活动已结束！
+                </template>
+                <template v-else-if='freeTimes>0'>
                     今天还有<span class='number'>{{freeTimes}}</span>次免费机会
                 </template>
                 <template v-else>
@@ -144,23 +146,22 @@
             <v-describe-title text='奖项列表' color='aquamarine'></v-describe-title>
         </article>
         <footer>
-            <v-aword-box :awords='activityDetail.items' color='aquamarine'></v-aword-box>
+            <v-award-box :awords='activityDetail.items' color='aquamarine'></v-award-box>
         </footer>
 
     </div>
 </template>
 <script>
-    /*global APP utils */
     import Lottery from './lottery.js';
     import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
-    import vAwordBox from '../vAwordBox';
+    import vAwardBox from '../vAwardBox';
     export default {
         name: 'scrap',
         components: {
             vDescribeTitle,
             vIntegralBox,
-            vAwordBox
+            vAwardBox
         },
         props: {
             freshFreeTimes: Function,
@@ -169,7 +170,8 @@
             notice: String,
             toOrderDetail: Function,
             freeTimes: Number,
-            toggleDialog: Function
+            toggleDialog: Function,
+            isOff: Boolean
         },
         data() {
             return {

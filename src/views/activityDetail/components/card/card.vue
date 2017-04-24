@@ -16,40 +16,26 @@
         height: pxTorem(1250);
         background-image: url('./images/cardBackgroundTop.png');
         background-size: pxTorem(750) pxTorem(15);
+        img {
+            position:absolute;
+            bottom:0;
+            width: pxTorem(750);
+            height: pxTorem(84);
+        }
     }
 
-    .decoration {
-        position: absolute;
-    }
 
-    .header {
-        position: relative;
-        width: pxTorem(750);
-        height: pxTorem(330);
-        margin-bottom: pxTorem(-26);
-    }
 
     .banner {
         position: relative;
         width: pxTorem(750);
         height: pxTorem(330);
-        z-index: 2;
     }
 
     .main {
         position: relative;
         padding: 0 pxTorem(40);
         height: pxTorem(787);
-        margin-top: pxTorem(20);
-    }
-
-    .hands {
-        position: absolute;
-        left: 0;
-        top: pxTorem(165);
-        width: pxTorem(750);
-        height: pxTorem(533);
-        z-index: 1;
     }
 
     .integral-message {
@@ -57,7 +43,7 @@
         position: relative;
         width: pxTorem(412);
         height: pxTorem(83);
-        margin: 0 auto;
+        margin: pxTorem(42) auto 0 auto;
         background-color: #e63805;
         box-shadow: 0 pxTorem(5) pxTorem(5) rgba(0, 0, 0, .2);
         border-radius: pxTorem(10);
@@ -357,6 +343,7 @@
         -webkit-transform: translateX(-50%);
         >div {
             @include flex-center;
+            height: pxTorem(56);
         }
         .number {
             padding: 0 pxTorem(10);
@@ -368,9 +355,6 @@
     .describe {
         position: relative;
         padding: 0 pxTorem(40);
-        background-image: url('./images/cardDecoration.png');
-        background-repeat: no-repeat;
-        background-size: pxTorem(750) pxTorem(84);
         .editor-style {
             padding-top: pxTorem(20);
             padding-bottom: pxTorem(40);
@@ -381,10 +365,11 @@
 
 <template>
     <div class='v-card'>
-        <div class='background-top'></div>
+        <div class='background-top'>
+            <img src='./images/cardDecoration.png'>
+        </div>
         <header class='header'>
             <img class='banner' :src='activityDetail.pic_banner'>
-            <img class='hands' src='./images/cardHands.png'>
         </header>
         <main class='main'>
             <div class='integral-message'>
@@ -403,7 +388,10 @@
             </ul>
             <div class='notice'>
                 <div>
-                    <template v-if='freeTimes>0'>
+                    <template v-if='isOff'>
+                        活动已结束！
+                    </template>
+                    <template v-else-if='freeTimes>0'>
                         今天还有<strong class='number'>{{freeTimes}}</strong>次免费机会
                     </template>
                     <template v-else>
@@ -425,20 +413,20 @@
             <v-describe-title text='奖项列表' color='brown'></v-describe-title>
         </article>
         <footer>
-            <v-aword-box :awords='activityDetail.items' color='brown'></v-aword-box>
+            <v-award-box :awords='activityDetail.items' color='brown'></v-award-box>
         </footer>
     </div>
 </template>
 <script>
     import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
-    import vAwordBox from '../vAwordBox';
+    import vAwardBox from '../vAwardBox';
     export default {
         name: 'card',
         components: {
             vDescribeTitle,
             vIntegralBox,
-            vAwordBox
+            vAwardBox
         },
         props: {
             freshFreeTimes: Function,
@@ -447,7 +435,8 @@
             id: Number,
             notice: String,
             toOrderDetail: Function,
-            toggleDialog: Function
+            toggleDialog: Function,
+            isOff: Boolean
         },
         data() {
             return {

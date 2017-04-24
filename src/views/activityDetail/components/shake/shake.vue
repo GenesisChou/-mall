@@ -7,8 +7,8 @@
         background-color: $white;
     }
 
-    .v-shake>header {
-        margin-bottom: pxTorem(-30);
+    .header {
+        margin-bottom: pxTorem(-90);
     }
 
     .banner {
@@ -18,15 +18,23 @@
 
     .integral-message {
         @include flex-center;
-        padding-top: pxTorem(65);
+        position:relative;
+        width: pxTorem(430);
+        height: pxTorem(80);
+        margin: 0 auto;
         color: $white;
         font-size: pxTorem(38);
+        background-color: #c5361e;
+        box-shadow:0 pxTorem(10) 0 #9c2416;
+        border-radius: pxTorem(20);
+        z-index:1;
     }
 
     .shake-panel {
         position: relative;
         width: pxTorem(750);
-        height: pxTorem(798);
+        height: pxTorem(822);
+        padding-top: pxTorem(84);
         margin-bottom: pxTorem(30);
         background: url('./images/shakePanel.png') no-repeat;
         background-size: 100% 100%;
@@ -35,33 +43,36 @@
 
     .hand {
         position: absolute;
-        top: 22%;
-        left: 50%;
-        margin-left: pxTorem(-179);
-        width: pxTorem(348);
-        height: pxTorem(412);
+        top: 20%;
+        left: 28%;
+        width: pxTorem(386);
+        height: pxTorem(458);
         transform: rotate(0deg);
         transform-origin: bottom center;
+        //  animation: shake 1.5s linear infinite;
+        z-index: 0;
         &.active {
             animation: shake 1.5s linear;
         }
     }
 
-    .notice {
+    .panel-footer {
         position: absolute;
         bottom: pxTorem(90);
         left: 50%;
-        transform: translateX(-50%);
-        padding-top: pxTorem(10);
-        text-align: center;
-        color: $white;
-        font-size: pxTorem(36);
         width: pxTorem(586);
         height: pxTorem(129);
-        background-image: url('./images/shakeNotice.png');
+        margin-left: pxTorem(-586/2);
+        background: url('./images/shakeNotice.png') no-repeat;
         background-size: pxTorem(586) pxTorem(129);
-        background-repeat: no-repeat;
         z-index: 1;
+        .notice {
+            @include flex-center;
+            width: 100%;
+            height: pxTorem(90);
+            color: $white;
+            font-size: pxTorem(36);
+        }
         .number {
             padding: 0 pxTorem(5);
             color: #fde638;
@@ -98,8 +109,8 @@
 </style>
 <template>
     <div class='v-shake '>
-        <header>
-            <img class='banner'  :src='activityDetail.pic_banner'>
+        <header class='header'>
+            <img class='banner' :src='activityDetail.pic_banner'>
         </header>
         <main class='shake-panel'>
             <div class='integral-message'>
@@ -107,13 +118,18 @@
                 <v-integral-box :integral='user.integral>>0' color='red'></v-integral-box>
             </div>
             <img :class='["hand",state=="shaking"?"active":""]' src="./images/shakeHand.png">
-            <div class='notice'>
-                <template v-if='freeTimes>0'>
-                    今天还有<span class='number'>{{freeTimes}}</span>次免费机会
-                </template>
-                <template v-else>
-                    每次消耗<span class='number'>{{activityDetail.integral>>0}}</span>积分
-                </template>
+            <div class='panel-footer'>
+                <div class='notice'>
+                    <template v-if='isOff'>
+                        活动已结束！
+                    </template>
+                    <template v-else-if='freeTimes>0'>
+                        今天还有<span class='number'>{{freeTimes}}</span>次免费机会
+                    </template>
+                    <template v-else>
+                        每次消耗<span class='number'>{{activityDetail.integral>>0}}</span>积分
+                    </template>
+                </div>
             </div>
         </main>
         <article class='describe'>
@@ -128,7 +144,7 @@
             <v-describe-title text='奖项列表' color='red'></v-describe-title>
         </article>
         <footer>
-            <v-aword-box :awords='activityDetail.items' color='red'></v-aword-box>
+            <v-award-box :awords='activityDetail.items' color='red'></v-award-box>
         </footer>
         <audio ref='audio'>
             <source src="http://xunlei.sc.chinaz.com/files/download/sound1/201410/5018.wav" type="audio/mpeg" />
@@ -138,13 +154,13 @@
 <script>
     import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
-    import vAwordBox from '../vAwordBox';
+    import vAwardBox from '../vAwardBox';
     export default {
         name: 'shake',
         components: {
             vDescribeTitle,
             vIntegralBox,
-            vAwordBox
+            vAwardBox
         },
         props: {
             freshFreeTimes: Function,
@@ -153,7 +169,8 @@
             notice: String,
             toOrderDetail: Function,
             freeTimes: Number,
-            toggleDialog: Function
+            toggleDialog: Function,
+            isOff: Boolean
         },
         data() {
             return {

@@ -10,7 +10,7 @@
     .header {
         width: pxTorem(750);
         height: pxTorem(330);
-        margin-bottom: pxTorem(-30);
+        margin-bottom:pxTorem(-84);
     }
 
     .doll-panel {
@@ -31,8 +31,9 @@
         .notice {
             @include flex-center;
             position: absolute;
-            width: 100%;
             top: pxTorem(222);
+            width: 100%;
+            height:pxTorem(61);
             font-weight: 500;
             color: $white;
             .number {
@@ -269,7 +270,10 @@
                     </v-integral-box>
                 </header>
                 <div class='notice'>
-                    <template v-if='freeTimes>0'>
+                    <template v-if='isOff'>
+                        活动已结束！
+                    </template>
+                    <template v-else-if='freeTimes>0'>
                         今天还有<span class='number'>{{freeTimes}}</span>次免费机会
                     </template>
                     <template v-else>
@@ -318,20 +322,20 @@
             <v-describe-title text='奖项列表' color='palaceblue'></v-describe-title>
         </article>
         <footer>
-            <v-aword-box :awords='activityDetail.items' color='palaceblue'></v-aword-box>
+            <v-award-box :awords='activityDetail.items' color='palaceblue'></v-award-box>
         </footer>
     </div>
 </template>
 <script>
     import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox';
-    import vAwordBox from '../vAwordBox';
+    import vAwardBox from '../vAwardBox';
     export default {
         name: 'doll',
         components: {
             vDescribeTitle,
             vIntegralBox,
-            vAwordBox
+            vAwardBox
         },
         props: {
             freshFreeTimes: Function,
@@ -339,7 +343,8 @@
             id: Number,
             toOrderDetail: Function,
             freeTimes: Number,
-            toggleDialog: Function
+            toggleDialog: Function,
+            isOff: Boolean
         },
         data() {
             return {
@@ -352,7 +357,7 @@
                 awards: [],
                 state: 'ready', // 游戏状态
                 caught_number: 0
-            }
+            };
         },
         computed: {
             user() {
@@ -508,7 +513,7 @@
                         for (var i = 0; i < len; i++) {
                             let current_left = this.awards[i].left,
                                 init_left = this.awards[i].init_left;
-                            this.group[i].style.left = `${current_left/75}rem`;
+                            this.group[i].style.left = `${current_left/100}rem`;
                             if (this.awards[i].caught === false) {
                                 current_left += 1.5;
                             }
@@ -557,7 +562,7 @@
                 const timer = setInterval(() => {
                     if (this.awards[caught_number].left >= (active_left - 123)) {
                         this.claws.left = (random_type - 2) * 12.5;
-                        containerHeader.style.marginTop = `${current_margin_top/75}rem`;
+                        containerHeader.style.marginTop = `${current_margin_top/100}rem`;
                         this.claws.active = true;
                         if (direction === 'down') {
                             current_margin_top += 1.5;
@@ -574,7 +579,7 @@
                     if (this.awards[caught_number].left >= active_left) {
                         this.awards[caught_number].caught = true;
                         this.group[caught_number].style['z-index'] = 2;
-                        this.group[caught_number].style.top = `${current_top/75}rem`;
+                        this.group[caught_number].style.top = `${current_top/100}rem`;
                         current_top -= 1.5;
                         if (current_top < limit_top) {
                             clearInterval(timer);

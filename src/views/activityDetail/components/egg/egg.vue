@@ -63,8 +63,8 @@
     }
 
     .notice {
-        padding-top: pxTorem(15);
-        text-align: center;
+        @include flex-center;
+        height: pxTorem(60);
         font-weight: 500;
         color: #ad0406;
         .number {
@@ -128,7 +128,10 @@
                 <img class='hammer' src='./images/hammer.png' ref='hammer'>
             </ul>
             <h2 class='notice'>
-                <template v-if='freeTimes>0'>
+                <template v-if='isOff'>
+                    活动已结束！
+                </template>
+                <template v-else-if='freeTimes>0'>
                     今天还有<span class='number'>{{freeTimes}}</span>次免费机会
                 </template>
                 <template v-else>
@@ -148,20 +151,20 @@
             <v-describe-title text='奖项列表' color='red'></v-describe-title>
         </article>
         <footer>
-            <v-aword-box :awords='activityDetail.items' color='red'></v-aword-box>
+            <v-award-box :awords='activityDetail.items' color='red'></v-award-box>
         </footer>
     </div>
 </template>
 <script>
     import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
-    import vAwordBox from '../vAwordBox';
+    import vAwardBox from '../vAwardBox';
     export default {
         name: 'egg',
         components: {
             vDescribeTitle,
             vIntegralBox,
-            vAwordBox
+            vAwardBox
         },
         props: {
             freshFreeTimes: Function,
@@ -170,7 +173,8 @@
             id: Number,
             notice: String,
             toOrderDetail: Function,
-            toggleDialog: Function
+            toggleDialog: Function,
+            isOff: Boolean
         },
         data() {
             return {

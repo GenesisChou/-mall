@@ -8,7 +8,7 @@
 
     .header {
         position: relative;
-        width:pxTorem(750);
+        width: pxTorem(750);
         height: pxTorem(330);
     }
 
@@ -46,7 +46,7 @@
         z-index: 1;
     }
 
-    .free-time-message {
+    .notice{
         position: absolute;
         color: $white;
         left: 50%;
@@ -82,7 +82,8 @@
                 <img class='banner' :src='activityDetail.pic_banner'>
                 <div class='start' @click='startGame'></div>
                 <div class='cover'></div>
-                <div class='free-time-message'>{{notice}}</div>
+                <div class='notice' v-if='isOff'>游戏已下架</div>
+                <div class='notice' v-else>{{notice}}</div>
             </template>
             <canvas id="canvas"></canvas>
         </header>
@@ -98,18 +99,18 @@
             <v-describe-title text='奖项列表' :color='color'></v-describe-title>
         </article>
         <footer v-if='state=="ready"'>
-            <v-aword-box :awords='activityDetail.items' :color='color'></v-aword-box>
+            <v-award-box :awords='activityDetail.items' :color='color'></v-award-box>
         </footer>
     </div>
 </template>
 <script>
     // import './game.js';
     import vDescribeTitle from '../vDescribeTitle';
-    import vAwordBox from '../vAwordBox';
+    import vAwardBox from '../vAwardBox';
     export default {
         components: {
             vDescribeTitle,
-            vAwordBox
+            vAwardBox
         },
         props: {
             freshFreeTimes: Function,
@@ -117,7 +118,8 @@
             id: Number,
             notice: String,
             toOrderDetail: Function,
-            toggleDialog: Function
+            toggleDialog: Function,
+            isOff: Boolean
         },
         data() {
             return {

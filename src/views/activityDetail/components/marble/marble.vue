@@ -19,11 +19,11 @@
 
     .circles {
         position: absolute;
-        left:0;
-        top:0;
+        left: 0;
+        top: 0;
         width: pxTorem(750);
         height: pxTorem(1140);
-        overflow:hidden;
+        overflow: hidden;
         .content {
             position: absolute;
             left: 50%;
@@ -80,9 +80,11 @@
     }
 
     .notice {
+        @include flex-center-v;
         position: absolute;
         left: 50%;
         top: pxTorem(90);
+        height: pxTorem(54);
         font-weight: 500;
         color: $white;
         transform: translateX(-50%); // font-size:pxTorem(26);
@@ -520,7 +522,10 @@
                 <v-integral-box :integral='user.integral>>0' color='pink'></v-integral-box>
             </div>
             <div class='notice'>
-                <template v-if='freeTimes>0'>
+                <template v-if='isOff'>
+                    活动已结束！
+                </template>
+                <template v-else-if='freeTimes>0'>
                     今天还有<span class='number'>{{freeTimes}}</span>次免费机会
                 </template>
                 <template v-else>
@@ -554,7 +559,7 @@
             <v-describe-title text='奖项列表' color='army'></v-describe-title>
         </article>
         <footer>
-            <v-aword-box :awords='activityDetail.items' color='army'></v-aword-box>
+            <v-award-box :awords='activityDetail.items' color='army'></v-award-box>
         </footer>
 
     </div>
@@ -562,13 +567,13 @@
 <script>
     import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
-    import vAwordBox from '../vAwordBox';
+    import vAwardBox from '../vAwardBox';
     export default {
         name: 'marble',
         components: {
             vDescribeTitle,
             vIntegralBox,
-            vAwordBox
+            vAwardBox
         },
         props: {
             activityDetail: Object,
@@ -577,7 +582,8 @@
             notice: String,
             toOrderDetail: Function,
             freeTimes: Number,
-            toggleDialog: Function
+            toggleDialog: Function,
+            isOff: Boolean
         },
         data() {
             return {
@@ -612,7 +618,6 @@
                 if (value) {
                     this.dialog = {
                         type: 'success',
-                        style: 'dice',
                         img: result.pic_thumb,
                         msg: result.name,
                         btn_text: '查看',
@@ -632,7 +637,7 @@
                 }
                 setTimeout(() => {
                     this.toggleDialog(this.dialog);
-                }, 5000);
+                }, 4500);
             }
         },
         filters: {
