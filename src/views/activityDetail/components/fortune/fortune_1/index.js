@@ -1,0 +1,1 @@
+module.exports=require('./fortune_1.vue');

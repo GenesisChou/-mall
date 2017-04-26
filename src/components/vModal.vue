@@ -23,9 +23,11 @@
     <div class='v-modal'>
         <div v-show='value' @click='close' class='bg-cover'>
         </div>
-        <div v-show='value' class='content'>
-            <slot></slot>
-        </div>
+        <transition name='enlarge'>
+            <div v-show='value' class='content'>
+                <slot></slot>
+            </div>
+        </transition>
     </div>
 </template>
 <script>
@@ -35,7 +37,10 @@
                 type: Boolean,
                 default: true
             },
-            value: Boolean,
+            value: {
+                type: Boolean,
+                default: false
+            },
             toggleModal: Function,
             transition: {
                 type: String,

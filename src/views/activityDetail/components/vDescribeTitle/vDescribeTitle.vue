@@ -41,6 +41,14 @@
             color: $white;
             background-image: url('./images/armyTitle.png');
         }
+        &.purple{
+            color:#7a1498;
+            background-image: url('./images/purpleTitle.png');
+        }
+        &.orange{
+            color:#fef9d4;
+            background-image: url('./images/orangeTitle.png');
+        }
     }
 </style>
 <template>

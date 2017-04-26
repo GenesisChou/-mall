@@ -29,9 +29,9 @@
             position: absolute;
             left: 50%;
             top: pxTorem(310);
-            width: pxTorem(340);
+            width: pxTorem(194);
             height: pxTorem(194);
-            margin-left: pxTorem(-170);
+            margin-left: pxTorem(-194/2);
             padding: pxTorem(12);
             border-radius: pxTorem(10);
             transition: 1s;
@@ -83,9 +83,9 @@
             @include flex-center;
             width: pxTorem(632);
             height: pxTorem(358);
-            background-color: #f1f1f1;
+            // background-color: #f1f1f1;
             img {
-                width: pxTorem(595);
+                width: pxTorem(318);
                 height: pxTorem(318);
                 border-radius: pxTorem(10);
             }
@@ -103,16 +103,7 @@
         }
     }
 
-    .enlarge-enter-active {
-        transform: scale(1);
-        transform-origin: center center;
-        transition: .2s;
-    }
-
-    .enlarge-enter {
-        transform: scale(0.5); // top: pxTorem(-675);
-    }
-</style>
+   </style>
 <template>
     <div v-show='show' class='common'>
         <transition name='enlarge'>

@@ -15,7 +15,7 @@
         <div v-show='show' class='bg-cover'></div>
         <component :is='style' v-if='type==="success"' :close='close' :func='func' :dialog='dialog' :show='show'>
         </component>
-        <faliure v-else :close='close' :func='func' :dialog='dialog' :show='show'>
+        <faliure v-else :close='close' :func='func' :dialog='dialog' :show='show' >
         </faliure>
     </div>
 </template>
@@ -36,6 +36,33 @@
             money: (resolve) => {
                 require(['./components/money'], resolve);
             },
+            soccer: (resolve) => {
+                require(['./components/soccer'], resolve);
+            },
+            eliminate: (resolve) => {
+                require(['./components/eliminate'], resolve);
+            },
+            stick: (resolve) => {
+                require(['./components/stick'], resolve);
+            },
+            mario: (resolve) => {
+                require(['./components/mario'], resolve);
+            },
+            gold: (resolve) => {
+                require(['./components/gold'], resolve);
+            },
+            cat: (resolve) => {
+                require(['./components/cat'], resolve);
+            },
+            twins: (resolve) => {
+                require(['./components/twins'], resolve);
+            },
+            cake: (resolve) => {
+                require(['./components/cake'], resolve);
+            },
+            pakour: (resolve) => {
+                require(['./components/pakour'], resolve);
+            },
             faliure
         },
         props: {
@@ -46,7 +73,7 @@
                 }
             },
             toggleDialog: Function,
-            show: Boolean
+            show: Boolean,
         },
         computed: {
             type() {

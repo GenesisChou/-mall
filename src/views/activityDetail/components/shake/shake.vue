@@ -18,16 +18,16 @@
 
     .integral-message {
         @include flex-center;
-        position:relative;
+        position: relative;
         width: pxTorem(430);
         height: pxTorem(80);
         margin: 0 auto;
         color: $white;
         font-size: pxTorem(38);
         background-color: #c5361e;
-        box-shadow:0 pxTorem(10) 0 #9c2416;
+        box-shadow: 0 pxTorem(10) 0 #9c2416;
         border-radius: pxTorem(20);
-        z-index:1;
+        z-index: 1;
     }
 
     .shake-panel {
@@ -48,8 +48,7 @@
         width: pxTorem(386);
         height: pxTorem(458);
         transform: rotate(0deg);
-        transform-origin: bottom center;
-        //  animation: shake 1.5s linear infinite;
+        transform-origin: bottom center; //  animation: shake 1.5s linear infinite;
         z-index: 0;
         &.active {
             animation: shake 1.5s linear;
@@ -274,6 +273,15 @@
                 }).then((response) => {
                     const data = response.data;
                     if (data.status === APP.SUCCESS) {
+                        if (data.data.error_code == APP.INTEGRAL_LACK) {
+                            this.toggleDialog({
+                                faliure: 'lack',
+                                callback: () => {
+                                    this.init();
+                                }
+                            });
+                            return;
+                        }
                         this.activity_result = data.data;
                         this.is_win = this.activity_result.is_win;
                     } else {

@@ -285,10 +285,12 @@
             start(num) {
                 // this.toggleDialog({
                 //     type: 'success',
-                //     msg: '获得澳洲品质牛排88元一份',
-                //     btn_text: 'fuck',
-                //     style: 'money'
+                //     // img: result.pic_thumb,
+                //     style:'twins',
+                //     msg: '获得fuck you',
+                //     btn_text: '查看'
                 // });
+                // return;
                 if (this.state !== 'ready') return;
                 this.state = 'start';
                 this.$http.post(`${APP.HOST}/smashing_eggs_activity/${this.id}`, {
@@ -297,6 +299,15 @@
                 }).then((response) => {
                     const data = response.data;
                     if (data.status === APP.SUCCESS) {
+                        if (data.data.error_code == APP.INTEGRAL_LACK) {
+                            this.toggleDialog({
+                                faliure: 'lack',
+                                callback: () => {
+                                    this.init();
+                                }
+                            });
+                            return;
+                        }
                         this.broken_num = num;
                         this.activity_result = data.data;
                         this.is_win = this.activity_result.is_win;

@@ -1,0 +1,96 @@
+ @import '../../../../assets/scss/variable.scss';
+ .v-scrap {
+     min-height: pxTorem(1250);
+     padding-bottom: pxTorem(84);
+ }
+
+ header {
+     position: relative;
+ }
+
+ .banner {
+     width: pxTorem(750);
+     height: pxTorem(330);
+ }
+
+ .banner-cover {
+     position: absolute;
+     left: 0;
+     bottom: pxTorem(-4);
+     width: pxTorem(750);
+     height: pxTorem(61);
+     background: none;
+     z-index: 1;
+ }
+
+ main {
+     position: relative;
+     width: pxTorem(750);
+     height: pxTorem(514);
+     margin: 0 auto;
+     margin-bottom: pxTorem(140);
+     background-image: url('./images/scrapPanel.png');
+     background-size: 100% 100%;
+     background-repeat: no-repeat;
+ }
+
+ .integral-message {
+     position: absolute;
+     top: pxTorem(30);
+     left: pxTorem(400);
+ }
+
+ #lotteryContainer {
+     position: absolute;
+     left: 50%;
+     bottom: pxTorem(34);
+     width: pxTorem(542);
+     height: pxTorem(196);
+     margin-left: pxTorem(-542/2);
+     background-color: #e2e2e2;
+     outline: pxTorem(5) dotted #ccc;
+ }
+
+ .start {
+     @include flex-center;
+     position: absolute;
+     left: 50%;
+     bottom: 19%;
+     width: pxTorem(227);
+     height: pxTorem(78);
+     margin-left: pxTorem(-227/2);
+     box-shadow: 0 pxTorem(5) pxTorem(8) 1px rgba(215, 65, 0, 0.75);
+     border-radius: pxTorem(10);
+     background-color: $orange;
+     text-align: center;
+     font-size: pxTorem(36);
+     color: $white;
+ }
+
+ .notice {
+     @include flex-center;
+     position: absolute;
+     left: 50%;
+     top: pxTorem(197);
+     height: pxTorem(53);
+     padding: 0 pxTorem(30);
+     color: $white;
+     background-color: #404040;
+     border-radius: pxTorem(53/2);
+     transform: translateX(-50%);
+     z-index: 2;
+     .number {
+         padding: 0 pxTorem(10);
+         font-size: pxTorem(35);
+         color: $orange;
+     }
+ }
+
+ .describe {
+     padding: 0 pxTorem(40);
+     .editor-style {
+         padding-top: pxTorem(20);
+         padding-bottom: pxTorem(40);
+         color: $white;
+     }
+ }

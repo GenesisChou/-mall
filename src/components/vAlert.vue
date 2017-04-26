@@ -21,7 +21,7 @@
             color:$red;
         }
         .pic {
-            width: pxTorem(300);
+            width: pxTorem(210);
             height: pxTorem(210);
         }
         .msg {

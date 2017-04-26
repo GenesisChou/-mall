@@ -1,76 +1,110 @@
 <style lang='scss' scoped>
     @import '../../../../../../assets/scss/variable.scss';
     .faliure {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         position: fixed;
         left: 50%;
         top: 50%;
         z-index: 6;
-        width: pxTorem(574);
-        height: pxTorem(553);
-        margin-left: pxTorem(-574/2);
-        margin-top: pxTorem(-553/2);
-        background-color: #eb4a4a;
+        width: pxTorem(540);
+        height: pxTorem(581);
+        margin-left: pxTorem(-540/2);
+        margin-top: pxTorem(-581/2);
+        background-color: $white;
         border-radius: pxTorem(30);
         .close {
-            float: right;
+            @include flex-center;
+            right: pxTorem(-15);
+            top: pxTorem(-15);
+            position: absolute;
             width: pxTorem(50);
             height: pxTorem(50);
-            background-image: url('./images/faliureClose.png');
-            background-size: pxTorem(34) pxTorem(34);
-            background-position: left bottom;
-            background-repeat: no-repeat;
+            background-color: $white;
+            border-radius: 50%;
         }
-        .message {
-            width: 100%;
-            height: pxTorem(66);
-            line-height: pxTorem(66);
-            padding: 0 pxTorem(15);
-            overflow: hidden;
-            font-size: pxTorem(38);
-            text-align: center;
-            font-weight: 500;
-            color: #ffe433;
+        .icon-error {
+            font-size: pxTorem(25);
+            font-weight: bold;
         }
-        .circle {
-            @include flex-center;
-            width: pxTorem(230);
-            height: pxTorem(230);
-            margin: pxTorem(30) auto pxTorem(55);
-            background: url('./images/faliure.png') no-repeat;
-            background-size: 100% 100%;
+        h1 {
+            height: pxTorem(92);
+            padding: pxTorem(20) 0 pxTorem(10) 0;
+            font-size: pxTorem(40);
+            color: #fe112d;
+            &.title{
+                height:pxTorem(92+44);
+                line-height:pxTorem(92+44);
+            }
+        }
+        h2{
+            height:pxTorem(44);
+            line-height:pxTorem(44);
+        }
+        img {
+            width: pxTorem(306);
+            height: pxTorem(265);
+            margin: pxTorem(15) 0 pxTorem(40) 0;
         }
         .operation {
-            @include active(#ffe433,10%);
-            display: block;
-            width: pxTorem(180);
+            @include flex-center;
             height: pxTorem(59);
-            margin: 0 auto;
-            text-align: center;
-            line-height: pxTorem(59);
             border-radius: pxTorem(10);
-            background-color: #ffe433;
-            color: #474747;
-            font-size: pxTorem(34);
+            font-size: pxTorem(28);
+            &.purple {
+                @include active(#a401d6,
+                5%);
+                width: pxTorem(241);
+                background-color: #a401d6;
+                color: $white;
+            }
         }
-    }
-
-    .enlarge-enter-active {
-        transform: scale(1);
-        transform-origin: center center;
-        transition: .2s;
-    }
-
-    .enlarge-enter {
-        transform: scale(0.5); // top: pxTorem(-675);
+        footer {
+            display: flex;
+            justify-content: space-between;
+            width: pxTorem(416);
+            .operation {
+                width: pxTorem(177);
+                &:first-child {
+                    @include active($white, 2%);
+                    color: #feae2f;
+                    border: 1px solid #feae2f;
+                }
+                &:last-child {
+                    @include active(#feae2f,
+                    5%);
+                    color: $white;
+                    background-color: #feae2f;
+                    border: 1px solid #feae2f;
+                }
+            }
+        }
     }
 </style>
 <template>
     <transition name='enlarge'>
         <div v-if='show' class='faliure'>
-            <div class='close' @click='close'></div>
-            <h1 class='message '>{{dialog.msg||'谢谢参与'}}</h1>
-            <div class='circle'></div>
-            <div class='operation' @click='func'>{{dialog.btn_text||'关闭'}}</div>
+            <div class='close' @click='close'>
+                <i class='iconfont icon-error'></i>
+            </div>
+            <template v-if='type==="lack"'>
+                <h1>积分不足</h1>
+                <h2>赚取积分后再来吧～</h2>
+                <img src='./images/faliureLack.png'></img>
+                <footer>
+                    <div class='operation' @click='close'>知道了</div>
+                    <router-link :to='{path:"earn_integral"}' class='operation' tag='div'>
+                        赚取积分
+                    </router-link>
+                </footer>
+            </template>
+            <template v-else>
+                <h1 class='title'>{{dialog.msg||"没中奖"}}</h1>
+                <img src='./images/faliureDefault.png'></img>
+                <div class='operation purple' @click='close'>{{dialog.btn_text||"知道了"}}</div>
+            </template>
+
         </div>
     </transition>
 </template>
@@ -84,6 +118,11 @@
             show: {
                 type: Boolean,
                 default: false
+            },
+        },
+        computed: {
+            type() {
+                return this.dialog.faliure || '';
             }
         }
     };

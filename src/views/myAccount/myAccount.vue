@@ -57,7 +57,6 @@
         bottom: pxTorem(110);
         z-index: 1;
         padding: 0 pxTorem(30);
-        border-bottom: 1px solid #d4d4d6;
         overflow: scroll;
         -webkit-overflow-scrolling: touch;
         background-color: $white;

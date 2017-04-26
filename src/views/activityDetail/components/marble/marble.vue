@@ -619,7 +619,7 @@
                     this.dialog = {
                         type: 'success',
                         img: result.pic_thumb,
-                        msg: result.name,
+                        msg: '获得' + result.name,
                         btn_text: '查看',
                         callback: this.toOrderDetail(result.id),
                         callback_close: () => {
@@ -668,6 +668,15 @@
                 }).then((response) => {
                     const data = response.data;
                     if (data.status === APP.SUCCESS) {
+                        if (data.data.error_code == APP.INTEGRAL_LACK) {
+                            this.toggleDialog({
+                                faliure: 'lack',
+                                callback: () => {
+                                    this.init();
+                                }
+                            });
+                            return;
+                        }
                         this.activity_result = data.data;
                         this.state = 'start';
                         const name = this.activity_result.name;

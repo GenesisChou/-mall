@@ -38,20 +38,26 @@
     &.army {
         background-image: url('./images/armyAwardBox.png');
     }
+    &.purple{
+        background-image: url('./images/purpleAwardBox.png');
+    }
+    &.orange{
+        background-image: url('./images/orangeAwardBox.png');
+    }
     .wrapper {
         width: 100%;
         overflow-x: hidden;
     }
     ul {
         white-space: nowrap;
-        display:flex;
+        // display:flex;
     }
     .award {
-        display: flex;
+        display: inline-flex;
         flex-direction: column;
         justify-content: space-between;
         align-items:center;
-        width:pxTorem(147);
+        width:pxTorem(155);
         height:pxTorem(175);
         margin:0 pxTorem(21);
         padding:pxTorem(10) pxTorem(10) 0 pxTorem(10);
@@ -89,6 +95,12 @@
         }
         &.army{
             background-color:#1d7233;
+        }
+        &.purple{
+            background-color:#9901aa;
+        }
+        &.orange{
+            background-color:#e76241;
         }
     }
 }

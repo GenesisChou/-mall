@@ -13,9 +13,9 @@
             position: absolute;
             left: 50%;
             top: pxTorem(365);
-            width: pxTorem(509);
+            width: pxTorem(240);
             height: pxTorem(240);
-            margin-left: pxTorem(-509/2);
+            margin-left: pxTorem(-120);
         }
         .message {
             // display:flex;
@@ -52,17 +52,7 @@
 
 
 
-    .enlarge-enter-active {
-        // top: pxTorem(280);
-        transform: scale(1);
-        transform-origin: center center;
-        transition: .6s;
-    }
-
-    .enlarge-enter {
-        transform: scale(0.5); // top: pxTorem(-675);
-    }
-</style>
+  </style>
 <template>
     <transition name='enlarge'>
         <div v-show='show' class='dice'>

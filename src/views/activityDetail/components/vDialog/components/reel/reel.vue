@@ -51,10 +51,11 @@
         }
         .product {
             position: absolute;
-            left: pxTorem(126);
+            left: 50%;
             top: pxTorem(282);
-            width: pxTorem(494);
+            width: pxTorem(234);
             height: pxTorem(234);
+            transform:translateX(-50%);
         }
         .message {
             // display:flex;

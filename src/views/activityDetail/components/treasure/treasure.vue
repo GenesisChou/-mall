@@ -1,7 +1,7 @@
 <style lang='scss' scoped>
     @import '../../../../assets/scss/variable.scss';
     .v-treasure {
-        margin-top:pxTorem(-50);
+        margin-top: pxTorem(-50);
         min-height: pxTorem(1250);
         padding-bottom: pxTorem(84);
         overflow: hidden;
@@ -11,20 +11,20 @@
         background-repeat: no-repeat;
         background-position: 0 pxTorem(395);
     }
-    
+
     .header {
         position: relative;
         width: pxTorem(750);
         height: pxTorem(330);
     }
-    
+
     .banner {
         position: absolute;
         width: pxTorem(750);
         height: pxTorem(330);
         z-index: 0;
     }
-    
+
     .wave {
         position: absolute;
         left: pxTorem(-14);
@@ -35,7 +35,7 @@
         animation: wave 5s linear infinite;
         transform: translateY(3%);
     }
-    
+
     @keyframes wave {
         50% {
             transform: translateY(-3%) translateX(pxTorem(14));
@@ -44,14 +44,14 @@
             transform: translateY(3%);
         }
     }
-    
+
     .container {
         position: relative;
         width: pxTorem(750);
         height: pxTorem(560);
         margin-top: pxTorem(80);
     }
-    
+
     .chest {
         position: absolute;
         width: pxTorem(135);
@@ -115,7 +115,7 @@
             animation-delay: -1.2s;
         }
     }
-    
+
     @keyframes chest {
         0% {
             transform: translateY(0%);
@@ -133,7 +133,7 @@
             transform: translateY(0%);
         }
     }
-    
+
     .buble {
         position: relative;
         width: pxTorem(533);
@@ -143,7 +143,7 @@
         opacity: 0.2;
         animation: buble 7s linear infinite;
     }
-    
+
     @keyframes buble {
         10% {
             opacity: 0.5;
@@ -165,15 +165,15 @@
             transform: translateY(-30%) translateX(0%);
         }
     }
-    
+
     .notice {
         position: absolute;
         bottom: pxTorem(75);
         left: 50%;
         width: pxTorem(310);
         height: pxTorem(78);
-        line-height:pxTorem(65);
-        text-align:center;
+        line-height: pxTorem(65);
+        text-align: center;
         margin-left: pxTorem(-310/2);
         background-image: url('./images/treasureNotice.png');
         background-size: 100% 100%;
@@ -185,7 +185,7 @@
             color: $white;
         }
     }
-    
+
     .operation {
         @include flex-center-h;
         position: relative;
@@ -202,7 +202,7 @@
         }
         .integral-message {
             @include flex-center;
-            flex-direction:column;
+            flex-direction: column;
             position: relative;
             width: pxTorem(243);
             height: pxTorem(130);
@@ -243,7 +243,7 @@
             right: pxTorem(-7);
         }
     }
-    
+
     .describe {
         padding: 0 pxTorem(40);
         .editor-style {
@@ -257,7 +257,7 @@
 <template>
     <div class='v-treasure'>
         <header class='header'>
-            <img class='banner'  :src='activityDetail.pic_banner'>
+            <img class='banner' :src='activityDetail.pic_banner'>
             <img class='wave' src='./images/wave.png'>
             <v-people :action='action' :state='state'></v-people>
         </header>
@@ -429,6 +429,15 @@
                 }).then((response) => {
                     const data = response.data;
                     if (data.status === APP.SUCCESS) {
+                        if (data.data.error_code == APP.INTEGRAL_LACK) {
+                            this.toggleDialog({
+                                faliure: 'lack',
+                                callback: () => {
+                                    this.init();
+                                }
+                            });
+                            return;
+                        }
                         this.activity_result = data.data;
                         this.is_win = this.activity_result.is_win;
                         this.state = 'fishing';

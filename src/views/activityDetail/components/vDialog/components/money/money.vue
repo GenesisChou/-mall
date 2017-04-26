@@ -11,10 +11,11 @@
 
         .product {
             position: absolute;
-            left: pxTorem(170);
-            top: pxTorem(278);
-            width: pxTorem(410);
+            left:50%;
+            top: pxTorem(276);
+            width: pxTorem(220);
             height: pxTorem(220);
+            transform:translateX(-50%);
         }
         .message {
             position: absolute;

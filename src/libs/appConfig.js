@@ -11,6 +11,7 @@ module.exports = {
     MALL_HOST: 'http://test.imall.justtong.com', //服务器域名
     LOGO: 'http://static.justtong.com/uploads/images/goods/20161025/142505580efac1ad494.jpg',
     SUCCESS: 10000, //服务端返回成功状态码
+    INTEGRAL_LACK: 40001,
     LOGIN_FAILED: 9999, //服务端返回错误状态码
     PERPAGE: 20, //分页查询时每页条数
     TOKEN: '', //授权码

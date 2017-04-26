@@ -110,7 +110,7 @@
         @include flex-center;
         position: absolute;
         bottom: pxTorem(-36);
-        position:relative;
+        position: relative;
         height: pxTorem(60);
         color: #6f3a04;
         font-size: pxTorem(24);
@@ -322,12 +322,24 @@
                     this.$store.dispatch('toggleLoading');
                     const data = response.data;
                     if (data.status === APP.SUCCESS) {
+                        if (data.data.error_code == APP.INTEGRAL_LACK) {
+                            this.toggleDialog({
+                                faliure: 'lack',
+                                callback: () => {
+                                    this.init();
+                                }
+                            });
+                            return;
+                        }
                         this.state = 'start';
                         this.activity_result = data.data;
                         this.is_right = this.activity_result.is_right;
                     } else {
                         this.toggleDialog({
-                            msg: data.info
+                            msg: data.info,
+                            callback: () => {
+                                this.init();
+                            }
                         });
                     }
                 }, (response) => {

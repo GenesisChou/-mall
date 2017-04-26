@@ -10,7 +10,7 @@
     .header {
         width: pxTorem(750);
         height: pxTorem(330);
-        margin-bottom:pxTorem(-84);
+        margin-bottom: pxTorem(-84);
     }
 
     .doll-panel {
@@ -33,7 +33,7 @@
             position: absolute;
             top: pxTorem(222);
             width: 100%;
-            height:pxTorem(61);
+            height: pxTorem(61);
             font-weight: 500;
             color: $white;
             .number {
@@ -453,6 +453,15 @@
                 }).then((response) => {
                     const data = response.data;
                     if (data.status === APP.SUCCESS) {
+                        if (data.data.error_code == APP.INTEGRAL_LACK) {
+                            this.toggleDialog({
+                                faliure: 'lack',
+                                callback: () => {
+                                    this.init();
+                                }
+                            });
+                            return;
+                        }
                         this.activity_result = data.data;
                         this.is_win = this.activity_result.is_win;
                         this.state = 'caught';

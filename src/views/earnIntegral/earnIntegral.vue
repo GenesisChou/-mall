@@ -5,15 +5,30 @@
         overflow: hidden;
     }
 
-    .head {
-        width: pxTorem(750);
-        height: pxTorem(1158);
-        padding-top: pxTorem(70);
+    .main {
         position: relative;
+        background-color: #4dd3d6;
+        padding-bottom: pxTorem(103);
+    }
+
+    .head {
+        position: relative;
+        width: pxTorem(750);
+        height: pxTorem(859);
+        overflow: hidden;
         background: url('./images/earnIntegralBackground.png') no-repeat;
         background-size: 100% 100%;
+        .btn {
+            @include flex-center;
+            @include active(#f05f61,
+            3%);
+            width: pxTorem(120);
+            margin: pxTorem(15) auto;
+            color: $white;
+            background-color: #f05f61;
+            font-size: pxTorem(24);
+        }
         .message {
-            padding-top: pxTorem(15);
             text-shadow: 0 pxTorem(4) pxTorem(4) rgba(209, 172, 0, 0.68);
             font-weight: 500;
             color: $white;
@@ -51,6 +66,7 @@
         position: relative;
         width: 100%;
         height: pxTorem(234);
+        margin-top: pxTorem(50);
         z-index: 1;
     }
 
@@ -76,7 +92,9 @@
             background-color: $white;
             color: $orange;
             h1 {
-                font-size: pxTorem(44);
+                font-size: pxTorem(48);
+                padding-bottom: pxTorem(1);
+                margin-bottom: pxTorem(5);
                 border-bottom: 1px solid $orange;
             }
         }
@@ -89,8 +107,61 @@
         }
     }
 
-    .main {
-        background-color: #4dd3d6;
+    .gift-list {
+        @include flex-center;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: pxTorem(55);
+        img {
+            width: pxTorem(153);
+            height: pxTorem(145);
+        }
+        li {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            width: pxTorem(208);
+            height: pxTorem(232);
+            padding: pxTorem(4);
+            margin: 0 pxTorem(11);
+            border-radius: pxTorem(5);
+            background-color: #37b8ba;
+            list-style: none;
+        }
+        h4 {
+            @include flex-center;
+            width: 100%;
+            height: pxTorem(60);
+            line-height: pxTorem(60);
+            overflow: hidden;
+            font-weight: 500;
+            background-color: #4dd3d6;
+            border-radius: pxTorem(5);
+            color: #29a6a8;
+        }
+        li.active {
+            position: relative;
+            background-color: #b8edef;
+            h4 {
+                color: $white;
+            }
+            &:before {
+                content: '已领取';
+                position: absolute;
+                left: -12%;
+                top: -6%;
+                background-color: #f05f61;
+                color: $white;
+                border: 1px solid $white;
+                border-radius: pxTorem(5);
+                padding: pxTorem(5) pxTorem(8);
+                font-size: pxTorem(28);
+                font-weight: 500;
+                transform: rotate(-20deg);
+            }
+        }
     }
 
     .progress {
@@ -209,8 +280,8 @@
         border-top: 1px solid #d4d4d6;
         .title {
             @include flex-center-v; // height: pxTorem(80);
-            line-height: pxTorem(40);
             width: 70%;
+            line-height: pxTorem(40);
             font-weight: 500;
             overflow: hidden;
         }
@@ -251,27 +322,12 @@
         background-color: #f2f3f4;
     }
 
-    .frame {
-        position: fixed;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        z-index: 2;
-        iframe {
-            width: 100%;
-            height: 100%;
-            overflow: scroll;
-        }
-    }
-
-    .close-frame {
-        position: fixed;
-        right: pxTorem(30);
-        top: pxTorem(670);
-        width: pxTorem(94);
-        height: pxTorem(94);
-        z-index: 3;
+    .balloon {
+        position: absolute;
+        bottom: pxTorem(5);
+        right: pxTorem(20);
+        width: pxTorem(116);
+        height: pxTorem(106);
     }
 
     .raiders {
@@ -307,7 +363,7 @@
         }
     }
 
-    .dialog {
+    .gift {
         position: relative;
         width: pxTorem(619);
         height: pxTorem(664);
@@ -347,10 +403,112 @@
             margin-left: pxTorem(-190);
         }
     }
+
+    .records {
+        position: relative;
+        width: pxTorem(620);
+        padding: pxTorem(32);
+        background-color: #cf423f;
+        border-radius: pxTorem(10);
+        box-shadow: 0 pxTorem(4) pxTorem(4) rgba(0, 0, 0, .5);
+        .decoration {
+            position: absolute;
+            left: -8%;
+            top: -10%;
+            width: pxTorem(685);
+            height: pxTorem(264);
+        }
+        .container {
+            width: 100%;
+            height: 100%;
+            background-color: $white;
+            border-top-left-radius: pxTorem(10);
+            border-top-right-radius: pxTorem(10);
+        }
+        .title {
+            text-align: center;
+            line-height: pxTorem(63);
+            font-size: pxTorem(40);
+            color: $white;
+            background-color: #9b3131;
+            border-top-left-radius: pxTorem(10);
+            border-top-right-radius: pxTorem(10);
+        }
+        .close {
+            @include flex-center;
+            position: absolute;
+            right: pxTorem(-40);
+            top: pxTorem(-40);
+            width: pxTorem(80);
+            height: pxTorem(80);
+            background-color: $white;
+            border-radius: 50%;
+        }
+        .icon-close-circle {
+            font-size: pxTorem(80);
+            color: #cf423f;
+            &:active {
+                color: darken(#cf423f, 10%);
+            }
+        }
+        .calendar {
+            width: 100%;
+            padding-bottom: pxTorem(20);
+            ul {
+                display: flex;
+                flex-wrap: wrap;
+            }
+            li {
+                list-style: none;
+                width: 14.28%;
+                text-align: center;
+                color: #3d3d3d;
+                &.checked {
+                    color: #cf423f;
+                }
+                &.today {
+                    background-color: #9b3131;
+                    color: $white;
+                }
+                &.disable {
+                    color: rgba(0, 0, 0, .3);
+                }
+            }
+            h1 {
+                line-height: pxTorem(35);
+            }
+            h6 {
+                font-size: pxTorem(18);
+            }
+
+            ul:first-child {
+                li {
+                    height: pxTorem(50);
+                    line-height: pxTorem(50);
+                    font-size: pxTorem(18);
+                    &:first-child {
+                        color: #cf423f;
+                    }
+                    &:last-child {
+                        color: #cf423f;
+                    }
+                }
+            }
+            ul:first-child~ul {
+                li {
+                    display: flex;
+                    flex-direction: column;
+                    height: pxTorem(80);
+                    justify-content: center;
+                    border-radius: pxTorem(10); // margin:pxTorem(5) 0;
+                }
+            }
+        }
+    }
 </style>
 <template>
-    <div v-if='loaded' class='earn-integral'>
-        <main v-if='!frame_show' class='main'>
+    <div class='earn-integral'>
+        <main class='main'>
             <header class='head'>
                 <router-link v-show='back_show' :to='{name:"index"}' class='back' tag='div'>
                     <span>返回首页</span>
@@ -363,7 +521,7 @@
                         <div v-if='user.ischecked' class='circle-button'>
                             <div class='circle white' @click='checkIn'>
                                 <h1>已签到</h1>
-                                <h4>连续{{user.checkin_days}}天</h4>
+                                <h6>积分：{{user.integral>>0}}</h6>
                             </div>
                         </div>
                     </transition>
@@ -375,11 +533,19 @@
                         </div>
                     </transition>
                 </div>
+                <div class='btn' @click='toggleRecords'>
+                    签到记录
+                </div>
                 <p class='message'>
-                    连续签到有更多惊喜哦
-                    <img src='./images/foot.png'>
+                    {{notice}}
                 </p>
-                <v-progress :checkin-params='checkin_params'></v-progress>
+                <ul class='gift-list'>
+                    <li v-for='gift in gift_list' :class='{active:gift.is_price}'>
+                        <img v-if='gift.is_price' src='./images/earnIntegralMoneyActive.png'>
+                        <img v-else src='./images/earnIntegralMoney.png'>
+                        <h4>{{gift.checkin_days}}</h4>
+                    </li>
+                </ul>
             </header>
             <template v-if='user.is_submit!= 1'>
                 <router-link :to='{name:"edit_user"}' tag='div' class='edit-user'>
@@ -407,21 +573,17 @@
                     现在没有积分任务啦～
                 </li>
             </ul>
-            <footer class='footer'>
-                <v-support></v-support>
-            </footer>
+            <img class='balloon' src='./images/earnIntegralBalloon.png'>
         </main>
-        <template v-if='frame_show'>
-            <div class='frame' style='overflow:auto;-webkit-overflow-scrolling:touch'>
-                <iframe :src='frame_link'></iframe>
-            </div>
-            <img class='close-frame' src='./images/back.png' @click='toggleFrame'>
-        </template>
+        <footer class='footer'>
+            <v-support></v-support>
+        </footer>
+
         <v-modal v-model='raiders_show'>
             <div class='raiders'>
                 <ul>
-                    <li v-for='item in checkin_strategy'>
-                        {{item}}
+                    <li v-for='(item,$index) in raiders '>
+                        {{$index+1}}、{{item}}
                     </li>
                 </ul>
                 <footer @click='toggleRaiders'>
@@ -429,33 +591,50 @@
                 </footer>
             </div>
         </v-modal>
-        <v-modal v-model='dialog_show'>
-            <div class='dialog'>
-                <img @click='toggleDialog' class='close' src='./images/close.png'>
-                <h4 class='message'>获得{{dialog.msg}}</h4>
-                <img class='product' :src='dialog.img'>
+        <v-modal v-model='gift_show'>
+            <div class='gift'>
+                <img @click='toggleGift' class='close' src='./images/close.png'>
+                <h4 class='message'>获得{{gift.msg}}</h4>
+                <img class='product' :src='gift.img'>
                 <div class='operation' @click='toOrderDetail'></div>
             </div>
         </v-modal>
-
+        <v-modal v-model='records_show'>
+            <div class='records'>
+                <div class='container'>
+                    <img class='decoration' src='./images/recordsDecoration.png'>
+                    <div class='close' @click='toggleRecords'>
+                        <i class='iconfont icon-close-circle'></i>
+                    </div>
+                    <h1 class='title'>{{records.year_month}}</h1>
+                    <div class='calendar'>
+                        <ul>
+                            <li v-for="i in ['日', '一', '二', '三', '四', '五', '六']">{{i}}</li>
+                        </ul>
+                        <ul>
+                            <li v-for='record in records.detail' :class='[{checked:record.checkin},{disable:record.day>new Date().getDate()},{today:record.day==new Date().getDate()}]'>
+                                <h1>{{record.day}}</h1>
+                                <h6>{{record.integral}}</h6>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </v-modal>
     </div>
 </template>
 <script>
     import vModal from 'components/vModal';
-    import vProgress from './components/vProgress';
-    import vDialog from 'views/activityDetail/components/vDialog';
+    // import vProgress from './components/vProgress ';
     export default {
         name: 'earnIntegral',
         components: {
             vModal,
-            vProgress,
-            vDialog
+            // vProgress,
         },
         data() {
             return {
                 check_in_params: [],
-                loaded: false,
-                checked: true,
                 submit_param: {
                     integral: 0
                 },
@@ -464,24 +643,29 @@
                     day_limit: 0,
                     today: 0
                 },
-                dialog: {},
-                frame_link: '',
+                gift: {},
                 article_list: [],
                 back_show: false,
-                frame_show: false,
                 raiders_show: false,
-                dialog_show: false,
+                gift_show: false,
+                records_show: false
             };
         },
         computed: {
             user() {
                 return this.$store.state.user;
             },
-            checkin_strategy() {
+            raiders() {
                 return this.check_in_params.checkin_strategy || [];
             },
-            checkin_params() {
-                return this.check_in_params.checkin_params || [];
+            gift_list() {
+                return this.check_in_params.checkin_price ? this.check_in_params.checkin_price[0].slice(0, 3) : [];
+            },
+            notice() {
+                return this.check_in_params.checkin_param ? this.check_in_params.checkin_param.tips : '';
+            },
+            records() {
+                return this.check_in_params.checkin_record || {};
             }
         },
         activated() {
@@ -491,72 +675,58 @@
             this.getReadParam();
             this.getArticleList();
             this.getCheckInParams();
-            this.getSubmitParam();
+            // this.getSubmitParam();
         },
         deactivated() {
             this.back_show = false;
-            this.frame_show = false;
             this.raiders_show = false;
-            this.dialog_show = false;
+            this.gift_show = false;
+            this.records_show = false;
         },
         methods: {
             //签到
             checkIn() {
                 if (!this.user.ischecked) {
-                    this.$store.dispatch('toggleLoading');
+                    this.$store.dispatch('toggleLoading ');
                     this.$http.post(`${APP.HOST}/checkin/${APP.USER_ID}`, {
                         token: APP.TOKEN,
                         user_id: APP.USER_ID,
                         media_id: APP.MEDIA_ID
                     }).then((response) => {
                         const data = response.data;
-                        this.$store.dispatch('toggleLoading');
+                        this.$store.dispatch('toggleLoading ');
                         if (data.status === APP.SUCCESS) {
                             const check_result = data.data;
                             if (check_result.is_win) {
-                                this.toggleDialog({
+                                this.togglegift({
                                     msg: check_result.name,
                                     img: check_result.pic_thumb,
                                     order_id: check_result.id
                                 });
                             }
-                            this.$store.dispatch('getUserInfor');
+                            this.$store.dispatch('getUserInfor ');
                             this.getCheckInParams();
                         } else {
-                            this.$store.dispatch('toggleAlert', {
+                            this.$store.dispatch('toggleAlert ', {
                                 msg: data.info
                             });
                         }
                     }, (response) => {
-                        this.$store.dispatch('toggleLoading');
+                        this.$store.dispatch('toggleLoading ');
                     });
                 }
             },
             //获取签到记录
             getCheckInParams() {
-                this.$store.dispatch('toggleLoading');
                 this.$http.post(`${APP.HOST}/get_checkin_param/${APP.USER_ID}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID,
                     media_id: APP.MEDIA_ID
                 }).then((response) => {
-                    this.$store.dispatch('toggleLoading');
                     const data = response.data;
-                    this.check_in_params = data.data;
-                    this.loaded = true;
-                }, (response) => {
-                    this.$store.dispatch('toggleLoading');
-                });
-            },
-            //获取提交资料积分参数
-            getSubmitParam() {
-                this.$http.post(`${APP.HOST}/get_submit_param/${APP.USER_ID}`, {
-                    token: APP.TOKEN,
-                    user_id: APP.USER_ID,
-                    media_id: APP.MEDIA_ID
-                }).then((response) => {
-                    const data = response.data;
-                    this.submit_param.integral = data.data.integral;
+                    if (data.status === APP.SUCCESS) {
+                        this.check_in_params = data.data;
+                    }
                 });
             },
             //获取阅读文章积分参数
@@ -583,37 +753,34 @@
             },
             //阅读文章
             readArticle(article) {
-                this.frame_link = article.url;
                 this.$http.post(`${APP.HOST}/read_article/${article.id}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID,
                     media_id: APP.MEDIA_ID
                 }).then((response) => {
-                    // this.toggleFrame();
-                    location.href = article.url;
                     const data = response.data;
                     if (data.status === APP.SUCCESS && article.is_read === 2) {
-                        this.$store.dispatch('getUserInfor');
+                        this.$store.dispatch('getUserInfor ');
                         this.getArticleList();
                         this.getReadParam();
                     }
-                    // location.href = article.url;
+                    location.href = article.url;
                 });
-            },
-            toggleFrame() {
-                this.frame_show = !this.frame_show;
             },
             toggleRaiders() {
                 this.raiders_show = !this.raiders_show;
             },
-            toggleDialog(dialog = {}) {
-                this.dialog = dialog;
-                this.dialog_show = !this.dialog_show;
+            toggleGift(gift = {}) {
+                this.gift = gift;
+                this.gift_show = !this.gift_show;
+            },
+            toggleRecords() {
+                this.records_show = !this.records_show;
             },
             toOrderDetail() {
-                const order_id = this.dialog.order_id;
+                const order_id = this.gift.order_id;
                 this.$router.push({
-                    name: 'order_detail',
+                    name: 'order_detail ',
                     query: {
                         order_id
                     }

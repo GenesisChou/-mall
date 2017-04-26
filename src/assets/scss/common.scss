@@ -41,3 +41,13 @@ img.img-responsive {
     background-color: #b5b5b5;
     color: $white;
 }
+
+.enlarge-enter-active {
+    transform: scale(1);
+    transform-origin: center center;
+    transition: .2s;
+}
+
+.enlarge-enter {
+    transform: scale(0.5); // top: pxTorem(-675);
+}

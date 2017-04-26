@@ -1,0 +1,76 @@
+  @import '../../../../assets/scss/variable.scss';
+  .fortune {
+      min-height: pxTorem(1250);
+      padding-bottom: pxTorem(84);
+      background-color: #fdf860;
+      background-size: pxTorem(750) pxTorem(1380);
+      background-position: pxTorem(0) pxTorem(400);
+      background-repeat: no-repeat;
+  }
+
+  .banner {
+      width: pxTorem(750);
+      height: pxTorem(330);
+  }
+
+  .panel {
+      position: relative;
+      width: pxTorem(623);
+      height: pxTorem(809);
+      margin: 0 auto pxTorem(40) auto;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+  }
+
+  .integral-message {
+      @include flex-center;
+      height: pxTorem(100);
+      color: $white;
+      font-size: pxTorem(38);
+  }
+
+  table {
+      margin: 0 auto;
+      padding-top: pxTorem(72);
+  }
+
+  td {
+      width: pxTorem(178);
+      height: pxTorem(178);
+      vertical-align: middle;
+      text-align: center;
+      background-size: pxTorem(155) pxTorem(155);
+      background-position: center;
+      background-repeat: no-repeat;
+      img {
+          width: pxTorem(100);
+          height: pxTorem(100);
+          margin-bottom: pxTorem(10);
+      }
+      &.center {
+          background-size: 100% 100%;
+      }
+  }
+
+  .notice {
+      position: absolute;
+      bottom: pxTorem(15);
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      color: #b50300;
+      .number {
+          padding: 0 pxTorem(3);
+          color: #ffff66;
+          font-size: pxTorem(34);
+      }
+  }
+
+  .describe {
+      padding: 0 pxTorem(40);
+      .editor-style {
+          padding-top: pxTorem(20);
+          padding-bottom: pxTorem(40);
+          color: #ad0406;
+      }
+  }

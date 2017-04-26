@@ -17,8 +17,8 @@
         background-image: url('./images/cardBackgroundTop.png');
         background-size: pxTorem(750) pxTorem(15);
         img {
-            position:absolute;
-            bottom:0;
+            position: absolute;
+            bottom: 0;
             width: pxTorem(750);
             height: pxTorem(84);
         }
@@ -276,9 +276,9 @@
             position: absolute;
             top: pxTorem(160);
             left: 50%;
-            width: pxTorem(256);
+            width: pxTorem(118);
             height: pxTorem(118);
-            margin-left: pxTorem(-256/2);
+            margin-left: pxTorem(-118/2);
             z-index: 1;
         }
     }
@@ -532,10 +532,6 @@
                 this.big_card_state = 'shake';
             },
             start(num) {
-                // this.light_num = '';
-                // this.select_num = num;
-                // this.state = 'start';
-                // this.is_win = true;
                 if (this.state !== 'ready') return;
                 this.state = 'block';
                 clearInterval(this.timer);
@@ -546,6 +542,15 @@
                 }).then((response) => {
                     const data = response.data;
                     if (data.status === APP.SUCCESS) {
+                        if (data.data.error_code == APP.INTEGRAL_LACK) {
+                            this.toggleDialog({
+                                faliure: 'lack',
+                                callback: () => {
+                                    this.init();
+                                }
+                            });
+                            return;
+                        }
                         this.state = 'start';
                         this.select_num = num;
                         this.activity_result = data.data;

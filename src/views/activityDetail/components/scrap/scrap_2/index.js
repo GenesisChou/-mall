@@ -1,0 +1,1 @@
+module.exports = require('./scrap_2.vue');

@@ -46,7 +46,7 @@
         z-index: 1;
     }
 
-    .notice{
+    .notice {
         position: absolute;
         color: $white;
         left: 50%;
@@ -122,6 +122,51 @@
             isOff: Boolean
         },
         data() {
+            const game_list = [{
+                    name: '开心消消乐',
+                    code: 'r3FEflzD',
+                    style: 'eliminate'
+                }, {
+                    name: '棍子忍者',
+                    code: 'uWr5e32D',
+                    style: 'stick'
+                },
+                {
+                    name: '逝去的青春',
+                    code: 'o3KdlWed',
+                    style: 'mario'
+                },
+                {
+                    name: '接金元宝',
+                    code: '8Ew3kl53',
+                    style: 'gold'
+                },
+                {
+                    name: '颠球大赛',
+                    code: '6Uwfer9e',
+                    style: 'soccer'
+                },
+                {
+                    name: '猫落游戏',
+                    code: 'U49deE3',
+                    style: 'cat'
+                },
+                {
+                    name: '双色小弹球',
+                    code: 'a3jeUdw8',
+                    style: 'twins'
+                },
+                {
+                    name: '蛋糕制造者',
+                    code: 't8EwO4nh',
+                    style: 'cake'
+                },
+                {
+                    name: '忍者跑酷',
+                    code: 'E1w9gp4i3',
+                    style: 'pakour'
+                }
+            ];
             return {
                 name: '',
                 game_id: '',
@@ -129,10 +174,12 @@
                 state: '',
                 is_win: '',
                 order_detail_id: '', //活动结束跳转id
-                alert: {},
+                dialog: {},
                 script: null,
                 game_loaded: false,
-                activity_result: {}
+                activity_result: {},
+                game_list,
+                dialog_style: ''
             };
         },
         computed: {
@@ -153,7 +200,7 @@
                             color: 'red'
                         },
                     ],
-                    color = 'red';
+                    color = 'green';
                 colors.forEach(item => {
                     if (item.name === this.name) {
                         color = item.color;
@@ -169,61 +216,20 @@
                     // this.$parent.game_start = true;
                     AIR.Game.startGame('#canvas', false, false, this.game, 1, true);
                     AIR.Game.gameOver((score) => {
+                        this.dialog.score = score;
                         this.state = 'stop';
                         AIR.Game.stopGame();
-                        this.toggleDialog(this.alert);
+                        this.toggleDialog(this.dialog);
                     });
                 }
             },
             game_id(value) {
                 this.getGameDetail(value).then(data => {
-                    /*
-                     * 各个游戏的游戏代码为：
-                     * 接元宝游戏：   8Ew3kl53
-                     * 逝去的青春：   o3KdlWed
-                     * 三消游戏  ：   r3FEflzD
-                     * 棍子忍者  ：   uWr5e32D
-                     */
                     this.name = data.data.name;
-                    const game_list = [{
-                            name: '开心消消乐',
-                            code: 'r3FEflzD'
-                        }, {
-                            name: '棍子忍者',
-                            code: 'uWr5e32D'
-                        },
-                        {
-                            name: '逝去的青春',
-                            code: 'o3KdlWed'
-                        },
-                        {
-                            name: '接金元宝',
-                            code: '8Ew3kl53'
-                        },
-                        {
-                            name: '颠球大赛',
-                            code: '6Uwfer9e'
-                        },
-                        {
-                            name: '猫落游戏',
-                            code: 'U49deE3'
-                        },
-                        {
-                            name: '双色小弹球',
-                            code: 'a3jeUdw8'
-                        },
-                        {
-                            name: '蛋糕制造者',
-                            code: 't8EwO4nh'
-                        },
-                        {
-                            name: '忍者跑酷',
-                            code: 'E1w9gp4i3'
-                        }
-                    ];
-                    game_list.forEach(item => {
+                    this.game_list.forEach(item => {
                         if (item.name === this.name) {
                             this.game = item.code;
+                            this.dialog_style = item.style || '';
                             return;
                         }
                     });
@@ -244,8 +250,10 @@
                     new_canvas = document.createElement('canvas');
                 new_canvas.setAttribute('id', 'canvas');
                 if (value) {
-                    this.alert = {
+                    this.dialog = {
                         type: 'success',
+                        style: this.dialog_style,
+                        score: 0,
                         img: result.pic_thumb,
                         msg: '获得' + result.name,
                         callback: this.toOrderDetail(result.id),
@@ -256,7 +264,7 @@
                         btn_text: '查看'
                     };
                 } else {
-                    this.alert = {
+                    this.dialog = {
                         msg: result.name,
                         callback: () => {
                             this.init();
@@ -284,7 +292,7 @@
                 this.game_id = this.activityDetail.game_id;
                 this.is_win = '';
                 this.order_detail_id = ''; //活动结束跳转id
-                this.alert = {};
+                this.dialog = {};
                 this.state = 'ready';
             },
             getGameDetail(game_id) {
@@ -293,7 +301,7 @@
                         token: APP.TOKEN,
                         user_id: APP.USER_ID
                     }).then((response) => {
-                        let data = response.data;
+                        const data = response.data;
                         if (resolve) {
                             resolve(data);
                         }
@@ -303,13 +311,13 @@
             startGame() {
                 if (!this.game) {
                     this.toggleDialog({
-                        msg: '该活动已下架'
+                        msg: '该活动已下架',
                     });
                     return;
                 }
                 if (!this.game_loaded) {
                     this.toggleDialog({
-                        msg: '请等待游戏完全载入'
+                        msg: '请等待游戏完全载入',
                     });
                     return;
                 }
@@ -321,6 +329,15 @@
                     this.$store.dispatch('toggleLoading');
                     const data = response.data;
                     if (data.status === APP.SUCCESS) {
+                        if (data.data.error_code == APP.INTEGRAL_LACK) {
+                            this.toggleDialog({
+                                faliure: 'lack',
+                                callback: () => {
+                                    this.init();
+                                }
+                            });
+                            return;
+                        }
                         this.state = 'start';
                         this.activity_result = data.data;
                         this.is_win = this.activity_result.is_win;
