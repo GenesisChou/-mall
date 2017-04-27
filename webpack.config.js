@@ -4,7 +4,7 @@ const path = require('path'),
     webpackConfig = {
         entry: {
             app: './src/main.js',
-            vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk', 'scriptjs', 'vue-swipe', 'alloytouch']
+            vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk', 'scriptjs', 'alloytouch']
         },
         output: {
             path: path.resolve(__dirname, './dist'),
@@ -113,8 +113,8 @@ if (process.env.NODE_ENV === 'production') {
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
-            filename: 'js/vendor.js',
-            // filename: 'js/vendor.[hash].js'
+            // filename: 'js/vendor.js',
+            filename: 'js/vendor.[hash].js'
         }),
         new webpack.LoaderOptionsPlugin({
             minimize: true

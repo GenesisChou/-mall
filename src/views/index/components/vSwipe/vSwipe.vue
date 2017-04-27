@@ -1,39 +1,66 @@
 <style lang='scss' scoped>
     @import '../../../../assets/scss/variable.scss';
-    .v-swipe {
+    // @import './style.scss';
+    .slide-item {
+        width: pxTorem(750);
         height: pxTorem(330);
-        img {
-            width: pxTorem(750);
-            height: pxTorem(330);
-        }
+    }
+
+    .bullet {
+        width: pxTorem(10);
+        height: pxTorem(10);
     }
 </style>
 <template>
-    <swipe  class='v-swipe' :auto=5000 :speed=500>
-        <swipe-item v-for='slide in slides'>
-            <img @click='routerLink(slide);' :src="slide.pic">
-        </swipe-item>
-    </swipe>
+    <swiper :options='swiperOption' ref='mySwiper'>
+        <!-- slides -->
+        <swiper-slide v-for='slide in slides'>
+            <img class='slide-item' :src="slide.pic">
+        </swiper-slide>
+        <div class='swiper-pagination' slot='pagination'></div>
+    </swiper>
 </template>
 <script>
-    import './style/vSwipe.scss';
+    import './style.scss';
     import {
-        Swipe,
-        SwipeItem
-    } from 'vue-swipe';
+        swiper,
+        swiperSlide
+    } from 'vue-awesome-swiper';
     export default {
         name: 'vSwipe',
         components: {
-            Swipe,
-            SwipeItem
+            swiper,
+            swiperSlide
         },
         data() {
             return {
-                slides: []
+                slides: [],
+                swiperOption: {
+                    notNextTick: true,
+                    autoplay: 5000,
+                    autoplayDisableOnInteraction: false,
+                    loop: true,
+                    autoHeight: true,
+                    pagination: '.swiper-pagination',
+                    paginationClickable: true,
+                    onTap: (swiper) => {
+                        const index = swiper.realIndex;
+                        // console.log(this.slides[index]);
+                        this.routerLink(this.slides[index]);
+                    },
+                }
             };
+        },
+        computed: {
+            swiper() {
+                return this.$refs.mySwiper.swiper;
+            }
         },
         created() {
             this.getHotBanners();
+        },
+        mounted() {
+            this.swiper.slideTo(1, 0);
         },
         methods: {
             getHotBanners() {
@@ -56,33 +83,33 @@
                 // let router = null;
                 this.$store.dispatch('bannerView', id);
                 switch (type) {
-                case 1:
-                    location.href = banner.url;
-                    break;
-                case 2:
-                    this.$router.push({
-                        name: 'activity_detail',
-                        query: {
-                            activity_id: item_id,
-                        }
-                    });
-                    break;
-                case 3:
-                    this.$router.push({
-                        name: 'product_detail',
-                        query: {
-                            product_id: item_id,
-                        }
-                    });
-                    break;
-                case 4:
-                    this.$router.push({
-                        name: 'subject_detail',
-                        query: {
-                            subject_id: item_id,
-                        }
-                    });
-                    break;
+                    case 1:
+                        location.href = banner.url;
+                        break;
+                    case 2:
+                        this.$router.push({
+                            name: 'activity_detail',
+                            query: {
+                                activity_id: item_id,
+                            }
+                        });
+                        break;
+                    case 3:
+                        this.$router.push({
+                            name: 'product_detail',
+                            query: {
+                                product_id: item_id,
+                            }
+                        });
+                        break;
+                    case 4:
+                        this.$router.push({
+                            name: 'subject_detail',
+                            query: {
+                                subject_id: item_id,
+                            }
+                        });
+                        break;
                 }
             },
         }

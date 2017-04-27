@@ -154,6 +154,7 @@
             this.scroll_event = this.getScrollEvent();
         },
         beforeRouteLeave(to, from, next) {
+            utils.setSessionStorage('position:' + from.name, utils.getScrollTop());
             window.removeEventListener('scroll', this.scroll_event);
             next();
         },

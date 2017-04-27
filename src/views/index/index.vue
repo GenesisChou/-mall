@@ -27,7 +27,7 @@
             overflow: hidden;
             position: relative;
             text-align: center;
-        background-color: $white;
+            background-color: $white;
             .v-badage {
                 @include flex-center;
                 width: pxTorem(50);
@@ -169,6 +169,7 @@
             }
         },
         activated() {
+            this.$children[0].swiper.startAutoplay();
             const position = utils.getSessionStorage('position:' + this.$route.name);
             if (position) {
                 window.scrollTo(0, position);
@@ -184,6 +185,9 @@
             this.scroll_event = this.getScrollEvent();
         },
         beforeRouteLeave(to, from, next) {
+            this.$children[0].swiper.startAutoplay();
+            utils.setSessionStorage('position:' + from.name, utils.getScrollTop());
+
             window.removeEventListener('scroll', this.scroll_event);
             next();
         },

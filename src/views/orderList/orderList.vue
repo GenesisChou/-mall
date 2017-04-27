@@ -193,7 +193,7 @@
             }
         },
         beforeRouteLeave(to, from, next) {
-            //离开页面后解除滚动事件
+            utils.setSessionStorage('position:' + from.name, utils.getScrollTop());
             window.removeEventListener('scroll', this.scroll_events[this.current_type]);
             next();
         },
