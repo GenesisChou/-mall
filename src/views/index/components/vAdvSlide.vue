@@ -1,18 +1,24 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss'; // @import './style.scss';
+    .v-adv-slide {
+        width: pxTorem(750);
+        height: pxTorem(330);
+    }
     .slide-item {
         width: pxTorem(750);
         height: pxTorem(330);
     }
 </style>
 <template>
-    <swiper :options='swiperOption' ref='mySwiper' id='swiper'>
-        <!-- slides -->
-        <swiper-slide v-for='slide in layout.items'>
-            <img class='slide-item' :src="slide.pic_banner_new">
-        </swiper-slide>
-        <div class='swiper-pagination' slot='pagination'></div>
-    </swiper>
+    <div class='v-adv-slide'>
+        <swiper :options='swiperOption' ref='mySwiper' id='swiper'>
+            <!-- slides -->
+            <swiper-slide v-for='slide in layout.items'>
+                <img class='slide-item' :src="slide.pic_banner_new">
+            </swiper-slide>
+            <div class='swiper-pagination' slot='pagination'></div>
+        </swiper>
+    </div>
 </template>
 <script>
     import {

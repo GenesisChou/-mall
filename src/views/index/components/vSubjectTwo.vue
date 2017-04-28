@@ -3,9 +3,10 @@
     .v-subject {
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        height: pxTorem(250);
         padding: 0 pxTorem(28); // margin-bottom: pxTorem(20);
-        background-color: $white;
-        border-bottom: 1px solid #d3d4d6;
+        background-color: $white; // border-bottom: 1px solid #d3d4d6;
         img {
             width: pxTorem(222);
             height: pxTorem(222);
@@ -19,7 +20,7 @@
 </template>
 <script>
     export default {
-        name: 'vSubjectOne',
+        name: 'vSubjectTwo',
         props: {
             layout: Object,
             routerLink: Function

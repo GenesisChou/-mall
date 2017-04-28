@@ -5,7 +5,7 @@
         list-style: none; // border-bottom: 1px solid #d3d4d6;
         color: #666;
         font-size: pxTorem(24);
-        margin-bottom: pxTorem(20);
+        // margin-bottom: pxTorem(20);
         li {
             @include active;
             @include flex-center;
