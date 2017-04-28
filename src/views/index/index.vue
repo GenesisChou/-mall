@@ -76,15 +76,19 @@
         },
         methods: {
             getLayOut() {
+                this.$store.dispatch('toggleLoading');
                 this.$http.post(`${APP.HOST}/index`, {
                     token: APP.TOKEN,
                     userid: APP.USER_ID,
                     media_id: APP.MEDIA_ID
                 }).then((response) => {
+                    this.$store.dispatch('toggleLoading');
                     const data = response.data;
                     if (data.status === APP.SUCCESS) {
                         this.framework = data.data;
                     }
+                }, () => {
+                    this.$store.dispatch('toggleLoading');
                 });
             },
             getComponent(component_type, layout_type) {
