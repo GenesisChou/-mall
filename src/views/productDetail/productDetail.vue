@@ -89,7 +89,7 @@
     <div v-if='product_detail' class='product-detail'>
         <template v-if='!is_recharge'>
             <header class='header '>
-                <img class='banner' :src='product_detail.pic_banner' />
+                <img class='banner' :src='product_detail.pic_banner_new' />
                 <div class='title'>
                     <h1 class='text-ellipsis'>{{product_name}}</h1>
                     <h3><span class='number'>{{integral}}</span>积分
@@ -160,7 +160,7 @@
                     close_btn: true,
                     msg: '获得' + this.product_name,
                     type: 'img',
-                    img: this.product_detail.pic_thumb,
+                    img: this.product_detail.pic_thumb_new,
                     btn_text: '查看',
                     callback: this.toOrderDetail
                 });

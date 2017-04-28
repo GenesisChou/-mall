@@ -8,7 +8,7 @@
 <template>
     <div class='v-scrap'>
         <header>
-            <img class='banner' :src='activityDetail.pic_banner'>
+            <img class='banner' :src='activityDetail.pic_banner_new'>
         </header>
         <main>
             <div class='integral-message'>

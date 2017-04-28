@@ -511,7 +511,7 @@
 <template>
     <div class='v-marble '>
         <header class='header'>
-            <img class='banner' :src='activityDetail.pic_banner'>
+            <img class='banner' :src='activityDetail.pic_banner_new'>
         </header>
         <div class='circles'>
             <div class='content'></div>
@@ -618,7 +618,7 @@
                 if (value) {
                     this.dialog = {
                         type: 'success',
-                        img: result.pic_thumb,
+                        img: result.pic_thumb_new,
                         msg: '获得' + result.name,
                         btn_text: '查看',
                         callback: this.toOrderDetail(result.id),

@@ -390,9 +390,10 @@
         .product {
             position: absolute;
             top: pxTorem(222);
-            left: pxTorem(66);
-            width: pxTorem(490);
+            left: 50%;
+            width: pxTorem(233);
             height: pxTorem(233);
+            transform: translateX(-50%);
         }
         .operation {
             position: absolute;
@@ -668,6 +669,10 @@
                 return this.check_in_params.checkin_record || {};
             }
         },
+        beforeRouteEnter(to, from, next) {
+            utils.scrollToTop();
+            next();
+        },
         activated() {
             this.back_show = this.$route.query.back_show || false;
         },
@@ -687,32 +692,32 @@
             //签到
             checkIn() {
                 if (!this.user.ischecked) {
-                    this.$store.dispatch('toggleLoading ');
+                    this.$store.dispatch('toggleLoading');
                     this.$http.post(`${APP.HOST}/checkin/${APP.USER_ID}`, {
                         token: APP.TOKEN,
                         user_id: APP.USER_ID,
                         media_id: APP.MEDIA_ID
                     }).then((response) => {
                         const data = response.data;
-                        this.$store.dispatch('toggleLoading ');
+                        this.$store.dispatch('toggleLoading');
                         if (data.status === APP.SUCCESS) {
                             const check_result = data.data;
                             if (check_result.is_win) {
-                                this.togglegift({
+                                this.toggleGift({
                                     msg: check_result.name,
-                                    img: check_result.pic_thumb,
+                                    img: check_result.pic_thumb_new,
                                     order_id: check_result.id
                                 });
                             }
-                            this.$store.dispatch('getUserInfor ');
+                            this.$store.dispatch('getUserInfor');
                             this.getCheckInParams();
                         } else {
-                            this.$store.dispatch('toggleAlert ', {
+                            this.$store.dispatch('toggleAlert', {
                                 msg: data.info
                             });
                         }
                     }, (response) => {
-                        this.$store.dispatch('toggleLoading ');
+                        this.$store.dispatch('toggleLoading');
                     });
                 }
             },

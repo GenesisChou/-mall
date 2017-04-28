@@ -241,7 +241,7 @@
 <template>
     <div class='v-tear'>
         <header class='header'>
-            <img class='img-responsive' :src='activityDetail.pic_banner'>
+            <img class='img-responsive' :src='activityDetail.pic_banner_new'>
         </header>
         <main>
             <div class='machine-panel'>
@@ -346,7 +346,7 @@
                         this.alert = {
                             type: 'success',
                             style: 'reel',
-                            img: result.pic_thumb,
+                            img: result.pic_thumb_new,
                             msg: result.name,
                             btn_text: '查看',
                             callback: this.toOrderDetail(result.id),

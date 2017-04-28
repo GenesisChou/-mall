@@ -115,7 +115,7 @@
 <template>
     <div class='v-egg'>
         <header class='header'>
-            <img class='img-responsive' :src='activityDetail.pic_banner'>
+            <img class='img-responsive' :src='activityDetail.pic_banner_new'>
         </header>
         <img class='background' src="./images/eggBackground.png">
         <main class='main'>
@@ -247,7 +247,7 @@
                     if (value) {
                         this.toggleDialog({
                             type: 'success',
-                            img: result.pic_thumb,
+                            img: result.pic_thumb_new,
                             msg: '获得' + result.name,
                             callback: this.toOrderDetail(result.id),
                             callback_close: () => {
@@ -285,7 +285,7 @@
             start(num) {
                 // this.toggleDialog({
                 //     type: 'success',
-                //     // img: result.pic_thumb,
+                //     // img: result.pic_thumb_new,
                 //     style:'twins',
                 //     msg: '获得fuck you',
                 //     btn_text: '查看'

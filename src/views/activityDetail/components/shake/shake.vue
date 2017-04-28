@@ -109,7 +109,7 @@
 <template>
     <div class='v-shake '>
         <header class='header'>
-            <img class='banner' :src='activityDetail.pic_banner'>
+            <img class='banner' :src='activityDetail.pic_banner_new'>
         </header>
         <main class='shake-panel'>
             <div class='integral-message'>
@@ -202,7 +202,7 @@
                             this.toggleDialog({
                                 msg: '获得' + result.name,
                                 type: 'success',
-                                img: result.pic_thumb,
+                                img: result.pic_thumb_new,
                                 btn_text: '查看',
                                 callback: this.toOrderDetail(result.id),
                                 callback_close: () => {

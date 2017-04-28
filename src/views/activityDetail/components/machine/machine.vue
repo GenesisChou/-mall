@@ -178,7 +178,7 @@
     <div class='v-machine'>
         <img class='background' src='./images/machineBackground.png'>
         <header class='header'>
-            <img class='img-responsive' :src='activityDetail.pic_banner'>
+            <img class='img-responsive' :src='activityDetail.pic_banner_new'>
             <img class='banner-decoration' src='./images/machineDecoration.png'>
         </header>
         <main>
@@ -328,7 +328,7 @@
                 if (value) {
                     this.alert = {
                         type: 'success',
-                        img: result.pic_thumb,
+                        img: result.pic_thumb_new,
                         msg: '获得' + result.name,
                         btn_text: '查看',
                         callback: this.toOrderDetail(result.id),

@@ -95,7 +95,7 @@
             <ul class='list'>
                 <router-link v-for='(product,$index) in product_list' :to='{name:"product_detail",query:{product_id:product.id,integral:product.integral>>0}}'
                     tag='li'>
-                    <v-list-item :title='product.name' :title-dupty='product.name' :integral='product.integral>>0' :img='product.pic_thumb' :no-border='$index==product_list.length-1'></v-list-item>
+                    <v-list-item :title='product.name' :title-dupty='product.name' :integral='product.integral>>0' :img='product.pic_thumb_new' :no-border='$index==product_list.length-1'></v-list-item>
                 </router-link>
             </ul>
         </div>

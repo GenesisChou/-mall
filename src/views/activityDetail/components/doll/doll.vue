@@ -260,7 +260,7 @@
 <template>
     <div class="v-doll">
         <header class="header">
-            <img class="img-responsive" :src="activityDetail.pic_banner">
+            <img class="img-responsive" :src="activityDetail.pic_banner_new">
         </header>
         <main>
             <div class="doll-panel">
@@ -377,7 +377,7 @@
                         const caught_number = this.getPosition(this.awards),
                             random_type = Math.ceil(Math.random() * 3);
                         this.caught_number = caught_number;
-                        this.group[caught_number].childNodes[0].src = this.activity_result.pic_thumb;
+                        this.group[caught_number].childNodes[0].src = this.activity_result.pic_thumb_new;
                         this.beingCaught(caught_number, random_type, () => {
                             setTimeout(() => {
                                 this.toggleDialog(this.alert);
@@ -401,7 +401,7 @@
                 if (value) {
                     this.alert = {
                         type: 'success',
-                        img: result.pic_thumb,
+                        img: result.pic_thumb_new,
                         msg: '获得' + result.name,
                         btn_text: '查看',
                         callback: this.toOrderDetail(result.id),

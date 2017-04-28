@@ -79,7 +79,7 @@
     <div class='game-detail' v-if='game'>
         <header class='header' ref='container'>
             <template v-if='state=="ready"'>
-                <img class='banner' :src='activityDetail.pic_banner'>
+                <img class='banner' :src='activityDetail.pic_banner_new'>
                 <div class='start' @click='startGame'></div>
                 <div class='cover'></div>
                 <div class='notice' v-if='isOff'>游戏已下架</div>
@@ -254,7 +254,7 @@
                         type: 'success',
                         style: this.dialog_style,
                         score: 0,
-                        img: result.pic_thumb,
+                        img: result.pic_thumb_new,
                         msg: '获得' + result.name,
                         callback: this.toOrderDetail(result.id),
                         callback_close: () => {

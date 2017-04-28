@@ -369,7 +369,7 @@
             <img src='./images/cardDecoration.png'>
         </div>
         <header class='header'>
-            <img class='banner' :src='activityDetail.pic_banner'>
+            <img class='banner' :src='activityDetail.pic_banner_new'>
         </header>
         <main class='main'>
             <div class='integral-message'>
@@ -382,7 +382,7 @@
                 <li v-show='big_show' :class='["card","big",big_card_state]'></li>
                 <li v-show='big_show' :class='["card","big","reverse",big_card_state]'>
                     <h6 class='message'>获得{{activity_result.name}}</h6>
-                    <img class='product' :src='activity_result.pic_thumb'>
+                    <img class='product' :src='activity_result.pic_thumb_new'>
                     <img class='decoration' src='./images/pockerDecoration.png'>
                 </li>
             </ul>
@@ -486,7 +486,7 @@
                     this.dialog = {
                         type: 'success',
                         style: 'dice',
-                        img: result.pic_thumb,
+                        img: result.pic_thumb_new,
                         msg: result.name,
                         btn_text: '查看',
                         callback: this.toOrderDetail(result.id),

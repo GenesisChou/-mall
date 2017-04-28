@@ -24,7 +24,7 @@
 <template>
     <div class='fortune'>
         <header>
-            <img class='banner' v-if='activityDetail.pic_banner' :src='activityDetail.pic_banner'>
+            <img class='banner'  :src='activityDetail.pic_banner_new'>
         </header>
         <main>
             <div class='panel'>

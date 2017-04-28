@@ -163,7 +163,7 @@
 <template>
     <div class='v-quiz '>
         <header class='header'>
-            <img class='banner' :src='activityDetail.pic_banner'>
+            <img class='banner' :src='activityDetail.pic_banner_new'>
         </header>
         <template v-for='(item,$index) in activityDetail.questions'>
             <main v-if='current_number==$index' class='panel'>
@@ -274,7 +274,7 @@
                         close_btn: true,
                         msg: '获得' + result.name,
                         type: 'success',
-                        img: result.pic_thumb,
+                        img: result.pic_thumb_new,
                         btn_text: '查看',
                         callback: this.toOrderDetail(result.id),
                         callback_close: () => {
