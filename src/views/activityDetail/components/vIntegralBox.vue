@@ -44,6 +44,11 @@
             background-color:#9e6f01;
             border:1px solid #cb9e06;
         }
+        li.orange{
+            color:$white;
+            background-color:#ff5004;
+            border:1px solid #481110;
+        }
     }
 </style>
 <template>

@@ -10,12 +10,23 @@
     .index-content {
         flex: 1;
     }
+
+    .cover {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 1;
+        background-color: rgba(0, 0, 0, .5);
+    }
 </style>
 <template>
     <div class='index'>
         <div class='index-content'>
             <component v-for='layout in framework' :is='getComponent(layout.component_type,layout.layout_type)' :layout='layout' :router-link='routerLink'
-                :get-icon='getIcon' :state='state'></component>
+                :get-icon='getIcon' :state='state' :guide='guide'></component>
+            <div v-if='guide' class='cover'></div>
         </div>
     </div>
 </template>
@@ -56,11 +67,13 @@
         data() {
             return {
                 framework: [],
-                state: ''
+                state: '',
+                guide: ''
             };
         },
         created() {
             this.getLayOut();
+            this.guide = (this.$store.state.user.first_login === 1) ? 'guide-account' : '';
         },
         activated() {
             this.state = 'enter';
@@ -179,6 +192,9 @@
                     component_type: layout.component_type
                 });
             },
+            jumpGuide(str = '') {
+                this.guide = str;
+            }
         },
     };
 </script>

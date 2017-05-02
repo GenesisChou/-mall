@@ -1,8 +1,7 @@
 <style lang='scss' scoped>
     @import '../style.scss';
     .v-scrap {
-        background: #4dd3d6 url('./images/scrapBackground.png') no-repeat;
-        background-size: pxTorem(750) pxTorem(1968);
+        background-color:#4dd3d6;
     }
 </style>
 <template>
@@ -12,7 +11,7 @@
         </header>
         <main>
             <div class='integral-message'>
-                <v-integral-box :integral='user.integral>>0' color='yellow'></v-integral-box>
+                <v-integral-box :integral='user.integral>>0' color='orange'></v-integral-box>
             </div>
             <div id='lotteryContainer'> </div>
             <div v-if='state=="ready"' class='start' @click='start'>开始刮奖</div>

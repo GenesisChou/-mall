@@ -157,7 +157,7 @@
                         return;
                     }
                 });
-                // return 'marble';
+                // return 'scrap';
                 return result || 'scrap';
             },
             toggleDialog(dialog) {

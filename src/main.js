@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import VueResource from 'vue-resource';
+Vue.use(VueResource);
+Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
 
 const token = utils.getParameterByName('token'),
     activity_id = utils.getParameterByName('activity_id'),
@@ -52,7 +54,7 @@ function cacheExpire(cache) {
     return interval > 30;
 }
 //微信登陆
-function wxLogin(media_id) {
+function wxLogin(media_id, state = 1) {
     const redirect = encodeURIComponent(APP.MALL_HOST);
     let link = `${APP.HOST}/weixin/${media_id}?callback=${redirect}`;
     if (activity_id) {
@@ -62,7 +64,11 @@ function wxLogin(media_id) {
     } else if (subject_id) {
         link += '&subject_id=' + product_id;
     }
-    location.href = link;
+    if (state === 1) {
+        location.href = link;
+    } else if (state === 2) {
+        Vue.http.get(`${APP.HOST}/weixin/${APP.MEDIA_ID}?callback=${redirect}`);
+    }
 }
 
 function startApp(cache) {
@@ -78,11 +84,10 @@ function startApp(cache) {
         APP.TITLE = cache.TITLE;
     }
     FastClick.attach(document.body);
-    Vue.use(VueResource);
     Vue.use(globalComponents);
-    Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
     setWeChatConfig(Vue);
     document.title = APP.TITLE;
+    wxLogin(APP.MEDIA_ID, 2);
     new Vue({
         el: '#app',
         render: h => h(require('./APP.vue')),

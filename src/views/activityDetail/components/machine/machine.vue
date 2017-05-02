@@ -117,7 +117,7 @@
                 height: pxTorem(200);
             }
             img {
-                width: pxTorem(180);
+                width: pxTorem(140);
                 height: pxTorem(140);
             }
         }
