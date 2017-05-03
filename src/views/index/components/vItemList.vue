@@ -9,9 +9,6 @@
         margin: 0 auto pxTorem(14) auto;
         list-style: none;
         background-color: $white;
-        &:last-child {
-            margin-bottom: 0;
-        }
     }
 
     .left {

@@ -4,9 +4,10 @@
         position: relative;
         display: flex;
         list-style: none; 
-        // border-bottom: 1px solid #d3d4d6;
+        margin-bottom: pxTorem(14);
+        border-bottom: 1px solid #d3d4d6;
         color: #666;
-        font-size: pxTorem(24); // margin-bottom: pxTorem(20);
+        font-size: pxTorem(24); 
         li {
             @include active;
             @include flex-center;

@@ -1,13 +1,9 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .v-adv {
-        // margin-bottom: pxTorem(15);
         li {
             list-style: none;
             margin-bottom: pxTorem(14);
-            &:last-child {
-                margin-bottom: 0;
-            }
         }
         img {
             width: pxTorem(750);
