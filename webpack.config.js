@@ -13,16 +13,7 @@ const path = require('path'),
             // filename: 'js/[name].[hash].js'
         },
         module: {
-            rules: [
-                /*
-                {
-                    enforce: 'pre',
-                    test: /.vue$/,
-                    loader: 'eslint-loader',
-                    exclude: /node_modules/
-                },
-                */
-                {
+            rules: [{
                     test: /\.vue$/,
                     loader: 'vue-loader',
                     options: {
@@ -96,9 +87,6 @@ const path = require('path'),
         // devtool: '#eval-source-map'
     };
 if (process.env.NODE_ENV === 'production') {
-    // module.exports.devtool = '#source-map',
-    // http://vue-loader.vuejs.org/en/workflow/production.html
-    // webpackConfig.output.filename = 'js/[name].[hash].js';
     webpackConfig.plugins = (webpackConfig.plugins || []).concat([
         new webpack.DefinePlugin({
             'process.env': {

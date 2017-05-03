@@ -581,46 +581,52 @@
         </footer>
 
         <v-modal v-model='raiders_show'>
-            <div class='raiders'>
-                <ul>
-                    <li v-for='(item,$index) in raiders '>
-                        {{$index+1}}、{{item}}
-                    </li>
-                </ul>
-                <footer @click='toggleRaiders'>
-                    我知道了
-                </footer>
-            </div>
+            <transition name='enlarge'>
+                <div v-show='raiders_show' class='raiders'>
+                    <ul>
+                        <li v-for='(item,$index) in raiders '>
+                            {{$index+1}}、{{item}}
+                        </li>
+                    </ul>
+                    <footer @click='toggleRaiders'>
+                        我知道了
+                    </footer>
+                </div>
+            </transition>
         </v-modal>
         <v-modal v-model='gift_show'>
-            <div class='gift'>
-                <img @click='toggleGift' class='close' src='./images/close.png'>
-                <h4 class='message'>获得{{gift.msg}}</h4>
-                <img class='product' :src='gift.img'>
-                <div class='operation' @click='toOrderDetail'></div>
-            </div>
+            <transition name='enlarge'>
+                <div v-show='gift_show' class='gift'>
+                    <img @click='toggleGift' class='close' src='./images/close.png'>
+                    <h4 class='message'>获得{{gift.msg}}</h4>
+                    <img class='product' :src='gift.img'>
+                    <div class='operation' @click='toOrderDetail'></div>
+                </div>
+            </transition>
         </v-modal>
         <v-modal v-model='records_show'>
-            <div class='records'>
-                <div class='container'>
-                    <img class='decoration' src='./images/recordsDecoration.png'>
-                    <div class='close' @click='toggleRecords'>
-                        <i class='iconfont icon-close-circle'></i>
-                    </div>
-                    <h1 class='title'>{{records.year_month}}</h1>
-                    <div class='calendar'>
-                        <ul>
-                            <li v-for="i in ['日', '一', '二', '三', '四', '五', '六']">{{i}}</li>
-                        </ul>
-                        <ul>
-                            <li v-for='record in records.detail' :class='[{checked:record.checkin},{disable:record.day>new Date().getDate()},{today:record.day==new Date().getDate()}]'>
-                                <h1>{{record.day}}</h1>
-                                <h6>{{record.integral}}</h6>
-                            </li>
-                        </ul>
+            <transition name='enlarge'>
+                <div v-show='records_show' class='records'>
+                    <div class='container'>
+                        <img class='decoration' src='./images/recordsDecoration.png'>
+                        <div class='close' @click='toggleRecords'>
+                            <i class='iconfont icon-close-circle'></i>
+                        </div>
+                        <h1 class='title'>{{records.year_month}}</h1>
+                        <div class='calendar'>
+                            <ul>
+                                <li v-for="i in ['日', '一', '二', '三', '四', '五', '六']">{{i}}</li>
+                            </ul>
+                            <ul>
+                                <li v-for='record in records.detail' :class='[{checked:record.checkin},{disable:record.day>new Date().getDate()},{today:record.day==new Date().getDate()}]'>
+                                    <h1>{{record.day}}</h1>
+                                    <h6>{{record.integral}}</h6>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </transition>
         </v-modal>
     </div>
 </template>

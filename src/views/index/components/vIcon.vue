@@ -3,7 +3,8 @@
     .icon-list {
         position: relative;
         display: flex;
-        list-style: none; // border-bottom: 1px solid #d3d4d6;
+        list-style: none; 
+        // border-bottom: 1px solid #d3d4d6;
         color: #666;
         font-size: pxTorem(24); // margin-bottom: pxTorem(20);
         li {
@@ -191,7 +192,7 @@
         },
         methods: {
             jump(str = '') {
-                this.$parent.jumpGuide(str);
+                this.$emit('update:guide', str);
             }
         }
     };

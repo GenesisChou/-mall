@@ -4,12 +4,13 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        height: pxTorem(250);
+        height: pxTorem(252);
         padding: 0 pxTorem(28); // margin-bottom: pxTorem(20);
-        background-color: $white; // border-bottom: 1px solid #d3d4d6;
+        background-color: $white; 
+        // border-bottom: 1px solid #d3d4d6;
         img {
-            width: pxTorem(222);
-            height: pxTorem(222);
+            width: pxTorem(220);
+            height: pxTorem(220);
         }
     }
 </style>

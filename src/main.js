@@ -37,21 +37,9 @@ if (token) {
     if (!cache) {
         wxLogin(media_id);
         console.log('no cache');
-        //缓存过期
-    } else if (cacheExpire(cache)) {
-        wxLogin(media_id);
-        console.log('out of date');
     } else {
         startApp(cache);
     }
-}
-//判断是否过期
-//localstorage保存时间30天
-function cacheExpire(cache) {
-    const current_time = new Date(),
-        save_time = cache.Date,
-        interval = utils.getTimeInterval(current_time, save_time, 'day');
-    return interval > 30;
 }
 //微信登陆
 function wxLogin(media_id, state = 1) {

@@ -1,24 +1,27 @@
 <style lang='scss' scoped>
     @import '../assets/scss/variable';
-    .v-alert-content {
+    .container {
         position: fixed;
         left: 50%;
         top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 11;
+    }
+
+    .v-alert-content {
         width: pxTorem(600);
         font-size: pxTorem(28);
         text-align: center;
         padding: pxTorem(20);
         background-color: $white;
-        transform: translate(-50%, -50%);
         border-radius: pxTorem(10);
         background-color: $white;
-        z-index: 11;
         .iconfont {
             width: pxTorem(60);
             height: pxTorem(60);
             font-size: pxTorem(40);
-            font-weight:bold;
-            color:$red;
+            font-weight: bold;
+            color: $red;
         }
         .pic {
             width: pxTorem(210);
@@ -31,7 +34,7 @@
             text-align: center;
             width: pxTorem(400);
         }
-        button{
+        button {
             width: pxTorem(300);
             height: pxTorem(80);
             margin: 0 auto;
@@ -45,20 +48,45 @@
             top: pxTorem(5);
             font-weight: bold;
             font-size: pxTorem(40);
-            color:$black;
+            color: $black;
         }
+    }
+
+    .bg-cover {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, .5);
+        z-index: 5;
+    }
+
+    .enlarge-enter-active {
+        transform: scale(1);
+        transform-origin: center center;
+        transition: .2s;
+    }
+
+    .enlarge-enter {
+        transform: scale(0.5); // top: pxTorem(-675);
     }
 </style>
 <template>
-    <v-modal v-model='show' :cover-close='false'>
-        <div v-if='show' class='v-alert-content '>
-            <img v-if='type=="img"' class='pic' :src='img' alt="">
-            <i v-else :class='["iconfont",icon_class]'></i>
-            <h3 v-if='msg' class='msg'>{{msg}}</h3>
-            <button class='btn btn-orange' @click='func()'>{{btn_text}}</button>
-            <i v-if='close_btn' class='close iconfont icon-error-circle' @click='close()'></i>
+    <div class='v-alert'>
+        <div class='container'>
+            <transition name='enlarge'>
+                <div v-if='show' class='v-alert-content'>
+                    <img v-if='type=="img"' class='pic' :src='img' alt="">
+                    <i v-else :class='["iconfont",icon_class]'></i>
+                    <h3 v-if='msg' class='msg'>{{msg}}</h3>
+                    <button class='btn btn-orange' @click='func()'>{{btn_text}}</button>
+                    <i v-if='close_btn' class='close iconfont icon-error-circle' @click='close()'></i>
+                </div>
+            </transition>
         </div>
-    </v-modal>
+        <div v-show='show' class='bg-cover'></div>
+    </div>
 </template>
 <script>
     import vModal from 'components/vModal.vue';

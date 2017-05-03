@@ -4,6 +4,7 @@
         width: pxTorem(750);
         height: pxTorem(330);
     }
+
     .slide-item {
         width: pxTorem(750);
         height: pxTorem(330);
@@ -30,7 +31,6 @@
         props: {
             layout: Object,
             routerLink: Function,
-            state: String
         },
         components: {
             swiper,
@@ -54,7 +54,7 @@
             };
         },
         watch: {
-            state(value) {
+            router_state(value) {
                 if (value === 'leave') {
                     this.swiper.stopAutoplay();
                 } else if (value === 'enter') {
@@ -63,6 +63,9 @@
             }
         },
         computed: {
+            router_state() {
+                return this.$parent.router_state;
+            },
             swiper() {
                 return this.$refs.mySwiper.swiper;
             }

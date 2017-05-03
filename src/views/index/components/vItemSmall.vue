@@ -1,9 +1,9 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .v-items-small {
-        overflow:hidden;
+        overflow: hidden;
         background-color: $white;
-        padding:0 pxTorem(28);
+        padding: 0 pxTorem(28);
     }
 
     .v-item {
@@ -11,7 +11,7 @@
         @include clearfix;
         position: relative;
         width: 50%;
-        padding:pxTorem(20) 0;
+        padding: pxTorem(20) 0;
         list-style: none;
         float: left;
         background-color: $white;
@@ -56,23 +56,23 @@
         h5 {
             height: pxTorem(38);
             line-height: pxTorem(38);
-            padding-left:pxTorem(16);
-            overflow:hidden;
+            padding-left: pxTorem(16);
+            overflow: hidden;
         }
         h6 {
             height: pxTorem(40);
-            padding-left:pxTorem(16);
+            padding-left: pxTorem(16);
             line-height: pxTorem(40);
-            font-size:pxTorem(22);
-            overflow:hidden;
+            font-size: pxTorem(22);
+            overflow: hidden;
             color: #a9aaae;
         }
         .integral {
-            height:pxTorem(32);
-            padding-left:pxTorem(16);
-            padding-right:pxTorem(50);
+            height: pxTorem(32);
+            padding-left: pxTorem(16);
+            padding-right: pxTorem(50);
             line-height: pxTorem(32);
-            font-size:pxTorem(22);
+            font-size: pxTorem(22);
             overflow: hidden;
             color: $orange;
         }
@@ -107,16 +107,6 @@
 <script>
     export default {
         name: 'vItemSmall',
-        props: {
-            layout: Object,
-            routerLink: Function,
-            getIcon: Function
-        },
-        computed: {
-            show_message() {
-                return this.layout.show_title === 1 || this.layout.show_subtitle === 1 || this.layout.show_integral ===
-                    1;
-            }
-        }
+        mixins: [require('../mixin.js')],
     };
 </script>

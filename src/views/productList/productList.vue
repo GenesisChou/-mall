@@ -95,12 +95,13 @@
             <ul class='list'>
                 <router-link v-for='(product,$index) in product_list' :to='{name:"product_detail",query:{product_id:product.id,integral:product.integral>>0}}'
                     tag='li'>
-                    <v-list-item :title='product.name' :title-dupty='product.name' :integral='product.integral>>0' :img='product.pic_thumb_new' :no-border='$index==product_list.length-1'></v-list-item>
+                    <v-list-item :title='product.name' :title-dupty='product.name' :integral='product.integral>>0' :img='product.pic_thumb_new'
+                        :no-border='$index==product_list.length-1'></v-list-item>
                 </router-link>
             </ul>
         </div>
-        <v-back-top></v-back-top>
         <v-support :busy='busy'></v-support>
+        <v-back-top></v-back-top>
     </div>
 </template>
 <script>
@@ -130,6 +131,7 @@
                 },
                 sort_type: '',
                 scroll_event: '',
+                router_state: ''
             };
         },
         computed: {
@@ -139,6 +141,7 @@
         },
         activated() {
             const position = utils.getSessionStorage('position:' + this.$route.name);
+            this.router_state = 'enter';
             if (position) {
                 window.scrollTo(0, position);
             }
@@ -154,6 +157,7 @@
             this.scroll_event = this.getScrollEvent();
         },
         beforeRouteLeave(to, from, next) {
+            this.router_state = 'leave';
             utils.setSessionStorage('position:' + from.name, utils.getScrollTop());
             window.removeEventListener('scroll', this.scroll_event);
             next();

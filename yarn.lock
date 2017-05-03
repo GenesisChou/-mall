@@ -4327,6 +4327,10 @@ svgo@^0.7.0:
     sax "~1.2.1"
     whet.extend "~0.9.9"
 
+swiper@^3.4.2:
+  version "3.4.2"
+  resolved "http://registry.npm.taobao.org/swiper/download/swiper-3.4.2.tgz#39d6b410b1a39833e1f72d3b72999df5f5e38392"
+
 table@^3.7.8:
   version "3.8.3"
   resolved "http://registry.npm.taobao.org/table/download/table-3.8.3.tgz#2bbc542f0fda9861a755d3947fefd8b3f513855f"
@@ -4592,6 +4596,12 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vue-awesome-swiper@^2.4.0:
+  version "2.4.0"
+  resolved "http://registry.npm.taobao.org/vue-awesome-swiper/download/vue-awesome-swiper-2.4.0.tgz#7a924066ea48632c297f6d35765e177d8b4e7906"
+  dependencies:
+    swiper "^3.4.2"
+
 vue-hot-reload-api@^2.0.1:
   version "2.1.0"
   resolved "http://registry.npm.taobao.org/vue-hot-reload-api/download/vue-hot-reload-api-2.1.0.tgz#9ca58a6e0df9078554ce1708688b6578754d86de"
@@ -4629,15 +4639,9 @@ vue-style-loader@^2.0.0:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
 
-vue-swipe@^2.0.2:
-  version "2.0.3"
-  resolved "http://registry.npm.taobao.org/vue-swipe/download/vue-swipe-2.0.3.tgz#03b71d04a819b5f56efa09cd82658c30e8c846c5"
-  dependencies:
-    wind-dom "0.0.3"
-
-vue-template-compiler@^2.2.0:
-  version "2.2.6"
-  resolved "http://registry.npm.taobao.org/vue-template-compiler/download/vue-template-compiler-2.2.6.tgz#2e2928daf0cd0feca9dfc35a9729adeae173ec68"
+vue-template-compiler@^2.3.2:
+  version "2.3.2"
+  resolved "http://registry.npm.taobao.org/vue-template-compiler/download/vue-template-compiler-2.3.2.tgz#d48a7f53df5f497033827182ceb4f0d340803017"
   dependencies:
     de-indent "^1.0.2"
     he "^1.1.0"
@@ -4646,9 +4650,9 @@ vue-template-es2015-compiler@^1.2.2:
   version "1.5.2"
   resolved "http://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.5.2.tgz#a0a6c50c941d2a4abda963f2f42c337ac450ee95"
 
-vue@^2.2.6:
-  version "2.2.6"
-  resolved "http://registry.npm.taobao.org/vue/download/vue-2.2.6.tgz#451714b394dd6d4eae7b773c40c2034a59621aed"
+vue@^2.3.2:
+  version "2.3.2"
+  resolved "http://registry.npm.taobao.org/vue/download/vue-2.3.2.tgz#9e52aae3593480be235ff227557837e69f98203a"
 
 vuex@^2.0.0:
   version "2.3.1"
@@ -4772,10 +4776,6 @@ wide-align@^1.1.0:
   resolved "http://registry.npm.taobao.org/wide-align/download/wide-align-1.1.0.tgz#40edde802a71fea1f070da3e62dcda2e7add96ad"
   dependencies:
     string-width "^1.0.1"
-
-wind-dom@0.0.3:
-  version "0.0.3"
-  resolved "http://registry.npm.taobao.org/wind-dom/download/wind-dom-0.0.3.tgz#3456e3d959dbebdcbf76ca68c6a4e8142f26360f"
 
 window-size@0.1.0:
   version "0.1.0"

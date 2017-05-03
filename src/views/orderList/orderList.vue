@@ -167,7 +167,8 @@
                     name: '已逾期'
                 }],
                 busy: false,
-                has_entered: false
+                has_entered: false,
+                router_state: ''
             };
         },
         computed: {
@@ -188,11 +189,13 @@
         },
         activated() {
             const position = utils.getSessionStorage('position:' + this.$route.name);
+            this.router_state = 'enter';
             if (position) {
                 window.scrollTo(0, position);
             }
         },
         beforeRouteLeave(to, from, next) {
+            this.router_state = 'leave';
             utils.setSessionStorage('position:' + from.name, utils.getScrollTop());
             window.removeEventListener('scroll', this.scroll_events[this.current_type]);
             next();
@@ -289,7 +292,7 @@
                         temp = name;
                         return;
                     }
-                })
+                });
                 return temp;
             }
         }

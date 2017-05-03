@@ -1,4 +1,4 @@
-module.exports = {
+const utils = {
     isInArray(name, arr) {
         let result = false;
         arr.forEach(item => {
@@ -113,3 +113,4 @@ module.exports = {
         return value / 100 + 'rem';
     }
 };
+typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = utils : window.utils = utils;

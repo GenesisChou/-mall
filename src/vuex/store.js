@@ -85,33 +85,6 @@ const state = {
                 open_id: APP.OPEN_ID
             });
         },
-        bannerView(state, banner_id) {
-            Vue.http.post(`${APP.HOST}/banner_view`, {
-                token: APP.TOKEN,
-                userid: APP.USER_ID,
-                user_id: APP.USER_ID,
-                banner_id,
-                media_id: APP.MEDIA_ID
-            });
-        },
-        commendView(state, commend_id) {
-            Vue.http.post(`${APP.HOST}/commend_view`, {
-                token: APP.TOKEN,
-                userid: APP.USER_ID,
-                user_id: APP.USER_ID,
-                commend_id,
-                media_id: APP.MEDIA_ID,
-            });
-        },
-        subjectView(state, subject_id) {
-            Vue.http.post(`${APP.HOST}/subject_view`, {
-                token: APP.TOKEN,
-                userid: APP.USER_ID,
-                user_id: APP.USER_ID,
-                subject_id,
-                media_id: APP.MEDIA_ID,
-            });
-        }
     },
     actions = {
         // 全局
@@ -147,21 +120,6 @@ const state = {
         }, page_id) {
             commit('pageView', page_id);
         },
-        bannerView({
-            commit
-        }, banner_id) {
-            commit('bannerView', banner_id);
-        },
-        commendView({
-            commit
-        }, commend_id) {
-            commit('commendView', commend_id);
-        },
-        subjectView({
-            commit
-        }, subject_id) {
-            commit('subjectView', subject_id);
-        }
     },
     store = new Vuex.Store({
         state,

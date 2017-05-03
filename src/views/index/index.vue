@@ -25,14 +25,17 @@
     <div class='index'>
         <div class='index-content'>
             <component v-for='layout in framework' :is='getComponent(layout.component_type,layout.layout_type)' :layout='layout' :router-link='routerLink'
-                :get-icon='getIcon' :state='state' :guide='guide'></component>
+                :guide.sync='guide'></component>
             <div v-if='guide' class='cover'></div>
+            <v-back-top></v-back-top>
         </div>
     </div>
 </template>
 <script>
+    import vBackTop from 'components/vBackTop';
     export default {
         components: {
+            vBackTop,
             vItemSmall: (resolve) => {
                 require(['./components/vItemSmall'], resolve);
             },
@@ -67,7 +70,7 @@
         data() {
             return {
                 framework: [],
-                state: '',
+                router_state: '',
                 guide: ''
             };
         },
@@ -77,14 +80,14 @@
             });
         },
         activated() {
-            this.state = 'enter';
+            this.router_state = 'enter';
             const position = utils.getSessionStorage('position:' + this.$route.name);
             if (position) {
                 window.scrollTo(0, position);
             }
         },
         beforeRouteLeave(to, from, next) {
-            this.state = 'leave';
+            this.router_state = 'leave';
             utils.setSessionStorage('position:' + from.name, utils.getScrollTop());
             next();
         },
@@ -124,15 +127,6 @@
                     return 'vIcon';
                 }
                 return components[component_type - 1][layout_type - 1];
-            },
-            getIcon(item) {
-                if (item.item_type === 2) {
-                    if (item.activity_sub_type === 1) {
-                        return require('./components/images/game.png');
-                    }
-                    return require('./components/images/activity.png');
-                }
-                return require('./components/images/exchange.png');
             },
             routerLink(item, layout) {
                 if (!item) {
@@ -198,9 +192,6 @@
                     component_type: layout.component_type
                 });
             },
-            jumpGuide(str = '') {
-                this.guide = str;
-            }
         },
     };
 </script>

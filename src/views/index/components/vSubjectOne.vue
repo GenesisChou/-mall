@@ -1,7 +1,6 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .v-subject {
-        // margin-bottom: pxTorem(20);
         overflow: hidden;
         background-color: $white;
         // border-bottom: 1px solid #d3d4d6;

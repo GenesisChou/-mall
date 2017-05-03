@@ -9,8 +9,8 @@
         margin: 0 auto pxTorem(14) auto;
         list-style: none;
         background-color: $white;
-        &:last-child{
-            margin-bottom:0;
+        &:last-child {
+            margin-bottom: 0;
         }
     }
 
@@ -26,7 +26,7 @@
             top: 0;
             width: pxTorem(70);
             height: pxTorem(34);
-            overflow:hidden;
+            overflow: hidden;
             line-height: pxTorem(34);
             text-align: center;
             color: $white;
@@ -91,10 +91,6 @@
 <script>
     export default {
         name: 'vItemList',
-        props: {
-            layout: Object,
-            routerLink: Function,
-            getIcon: Function
-        },
+        mixins: [require('../mixin.js')],
     };
 </script>

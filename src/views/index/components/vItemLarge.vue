@@ -98,16 +98,7 @@
 <script>
     export default {
         name: 'vItemLarge',
-        props: {
-            layout: Object,
-            routerLink: Function,
-            getIcon: Function
-        },
-        computed: {
-            show_message() {
-                return this.layout.show_title === 1 || this.layout.show_subtitle === 1 || this.layout.show_integral ===
-                    1;
-            }
-        }
+        mixins: [require('../mixin.js')],
+
     };
 </script>
