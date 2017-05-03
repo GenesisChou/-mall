@@ -165,7 +165,7 @@
             </h1>
             <img class='dotted-1' src='./images/dotted_1.png'>
             <img class='dotted-2' src='./images/dotted_1.png'>
-            <span @click='jump("")'>跳过</span>
+            <span @click='jump()'>跳过</span>
             <div class='btn' @click='jump("guide-integral")'>朕知道了</div>
         </div>
         <div v-if='guide==="guide-integral"' class='guide integral'>
@@ -175,8 +175,8 @@
             </h1>
             <img class='dotted-1' src='./images/dotted_2.png'>
             <img class='dotted-2' src='./images/dotted_2.png'>
-            <span @click='jump("")'>跳过</span>
-            <div class='btn' @click='jump("")'>朕知道了</div>
+            <span @click='jump()'>跳过</span>
+            <div class='btn' @click='jump()'>朕知道了</div>
         </div>
 
     </ul>

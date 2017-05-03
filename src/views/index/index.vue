@@ -72,8 +72,9 @@
             };
         },
         created() {
-            this.getLayOut();
-            this.guide = (this.$store.state.user.first_login === 1) ? 'guide-account' : '';
+            this.getLayOut().then(first_login => {
+                this.guide = first_login ? 'guide-account' : '';
+            });
         },
         activated() {
             this.state = 'enter';
@@ -89,19 +90,24 @@
         },
         methods: {
             getLayOut() {
-                this.$store.dispatch('toggleLoading');
-                this.$http.post(`${APP.HOST}/index`, {
-                    token: APP.TOKEN,
-                    userid: APP.USER_ID,
-                    media_id: APP.MEDIA_ID
-                }).then((response) => {
+                return new Promise(resolve => {
                     this.$store.dispatch('toggleLoading');
-                    const data = response.data;
-                    if (data.status === APP.SUCCESS) {
-                        this.framework = data.data;
-                    }
-                }, () => {
-                    this.$store.dispatch('toggleLoading');
+                    this.$http.post(`${APP.HOST}/index`, {
+                        token: APP.TOKEN,
+                        user_id: APP.USER_ID,
+                        media_id: APP.MEDIA_ID
+                    }).then((response) => {
+                        this.$store.dispatch('toggleLoading');
+                        const data = response.data;
+                        if (data.status === APP.SUCCESS) {
+                            this.framework = data.data;
+                            if (resolve) {
+                                resolve(this.framework[0].first_login === 1);
+                            }
+                        }
+                    }, () => {
+                        this.$store.dispatch('toggleLoading');
+                    });
                 });
             },
             getComponent(component_type, layout_type) {
