@@ -14,7 +14,7 @@
         position: relative;
         width: pxTorem(658);
         height: pxTorem(658);
-        margin: 0 auto pxTorem(15) auto;
+        margin: 0 auto;
         .img {
             width: 100%;
             height: 100%;
@@ -43,6 +43,7 @@
 
     .message {
         margin: 0 pxTorem(46);
+        padding-top: pxTorem(15);
         border-bottom: 1px solid #d3d4d6;
         h1 {
             height: pxTorem(80);
@@ -61,8 +62,8 @@
         }
         .integral {
             height: pxTorem(85);
-            padding:0 pxTorem(100) 0 pxTorem(39);
-            margin-bottom:pxTorem(20);
+            padding: 0 pxTorem(100) 0 pxTorem(39);
+            margin-bottom: pxTorem(20);
             line-height: pxTorem(85);
             overflow: hidden;
             color: $orange;
@@ -85,11 +86,11 @@
                 <img v-if='layout.show_script===1' class='red-arrows' src="./images/redArrows.png">
                 <img class='img' :src='item.pic_thumb_new'>
             </header>
-            <footer class='message'>
+            <footer v-if='show_message' class='message'>
                 <h1 v-if='layout.show_title===1'>{{item.title}}</h1>
                 <h2 v-if='layout.show_subtitle===1'>{{item.subtitle}}</h2>
                 <p v-if='layout.show_integral===1' class='integral'>{{item.integral>>0}}积分 </p>
-                <img v-if='layout.show_integral===1' class='icon' :src='getIcon(item)'>
+                <img class='icon' :src='getIcon(item)'>
             </footer>
         </li>
     </ul>
@@ -102,5 +103,11 @@
             routerLink: Function,
             getIcon: Function
         },
+        computed: {
+            show_message() {
+                return this.layout.show_title === 1 || this.layout.show_subtitle === 1 || this.layout.show_integral ===
+                    1;
+            }
+        }
     };
 </script>
