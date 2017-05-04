@@ -14,7 +14,7 @@
 <template>
     <ul class='v-adv'>
         <li v-for='item in layout.items'>
-            <img class='v-adv' :src='item.pic_banner_new' @click='routerLink(item,layout)'>
+            <img class='v-adv' v-lazy='item.pic_banner_new' @click='routerLink(item,layout)'>
         </li>
     </ul>
 </template>

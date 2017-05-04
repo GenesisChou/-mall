@@ -84,7 +84,7 @@
             <header class='head'>
                 <span v-if='layout.show_script===1'>{{item.script}}</span>
                 <img v-if='layout.show_script===1' class='red-arrows' src="./images/redArrows.png">
-                <img class='img' :src='item.pic_thumb_new'>
+                <img class='img' v-lazy='item.pic_init_new'>
             </header>
             <footer v-if='show_message' class='message'>
                 <h1 v-if='layout.show_title===1'>{{item.title}}</h1>

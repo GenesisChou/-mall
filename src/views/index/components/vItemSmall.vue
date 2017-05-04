@@ -93,7 +93,7 @@
                 {{item.script}}
             </span>
                 <img v-if='layout.show_script===1' class='red-arrows' src="./images/redArrows.png">
-                <img class='img' :src='item.pic_thumb_new'>
+                <img class='img' v-lazy='item.pic_thumb_new'>
             </header>
             <footer v-if='show_message' class='message'>
                 <h5 v-if='layout.show_title===1'>{{item.title}}</h5>

@@ -61,8 +61,9 @@ function wxLogin(media_id, state = 1) {
 
 function startApp(cache) {
     const store = require('./store'),
-        FastClick = require('fastclick'),
+        fastClick = require('fastclick'),
         setWeChatConfig = require('libs/weChatConfig.js'),
+        lazyLoad = require('vue-lazyload'),
         globalComponents = require('components/components.js');
     APP.TOKEN = cache.TOKEN;
     APP.USER_ID = cache.USER_ID;
@@ -71,8 +72,12 @@ function startApp(cache) {
     if (cache.TITLE) {
         APP.TITLE = cache.TITLE;
     }
-    FastClick.attach(document.body);
+    fastClick.attach(document.body);
     Vue.use(globalComponents);
+    Vue.use(lazyLoad, {
+        attempt: 1,
+        listenEvents: ['scroll']
+    });
     setWeChatConfig();
     document.title = APP.TITLE;
     wxLogin(APP.MEDIA_ID, 2);

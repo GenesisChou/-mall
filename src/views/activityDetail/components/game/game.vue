@@ -122,7 +122,8 @@
             isOff: Boolean
         },
         data() {
-            const game_list = [{
+            const game_list = [
+                {
                     name: '开心消消乐',
                     code: 'r3FEflzD',
                     style: 'eliminate'

@@ -44,31 +44,31 @@
         .icon {
             width: pxTorem(74);
             height: pxTorem(74);
-            background:url('./images/icons.png') no-repeat;
-            background-size: 100% 100%;
+            background: url('./images/icons.png') no-repeat;
+            background-size: pxTorem(320) pxTorem(204);
         }
         .icon.unsolved {
-            background-image: url('./images/unsolvedOrder.png');
+            background-position: pxTorem(10) pxTorem(-110);
             &.active {
-                background-image: url('./images/activeUnsolvedOrder.png');
+                background-position: pxTorem(10) pxTorem(-30);
             }
         }
         .icon.untransported {
-            background-image: url('./images/untransportedOrder.png');
+            background-position: pxTorem(-80) pxTorem(-110);
             &.active {
-                background-image: url('./images/activeUntransportedOrder.png');
+                background-position: pxTorem(-80) pxTorem(-30);
             }
         }
         .icon.solved {
-            background-image: url('./images/solvedOrder.png');
+            background-position: pxTorem(-170) pxTorem(-110);
             &.active {
-                background-image: url('./images/activeSolvedOrder.png');
+                background-position: pxTorem(-170) pxTorem(-30);
             }
         }
         .icon.expired {
-            background-image: url('./images/expiredOrder.png');
+            background-position: pxTorem(-260) pxTorem(-110);
             &.active {
-                background-image: url('./images/activeExpiredOrder.png');
+                background-position: pxTorem(-260) pxTorem(-30);
             }
         }
 

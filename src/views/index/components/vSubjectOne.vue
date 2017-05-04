@@ -25,7 +25,7 @@
 </style>
 <template>
     <div class='v-subject'>
-        <img v-for='(item,$index) in layout.items' :src='$index==0?item.pic_init_new:item.pic_thumb_new' @click='routerLink(item,layout)'>
+        <img v-for='(item,$index) in layout.items' v-lazy='$index==0?item.pic_init_new:item.pic_thumb_new' @click='routerLink(item,layout)'>
     </div>
 </template>
 <script>

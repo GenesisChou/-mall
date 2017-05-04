@@ -74,7 +74,7 @@
                 {{item.script}}
             </span>
                 <img v-if='layout.show_script===1' class='red-arrows' src="./images/redArrows.png">
-                <img class='img' :src='item.pic_thumb_new'>
+                <img class='img' v-lazy='item.pic_thumb_new'>
             </div>
             <div class='message'>
                 <h3 v-if='layout.show_title===1'>{{item.title}}</h3>
