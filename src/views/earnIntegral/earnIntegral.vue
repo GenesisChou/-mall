@@ -506,6 +506,15 @@
             }
         }
     }
+
+    .slide-fade-enter-active {
+        transition: all .3s ease;
+    }
+
+    .slide-fade-enter {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
 </style>
 <template>
     <div class='earn-integral'>
@@ -540,13 +549,14 @@
                 <p class='message'>
                     {{notice}}
                 </p>
-                <ul class='gift-list'>
-                    <li v-for='gift in gift_list' :class='{active:gift.is_price}'>
+
+                <transition-group tag='ul' class='gift-list' name='slide-fade'>
+                    <li v-for='(gift,$index) in gift_list' :key='$index' :class='{active:gift.is_price}'>
                         <img v-if='gift.is_price' src='./images/earnIntegralMoneyActive.png'>
                         <img v-else src='./images/earnIntegralMoney.png'>
                         <h4>{{gift.checkin_days}}</h4>
                     </li>
-                </ul>
+                </transition-group>
             </header>
             <template v-if='user.is_submit!= 1'>
                 <router-link :to='{name:"edit_user"}' tag='div' class='edit-user'>
@@ -557,23 +567,23 @@
                     </div>
                 </router-link>
             </template>
-            <ul class='article-list'>
-                <li class='notice'>
+            <transition-group tag='ul' class='article-list' name='slide-fade'>
+                <li class='notice' key='title'>
                     <p> 完成单个任务可获得<span>{{read_param.integral}}</span>积分 </p>
                     <p> 每日最多可得<span>{{read_param.day_limit}}</span>积分,今日已获得<span>{{read_param.today}}</span>积分 </p>
                 </li>
                 <template v-if='article_list.length'>
-                    <li v-for='article in article_list'>
+                    <li v-for='article in article_list' :key='article.id'>
                         <div class='article' @click='readArticle(article)'>
                             <h4 class='title'>{{article.title}}</h4>
                             <div :class='{read:article.is_read==1}'>{{article.is_read==1?'已完成':article.button}}</div>
                         </div>
                     </li>
                 </template>
-                <li v-else class='empty'>
+                <li v-else class='empty' key='empty'>
                     现在没有积分任务啦～
                 </li>
-            </ul>
+            </transition-group>
             <img class='balloon' src='./images/earnIntegralBalloon.png'>
         </main>
         <footer class='footer'>
@@ -759,7 +769,9 @@
                     media_id: APP.MEDIA_ID
                 }).then((response) => {
                     const data = response.data;
-                    this.article_list = data.data;
+                    if (data.status === APP.SUCCESS) {
+                        this.article_list = data.data;
+                    }
                 });
             },
             //阅读文章

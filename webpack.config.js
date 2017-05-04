@@ -4,7 +4,7 @@ const path = require('path'),
     webpackConfig = {
         entry: {
             app: './src/main.js',
-            vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk', 'scriptjs', 'alloytouch']
+            vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk', 'scriptjs', 'alloytouch', 'vue-lazyload']
         },
         output: {
             path: path.resolve(__dirname, './dist'),

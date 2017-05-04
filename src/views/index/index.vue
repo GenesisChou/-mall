@@ -20,14 +20,25 @@
         z-index: 1;
         background-color: rgba(0, 0, 0, .5);
     }
+
+    .slide-fade-enter-active,
+    .slide-fade-leave-active {
+        transition: all .3s ease;
+    }
+
+    .slide-fade-enter,
+    .slide-fade-leave-active {
+        transform: translateY(10px);
+        opacity: 0;
+    }
 </style>
 <template>
     <div class='index'>
-        <div class='index-content'>
-            <component v-for='layout in framework' :is='getComponent(layout.component_type,layout.layout_type)' :layout='layout' :router-link='routerLink'
-                :guide.sync='guide'></component>
-            <div v-if='guide' class='cover'></div>
-        </div>
+        <transition-group tag='div' class='index-content' name='slide-fade'>
+            <component v-for='layout in framework' :key='layout.id' :is='getComponent(layout.component_type,layout.layout_type)' :layout='layout'
+                :router-link='routerLink' :guide.sync='guide'></component>
+        </transition-group>
+        <div v-if='guide' class='cover'></div>
         <v-back-top></v-back-top>
     </div>
 </template>
@@ -71,7 +82,8 @@
             return {
                 framework: [],
                 router_state: '',
-                guide: ''
+                guide: '',
+                list: [1, 2, 3, 4, 5]
             };
         },
         created() {
@@ -92,6 +104,9 @@
             next();
         },
         methods: {
+            test() {
+                this.list.push(this.list.length);
+            },
             getLayOut() {
                 return new Promise(resolve => {
                     this.$store.dispatch('toggleLoading');
@@ -102,10 +117,11 @@
                     }).then((response) => {
                         this.$store.dispatch('toggleLoading');
                         const data = response.data;
-                        if (data.status === APP.SUCCESS) {
-                            this.framework = data.data;
-                            if (resolve) {
-                                resolve(this.framework[0].first_login === 1);
+                        if (data.status === APP.SUCCESS && utils.getTypeOf(data.data) === 'Array' &&
+                            data.data.length) {
+                            utils.syncLoadArray(this.framework, data.data);
+                            if (resolve && data.data[0] !== 'undefined') {
+                                resolve(data.data[0].first_login === 1);
                             }
                         }
                     }, () => {

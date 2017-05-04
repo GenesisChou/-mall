@@ -106,6 +106,19 @@ const utils = {
             }
         };
     },
+    syncLoadArray(result, target, time = 150) {
+        let $index = 0;
+        const timer = setInterval(() => {
+            if ($index < target.length) {
+                result.push(target[$index]);
+                $index++;
+            } else {
+                clearInterval(timer);
+            }
+        }, 150);
+
+        return result;
+    },
     reloadApp() {
         location.reload();
     },
