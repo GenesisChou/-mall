@@ -50,25 +50,25 @@
         .icon.unsolved {
             background-position: pxTorem(10) pxTorem(-110);
             &.active {
-                background-position: pxTorem(10) pxTorem(-30);
+                background-position: pxTorem(10) pxTorem(-31);
             }
         }
         .icon.untransported {
             background-position: pxTorem(-80) pxTorem(-110);
             &.active {
-                background-position: pxTorem(-80) pxTorem(-30);
+                background-position: pxTorem(-80) pxTorem(-31);
             }
         }
         .icon.solved {
             background-position: pxTorem(-170) pxTorem(-110);
             &.active {
-                background-position: pxTorem(-170) pxTorem(-30);
+                background-position: pxTorem(-170) pxTorem(-31);
             }
         }
         .icon.expired {
             background-position: pxTorem(-260) pxTorem(-110);
             &.active {
-                background-position: pxTorem(-260) pxTorem(-30);
+                background-position: pxTorem(-260) pxTorem(-31);
             }
         }
 
