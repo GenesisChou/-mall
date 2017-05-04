@@ -60,7 +60,7 @@ function wxLogin(media_id, state = 1) {
 }
 
 function startApp(cache) {
-    const store = require('./vuex/store.js'),
+    const store = require('./store'),
         FastClick = require('fastclick'),
         setWeChatConfig = require('libs/weChatConfig.js'),
         globalComponents = require('components/components.js');
@@ -73,7 +73,7 @@ function startApp(cache) {
     }
     FastClick.attach(document.body);
     Vue.use(globalComponents);
-    setWeChatConfig(Vue);
+    setWeChatConfig();
     document.title = APP.TITLE;
     wxLogin(APP.MEDIA_ID, 2);
     new Vue({

@@ -1,9 +1,16 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss';
     .v-title {
-        padding:pxTorem(10) pxTorem(35);
+        padding: pxTorem(10) pxTorem(49);
         background-color:$white;
-        font-size:pxTorem(30);
+        h1 {
+            color: #322f2a;
+            font-weight: 500;
+            font-size: pxTorem(40);
+        }
+        h6{
+            color:#b1b1b5;
+        }
         &.left {
             text-align: left;
         }
@@ -18,7 +25,8 @@
 <template>
     <ul class='v-title-list'>
         <li v-for='item in layout.items' :class='["v-title",style]'>
-            {{item.title}}
+            <h1>{{item.title}}</h1>
+            <h6 v-if='layout.show_subtitle===1'>{{item.subtitle}}</h6>
         </li>
     </ul>
 </template>

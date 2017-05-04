@@ -44,8 +44,8 @@
         .icon {
             width: pxTorem(74);
             height: pxTorem(74);
-            background-size: 100%;
-            background-repeat: no-repeat;
+            background:url('./images/icons.png') no-repeat;
+            background-size: 100% 100%;
         }
         .icon.unsolved {
             background-image: url('./images/unsolvedOrder.png');

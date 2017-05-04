@@ -14,17 +14,17 @@
         z-index: 11;
         .msg {
             @include flex-center;
-            flex-direction:column;
+            flex-direction: column;
             height: pxTorem(130);
         }
         .btns {
-            display:flex;
+            display: flex;
             border-top: 1px solid #d3d4d6;
         }
         .btn-left,
         .btn-right {
             @include flex-center;
-            flex:1;
+            flex: 1;
             height: pxTorem(100);
             font-size: pxTorem(36);
             text-align: center;
@@ -35,10 +35,30 @@
             color: $orange;
         }
     }
+
+    .bg-cover {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, .5);
+        z-index: 5;
+    }
+
+    .enlarge-enter-active {
+        transform: scale(1);
+        transform-origin: center center;
+        transition: .2s;
+    }
+
+    .enlarge-enter {
+        transform: scale(0.5); // top: pxTorem(-675);
+    }
 </style>
 <template>
-    <v-modal v-model='show' :cover-close='false'>
-        <transition name='scale'>
+    <div class='v-confirm'>
+        <transition name='enlarge'>
             <div v-show='show' class='v-confirm-content'>
                 <div class='msg'>
                     <h3>{{msg}}</h3>
@@ -50,15 +70,12 @@
                 </div>
             </div>
         </transition>
-    </v-modal>
+        <div v-show='show' class='bg-cover'></div>
+    </div>
 </template>
 <script>
-    import vModal from 'components/vModal.vue';
     export default {
-        name: 'v-confirm',
-        components: {
-            vModal
-        },
+        name: 'vConfirm',
         computed: {
             confirm() {
                 return this.$store.state.v_confirm;

@@ -27,8 +27,8 @@
             <component v-for='layout in framework' :is='getComponent(layout.component_type,layout.layout_type)' :layout='layout' :router-link='routerLink'
                 :guide.sync='guide'></component>
             <div v-if='guide' class='cover'></div>
-            <v-back-top></v-back-top>
         </div>
+        <v-back-top></v-back-top>
     </div>
 </template>
 <script>
@@ -140,7 +140,13 @@
                 let link = '';
                 this.index_view(item, layout);
                 if (layout.component_type === 6) {
-                    this.iconLink(item);
+                    if (item.is_inner_url === 1) {
+                        this.$router.push({
+                            name: item.url
+                        });
+                    } else if (item.is_inner_url === 2) {
+                        location.href = item.url;
+                    }
                     return;
                 };
                 if (item.item_type === 1) {
@@ -169,15 +175,6 @@
                     location.href = item.url;
                 }
                 this.$router.push(link);
-            },
-            iconLink(icon) {
-                if (icon.is_inner_url === 1) {
-                    this.$router.push({
-                        name: icon.url
-                    });
-                } else if (icon.is_inner_url === 2) {
-                    location.href = icon.url;
-                }
             },
             index_view(item, layout) {
                 this.$http.post(`${APP.HOST}/index_view`, {
