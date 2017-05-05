@@ -63,7 +63,7 @@
             <i class='iconfont  icon-order'></i> 订单号：{{id}}
         </header>
         <main :class='["v-order-main",{border:hasBorder}]'>
-            <img class='pic' :src='img' />
+            <img class='pic' v-lazy='img' />
             <div class='describe'>
                 <h2 >{{name}}</h2>
                 <p> {{integral}}积分

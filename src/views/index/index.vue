@@ -21,21 +21,11 @@
         background-color: rgba(0, 0, 0, .5);
     }
 
-    .slide-fade-enter-active,
-    .slide-fade-leave-active {
-        transition: all .3s ease;
-    }
-
-    .slide-fade-enter,
-    .slide-fade-leave-active {
-        transform: translateY(10px);
-        opacity: 0;
-    }
-</style>
+   </style>
 <template>
     <div class='index'>
         <transition-group tag='div' class='index-content' name='slide-fade'>
-            <component v-for='layout in framework' :key='layout.id' :is='getComponent(layout.component_type,layout.layout_type)' :layout='layout'
+            <component v-for='layout in framework' key='layout.id' :is='getComponent(layout.component_type,layout.layout_type)' :layout='layout'
                 :router-link='routerLink' :guide.sync='guide'></component>
         </transition-group>
         <div v-if='guide' class='cover'></div>
@@ -83,7 +73,6 @@
                 framework: [],
                 router_state: '',
                 guide: '',
-                list: [1, 2, 3, 4, 5]
             };
         },
         created() {

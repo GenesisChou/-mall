@@ -297,7 +297,7 @@
                         this.$store.dispatch('toggleLoading');
                         this.toggleDialog(this.alert);
                     }, 1000);
-                } else if (value === 'rotating') {
+                } else if (value === 'start') {
                     if (this.is_win) {
                         const name = this.activity_result.name,
                             stop_num = this.getPosition(name, this.activityDetail.items);
@@ -367,14 +367,14 @@
             },
             start() {
                 if (this.state !== 'ready') return;
-                this.state = 'start';
+                this.state = 'block';
                 this.$http.post(`${APP.HOST}/slot_machine_activity/${this.id}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID
                 }).then((response) => {
                     const data = response.data;
                     if (data.status === APP.SUCCESS) {
-                        if (data.data.error_code == APP.INTEGRAL_LACK) {
+                        if (data.data.error_code === APP.INTEGRAL_LACK) {
                             this.toggleDialog({
                                 faliure: 'lack',
                                 callback: () => {
@@ -385,7 +385,7 @@
                         }
                         this.activity_result = data.data;
                         this.is_win = this.activity_result.is_win;
-                        this.state = 'rotating';
+                        this.state = 'start';
                     } else {
                         this.toggleDialog({
                             msg: data.info,

@@ -4,12 +4,12 @@
         width: pxTorem(750);
         height: pxTorem(420);
     }
-    
+
     main {
         background-color: $white;
         border-bottom: 1px solid #d3d4d6;
     }
-    
+
     .form-control {
         @include flex-center-v;
         justify-content: space-between;
@@ -19,16 +19,16 @@
         border-bottom: 1px solid $gray-light;
         font-size: pxTorem(34);
         input {
-            flex:1;
+            flex: 1;
             border: none;
         }
         span {
             color: #a9aaae;
         }
     }
-    
+
     .flow-box {
-        display:flex;
+        display: flex;
         justify-content: space-between;
         align-content: space-between;
         flex-wrap: wrap;
@@ -58,12 +58,12 @@
             }
         }
     }
-    
+
     .notice {
         line-height: pxTorem(100);
         text-align: center;
     }
-    
+
     .exchange {
         @include flex-center;
         height: pxTorem(112);
@@ -79,7 +79,7 @@
             transform: scale(0.9);
         }
     }
-    
+
     .popup-content {
         padding-bottom: pxTorem(35);
         background-color: $gray-light;
@@ -188,7 +188,7 @@
                 flow_infor: '',
                 in_exchange: false,
                 popup_show: false
-            }
+            };
         },
         computed: {
             company() {
@@ -201,9 +201,9 @@
                     'active' : 'ready';
             },
             state(value, old_value) {
-                if (value == 'active' && old_value == 'ready') {
+                if (value === 'active' && old_value === 'ready') {
                     this.getFlows();
-                } else if (value == 'ready') {
+                } else if (value === 'ready') {
                     this.flow_infor = '';
                 }
             }
@@ -223,9 +223,9 @@
                     flows: this.flow_infor.flows
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
-                    let data = response.data,
-                        msg = '';
-                    if (data.status == APP.SUCCESS) {
+                    const data = response.data;
+                    let msg = '';
+                    if (data.status === APP.SUCCESS) {
                         msg = data.data.message;
                     } else {
                         msg = data.info;
@@ -235,7 +235,7 @@
                         callback: () => {
                             this.in_exchange = false;
                         }
-                    })
+                    });
                 }, () => {
                     this.$store.dispatch('toggleLoading');
                 });
@@ -246,18 +246,16 @@
                     userid: APP.USER_ID,
                     media_id: APP.MEDIA_ID,
                 }).then((response) => {
-                    let data = response.data;
-                    if (data.status == APP.SUCCESS) {
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS) {
                         this.flow_infor = data.data;
                     }
                 });
             },
             togglePopup() {
-                if (this.state != 'active') return;
+                if (this.state !== 'active') return;
                 this.popup_show = !this.popup_show;
             }
         }
-
-
     };
 </script>

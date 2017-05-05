@@ -116,9 +116,9 @@
                     <span class='badage' v-if='$index==0&&user.unfinished_order_count>0'>{{user.unfinished_order_count}}</span>
                 </li>
             </ul>
-            <ul class='list'>
+            <transition-group tag='ul' class='list' name='slide-fade'>
                 <router-link v-for='(order,$index) in order_list[current_type]' :to='{name:"order_detail",
-                        query:{order_id:parseInt(order.id)}}' tag='li'>
+                        query:{order_id:parseInt(order.id)}}' tag='li' :key='order.id'>
                     <v-order :img='order.product_pic' :id='order.orderid' :integral='order.integral>>0' :name='order.product' :active='true'>
 
                         <h6 class='v-order-footer'>
@@ -126,7 +126,7 @@
                         </h6>
                     </v-order>
                 </router-link>
-            </ul>
+            </transition-group>
         </div>
         <v-support :busy='busy'></v-support>
         <v-back-top></v-back-top>

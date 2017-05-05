@@ -118,13 +118,15 @@
     </div>
 </template>
 <script>
-    import vIntroduction from 'components/vIntroduction.vue';
-    import recharge from './components/recharge';
     export default {
         name: 'productDetail',
         components: {
-            vIntroduction,
-            recharge
+            vIntroduction: (resolve) => {
+                require(['components/vIntroduction'], resolve);
+            },
+            recharge: (resolve) => {
+                require(['./components/recharge'], resolve);
+            }
         },
         data() {
             return {
@@ -182,7 +184,9 @@
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
                     const data = response.data;
-                    this.product_detail = data.data;
+                    if (data.status === APP.SUCCESS) {
+                        this.product_detail = data.data;
+                    }
                     if (this.product_detail.type === 8) {
                         this.is_recharge = true;
                     }

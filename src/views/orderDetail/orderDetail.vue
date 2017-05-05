@@ -51,10 +51,10 @@
                 text-align: justify;
                 color: #646565;
             }
-            .icon-arrows-right{
+            .icon-arrows-right {
                 font-weight: bold;
-                font-size:pxTorem(32);
-                width:pxTorem(60);
+                font-size: pxTorem(32);
+                width: pxTorem(60);
                 text-align: right;
             }
             &.active {
@@ -174,6 +174,7 @@
         }
         .content {
             @include flex-center;
+            @include active(#fef6f5,3%);
             width: pxTorem(619);
             height: pxTorem(154);
             margin: 0 auto;
@@ -217,15 +218,6 @@
                                     <i class='iconfont icon-plus'></i>完善个人信息
                                 </div>
                             </div>
-                            <!--<section class='address-box no-address'>
-                            <div class='content' @click='toggleEdit'>
-                                <div class='plus'> </div>
-                                <span class='address-content'>新增收货地址</span>
-                                <div class='arrows'>
-                                    <i class='iconfont icon-arrows-right'></i>
-                                </div>
-                            </div>
-                        </section>-->
                         </template>
                         <!-- 有地址 -->
                         <template v-else>
@@ -287,25 +279,32 @@
     </div>
 </template>
 <script>
-    import vLogistics from './components/vLogistics';
-    import vAddressEdit from './components/vAddressEdit.vue';
-    import vAddressSelect from './components/vAddressSelect.vue';
-    import vIntroduction from 'components/vIntroduction.vue';
-    import vAnnouncement from './components/vAnnouncement.vue';
-    import vTicket from './components/vTicket';
-    import vRecharge from './components/vRecharge';
     import vOrder from 'components/vOrder.vue';
     export default {
         name: 'orderDetail',
         components: {
             vOrder,
-            vLogistics,
-            vAddressEdit,
-            vIntroduction,
-            vAnnouncement,
-            vTicket,
-            vRecharge,
-            vAddressSelect,
+            vLogistics: (resolve) => {
+                require(['./components/vLogistics'], resolve);
+            },
+            vAddressEdit: (resolve) => {
+                require(['./components/vAddressEdit'], resolve);
+            },
+            vIntroduction: (resolve) => {
+                require(['components/vIntroduction'], resolve);
+            },
+            vAnnouncement: (resolve) => {
+                require(['./components/vAnnouncement'], resolve);
+            },
+            vTicket: (resolve) => {
+                require(['./components/vTicket'], resolve);
+            },
+            vRecharge: (resolve) => {
+                require(['./components/vRecharge'], resolve);
+            },
+            vAddressSelect: (resolve) => {
+                require(['./components/vAddressSelect'], resolve);
+            },
         },
         data() {
             return {

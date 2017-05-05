@@ -88,6 +88,13 @@
                 return this.activity_detail.status === 1;
             }
         },
+        beforeRouteEnter(to, from, next) {
+            const $script = require('scriptjs');
+            $script('http://m.goldmiao.com/yngame/air.min.1.0.1.js', () => {
+                next();
+            });
+        },
+
         created() {
             this.activity_id = this.$route.query.activity_id;
             this.getActivityDetail().then(data => {
@@ -109,7 +116,9 @@
                     }).then((response) => {
                         this.$store.dispatch('toggleLoading');
                         const data = response.data;
-                        this.activity_detail = data.data;
+                        if (data.status === APP.SUCCESS) {
+                            this.activity_detail = data.data;
+                        }
                         if (resolve) {
                             resolve(data);
                         }
@@ -126,7 +135,9 @@
                     activity_id: this.activity_id
                 }).then((response) => {
                     const data = response.data;
-                    this.free_times = data.data.free_times;
+                    if (data.status === APP.SUCCESS) {
+                        this.free_times = data.data.free_times;
+                    }
                 });
             },
             //刷新免费次数 刷新用户信息
@@ -146,7 +157,7 @@
                 };
             },
             getActivityType(type) {
-                /* 1:刮刮卡 2:有奖问答 3:游戏 4:摇一摇 5:大转盘 6:砸金蛋 7:老虎机 8:海底捞 9:抓娃娃机 10:翻纸牌 11:撕票机 */
+                /* 1:刮刮卡 2:有奖问答 3:游戏 4:摇一摇 5:大转盘 6:砸金蛋 7:老虎机 8:海底捞 9:抓娃娃机 10:翻纸牌 11:撕票机 12:弹珠 */
                 let result = '';
                 const type_list = ['scrap', 'quiz', 'game', 'shake', 'fortune', 'egg', 'machine', 'treasure',
                     'doll', 'card', 'tear', 'marble'

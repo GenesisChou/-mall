@@ -104,7 +104,6 @@
     </div>
 </template>
 <script>
-    // import './game.js';
     import vDescribeTitle from '../vDescribeTitle';
     import vAwardBox from '../vAwardBox';
     export default {
@@ -122,8 +121,7 @@
             isOff: Boolean
         },
         data() {
-            const game_list = [
-                {
+            const game_list = [{
                     name: '开心消消乐',
                     code: 'r3FEflzD',
                     style: 'eliminate'
@@ -176,7 +174,6 @@
                 is_win: '',
                 order_detail_id: '', //活动结束跳转id
                 dialog: {},
-                script: null,
                 game_loaded: false,
                 activity_result: {},
                 game_list,
@@ -185,23 +182,23 @@
         },
         computed: {
             color() {
-                let colors = [{
-                            name: '逝去的青春',
-                            color: 'red'
-                        }, {
-                            name: '棍子忍者',
-                            color: 'green'
-                        },
-                        {
-                            name: '开心消消乐',
-                            color: 'green'
-                        },
-                        {
-                            name: '逝去的青春',
-                            color: 'red'
-                        },
-                    ],
-                    color = 'green';
+                const colors = [{
+                        name: '逝去的青春',
+                        color: 'red'
+                    }, {
+                        name: '棍子忍者',
+                        color: 'green'
+                    },
+                    {
+                        name: '开心消消乐',
+                        color: 'green'
+                    },
+                    {
+                        name: '逝去的青春',
+                        color: 'red'
+                    },
+                ];
+                let color = 'green';
                 colors.forEach(item => {
                     if (item.name === this.name) {
                         color = item.color;
@@ -238,8 +235,9 @@
             },
             game(value) {
                 if (!value) return;
-                const url = `http://m.goldmiao.com/yngame/${value}.min.1.0.1.js`;
-                this.$script(url, () => {
+                const url = `http://m.goldmiao.com/yngame/${value}.min.1.0.1.js`,
+                    $script = require('scriptjs');
+                $script(url, () => {
                     console.log('game loaded');
                     this.game_loaded = true;
                 });
@@ -278,9 +276,6 @@
         activated() {
             this.init();
         },
-        created() {
-            this.$script = require('scriptjs');
-        },
         deactivated() {
             //游戏开始后
             if (this.state === 'start') {
@@ -303,13 +298,16 @@
                         user_id: APP.USER_ID
                     }).then((response) => {
                         const data = response.data;
-                        if (resolve) {
-                            resolve(data);
+                        if (data.status === APP.SUCCESS) {
+                            if (resolve) {
+                                resolve(data);
+                            }
                         }
                     });
                 });
             },
             startGame() {
+                if (this.state !== 'ready') return;
                 if (!this.game) {
                     this.toggleDialog({
                         msg: '该活动已下架',
@@ -322,6 +320,7 @@
                     });
                     return;
                 }
+                this.state = 'block';
                 this.$store.dispatch('toggleLoading');
                 this.$http.post(`${APP.HOST}/game_activity/${this.id}`, {
                     token: APP.TOKEN,
@@ -330,7 +329,8 @@
                     this.$store.dispatch('toggleLoading');
                     const data = response.data;
                     if (data.status === APP.SUCCESS) {
-                        if (data.data.error_code == APP.INTEGRAL_LACK) {
+                        //缺少积分
+                        if (data.data.error_code === APP.INTEGRAL_LACK) {
                             this.toggleDialog({
                                 faliure: 'lack',
                                 callback: () => {
@@ -344,7 +344,10 @@
                         this.is_win = this.activity_result.is_win;
                     } else {
                         this.toggleDialog({
-                            msg: data.info
+                            msg: data.info,
+                            callback: () => {
+                                this.init();
+                            }
                         });
                     }
                 }, (response) => {

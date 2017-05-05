@@ -43,7 +43,7 @@
 <template>
     <div class='v-list-item'>
         <div :class='["container",{"no-border":noBorder}]'>
-            <img class='img' :src='img' />
+            <img class='img' v-lazy='img' />
             <div class='describe'>
                 <h2 class='text-ellipsis'>{{title}}</h2>
                 <h6 class='text-ellipsis'>{{titleDupty}}</h6>

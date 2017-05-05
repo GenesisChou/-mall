@@ -3,6 +3,7 @@ const path = require('path'),
     HtmlWebpackPlugin = require('html-webpack-plugin'),
     webpackConfig = {
         entry: {
+            basic: './src/basic.js',
             app: './src/main.js',
             vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk', 'scriptjs', 'alloytouch', 'vue-lazyload']
         },
@@ -107,11 +108,16 @@ if (process.env.NODE_ENV === 'production') {
         new webpack.LoaderOptionsPlugin({
             minimize: true
         }),
+        // new OccurenceOrderPlugin(true),
         new HtmlWebpackPlugin({ //根据模板插入css/js等生成最终HTML
             filename: path.resolve(__dirname, 'index.html'), //生成的html存放路径，相对于 path
             template: path.resolve(__dirname, 'template/index.html'), //html模板路径
             inject: true, //允许插件修改哪些内容，包括head与body
-            hash: false, //为静态资源生成hash值
+            hash: true, //为静态资源生成hash值
+            chunksSortMode(a, b) {
+                const order = ['app', 'basic', 'vendor'];
+                return order.indexOf(b.names[0]) - order.indexOf(a.names[0]);
+            },
             minify: { //压缩HTML文件
                 removeComments: true, //移除HTML中的注释
                 collapseWhitespace: true //删除空白符与换行符

@@ -7,9 +7,21 @@
         width: pxTorem(94);
         height: pxTorem(94);
     }
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity .3s ease;
+    }
+
+    .fade-enter,
+    .fade-leave-active {
+        opacity: 0;
+    }
 </style>
 <template>
-    <img v-show='show' @click='backTop' src='./images/backTop.png' class=' v-back-top '>
+    <transition name='fade'>
+        <img v-show='show' @click='backTop' src='./images/backTop.png' class=' v-back-top '>
+    </transition>
 </template>
 <script>
     export default {
@@ -41,15 +53,18 @@
         },
         methods: {
             backTop() {
-                let height = utils.getScrollTop();
-                const timer = window.setInterval(() => {
-                    if (height >= 0) {
-                        height -= 150;
-                        window.scrollTo(0, height);
-                    } else {
-                        window.clearInterval(timer);
-                    }
-                }, 10);
+                let height = utils.getScrollTop(),
+                    interval = 0;
+                const clientHeight = utils.getClientHeight(),
+                    timer = window.setInterval(() => {
+                        if (height >= 0) {
+                            interval = (50 * (height / clientHeight));
+                            height -= interval > 2 ? interval : 2;
+                            window.scrollTo(0, height);
+                        } else {
+                            window.clearInterval(timer);
+                        }
+                    }, 10);
             },
             getScrollEvent() {
                 const clientHeight = utils.getClientHeight();

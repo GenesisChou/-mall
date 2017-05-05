@@ -292,14 +292,14 @@
                 // });
                 // return;
                 if (this.state !== 'ready') return;
-                this.state = 'start';
+                this.state = 'block';
                 this.$http.post(`${APP.HOST}/smashing_eggs_activity/${this.id}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID
                 }).then((response) => {
                     const data = response.data;
                     if (data.status === APP.SUCCESS) {
-                        if (data.data.error_code == APP.INTEGRAL_LACK) {
+                        if (data.data.error_code === APP.INTEGRAL_LACK) {
                             this.toggleDialog({
                                 faliure: 'lack',
                                 callback: () => {
@@ -308,6 +308,7 @@
                             });
                             return;
                         }
+                        this.state = 'start';
                         this.broken_num = num;
                         this.activity_result = data.data;
                         this.is_win = this.activity_result.is_win;

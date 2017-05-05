@@ -393,7 +393,7 @@
                 }).then((response) => {
                     const data = response.data;
                     if (data.status === APP.SUCCESS) {
-                        if (data.data.error_code == APP.INTEGRAL_LACK) {
+                        if (data.data.error_code === APP.INTEGRAL_LACK) {
                             this.toggleDialog({
                                 faliure: 'lack',
                                 callback: () => {

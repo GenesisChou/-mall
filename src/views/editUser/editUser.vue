@@ -56,10 +56,14 @@
             }
         }
         .iconfont {
+            display: none;
             text-align: center;
             width: pxTorem(60);
             font-size: pxTorem(36);
             color: #bababa;
+            &.active {
+                display: block;
+            }
         }
     }
 
@@ -101,8 +105,8 @@
                 <ul class='main'>
                     <li>
                         <label for='contact'>姓名</label>
-                        <input id='contact' placeholder="姓名" v-model='contact'>
-                        <i class='iconfont icon-close-circle' @click='clear("contact")'></i>
+                        <input id='contact' placeholder="姓名" v-model='contact' @blur='toggleClear' @focus='toggleClear'>
+                        <i class='iconfont icon-close-circle' @click='contact=""'></i>
                     </li>
                     <li>
                         <label for='birth'>出生年月</label>
@@ -110,8 +114,8 @@
                     </li>
                     <li>
                         <label for='phone'>联系电话</label>
-                        <input id='phone' type='tel' placeholder="手机或固定电话" v-model='phone'>
-                        <i class='iconfont icon-close-circle' @click='clear("phone")'></i>
+                        <input id='phone' type='tel' placeholder="手机或固定电话" v-model='phone' @blur='toggleClear' @focus='toggleClear'>
+                        <i class='iconfont icon-close-circle' @click='phone=""'></i>
                     </li>
                     <li class='code'>
                         <label for='code'>验证码</label>
@@ -134,8 +138,8 @@
                     <button v-if='submit_avaliable' class='btn btn-orange ' @click='submit'>确认</button>
                     <button v-else class='btn btn-gray' disabled='disabled'>确认</button>
                 </div>
-            <!--<button @click='toggleNotice({msg:"fuck you"})'>noticebalabala</button>-->
-            <!--<button @click='toggleWarn({msg:"fuck you"})'>warn</button> -->
+                <!--<button @click='toggleNotice({msg:"fuck you"})'>noticebalabala</button>-->
+                <!--<button @click='toggleWarn({msg:"fuck you"})'>warn</button> -->
             </div>
             <v-warn v-model='warn_show' :warn='warn'></v-warn>
             <v-notice v-model='notice_show'>
@@ -212,6 +216,9 @@
             this.init(this.default_address);
         },
         methods: {
+            toggleClear(state) {
+                event.target.parentElement.querySelector('.iconfont').classList.toggle('active');
+            },
             /*初始化地址列表 scen1:原地刷新 由watch实现初始化 scen2:从其他页面进入 由created实现初始化 */
             init(default_address) {
                 //防止重复初始化
@@ -324,9 +331,6 @@
                         return;
                     }
                 });
-            },
-            clear(type) {
-                this[type] = '';
             },
             toggleWarn(warn = {}) {
                 this.warn = warn;

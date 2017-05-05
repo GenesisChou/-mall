@@ -2,7 +2,7 @@
     @import './assets/scss/iconfont.css';
     @import './assets/scss/main.scss';
     #app {
-        width:100%;
+        width: 100%;
         height: 100%;
     }
 </style>
@@ -35,6 +35,10 @@
                 const data = response.data;
                 if (data.status === APP.SUCCESS) {
                     console.log('login success');
+                    //若用户是首次登陆 则调用登陆接口
+                    if (data.first_login === 1) {
+                        this.loginRecord();
+                    }
                 } else if (data.status === APP.LOGIN_FAILED) {
                     console.log(data.info);
                     utils.deleteLocalStorage(APP.MEDIA_ID);
@@ -46,6 +50,12 @@
                     });
                 }
             });
+        },
+        methods: {
+            loginRecord() {
+                const redirect = encodeURIComponent(APP.MALL_HOST);
+                this.$http.get(`${APP.HOST}/weixin/${APP.MEDIA_ID}?callback=${redirect}`);
+            }
         }
     };
 </script>

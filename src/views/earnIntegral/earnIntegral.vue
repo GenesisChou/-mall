@@ -506,15 +506,6 @@
             }
         }
     }
-
-    .slide-fade-enter-active {
-        transition: all .3s ease;
-    }
-
-    .slide-fade-enter {
-        transform: translateY(-10px);
-        opacity: 0;
-    }
 </style>
 <template>
     <div class='earn-integral'>

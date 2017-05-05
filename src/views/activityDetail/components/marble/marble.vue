@@ -533,7 +533,7 @@
                 </template>
             </div>
             <img class='steps' src='./images/marbleSteps.png'>
-            <img :class='["ball",{ready:this.state==="ready"||this.state==="block"},this.shoot_path]' ref='ball' src='./images/marbleBall.png'>
+            <img :class='["ball",{ready:this.state==="ready"||this.state==="block"},this.shoot_path]'  src='./images/marbleBall.png'>
             <div class='pipe'>
                 <img :class='["spring",{active:this.state==="ready"||this.state==="block"}]' src='./images/marbleSpring.png'>
             </div>
@@ -591,7 +591,6 @@
                 is_right: '', //判断回答是否正确
                 is_win: '', //判断是否中奖
                 activity_result: {},
-                ball: null,
                 select_num: ''
             };
         },
@@ -648,9 +647,6 @@
         created() {
             this.init();
         },
-        mounted() {
-            this.ball = this.$refs.ball;
-        },
         methods: {
             init() {
                 this.state = 'ready';
@@ -668,7 +664,7 @@
                 }).then((response) => {
                     const data = response.data;
                     if (data.status === APP.SUCCESS) {
-                        if (data.data.error_code == APP.INTEGRAL_LACK) {
+                        if (data.data.error_code === APP.INTEGRAL_LACK) {
                             this.toggleDialog({
                                 faliure: 'lack',
                                 callback: () => {
