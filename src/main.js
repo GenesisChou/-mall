@@ -15,7 +15,6 @@ if (token) {
             MEDIA_ID: media_id,
             OPEN_ID: utils.getParameterByName('open_id'),
             DATE: new Date(),
-            TITLE: utils.getParameterByName('imall_title')
         };
     utils.setLocalStorage(media_id, cache);
     //本地测试用
@@ -58,24 +57,23 @@ function wxLogin(media_id) {
 function startApp(cache) {
     const store = require('./store'),
         fastClick = require('fastclick'),
-        setWeChatConfig = require('libs/weChatConfig.js'),
+        weChatShare = require('libs/weChatShare.js'),
         lazyLoad = require('vue-lazyload'),
         globalComponents = require('components/components.js');
     APP.TOKEN = cache.TOKEN;
     APP.USER_ID = cache.USER_ID;
     APP.MEDIA_ID = cache.MEDIA_ID;
     APP.OPEN_ID = cache.OPEN_ID;
-    if (cache.TITLE) {
-        APP.TITLE = cache.TITLE;
-    }
     fastClick.attach(document.body);
     Vue.use(globalComponents);
     Vue.use(lazyLoad, {
         attempt: 1,
         listenEvents: ['scroll']
     });
-    setWeChatConfig();
-    document.title = APP.TITLE;
+    weChatShare();
+    store.dispatch('getTitle', (response) => {
+        document.title = store.state.title;
+    });
     new Vue({
         el: '#app',
         render: h => h(require('./APP.vue')),

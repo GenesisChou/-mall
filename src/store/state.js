@@ -1,6 +1,6 @@
 module.exports = {
-    // TODO: 放置初始状态
     user: '', // 用户信息
+    title: '',
     address_list: '', // 用户地址列表
     v_alert: {
         type: 'suprise',

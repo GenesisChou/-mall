@@ -10,9 +10,11 @@ module.exports = {
     toggleLoading(context, loading) {
         context.commit('toggleLoading');
     },
-    // ——获取用户信息
     getUserInfor(context, callback) {
         context.commit('getUserInfor', callback);
+    },
+    getTitle(context, callback) {
+        context.commit('getTitle', callback);
     },
     getAddressList(context, callback) {
         context.commit('getAddressList', callback);

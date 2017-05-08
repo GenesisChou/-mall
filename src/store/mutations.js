@@ -25,12 +25,28 @@ module.exports = {
             token: APP.TOKEN,
             userid: APP.USER_ID
         }).then((response) => {
-            state.user = response.data.data;
-            if (callback) {
-                callback(response);
+            const data = response.data;
+            if (data.status === APP.SUCCESS) {
+                state.user = data.data;
+                if (callback) {
+                    callback(response);
+                }
             }
-        }, (response) => {
-
+        });
+    },
+    getTitle(state, callback) {
+        Vue.http.post(`${APP.HOST}/imall_title`, {
+            token: APP.TOKEN,
+            userid: APP.USER_ID,
+            media_id: APP.MEDIA_ID
+        }).then((response) => {
+            const data = response.data;
+            if (data.status === APP.SUCCESS) {
+                state.title = data.data.imall_title;
+                if (callback) {
+                    callback(response);
+                }
+            }
         });
     },
     // 获取地址列表
@@ -39,9 +55,12 @@ module.exports = {
             token: APP.TOKEN,
             userid: APP.USER_ID
         }).then((response) => {
-            state.address_list = response.data.data;
-            if (callback) {
-                callback(response.data.data);
+            const data = response.data;
+            if (data.status === APP.SUCCESS) {
+                state.address_list = data.data;
+                if (callback) {
+                    callback(data.data);
+                }
             }
         }, (response) => {
 
