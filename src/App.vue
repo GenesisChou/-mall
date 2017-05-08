@@ -35,10 +35,7 @@
                 const data = response.data;
                 if (data.status === APP.SUCCESS) {
                     console.log('login success');
-                    //若用户是首次登陆 则调用登陆接口
-                    if (data.first_login === 1) {
-                        this.loginRecord();
-                    }
+                    this.loginRecord();
                 } else if (data.status === APP.LOGIN_FAILED) {
                     console.log(data.info);
                     utils.deleteLocalStorage(APP.MEDIA_ID);
