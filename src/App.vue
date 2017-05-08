@@ -51,7 +51,9 @@
         methods: {
             loginRecord() {
                 const redirect = encodeURIComponent(APP.MALL_HOST);
-                this.$http.get(`${APP.HOST}/weixin/${APP.MEDIA_ID}?callback=${redirect}`);
+                this.$http.post(`${APP.HOST}/weixin/${APP.MEDIA_ID}?callback=${redirect}`, {
+                    token: APP.TOKEN
+                });
             }
         }
     };
