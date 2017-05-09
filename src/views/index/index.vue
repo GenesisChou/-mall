@@ -122,7 +122,7 @@
                 const components = [
                     ['vItemLarge', 'vItemSmall', 'vItemList'],
                     ['vSubjectOne', 'vSubjectTwo'],
-                    ['vAdvList', 'vAdvSlide'],
+                    ['vAdvSlide', 'vAdvList'],
                 ];
                 if (component_type === 4) {
                     return 'vTitle';

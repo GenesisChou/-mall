@@ -5,13 +5,13 @@ const path = require('path'),
         entry: {
             basic: './src/basic.js',
             app: './src/main.js',
-            vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk', 'scriptjs', 'alloytouch', 'vue-lazyload']
+            vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk', 'scriptjs', 'alloytouch', 'vue-lazyload', 'vue-awesome-swiper']
         },
         output: {
             path: path.resolve(__dirname, './dist'),
             publicPath: '/dist/',
-            filename: 'js/[name].js',
-            // filename: 'js/[name].[hash].js'
+            // filename: 'js/[name].js',
+            filename: 'js/[name].[hash].js'
         },
         module: {
             rules: [{
@@ -102,8 +102,8 @@ if (process.env.NODE_ENV === 'production') {
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
-            filename: 'js/vendor.js',
-            // filename: 'js/vendor.[hash].js'
+            // filename: 'js/vendor.js',
+            filename: 'js/vendor.[hash].js'
         }),
         new webpack.LoaderOptionsPlugin({
             minimize: true
