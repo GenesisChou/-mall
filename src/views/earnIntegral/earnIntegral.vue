@@ -774,7 +774,7 @@
                 }).then((response) => {
                     const data = response.data;
                     if (data.status === APP.SUCCESS && article.is_read === 2) {
-                        this.$store.dispatch('getUserInfor ');
+                        this.$store.dispatch('getUserInfor');
                         this.getArticleList();
                         this.getReadParam();
                     }
@@ -794,7 +794,7 @@
             toOrderDetail() {
                 const order_id = this.gift.order_id;
                 this.$router.push({
-                    name: 'order_detail ',
+                    name: 'order_detail',
                     query: {
                         order_id
                     }

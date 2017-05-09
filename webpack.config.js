@@ -113,7 +113,7 @@ if (process.env.NODE_ENV === 'production') {
             filename: path.resolve(__dirname, 'index.html'), //生成的html存放路径，相对于 path
             template: path.resolve(__dirname, 'template/index.html'), //html模板路径
             inject: true, //允许插件修改哪些内容，包括head与body
-            hash: true, //为静态资源生成hash值
+            hash: false, //为静态资源生成hash值
             chunksSortMode(a, b) {
                 const order = ['app', 'basic', 'vendor'];
                 return order.indexOf(b.names[0]) - order.indexOf(a.names[0]);
