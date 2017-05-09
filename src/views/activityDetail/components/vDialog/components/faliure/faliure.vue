@@ -31,7 +31,7 @@
         h1 {
             height: pxTorem(92);
             padding: pxTorem(20) 0 pxTorem(10) 0;
-            font-size: pxTorem(40);
+            font-size: pxTorem(38);
             color: #fe112d;
             &.title{
                 height:pxTorem(92+44);

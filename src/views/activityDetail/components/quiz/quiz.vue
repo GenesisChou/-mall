@@ -15,23 +15,23 @@
 
     .panel {
         position: relative;
-        width: pxTorem(591);
+        width: pxTorem(616);
         height: auto;
+        padding: pxTorem(20);
         margin: pxTorem(45) auto 0 auto;
+        border: pxTorem(6) solid #6a3c05;
         border-radius: pxTorem(40);
-        border: pxTorem(13) solid #6a3c05;
-        background-color: $white;
+        background-color: #f89f14;
     }
 
     .panel-head {
         position: absolute;
         left: 50%;
-        top: pxTorem(-98);
-        width: pxTorem(450);
-        height: pxTorem(175);
-        background-image: url('./images/quizPanelHead.png');
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
+        top: pxTorem(-45);
+        width: pxTorem(444);
+        height: pxTorem(123);
+        background:url('./images/quizPanelHead.png') no-repeat;
+        background-size:100% 100%;
         transform: translateX(-50%);
         color: #e65413;
         z-index: 1;
@@ -45,11 +45,14 @@
     }
 
     .panel-content {
-        padding-bottom: pxTorem(40);
+        background-color: $white;
+        border: pxTorem(6) solid #6a3c05;
+        border-radius: pxTorem(30);
+        padding-bottom: pxTorem(80);
         color: #6f3a04;
         .quiz {
             position: relative;
-            padding: pxTorem(90) pxTorem(60) pxTorem(40) pxTorem(60);
+            padding: pxTorem(100) pxTorem(60) pxTorem(40) pxTorem(60);
             font-size: pxTorem(30);
             text-align: justify;
         }
@@ -97,21 +100,18 @@
     }
 
     .panel-footer {
+        @include flex-center;
         position: absolute;
-        left: 5%;
-        bottom: pxTorem(-85);
-        width: pxTorem(563);
-        height: pxTorem(134);
+        left: 50%;
+        bottom: pxTorem(-28);
+        width: pxTorem(456);
+        height: pxTorem(84);
         background: url('./images/quizNotice.png') no-repeat;
-        background-size: pxTorem(563) pxTorem(134);
+        background-size: 100% 100%;
+        transform: translateX(-50%);
     }
 
     .notice {
-        @include flex-center;
-        position: absolute;
-        bottom: pxTorem(-36);
-        position: relative;
-        height: pxTorem(60);
         color: #6f3a04;
         font-size: pxTorem(24);
         .number {
@@ -162,6 +162,7 @@
 </style>
 <template>
     <div class='v-quiz '>
+
         <header class='header'>
             <img class='banner' :src='activityDetail.pic_banner_new'>
         </header>
@@ -185,13 +186,12 @@
                     </ul>
                 </main>
                 <footer class='panel-footer'>
+                    <div class='notice'>
+                        <template v-if='isOff'>活动已结束!</template>
+                        <template v-else-if='freeTimes>0'>今天还有<span class='number'>{{freeTimes}}</span>次免费机会</template>
+                        <template v-else>每次消耗<span class='number'>{{activityDetail.integral>>0}}</span>积分</template>
+                    </div>
                 </footer>
-
-                <div class='notice'>
-                    <template v-if='isOff'>活动已结束!</template>
-                    <template v-else-if='freeTimes>0'>今天还有<span class='number'>{{freeTimes}}</span>次免费机会</template>
-                    <template v-else>每次消耗<span class='number'>{{activityDetail.integral>>0}}</span>积分</template>
-                </div>
             </main>
             <div class='submit' @click='submitAnswer'>提交答案</div>
         </template>

@@ -70,10 +70,10 @@
     <ul class='v-item-list'>
         <li v-for='item in layout.items' class='v-item' @click='routerLink(item,layout)'>
             <div class='left'>
-                <span v-if='layout.show_script===1'>
+                <span v-if='layout.show_script&&item.script'>
                 {{item.script}}
             </span>
-                <img v-if='layout.show_script===1' class='red-arrows' src="./images/redArrows.png">
+                <img v-if='layout.show_script===1&&item.script' class='red-arrows' src="./images/redArrows.png">
                 <img class='img' v-lazy='item.pic_thumb_new'>
             </div>
             <div class='message'>

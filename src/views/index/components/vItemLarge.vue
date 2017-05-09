@@ -82,8 +82,8 @@
     <ul class='v-item-large'>
         <li v-for='item in layout.items' class='v-item' @click='routerLink(item,layout)'>
             <header class='head'>
-                <span v-if='layout.show_script===1'>{{item.script}}</span>
-                <img v-if='layout.show_script===1' class='red-arrows' src="./images/redArrows.png">
+                <span v-if='layout.show_script===1&&item.script'>{{item.script}}</span>
+                <img v-if='layout.show_script===1&&item.script' class='red-arrows' src="./images/redArrows.png">
                 <img class='img' v-lazy='item.pic_init_new'>
             </header>
             <footer v-if='show_message' class='message'>

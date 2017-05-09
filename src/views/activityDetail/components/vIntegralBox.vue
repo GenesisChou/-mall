@@ -19,8 +19,8 @@
             background-color: #860000;
         }
         li.white {
-            background-color: #fff9d5;
-            border: pxTorem(2) solid #6b3906;
+            background-color: $white;
+            border: pxTorem(2) solid #6a1333;
             color: #e65413;
         }
         li.pink {
