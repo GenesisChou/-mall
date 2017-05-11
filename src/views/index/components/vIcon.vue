@@ -3,11 +3,11 @@
     .icon-list {
         position: relative;
         display: flex;
-        list-style: none; 
+        list-style: none;
         margin-bottom: pxTorem(14);
         border-bottom: 1px solid #d3d4d6;
         color: #666;
-        font-size: pxTorem(24); 
+        font-size: pxTorem(24);
         li {
             @include active;
             @include flex-center;
@@ -155,12 +155,12 @@
     }
 </style>
 <template>
-    <ul :class='["icon-list",guide]'>
+    <ul :class='["icon-list",guide_state]'>
         <li v-for='item in layout.items' @click='routerLink(item,layout)'>
             <img class='icon' v-lazy='item.pic_thumb_new'>
             <p>{{item.title}}</p>
         </li>
-        <div v-if='guide==="guide-account"' class='guide account'>
+        <div v-if='guide_state==="guide-account"' class='guide account'>
             <div class='square-cover'></div>
             <h1>
                 在这里查看您的个人信息<br>和积分获得消耗情况
@@ -170,7 +170,7 @@
             <span @click='jump()'>跳过</span>
             <div class='btn' @click='jump("guide-integral")'>朕知道了</div>
         </div>
-        <div v-if='guide==="guide-integral"' class='guide integral'>
+        <div v-if='guide_state==="guide-integral"' class='guide integral'>
             <div class='square-cover'></div>
             <h1>
                 在这里赚取积分，用来兑换<br>心仪商品、参与新颖活动
@@ -189,11 +189,15 @@
         props: {
             layout: Object,
             routerLink: Function,
-            guide: String
+        },
+        computed: {
+            guide_state() {
+                return this.$store.state.index.guide_state;
+            }
         },
         methods: {
             jump(str = '') {
-                this.$emit('update:guide', str);
+                this.$store.dispatch('updateGuideState', str);
             }
         }
     };

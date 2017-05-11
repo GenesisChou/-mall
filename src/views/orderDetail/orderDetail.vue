@@ -174,7 +174,8 @@
         }
         .content {
             @include flex-center;
-            @include active(#fef6f5,3%);
+            @include active(#fef6f5,
+            3%);
             width: pxTorem(619);
             height: pxTorem(154);
             margin: 0 auto;
@@ -400,7 +401,7 @@
                         this.$store.dispatch('toggleLoading');
                         const data = response.data;
                         this.order_detail = data.data;
-                        if (resolve) {
+                        if (resolve && typeof resolve === 'function') {
                             resolve();
                         }
                     }, (response) => {
@@ -417,7 +418,7 @@
                     }).then((response) => {
                         const data = response.data;
                         this.product_detail = data.data;
-                        if (resolve) {
+                        if (resolve && typeof resolve === 'function') {
                             resolve();
                         }
                     }, (response) => {

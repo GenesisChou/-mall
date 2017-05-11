@@ -75,4 +75,9 @@ module.exports = {
             open_id: APP.OPEN_ID
         });
     },
+    savePosition(state, callback) {
+        if (callback && typeof callback === 'function') {
+            callback(state.position);
+        }
+    }
 };

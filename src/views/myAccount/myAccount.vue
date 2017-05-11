@@ -46,7 +46,7 @@
         background-color: $white;
         color: $orange;
         border-bottom: 1px solid #d4d4d6;
-        font-size:pxTorem(34);
+        font-size: pxTorem(34);
     }
 
     .record-list {
@@ -78,8 +78,8 @@
         span {
             font-size: pxTorem(30);
             color: #646565;
-            &.pull-right{
-                color:$orange;
+            &.pull-right {
+                color: $orange;
             }
         }
     }
@@ -166,9 +166,6 @@
             }, 500, 500));
         },
         methods: {
-            // toggleModal() {
-            //     this.modal = !this.modal;
-            // },
             //——获取积分明细列表
             getIntegralList() {
                 return new Promise((resolve) => {
@@ -176,7 +173,7 @@
                         const data = response.data;
                         this.integral_list = this.integral_list.concat(data.data.list);
                         this.params.total = data.data.total;
-                        if (resolve) {
+                        if (resolve && typeof resolve === 'function') {
                             resolve();
                         }
                     }, (response) => {

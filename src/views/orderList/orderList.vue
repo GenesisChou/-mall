@@ -110,7 +110,6 @@
         <div class='order-list-content'>
             <ul class='tabs'>
                 <li v-for='(tab,$index) in tabs' @click='switchTab($index+1)' :class='{active:$index+1==current_tab}'>
-                    <!--<i :class='["iconfont",getIconType($index)]'></i>-->
                     <div :class='["icon",tab.type,{active:$index+1==current_tab}]'></div>
                     <h6>{{tab.name}}</h6>
                     <span class='badage' v-if='$index==0&&user.unfinished_order_count>0'>{{user.unfinished_order_count}}</span>
@@ -188,15 +187,17 @@
             });
         },
         activated() {
-            const position = utils.getSessionStorage('position:' + this.$route.name);
             this.router_state = 'enter';
+            const position = this.$store.state.position[this.$route.name];
             if (position) {
                 window.scrollTo(0, position);
             }
         },
         beforeRouteLeave(to, from, next) {
             this.router_state = 'leave';
-            utils.setSessionStorage('position:' + from.name, utils.getScrollTop());
+            this.$store.dispatch('savePosition', position => {
+                position[from.name] = utils.getScrollTop();
+            });
             window.removeEventListener('scroll', this.scroll_events[this.current_type]);
             next();
         },
@@ -227,12 +228,12 @@
                     this.$http.post(`${APP.HOST}/order_list/${APP.USER_ID}/${tab}`, params).then((
                         response) => {
                         const data = response.data;
-                        if (resolve) {
+                        if (resolve && typeof resolve === 'function') {
                             resolve(data);
                         }
                     }, (response) => {
                         const data = response.data;
-                        if (reject) {
+                        if (reject && typeof reject === 'function') {
                             reject(data);
                         }
                     });
@@ -284,17 +285,6 @@
                     this.$store.dispatch('toggleLoading');
                 });
             },
-            getIconType($index) {
-                const icon_list = ['icon-order-unsolved', 'icon-car', 'icon-solved', 'icon-delete'];
-                let temp = '';
-                icon_list.forEach((name, index) => {
-                    if (index === $index) {
-                        temp = name;
-                        return;
-                    }
-                });
-                return temp;
-            }
         }
     };
 </script>

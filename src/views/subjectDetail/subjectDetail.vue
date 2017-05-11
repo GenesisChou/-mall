@@ -63,12 +63,12 @@
                 </ul>
                 <ul v-for='tab in tabs'>
                     <router-link v-for='(item,$index) in tab.items' :to='getRouter(item)' tag='li' v-show='current_tab=="全部"||current_tab==tab.name'>
-                        <v-list-item :title='item.name' :title-dupty='item.sub_name' :integral='item.integral>>0' :img='item.pic' ></v-list-item>
+                        <v-list-item :title='item.name' :title-dupty='item.sub_name' :integral='item.integral>>0' :img='item.pic'></v-list-item>
                     </router-link>
                 </ul>
             </main>
         </div>
-        <v-support ></v-support>
+        <v-support></v-support>
     </div>
 </template>
 <script>
@@ -86,7 +86,7 @@
                 },
                 current_tab: '全部',
                 content_show: false,
-            }
+            };
         },
         computed: {
             tabs() {
@@ -98,8 +98,6 @@
         },
         watch: {
             subject_id(value) {
-                //bug 路由进入时值为number 路由返回/路由原地刷新时值类型为string
-                //类型变化也会引发该函数
                 this.content_show = false;
                 this.getSubjectDetail().then(() => {
                     this.content_show = true;
@@ -108,16 +106,9 @@
         },
         activated() {
             this.subject_id = this.$route.query.subject_id;
-            //保持滚动位置
-            let position = utils.getSessionStorage('position:' + this.$route.name);
-            if (position) {
-                window.scrollTo(0, position);
-            }
         },
-        //路由至详情内tab状态不重置 
-        //返回至主页时tab状态重置
         beforeRouteLeave(to, from, next) {
-            if (to.name == 'index') {
+            if (to.name === 'index') {
                 this.current_tab = '全部';
             }
             next();
@@ -132,24 +123,23 @@
                         media_id: APP.MEDIA_ID
                     }).then((response) => {
                         this.$store.dispatch('toggleLoading');
-                        let data = response.data;
+                        const data = response.data;
                         this.subject_detail = data.data;
-                        if (resolve) {
+                        if (resolve && typeof resolve === 'function') {
                             resolve();
                         }
                     }, (response) => {
                         this.$store.dispatch('toggleLoading');
                     });
-
-                })
+                });
             },
             switchTab(name) {
                 this.current_tab = name;
             },
             getRouter(item) {
-                if (item.type == 1) {
+                if (item.type === 1) {
                     return {
-                        name: "product_detail",
+                        name: 'product_detail',
                         query: {
                             product_id: item.item_id,
                             integral: item.integral >> 0,
@@ -157,14 +147,13 @@
                         }
                     };
                 }
-                if (item.type == 2) {
+                if (item.type === 2) {
                     return {
-                        name: "activity_detail",
+                        name: 'activity_detail',
                         query: {
                             activity_id: item.item_id,
                         }
                     };
-
                 }
             },
         },

@@ -5,7 +5,7 @@ const path = require('path'),
         entry: {
             basic: './src/basic.js',
             app: './src/main.js',
-            vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk', 'scriptjs', 'alloytouch', 'vue-lazyload', 'vue-awesome-swiper']
+            vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk', 'scriptjs', 'alloytouch', 'vue-lazyload']
         },
         output: {
             path: path.resolve(__dirname, './dist'),
@@ -15,50 +15,48 @@ const path = require('path'),
         },
         module: {
             rules: [{
-                    test: /\.vue$/,
-                    loader: 'vue-loader',
-                    options: {
-                        loaders: {
-                            scss: 'style-loader!css-loader?minimize&-autoprefixer!sass-loader',
-                        },
-                        postcss: [
-                            require('autoprefixer')({
-                                browsers: ['last 5 versions']
-                            })
-                        ]
-                    }
-                }, {
-                    test: /\.css$/,
-                    loaders: ['style-loader', 'css-loader']
-                }, {
-                    test: /\.scss$/,
-                    loaders: ['style-loader', 'css-loader', 'sass-loader']
-                }, {
-                    test: /\.js$/,
-                    loader: 'babel-loader',
-                    exclude: /node_modules/,
-                    query: {
-                        presets: ['es2015']
-                    }
-                },
-                {
-                    test: /\.json$/,
-                    loader: 'json-loader'
-                }, {
-                    test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                    loader: 'url-loader?limit=10000&minetype=application/font-woff'
-                }, {
-                    test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                    loader: 'file-loader'
-                }, {
-                    test: /\.(png|jpg|gif|svg)$/,
-                    loader: 'url-loader',
-                    query: {
-                        limit: 10000,
-                        name: 'images/[name].[hash].[ext]'
-                    }
+                test: /\.vue$/,
+                loader: 'vue-loader',
+                options: {
+                    loaders: {
+                        scss: 'style-loader!css-loader?minimize&-autoprefixer!sass-loader',
+                    },
+                    postcss: [
+                        require('autoprefixer')({
+                            browsers: ['last 5 versions']
+                        })
+                    ]
                 }
-            ]
+            }, {
+                test: /\.css$/,
+                loaders: ['style-loader', 'css-loader']
+            }, {
+                test: /\.scss$/,
+                loaders: ['style-loader', 'css-loader', 'sass-loader']
+            }, {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/,
+                query: {
+                    presets: ['es2015']
+                }
+            }, {
+                test: /\.json$/,
+                loader: 'json-loader'
+            }, {
+                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: 'url-loader?limit=10000&minetype=application/font-woff'
+            }, {
+                test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: 'file-loader'
+            }, {
+                test: /\.(png|jpg|gif|svg)$/,
+                loader: 'url-loader',
+                query: {
+                    limit: 10000,
+                    name: 'images/[name].[hash].[ext]'
+                }
+            }]
         },
         resolve: {
             alias: {
@@ -72,9 +70,7 @@ const path = require('path'),
             extensions: ['.js', '.json', '.vue']
         },
         devServer: {
-            // contentBase: './dist',
-            hot: true,
-            host: '0.0.0.0'
+            // host: '0.0.0.0'
         },
         plugins: [
             // new ExtractTextPlugin('style.css'),

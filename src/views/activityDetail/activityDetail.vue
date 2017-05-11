@@ -99,7 +99,6 @@
             this.activity_id = this.$route.query.activity_id;
             this.getActivityDetail().then(data => {
                 this.activity_type = this.getActivityType(data.data.type);
-                // this.activity_type ='card';
             });
             this.getFreeTimes();
         },
@@ -119,7 +118,7 @@
                         if (data.status === APP.SUCCESS) {
                             this.activity_detail = data.data;
                         }
-                        if (resolve) {
+                        if (resolve && typeof resolve === 'function') {
                             resolve(data);
                         }
                     }, (response) => {

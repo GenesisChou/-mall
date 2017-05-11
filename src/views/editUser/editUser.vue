@@ -216,9 +216,6 @@
             this.init(this.default_address);
         },
         methods: {
-            toggleClear(state) {
-                event.target.parentElement.querySelector('.iconfont').classList.toggle('active');
-            },
             /*初始化地址列表 scen1:原地刷新 由watch实现初始化 scen2:从其他页面进入 由created实现初始化 */
             init(default_address) {
                 //防止重复初始化
@@ -331,6 +328,9 @@
                         return;
                     }
                 });
+            },
+            toggleClear(state) {
+                event.target.parentElement.querySelector('.iconfont').classList.toggle('active');
             },
             toggleWarn(warn = {}) {
                 this.warn = warn;

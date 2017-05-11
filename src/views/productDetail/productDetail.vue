@@ -221,13 +221,19 @@
                         this.$store.dispatch('toggleLoading');
                         const data = response.data;
                         if (data.status === APP.SUCCESS) {
-                            resolve(data);
+                            if (resolve && typeof resolve === 'function') {
+                                resolve(data);
+                            }
                         } else {
-                            reject(data);
+                            if (reject && typeof reject === 'function') {
+                                reject(data);
+                            }
                         }
                     }, (response) => {
                         this.$store.dispatch('toggleLoading');
-                        reject(response.data);
+                        if (reject && typeof reject === 'function') {
+                            reject(response.data);
+                        }
                     });
                 });
             },

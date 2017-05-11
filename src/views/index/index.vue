@@ -20,15 +20,14 @@
         z-index: 1;
         background-color: rgba(0, 0, 0, .5);
     }
-
-   </style>
+</style>
 <template>
     <div class='index'>
         <transition-group tag='div' class='index-content' name='slide-fade'>
             <component v-for='layout in framework' key='layout.id' :is='getComponent(layout.component_type,layout.layout_type)' :layout='layout'
-                :router-link='routerLink' :guide.sync='guide'></component>
+                :router-link='routerLink'></component>
         </transition-group>
-        <div v-if='guide' class='cover'></div>
+        <div v-if='guide_state' class='cover'></div>
         <v-back-top></v-back-top>
     </div>
 </template>
@@ -72,50 +71,46 @@
             return {
                 framework: [],
                 router_state: '',
-                guide: '',
             };
         },
+        computed: {
+            guide_state() {
+                return this.$store.state.index.guide_state;
+            }
+        },
         created() {
-            this.getLayOut().then(first_login => {
-                this.guide = first_login ? 'guide-account' : '';
-            });
+            this.getLayOut();
         },
         activated() {
             this.router_state = 'enter';
-            const position = utils.getSessionStorage('position:' + this.$route.name);
+            const position = this.$store.state.position[this.$route.name];
             if (position) {
                 window.scrollTo(0, position);
             }
         },
         beforeRouteLeave(to, from, next) {
             this.router_state = 'leave';
-            utils.setSessionStorage('position:' + from.name, utils.getScrollTop());
+            this.$store.dispatch('savePosition', position => {
+                position[from.name] = utils.getScrollTop();
+            });
             next();
         },
         methods: {
-            test() {
-                this.list.push(this.list.length);
-            },
             getLayOut() {
-                return new Promise(resolve => {
+                this.$store.dispatch('toggleLoading');
+                this.$http.post(`${APP.HOST}/index`, {
+                    token: APP.TOKEN,
+                    user_id: APP.USER_ID,
+                    media_id: APP.MEDIA_ID
+                }).then((response) => {
                     this.$store.dispatch('toggleLoading');
-                    this.$http.post(`${APP.HOST}/index`, {
-                        token: APP.TOKEN,
-                        user_id: APP.USER_ID,
-                        media_id: APP.MEDIA_ID
-                    }).then((response) => {
-                        this.$store.dispatch('toggleLoading');
-                        const data = response.data;
-                        if (data.status === APP.SUCCESS && utils.getTypeOf(data.data) === 'Array' &&
-                            data.data.length) {
-                            utils.syncLoadArray(this.framework, data.data);
-                            if (resolve && data.data[0] !== 'undefined') {
-                                resolve(data.data[0].first_login === 1);
-                            }
-                        }
-                    }, () => {
-                        this.$store.dispatch('toggleLoading');
-                    });
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS && utils.getTypeOf(data.data) === 'Array' &&
+                        data.data.length) {
+                        utils.syncLoadArray(this.framework, data.data);
+                    }
+                }, () => {
+                    this.$store.dispatch('toggleLoading');
                 });
             },
             getComponent(component_type, layout_type) {

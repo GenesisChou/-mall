@@ -22,4 +22,7 @@ module.exports = {
     pageView(context, page_id) {
         context.commit('pageView', page_id);
     },
+    savePosition(context, callback) {
+        context.commit('savePosition', callback);
+    }
 };

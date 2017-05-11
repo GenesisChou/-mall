@@ -14,27 +14,25 @@
         <v-alert></v-alert>
         <v-confirm> </v-confirm>
         <v-loading></v-loading>
-        <!--<v-support></v-support>-->
     </div>
 </template>
 <script>
     import vLoading from 'components/vLoading.vue';
     import vAlert from 'components/vAlert.vue';
     import vConfirm from 'components/vConfirm.vue';
-    // import vSupport from 'components/vSupport';
     export default {
         name: 'app',
         components: {
             vLoading,
             vAlert,
             vConfirm,
-            // vSupport
         },
         created() {
             this.$store.dispatch('getUserInfor', (response) => {
                 const data = response.data;
                 if (data.status === APP.SUCCESS) {
                     console.log('login success');
+                    this.setGuideState(data.data);
                     this.loginRecord();
                 } else if (data.status === APP.LOGIN_FAILED) {
                     console.log(data.info);
@@ -54,6 +52,9 @@
                 this.$http.post(`${APP.HOST}/weixin/${APP.MEDIA_ID}?callback=${redirect}`, {
                     token: APP.TOKEN
                 });
+            },
+            setGuideState(user) {
+                this.$store.dispatch('updateGuideState', (user.first_login === 1 ? 'guide-account' : ''));
             }
         }
     };

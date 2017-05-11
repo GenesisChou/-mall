@@ -20,5 +20,6 @@ module.exports = {
     },
     v_loading: {
         show: false
-    }
+    },
+    position: {}
 };

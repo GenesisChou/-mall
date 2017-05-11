@@ -149,7 +149,7 @@
                     }).then((response) => {
                         const data = response.data;
                         this.province_list = data.data || [];
-                        if (resolve) {
+                        if (resolve && typeof resolve === 'function') {
                             resolve();
                         }
                     });
@@ -164,7 +164,7 @@
                     }).then((response) => {
                         const data = response.data;
                         this.city_list = data.data || [];
-                        if (resolve) {
+                        if (resolve && typeof resolve === 'function') {
                             resolve();
                         }
                     }, (response) => {});
@@ -179,7 +179,7 @@
                     }).then((response) => {
                         const data = response.data;
                         this.country_list = data.data || [];
-                        if (resolve) {
+                        if (resolve && typeof resolve === 'function') {
                             resolve();
                         }
                     });

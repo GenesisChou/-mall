@@ -14,10 +14,16 @@
             background-color: $white;
         }
         .iconfont {
-            text-align: center;
             width: pxTorem(60);
+            text-align: center;
             font-size: pxTorem(36);
             color: #bababa;
+        }
+        .icon-close-circle {
+            display: none;
+            &.active {
+                display: block;
+            }
         }
         input {
             flex: 1;
@@ -43,8 +49,9 @@
     <div class='v-search'>
         <form class='search-box' action='javascript:return true;'>
             <i class='iconfont icon-search ' @click='search'></i>
-            <input type='search' placeholder='请输入关键字进行过滤' :value='value' @input='updateValue' @keyup.enter='search'>
-            <i class='iconfont icon-close-circle ' @click='clear'></i>
+            <input type='search' placeholder='请输入关键字进行过滤' :value='value' @input='updateValue' @keyup.enter='search' @blur='toggleClear'
+                @focus='toggleClear'>
+            <i class='iconfont icon-close-circle' @click='clear'></i>
         </form>
         <!--<span @click='clear'>取消</span>-->
     </div>
@@ -62,7 +69,10 @@
             },
             clear() {
                 this.$emit('input', '');
-            }
+            },
+            toggleClear(state) {
+                event.target.parentElement.querySelector('.icon-close-circle').classList.toggle('active');
+            },
         },
     };
 </script>

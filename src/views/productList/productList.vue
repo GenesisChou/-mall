@@ -140,8 +140,8 @@
             }
         },
         activated() {
-            const position = utils.getSessionStorage('position:' + this.$route.name);
             this.router_state = 'enter';
+            const position = this.$store.state.position[this.$route.name];
             if (position) {
                 window.scrollTo(0, position);
             }
@@ -158,7 +158,9 @@
         },
         beforeRouteLeave(to, from, next) {
             this.router_state = 'leave';
-            utils.setSessionStorage('position:' + from.name, utils.getScrollTop());
+            this.$store.dispatch('savePosition', position => {
+                position[from.name] = utils.getScrollTop();
+            });
             window.removeEventListener('scroll', this.scroll_event);
             next();
         },
@@ -168,13 +170,13 @@
                 return new Promise((resolve, reject) => {
                     this.$http.post(`${APP.HOST}/all_product`, this.params).then((response) => {
                         const data = response.data;
-                        if (resolve) {
+                        if (resolve && typeof resolve === 'function') {
                             resolve(data);
                         }
                         this.params.total = data.data.total;
                         this.product_list = this.product_list.concat(data.data.list);
                     }, (response) => {
-                        if (reject) {
+                        if (reject && typeof reject === 'function') {
                             reject();
                         }
                     });

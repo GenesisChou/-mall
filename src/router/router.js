@@ -3,7 +3,8 @@ import VueRouter from 'vue-router';
 import store from '../store';
 Vue.use(VueRouter);
 const router = new VueRouter({
-    routes: [{
+    routes: [
+        {
             path: '/',
             name: 'index',
             component: resolve => {
@@ -105,13 +106,6 @@ const router = new VueRouter({
     ],
 });
 router.beforeEach((to, from, next) => {
-    // if (utils.isInArray(from.name, fixList)) {
-    //     utils.setSessionStorage('position:' + from.name, utils.getScrollTop());
-    // }
-    // if (!utils.isInArray(to.name, fixList)) {
-    //     utils.scrollToTop();
-    // }
-
     store.dispatch('pageView', to.name);
     next();
 });

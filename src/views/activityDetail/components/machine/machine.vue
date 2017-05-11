@@ -438,7 +438,7 @@
                         }
                         if (current_top > (stop_num - 1) * 100) {
                             clearInterval(timer);
-                            if (resolve) {
+                            if (resolve && typeof resolve === 'function') {
                                 resolve();
                             }
                         }
