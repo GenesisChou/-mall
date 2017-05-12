@@ -26,12 +26,11 @@ module.exports = {
             userid: APP.USER_ID
         }).then((response) => {
             const data = response.data;
-            alert(JSON.stringify(data));
             if (data.status === APP.SUCCESS) {
                 state.user = data.data;
-                if (callback) {
-                    callback(response);
-                }
+            }
+            if (callback && typeof callback === 'function') {
+                callback(response);
             }
         });
     },

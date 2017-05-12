@@ -105,7 +105,6 @@
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
                     const data = response.data;
-                    alert(JSON.stringify(data));
                     if (data.status === APP.SUCCESS && utils.getTypeOf(data.data) === 'Array' &&
                         data.data.length) {
                         utils.syncLoadArray(this.framework, data.data);
