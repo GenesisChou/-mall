@@ -2,7 +2,6 @@ import Vue from 'vue';
 import VueResource from 'vue-resource';
 Vue.use(VueResource);
 Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
-
 const token = utils.getParameterByName('token'),
     activity_id = utils.getParameterByName('activity_id'),
     product_id = utils.getParameterByName('product_id'),
