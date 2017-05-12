@@ -26,6 +26,7 @@ module.exports = {
             userid: APP.USER_ID
         }).then((response) => {
             const data = response.data;
+            alert(data);
             if (data.status === APP.SUCCESS) {
                 state.user = data.data;
                 if (callback) {
