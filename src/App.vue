@@ -35,7 +35,6 @@
                     this.setGuideState(data.data);
                     this.loginRecord();
                 } else if (data.status === APP.LOGIN_FAILED) {
-                    alert('登陆失败'+data.info)
                     console.log(data.info);
                     utils.deleteLocalStorage(APP.MEDIA_ID);
                     utils.reloadApp();

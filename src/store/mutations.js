@@ -43,7 +43,7 @@ module.exports = {
             const data = response.data;
             if (data.status === APP.SUCCESS) {
                 state.title = data.data.imall_title;
-                if (callback) {
+                if (callback && typeof callback === 'function') {
                     callback(response);
                 }
             }
@@ -58,7 +58,7 @@ module.exports = {
             const data = response.data;
             if (data.status === APP.SUCCESS) {
                 state.address_list = data.data;
-                if (callback) {
+                if (callback && typeof callback === 'function') {
                     callback(data.data);
                 }
             }
