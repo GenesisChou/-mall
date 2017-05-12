@@ -122,7 +122,7 @@
                     sword: '',
                     p: 1,
                     r: APP.PERPAGE,
-                    total: 0,
+                    // total: 0,
                     token: APP.TOKEN,
                     userid: APP.USER_ID,
                     media_id: APP.MEDIA_ID,
@@ -131,13 +131,9 @@
                 },
                 sort_type: '',
                 scroll_event: '',
-                router_state: ''
+                router_state: '',
+                busy: false
             };
-        },
-        computed: {
-            busy() {
-                return this.params.total > this.params.p;
-            }
         },
         activated() {
             this.router_state = 'enter';
@@ -170,10 +166,10 @@
                 return new Promise((resolve, reject) => {
                     this.$http.post(`${APP.HOST}/all_product`, this.params).then((response) => {
                         const data = response.data;
+                        this.busy = !(data.data.list.length < 20);
                         if (resolve && typeof resolve === 'function') {
                             resolve(data);
                         }
-                        this.params.total = data.data.total;
                         this.product_list = this.product_list.concat(data.data.list);
                     }, (response) => {
                         if (reject && typeof reject === 'function') {
@@ -189,8 +185,6 @@
                 this.initParams();
                 this.getProductList().then((data) => {
                     this.$store.dispatch('toggleLoading');
-                    this.loading = true;
-                    this.params.total = data.data.total;
                     this.product_list = data.data.list;
                 }).catch(() => {
                     this.$store.dispatch('toggleLoading');
@@ -247,8 +241,8 @@
                 return utils.debounce(() => {
                     if (scroll && this.busy && utils.touchBottom()) {
                         scroll = false;
-                        this.params.p++;
-                        this.getProductList().then(() => {
+                        this.params.p = this.product_list.length + 1;
+                        this.getProductList().then(data => {
                             scroll = true;
                         });
                     }
