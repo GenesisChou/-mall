@@ -391,6 +391,7 @@
                                 this.init();
                             }
                         };
+                        this.toggleDialog(this.alert);
                     }
                 }
             },
