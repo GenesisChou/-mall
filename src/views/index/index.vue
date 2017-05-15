@@ -27,6 +27,7 @@
             <component v-for='layout in framework' key='layout.id' :is='getComponent(layout.component_type,layout.layout_type)' :layout='layout'
                 :router-link='routerLink'></component>
         </transition-group>
+        <v-support></v-support>
         <div v-if='guide_state' class='cover'></div>
         <v-back-top></v-back-top>
     </div>
