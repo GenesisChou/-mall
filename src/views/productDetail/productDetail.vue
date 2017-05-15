@@ -143,7 +143,8 @@
             },
             exchange_unavaliable() {
                 //库存<=0，下架状态
-                return this.product_detail.stocks <= 0 || this.product_detail.status === 1;
+                return (this.product_detail.type !== 8 && this.product_detail.type !== 5) && this.product_detail.stocks <=
+                    0 || this.product_detail.status === 1;
             },
             integral_enough() {
                 return (this.user.integral) >> 0 >= this.integral;
