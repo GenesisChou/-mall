@@ -5,7 +5,7 @@ const path = require('path'),
         entry: {
             basic: './src/basic.js',
             app: './src/main.js',
-            vendor: ['vue', 'vue-router', 'vue-resource', 'vuex', 'fastclick', 'weixin-js-sdk', 'scriptjs', 'alloytouch', 'vue-lazyload']
+            vendor: ['vue']
         },
         output: {
             path: path.resolve(__dirname, './dist'),
