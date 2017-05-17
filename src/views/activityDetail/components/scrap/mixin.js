@@ -53,7 +53,7 @@
                 if (value) {
                     this.alert = {
                         type: 'success',
-                        img: result.pic_thumb,
+                        img: result.pic_thumb_new,
                         msg: '获得' + result.name,
                         btn_text: '查看',
                         callback: this.toOrderDetail(result.id),
