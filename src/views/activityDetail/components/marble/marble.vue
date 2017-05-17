@@ -20,9 +20,10 @@
     .circles {
         position: absolute;
         left: 0;
-        top: 0;
+        top: pxTorem(60);
         width: pxTorem(750);
-        height: pxTorem(1140);
+        height: pxTorem(1080);
+        background-color:#c2251d;
         overflow: hidden;
         .content {
             position: absolute;
