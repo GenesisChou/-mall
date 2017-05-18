@@ -7,7 +7,10 @@ const media_id = utils.getParameterByName('id'),
 if (storage) {
     startApp(storage);
 } else {
-    const token = utils.getParameterByName('token');
+    const token = utils.getParameterByName('token'),
+        activity_id = utils.getParameterByName('activity_id'),
+        product_id = utils.getParameterByName('product_id'),
+        subject_id = utils.getParameterByName('subject_id');
     if (token) {
         const media_id = utils.getParameterByName('mediaid');
         utils.setLocalStorage(media_id, {
@@ -18,28 +21,25 @@ if (storage) {
             DATE: new Date(),
         });
         //本地测试用
-        startApp(utils.getLocalStorage(media_id));
+        // startApp(utils.getLocalStorage(media_id));
         //正式部署用
-        // let link = `${APP.MALL_HOST}/?id=${media_id}#/`;
-        // if (activity_id) {
-        //     link += 'activity_detail?activity_id=' + activity_id;
-        // } else if (product_id) {
-        //     link += 'product_detail?product_id=' + product_id;
-        // } else if (subject_id) {
-        //     link += 'subject_detail?subject_id=' + subject_id;
-        // }
-        // location.href = link;
+        let link = `${APP.MALL_HOST}/?id=${media_id}#/`;
+        if (activity_id) {
+            link += 'activity_detail?activity_id=' + activity_id;
+        } else if (product_id) {
+            link += 'product_detail?product_id=' + product_id;
+        } else if (subject_id) {
+            link += 'subject_detail?subject_id=' + subject_id;
+        }
+        location.href = link;
     } else {
-        wxLogin(media_id);
+        wxLogin(media_id, activity_id, product_id, subject_id);
     }
 }
 
 //微信登陆
-function wxLogin(media_id) {
-    const redirect = encodeURIComponent(APP.MALL_HOST),
-        activity_id = utils.getParameterByName('activity_id'),
-        product_id = utils.getParameterByName('product_id'),
-        subject_id = utils.getParameterByName('subject_id');
+function wxLogin(media_id, activity_id, product_id, subject_id) {
+    const redirect = encodeURIComponent(APP.MALL_HOST);
     let link = `${APP.HOST}/weixin/${media_id}?callback=${redirect}`;
     if (activity_id) {
         link += '&activity_id=' + activity_id;
