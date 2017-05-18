@@ -46,6 +46,12 @@
                 }
             });
         },
+        mounted() {
+            this.$store.dispatch('getTitle', (response) => {
+                document.title = response.data.data.imall_title;
+                console.log(document.title);
+            });
+        },
         methods: {
             loginRecord() {
                 const redirect = encodeURIComponent(APP.MALL_HOST);

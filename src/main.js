@@ -68,9 +68,6 @@ function startApp(cache) {
         listenEvents: ['scroll']
     });
     weChatShare();
-    store.dispatch('getTitle', (response) => {
-        document.title = store.state.title;
-    });
     new Vue({
         el: '#app',
         render: h => h(require('./APP.vue')),

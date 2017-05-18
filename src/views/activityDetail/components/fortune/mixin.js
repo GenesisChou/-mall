@@ -69,7 +69,7 @@
                  if (result.is_win) {
                      this.alert = {
                          type: 'success',
-                         img: result.pic_thumb,
+                         img: result.pic_thumb_new,
                          msg: '获得' + result.name,
                          callback: this.toOrderDetail(result.id),
                          callback_close: () => {
