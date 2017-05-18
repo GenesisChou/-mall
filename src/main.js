@@ -2,15 +2,13 @@ import Vue from 'vue';
 import VueResource from 'vue-resource';
 Vue.use(VueResource);
 Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
-const token = utils.getParameterByName('token'),
-    media_id = utils.getParameterByName('id'),
-    activity_id = utils.getParameterByName('activity_id'),
-    product_id = utils.getParameterByName('product_id'),
-    subject_id = utils.getParameterByName('subject_id'),
+const media_id = utils.getParameterByName('id'),
     storage = utils.getLocalStorage(media_id);
 if (storage) {
     startApp(storage);
 } else {
+    const media_id = utils.getParameterByName('mediaid'),
+        token = utils.getParameterByName('token');
     if (token) {
         utils.setLocalStorage(media_id, {
             TOKEN: token,
@@ -38,7 +36,10 @@ if (storage) {
 
 //微信登陆
 function wxLogin(media_id) {
-    const redirect = encodeURIComponent(APP.MALL_HOST);
+    const redirect = encodeURIComponent(APP.MALL_HOST),
+        activity_id = utils.getParameterByName('activity_id'),
+        product_id = utils.getParameterByName('product_id'),
+        subject_id = utils.getParameterByName('subject_id');
     let link = `${APP.HOST}/weixin/${media_id}?callback=${redirect}`;
     if (activity_id) {
         link += '&activity_id=' + activity_id;
