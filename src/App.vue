@@ -49,9 +49,7 @@
         methods: {
             loginRecord() {
                 const redirect = encodeURIComponent(APP.MALL_HOST);
-                this.$http.post(`${APP.HOST}/weixin/${APP.MEDIA_ID}?callback=${redirect}`, {
-                    token: APP.TOKEN
-                });
+                this.$http.get(`${APP.HOST}/weixin/${APP.MEDIA_ID}?callback=${redirect}&token=${APP.TOKEN}`);
             },
             setGuideState(user) {
                 this.$store.dispatch('updateGuideState', (user.first_login === 1 ? 'guide-account' : ''));

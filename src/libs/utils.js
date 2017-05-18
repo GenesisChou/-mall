@@ -120,7 +120,7 @@ const utils = {
         return result;
     },
     reloadApp() {
-        location.reload();
+        window.location.reload();
     },
     pxTorem(value) {
         return value / 100 + 'rem';
