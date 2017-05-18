@@ -1,0 +1,160 @@
+    @import '../../../../assets/scss/variable.scss';
+    .v-quiz {
+        min-height: pxTorem(1250);
+        padding-bottom: pxTorem(84);
+        background-image: url('./images/quizBackground.png');
+        background-size: pxTorem(750) pxTorem(15);
+    }
+
+
+    .banner {
+        width: pxTorem(750);
+        height: pxTorem(330);
+    }
+
+    .panel {
+        position: relative;
+        width: pxTorem(616);
+        height: auto;
+        padding: pxTorem(20);
+        margin: pxTorem(45) auto 0 auto;
+        border: pxTorem(6) solid #6a3c05;
+        border-radius: pxTorem(40);
+        background-color: #f89f14;
+    }
+
+    .panel-head {
+        position: absolute;
+        left: 50%;
+        top: pxTorem(-45);
+        width: pxTorem(444);
+        height: pxTorem(123);
+        background:url('./images/quizPanelHead.png') no-repeat;
+        background-size:100% 100%;
+        transform: translateX(-50%);
+        color: #e65413;
+        z-index: 1;
+    }
+
+    .integral-message {
+        @include flex-center;
+        width: 100%;
+        height: 100%;
+        font-size: pxTorem(38);
+    }
+
+    .panel-content {
+        background-color: $white;
+        border: pxTorem(6) solid #6a3c05;
+        border-radius: pxTorem(30);
+        padding-bottom: pxTorem(80);
+        color: #6f3a04;
+        .quiz {
+            position: relative;
+            padding: pxTorem(100) pxTorem(60) pxTorem(40) pxTorem(60);
+            font-size: pxTorem(30);
+            text-align: justify;
+        }
+        .number {
+            position: absolute;
+            left: pxTorem(20);
+            top: pxTorem(83);
+            color: #e65413;
+            font-size: pxTorem(36);
+        }
+    }
+
+    .answers {
+        display: flex;
+        flex-wrap: wrap;
+        font-size: pxTorem(34);
+        color: #6f3a04;
+        list-style: none;
+        li {
+            list-style: none;
+            width: 50%;
+            text-align: center;
+            label {
+                text-align: left;
+                display: block;
+                padding-left: pxTorem(37.5);
+            }
+        }
+        input[type='radio'] {
+            display: none;
+        }
+        label:before {
+            content: "";
+            display: inline-block;
+            width: pxTorem(44);
+            height: pxTorem(44);
+            margin-right: pxTorem(30);
+            background-image: url('./images/quizCircle.png');
+            background-size: 100% 100%;
+            transform: translateY(pxTorem(5));
+        }
+        input[type="radio"]:checked+label:before {
+            background-image: url('./images/quizCircleActive.png');
+        }
+    }
+
+    .panel-footer {
+        @include flex-center;
+        position: absolute;
+        left: 50%;
+        bottom: pxTorem(-28);
+        width: pxTorem(456);
+        height: pxTorem(84);
+        background: url('./images/quizNotice.png') no-repeat;
+        background-size: 100% 100%;
+        transform: translateX(-50%);
+    }
+
+    .notice {
+        color: #6f3a04;
+        font-size: pxTorem(24);
+        .number {
+            padding: 0 pxTorem(5);
+            font-size: pxTorem(30);
+            color: #f9bd16;
+        }
+    }
+
+
+    .submit {
+        @include active(#62be11,
+        5%);
+        position: relative;
+        display: block;
+        width: pxTorem(322);
+        height: pxTorem(82);
+        line-height: pxTorem(82);
+        margin: pxTorem(60) auto pxTorem(50) auto;
+        box-shadow: pxTorem(4) pxTorem(3) pxTorem(5) 1px rgba(67, 160, 9, 0.68);
+        border-radius: pxTorem(31);
+        text-align: center;
+        font-size: pxTorem(40);
+        background-color: #62be11;
+        color: $white;
+        &:after {
+            content: '';
+            position: absolute;
+            right: pxTorem(10);
+            top: pxTorem(15);
+            width: pxTorem(26);
+            height: pxTorem(12);
+            border-radius: pxTorem(6);
+            background-color: rgb(183, 233, 56);
+            transform: rotate(30deg);
+            box-shadow: 0 0 pxTorem(4) 1px rgba(183, 233, 56, .3); //  width: pxTorem(29);
+        }
+    }
+
+    .describe {
+        padding: 0 pxTorem(40);
+        .editor-style {
+            padding-top: pxTorem(20);
+            padding-bottom: pxTorem(40);
+            color: #6a3c05;
+        }
+    }

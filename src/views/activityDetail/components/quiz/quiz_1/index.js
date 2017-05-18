@@ -1,0 +1,1 @@
+module.exports = require('./quiz_1.vue');

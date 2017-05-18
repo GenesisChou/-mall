@@ -24,7 +24,7 @@
 <template>
     <div class='fortune'>
         <header>
-            <img class='banner'  :src='activityDetail.pic_banner_new'>
+            <img class='banner' :src='activityDetail.pic_banner_new'>
         </header>
         <main>
             <div class='panel'>
@@ -97,8 +97,8 @@
     </div>
 </template>
 <script>
+    import mixin from '../mixin.js';
     export default {
-        name: 'one',
-        mixins: [require('../mixin.js')]
+        mixins: [mixin],
     };
 </script>

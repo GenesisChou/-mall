@@ -49,6 +49,11 @@
             background-color:#ff5004;
             border:1px solid #481110;
         }
+        li.aquamarine{
+            color:#1c9e9e;
+            background-color:$white;
+            border:1px solid #6a1333;
+        }
     }
 </style>
 <template>

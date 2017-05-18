@@ -44,6 +44,9 @@
     &.orange{
         background-image: url('./images/orangeAwardBox.png');
     }
+    &.yellow{
+        background-image: url('./images/yellowAwardBox.png');
+    }
     .wrapper {
         width: 100%;
         overflow-x: hidden;
@@ -101,6 +104,9 @@
         }
         &.orange{
             background-color:#e76241;
+        }
+        &.yellow{
+            background-color:#e8af00;
         }
     }
 }

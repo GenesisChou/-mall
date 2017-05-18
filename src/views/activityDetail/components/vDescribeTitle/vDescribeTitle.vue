@@ -37,17 +37,20 @@
         &.emerald {
             background-image: url('./images/emeraldTitle.png');
         }
-        &.army{
+        &.army {
             color: $white;
             background-image: url('./images/armyTitle.png');
         }
-        &.purple{
-            color:#7a1498;
+        &.purple {
+            color: #7a1498;
             background-image: url('./images/purpleTitle.png');
         }
-        &.orange{
-            color:#fef9d4;
+        &.orange {
+            color: #fef9d4;
             background-image: url('./images/orangeTitle.png');
+        }
+        &.yellow {
+            background-image: url('./images/yellowTitle.png');
         }
     }
 </style>

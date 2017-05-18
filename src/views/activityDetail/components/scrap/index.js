@@ -4,7 +4,7 @@ const template = `
     </component>
 `;
 module.exports = {
-    name: 'fortune',
+    name: 'scrap',
     template,
     components: {
         one: (resolve) => {

@@ -1,7 +1,7 @@
 <style lang='scss' scoped>
     @import '../style.scss';
     .v-scrap {
-        background-color:#4dd3d6;
+        background-color: #4dd3d6;
     }
 </style>
 <template>
@@ -45,8 +45,8 @@
     </div>
 </template>
 <script>
+    import mixin from '../mixin.js';
     export default {
-        name: 'one',
-        mixins: [require('../mixin.js')],
+        mixins: [mixin],
     };
 </script>

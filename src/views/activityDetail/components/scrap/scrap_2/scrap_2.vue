@@ -38,7 +38,6 @@
                     每次消耗<span class='number'>{{activityDetail.integral>>0}}</span>积分
                 </template>
             </h5>
-
         </main>
         <article class='describe'>
             <v-describe-title text='详细说明' color='orange'></v-describe-title>
@@ -57,8 +56,8 @@
     </div>
 </template>
 <script>
+    import mixin from '../mixin.js';
     export default {
-        name: 'one',
-        mixins: [require('../mixin.js')],
+        mixins: [mixin],
     };
 </script>
