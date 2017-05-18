@@ -7,9 +7,9 @@ const media_id = utils.getParameterByName('id'),
 if (storage) {
     startApp(storage);
 } else {
-    const media_id = utils.getParameterByName('mediaid'),
-        token = utils.getParameterByName('token');
+    const token = utils.getParameterByName('token');
     if (token) {
+        const media_id = utils.getParameterByName('mediaid');
         utils.setLocalStorage(media_id, {
             TOKEN: token,
             USER_ID: utils.getParameterByName('userid'),
