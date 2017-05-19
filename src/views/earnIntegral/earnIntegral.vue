@@ -29,6 +29,7 @@
             font-size: pxTorem(24);
         }
         .message {
+            margin-top:pxTorem(26);
             text-shadow: 0 pxTorem(4) pxTorem(4) rgba(209, 172, 0, 0.68);
             font-weight: 500;
             color: $white;
@@ -106,7 +107,40 @@
             background-color: $orange;
         }
     }
-
+    .gift-notice{
+        @include flex-center;
+        position:absolute;
+        left:0;
+        right:0;
+        bottom:pxTorem(320);
+        font-size:pxTorem(24);
+        color:$white;
+        .number{
+            padding:0 pxTorem(5);
+            font-size:pxTorem(40);
+            color:#f05f61;
+        }
+        .arrows{
+            color:#f05f61;
+            font-weight:bold;
+            margin-left:pxTorem(5);
+        }
+        &:before,&:after{
+            content:'';
+            position:absolute;
+            top:50%;
+            width:pxTorem(125);
+            height:pxTorem(3);
+            margin-top:pxTorem(-3/2);
+            background-color:$white;
+        }
+        &:before{
+            left:pxTorem(30);
+        }
+        &:after{
+            right:pxTorem(30);
+        }
+    }
     .gift-list {
         @include flex-center;
         position: absolute;
@@ -116,6 +150,7 @@
         img {
             width: pxTorem(153);
             height: pxTorem(145);
+            transition:.3s;
         }
         li {
             display: flex;
@@ -127,7 +162,7 @@
             padding: pxTorem(4);
             margin: 0 pxTorem(11);
             border-radius: pxTorem(5);
-            background-color: #37b8ba;
+            background-color: #b8edef;
             list-style: none;
         }
         h4 {
@@ -145,21 +180,8 @@
             position: relative;
             background-color: #b8edef;
             h4 {
+                background-color:#f05f61;
                 color: $white;
-            }
-            &:before {
-                content: '已领取';
-                position: absolute;
-                left: -12%;
-                top: -6%;
-                background-color: #f05f61;
-                color: $white;
-                border: 1px solid $white;
-                border-radius: pxTorem(5);
-                padding: pxTorem(5) pxTorem(8);
-                font-size: pxTorem(28);
-                font-weight: 500;
-                transform: rotate(-20deg);
             }
         }
     }
@@ -534,18 +556,25 @@
                         </div>
                     </transition>
                 </div>
-                <div class='btn' @click='toggleRecords'>
+                <!--<div class='btn' @click='toggleRecords'>
                     签到记录
-                </div>
+                </div>-->
                 <p class='message'>
                     {{notice}}
                 </p>
-
+                <div class='gift-notice'>
+                    距离领奖还有 <span class='number'>8</span> 天，查看签到记录<span class='arrows'>>></span>
+                </div>
                 <transition-group tag='ul' class='gift-list' name='slide-fade'>
                     <li v-for='(gift,$index) in gift_list' :key='$index' :class='{active:gift.is_price}'>
-                        <img v-if='gift.is_price' src='./images/earnIntegralMoneyActive.png'>
-                        <img v-else src='./images/earnIntegralMoney.png'>
-                        <h4>{{gift.checkin_days}}</h4>
+                        <template v-if='gift.is_price'>
+                            <img src='./images/earnIntegralMoneyActive.png'>
+                            <h4>已领取</h4>
+                        </template>
+                        <template v-else>
+                            <img src='./images/earnIntegralMoney.png'>
+                            <h4>{{gift.checkin_days}}</h4>
+                        </template>
                     </li>
                 </transition-group>
             </header>

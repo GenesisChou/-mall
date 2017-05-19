@@ -60,8 +60,8 @@
         .close {
             @include flex-center;
             position: absolute;
-            right: pxTorem(-40);
-            top: pxTorem(-40);
+            right: pxTorem(-30);
+            top: pxTorem(-30);
             width: pxTorem(80);
             height: pxTorem(80);
             background-color: $white;

@@ -35,12 +35,27 @@
                 transform: scale(0.5);
             }
         }
+        li.red-dot {
+            position: relative;
+            &:after {
+                content: '';
+                position: absolute;
+                right: 25%;
+                top: 15%;
+                width: pxTorem(15);
+                height: pxTorem(15);
+                border-radius: 50%;
+                background-color: #ff0000;
+            }
+        }
+
         p {
             width: 100%;
             height: pxTorem(30);
             overflow: hidden;
         }
         .icon {
+            position: relative;
             width: pxTorem(95);
             height: pxTorem(95);
             margin-bottom: pxTorem(15);
@@ -87,7 +102,7 @@
             color: $white;
             background-color: #000;
             border: 1px solid $white;
-            border-radius: pxTorem(32);
+            border-radius: pxTorem(30);
             &:active {
                 background-color: #222;
             }
@@ -98,10 +113,13 @@
         h1 {
             left: pxTorem(260);
             top: pxTorem(-250);
+            line-height:pxTorem(48);
+            font-weight: 500;
         }
         span {
             right: pxTorem(10);
             top: pxTorem(-320);
+            font-weight: 500;
         }
         .btn {
             left: pxTorem(313);
@@ -128,10 +146,13 @@
         h1 {
             left: pxTorem(150);
             top: pxTorem(-260);
+            line-height:pxTorem(48);
+            font-weight: 500;
         }
         span {
             right: pxTorem(10);
             top: pxTorem(-320);
+            font-weight: 500;
         }
         .btn {
             left: pxTorem(290);
@@ -156,7 +177,8 @@
 </style>
 <template>
     <ul :class='["icon-list",guide_state]'>
-        <li v-for='item in layout.items' @click='routerLink(item,layout)'>
+        <li :class='{"red-dot":user.unfinished_order_count>0&&item.is_inner_url === 1&&item.url==="order_list"}' v-for='item in layout.items'
+            @click='routerLink(item,layout)'>
             <img class='icon' v-lazy='item.pic_thumb_new'>
             <p>{{item.title}}</p>
         </li>
@@ -191,6 +213,9 @@
             routerLink: Function,
         },
         computed: {
+            user() {
+                return this.$store.state.user;
+            },
             guide_state() {
                 return this.$store.state.index.guide_state;
             }

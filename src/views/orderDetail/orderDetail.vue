@@ -9,21 +9,44 @@
 
     .order-detail-content {
         flex: 1;
+        margin-bottom: pxTorem(40);
     }
 
 
     .single-button {
         @include flex-center;
         height: pxTorem(120);
-        &.bg-white {
-            margin-top: pxTorem(20);
-            background-color: $white;
-        }
         .btn {
             width: pxTorem(517);
             height: pxTorem(72);
         }
     }
+
+    .sticky {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        padding: 0 pxTorem(30) pxTorem(30) pxTorem(30);
+        text-align: center;
+        background-color: $white;
+        border-bottom: 1px solid $gray-light;
+        box-shadow: 0 0 0 #000, 0 0 pxTorem(15) #ddd;
+        >div {
+            @include active(#ff5000, 5%);
+            margin-top: pxTorem(30);
+            background-color: #ff5000;
+            display: block;
+            width: 100%;
+            height: pxTorem(100);
+            line-height: pxTorem(100);
+            font-size: pxTorem(40);
+            color: $white;
+            border-radius: pxTorem(10);
+        }
+    }
+
 
     .address-box {
         background-color: $white;
@@ -202,9 +225,9 @@
                     <!-- 使用说明 -->
                     <v-introduction v-if='product_detail.content_use' title='使用说明' :content='product_detail.content_use'></v-introduction>
                     <!-- 重要声明 -->
-                    <v-announcement :has-border='product_type==5'></v-announcement>
-                    <div v-if='product_type==5' class='single-button bg-white'>
-                        <button class='btn btn-orange' @click='useTicket(product_detail.url)'> 前往使用 </button>
+                    <v-announcement></v-announcement>
+                    <div v-if='product_type==5' class='sticky'>
+                        <div class='exchange' @click='useTicket(product_detail.url)'> 前往使用 </div>
                     </div>
                 </template>
                 <!-- 商品为实物时 -->

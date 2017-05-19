@@ -107,6 +107,15 @@ const router = new VueRouter({
 });
 router.beforeEach((to, from, next) => {
     store.dispatch('pageView', to.name);
+    if (store.state.v_alert.show) {
+        store.dispatch('toggleAlert');
+    }
+    if (store.state.v_confirm.show) {
+        store.dispatch('toggleConfirm');
+    }
+    if (store.state.v_loading.show) {
+        store.dispatch('toggleLoading');
+    }
     next();
 });
 module.exports = router;

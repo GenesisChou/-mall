@@ -3,11 +3,22 @@
     .v-scrap {
         background-color: #4dd3d6;
     }
+    .header{
+        position:relative;
+        overflow: hidden;
+    }
+    .arc{
+        position:absolute;
+        bottom:pxTorem(-56);
+        width:pxTorem(750);
+        height:pxTorem(78);
+    }
 </style>
 <template>
     <div class='v-scrap'>
-        <header>
+        <header class='header'>
             <img class='banner' :src='activityDetail.pic_banner_new'>
+            <img class='arc' src='./images/arc.png' >
         </header>
         <main>
             <div class='integral-message'>
