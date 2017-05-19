@@ -1,5 +1,4 @@
 <style lang='scss'>
-    @import './assets/scss/iconfont.css';
     @import './assets/scss/main.scss';
     #app {
         width: 100%;

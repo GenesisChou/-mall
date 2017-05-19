@@ -169,6 +169,15 @@
                 });
             }
         },
+        beforeRouteLeave(from, to, next) {
+            // if (this.$store.state.v_alert.show) {
+            //     this.$store.dispatch('toggleAlert');
+            // }
+            // if (this.$store.state.v_confirm.show) {
+            //     this.$store.dispatch('toggleConfirm');
+            // }
+            next();
+        },
         created() {
             this.product_id = this.$route.query.product_id;
             this.getProductDetail();

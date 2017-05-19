@@ -29,7 +29,7 @@
             font-size: pxTorem(24);
         }
         .message {
-            margin-top:pxTorem(26);
+            margin-top: pxTorem(26);
             text-shadow: 0 pxTorem(4) pxTorem(4) rgba(209, 172, 0, 0.68);
             font-weight: 500;
             color: $white;
@@ -107,40 +107,49 @@
             background-color: $orange;
         }
     }
-    .gift-notice{
+
+    .gift-notice {
         @include flex-center;
-        position:absolute;
-        left:0;
-        right:0;
-        bottom:pxTorem(320);
-        font-size:pxTorem(24);
-        color:$white;
-        .number{
-            padding:0 pxTorem(5);
-            font-size:pxTorem(40);
-            color:#f05f61;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: pxTorem(320);
+        font-size: pxTorem(24);
+        color: $white;
+        .number {
+            padding: 0 pxTorem(5);
+            font-size: pxTorem(40);
+            color: #f05f61;
         }
-        .arrows{
-            color:#f05f61;
-            font-weight:bold;
-            margin-left:pxTorem(5);
+        .icon-arrows-right {
+            color: #f05f61;
+            font-weight: bold;
+            margin-left: pxTorem(5);
+            font-size: pxTorem(24);
+            width: pxTorem(6);
         }
-        &:before,&:after{
-            content:'';
-            position:absolute;
-            top:50%;
-            width:pxTorem(125);
-            height:pxTorem(3);
-            margin-top:pxTorem(-3/2);
-            background-color:$white;
+        strong {
+            // font-weight: 500;
+            // border-bottom: 1px solid $white;
         }
-        &:before{
-            left:pxTorem(30);
+        &:before,
+        &:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: pxTorem(125);
+            height: pxTorem(3);
+            margin-top: pxTorem(-3/2);
+            background-color: $white;
         }
-        &:after{
-            right:pxTorem(30);
+        &:before {
+            left: pxTorem(30);
+        }
+        &:after {
+            right: pxTorem(30);
         }
     }
+
     .gift-list {
         @include flex-center;
         position: absolute;
@@ -150,7 +159,7 @@
         img {
             width: pxTorem(153);
             height: pxTorem(145);
-            transition:.3s;
+            transition: .3s;
         }
         li {
             display: flex;
@@ -180,7 +189,7 @@
             position: relative;
             background-color: #b8edef;
             h4 {
-                background-color:#f05f61;
+                background-color: #f05f61;
                 color: $white;
             }
         }
@@ -309,14 +318,28 @@
         }
         div {
             @include flex-center;
+            position:relative;
             width: pxTorem(115);
             height: pxTorem(50);
             border-radius: pxTorem(10);
             font-size: pxTorem(24);
-            background-color: $orange;
+            background-color: #29a6a8;
             color: $white;
+            &:after{
+                content:'';
+                position:absolute;
+                right:pxTorem(-3);
+                top:pxTorem(-2);
+                width:pxTorem(10);
+                height:pxTorem(10);
+                background-color:#ff0000;
+                border-radius: 50%;
+            }
             &.read {
-                background-color: #4dd3d6;
+                background-color: #b4c7c8;
+                &:after{
+                    display: none;
+                }
             }
         }
     }
@@ -449,13 +472,18 @@
             border-top-right-radius: pxTorem(10);
         }
         .title {
-            text-align: center;
-            line-height: pxTorem(63);
+            display: flex;
+            align-items: center;
+            height:pxTorem(64);
             font-size: pxTorem(40);
             color: $white;
             background-color: #9b3131;
             border-top-left-radius: pxTorem(10);
             border-top-right-radius: pxTorem(10);
+            .left,.right{
+                flex:1;
+                text-align: center;
+            }
         }
         .close {
             @include flex-center;
@@ -480,6 +508,9 @@
             ul {
                 display: flex;
                 flex-wrap: wrap;
+            }
+            .weeks{
+                background-color:#f1f1f1;
             }
             li {
                 list-style: none;
@@ -556,14 +587,13 @@
                         </div>
                     </transition>
                 </div>
-                <!--<div class='btn' @click='toggleRecords'>
-                    签到记录
-                </div>-->
                 <p class='message'>
                     {{notice}}
                 </p>
                 <div class='gift-notice'>
-                    距离领奖还有 <span class='number'>8</span> 天，查看签到记录<span class='arrows'>>></span>
+                    距离领奖还有 <span class='number'>{{remain_days}}</span> 天， <strong @click='toggleRecords'>查看签到记录</strong>
+                    <i class='iconfont icon-arrows-right'></i>
+                    <i class='iconfont icon-arrows-right'></i>
                 </div>
                 <transition-group tag='ul' class='gift-list' name='slide-fade'>
                     <li v-for='(gift,$index) in gift_list' :key='$index' :class='{active:gift.is_price}'>
@@ -642,9 +672,12 @@
                         <div class='close' @click='toggleRecords'>
                             <i class='iconfont icon-close-circle'></i>
                         </div>
-                        <h1 class='title'>{{records.year_month}}</h1>
+                        <h1 class='title'>
+                            <div class='left'>{{records.year_month}}</div>
+                            <!--<div class='right'>累计签到25天</div>-->
+                        </h1>
                         <div class='calendar'>
-                            <ul>
+                            <ul class='weeks'>
                                 <li v-for="i in ['日', '一', '二', '三', '四', '五', '六']">{{i}}</li>
                             </ul>
                             <ul>
@@ -701,9 +734,12 @@
             notice() {
                 return this.check_in_params.checkin_param ? this.check_in_params.checkin_param.tips : '';
             },
+            remain_days() {
+                return this.check_in_params.checkin_param ? this.check_in_params.checkin_param.remaining_days : 0;
+            },
             records() {
                 return this.check_in_params.checkin_record || {};
-            }
+            },
         },
         beforeRouteEnter(to, from, next) {
             utils.scrollToTop();
