@@ -53,7 +53,7 @@
 <template>
     <div v-show='content_show' class='subject-detail'>
         <div class='subject-detail-content'>
-            <img class='banner' :src='subject_detail.pic'>
+            <img class='banner' :src='subject_detail.pic_banner_new'>
             <main>
                 <ul v-if='tabs_show' class='tabs'>
                     <li :class='{active:current_tab=="全部"}' @click='switchTab("全部")'>全部</li>

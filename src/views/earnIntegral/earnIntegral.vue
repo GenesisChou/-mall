@@ -673,7 +673,7 @@
                             <i class='iconfont icon-close-circle'></i>
                         </div>
                         <h1 class='title'>
-                            <div class='left'>{{records.year_month}}</div>
+                            <div class='left'>{{records.today}}</div>
                             <!--<div class='right'>累计签到25天</div>-->
                         </h1>
                         <div class='calendar'>

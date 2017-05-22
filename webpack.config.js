@@ -10,8 +10,8 @@ const path = require('path'),
         output: {
             path: path.resolve(__dirname, './dist'),
             publicPath: '/dist/',
-            // filename: 'js/[name].js',
-            filename: 'js/[name].[hash].js'
+            filename: 'js/[name].js',
+            // filename: 'js/[name].[hash].js'
         },
         module: {
             rules: [{
