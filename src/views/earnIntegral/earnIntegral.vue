@@ -128,10 +128,6 @@
             font-size: pxTorem(24);
             width: pxTorem(6);
         }
-        strong {
-            // font-weight: 500;
-            // border-bottom: 1px solid $white;
-        }
         &:before,
         &:after {
             content: '';
@@ -452,18 +448,22 @@
 
     .records {
         position: relative;
-        width: pxTorem(628);
+        width: pxTorem(640);
         padding: pxTorem(32);
         background-color: #cf423f;
         border-radius: pxTorem(10);
         box-shadow: 0 pxTorem(4) pxTorem(4) rgba(0, 0, 0, .5);
-        .decoration {
+        .decoration-left {
             position: absolute;
             left: -8%;
             top: -10%;
             width: pxTorem(685);
             height: pxTorem(264);
+            z-index:2;
+            background:url('./images/recordsDecoration.png');
+            background-size:pxTorem(685) pxTorem(264);
         }
+
         .container {
             width: 100%;
             height: 100%;
@@ -472,6 +472,7 @@
             border-top-right-radius: pxTorem(10);
         }
         .title {
+            position: relative;
             display: flex;
             align-items: center;
             height: pxTorem(64);
@@ -485,9 +486,27 @@
                 @include flex-center;
                 flex: 1;
                 height: 100%;
+                span {
+                    position: relative;
+                    z-index: 1;
+                }
             }
             .right {
                 background-color: #b34444;
+            }
+            .number {
+                color: #8ae1c4;
+                padding: 0 pxTorem(5);
+            }
+            .triangle {
+                position: absolute;
+                left: 50%;
+                top: 0;
+                width: 0;
+                height: 0;
+                margin-left: pxTorem(-32);
+                border-bottom: pxTorem(64) solid #b34444;
+                border-left: pxTorem(64) solid #9b3131;
             }
         }
         .close {
@@ -509,7 +528,6 @@
         }
         .calendar {
             width: 100%;
-            padding-bottom: pxTorem(20);
             ul {
                 display: flex;
                 flex-wrap: wrap;
@@ -519,15 +537,6 @@
                 width: pxTorem(80);
                 text-align: center;
                 color: #3d3d3d;
-                &.checked {
-                    color: #cf423f;
-                }
-                &.today {
-                    color: #cf423f;
-                }
-                &.disable {
-                    color: rgba(0, 0, 0, .3);
-                }
             }
 
             ul:first-child {
@@ -543,7 +552,10 @@
                 }
             }
             ul:nth-child(2) {
-                border: 1px solid #f1f1f1;
+                padding-bottom: pxTorem(8);
+                border: pxTorem(8) solid #f1f1f1;
+                border-top: none;
+                background-color: #f1f1f1;
                 li {
                     display: flex;
                     flex-direction: column;
@@ -551,15 +563,48 @@
                     justify-content: space-between;
                     border-right: 1px solid #f1f1f1;
                     border-bottom: 1px solid #f1f1f1;
+                    background-color: $white;
+                    &.today {
+                        position: relative;
+                        color: #cf423f;
+                        h6 {
+                            color: $white;
+                            background-color: #cf423f;
+                        }
+                        &:before {
+                            content: '';
+                            position: absolute;
+                            left: 2px;
+                            top: 2px;
+                            right: 2px;
+                            bottom: 2px;
+                            outline: 2px solid #cf423f;
+                        }
+                    }
+
+                    &.checked {
+                        color: #cf423f;
+                    }
+                    &.disable {
+                        color: rgba(0, 0, 0, .3);
+                        img {
+                            opacity: 0;
+                        }
+                    }
                 }
                 h1 {
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
+                    padding: pxTorem(10) pxTorem(3) 0 pxTorem(10);
                     font-size: pxTorem(30);
                 }
                 h6 {
                     font-size: pxTorem(18);
+                }
+                h6.unchecked {
+                    background-color: #656565;
+                    color: $white;
                 }
                 img.checked {
                     width: pxTorem(24);
@@ -681,13 +726,17 @@
             <transition name='enlarge'>
                 <div v-show='records_show' class='records'>
                     <div class='container'>
-                        <!--<img class='decoration' src='./images/recordsDecoration.png'>-->
+                        <div class='decoration-left'></div>
+                        <!--<img class='decoration-right' src='./images/recordsDecoration.png'>-->
                         <div class='close' @click='toggleRecords'>
                             <i class='iconfont icon-close-circle'></i>
                         </div>
                         <h1 class='title'>
-                            <div class='left'>{{records.today}}</div>
-                            <div class='right'>累计签到{{records.accumulate_days||0}}天</div>
+                            <div class='triangle'></div>
+                            <div class='left'><span>{{records.today}}</span></div>
+                            <div class='right'>
+                                <span>累计签到<span class='number'>{{records.accumulate_days||0}}</span>天</span>
+                            </div>
                         </h1>
                         <div class='calendar'>
                             <ul>
@@ -701,7 +750,7 @@
                                         <img class='unchecked' v-else src='./images/unchecked.png'>
                                     </h1>
                                     <template v-if='record.integral'>
-                                        <h6 v-if='record.checkin'>{{record.integral}}</h6>
+                                        <h6 v-if='record.checkin||record.day>new Date().getDate()'>{{record.integral}}</h6>
                                         <h6 v-else class='unchecked'>未签到</h6>
                                     </template>
                                 </li>
