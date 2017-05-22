@@ -453,10 +453,10 @@
         background-color: #cf423f;
         border-radius: pxTorem(10);
         box-shadow: 0 pxTorem(4) pxTorem(4) rgba(0, 0, 0, .5);
-        .decoration-left {
+        .decoration{
             position: absolute;
             left: -8%;
-            top: -10%;
+            top: -11%;
             width: pxTorem(685);
             height: pxTorem(264);
             z-index:2;
@@ -518,6 +518,7 @@
             height: pxTorem(80);
             background-color: $white;
             border-radius: 50%;
+            z-index:2;
         }
         .icon-close-circle {
             font-size: pxTorem(80);
@@ -727,8 +728,7 @@
             <transition name='enlarge'>
                 <div v-show='records_show' class='records'>
                     <div class='container'>
-                        <div class='decoration-left'></div>
-                        <!--<img class='decoration-right' src='./images/recordsDecoration.png'>-->
+                        <div class='decoration'></div>
                         <div class='close' @click='toggleRecords'>
                             <i class='iconfont icon-close-circle'></i>
                         </div>
@@ -751,7 +751,7 @@
                                         <img class='unchecked' v-else-if='record.day!=new Date().getDate()' src='./images/unchecked.png'>
                                     </h1>
                                     <template v-if='record.integral'>
-                                        <h6 v-if='record.checkin||record.day>new Date().getDate()'>{{record.integral}}</h6>
+                                        <h6 v-if='record.checkin||record.day>=new Date().getDate()'>{{record.integral}}</h6>
                                         <h6 v-else class='unchecked'>未签到</h6>
                                     </template>
                                 </li>
