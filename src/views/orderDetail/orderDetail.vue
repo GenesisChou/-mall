@@ -294,7 +294,7 @@
                         <!-- 领取说明 -->
                         <v-introduction v-if='product_detail.content_use' title='领取说明' :content='product_detail.content_use'></v-introduction>
                         <!-- 重要声明 -->
-                        <v-announcement :has-border='false'></v-announcement>
+                        <v-announcement></v-announcement>
                     </template>
                 </template>
             </v-order>
