@@ -318,26 +318,26 @@
         }
         div {
             @include flex-center;
-            position:relative;
+            position: relative;
             width: pxTorem(115);
             height: pxTorem(50);
             border-radius: pxTorem(10);
             font-size: pxTorem(24);
             background-color: #29a6a8;
             color: $white;
-            &:after{
-                content:'';
-                position:absolute;
-                right:pxTorem(-3);
-                top:pxTorem(-2);
-                width:pxTorem(10);
-                height:pxTorem(10);
-                background-color:#ff0000;
+            &:after {
+                content: '';
+                position: absolute;
+                right: pxTorem(-3);
+                top: pxTorem(-2);
+                width: pxTorem(10);
+                height: pxTorem(10);
+                background-color: #ff0000;
                 border-radius: 50%;
             }
             &.read {
                 background-color: #b4c7c8;
-                &:after{
+                &:after {
                     display: none;
                 }
             }
@@ -452,7 +452,7 @@
 
     .records {
         position: relative;
-        width: pxTorem(620);
+        width: pxTorem(628);
         padding: pxTorem(32);
         background-color: #cf423f;
         border-radius: pxTorem(10);
@@ -474,15 +474,20 @@
         .title {
             display: flex;
             align-items: center;
-            height:pxTorem(64);
-            font-size: pxTorem(40);
+            height: pxTorem(64);
+            font-size: pxTorem(30);
             color: $white;
             background-color: #9b3131;
             border-top-left-radius: pxTorem(10);
             border-top-right-radius: pxTorem(10);
-            .left,.right{
-                flex:1;
-                text-align: center;
+            .left,
+            .right {
+                @include flex-center;
+                flex: 1;
+                height: 100%;
+            }
+            .right {
+                background-color: #b34444;
             }
         }
         .close {
@@ -509,52 +514,60 @@
                 display: flex;
                 flex-wrap: wrap;
             }
-            .weeks{
-                background-color:#f1f1f1;
-            }
             li {
                 list-style: none;
-                width: 14.28%;
+                width: pxTorem(80);
                 text-align: center;
                 color: #3d3d3d;
                 &.checked {
                     color: #cf423f;
                 }
                 &.today {
-                    background-color: #9b3131;
-                    color: $white;
+                    color: #cf423f;
                 }
                 &.disable {
                     color: rgba(0, 0, 0, .3);
                 }
             }
-            h1 {
-                line-height: pxTorem(35);
-            }
-            h6 {
-                font-size: pxTorem(18);
-            }
 
             ul:first-child {
+                background-color: #f1f1f1;
                 li {
                     height: pxTorem(50);
                     line-height: pxTorem(50);
-                    font-size: pxTorem(18);
-                    &:first-child {
-                        color: #cf423f;
-                    }
+                    font-size: pxTorem(22);
+                    &:first-child,
                     &:last-child {
                         color: #cf423f;
                     }
                 }
             }
-            ul:first-child~ul {
+            ul:nth-child(2) {
+                border: 1px solid #f1f1f1;
                 li {
                     display: flex;
                     flex-direction: column;
-                    height: pxTorem(80);
-                    justify-content: center;
-                    border-radius: pxTorem(10); // margin:pxTorem(5) 0;
+                    height: pxTorem(109);
+                    justify-content: space-between;
+                    border-right: 1px solid #f1f1f1;
+                    border-bottom: 1px solid #f1f1f1;
+                }
+                h1 {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    font-size: pxTorem(30);
+                }
+                h6 {
+                    font-size: pxTorem(18);
+                }
+                img.checked {
+                    width: pxTorem(24);
+                    height: pxTorem(16);
+                }
+                img.unchecked {
+                    width: pxTorem(17);
+                    height: pxTorem(17);
                 }
             }
         }
@@ -668,22 +681,29 @@
             <transition name='enlarge'>
                 <div v-show='records_show' class='records'>
                     <div class='container'>
-                        <img class='decoration' src='./images/recordsDecoration.png'>
+                        <!--<img class='decoration' src='./images/recordsDecoration.png'>-->
                         <div class='close' @click='toggleRecords'>
                             <i class='iconfont icon-close-circle'></i>
                         </div>
                         <h1 class='title'>
                             <div class='left'>{{records.today}}</div>
-                            <!--<div class='right'>累计签到25天</div>-->
+                            <div class='right'>累计签到{{records.accumulate_days||0}}天</div>
                         </h1>
                         <div class='calendar'>
-                            <ul class='weeks'>
+                            <ul>
                                 <li v-for="i in ['日', '一', '二', '三', '四', '五', '六']">{{i}}</li>
                             </ul>
                             <ul>
                                 <li v-for='record in records.detail' :class='[{checked:record.checkin},{disable:record.day>new Date().getDate()},{today:record.day==new Date().getDate()}]'>
-                                    <h1>{{record.day}}</h1>
-                                    <h6>{{record.integral}}</h6>
+                                    <h1 v-if='record.day'>
+                                        {{record.day}}
+                                        <img class='checked' v-if='record.checkin' src='./images/checked.png'>
+                                        <img class='unchecked' v-else src='./images/unchecked.png'>
+                                    </h1>
+                                    <template v-if='record.integral'>
+                                        <h6 v-if='record.checkin'>{{record.integral}}</h6>
+                                        <h6 v-else class='unchecked'>未签到</h6>
+                                    </template>
                                 </li>
                             </ul>
                         </div>
