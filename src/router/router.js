@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '../store';
+import weChatShare from 'libs/weChatShare.js';
 Vue.use(VueRouter);
 const router = new VueRouter({
     routes: [
@@ -106,6 +107,7 @@ const router = new VueRouter({
     ],
 });
 router.beforeEach((to, from, next) => {
+    weChatShare(to);
     store.dispatch('pageView', to.name);
     next();
 });

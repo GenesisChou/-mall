@@ -54,7 +54,7 @@ function wxLogin(media_id, activity_id, product_id, subject_id) {
 function startApp(cache) {
     const store = require('./store'),
         fastClick = require('fastclick'),
-        weChatShare = require('libs/weChatShare.js'),
+        // weChatShare = require('libs/weChatShare.js'),
         lazyLoad = require('vue-lazyload'),
         globalComponents = require('components/components.js');
     APP.TOKEN = cache.TOKEN;
@@ -67,7 +67,6 @@ function startApp(cache) {
         attempt: 1,
         listenEvents: ['scroll']
     });
-    weChatShare();
     new Vue({
         el: '#app',
         render: h => h(require('./APP.vue')),

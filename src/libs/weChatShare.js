@@ -1,9 +1,12 @@
 import Vue from 'vue';
 import wx from 'weixin-js-sdk';
 import store from '../store';
-module.exports = function () {
-    // let url = encodeURIComponent(location.href.split('#')[0]);
-    const url = location.href.split('#')[0];
+module.exports = function (router) {
+    console.log(router);
+    let url = location.href.split('#')[0];
+    if (router.name !== 'index') {
+        url += '#' + router.fullPath;
+    }
     getSignature(url).then((data) => {
         init(data.data);
     });
