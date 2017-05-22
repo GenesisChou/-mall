@@ -747,7 +747,7 @@
                                     <h1 v-if='record.day'>
                                         {{record.day}}
                                         <img class='checked' v-if='record.checkin' src='./images/checked.png'>
-                                        <img class='unchecked' v-else src='./images/unchecked.png'>
+                                        <img class='unchecked' v-else-if='record.day!=new Date().getDate()' src='./images/unchecked.png'>
                                     </h1>
                                     <template v-if='record.integral'>
                                         <h6 v-if='record.checkin||record.day>new Date().getDate()'>{{record.integral}}</h6>
