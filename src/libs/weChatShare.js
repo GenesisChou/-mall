@@ -2,7 +2,6 @@ import Vue from 'vue';
 import wx from 'weixin-js-sdk';
 import store from '../store';
 module.exports = function (router) {
-    console.log(router);
     let url = location.href.split('#')[0];
     if (router.name !== 'index') {
         url += '#' + router.fullPath;

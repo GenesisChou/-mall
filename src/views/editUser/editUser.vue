@@ -109,10 +109,6 @@
                         <i class='iconfont icon-close-circle' @click='contact=""'></i>
                     </li>
                     <li>
-                        <label for='birth'>出生年月</label>
-                        <input type='date' v-model='birthday'>
-                    </li>
-                    <li>
                         <label for='phone'>联系电话</label>
                         <input id='phone' type='tel' placeholder="手机或固定电话" v-model='phone' @blur='toggleClear' @focus='toggleClear'>
                         <i class='iconfont icon-close-circle' @click='phone=""'></i>
@@ -169,7 +165,6 @@
                 address: '',
                 phone: '',
                 contact: '',
-                birthday: '',
                 province_id: '',
                 city_id: '',
                 country_id: '',
@@ -193,8 +188,7 @@
                 return this.$store.state.user.is_submit === 1;
             },
             submit_avaliable() {
-                if (this.birthday &&
-                    this.province &&
+                if (this.province &&
                     this.address.length >= 5 &&
                     this.phone &&
                     this.contact &&
@@ -234,7 +228,6 @@
                 address_config.forEach(config => {
                     this[config] = default_address[config];
                 });
-                this.birthday = this.user.birthday;
             },
             cancel() {
                 this.$router.go(-1);
@@ -251,7 +244,6 @@
                     address: this.address,
                     phone: this.phone,
                     contact: this.contact,
-                    birthday: this.birthday,
                     province_id: this.province_id,
                     city_id: this.city_id,
                     country_id: this.country_id,

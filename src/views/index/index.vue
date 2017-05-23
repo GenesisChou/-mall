@@ -34,6 +34,7 @@
 </template>
 <script>
     import vBackTop from 'components/vBackTop';
+    import weChatShare from 'libs/weChatShare.js';
     export default {
         components: {
             vBackTop,
@@ -81,6 +82,7 @@
         },
         created() {
             this.getLayOut();
+            weChatShare(this.$route);
         },
         activated() {
             this.router_state = 'enter';

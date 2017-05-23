@@ -2,8 +2,7 @@
     @import '../../../assets/scss/variable.scss';
     .edit-address {
         display: flex;
-        flex-direction: column;
-        height: pxTorem(640);
+        flex-direction: column; // height: pxTorem(640);
         background: $gray-light;
         .header {
             text-align: center;
@@ -119,15 +118,15 @@
                     <h1>{{title}}</h1>
                 </header>
                 <ul class='main'>
-                    <li>
+                    <li v-if='state.show_contact'>
                         <label for='contact'>收货人</label>
                         <input id='contact' placeholder="收货人姓名" v-model='receive_infor.contact'>
                     </li>
-                    <li>
+                    <li v-if='state.show_phone'>
                         <label for='phone'>联系电话</label>
                         <input id='phone' type='tel' placeholder="手机或固定电话" v-model='receive_infor.phone'>
                     </li>
-                    <li class='address'>
+                    <li v-if='state.show_address' class='address'>
                         <label for='province'>选择地址</label>
                         <div class='form-control'>
                             <input id='province' @click='showAreaList("province")' placeholder="请选择省" v-model='receive_infor.province' readonly>
@@ -142,14 +141,14 @@
                             <i v-if='!receive_infor.country' class=' iconfont icon-arrows-down third'></i>
                         </div>
                     </li>
-                    <li>
+                    <li v-if='state.show_address'>
                         <label for='address'>详细地址</label>
                         <input id='address' placeholder="请输入详细地址" v-model='receive_infor.address'>
                     </li>
                 </ul>
                 <div class='space'></div>
                 <footer class='footer'>
-                    <button class='btn btn-orange' @click.prevent='save'>保存</button>
+                    <button class='btn btn-orange' @click.prevent='save'>{{btnText||'保存'}}</button>
                 </footer>
             </form>
         </v-popup>
@@ -181,9 +180,21 @@
         name: 'vAddressEdit',
         components: {
             vPopup,
-            vModal
+            vModal,
         },
         props: {
+            btnText: String,
+            state: {
+                type: Object,
+                default: function () {
+                    return {
+                        show_contact: true,
+                        show_phone: true,
+                        show_address: true
+                    };
+                }
+            },
+            value: Object,
             togglePopup: Function,
             show: {
                 type: Boolean,
@@ -218,12 +229,6 @@
             };
         },
         computed: {
-            save() {
-                if (this.id) {
-                    return this.updateAddress;
-                }
-                return this.insertAddress;
-            },
             address_list() {
                 return this.$store.state.address_list;
             },
@@ -251,6 +256,14 @@
             //弹出窗口后为表单赋值
             show(value) {
                 if (value) {
+                    if (this.value) {
+                        this.receive_infor.province = this.value.province;
+                        this.receive_infor.city = this.value.city;
+                        this.receive_infor.country = this.value.country;
+                        this.receive_infor.address = this.value.address;
+                        this.receive_infor.phone = this.value.phone;
+                        this.receive_infor.contact = this.value.contact;
+                    }
                     this.getProvinceList();
                     //id大于0代表此时是修改地址状态
                     if (this.id > 0) {
@@ -275,6 +288,23 @@
             },
         },
         methods: {
+            save() {
+                if (this.value) {
+                    this.$emit('input', {
+                        contact: this.receive_infor.contact,
+                        province: this.receive_infor.province,
+                        city: this.receive_infor.city,
+                        country: this.receive_infor.country,
+                        address: this.receive_infor.address,
+                        phone: this.receive_infor.phone,
+                    });
+                    this.togglePopup();
+                } else if (this.id) {
+                    this.updateAddress();
+                } else {
+                    this.insertAddress();
+                }
+            },
             //添加地址
             insertAddress() {
                 this.$store.dispatch('toggleLoading');

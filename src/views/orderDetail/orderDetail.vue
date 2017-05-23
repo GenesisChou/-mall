@@ -61,13 +61,16 @@
             }
         }
         .content {
-            @include flex-center-v;
-            height: pxTorem(157);
-            margin-top: pxTorem(20);
-            padding: 0 pxTorem(30);
+            @include flex-center-v; // line-height: pxTorem(86);
+            padding: pxTorem(20) pxTorem(30);
+            margin-top: pxTorem(20); // padding: 0 pxTorem(30);
             .address-content {
                 flex: 1;
                 overflow: hidden;
+                .contact-phone {
+                    display: flex;
+                    justify-content: space-between;
+                }
             }
             .address-detail {
                 @include text-ellipsis(2);
@@ -217,7 +220,46 @@
                 <!--商品为虚拟物品时 -->
                 <template v-if='is_virtual'>
                     <!--商品为优惠券时 -->
-                    <v-ticket v-if='product_type==1||product_type==6' :type='product_type' :order-detail='order_detail' :product-detail='product_detail'></v-ticket>
+                    <template v-if='order_detail.status===1'>
+                        <v-address-edit v-model='order_user' 
+                                        :state='{show_address:order_detail.is_address===1,
+                                                show_contact:order_detail.is_name===1,
+                                                show_phone:order_detail.is_phone===1}' 
+                                        :show='update_order_show' 
+                                        :toggle-popup='toggleUpdateOrder'
+                                        btn-text='确认'></v-address-edit>
+                        <div v-if='!order_detail.contact&&!order_detail.phone&&!order_detail.province&&!order_detail.city&&!order_detail.country&&!order_detail.address'
+                            class='profile'>
+                            <div class='content' @click='toggleUpdateOrder'>
+                                <i class='iconfont icon-plus'></i>完善个人信息
+                            </div>
+                        </div>
+                        <section v-else class='address-box'>
+                            <div :class='["content",{active:!order_checked}]' @click='toggleUpdateOrder'>
+                                <div class='location'>
+                                    <i :class='["iconfont", order_detail.is_name===1?"icon-user":(order_detail.is_phone===1?"icon-phone":"icon-location")]'></i>
+                                </div>
+                                <div class='address-content '>
+                                    <h4 class='contact-phone'>
+                                        <span v-if='order_detail.is_name===1'><label>收件人:</label> {{order_user.contact}}</span>
+                                        <span v-if='order_detail.is_phone===1' class='pull-right'>
+                                       <label v-if='order_detail.is_name!==1'>联系电话:</label> {{order_user.phone}}
+                                    </span>
+                                    </h4>
+                                    <h4 v-if='order_detail.is_address===1' class='address-detail'>
+                                        <label>收货地址:</label> {{order_user.province}} {{order_user.city}} {{order_user.country}}
+                                        {{order_user.address}}
+                                    </h4>
+                                </div>
+                                <i v-if='!order_checked' class='iconfont icon-arrows-right'></i>
+                            </div>
+                            <div v-if='!order_checked' class='single-button'>
+                                <button class='btn btn-orange' @click='updateOrderUser'>确认地址</button>
+                            </div>
+                        </section>
+                    </template>
+                    <v-ticket v-else-if='product_type==1||product_type==6' :type='product_type' :order-detail='order_detail'
+                        :product-detail='product_detail'></v-ticket>
                     <!--商品为流量充值时 -->
                     <v-recharge v-if='product_type==8' :type='product_type' :get-order-detail='getOrderDetail' :order-detail='order_detail' :product-detail='product_detail'></v-recharge>
                     <!-- 详细说明 -->
@@ -226,7 +268,7 @@
                     <v-introduction v-if='product_detail.content_use' title='使用说明' :content='product_detail.content_use'></v-introduction>
                     <!-- 重要声明 -->
                     <v-announcement></v-announcement>
-                    <div v-if='product_type==5' class='sticky'>
+                    <div v-if='product_type==5&&order_detail.status!==1' class='sticky'>
                         <div class='exchange' @click='useTicket(product_detail.url)'> 前往使用 </div>
                     </div>
                 </template>
@@ -274,9 +316,47 @@
                     </template>
                     <!-- 取货类型为自取时 -->
                     <template v-if='send_type==2'>
-                        <img v-if='order_detail.status==3' class='take-goods-script' src="./images/takeGoods.png" alt="">
+                         <template v-if='order_detail.status===1'>
+                        <v-address-edit v-model='order_user' 
+                                        :state='{show_address:order_detail.is_address===1,
+                                                show_contact:order_detail.is_name===1,
+                                                show_phone:order_detail.is_phone===1}' 
+                                        :show='update_order_show' 
+                                        :toggle-popup='toggleUpdateOrder'
+                                        btn-text='确认'></v-address-edit>
+                        <div v-if='!order_detail.contact&&!order_detail.phone&&!order_detail.province&&!order_detail.city&&!order_detail.country&&!order_detail.address'
+                            class='profile'>
+                            <div class='content' @click='toggleUpdateOrder'>
+                                <i class='iconfont icon-plus'></i>完善个人信息
+                            </div>
+                        </div>
+                        <section v-else class='address-box'>
+                            <div :class='["content",{active:!order_checked}]' @click='toggleUpdateOrder'>
+                                <div class='location'>
+                                    <i :class='["iconfont", order_detail.is_name===1?"icon-user":(order_detail.is_phone===1?"icon-phone":"icon-location")]'></i>
+                                </div>
+                                <div class='address-content '>
+                                    <h4 class='contact-phone'>
+                                        <span v-if='order_detail.is_name===1'><label>收件人:</label> {{order_user.contact}}</span>
+                                        <span v-if='order_detail.is_phone===1' class='pull-right'>
+                                       <label v-if='order_detail.is_name!==1'>联系电话:</label> {{order_user.phone}}
+                                    </span>
+                                    </h4>
+                                    <h4 v-if='order_detail.is_address===1' class='address-detail'>
+                                        <label>收货地址:</label> {{order_user.province}} {{order_user.city}} {{order_user.country}}
+                                        {{order_user.address}}
+                                    </h4>
+                                </div>
+                                <i v-if='!order_checked' class='iconfont icon-arrows-right'></i>
+                            </div>
+                            <div v-if='!order_checked' class='single-button'>
+                                <button class='btn btn-orange' @click='updateOrderUser'>确认地址</button>
+                            </div>
+                        </section>
+                    </template>
+                        <img v-if='order_detail.status===3' class='take-goods-script' src="./images/takeGoods.png" alt="">
                         <!-- 取货 -->
-                        <section class='take-goods'>
+                        <section v-if='order_detail.status!==1' class='take-goods'>
                             <h5> <i class='iconfont icon-location'></i> 取货地址: {{order_detail.take_address}} </h5>
                             <main class='input-box' v-if='order_detail.status!=3'>
                                 <div class='container'>
@@ -343,6 +423,15 @@
                 loaded: false,
                 take_code: '',
                 content_show: false,
+                update_order_show: false,
+                order_user: {
+                    contact: '',
+                    phone: '',
+                    province: '',
+                    city: '',
+                    country: '',
+                    address: ''
+                }
             };
         },
         computed: {
@@ -390,20 +479,8 @@
         watch: {
             //order_type  1商品兑换 2活动
             //product_type 1优惠券唯一码 2实物 3积分赠送 4谢谢参与 5优惠券链接 6优惠券通用码 7福袋 8流量充值
-            //status  1未确认地址 2已确认地址 3已发货
+            //status  1未确认地址 2已确认地址 3已发货 4已逾期
             //send_type 1快递 2自提
-            order_id() {
-                this.content_show = false;
-                this.getOrderDetail().then(() => {
-                    const data = this.order_detail;
-                    this.product_id = data.product_id;
-                    this.product_type = data.product_type;
-                    this.send_type = data.send_type;
-                    this.getProductDetail().then(() => {
-                        this.content_show = true;
-                    });
-                });
-            },
             send_type(value) {
                 if (value === 1 && this.product_type === 2 && this.order_detail.status === 1) {
                     this.$store.dispatch('getAddressList');
@@ -412,6 +489,21 @@
         },
         created() {
             this.order_id = this.$route.query.order_id;
+            this.content_show = false;
+            this.getOrderDetail().then(data => {
+                this.product_id = data.product_id;
+                this.product_type = data.product_type;
+                this.send_type = data.send_type;
+                this.order_user.contact = data.contact;
+                this.order_user.phone = data.phone;
+                this.order_user.province = data.province;
+                this.order_user.city = data.city;
+                this.order_user.country = data.country;
+                this.order_user.address = data.address;
+                this.getProductDetail().then(() => {
+                    this.content_show = true;
+                });
+            });
         },
         methods: {
             getOrderDetail() {
@@ -423,9 +515,11 @@
                     }).then((response) => {
                         this.$store.dispatch('toggleLoading');
                         const data = response.data;
-                        this.order_detail = data.data;
-                        if (resolve && typeof resolve === 'function') {
-                            resolve();
+                        if (data.status === APP.SUCCESS) {
+                            this.order_detail = data.data;
+                            if (resolve && typeof resolve === 'function') {
+                                resolve(data.data);
+                            }
                         }
                     }, (response) => {
                         this.$store.dispatch('toggleLoading');
@@ -514,6 +608,34 @@
                     this.popup_select = !this.popup_select;
                 }
             },
+            toggleUpdateOrder() {
+                this.update_order_show = !this.update_order_show;
+            },
+            updateOrderUser() {
+                this.$store.dispatch('toggleLoading');
+                this.$http.post(`${APP.HOST}/update_order_user/${this.order_id}`, {
+                    token: APP.TOKEN,
+                    user_id: APP.USER_ID,
+                    contact: this.order_user.contact,
+                    phone: this.order_user.phone,
+                    province: this.order_user.province,
+                    city: this.order_user.city,
+                    country: this.order_user.country,
+                    address: this.order_user.address,
+                }).then((response) => {
+                    const data = response.data;
+                    this.$store.dispatch('toggleLoading');
+                    if (data.status === APP.SUCCESS) {
+                        this.getOrderDetail();
+                    } else {
+                        this.$store.dispatch('toggleAlert', {
+                            msg: data.info
+                        });
+                    }
+                }, (response) => {
+                    this.$store.dispatch('toggleLoading');
+                });
+            }
         }
     };
 </script>

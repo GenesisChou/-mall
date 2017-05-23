@@ -118,6 +118,7 @@
     </div>
 </template>
 <script>
+    import weChatShare from 'libs/weChatShare.js';
     export default {
         name: 'productDetail',
         components: {
@@ -170,38 +171,39 @@
             }
         },
         beforeRouteLeave(from, to, next) {
-            // if (this.$store.state.v_alert.show) {
-            //     this.$store.dispatch('toggleAlert');
-            // }
-            // if (this.$store.state.v_confirm.show) {
-            //     this.$store.dispatch('toggleConfirm');
-            // }
             next();
         },
         created() {
             this.product_id = this.$route.query.product_id;
-            this.getProductDetail();
+            this.getProductDetail().then(data => {
+                weChatShare(this.$route);
+            });
         },
         methods: {
             //获取商品详情
             getProductDetail() {
-                this.$store.dispatch('toggleLoading');
-                this.$http.post(`${APP.HOST}/product_detail_l/${this.product_id}`, {
-                    token: APP.TOKEN,
-                    media_id: APP.MEDIA_ID,
-                    user_id: APP.USER_ID,
-                    open_id: APP.OPEN_ID
-                }).then((response) => {
+                return new Promise(resolve => {
                     this.$store.dispatch('toggleLoading');
-                    const data = response.data;
-                    if (data.status === APP.SUCCESS) {
-                        this.product_detail = data.data;
-                    }
-                    if (this.product_detail.type === 8) {
-                        this.is_recharge = true;
-                    }
-                }, (response) => {
-                    this.$store.dispatch('toggleLoading');
+                    this.$http.post(`${APP.HOST}/product_detail_l/${this.product_id}`, {
+                        token: APP.TOKEN,
+                        media_id: APP.MEDIA_ID,
+                        user_id: APP.USER_ID,
+                        open_id: APP.OPEN_ID
+                    }).then((response) => {
+                        this.$store.dispatch('toggleLoading');
+                        const data = response.data;
+                        if (data.status === APP.SUCCESS) {
+                            this.product_detail = data.data;
+                            if (resolve && typeof resolve === 'function') {
+                                resolve(data.data);
+                            }
+                        }
+                        if (this.product_detail.type === 8) {
+                            this.is_recharge = true;
+                        }
+                    }, (response) => {
+                        this.$store.dispatch('toggleLoading');
+                    });
                 });
             },
             //兑换

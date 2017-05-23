@@ -453,15 +453,15 @@
         background-color: #cf423f;
         border-radius: pxTorem(10);
         box-shadow: 0 pxTorem(4) pxTorem(4) rgba(0, 0, 0, .5);
-        .decoration{
+        .decoration {
             position: absolute;
             left: -8%;
             top: -11%;
             width: pxTorem(685);
             height: pxTorem(264);
-            z-index:2;
-            background:url('./images/recordsDecoration.png');
-            background-size:pxTorem(685) pxTorem(264);
+            z-index: 2;
+            background: url('./images/recordsDecoration.png');
+            background-size: pxTorem(685) pxTorem(264);
         }
 
         .container {
@@ -518,7 +518,7 @@
             height: pxTorem(80);
             background-color: $white;
             border-radius: 50%;
-            z-index:2;
+            z-index: 2;
         }
         .icon-close-circle {
             font-size: pxTorem(80);
@@ -889,15 +889,20 @@
             },
             //获取文章列表
             getArticleList() {
-                this.$http.post(`${APP.HOST}/article_list/${APP.USER_ID}`, {
-                    token: APP.TOKEN,
-                    user_id: APP.USER_ID,
-                    media_id: APP.MEDIA_ID
-                }).then((response) => {
-                    const data = response.data;
-                    if (data.status === APP.SUCCESS) {
-                        this.article_list = data.data;
-                    }
+                return new Promise(resolve => {
+                    this.$http.post(`${APP.HOST}/article_list/${APP.USER_ID}`, {
+                        token: APP.TOKEN,
+                        user_id: APP.USER_ID,
+                        media_id: APP.MEDIA_ID
+                    }).then((response) => {
+                        const data = response.data;
+                        if (data.status === APP.SUCCESS) {
+                            this.article_list = data.data;
+                            if (resolve && typeof resolve === 'function') {
+                                resolve();
+                            }
+                        }
+                    });
                 });
             },
             //阅读文章
@@ -910,10 +915,13 @@
                     const data = response.data;
                     if (data.status === APP.SUCCESS && article.is_read === 2) {
                         this.$store.dispatch('getUserInfor');
-                        this.getArticleList();
+                        this.getArticleList().then(() => {
+                            location.href = article.url;
+                        });
                         this.getReadParam();
+                    } else {
+                        location.href = article.url;
                     }
-                    location.href = article.url;
                 });
             },
             toggleRaiders() {

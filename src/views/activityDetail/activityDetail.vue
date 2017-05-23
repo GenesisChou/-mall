@@ -28,6 +28,7 @@
 <script>
     /*global APP */
     import vDialog from './components/vDialog';
+    import weChatShare from 'libs/weChatShare.js';
     export default {
         name: 'activityDetail',
         components: {
@@ -99,6 +100,7 @@
             this.activity_id = this.$route.query.activity_id;
             this.getActivityDetail().then(data => {
                 this.activity_type = this.getActivityType(data.data.type);
+                weChatShare(this.$route);
             });
             this.getFreeTimes();
         },
