@@ -227,6 +227,7 @@
                                                 show_phone:order_detail.is_phone===1}' 
                                         :show='update_order_show' 
                                         :toggle-popup='toggleUpdateOrder'
+                                        :title='!order_detail.contact&&!order_detail.phone&&!order_detail.province&&!order_detail.city&&!order_detail.country&&!order_detail.address?"完善个人信息":"修改个人信息"'
                                         btn-text='确认'></v-address-edit>
                         <div v-if='!order_detail.contact&&!order_detail.phone&&!order_detail.province&&!order_detail.city&&!order_detail.country&&!order_detail.address'
                             class='profile'>
@@ -254,7 +255,7 @@
                                 <i v-if='!order_checked' class='iconfont icon-arrows-right'></i>
                             </div>
                             <div v-if='!order_checked' class='single-button'>
-                                <button class='btn btn-orange' @click='updateOrderUser'>确认地址</button>
+                                <button class='btn btn-orange' @click='updateOrderUser'>确认信息</button>
                             </div>
                         </section>
                     </template>
@@ -323,6 +324,7 @@
                                                 show_phone:order_detail.is_phone===1}' 
                                         :show='update_order_show' 
                                         :toggle-popup='toggleUpdateOrder'
+                                        :title='!order_detail.contact&&!order_detail.phone&&!order_detail.province&&!order_detail.city&&!order_detail.country&&!order_detail.address?"完善个人信息":"修改个人信息"'
                                         btn-text='确认'></v-address-edit>
                         <div v-if='!order_detail.contact&&!order_detail.phone&&!order_detail.province&&!order_detail.city&&!order_detail.country&&!order_detail.address'
                             class='profile'>
@@ -350,7 +352,7 @@
                                 <i v-if='!order_checked' class='iconfont icon-arrows-right'></i>
                             </div>
                             <div v-if='!order_checked' class='single-button'>
-                                <button class='btn btn-orange' @click='updateOrderUser'>确认地址</button>
+                                <button class='btn btn-orange' @click='updateOrderUser'>确认信息</button>
                             </div>
                         </section>
                     </template>
@@ -584,7 +586,8 @@
                             const data = response.data;
                             this.$store.dispatch('toggleLoading');
                             if (data.status === APP.SUCCESS) {
-                                this.getOrderDetail();
+                                // this.getOrderDetail();
+                                window.location.reload();
                             } else {
                                 this.$store.dispatch('toggleAlert', {
                                     msg: data.info
@@ -626,7 +629,8 @@
                     const data = response.data;
                     this.$store.dispatch('toggleLoading');
                     if (data.status === APP.SUCCESS) {
-                        this.getOrderDetail();
+                        // this.getOrderDetail();
+                        window.location.reload();
                     } else {
                         this.$store.dispatch('toggleAlert', {
                             msg: data.info

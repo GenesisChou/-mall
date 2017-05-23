@@ -200,7 +200,9 @@
                 this.show_province = !this.show_province;
             },
             toggleCity() {
-                this.show_city = !this.show_city;
+                if (this.province_id) {
+                    this.show_city = !this.show_city;
+                }
             },
             toggleCountry() {
                 if (this.city_id) {
