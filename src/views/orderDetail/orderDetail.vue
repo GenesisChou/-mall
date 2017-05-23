@@ -221,7 +221,7 @@
                 <template v-if='is_virtual'>
                     <!--商品为优惠券时 -->
                     <template v-if='order_detail.status===1'>
-                        <v-address-edit v-model='order_user' 
+                        <v-address-edit :order-user.sync='order_user'
                                         :state='{show_address:order_detail.is_address===1,
                                                 show_contact:order_detail.is_name===1,
                                                 show_phone:order_detail.is_phone===1}' 
@@ -318,7 +318,7 @@
                     <!-- 取货类型为自取时 -->
                     <template v-if='send_type==2'>
                          <template v-if='order_detail.status===1'>
-                        <v-address-edit v-model='order_user' 
+                         <v-address-edit :order-user.sync='order_user'
                                         :state='{show_address:order_detail.is_address===1,
                                                 show_contact:order_detail.is_name===1,
                                                 show_phone:order_detail.is_phone===1}' 
@@ -430,8 +430,11 @@
                     contact: '',
                     phone: '',
                     province: '',
+                    province_id: '',
                     city: '',
+                    city_id: '',
                     country: '',
+                    country_id: '',
                     address: ''
                 }
             };
@@ -622,8 +625,11 @@
                     contact: this.order_user.contact,
                     phone: this.order_user.phone,
                     province: this.order_user.province,
+                    province_id: this.order_user.province_id,
                     city: this.order_user.city,
+                    city_id: this.order_user.city_id,
                     country: this.order_user.country,
+                    country_id: this.order_user.country_id,
                     address: this.order_user.address,
                 }).then((response) => {
                     const data = response.data;

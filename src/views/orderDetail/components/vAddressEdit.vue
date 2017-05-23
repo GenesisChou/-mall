@@ -183,6 +183,7 @@
             vModal,
         },
         props: {
+            orderUser: Object,
             btnText: String,
             state: {
                 type: Object,
@@ -194,7 +195,6 @@
                     };
                 }
             },
-            value: Object,
             togglePopup: Function,
             show: {
                 type: Boolean,
@@ -256,13 +256,16 @@
             //弹出窗口后为表单赋值
             show(value) {
                 if (value) {
-                    if (this.value) {
-                        this.receive_infor.province = this.value.province;
-                        this.receive_infor.city = this.value.city;
-                        this.receive_infor.country = this.value.country;
-                        this.receive_infor.address = this.value.address;
-                        this.receive_infor.phone = this.value.phone;
-                        this.receive_infor.contact = this.value.contact;
+                    if (this.orderUser) {
+                        this.receive_infor.province = this.orderUser.province;
+                        this.address_id.province = this.orderUser.province_id;
+                        this.receive_infor.city = this.orderUser.city;
+                        this.address_id.city = this.orderUser.city_id;
+                        this.receive_infor.country = this.orderUser.country;
+                        this.address_id.country = this.orderUser.country_id;
+                        this.receive_infor.address = this.orderUser.address;
+                        this.receive_infor.phone = this.orderUser.phone;
+                        this.receive_infor.contact = this.orderUser.contact;
                     }
                     this.getProvinceList();
                     //id大于0代表此时是修改地址状态
@@ -289,12 +292,15 @@
         },
         methods: {
             save() {
-                if (this.value) {
-                    this.$emit('input', {
+                if (this.orderUser) {
+                    this.$emit('update:orderUser', {
                         contact: this.receive_infor.contact,
                         province: this.receive_infor.province,
+                        province_id: this.address_id.province,
                         city: this.receive_infor.city,
+                        city_id: this.address_id.city,
                         country: this.receive_infor.country,
+                        country_id: this.address_id.country,
                         address: this.receive_infor.address,
                         phone: this.receive_infor.phone,
                     });
