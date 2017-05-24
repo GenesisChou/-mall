@@ -250,6 +250,9 @@
                     }
                 });
                 return result;
+            },
+            user() {
+                return this.$store.state.user;
             }
         },
         watch: {
@@ -304,10 +307,33 @@
         methods: {
             save() {
                 if (this.orderUser) {
-                    this.$store.dispatch('toggleLoading');
-                    this.$http.post(`${APP.HOST}/update_user/${this.id}`, {
-                        token: APP.TOKEN,
-                        user_id: APP.USER_ID,
+                    if (this.user.is_submit === 2) {
+                        this.$store.dispatch('toggleLoading');
+                        this.$http.post(`${APP.HOST}/update_user/${this.id}`, {
+                            token: APP.TOKEN,
+                            user_id: APP.USER_ID,
+                            province: this.receive_infor.province,
+                            province_id: this.address_id.province,
+                            city: this.receive_infor.city,
+                            city_id: this.address_id.city,
+                            country: this.receive_infor.country,
+                            country_id: this.address_id.country,
+                            address: this.receive_infor.address,
+                            phone: this.receive_infor.phone,
+                            contact: this.receive_infor.contact
+                        }).then((response) => {
+                            const data = response.data;
+                            this.$store.dispatch('toggleLoading');
+                            if (data.status === APP.SUCCESS) {} else {
+                                this.$store.dispatch('toggleAlert', {
+                                    msg: data.info
+                                });
+                            }
+                        }, (response) => {
+                            this.$store.dispatch('toggleLoading');
+                        });
+                    }
+                    this.$emit('update:orderUser', {
                         province: this.receive_infor.province,
                         province_id: this.address_id.province,
                         city: this.receive_infor.city,
@@ -317,20 +343,8 @@
                         address: this.receive_infor.address,
                         phone: this.receive_infor.phone,
                         contact: this.receive_infor.contact
-                    }).then((response) => {
-                        const data = response.data;
-                        this.$store.dispatch('toggleLoading');
-                        if (data.status === APP.SUCCESS) {
-                            this.$store.dispatch('getUserInfor');
-                            this.togglePopup();
-                        } else {
-                            this.$store.dispatch('toggleAlert', {
-                                msg: data.info
-                            });
-                        }
-                    }, (response) => {
-                        this.$store.dispatch('toggleLoading');
                     });
+                    this.togglePopup();
                 } else if (this.id) {
                     this.updateAddress();
                 } else {

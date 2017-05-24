@@ -127,6 +127,10 @@
             margin-left: pxTorem(5);
             font-size: pxTorem(24);
             width: pxTorem(6);
+            margin-left:pxTorem(-5);
+            &:first-child{
+                margin-right:pxTorem(-15);
+            }
         }
         &:before,
         &:after {
@@ -651,9 +655,12 @@
                     {{notice}}
                 </p>
                 <div class='gift-notice'>
-                    距离领奖还有 <span class='number'>{{remain_days}}</span> 天， <strong @click='toggleRecords'>查看签到记录</strong>
-                    <i class='iconfont icon-arrows-right'></i>
-                    <i class='iconfont icon-arrows-right'></i>
+                    距离领奖还有 <span class='number'>{{remain_days}}</span> 天，
+                    <strong @click='toggleRecords'>
+                        查看签到记录
+                        <i class='iconfont icon-arrows-right'></i>
+                        <i class='iconfont icon-arrows-right'></i>
+                     </strong>
                 </div>
                 <transition-group tag='ul' class='gift-list' name='slide-fade'>
                     <li v-for='(gift,$index) in gift_list' :key='$index' :class='{active:gift.is_price}'>

@@ -221,12 +221,13 @@
                 <template v-if='is_virtual'>
                     <!--商品为优惠券时 -->
                     <template v-if='order_detail.status===1'>
-                        <v-address-edit :id='order_detail.id' :order-user='order_user' :state='{show_address:order_detail.is_address===1,
+                        <v-address-edit :id='order_detail.id' :order-user.sync='order_user' :state='{show_address:order_detail.is_address===1,
                                                 show_contact:order_detail.is_name===1,
                                                 show_phone:order_detail.is_phone===1}' :show='update_order_show' :toggle-popup='toggleUpdateOrder'
-                            :title='!user.contact&&!user.phone&&!user.province_name&&!user.city_name&&!user.country_name&&!user.address?"完善个人信息":"修改个人信息"'
+                            :title='!order_user.contact&&!order_user.phone&&!order_user.province&&!order_user.city&&!order_user.country&&!order_user.address?"完善个人信息":"修改个人信息"'
                             btn-text='确认'></v-address-edit>
-                        <div v-if='!user.contact&&!user.phone&&!user.province_name&&!user.city_name&&!user.country_name&&!user.address' class='profile'>
+                        <div v-if='!order_user.contact&&!order_user.phone&&!order_user.province&&!order_user.city&&!order_user.country&&!order_user.address'
+                            class='profile'>
                             <div class='content' @click='toggleUpdateOrder'>
                                 <i class='iconfont icon-plus'></i>完善个人信息
                             </div>
@@ -313,12 +314,13 @@
                     <!-- 取货类型为自取时 -->
                     <template v-if='send_type==2'>
                         <template v-if='order_detail.status===1'>
-                            <v-address-edit :id='order_detail.id' :order-user='order_user' :state='{show_address:order_detail.is_address===1,
+                            <v-address-edit :id='order_detail.id' :order-user.sync='order_user' :state='{show_address:order_detail.is_address===1,
                                                 show_contact:order_detail.is_name===1,
                                                 show_phone:order_detail.is_phone===1}' :show='update_order_show' :toggle-popup='toggleUpdateOrder'
-                                :title='!user.contact&&!user.phone&&!user.province_name&&!user.city_name&&!user.country_name&&!user.address?"完善个人信息":"修改个人信息"'
+                                :title='!order_user.contact&&!order_user.phone&&!order_user.province&&!order_user.city&&!order_user.country&&!order_user.address?"完善个人信息":"修改个人信息"'
                                 btn-text='确认'></v-address-edit>
-                            <div v-if='!user.contact&&!user.phone&&!user.province_name&&!user.city_name&&!user.country_name&&!user.address' class='profile'>
+                            <div v-if='!order_user.contact&&!order_user.phone&&!order_user.province&&!order_user.city&&!order_user.country&&!order_user.address'
+                                class='profile'>
                                 <div class='content' @click='toggleUpdateOrder'>
                                     <i class='iconfont icon-plus'></i>完善个人信息
                                 </div>
@@ -418,6 +420,17 @@
                 take_code: '',
                 content_show: false,
                 update_order_show: false,
+                order_user: {
+                    contact: '',
+                    phone: '',
+                    province: '',
+                    province_id: '',
+                    city: '',
+                    city_id: '',
+                    country: '',
+                    country_id: '',
+                    address: ''
+                }
             };
         },
         computed: {
@@ -464,19 +477,6 @@
             user() {
                 return this.$store.state.user;
             },
-            order_user() {
-                return {
-                    contact: this.user.contact || '',
-                    phone: this.user.phone || '',
-                    province: this.user.province_name || '',
-                    province_id: this.user.province_id || '',
-                    city: this.user.city_name || '',
-                    city_id: this.user.city_id || '',
-                    country: this.user.country_name || '',
-                    country_id: this.user.country_id || '',
-                    address: this.user.address || ''
-                };
-            }
         },
         watch: {
             //order_type  1商品兑换 2活动
@@ -496,6 +496,15 @@
                 this.product_id = data.product_id;
                 this.product_type = data.product_type;
                 this.send_type = data.send_type;
+                this.order_user.contact = this.user.contact;
+                this.order_user.phone = this.user.phone;
+                this.order_user.province = this.user.province_name;
+                this.order_user.province_id = this.user.province_id;
+                this.order_user.city = this.user.city_name;
+                this.order_user.city_id = this.user.city_id;
+                this.order_user.country = this.user.country_name;
+                this.order_user.country_id = this.user.country_id;
+                this.order_user.address = this.user.address;
                 this.getProductDetail().then(() => {
                     this.content_show = true;
                 });

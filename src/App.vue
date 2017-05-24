@@ -33,7 +33,7 @@
                     console.log('login success');
                     // this.setGuideState(data.data);
                     this.loginRecord();
-                } else if (data.status === APP.LOGIN_FAILED) {
+                } else if (data.status === 9999) {
                     console.log(data.info);
                     utils.deleteLocalStorage(APP.MEDIA_ID);
                     utils.reloadApp();
@@ -42,8 +42,8 @@
                     this.$store.dispatch('toggleAlert', {
                         msg: '网络断开连接'
                     });
-                    utils.deleteLocalStorage(APP.MEDIA_ID);
-                    utils.reloadApp();
+                    // utils.deleteLocalStorage(APP.MEDIA_ID);
+                    // utils.reloadApp();
                 }
             });
         },
