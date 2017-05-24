@@ -132,11 +132,8 @@
             <h4 class='notice'>即时生效,当月有效,(充值高峰可能出现延迟)。</h4>
         </main>
         <footer>
-            <div class='exchange btn-orange' @click='togglePopup'>立即兑换
-                <template v-if='flow_infor'>
-                    :<span>{{productDetail.integral>>0}}积分</span>
-                    <s>¥{{productDetail.price}}</s>
-                </template>
+            <div class='exchange btn-orange' @click='togglePopup'>
+                立即兑换<template v-if='flow_infor'>:<span>{{productDetail.integral>>0}}积分</span><s>¥{{productDetail.price}}</s></template>
             </div>
         </footer>
         <v-popup :show='popup_show' :toggle-popup='togglePopup'>
