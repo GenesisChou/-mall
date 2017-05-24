@@ -40,10 +40,12 @@
                 } else {
                     console.log(data.info);
                     this.$store.dispatch('toggleAlert', {
-                        msg: '网络断开连接'
+                        msg: '网络断开连接',
+                        callback: () => {
+                            utils.deleteLocalStorage(APP.MEDIA_ID);
+                            utils.reloadApp();
+                        }
                     });
-                    // utils.deleteLocalStorage(APP.MEDIA_ID);
-                    // utils.reloadApp();
                 }
             });
         },
