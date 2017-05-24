@@ -42,6 +42,8 @@
                     this.$store.dispatch('toggleAlert', {
                         msg: '网络断开连接'
                     });
+                    utils.deleteLocalStorage(APP.MEDIA_ID);
+                    utils.reloadApp();
                 }
             });
         },

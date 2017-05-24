@@ -42,8 +42,8 @@
                 position: absolute;
                 right: 25%;
                 top: 15%;
-                width: pxTorem(15);
-                height: pxTorem(15);
+                width: 8px;
+                height:8px;
                 border-radius: 50%;
                 background-color: #ff0000;
             }

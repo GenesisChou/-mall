@@ -123,7 +123,8 @@
                     </li>
                     <li class='address'>
                         <label for='province'>收货地址</label>
-                        <v-address :address='{province,city,country}' :id='{province_id,city_id,country_id}' :change-id='changeId' :change-name='changeName'></v-address>
+                        <v-address :address='{province:this.province,city:this.city,country:this.country}' :id='{province_id,city_id,country_id}'
+                            :change-id='changeId' :change-name='changeName'></v-address>
                     </li>
                     <li>
                         <label for='address'>详细地址</label>
@@ -134,8 +135,6 @@
                     <button v-if='submit_avaliable' class='btn btn-orange ' @click='submit'>确认</button>
                     <button v-else class='btn btn-gray' disabled='disabled'>确认</button>
                 </div>
-                <!--<button @click='toggleNotice({msg:"fuck you"})'>noticebalabala</button>-->
-                <!--<button @click='toggleWarn({msg:"fuck you"})'>warn</button> -->
             </div>
             <v-warn v-model='warn_show' :warn='warn'></v-warn>
             <v-notice v-model='notice_show'>
@@ -175,14 +174,12 @@
                 warn_show: false,
                 notice: {},
                 notice_show: false,
+                content_show: false
             };
         },
         computed: {
             user() {
                 return this.$store.state.user;
-            },
-            content_show() {
-                return !utils.isEmptyObject(this.user);
             },
             is_submit() {
                 return this.$store.state.user.is_submit === 1;
@@ -197,37 +194,25 @@
                 }
                 return false;
             },
-            default_address() {
-                return this.user.default_address || {};
-            },
-        },
-        watch: {
-            default_address(value) {
-                this.init(value);
-            }
         },
         created() {
-            this.init(this.default_address);
+            this.$store.dispatch('getUserInfor', () => {
+                this.init();
+            });
         },
         methods: {
             /*初始化地址列表 scen1:原地刷新 由watch实现初始化 scen2:从其他页面进入 由created实现初始化 */
-            init(default_address) {
-                //防止重复初始化
-                if (utils.isEmptyObject(default_address)) return;
-                const address_config = [
-                    'province',
-                    'city',
-                    'country',
-                    'address',
-                    'phone',
-                    'contact',
-                    'province_id',
-                    'city_id',
-                    'country_id'
-                ];
-                address_config.forEach(config => {
-                    this[config] = default_address[config];
-                });
+            init() {
+                this.contact = this.user.contact;
+                this.phone = this.user.phone;
+                this.province = this.user.province_name;
+                this.province_id = this.user.province_id;
+                this.city = this.user.city_name;
+                this.city_id = this.user.city_id;
+                this.country = this.user.country_name;
+                this.country_id = this.user.country_id;
+                this.address = this.user.address;
+                this.content_show = true;
             },
             cancel() {
                 this.$router.go(-1);
@@ -312,7 +297,7 @@
                     }
                 });
             },
-            changeId(type, id) {
+            changeId(type, id = '') {
                 const list = ['province', 'city', 'country'];
                 list.forEach(item => {
                     if (item === type) {

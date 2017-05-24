@@ -496,15 +496,6 @@
                 this.product_id = data.product_id;
                 this.product_type = data.product_type;
                 this.send_type = data.send_type;
-                // this.order_user.contact = this.user.contact;
-                // this.order_user.phone = this.user.phone;
-                // this.order_user.province = this.user.province_name;
-                // this.order_user.province_id = this.user.province_id;
-                // this.order_user.city = this.user.city_name;
-                // this.order_user.city_id = this.user.city_id;
-                // this.order_user.country = this.user.country_name;
-                // this.order_user.country_id = this.user.country_id;
-                // this.order_user.address = this.user.address;
                 this.getProductDetail().then(() => {
                     this.content_show = true;
                 });
