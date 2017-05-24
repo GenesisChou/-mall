@@ -133,7 +133,8 @@
         </main>
         <footer>
             <div class='exchange btn-orange' @click='togglePopup'>
-                立即兑换<template v-if='flow_infor'>:<span>{{productDetail.integral>>0}}积分</span><s>¥{{productDetail.price}}</s></template>
+                立即兑换
+                <!--<template v-if='flow_infor'><span>{{productDetail.integral>>0}}积分</span><s>¥{{productDetail.price}}</s></template>-->
             </div>
         </footer>
         <v-popup :show='popup_show' :toggle-popup='togglePopup'>
