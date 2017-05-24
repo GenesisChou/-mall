@@ -186,7 +186,7 @@
             },
             submit_avaliable() {
                 if (this.province &&
-                    this.address.length >= 5 &&
+                    // this.address.length >= 5 &&
                     this.phone &&
                     this.contact &&
                     this.verification_code) {
