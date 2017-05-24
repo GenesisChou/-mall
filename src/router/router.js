@@ -3,8 +3,7 @@ import VueRouter from 'vue-router';
 import store from '../store';
 Vue.use(VueRouter);
 const router = new VueRouter({
-    routes: [
-        {
+    routes: [{
             path: '/',
             name: 'index',
             component: resolve => {
@@ -106,7 +105,18 @@ const router = new VueRouter({
     ],
 });
 router.beforeEach((to, from, next) => {
-    store.dispatch('pageView', to.name);
+    // if (store.state.v_alert.show === true) {
+    //     store.dispatch('toggleAlert');
+    // }
+    if (store.state.v_confirm.show === true) {
+        store.dispatch('toggleConfirm');
+    }
+    if (store.state.v_loading.show === true) {
+        store.dispatch('toggleLoading');
+    }
+
+    store.dispatch('pageView', to.nameo);
     next();
 });
+router.afterEach(route => {});
 module.exports = router;

@@ -6,6 +6,7 @@ module.exports = function (router) {
     if (router.name !== 'index') {
         url += '#' + router.fullPath;
     }
+    store.dispatch('changeCurrentSignature', router.name);
     getSignature(url).then((data) => {
         init(data.data);
     });

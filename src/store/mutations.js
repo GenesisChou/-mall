@@ -79,5 +79,8 @@ module.exports = {
         if (callback && typeof callback === 'function') {
             callback(state.position);
         }
+    },
+    changeCurrentSignature(state, name) {
+        state.current_signature_page = name;
     }
 };

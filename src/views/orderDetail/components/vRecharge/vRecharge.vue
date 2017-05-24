@@ -103,10 +103,10 @@
                 }
             },
             script() {
-                if (this.orderDetail.status == 3) {
-                    return require('./images/rechargeSuccess.png')
-                } else if (this.orderDetail.status == 4) {
-                    return require('./images/rechargeFaliure.png')
+                if (this.orderDetail.status === 3) {
+                    return require('./images/rechargeSuccess.png');
+                } else if (this.orderDetail.status === 4) {
+                    return require('./images/rechargeFaliure.png');
                 }
             }
         },
@@ -127,21 +127,20 @@
                             phone: this.phone
                         }).then((response) => {
                             this.$store.dispatch('toggleLoading');
-                            let data = response.data;
-                            if (data.status == APP.SUCCESS) {
+                            const data = response.data;
+                            if (data.status === APP.SUCCESS) {
                                 this.getOrderDetail();
                             } else {
                                 this.$store.dispatch('toggleAlert', {
                                     msg: data.info
-                                })
+                                });
                             }
                         }, () => {
                             this.$store.dispatch('toggleLoading');
                         });
                     }
                 });
-
             }
         },
-    }
+    };
 </script>

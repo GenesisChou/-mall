@@ -24,5 +24,8 @@ module.exports = {
     },
     savePosition(context, callback) {
         context.commit('savePosition', callback);
+    },
+    changeCurrentSignature(context, name) {
+        context.commit('changeCurrentSignature', name);
     }
 };

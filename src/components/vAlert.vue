@@ -32,7 +32,7 @@
             margin: auto;
             font-size: pxTorem(32);
             text-align: center;
-            width: pxTorem(400);
+            width: pxTorem(500);
         }
         button {
             width: pxTorem(300);

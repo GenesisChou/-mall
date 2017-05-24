@@ -21,5 +21,6 @@ module.exports = {
     v_loading: {
         show: false
     },
-    position: {}
+    position: {},
+    current_signature_page: ''
 };

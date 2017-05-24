@@ -204,7 +204,7 @@
                 type: String,
                 default: '新建收货地址'
             },
-            id: Number
+            id: Number,
         },
         data() {
             return {
@@ -256,6 +256,7 @@
             //弹出窗口后为表单赋值
             show(value) {
                 if (value) {
+                    this.getProvinceList();
                     if (this.orderUser) {
                         this.receive_infor.province = this.orderUser.province;
                         this.address_id.province = this.orderUser.province_id;
@@ -266,8 +267,14 @@
                         this.receive_infor.address = this.orderUser.address;
                         this.receive_infor.phone = this.orderUser.phone;
                         this.receive_infor.contact = this.orderUser.contact;
+                        if (this.orderUser.province_id) {
+                            this.getCityList(this.orderUser.province_id);
+                        }
+                        if (this.orderUser.city_id) {
+                            this.getCountryList(this.orderUser.city_id);
+                        }
+                        return;
                     }
-                    this.getProvinceList();
                     //id大于0代表此时是修改地址状态
                     if (this.id > 0) {
                         this.address_list.forEach((address) => {
@@ -275,8 +282,12 @@
                                 this.address_id.province = address.province_id;
                                 this.address_id.city = address.city_id;
                                 this.address_id.country = address.country_id;
-                                this.getCityList(address.province_id);
-                                this.getCountryList(address.city_id);
+                                if (address.province_id) {
+                                    this.getCityList(address.province_id);
+                                }
+                                if (address.city_id) {
+                                    this.getCountryList(address.city_id);
+                                }
                                 this.receive_infor.province = address.province;
                                 this.receive_infor.city = address.city;
                                 this.receive_infor.country = address.country;
@@ -293,8 +304,10 @@
         methods: {
             save() {
                 if (this.orderUser) {
-                    this.$emit('update:orderUser', {
-                        contact: this.receive_infor.contact,
+                    this.$store.dispatch('toggleLoading');
+                    this.$http.post(`${APP.HOST}/update_user/${this.id}`, {
+                        token: APP.TOKEN,
+                        user_id: APP.USER_ID,
                         province: this.receive_infor.province,
                         province_id: this.address_id.province,
                         city: this.receive_infor.city,
@@ -303,8 +316,21 @@
                         country_id: this.address_id.country,
                         address: this.receive_infor.address,
                         phone: this.receive_infor.phone,
+                        contact: this.receive_infor.contact
+                    }).then((response) => {
+                        const data = response.data;
+                        this.$store.dispatch('toggleLoading');
+                        if (data.status === APP.SUCCESS) {
+                            this.$store.dispatch('getUserInfor');
+                            this.togglePopup();
+                        } else {
+                            this.$store.dispatch('toggleAlert', {
+                                msg: data.info
+                            });
+                        }
+                    }, (response) => {
+                        this.$store.dispatch('toggleLoading');
                     });
-                    this.togglePopup();
                 } else if (this.id) {
                     this.updateAddress();
                 } else {
@@ -371,10 +397,6 @@
                     if (data.status === APP.SUCCESS) {
                         //重新获取地址列表
                         this.$store.dispatch('getAddressList');
-                        // this.$store.dispatch('toggleAlert', {
-                        //     msg: '编辑地址成功',
-                        //     type: 'correct'
-                        // });
                         setTimeout(() => {
                             this.togglePopup();
                             this.clearInput();
@@ -413,12 +435,12 @@
             },
             showAreaList(type) {
                 if (type === 'city') {
-                    if (!this.receive_infor.province) {
+                    if (!this.receive_infor.province || !this.city_list.length) {
                         return;
                     }
                 }
                 if (type === 'country') {
-                    if (!this.receive_infor.city) {
+                    if (!this.receive_infor.city || !this.country_list.length) {
                         return;
                     }
                 }
