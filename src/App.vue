@@ -31,7 +31,7 @@
                 const data = response.data;
                 if (data.status === APP.SUCCESS) {
                     console.log('login success');
-                    this.setGuideState(data.data);
+                    // this.setGuideState(data.data);
                     this.loginRecord();
                 } else if (data.status === APP.LOGIN_FAILED) {
                     console.log(data.info);
