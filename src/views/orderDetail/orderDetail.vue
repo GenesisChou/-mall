@@ -278,8 +278,7 @@
                             <v-address-edit :show='popup_edit' :toggle-popup='toggleEdit'></v-address-edit>
                             <div class='profile'>
                                 <div class='content' @click='toggleEdit'>
-                                    为了更好的领取优惠，请完善您的个人信息<strong><i class='iconfont icon-arrows-right'></i></strong>
-                                </div>
+                                    <i class='iconfont icon-plus'></i>请填写收货地址</div>
                             </div>
                         </template>
                         <!-- 有地址 -->

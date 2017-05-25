@@ -47,6 +47,11 @@
                 default: ''
             }
         },
+        watch: {
+            value(v) {
+                utils.toggleScroll();
+            }
+        },
         methods: {
             close() {
                 if (this.coverClose && event.target.className === 'bg-cover') {

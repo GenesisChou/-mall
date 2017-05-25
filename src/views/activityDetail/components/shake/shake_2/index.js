@@ -1,0 +1,1 @@
+module.exports = require('./shake_2.vue');

@@ -124,6 +124,10 @@ const utils = {
     },
     pxTorem(value) {
         return value / 100 + 'rem';
+    },
+    toggleScroll() {
+        // document.body.classList.toggle('disable-scroll');
+        // document.getElementsByTagName('html')[0].classList.toggle('disable-scroll');
     }
 };
 typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = utils : window.utils = utils;

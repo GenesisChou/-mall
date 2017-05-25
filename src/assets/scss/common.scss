@@ -68,3 +68,8 @@ img.img-responsive {
         background-color: $white !important;
     }
 }
+
+body.disable-scroll,
+html.disable-scroll {
+    overflow: hidden;
+}
