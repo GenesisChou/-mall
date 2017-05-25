@@ -229,7 +229,7 @@
                         <div v-if='!order_user.contact&&!order_user.phone&&!order_user.province&&!order_user.city&&!order_user.country&&!order_user.address'
                             class='profile'>
                             <div class='content' @click='toggleUpdateOrder'>
-                                <i class='iconfont icon-plus'></i>完善个人信息
+                                为了更好的领取优惠，请完善您的个人信息<strong><i class='iconfont icon-arrows-right'></i></strong>
                             </div>
                         </div>
                         <section v-else class='address-box'>
@@ -278,7 +278,7 @@
                             <v-address-edit :show='popup_edit' :toggle-popup='toggleEdit'></v-address-edit>
                             <div class='profile'>
                                 <div class='content' @click='toggleEdit'>
-                                    <i class='iconfont icon-plus'></i>完善个人信息
+                                    为了更好的领取优惠，请完善您的个人信息<strong><i class='iconfont icon-arrows-right'></i></strong>
                                 </div>
                             </div>
                         </template>
@@ -322,7 +322,7 @@
                             <div v-if='!order_user.contact&&!order_user.phone&&!order_user.province&&!order_user.city&&!order_user.country&&!order_user.address'
                                 class='profile'>
                                 <div class='content' @click='toggleUpdateOrder'>
-                                    <i class='iconfont icon-plus'></i>完善个人信息
+                                    为了更好的领取优惠，请完善您的个人信息<strong><i class='iconfont icon-arrows-right'></i></strong>
                                 </div>
                             </div>
                             <section v-else class='address-box'>

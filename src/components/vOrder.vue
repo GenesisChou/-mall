@@ -32,7 +32,7 @@
         }
         .pic {
             width: pxTorem(133);
-            height: pxTorem(133);
+            // height: pxTorem(133);
         }
         .describe {
             @include flex-center-h;
