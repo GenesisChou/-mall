@@ -15,7 +15,7 @@
         <div v-show='show' class='bg-cover'></div>
         <component :is='style' v-if='type==="success"' :close='close' :func='func' :dialog='dialog' :show='show'>
         </component>
-        <faliure v-else :close='close' :func='func' :dialog='dialog' :show='show' >
+        <faliure v-else :close='close' :func='func' :dialog='dialog' :show='show'>
         </faliure>
     </div>
 </template>
@@ -74,6 +74,11 @@
             },
             toggleDialog: Function,
             show: Boolean,
+        },
+        watch: {
+            show(value) {
+                utils.toggleTouchMove(value);
+            }
         },
         computed: {
             type() {

@@ -138,6 +138,11 @@
                 }
             },
         },
+        watch: {
+            show(value) {
+                utils.toggleTouchMove(value);
+            }
+        },
         methods: {
             func() {
                 if (this.callback) {

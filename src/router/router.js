@@ -105,9 +105,9 @@ const router = new VueRouter({
     ],
 });
 router.beforeEach((to, from, next) => {
-    // if (store.state.v_alert.show === true) {
-    //     store.dispatch('toggleAlert');
-    // }
+    if (store.state.v_alert.show === true) {
+        store.dispatch('toggleAlert');
+    }
     if (store.state.v_confirm.show === true) {
         store.dispatch('toggleConfirm');
     }

@@ -488,6 +488,13 @@
                 }
             }
         },
+        beforeRouteEnter(to, from, next) {
+            next(vm => {
+                if (vm.$store.state.v_alert.show === true) {
+                    vm.$store.dispatch('toggleAlert');
+                }
+            });
+        },
         created() {
             this.order_id = this.$route.query.order_id;
             this.content_show = false;

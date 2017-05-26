@@ -47,9 +47,18 @@
                 default: ''
             }
         },
+        data() {
+            const touchMoveEvent = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            };
+            return {
+                touchMoveEvent
+            };
+        },
         watch: {
             value(v) {
-                utils.toggleScroll();
+                utils.toggleTouchMove(v);
             }
         },
         methods: {
@@ -61,7 +70,7 @@
                         this.$emit('input', false);
                     }
                 }
-            }
+            },
         }
 
     };

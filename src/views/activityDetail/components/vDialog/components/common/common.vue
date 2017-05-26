@@ -93,6 +93,7 @@
         h4 {
             color: $orange;
             padding: pxTorem(20) pxTorem(36);
+            text-align:center;
         }
         .operation {
             @include flex-center;
