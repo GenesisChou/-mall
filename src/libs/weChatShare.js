@@ -2,7 +2,6 @@ import Vue from 'vue';
 import wx from 'weixin-js-sdk';
 import store from '../store';
 module.exports = function (option = {}) {
-    console.log(option);
     let url = location.href.split('#')[0];
     if (option.router && option.router.name !== 'index') {
         url += '#' + option.router.fullPath;
@@ -14,7 +13,7 @@ module.exports = function (option = {}) {
 
     function init(data) {
         const title = option.title || APP.TITLE,
-            desc = option.title || '',
+            desc = option.desc || '',
             link = url,
             imgUrl = option.img || APP.LOGO,
             appId = APP.APPID,
