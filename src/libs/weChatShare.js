@@ -1,20 +1,20 @@
 import Vue from 'vue';
 import wx from 'weixin-js-sdk';
 import store from '../store';
-module.exports = function (router) {
+module.exports = function (option = {}) {
     let url = location.href.split('#')[0];
-    if (router.name !== 'index') {
-        url += '#' + router.fullPath;
+    if (option.router && option.router.name !== 'index') {
+        url += '#' + option.router.fullPath;
     }
-    store.dispatch('changeCurrentSignature', router.name);
+    store.dispatch('changeCurrentSignature', option.router.name);
     getSignature(url).then((data) => {
         init(data.data);
     });
 
     function init(data) {
-        const title = APP.TITLE,
+        const title = option.title || APP.TITLE,
             link = url,
-            imgUrl = APP.LOGO,
+            imgUrl = option.img || APP.LOGO,
             appId = APP.APPID,
             timestamp = data.timestamp,
             nonceStr = data.noncestr,

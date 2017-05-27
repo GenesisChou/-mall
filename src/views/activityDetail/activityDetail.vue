@@ -100,7 +100,11 @@
             this.activity_id = this.$route.query.activity_id;
             this.getActivityDetail().then(data => {
                 this.activity_type = this.getActivityType(data.data.type);
-                weChatShare(this.$route);
+                weChatShare({
+                    router: this.$route,
+                    title: data.data.name,
+                    img: data.data.pic_thumb_new
+                });
             });
             this.getFreeTimes();
         },

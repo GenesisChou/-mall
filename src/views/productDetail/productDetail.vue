@@ -176,7 +176,11 @@
         created() {
             this.product_id = this.$route.query.product_id;
             this.getProductDetail().then(data => {
-                weChatShare(this.$route);
+                weChatShare({
+                    router: this.$route,
+                    title: data.name,
+                    img: data.pic_thumb_new
+                });
             });
         },
         methods: {

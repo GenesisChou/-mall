@@ -85,7 +85,9 @@
         },
         activated() {
             if (this.$store.state.current_signature_page !== 'index') {
-                weChatShare(this.$route);
+                weChatShare({
+                    router: this.$route
+                });
             }
             this.router_state = 'enter';
             const position = this.$store.state.position[this.$route.name];
