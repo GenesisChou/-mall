@@ -103,7 +103,8 @@
                 weChatShare({
                     router: this.$route,
                     title: data.data.name,
-                    img: data.data.pic_thumb_new
+                    img: data.data.pic_thumb_new,
+                    desc: data.data.desc
                 });
             });
             this.getFreeTimes();

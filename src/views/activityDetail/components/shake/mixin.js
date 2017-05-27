@@ -68,7 +68,7 @@
                 }, this.animation_time);
             }
         },
-        activated() {
+        created() {
             this.init();
             this.deviceEvent = this.getDeviceEvent();
             window.addEventListener('devicemotion', this.deviceEvent);
@@ -111,6 +111,7 @@
                 };
             },
             start() {
+                console.log('start');
                 if (this.state !== 'ready') return;
                 this.state = 'shaking';
                 this.$http.post(`${APP.HOST}/shake_activity/${this.id}`, {

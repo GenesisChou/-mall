@@ -2,6 +2,7 @@ import Vue from 'vue';
 import wx from 'weixin-js-sdk';
 import store from '../store';
 module.exports = function (option = {}) {
+    console.log(option);
     let url = location.href.split('#')[0];
     if (option.router && option.router.name !== 'index') {
         url += '#' + option.router.fullPath;
@@ -13,6 +14,7 @@ module.exports = function (option = {}) {
 
     function init(data) {
         const title = option.title || APP.TITLE,
+            desc = option.title || '',
             link = url,
             imgUrl = option.img || APP.LOGO,
             appId = APP.APPID,
@@ -45,73 +47,57 @@ module.exports = function (option = {}) {
         wx.ready(() => {
             wx.onMenuShareTimeline({
                 title, // 分享标题
+                desc,
                 link, // 分享链接
                 imgUrl, // 分享图标
                 success() {
                     // 用户确认分享后执行的回调函数
                     share();
                 },
-                cancel() {
-                    // 用户取消分享后执行的回调函数
-                }
             });
             wx.onMenuShareAppMessage({
                 title, // 分享标题
-                // desc: '来自地球的问候', // 分享描述
+                desc,
                 link, // 分享链接
                 imgUrl, // 分享图标
                 // type: '', // 分享类型,music、video或link，不填默认为link
                 // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
                 success() {
-                    // 用户确认分享后执行的回调函数
                     share();
                 },
-                cancel() {
-                    // 用户取消分享后执行的回调函数
-                }
             });
 
             // 分享到QQ
             wx.onMenuShareQQ({
-                // title: '分享给地球的QQ', // 分享标题
-                // desc: '来自地球的问候', // 分享描述
+                title,
+                desc,
                 link, // 分享链接
                 imgUrl, // 分享图标
                 success() {
                     // 用户确认分享后执行的回调函数
                     share();
                 },
-                cancel() {
-                    // 用户取消分享后执行的回调函数
-                }
             });
             //分享到腾讯微博
             wx.onMenuShareWeibo({
-                // title: '分享给地球的微博', // 分享标题
-                // desc: '来自地球的问候', // 分享描述
+                title,
+                desc,
                 link, // 分享链接
                 imgUrl, // 分享图标
                 success() {
                     // 用户确认分享后执行的回调函数
                     share();
                 },
-                cancel() {
-                    // 用户取消分享后执行的回调函数
-                }
             });
             //分享到qq空间
             wx.onMenuShareQZone({
-                // title: '分享给地球的空间', // 分享标题
-                // desc: '来自地球的问候', // 分享描述
-                link, // 分享链接
-                imgUrl, // 分享图标
+                title,
+                desc,
+                link,
+                imgUrl,
                 success() {
-                    // 用户确认分享后执行的回调函数
                     share();
                 },
-                cancel() {
-                    // 用户取消分享后执行的回调函数
-                }
             });
             // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
         });

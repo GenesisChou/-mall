@@ -179,7 +179,8 @@
                 weChatShare({
                     router: this.$route,
                     title: data.name,
-                    img: data.pic_thumb_new
+                    img: data.pic_thumb_new,
+                    desc: data.name_show
                 });
             });
         },
