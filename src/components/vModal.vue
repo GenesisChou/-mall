@@ -33,6 +33,7 @@
 <script>
     export default {
         props: {
+            type: String,
             coverClose: {
                 type: Boolean,
                 default: true
@@ -58,6 +59,9 @@
         },
         watch: {
             value(v) {
+                if (this.type === 'select') {
+                    return;
+                }
                 utils.toggleTouchMove(v);
             }
         },

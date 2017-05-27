@@ -35,7 +35,7 @@
     }
 </style>
 <template>
-    <v-modal v-model='show' :toggle-modal='toggleModal'>
+    <v-modal v-model='show' :toggle-modal='toggleModal' type='select'>
         <ul class='v-list-choose' ref='list'>
             <li v-for='item in list' @click='event(item)'>
                 <i :class='["radio",{active:isActive(item)}]'></i> <span>{{item[attribute]}}</span>

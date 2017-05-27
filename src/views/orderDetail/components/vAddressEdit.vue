@@ -152,7 +152,7 @@
                 </footer>
             </form>
         </v-popup>
-        <v-modal v-model='modal'>
+        <v-modal v-model='modal' type='select'>
             <div class='modal-content'>
                 <ul v-if='current_type=="province"'>
                     <li v-for='province in province_list' @click='selectAddress("province",province.province,province.provinceid)'>
