@@ -73,7 +73,6 @@
             event(item) {
                 this.callback(item);
                 this.toggleModal();
-                // this.$emit('input',!this.value);
             }
         },
     };
