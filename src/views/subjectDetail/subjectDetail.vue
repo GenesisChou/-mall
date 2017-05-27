@@ -73,6 +73,7 @@
 </template>
 <script>
     import vListItem from 'components/vListItem.vue';
+    import weChatShare from 'libs/weChatShare.js';
     export default {
         name: 'subjectDetail',
         components: {
@@ -99,8 +100,14 @@
         watch: {
             subject_id(value) {
                 this.content_show = false;
-                this.getSubjectDetail().then(() => {
+                this.getSubjectDetail().then(data => {
                     this.content_show = true;
+                    weChatShare({
+                        router: this.$route,
+                        title: data.name,
+                        img: data.pic_thumb_new,
+                        desc: data.name_show
+                    });
                 });
             }
         },
@@ -126,7 +133,7 @@
                         const data = response.data;
                         this.subject_detail = data.data;
                         if (resolve && typeof resolve === 'function') {
-                            resolve();
+                            resolve(data.data);
                         }
                     }, (response) => {
                         this.$store.dispatch('toggleLoading');
