@@ -145,6 +145,9 @@
                     return;
                 }
                 let link = '';
+                if (item.is_local_ads === 1) {
+                    this.adv_view(item);
+                }
                 this.index_view(item, layout);
                 if (layout.component_type === 6) {
                     if (item.is_inner_url === 1) {
@@ -196,6 +199,15 @@
                     component_type: layout.component_type
                 });
             },
+            adv_view(item) {
+                this.$http.post(`${APP.HOST}/local_ads_view`, {
+                    token: APP.TOKEN,
+                    user_id: APP.USER_ID,
+                    media_id: APP.MEDIA_ID,
+                    open_id: APP.OPEN_ID,
+                    advertisement_id: item.id
+                });
+            }
         },
     };
 </script>

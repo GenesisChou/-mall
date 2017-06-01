@@ -128,7 +128,6 @@
             padding-left: pxTorem(30);
             line-height: pxTorem(76);
             color: $orange;
-            border-bottom: 1px solid $gray-light;
             .iconfont {
                 font-size: pxTorem(30);
             }
@@ -136,6 +135,7 @@
     }
 
     .input-box {
+        border-top: 1px solid $gray-light;
         padding: pxTorem(30);
         .container {
             display: flex;
@@ -353,7 +353,7 @@
                         <!-- 取货 -->
                         <section v-if='order_detail.status!==1' class='take-goods'>
                             <h5> <i class='iconfont icon-location'></i> 取货地址: {{order_detail.take_address}} </h5>
-                            <main class='input-box' v-if='order_detail.status!=3'>
+                            <main class='input-box' v-if='order_detail.status!=3&&product_detail.take_word'>
                                 <div class='container'>
                                     <div :class='["form-control",{disable:order_detail.status==4}]'>
                                         <label for='take-goods'>取货码:</label>
