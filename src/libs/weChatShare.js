@@ -14,7 +14,7 @@ module.exports = function (option = {}) {
     function init(data) {
         const title = option.title || APP.TITLE,
             desc = option.desc || '',
-            link = url,
+            link = option.link || url,
             imgUrl = option.img || APP.LOGO,
             appId = APP.APPID,
             timestamp = data.timestamp,

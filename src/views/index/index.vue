@@ -196,7 +196,8 @@
                     item_type: item.item_type,
                     item_title: item.title,
                     component_id: item.component_id,
-                    component_type: layout.component_type
+                    component_type: layout.component_type,
+                    index_item_id: item.id
                 });
             },
             adv_view(item) {

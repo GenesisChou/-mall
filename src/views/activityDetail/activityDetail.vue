@@ -103,7 +103,8 @@
                     router: this.$route,
                     title: data.data.name,
                     img: data.data.pic_thumb_new,
-                    desc: data.data.desc
+                    desc: data.data.desc,
+                    link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}#/activity_detail?activity_id=${this.activity_id}`
                 });
             });
             this.getFreeTimes();
