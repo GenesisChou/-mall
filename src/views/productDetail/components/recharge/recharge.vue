@@ -120,7 +120,7 @@
         <img class='banner' src='./images/rechargeBanner.png'></img>
         <main>
             <div class='form-control'>
-                <input type='tel' v-model='phone' autofocus>
+                <input type='tel' v-model='phone' autofocus placeholder='请输入手机号'>
                 <span>{{company}}</span>
             </div>
             <ul v-if='!flow_infor' class='flow-box'>

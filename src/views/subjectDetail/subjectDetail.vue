@@ -106,7 +106,8 @@
                         router: this.$route,
                         title: data.name,
                         img: data.pic_thumb_new,
-                        desc: data.name_show
+                        desc: data.name_show,
+                        link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}#/subject_detail?subject_id=${value}`
                     });
                 });
             }
