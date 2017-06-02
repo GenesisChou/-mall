@@ -21,6 +21,7 @@
         input {
             flex: 1;
             border: none;
+            font-size:pxTorem(34);
         }
         span {
             color: #a9aaae;

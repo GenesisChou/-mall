@@ -119,15 +119,13 @@
 </template>
 <script>
     import weChatShare from 'libs/weChatShare.js';
+    import vIntroduction from 'components/vIntroduction';
+    import recharge from './components/recharge';
     export default {
         name: 'productDetail',
         components: {
-            vIntroduction: (resolve) => {
-                require(['components/vIntroduction'], resolve);
-            },
-            recharge: (resolve) => {
-                require(['./components/recharge'], resolve);
-            }
+            vIntroduction,
+            recharge
         },
         data() {
             return {
