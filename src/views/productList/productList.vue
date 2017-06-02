@@ -108,7 +108,7 @@
 <script>
     import vSearch from './components/vSearch.vue';
     import vBackTop from 'components/vBackTop';
-    import vListItem from 'components/vListItem.vue';
+    import vListItem from 'components/vListItem';
     export default {
         name: 'productList',
         components: {

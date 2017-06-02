@@ -1,0 +1,174 @@
+ @import '../../../../assets/scss/variable.scss';
+ .v-machine {
+     position: relative;
+     min-height: pxTorem(1250);
+     padding-bottom: pxTorem(84);
+     background-color: #64acff;
+     ul,
+     li {
+         list-style: none;
+     }
+ }
+
+ .header {
+     position: relative;
+     width: pxTorem(750);
+     height: pxTorem(330);
+ }
+
+ .banner-decoration {
+     position: absolute;
+     left: 0;
+     top: 0;
+     width: pxTorem(750);
+     height: pxTorem(37);
+ }
+
+ .banner {
+     width: pxTorem(750);
+     height: pxTorem(434);
+ }
+
+ .background {
+     position: absolute;
+     width: pxTorem(750);
+     height: pxTorem(1026);
+     left: 0;
+     top: pxTorem(90);
+ }
+
+ .machine {
+     position: relative;
+     padding: pxTorem(32);
+     margin: pxTorem(50) auto pxTorem(60) auto;
+     width: pxTorem(740);
+     height: pxTorem(525);
+     background-image: url('./images/machinePanel.png');
+     background-size: 100% 100%;
+     background-repeat: no-repeat;
+     .integral-message {
+         @include flex-center;
+         position: absolute;
+         top: pxTorem(-40);
+         left: 50%;
+         width: pxTorem(416);
+         height: pxTorem(85);
+         margin-left: pxTorem(-416/2);
+         background-color: #fdc713;
+         border-radius: pxTorem(10);
+         box-shadow: 0 pxTorem(5) pxTorem(5) #fbab07;
+         font-size: pxTorem(38);
+         color: $white;
+         z-index: 1;
+     }
+     .notice {
+         @include flex-center;
+         position: absolute;
+         bottom: pxTorem(-20);
+         left: 50%;
+         width: pxTorem(320);
+         height: pxTorem(63);
+         margin-left: pxTorem(-320/2);
+         background-color: #76e6f7;
+         border-radius: pxTorem(10);
+         box-shadow: 0 pxTorem(5) pxTorem(5) #367fe5;
+         font-weight: 500;
+         color: #fc4c60;
+         z-index: 1;
+         .number {
+             padding: 0 pxTorem(5);
+             font-size: pxTorem(36);
+             color: $white;
+         }
+     }
+     .container {
+         display: flex;
+         position: relative;
+         background-color: $white;
+         width: 100%;
+         height: 100%;
+         border: pxTorem(30) solid #fdc713;
+         border-radius: pxTorem(12);
+         box-shadow: 0 0 pxTorem(8) rgba(0, 0, 0, .6);
+     }
+     .shadow {
+         position: absolute;
+         left: 0;
+         top: 0;
+         width: 100%;
+         height: 100%;
+         z-index: 2;
+     }
+     .group {
+         flex: 1;
+         height: pxTorem(400);
+         border-right: pxTorem(6) solid #fdc713;
+         overflow: hidden;
+         &:last-child {
+             border: none;
+         }
+     }
+     .awards {
+         position: relative;
+         top: -25%;
+         li {
+             @include flex-center;
+             height: pxTorem(200);
+         }
+         img {
+             width: pxTorem(140);
+             height: pxTorem(140);
+         }
+     }
+ }
+
+ .operation {
+     position: relative;
+     width: pxTorem(750);
+     height: pxTorem(138);
+     text-align: center;
+     margin-bottom: pxTorem(40);
+     img {
+         position: relative;
+         width: pxTorem(243);
+         height: pxTorem(138)
+     }
+     .line {
+         position: absolute;
+         top: 50%;
+         left: pxTorem(30);
+         width: pxTorem(690);
+         height: pxTorem(4);
+         background-color: #76e6f7;
+         box-shadow: 0 pxTorem(5) pxTorem(5) #4a93f0;
+         transform: translateY(-50%);
+     }
+     .line:before,
+     .line:after {
+         content: '';
+         position: absolute;
+         top: 50%;
+         width: pxTorem(14);
+         height: pxTorem(14);
+         border-radius: 50%;
+         background-color: #76e6f7;
+         box-shadow: 0 pxTorem(5) pxTorem(5) #4a93f0;
+         transform: translateY(-50%);
+     }
+     .line:before {
+         left: pxTorem(-7);
+     }
+     .line:after {
+         right: pxTorem(-7);
+     }
+ }
+
+ .describe {
+     position: relative;
+     padding: 0 pxTorem(40);
+     .editor-style {
+         padding-top: pxTorem(20);
+         padding-bottom: pxTorem(40);
+         color: $white;
+     }
+ }

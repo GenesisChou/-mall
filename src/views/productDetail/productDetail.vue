@@ -179,7 +179,7 @@
                     title: data.name,
                     img: data.pic_thumb_new,
                     desc: data.name_show,
-                    link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}#/product_detail?product_id=${this.product_id}`
+                    link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=product_detail&product_id=${this.product_id}`
                 });
             });
         },

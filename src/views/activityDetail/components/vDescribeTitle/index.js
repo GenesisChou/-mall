@@ -1,1 +1,1 @@
-module.exports=require('./vDescribeTitle.vue');
+module.exports = require('./vDescribeTitle.vue');

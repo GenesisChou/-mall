@@ -63,7 +63,7 @@
                 </ul>
                 <ul v-for='tab in tabs'>
                     <router-link v-for='(item,$index) in tab.items' :to='getRouter(item)' tag='li' v-show='current_tab=="全部"||current_tab==tab.name'>
-                        <v-list-item :title='item.name' :title-dupty='item.sub_name' :integral='item.integral>>0' :img='item.pic'></v-list-item>
+                        <v-list-item :title='item.name' :title-dupty='item.sub_name' :integral='item.integral>>0' :img='item.pic' :script='item.script'></v-list-item>
                     </router-link>
                 </ul>
             </main>
@@ -72,7 +72,7 @@
     </div>
 </template>
 <script>
-    import vListItem from 'components/vListItem.vue';
+    import vListItem from 'components/vListItem';
     import weChatShare from 'libs/weChatShare.js';
     export default {
         name: 'subjectDetail',
@@ -107,7 +107,7 @@
                         title: data.name,
                         img: data.pic_thumb_new,
                         desc: data.name_show,
-                        link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}#/subject_detail?subject_id=${value}`
+                        link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=subject_detail&subject_id=${value}`
                     });
                 });
             }
