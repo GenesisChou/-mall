@@ -162,11 +162,12 @@
         }
         input {
             width: pxTorem(300);
+            height:100%;
             background: none;
             border: none;
             text-indent: 0;
             color: $orange;
-            font-size: pxTorem(20);
+            font-size: pxTorem(24);
         }
         .submit {
             float: left;

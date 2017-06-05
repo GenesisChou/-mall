@@ -29,6 +29,7 @@
             li.address {
                 .form-control {
                     flex: 1;
+                    height:100%;
                     position: relative;
                 }
                 .iconfont {
@@ -54,6 +55,7 @@
             }
             input {
                 flex: 1;
+                height:100%;
                 color: #646565;
                 background: none;
                 border: 0;

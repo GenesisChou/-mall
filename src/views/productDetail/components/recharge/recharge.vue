@@ -12,6 +12,7 @@
 
     .form-control {
         @include flex-center-v;
+        position:relative;
         justify-content: space-between;
         height: pxTorem(92);
         margin: 0 pxTorem(24);
@@ -22,8 +23,14 @@
             flex: 1;
             border: none;
             font-size: pxTorem(34);
+            height:100%;
+            padding-right:pxTorem(280);
         }
         span {
+            position:absolute;
+            right:0;
+            top:50%;
+            transform:translateY(-50%);
             color: #a9aaae;
         }
     }

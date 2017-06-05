@@ -2,6 +2,7 @@
     @import '../../../assets/scss/variable.scss';
     .v-address {
         flex: 1;
+        height:100%;
         display: flex;
         .form-control {
             flex: 1;
@@ -20,6 +21,7 @@
             }
         }
         input {
+            height:100%;
             width: pxTorem(150);
             color: #646565;
             background: none;

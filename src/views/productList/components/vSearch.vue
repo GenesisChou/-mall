@@ -27,6 +27,7 @@
         }
         input {
             flex: 1;
+            height:100%;
             width: pxTorem(610);
             border: 0;
             font-size: pxTorem(28);
