@@ -21,7 +21,7 @@
         input {
             flex: 1;
             border: none;
-            font-size:pxTorem(34);
+            font-size: pxTorem(34);
         }
         span {
             color: #a9aaae;
@@ -79,6 +79,12 @@
             font-size: pxTorem(24);
             transform: scale(0.9);
         }
+        &.lack {
+            @include active(#dcdcdc, 5%);
+            background-color: #dcdcdc;
+            color: #ff5000;
+            box-shadow: 0 2px 2px #d0d1d2;
+        }
     }
 
     .popup-content {
@@ -121,22 +127,24 @@
         <img class='banner' src='./images/rechargeBanner.png'></img>
         <main>
             <div class='form-control'>
-                <input type='tel' v-model='phone' autofocus placeholder='请输入手机号'>
-                <span>{{company}}</span>
+                <input type='tel' v-model='phone' autofocus placeholder='请输入手机号' @blur='getFlows'>
+                <span>{{notice}}</span>
             </div>
-            <ul v-if='!flow_infor' class='flow-box'>
-                <li class='ready' v-for='(flow,$index) in flow_list'>{{flow}}</li>
-            </ul>
-            <ul v-else class='flow-box'>
+            <ul class='flow-box'>
                 <li v-show='flow_infor.flows' class='active'>{{flow_infor.flows}}</li>
             </ul>
             <h4 class='notice'>即时生效,当月有效,(充值高峰可能出现延迟)。</h4>
         </main>
         <footer>
-            <div class='exchange btn-orange' @click='togglePopup'>
+            <div v-if='!integral_enough' class='exchange btn-orange' @click='togglePopup'>
                 立即兑换
-                <!--<template v-if='flow_infor'><span>{{productDetail.integral>>0}}积分</span><s>¥{{productDetail.price}}</s></template>-->
+                <template v-if='flow_infor'><span>{{productDetail.integral>>0}}积分</span>
+                    <s>¥{{productDetail.price}}</s>
+                </template>
             </div>
+            <router-link v-else :to='{name:"earn_integral"}' tag='div' class='exchange lack'>
+                您的积分不足，去赚取 >>
+            </router-link>
         </footer>
         <v-popup :show='popup_show' :toggle-popup='togglePopup'>
             <div class='popup-content'>
@@ -146,7 +154,7 @@
                         <strong>手机号码</strong> {{phone}}
                     </li>
                     <li>
-                        <strong>重制流量</strong> {{flow_infor.flows}}
+                        <strong>充值流量</strong> {{flow_infor.flows}}
                     </li>
                     <li>
                         <strong>消耗积分</strong> <span class='integral'>{{productDetail.integral>>0}}积分</span>
@@ -170,28 +178,21 @@
             productDetail: {
                 type: Object,
                 default: {}
-            }
+            },
         },
         data() {
             return {
-                flow_list: [
-                    '30M',
-                    '70M',
-                    '150M',
-                    '500M',
-                    '1024M',
-                    '2048M'
-                ],
                 phone: '',
                 state: 'ready',
                 flow_infor: '',
+                notice: '',
                 in_exchange: false,
                 popup_show: false
             };
         },
         computed: {
-            company() {
-                return this.flow_infor ? this.flow_infor.company : '';
+            integral_enough() {
+                return this.$parent.integral_enough;
             }
         },
         watch: {
@@ -248,6 +249,9 @@
                     const data = response.data;
                     if (data.status === APP.SUCCESS) {
                         this.flow_infor = data.data;
+                        this.notice = data.data.company;
+                    } else {
+                        this.notice = data.info;
                     }
                 });
             },
