@@ -33,20 +33,16 @@
                     console.log('login success');
                     this.setGuideState(data.data);
                     this.loginRecord();
-                } else if (data.status === 9999) {
+                } else {
                     console.log(data.info);
                     utils.deleteLocalStorage(APP.MEDIA_ID);
                     utils.reloadApp();
-                } else {
-                    console.log(data.info);
-                    this.$store.dispatch('toggleAlert', {
-                        msg: '网络断开连接',
-                        callback: () => {
-                            utils.deleteLocalStorage(APP.MEDIA_ID);
-                            utils.reloadApp();
-                        }
-                    });
                 }
+                // else if (data.status === 9999) {
+                //     console.log(data.info);
+                //     utils.deleteLocalStorage(APP.MEDIA_ID);
+                //     utils.reloadApp();
+                // }
             });
             const page = utils.getParameterByName('page');
             if (page) {
