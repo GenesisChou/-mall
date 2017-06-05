@@ -29,12 +29,12 @@
         data() {
             return {
                 show: false,
-                scrollEvent: '',
+                scroll_event: '',
             };
         },
         created() {
-            this.scrollEvent = this.getScrollEvent();
-            window.addEventListener('scroll', this.scrollEvent);
+            this.scroll_event = this.getScrollEvent();
+            window.addEventListener('scroll', this.scroll_event);
         },
         computed: {
             router_state() {
@@ -44,9 +44,9 @@
         watch: {
             router_state(value) {
                 if (value === 'leave') {
-                    window.removeEventListener('scroll', this.scrollEvent);
+                    window.removeEventListener('scroll', this.scroll_event);
                 } else if (value === 'enter') {
-                    window.addEventListener('scroll', this.scrollEvent);
+                    window.addEventListener('scroll', this.scroll_event);
                 }
             }
 

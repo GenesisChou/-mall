@@ -7,6 +7,7 @@
         background-color: $gray-light;
         box-shadow: 0 0 pxTorem(10) rgba(0, 0, 0, .2);
         z-index: 1;
+        transition: .3s;
         .search-box {
             @include flex-center-v; // width: pxTorem(593);
             height: pxTorem(72);
@@ -27,7 +28,7 @@
         }
         input {
             flex: 1;
-            height:100%;
+            height: 100%;
             width: pxTorem(610);
             border: 0;
             font-size: pxTorem(28);
@@ -43,6 +44,9 @@
         }
         span {
             font-size: pxTorem(32);
+        }
+        &.top {
+            position: absolute;
         }
     }
 </style>
@@ -64,6 +68,25 @@
             search: Function,
             value: String
         },
+        data() {
+            return {
+                scroll_event: ''
+            };
+        },
+        computed: {
+            router_state() {
+                return this.$parent.router_state || {};
+            }
+        },
+        watch: {
+            router_state(value) {
+                if (value === 'leave') {
+                    window.removeEventListener('scroll', this.scroll_event);
+                } else if (value === 'enter') {
+                    window.addEventListener('scroll', this.scroll_event);
+                }
+            }
+        },
         methods: {
             updateValue(state) {
                 this.$emit('input', event.target.value);
@@ -75,5 +98,16 @@
                 event.target.parentElement.querySelector('.icon-close-circle').classList.toggle('active');
             },
         },
+        created() {
+            this.scroll_event = utils.debounce(() => {
+                const height = utils.getScrollTop();
+                if (height <= 0) {
+                    this.$el.classList.add('top');
+                } else {
+                    this.$el.classList.remove('top');
+                }
+            }, 100, 100);
+            window.addEventListener('scroll', this.scroll_event);
+        }
     };
 </script>
