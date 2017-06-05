@@ -7,12 +7,8 @@ module.exports = {
     name: 'quiz',
     template,
     components: {
-        one: (resolve) => {
-            require(['./quiz_1'], resolve);
-        },
-        two: (resolve) => {
-            require(['./quiz_2'], resolve);
-        },
+        one: require('./quiz_1'),
+        two: require('./quiz_2'),
     },
     props: {
         freshFreeTimes: Function,

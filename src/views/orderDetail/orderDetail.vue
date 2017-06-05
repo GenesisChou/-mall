@@ -162,7 +162,7 @@
         }
         input {
             width: pxTorem(300);
-            height:100%;
+            height: 100%;
             background: none;
             border: none;
             text-indent: 0;
@@ -384,27 +384,13 @@
         name: 'orderDetail',
         components: {
             vOrder,
-            vLogistics: (resolve) => {
-                require(['./components/vLogistics'], resolve);
-            },
-            vAddressEdit: (resolve) => {
-                require(['./components/vAddressEdit'], resolve);
-            },
-            vIntroduction: (resolve) => {
-                require(['components/vIntroduction'], resolve);
-            },
-            vAnnouncement: (resolve) => {
-                require(['./components/vAnnouncement'], resolve);
-            },
-            vTicket: (resolve) => {
-                require(['./components/vTicket'], resolve);
-            },
-            vRecharge: (resolve) => {
-                require(['./components/vRecharge'], resolve);
-            },
-            vAddressSelect: (resolve) => {
-                require(['./components/vAddressSelect'], resolve);
-            },
+            vLogistics: require('./components/vLogistics'),
+            vAddressEdit: require('./components/vAddressEdit'),
+            vIntroduction: require('components/vIntroduction'),
+            vAnnouncement: require('./components/vAnnouncement'),
+            vTicket: require('./components/vTicket'),
+            vRecharge: require('./components/vRecharge'),
+            vAddressSelect: require('./components/vAddressSelect')
         },
         data() {
             return {

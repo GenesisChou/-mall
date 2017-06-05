@@ -10,8 +10,7 @@ const path = require('path'),
         output: {
             path: path.resolve(__dirname, './dist'),
             publicPath: '/dist/',
-            // filename: 'js/[name].js',
-            filename: 'js/[name].[hash].js'
+            filename: 'js/[name].js',
         },
         module: {
             rules: [{
@@ -98,8 +97,7 @@ if (process.env.NODE_ENV === 'production') {
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
-            // filename: 'js/vendor.js',
-            filename: 'js/vendor.[hash].js'
+            filename: 'js/vendor.js',
         }),
         new webpack.LoaderOptionsPlugin({
             minimize: true
@@ -109,7 +107,7 @@ if (process.env.NODE_ENV === 'production') {
             filename: path.resolve(__dirname, 'index.html'), //生成的html存放路径，相对于 path
             template: path.resolve(__dirname, 'template/index.html'), //html模板路径
             inject: true, //允许插件修改哪些内容，包括head与body
-            hash: false, //为静态资源生成hash值
+            hash: true, //为静态资源生成hash值
             chunksSortMode(a, b) {
                 const order = ['app', 'basic', 'vendor'];
                 return order.indexOf(b.names[0]) - order.indexOf(a.names[0]);

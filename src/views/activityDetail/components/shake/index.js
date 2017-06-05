@@ -8,12 +8,8 @@ module.exports = {
     name: 'shake',
     template,
     components: {
-        one: (resolve) => {
-            require(['./shake_1'], resolve);
-        },
-        two: (resolve) => {
-            require(['./shake_2'], resolve);
-        },
+        one: require('./shake_1'),
+        two: require('./shake_2'),
     },
     props: {
         freshFreeTimes: Function,

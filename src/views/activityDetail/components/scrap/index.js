@@ -7,12 +7,8 @@ module.exports = {
     name: 'scrap',
     template,
     components: {
-        one: (resolve) => {
-            require(['./scrap_1'], resolve);
-        },
-        two: (resolve) => {
-            require(['./scrap_2'], resolve);
-        },
+        one: require('./scrap_1'),
+        two: require('./scrap_2'),
     },
     props: {
         freshFreeTimes: Function,

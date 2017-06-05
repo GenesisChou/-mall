@@ -32,42 +32,18 @@
         name: 'activityDetail',
         components: {
             vDialog,
-            quiz: (resolve) => {
-                require(['./components/quiz'], resolve);
-            },
-            scrap: (resolve) => {
-                require(['./components/scrap'], resolve);
-            },
-            game: (resolve) => {
-                require(['./components/game'], resolve);
-            },
-            shake: (resolve) => {
-                require(['./components/shake'], resolve);
-            },
-            fortune: (resolve) => {
-                require(['./components/fortune'], resolve);
-            },
-            egg: (resolve) => {
-                require(['./components/egg'], resolve);
-            },
-            machine: (resolve) => {
-                require(['./components/machine'], resolve);
-            },
-            treasure: (resolve) => {
-                require(['./components/treasure'], resolve);
-            },
-            doll: (resolve) => {
-                require(['./components/doll'], resolve);
-            },
-            card: (resolve) => {
-                require(['./components/card'], resolve);
-            },
-            tear: (resolve) => {
-                require(['./components/tear'], resolve);
-            },
-            marble: (resolve) => {
-                require(['./components/marble'], resolve);
-            }
+            quiz: require('./components/quiz'),
+            scrap: require('./components/scrap'),
+            game: require('./components/game'),
+            shake: require('./components/shake'),
+            fortune: require('./components/fortune'),
+            egg: require('./components/egg'),
+            machine: require('./components/machine'),
+            treasure: require('./components/treasure'),
+            doll: require('./components/doll'),
+            card: require('./components/card'),
+            tear: require('./components/tear'),
+            marble: require('./components/marble')
         },
         data() {
             return {

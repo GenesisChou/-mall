@@ -7,12 +7,8 @@ module.exports = {
     name: 'machine',
     template,
     components: {
-        one: (resolve) => {
-            require(['./machine_1'], resolve);
-        },
-        two: (resolve) => {
-            require(['./machine_2'], resolve);
-        },
+        one: require('./machine_1'),
+        two: require('./machine_2')
     },
     props: {
         freshFreeTimes: Function,

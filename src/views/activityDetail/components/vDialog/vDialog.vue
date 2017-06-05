@@ -24,45 +24,19 @@
     export default {
         name: 'vDialog',
         components: {
-            common: (resolve) => {
-                require(['./components/common'], resolve);
-            },
-            dice: (resolve) => {
-                require(['./components/dice'], resolve);
-            },
-            reel: (resolve) => {
-                require(['./components/reel'], resolve);
-            },
-            money: (resolve) => {
-                require(['./components/money'], resolve);
-            },
-            soccer: (resolve) => {
-                require(['./components/soccer'], resolve);
-            },
-            eliminate: (resolve) => {
-                require(['./components/eliminate'], resolve);
-            },
-            stick: (resolve) => {
-                require(['./components/stick'], resolve);
-            },
-            mario: (resolve) => {
-                require(['./components/mario'], resolve);
-            },
-            gold: (resolve) => {
-                require(['./components/gold'], resolve);
-            },
-            cat: (resolve) => {
-                require(['./components/cat'], resolve);
-            },
-            twins: (resolve) => {
-                require(['./components/twins'], resolve);
-            },
-            cake: (resolve) => {
-                require(['./components/cake'], resolve);
-            },
-            pakour: (resolve) => {
-                require(['./components/pakour'], resolve);
-            },
+            common: require('./components/common'),
+            dice: require('./components/dice'),
+            reel: require('./components/reel'),
+            money: require('./components/money'),
+            soccer: require('./components/soccer'),
+            eliminate: require('./components/eliminate'),
+            stick: require('./components/stick'),
+            mario: require('./components/mario'),
+            gold: require('./components/gold'),
+            cat: require('./components/cat'),
+            twins: require('./components/twins'),
+            cake: require('./components/cake'),
+            pakour: require('./components/pakour'),
             faliure
         },
         props: {

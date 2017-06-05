@@ -38,36 +38,16 @@
     export default {
         components: {
             vBackTop,
-            vItemSmall: (resolve) => {
-                require(['./components/vItemSmall'], resolve);
-            },
-            vItemList: (resolve) => {
-                require(['./components/vItemList'], resolve);
-            },
-            vItemLarge: (resolve) => {
-                require(['./components/vItemLarge'], resolve);
-            },
-            vSubjectOne: (resolve) => {
-                require(['./components/vSubjectOne'], resolve);
-            },
-            vSubjectTwo: (resolve) => {
-                require(['./components/vSubjectTwo'], resolve);
-            },
-            vAdvList: (resolve) => {
-                require(['./components/vAdvList'], resolve);
-            },
-            vAdvSlide: (resolve) => {
-                require(['./components/vAdvSlide'], resolve);
-            },
-            vTitle: (resolve) => {
-                require(['./components/vTitle'], resolve);
-            },
-            vIcon: (resolve) => {
-                require(['./components/vIcon'], resolve);
-            },
-            vSpace: (resolve) => {
-                require(['./components/vSpace'], resolve);
-            },
+            vItemSmall: require('./components/vItemSmall'),
+            vItemList: require('./components/vItemList'),
+            vItemLarge: require('./components/vItemLarge'),
+            vSubjectOne: require('./components/vSubjectOne'),
+            vSubjectTwo: require('./components/vSubjectTwo'),
+            vAdvList: require('./components/vAdvList'),
+            vAdvSlide: require('./components/vAdvSlide'),
+            vTitle: require('./components/vTitle'),
+            vIcon: require('./components/vIcon'),
+            vSpace: require('./components/vSpace')
         },
         data() {
             return {
