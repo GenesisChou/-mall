@@ -151,7 +151,6 @@
                         query: {
                             product_id: item.item_id,
                             integral: item.integral >> 0,
-                            product_name: item.name,
                         }
                     };
                 }

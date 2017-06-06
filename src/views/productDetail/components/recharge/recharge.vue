@@ -17,7 +17,7 @@
         height: pxTorem(92);
         margin: 0 pxTorem(24);
         padding: 0 pxTorem(16);
-        border-bottom: 1px solid $gray-light;
+        border-bottom: 1px solid #d3d4d6;
         font-size: pxTorem(34);
         input {
             flex: 1;
