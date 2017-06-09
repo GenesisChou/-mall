@@ -69,7 +69,8 @@ const path = require('path'),
             extensions: ['.js', '.json', '.vue']
         },
         devServer: {
-            // host: '0.0.0.0'
+            host: '0.0.0.0',
+            disableHostCheck: true
         },
         plugins: [
             // new ExtractTextPlugin('style.css'),
