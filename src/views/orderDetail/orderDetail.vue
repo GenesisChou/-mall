@@ -121,13 +121,15 @@
     }
 
     .take-goods {
+        padding:pxTorem(10) 0;
         margin-top: pxTorem(20);
         background-color: $white;
         border-bottom: 1px solid #d3d4d6;
         h5 {
-            padding-left: pxTorem(30);
-            line-height: pxTorem(76);
+            padding:pxTorem(12) pxTorem(30);
+            line-height: pxTorem(34);
             color: $orange;
+            text-align: justify;
             .iconfont {
                 font-size: pxTorem(30);
             }
@@ -209,6 +211,22 @@
             border: 1px solid #f1d0cf;
             background-color: #fef6f5;
             color: $orange;
+        }
+    }
+
+    .expand {
+        @include flex-center;
+        background-color: $white;
+        width: pxTorem(60);
+        height: pxTorem(60);
+        text-align: center;
+        border-radius: 50%;
+        box-shadow: 0 1px 1px #ddd;
+        margin: pxTorem(15) auto;
+        .iconfont {
+            font-size: pxTorem(28);
+            color: $orange;
+            font-weight: bold;
         }
     }
 </style>
@@ -353,7 +371,12 @@
                         <img v-if='order_detail.status===3' class='take-goods-script' src="./images/takeGoods.png" alt="">
                         <!-- 取货 -->
                         <section v-if='order_detail.status!==1' class='take-goods'>
-                            <h5> <i class='iconfont icon-location'></i> 取货地址: {{order_detail.take_address}} </h5>
+                            <h5 v-for='address in take_address'> <i class='iconfont icon-location'></i> 取货地址: {{address}} </h5>
+                            <!--<template v-if='take_address.length>2'>
+                                <div class='expand' @click='expandAddress(address_limit_num===2?take_address.length:2)'>
+                                    <i :class='["iconfont", address_limit_num===2?"icon-arrows-down":"icon-arrows-up"]'></i>
+                                </div>
+                            </template>-->
                             <main class='input-box' v-if='order_detail.status!=3&&product_detail.take_word'>
                                 <div class='container'>
                                     <div :class='["form-control",{disable:order_detail.status==4}]'>
@@ -416,7 +439,8 @@
                     country: '',
                     country_id: '',
                     address: ''
-                }
+                },
+                address_limit_num: 2
             };
         },
         computed: {
@@ -459,6 +483,12 @@
                     temp.address = this.order_detail.address;
                 }
                 return temp;
+            },
+            take_address() {
+                if (this.order_detail && this.order_detail.take_address) {
+                    return this.order_detail.take_address.split('\n');
+                }
+                return [];
             },
             user() {
                 return this.$store.state.user;
@@ -644,6 +674,12 @@
                         });
                     }
                 });
+            },
+            expandAddress(num = 2) {
+                this.address_limit_num = num;
+            },
+            shrinkAddress() {
+                this.address_limit_num = 2;
             }
         }
     };
