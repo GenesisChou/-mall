@@ -121,13 +121,13 @@
     }
 
     .take-goods {
-        padding:pxTorem(10) 0;
         margin-top: pxTorem(20);
         background-color: $white;
         border-bottom: 1px solid #d3d4d6;
+        overflow: hidden;
         h5 {
-            padding:pxTorem(12) pxTorem(30);
-            line-height: pxTorem(34);
+            padding: pxTorem(10) pxTorem(30) ;
+            line-height: pxTorem(40);
             color: $orange;
             text-align: justify;
             .iconfont {
@@ -217,12 +217,9 @@
     .expand {
         @include flex-center;
         background-color: $white;
-        width: pxTorem(60);
-        height: pxTorem(60);
+        height: pxTorem(50);
         text-align: center;
-        border-radius: 50%;
-        box-shadow: 0 1px 1px #ddd;
-        margin: pxTorem(15) auto;
+        border-top: 1px solid #d3d4d6;
         .iconfont {
             font-size: pxTorem(28);
             color: $orange;
@@ -371,12 +368,12 @@
                         <img v-if='order_detail.status===3' class='take-goods-script' src="./images/takeGoods.png" alt="">
                         <!-- 取货 -->
                         <section v-if='order_detail.status!==1' class='take-goods'>
-                            <h5 v-for='address in take_address'> <i class='iconfont icon-location'></i> 取货地址: {{address}} </h5>
-                            <!--<template v-if='take_address.length>2'>
+                            <h5 v-show='$index<address_limit_num' v-for='(address,$index) in take_address'> <i class='iconfont icon-location'></i> 取货地址: {{address}} </h5>
+                            <template v-if='take_address.length>2'>
                                 <div class='expand' @click='expandAddress(address_limit_num===2?take_address.length:2)'>
                                     <i :class='["iconfont", address_limit_num===2?"icon-arrows-down":"icon-arrows-up"]'></i>
                                 </div>
-                            </template>-->
+                            </template>
                             <main class='input-box' v-if='order_detail.status!=3&&product_detail.take_word'>
                                 <div class='container'>
                                     <div :class='["form-control",{disable:order_detail.status==4}]'>
