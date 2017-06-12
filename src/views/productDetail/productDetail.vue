@@ -115,25 +115,29 @@
             </footer>
         </template>
         <recharge v-else :product-detail='product_detail'></recharge>
+        <v-dialog :show='dialog_show' :dialog='dialog' :toggle-dialog='toggleDialog'></v-dialog>
     </div>
 </template>
 <script>
     import weChatShare from 'libs/weChatShare.js';
     import vIntroduction from 'components/vIntroduction';
     import recharge from './components/recharge';
+    import vDialog from './components/vDialog';
     export default {
         name: 'productDetail',
         components: {
             vIntroduction,
-            recharge
+            recharge,
+            vDialog
         },
         data() {
             return {
                 product_id: '',
                 product_detail: '',
                 order_detail_id: '', //兑换成功后用于跳转订单详情的订单id
-                content_show: false,
-                is_recharge: false
+                is_recharge: false,
+                dialog: {},
+                dialog_show: false
             };
         },
         computed: {
@@ -155,19 +159,6 @@
                 return this.$route.query.name || this.product_detail.name;
             }
         },
-        watch: {
-            order_detail_id() {
-                this.$store.dispatch('getUserInfor');
-                this.$store.dispatch('toggleAlert', {
-                    close_btn: true,
-                    msg: '获得' + this.product_name,
-                    type: 'img',
-                    img: this.product_detail.pic_thumb_new,
-                    btn_text: '查看',
-                    callback: this.toOrderDetail
-                });
-            }
-        },
         beforeRouteLeave(from, to, next) {
             next();
         },
@@ -184,6 +175,10 @@
             });
         },
         methods: {
+            toggleDialog(dialog) {
+                this.dialog = dialog;
+                this.dialog_show = !this.dialog_show;
+            },
             //获取商品详情
             getProductDetail() {
                 return new Promise(resolve => {
@@ -217,10 +212,20 @@
                     callback: () => {
                         this.order().then(data => {
                             this.order_detail_id = data.data.id;
+                            this.$store.dispatch('getUserInfor');
+                            this.toggleDialog({
+                                type: 'success',
+                                msg: '获得' + this.product_name,
+                                img: this.product_detail.pic_thumb_new,
+                                btn_text: '查看',
+                                callback: this.toOrderDetail
+                            });
                             this.getProductDetail();
                         }).catch(data => {
-                            this.$store.dispatch('toggleAlert', {
+                            this.toggleDialog({
+                                type: 'faliure',
                                 msg: data.info,
+                                btn_text: '我知道了',
                             });
                         });
                     }

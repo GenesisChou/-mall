@@ -7,7 +7,7 @@
             background-color: darken($white, 2%);
         }
     }
-    
+
     .v-order-header {
         padding-left: pxTorem(30);
         line-height: pxTorem(76);
@@ -20,7 +20,7 @@
             vertical-align: middle;
         }
     }
-    
+
     .v-order-main {
         @include flex-center-v;
         height: pxTorem(155);
@@ -31,13 +31,19 @@
             border-bottom: 1px solid #d3d4d6;
         }
         .pic {
-            width: pxTorem(133);
-            // height: pxTorem(133);
+            width: pxTorem(133); // height: pxTorem(133);
+            height: pxTorem(133);
+            line-height:pxTorem(133);
+            text-align: center;
+            img {
+                max-width: pxTorem(133);
+                max-height: pxTorem(133);
+            }
         }
         .describe {
             @include flex-center-h;
-            flex:1;
-            flex-direction:column;
+            flex: 1;
+            flex-direction: column;
             height: 80%;
             padding-left: pxTorem(25);
             h2 {
@@ -63,9 +69,11 @@
             <i class='iconfont  icon-order'></i> 订单号：{{id}}
         </header>
         <main :class='["v-order-main",{border:hasBorder}]'>
-            <img class='pic' v-lazy='img' />
+            <div class='pic'>
+                <img v-lazy='img' />
+            </div>
             <div class='describe'>
-                <h2 >{{name}}</h2>
+                <h2>{{name}}</h2>
                 <p> {{integral}}积分
                     <span>x1</span>
                 </p>

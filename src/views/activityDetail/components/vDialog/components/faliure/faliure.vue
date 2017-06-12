@@ -95,7 +95,7 @@
                 <footer>
                     <div class='operation' @click='close'>知道了</div>
                     <router-link :to='{path:"earn_integral"}' class='operation' tag='div'>
-                        赚取积分
+                        去赚积分
                     </router-link>
                 </footer>
             </template>

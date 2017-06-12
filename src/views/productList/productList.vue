@@ -167,11 +167,17 @@
                 return new Promise((resolve, reject) => {
                     this.$http.post(`${APP.HOST}/all_product`, this.params).then((response) => {
                         const data = response.data;
-                        this.busy = !(data.data.list.length < 20);
-                        if (resolve && typeof resolve === 'function') {
-                            resolve(data);
+                        if (data.status === APP.SUCCESS) {
+                            this.busy = !(data.data.list.length < 20);
+                            if (resolve && typeof resolve === 'function') {
+                                resolve(data);
+                            }
+                            this.product_list = this.product_list.concat(data.data.list);
+                        } else {
+                            if (reject && typeof reject === 'function') {
+                                reject();
+                            }
                         }
-                        this.product_list = this.product_list.concat(data.data.list);
                     }, (response) => {
                         if (reject && typeof reject === 'function') {
                             reject();
