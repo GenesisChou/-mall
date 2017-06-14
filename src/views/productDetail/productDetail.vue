@@ -203,6 +203,11 @@
                 return 0;
             }
         },
+        beforeRouteLeave(to, from, next) {
+            this.share_show = false;
+            this.dialog_show = false;
+            next();
+        },
         created() {
             this.product_id = this.$route.query.product_id;
             this.from = this.$route.query.from;
@@ -341,7 +346,6 @@
             },
             //路由跳转
             toOrderDetail() {
-                this.share_show = false;
                 this.$router.push({
                     name: 'order_detail',
                     query: {

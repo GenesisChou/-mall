@@ -100,9 +100,9 @@
             show: Boolean,
         },
         watch: {
-            show(value) {
-                utils.toggleTouchMove(value);
-            }
+            // show(value) {
+            //     utils.toggleTouchMove(value);
+            // }
         },
         computed: {
             type() {

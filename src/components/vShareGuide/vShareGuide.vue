@@ -110,9 +110,9 @@
             };
         },
         watch: {
-            show(v) {
-                utils.toggleTouchMove(v);
-            }
+            // show(v) {
+            //     utils.toggleTouchMove(v);
+            // }
         },
         methods: {
             close() {
