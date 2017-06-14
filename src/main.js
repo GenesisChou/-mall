@@ -20,27 +20,27 @@ if (storage) {
             DATE: new Date(),
         });
         //本地测试用
-        // startApp(utils.getLocalStorage(media_id));
+        startApp(utils.getLocalStorage(media_id));
         //正式部署用 清除url内token,xxx,xxx
-        let link = `${APP.MALL_HOST}/?id=${media_id}`;
-        if (page === 'product_detail') {
-            const product_id = utils.getParameterByName('product_id'),
-                back = utils.getParameterByName('back');
-            link += `&page=${page}&product_id=${product_id}`;
-            if (back) {
-                link += `&back=${back}`;
-            } else if (back === 'subject_detail') {
-                const subject_id = utils.getParameterByName('subject_id');
-                link += `&back=${back}&subject_id=${subject_id}`;
-            }
-        } else if (page === 'activity_detail') {
-            const activity_id = utils.getParameterByName('activity_id');
-            link += `&page=${page}&activity_id=${activity_id}`;
-        } else if (page === 'subject_detail') {
-            const subject_id = utils.getParameterByName('subject_id');
-            link += `&page=${page}&subject_id=${subject_id}`;
-        }
-        location.href = link;
+        // let link = `${APP.MALL_HOST}/?id=${media_id}`;
+        // if (page === 'product_detail') {
+        //     const product_id = utils.getParameterByName('product_id'),
+        //         back = utils.getParameterByName('back');
+        //     link += `&page=${page}&product_id=${product_id}`;
+        //     if (back) {
+        //         link += `&back=${back}`;
+        //     } else if (back === 'subject_detail') {
+        //         const subject_id = utils.getParameterByName('subject_id');
+        //         link += `&back=${back}&subject_id=${subject_id}`;
+        //     }
+        // } else if (page === 'activity_detail') {
+        //     const activity_id = utils.getParameterByName('activity_id');
+        //     link += `&page=${page}&activity_id=${activity_id}`;
+        // } else if (page === 'subject_detail') {
+        //     const subject_id = utils.getParameterByName('subject_id');
+        //     link += `&page=${page}&subject_id=${subject_id}`;
+        // }
+        // location.href = link;
     } else {
         wxLogin(page);
     }

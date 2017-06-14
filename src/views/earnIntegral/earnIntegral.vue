@@ -14,7 +14,7 @@
     .head {
         position: relative;
         width: pxTorem(750);
-        height: pxTorem(859);
+        height: pxTorem(860);
         overflow: hidden;
         background: url('./images/earnIntegralBackground.png') no-repeat;
         background-size: 100% 100%;
@@ -113,40 +113,13 @@
         position: absolute;
         left: 0;
         right: 0;
-        bottom: pxTorem(320);
+        bottom: pxTorem(300);
         font-size: pxTorem(24);
         color: $white;
         .number {
             padding: 0 pxTorem(5);
             font-size: pxTorem(40);
             color: #f05f61;
-        }
-        .icon-arrows-right {
-            color: #f05f61;
-            font-weight: bold;
-            margin-left: pxTorem(5);
-            font-size: pxTorem(24);
-            width: pxTorem(6);
-            margin-left:pxTorem(-5);
-            &:first-child{
-                margin-right:pxTorem(-15);
-            }
-        }
-        &:before,
-        &:after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: pxTorem(125);
-            height: pxTorem(3);
-            margin-top: pxTorem(-3/2);
-            background-color: $white;
-        }
-        &:before {
-            left: pxTorem(30);
-        }
-        &:after {
-            right: pxTorem(30);
         }
     }
 
@@ -169,7 +142,7 @@
             width: pxTorem(208);
             height: pxTorem(232);
             padding: pxTorem(4);
-            margin: 0 pxTorem(11);
+            margin: 0 pxTorem(8);
             border-radius: pxTorem(5);
             background-color: #b8edef;
             list-style: none;
@@ -656,11 +629,9 @@
                 </p>
                 <div class='gift-notice'>
                     距离领奖还有 <span class='number'>{{remain_days}}</span> 天，
-                    <strong @click='toggleRecords'>
+                    <span @click='toggleRecords'>
                         查看签到记录
-                        <i class='iconfont icon-arrows-right'></i>
-                        <i class='iconfont icon-arrows-right'></i>
-                     </strong>
+                     </span>
                 </div>
                 <transition-group tag='ul' class='gift-list' name='slide-fade'>
                     <li v-for='(gift,$index) in gift_list' :key='$index' :class='{active:gift.is_price}'>
