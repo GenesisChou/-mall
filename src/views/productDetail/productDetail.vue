@@ -291,7 +291,11 @@
                                 btn_text: '查看',
                                 callback: this.toOrderDetail
                             });
-                            this.getProductDetail();
+                            this.getProductPromise(this.getProductDetail(), this.isShare()).then((
+                                data) => {
+                                this.has_shared = data[1].is_share;
+                                this.has_exchanged = data[1].is_exchange;
+                            });
                         }).catch(data => {
                             this.toggleDialog({
                                 type: 'faliure',

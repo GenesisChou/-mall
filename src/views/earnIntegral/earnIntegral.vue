@@ -116,11 +116,16 @@
         bottom: pxTorem(300);
         font-size: pxTorem(24);
         color: $white;
-        font-weight: B
-        // text-shadow:0 1px 1px #2ba7a9;
+        font-weight: 500;
+        text-shadow: 0 2px 1px #2ba7a9;
+        line-height: pxTorem(60);
         .number {
             padding: 0 pxTorem(5);
             font-size: pxTorem(40);
+            color: #f05f61;
+        }
+        .icon-foot {
+            font-size: pxTorem(36);
             color: #f05f61;
         }
     }
@@ -633,6 +638,7 @@
                     距离领奖还有 <span class='number'>{{remain_days}}</span> 天，
                     <span @click='toggleRecords'>
                         查看签到记录
+                     <i class='iconfont icon-foot'></i>
                      </span>
                 </div>
                 <transition-group tag='ul' class='gift-list' name='slide-fade'>
