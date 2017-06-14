@@ -341,6 +341,7 @@
             },
             //路由跳转
             toOrderDetail() {
+                this.share_show = false;
                 this.$router.push({
                     name: 'order_detail',
                     query: {
