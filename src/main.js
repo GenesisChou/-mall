@@ -63,7 +63,7 @@ function wxLogin(page) {
         link += `&page=activity_detail&activity_id=${activity_id}`;
     } else if (page === 'subject_detail') {
         const subject_id = utils.getParameterByName('subject_id');
-        link += `&page=subject_detail&subjectid=${subject_id}`;
+        link += `&page=subject_detail&subject_id=${subject_id}`;
     }
     location.href = link;
 }
