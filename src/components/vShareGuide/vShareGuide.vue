@@ -31,6 +31,7 @@
             left: 50%;
             transform: translateX(-50%);
             color: $white;
+            z-index:1;
         }
         .icon-share-time {
             font-size: pxTorem(45);
@@ -81,7 +82,7 @@
         </div>
         <div v-show='show' class='content'>
             <ul class='msg'>
-                <li>1、点击右上角的 “...”</li>
+                <li>1、点击右上角的 “...” </li>
                 <li>2、选择“ <i class='iconfont icon-share-time'></i> ”即可</li>
             </ul>
             <img class='dot top' src='./images/dot.png'>
