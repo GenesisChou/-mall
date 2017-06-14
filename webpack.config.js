@@ -70,7 +70,8 @@ const path = require('path'),
         },
         devServer: {
             host: '0.0.0.0',
-            disableHostCheck: true
+            disableHostCheck: true,
+            port: 80,
         },
         plugins: [
             // new ExtractTextPlugin('style.css'),

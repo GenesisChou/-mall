@@ -66,7 +66,8 @@
         activated() {
             if (this.$store.state.current_signature_page !== 'index') {
                 weChatShare({
-                    router: this.$route
+                    router: this.$route,
+                    link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`
                 });
             }
             this.router_state = 'enter';
@@ -144,7 +145,7 @@
                         name: 'product_detail',
                         query: {
                             product_id: item.item_id,
-                            integral: item.integral >> 0
+                            from: 'index'
                         }
                     };
                 } else if (item.item_type === 2) {

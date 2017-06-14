@@ -6,6 +6,14 @@
         background-color: #f2f3f4;
     }
 
+    .back {
+        position: absolute;
+        left: pxTorem(38);
+        top: pxTorem(24);
+        width: pxTorem(94);
+        height: pxTorem(94);
+    }
+
     .banner {
         width: pxTorem(750);
         height: pxTorem(330);
@@ -74,14 +82,33 @@
             @include active(#ff5000, 5%);
             margin-top: pxTorem(30);
             background-color: #ff5000;
-            &.disable {
-                @include active(#b5b5b5, 5%);
-                background-color: #b5b5b5;
+            &.right {
+                width: pxTorem(465);
+                font-size: pxTorem(36);
+                float: right;
+            }
+        }
+        .exchange.disable {
+            @include active(#b5b5b5, 5%);
+            background-color: #b5b5b5;
+            &.left {
+                width: pxTorem(211);
+                font-size: pxTorem(36);
+                float: left;
             }
         }
         .lack {
             @include active(#ff9817, 5%);
             background-color: #ff9817;
+        }
+        .icon-arrows-right,
+        {
+            font-weight: bold; // font-size: .24rem;
+            font-size: pxTorem(36);
+            &:last-child {
+                margin-left: pxTorem(-30);
+                margin-right: 0;
+            }
         }
     }
 </style>
@@ -89,9 +116,10 @@
     <div v-if='product_detail' class='product-detail'>
         <template v-if='!is_recharge'>
             <header class='header '>
+                <img v-show='back' class='back' src='./images/back.png' @click='returnPrev' />
                 <img class='banner' :src='product_detail.pic_banner_new' />
                 <div class='title'>
-                    <h1 class='text-ellipsis'>{{product_name}}</h1>
+                    <h1 class='text-ellipsis'>{{product_detail.name}}</h1>
                     <h3><span class='number'>{{integral}}</span>积分
                         <s>¥{{product_detail.price}}</s>
                     </h3>
@@ -102,20 +130,34 @@
                 <v-introduction v-if='product_detail.content_use' title='使用说明' :content='product_detail.content_use'></v-introduction>
             </main>
             <footer class='sticky'>
-                <div class='exchange disable' v-if='exchange_unavaliable'>商品已兑换光</div>
-                <div class='exchange' v-else-if='integral_enough' @click='exchange'>立即兑换</div>
-                <template v-else>
+                <div class='exchange' v-if='state===1' @click='exchange'>立即兑换</div>
+                <template v-else-if='state===2'>
                     <h6>
                         <i class='iconfont icon-warn'></i> 您的积分不足
                     </h6>
                     <router-link :to='{name:"earn_integral",query:{back_show:true}}' tag='div' class='lack'>
-                        去赚取更多的积分>>
+                        去赚取更多的积分
+                        <i class='iconfont icon-arrows-right'></i>
+                        <i class='iconfont icon-arrows-right'></i>
                     </router-link>
+                </template>
+                <div class='exchange disable' v-else-if='state===3'>商品已兑换光</div>
+                <div class='exchange ' v-else-if='state===4' @click='share_show=true'>完成分享 立即兑换</div>
+                <template v-else-if='state===5'>
+                    <div class='exchange disable left'>
+                        直接兑换
+                    </div>
+                    <div class='exchange right' @click='share_show=true'>
+                        马上分享 {{product_detail.share_integral}}积分兑换
+                        <i class='iconfont icon-arrows-right'></i>
+                        <i class='iconfont icon-arrows-right'></i>
+                    </div>
                 </template>
             </footer>
         </template>
         <recharge v-else :product-detail='product_detail'></recharge>
         <v-dialog :show='dialog_show' :dialog='dialog' :toggle-dialog='toggleDialog'></v-dialog>
+        <v-share-guide :show.sync='share_show'></v-share-guide>
     </div>
 </template>
 <script>
@@ -123,12 +165,14 @@
     import vIntroduction from 'components/vIntroduction';
     import recharge from './components/recharge';
     import vDialog from './components/vDialog';
+    import vShareGuide from 'components/vShareGuide';
     export default {
         name: 'productDetail',
         components: {
             vIntroduction,
             recharge,
-            vDialog
+            vDialog,
+            vShareGuide
         },
         data() {
             return {
@@ -137,47 +181,82 @@
                 order_detail_id: '', //兑换成功后用于跳转订单详情的订单id
                 is_recharge: false,
                 dialog: {},
-                dialog_show: false
+                dialog_show: false,
+                share_show: false,
+                from: '',
+                back: '',
+                state: '',
+                has_shared: false
             };
         },
         computed: {
             user() {
                 return this.$store.state.user;
             },
-            exchange_unavaliable() {
-                //库存<=0，下架状态
-                return (this.product_detail.type !== 8 && this.product_detail.type !== 5) && this.product_detail.stocks <=
-                    0 || this.product_detail.status === 1;
-            },
-            integral_enough() {
-                return (this.user.integral) >> 0 >= this.integral;
-            },
             integral() {
-                return this.$route.query.integral || (this.product_detail.integral >> 0) || 0;
-            },
-            product_name() {
-                return this.$route.query.name || this.product_detail.name;
+                if (this.product_detail) {
+                    if (this.product_detail.is_share === 1 && this.has_shared === true) {
+                        return this.product_detail.share_integral >> 0;
+                    }
+                    return this.product_detail.integral >> 0;
+                }
+                return 0;
             }
-        },
-        beforeRouteLeave(from, to, next) {
-            next();
         },
         created() {
             this.product_id = this.$route.query.product_id;
-            this.getProductDetail().then(data => {
+            this.from = this.$route.query.from;
+            this.back = this.$route.query.back;
+            this.getProductPromise(this.getProductDetail(), this.isShare()).then(data => {
+                this.changeState(data);
+                let link =
+                    `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=product_detail&product_id=${this.product_id}&back=${this.from}`;
+                if (this.from === 'subject_detail') {
+                    link += `&subject_id=${this.$route.query.subject_id}`;
+                }
                 weChatShare({
                     router: this.$route,
-                    title: data.name,
-                    img: data.pic_thumb_new,
-                    desc: data.name_show,
-                    link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=product_detail&product_id=${this.product_id}`
+                    title: this.product_detail.name,
+                    img: this.product_detail.pic_thumb_new,
+                    desc: this.product_detail.name_show,
+                    link
+                }).then(() => {
+                    return this.shareView();
+                }).then(() => {
+                    this.getProductPromise(this.getProductDetail(), this.isShare()).then(data => {
+                        this.changeState(data);
+                    });
                 });
             });
         },
         methods: {
-            toggleDialog(dialog) {
-                this.dialog = dialog;
-                this.dialog_show = !this.dialog_show;
+            changeState(data = []) {
+                const product = data[0],
+                    stock_lack = (product.type !== 8 && product.type !== 5) && product
+                    .stocks <= 0 || product.status === 1,
+                    integral_lack = parseInt(this.user.integral) < parseInt(product.integral);
+                this.has_shared = data[1].is_share;
+                if (product.is_share === 1) {
+                    if (this.has_shared) {
+                        this.state = 1;
+                    } else if (product.share === 1) {
+                        this.state = 4;
+                    } else if (product.share === 2) {
+                        this.state = 5;
+                    }
+                } else if (stock_lack) {
+                    this.state = 3;
+                } else if (integral_lack) {
+                    this.state = 2;
+                } else {
+                    this.state = 1;
+                }
+            },
+            getProductPromise(promiseX, promiseY) {
+                return Promise.all([promiseX, promiseY])
+                    .then(data => {
+                        return data;
+                    });
             },
             //获取商品详情
             getProductDetail() {
@@ -215,7 +294,7 @@
                             this.$store.dispatch('getUserInfor');
                             this.toggleDialog({
                                 type: 'success',
-                                msg: '获得' + this.product_name,
+                                msg: '获得' + this.product_detail.name,
                                 img: this.product_detail.pic_thumb_new,
                                 btn_text: '查看',
                                 callback: this.toOrderDetail
@@ -237,7 +316,9 @@
                     this.$store.dispatch('toggleLoading');
                     this.$http.post(`${APP.HOST}/product_order/${this.product_id}`, {
                         token: APP.TOKEN,
-                        user_id: APP.USER_ID
+                        media_id: APP.MEDIA_ID,
+                        user_id: APP.USER_ID,
+                        open_id: APP.OPEN_ID
                     }).then((response) => {
                         this.$store.dispatch('toggleLoading');
                         const data = response.data;
@@ -266,7 +347,58 @@
                         order_id: this.order_detail_id
                     }
                 });
-            }
+            },
+            toggleDialog(dialog) {
+                this.dialog = dialog;
+                this.dialog_show = !this.dialog_show;
+            },
+            returnPrev() {
+                var link = {
+                    name: this.back
+                };
+                if (this.back === 'subject_detail') {
+                    link.query = {
+                        subject_id: utils.getParameterByName('subject_id')
+                    };
+                }
+                this.$router.push(link);
+            },
+            shareView() {
+                return new Promise(resolve => {
+                    this.$http.post(`${APP.HOST}/share_view/${this.product_id}`, {
+                        token: APP.TOKEN,
+                        media_id: APP.MEDIA_ID,
+                        user_id: APP.USER_ID,
+                        open_id: APP.OPEN_ID,
+                        type: 1
+                    }).then((response) => {
+                        const data = response.data;
+                        if (data.status === APP.SUCCESS) {
+                            if (resolve && typeof resolve === 'function') {
+                                resolve();
+                            }
+                        }
+                    });
+                });
+            },
+            isShare() {
+                return new Promise(resolve => {
+                    this.$http.post(`${APP.HOST}/is_share/${this.product_id}`, {
+                        token: APP.TOKEN,
+                        media_id: APP.MEDIA_ID,
+                        user_id: APP.USER_ID,
+                        open_id: APP.OPEN_ID,
+                        type: 1
+                    }).then((response) => {
+                        const data = response.data;
+                        if (data.status === APP.SUCCESS) {
+                            if (resolve && typeof resolve === 'function') {
+                                resolve(data.data);
+                            }
+                        }
+                    });
+                });
+            },
         }
     };
 </script>

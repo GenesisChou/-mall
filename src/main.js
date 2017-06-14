@@ -8,11 +8,10 @@ if (storage) {
     startApp(storage);
 } else {
     const token = utils.getParameterByName('token'),
-        activity_id = utils.getParameterByName('activity_id'),
-        product_id = utils.getParameterByName('product_id'),
-        subject_id = utils.getParameterByName('subject_id');
+        page = utils.getParameterByName('page');
     if (token) {
         const media_id = utils.getParameterByName('mediaid');
+        //设置缓存
         utils.setLocalStorage(media_id, {
             TOKEN: token,
             USER_ID: utils.getParameterByName('userid'),
@@ -22,31 +21,45 @@ if (storage) {
         });
         //本地测试用
         // startApp(utils.getLocalStorage(media_id));
-        //正式部署用
-        let link = `${APP.MALL_HOST}/?id=${media_id}#/`;
-        if (activity_id) {
-            link += 'activity_detail?activity_id=' + activity_id;
-        } else if (product_id) {
-            link += 'product_detail?product_id=' + product_id;
-        } else if (subject_id) {
-            link += 'subject_detail?subject_id=' + subject_id;
+        //正式部署用 清除url内token,xxx,xxx
+        let link = `${APP.MALL_HOST}/?id=${media_id}`;
+        if (page === 'product_detail') {
+            const product_id = utils.getParameterByName('product_id'),
+                back = utils.getParameterByName('back');
+            link += `&page=${page}&product_id=${product_id}`;
+            if (back) {
+                link += `&back=${back}`;
+            } else if (back === 'subject_detail') {
+                const subject_id = utils.getParameterByName('subject_id');
+                link += `&back=${back}&subject_id=${subject_id}`;
+            }
+        } else if (page === 'activity_detail') {
+            const activity_id = utils.getParameterByName('activity_id');
+            link += `&page=${page}&activity_id=${activity_id}`;
+        } else if (page === 'subject_detail') {
+            const subject_id = utils.getParameterByName('subject_id');
+            link += `&page=${page}&subject_id=${subject_id}`;
         }
         location.href = link;
     } else {
-        wxLogin(media_id, activity_id, product_id, subject_id);
+        wxLogin(page);
     }
 }
 
 //微信登陆
-function wxLogin(media_id, activity_id, product_id, subject_id) {
+function wxLogin(page) {
     const redirect = encodeURIComponent(APP.MALL_HOST);
     let link = `${APP.HOST}/weixin/${media_id}?callback=${redirect}`;
-    if (activity_id) {
-        link += '&activity_id=' + activity_id;
-    } else if (product_id) {
-        link += '&product_id=' + product_id;
-    } else if (subject_id) {
-        link += '&subject_id=' + product_id;
+    if (page === 'product_detail') {
+        const back = utils.getParameterByName('back'),
+            product_id = utils.getParameterByName('product_id');
+        link += `&page=product_detail&product_id=${product_id}&back=${back}`;
+    } else if (page === 'activity_detail') {
+        const activity_id = utils.getParameterByName('activity_id');
+        link += `&page=activity_detail&activity_id=${activity_id}`;
+    } else if (page === 'subject_detail') {
+        const subject_id = utils.getParameterByName('subject_id');
+        link += `&page=subject_detail&subjectid=${subject_id}`;
     }
     location.href = link;
 }
@@ -54,7 +67,6 @@ function wxLogin(media_id, activity_id, product_id, subject_id) {
 function startApp(cache) {
     const store = require('./store'),
         fastClick = require('fastclick'),
-        // weChatShare = require('libs/weChatShare.js'),
         lazyLoad = require('vue-lazyload'),
         globalComponents = require('components/components.js');
     APP.TOKEN = cache.TOKEN;

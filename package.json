@@ -4,8 +4,8 @@
   "author": "GenesisChou <447074838@qq.com>",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server  --inline --hot",
-    "server": "http-server",
+    "dev": "sudo cross-env NODE_ENV=development webpack-dev-server --inline --hot",
+    "server": "sudo http-server -p 80",
     "build": " rm -rf dist index.html && cross-env NODE_ENV=production webpack --progress ",
     "analyse": "cross-env NODE_ENV=production webpack --profile --json > stats.json"
   },

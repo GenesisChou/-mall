@@ -48,19 +48,24 @@
             if (page) {
                 let query = {};
                 if (page === 'product_detail') {
-                    const product_id = utils.getParameterByName('product_id');
+                    const product_id = utils.getParameterByName('product_id'),
+                        back = utils.getParameterByName('back');
                     query = {
-                        product_id
+                        product_id,
+                        back,
+                        from: 'index'
                     };
                 } else if (page === 'activity_detail') {
                     const activity_id = utils.getParameterByName('activity_id');
                     query = {
-                        activity_id
+                        activity_id,
+                        from: 'index'
                     };
                 } else if (page === 'subject_detail') {
                     const subject_id = utils.getParameterByName('subject_id');
                     query = {
-                        subject_id
+                        subject_id,
+                        from: 'index'
                     };
                 }
                 this.$router.push({

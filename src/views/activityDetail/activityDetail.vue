@@ -74,13 +74,17 @@
         created() {
             this.activity_id = this.$route.query.activity_id;
             this.getActivityDetail().then(data => {
-                this.activity_type = this.getActivityType(data.data.type);
+                this.activity_type = this.getActivityType(this.activity_detail.type);
                 weChatShare({
                     router: this.$route,
-                    title: data.data.name,
-                    img: data.data.pic_thumb_new,
-                    desc: data.data.desc,
+                    title: this.activity_detail.name,
+                    img: this.activity_detail.pic_thumb_new,
+                    desc: this.activity_detail.name_show,
                     link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=activity_detail&activity_id=${this.activity_id}`
+                }).then(() => {
+                    return this.shareView();
+                }).then(() => {
+                    this.getActivityDetail();
                 });
             });
             this.getFreeTimes();
@@ -155,7 +159,43 @@
             toggleDialog(dialog) {
                 this.dialog = dialog;
                 this.dialog_show = !this.dialog_show;
-            }
+            },
+            shareView() {
+                return new Promise(resolve => {
+                    this.$http.post(`${APP.HOST}/share_view/${this.activity_id}`, {
+                        token: APP.TOKEN,
+                        media_id: APP.MEDIA_ID,
+                        user_id: APP.USER_ID,
+                        open_id: APP.OPEN_ID,
+                        type: 2
+                    }).then((response) => {
+                        const data = response.data;
+                        if (data.status === APP.SUCCESS) {
+                            if (resolve && typeof resolve === 'function') {
+                                resolve();
+                            }
+                        }
+                    });
+                });
+            },
+            isShare() {
+                return new Promise(resolve => {
+                    this.$http.post(`${APP.HOST}/is_share/${this.activity_id}`, {
+                        token: APP.TOKEN,
+                        media_id: APP.MEDIA_ID,
+                        user_id: APP.USER_ID,
+                        open_id: APP.OPEN_ID,
+                        type: 2
+                    }).then((response) => {
+                        const data = response.data;
+                        if (data.status === APP.SUCCESS) {
+                            if (resolve && typeof resolve === 'function') {
+                                resolve(data.data);
+                            }
+                        }
+                    });
+                });
+            },
         }
     };
 </script>

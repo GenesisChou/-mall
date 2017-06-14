@@ -150,7 +150,8 @@
                         name: 'product_detail',
                         query: {
                             product_id: item.item_id,
-                            integral: item.integral >> 0,
+                            from: 'subject_detail',
+                            subject_id: this.subject_id
                         }
                     };
                 }
