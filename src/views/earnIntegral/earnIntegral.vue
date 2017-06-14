@@ -116,6 +116,8 @@
         bottom: pxTorem(300);
         font-size: pxTorem(24);
         color: $white;
+        font-weight: B
+        // text-shadow:0 1px 1px #2ba7a9;
         .number {
             padding: 0 pxTorem(5);
             font-size: pxTorem(40);

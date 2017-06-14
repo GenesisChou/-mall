@@ -54,6 +54,10 @@ function wxLogin(page) {
         const back = utils.getParameterByName('back'),
             product_id = utils.getParameterByName('product_id');
         link += `&page=product_detail&product_id=${product_id}&back=${back}`;
+        if (back === 'subject_detail') {
+            const subject_id = utils.getParameterByName('subject_id');
+            link += `&subject_id=${subject_id}`;
+        }
     } else if (page === 'activity_detail') {
         const activity_id = utils.getParameterByName('activity_id');
         link += `&page=activity_detail&activity_id=${activity_id}`;

@@ -53,7 +53,7 @@
                     query = {
                         product_id,
                         back,
-                        from: 'index'
+                        from: back || 'index'
                     };
                 } else if (page === 'activity_detail') {
                     const activity_id = utils.getParameterByName('activity_id');
