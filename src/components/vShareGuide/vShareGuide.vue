@@ -27,7 +27,7 @@
                 font-size: pxTorem(36);
             }
             position:absolute;
-            top: pxTorem(-350);
+            top: pxTorem(-360);
             left: 50%;
             transform: translateX(-50%);
             color: $white;
@@ -37,7 +37,7 @@
         }
         .arrows {
             position: absolute;
-            top: pxTorem(-420);
+            top: pxTorem(-465);
             right: pxTorem(20);
             width: pxTorem(100);
             height: pxTorem(100);
@@ -46,7 +46,7 @@
         .btn {
             @include flex-center;
             position: absolute;
-            top: pxTorem(480);
+            top: pxTorem(530);
             left: 50%;
             transform: translateX(-50%);
             width: pxTorem(326);
@@ -62,14 +62,14 @@
         }
         .dot {
             position: absolute;
-            left: pxTorem(80);
-            width: pxTorem(128);
-            height: pxTorem(184);
+            left: pxTorem(230);
+            width: pxTorem(108);
+            height: pxTorem(203);
             &.top {
-                top: pxTorem(-200);
+                top: pxTorem(-220);
             }
             &.bottom {
-                bottom: pxTorem(-200);
+                bottom: pxTorem(-220);
                 transform: rotateX(180deg);
             }
         }

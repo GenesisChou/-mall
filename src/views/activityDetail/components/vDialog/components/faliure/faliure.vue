@@ -34,7 +34,7 @@
             font-size: pxTorem(38);
             color: #fe112d;
             &.title {
-                padding-top: pxTorem(30);
+                padding-top: pxTorem(50);
                 text-align: center;
             }
         }

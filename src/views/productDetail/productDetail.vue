@@ -186,7 +186,8 @@
                 from: '',
                 back: '',
                 state: '',
-                has_shared: false
+                has_shared: false,
+                has_exchanged: false
             };
         },
         computed: {
@@ -196,6 +197,9 @@
             integral() {
                 if (this.product_detail) {
                     if (this.product_detail.is_share === 1 && this.has_shared === true) {
+                        if (this.has_exchanged) {
+                            return this.product_detail.integral >> 0;
+                        }
                         return this.product_detail.share_integral >> 0;
                     }
                     return this.product_detail.integral >> 0;
@@ -213,6 +217,8 @@
             this.from = this.$route.query.from;
             this.back = this.$route.query.back;
             this.getProductPromise(this.getProductDetail(), this.isShare()).then(data => {
+                this.has_shared = data[1].is_share;
+                this.has_exchanged = data[1].is_exchange;
                 this.changeState(data);
                 let link =
                     `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=product_detail&product_id=${this.product_id}&back=${this.from}`;
@@ -226,37 +232,18 @@
                     desc: this.product_detail.name_show,
                     link
                 }).then(() => {
+                    this.share_show = false;
                     return this.shareView();
                 }).then(() => {
                     this.getProductPromise(this.getProductDetail(), this.isShare()).then(data => {
+                        this.has_shared = data[1].is_share;
+                        this.has_exchanged = data[1].is_exchange;
                         this.changeState(data);
                     });
                 });
             });
         },
         methods: {
-            changeState(data = []) {
-                const product = data[0],
-                    stock_lack = (product.type !== 8 && product.type !== 5) && product
-                    .stocks <= 0 || product.status === 1,
-                    integral_lack = parseInt(this.user.integral) < parseInt(product.integral);
-                this.has_shared = data[1].is_share;
-                if (product.is_share === 1) {
-                    if (this.has_shared) {
-                        this.state = 1;
-                    } else if (product.share === 1) {
-                        this.state = 4;
-                    } else if (product.share === 2) {
-                        this.state = 5;
-                    }
-                } else if (stock_lack) {
-                    this.state = 3;
-                } else if (integral_lack) {
-                    this.state = 2;
-                } else {
-                    this.state = 1;
-                }
-            },
             getProductPromise(promiseX, promiseY) {
                 return Promise.all([promiseX, promiseY])
                     .then(data => {
@@ -367,6 +354,27 @@
                     };
                 }
                 this.$router.push(link);
+            },
+            changeState(data = []) {
+                const product = data[0],
+                    stock_lack = (product.type !== 8 && product.type !== 5) && product
+                    .stocks <= 0 || product.status === 1,
+                    integral_lack = parseInt(this.user.integral) < parseInt(product.integral);
+                if (product.is_share === 1) {
+                    if (this.has_shared) {
+                        this.state = 1;
+                    } else if (product.share === 1) {
+                        this.state = 4;
+                    } else if (product.share === 2) {
+                        this.state = 5;
+                    }
+                } else if (stock_lack) {
+                    this.state = 3;
+                } else if (integral_lack) {
+                    this.state = 2;
+                } else {
+                    this.state = 1;
+                }
             },
             shareView() {
                 return new Promise(resolve => {

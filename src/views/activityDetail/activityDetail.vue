@@ -22,16 +22,19 @@
         </div>
         <v-dialog :show='dialog_show' :dialog='dialog' :toggle-dialog='toggleDialog'></v-dialog>
         <v-support></v-support>
+        <v-share-guide :show.sync='share_show'></v-share-guide>
     </div>
 </template>
 <script>
     /*global APP */
     import vDialog from './components/vDialog';
     import weChatShare from 'libs/weChatShare.js';
+    import vShareGuide from 'components/vShareGuide';
     export default {
         name: 'activityDetail',
         components: {
             vDialog,
+            vShareGuide,
             quiz: require('./components/quiz'),
             scrap: require('./components/scrap'),
             game: require('./components/game'),
@@ -52,7 +55,10 @@
                 activity_type: '',
                 free_times: '',
                 dialog_show: false,
-                dialog: {}
+                dialog: {},
+                share_show: false,
+                has_shared: false,
+                has_exchanged: false
             };
         },
         computed: {
@@ -73,8 +79,13 @@
 
         created() {
             this.activity_id = this.$route.query.activity_id;
-            this.getActivityDetail().then(data => {
+            this.getActivityPromise(this.getActivityDetail(), this.isShare()).then(data => {
                 this.activity_type = this.getActivityType(this.activity_detail.type);
+                this.has_shared = data[1].is_share;
+                this.has_exchanged = data[1].is_exchange;
+                if (this.activity_detail.is_share === 1 & this.has_shared === false) {
+                    this.share_show = true;
+                }
                 weChatShare({
                     router: this.$route,
                     title: this.activity_detail.name,
@@ -82,14 +93,24 @@
                     desc: this.activity_detail.name_show,
                     link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=activity_detail&activity_id=${this.activity_id}`
                 }).then(() => {
+                    this.share_show = false;
                     return this.shareView();
                 }).then(() => {
-                    this.getActivityDetail();
+                    this.getActivityPromise(this.getActivityDetail(), this.isShare()).then(data => {
+                        this.has_shared = data[1].is_share;
+                        this.has_exchanged = data[1].is_exchange;
+                    });
                 });
             });
             this.getFreeTimes();
         },
         methods: {
+            getActivityPromise(promiseX, promiseY) {
+                return Promise.all([promiseX, promiseY])
+                    .then(data => {
+                        return data;
+                    });
+            },
             //获取活动详情
             getActivityDetail() {
                 return new Promise(resolve => {
