@@ -29,9 +29,10 @@ if (storage) {
             link += `&page=${page}&product_id=${product_id}`;
             if (back) {
                 link += `&back=${back}`;
-            } else if (back === 'subject_detail') {
-                const subject_id = utils.getParameterByName('subject_id');
-                link += `&back=${back}&subject_id=${subject_id}`;
+                if (back === 'subject_detail') {
+                    const subject_id = utils.getParameterByName('subject_id');
+                    link += `&subject_id=${subject_id}`;
+                }
             }
         } else if (page === 'activity_detail') {
             const activity_id = utils.getParameterByName('activity_id');
