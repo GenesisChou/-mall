@@ -26,6 +26,16 @@
                 list-style: none;
                 font-size: pxTorem(36);
             }
+            li:first-child {
+                position: relative;
+                &:after {
+                    content: '“...”';
+                    position: absolute;
+                    right: pxTorem(-40);
+                    top: 0;
+                }
+            }
+
             position:absolute;
             top: pxTorem(-360);
             left: 50%;
@@ -82,7 +92,7 @@
         </div>
         <div v-show='show' class='content'>
             <ul class='msg'>
-                <li>1、点击右上角的 “...” </li>
+                <li>1、点击右上角的 </li>
                 <li>2、选择“ <i class='iconfont icon-share-time'></i> ”即可</li>
             </ul>
             <img class='dot top' src='./images/dot.png'>
