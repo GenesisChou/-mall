@@ -18,19 +18,42 @@
     }
 
     .sort {
+        position: relative;
         display: flex;
         margin: pxTorem(112) 0 pxTorem(20) 0;
         border-bottom: 1px solid #d3d4d6;
         background-color: $white;
         color: #babbbe;
         >div {
-            @include flex-center;
-            flex: 1;
+            @include flex-center; // flex: 1;
+            position: relative;
             height: pxTorem(82);
             font-size: pxTorem(30);
             &:nth-child(1) {
-                position: relative;
+                width: pxTorem(220);
+                &:after {
+                    content: '|';
+                    position: absolute;
+                    top: 50%;
+                    right: 0;
+                    color: #f2f3f4;
+                    transform: translateY(-50%);
+                }
             }
+            &:last-child {
+                width: pxTorem(220);
+                &:after {
+                    content: '|';
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    color: #f2f3f4;
+                    transform: translateY(-50%);
+                }
+            }
+        }
+        .by-integral {
+            flex: 1;
         }
         .active {
             color: $orange;
@@ -42,11 +65,10 @@
 
     .arrows {
         position: absolute;
-        right: 0;
+        right: pxTorem(40);
         top: 50%;
         transform: translateY( -50%);
         line-height: pxTorem(18);
-        right: pxTorem(70);
         .up,
         .down {
             width: 0;
@@ -75,13 +97,79 @@
     .list li:last-child {
         margin-bottom: pxTorem(20);
     }
+
+    .sort-panel {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: pxTorem(190);
+        bottom: 0;
+        background-color: $white;
+        border-top: 1px solid #f2f3f4;
+        z-index: 1;
+        .class-one-list {
+            float: left;
+            height: 100%;
+            width: pxTorem(220);
+            background-color: #f8f8f8;
+            border-right: 1px solid #f2f3f4;
+            >li {
+                height: pxTorem(80);
+                line-height: pxTorem(80);
+                text-align: center;
+                border-bottom: 1px solid #f2f3f4;
+                font-size: pxTorem(30);
+                &.active {
+                    position: relative;
+                    color: #ff4f03;
+                    background-color: $white;
+                    &:before {
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        height: 100%;
+                        width: pxTorem(4);
+                        background-color: #ff4f03;
+                    }
+                }
+                &:last-child {
+                    border-bottom: 0;
+                }
+            }
+        }
+        .class-two-list {
+            overflow: hidden;
+            height: 100%;
+            >li {
+                width: pxTorem(140);
+                height: pxTorem(60);
+                margin-left: pxTorem(30);
+                margin-top: pxTorem(30);
+                font-size: pxTorem(28);
+                float: left;
+                text-align: center;
+                line-height: pxTorem(60);
+                color: #a9aaae;
+                border: 1px solid #a9aaae;
+                border-radius: pxTorem(10);
+                &.active {
+                    color: #ff4f03;
+                    border: 1px solid #ff4f03;
+                }
+            }
+        }
+    }
 </style>
 <template>
     <div class='product-list'>
         <div class='product-list-content'>
             <v-search :search='searchProduct' v-model='params.sword'></v-search>
             <section class='sort'>
-                <div @click='sortByIntegral'>
+                <div :class='{active:sort_show}' @click='sort_show=!sort_show'>
+                    分类筛选
+                </div>
+                <div class='by-integral' @click='sortByIntegral'>
                     <span :class='[sort_type!="count"&&sort_type?"active":""]'>消耗积分排序</span>
                     <div class='arrows'>
                         <div :class='["up",{active:sort_type=="integral-up"}]'></div>
@@ -92,7 +180,18 @@
                     兑换量优先
                 </div>
             </section>
-
+            <div v-show='sort_show' class='sort-panel'>
+                <ul class='class-one-list'>
+                    <li :class='{active:item.id===params.class_one_id}' @click='changeClassTwoList(item)' v-for='item in class_one_list'>
+                        {{item.title}}
+                    </li>
+                </ul>
+                <ul class='class-two-list'>
+                    <li :class='{active:item.id===params.class_two_id}' @click='searchSortProductList(item)' v-for='item in class_two_list'>
+                        {{item.title}}
+                    </li>
+                </ul>
+            </div>
             <transition-group tag='ul' class='list' name='slide-fade'>
                 <router-link v-for='(product,$index) in product_list' :to='{name:"product_detail",query:{product_id:product.id,from:"product_list"}}'
                     tag='li' :key='product.id'>
@@ -128,13 +227,22 @@
                     userid: APP.USER_ID,
                     media_id: APP.MEDIA_ID,
                     _order: '',
-
+                    class_one_id: '',
+                    class_two_id: '',
                 },
                 sort_type: '',
                 scroll_event: '',
                 router_state: '',
-                busy: false
+                busy: false,
+                sort_show: false,
+                class_one_list: [],
+                class_two_list: []
             };
+        },
+        watch: {
+            sort_show(value) {
+                utils.toggleTouchMove(value);
+            }
         },
         activated() {
             this.router_state = 'enter';
@@ -145,19 +253,37 @@
             window.addEventListener('scroll', this.scroll_event);
         },
         created() {
-            this.$store.dispatch('toggleLoading');
-            this.getProductList().then(() => {
-                this.$store.dispatch('toggleLoading');
-            }).catch(() => {
-                this.$store.dispatch('toggleLoading');
-            });
+            this.getProductClassList();
             this.scroll_event = this.getScrollEvent();
         },
+        beforeRouteEnter(to, from, next) {
+            console.log(from);
+            next(vm => {
+                if (from.name === 'index' || !from.name) {
+                    vm.$store.dispatch('toggleLoading');
+                    vm.getProductList().then(data => {
+                        vm.$store.dispatch('toggleLoading');
+                        vm.product_list = data.data.list;
+                    }).catch(() => {
+                        vm.$store.dispatch('toggleLoading');
+                    });
+                }
+            });
+        },
         beforeRouteLeave(to, from, next) {
+            this.sort_show = false;
             this.router_state = 'leave';
             this.$store.dispatch('savePosition', position => {
                 position[from.name] = utils.getScrollTop();
             });
+            if (to.name === 'index') {
+                this.initParams();
+                this.sort_type = '';
+                this.params.class_one_id = '';
+                this.params.class_two_id = '';
+                this.product_list = [];
+                this.class_two_list = [];
+            }
             window.removeEventListener('scroll', this.scroll_event);
             next();
         },
@@ -172,7 +298,6 @@
                             if (resolve && typeof resolve === 'function') {
                                 resolve(data);
                             }
-                            this.product_list = this.product_list.concat(data.data.list);
                         } else {
                             if (reject && typeof reject === 'function') {
                                 reject();
@@ -190,6 +315,8 @@
                 this.$store.dispatch('toggleLoading');
                 this.sort_type = '';
                 this.initParams();
+                this.params.class_one_id = '';
+                this.params.class_two_id = '';
                 this.getProductList().then((data) => {
                     this.$store.dispatch('toggleLoading');
                     this.product_list = data.data.list;
@@ -218,8 +345,7 @@
                 }
                 this.$store.dispatch('toggleLoading');
                 this.getProductList().then((data) => {
-                    this.product_list = [];
-                    this.product_list = this.product_list.concat(data.data.list);
+                    this.product_list = data.data.list;
                     this.$store.dispatch('toggleLoading');
                 }).catch(() => {
                     this.$store.dispatch('toggleLoading');
@@ -233,8 +359,7 @@
                 if (this.sort_type !== 'count') {
                     this.sort_type = 'count';
                     this.getProductList().then((data) => {
-                        this.product_list = [];
-                        this.product_list = this.product_list.concat(data.data.list);
+                        this.product_list = data.data.list;
                         this.$store.dispatch('toggleLoading');
                     }).catch(() => {
                         this.$store.dispatch('toggleLoading');
@@ -250,11 +375,49 @@
                         scroll = false;
                         this.params.p = this.product_list.length + 1;
                         this.getProductList().then(data => {
+                            this.product_list = this.product_list.concat(data.data.list);
                             scroll = true;
                         });
                     }
                 }, 500, 500);
             },
+            getProductClassList() {
+                this.$http.post(`${APP.HOST}/product_class_list`, {
+                    token: APP.TOKEN,
+                    media_id: APP.MEDIA_ID,
+                    user_id: APP.USER_ID,
+                    open_id: APP.OPEN_ID
+                }).then((response) => {
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS) {
+                        this.class_one_list = data.data;
+                    }
+                });
+            },
+            changeClassTwoList(class_one = {}) {
+                if (class_one) {
+                    this.params.class_one_id = class_one.id;
+                    this.class_two_list = class_one.items;
+                }
+            },
+            searchSortProductList(class_two = {}) {
+                if (class_two) {
+                    this.initParams();
+                    this.sort_type = '';
+                    // this.params.class_one_id = class_two.parent_id;
+                    this.params.class_two_id = class_two.id;
+                    this.$store.dispatch('toggleLoading');
+                    this.getProductList().then((data) => {
+                        this.product_list = [];
+                        this.product_list = data.data.list;
+                        this.$store.dispatch('toggleLoading');
+                        this.sort_show = false;
+                    }).catch(() => {
+                        this.$store.dispatch('toggleLoading');
+                        this.sort_show = false;
+                    });
+                }
+            }
 
         }
     };

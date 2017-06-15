@@ -153,6 +153,9 @@
                         <i class='iconfont icon-arrows-right'></i>
                     </div>
                 </template>
+                <div class='exchange disable' v-else-if='state===6'>
+                    该商品已兑换
+                </div>
             </footer>
         </template>
         <recharge v-else :product-detail='product_detail'></recharge>
@@ -196,7 +199,9 @@
             },
             integral() {
                 if (this.product_detail) {
-                    if (this.product_detail.is_share === 1 && this.has_shared === true) {
+                    if (this.product_detail.is_share === 1 &&
+                        this.has_shared === true &&
+                        this.product_detail.share === 2) {
                         if (this.has_exchanged) {
                             return this.product_detail.integral >> 0;
                         }
@@ -295,6 +300,7 @@
                                 data) => {
                                 this.has_shared = data[1].is_share;
                                 this.has_exchanged = data[1].is_exchange;
+                                this.changeState(data);
                             });
                         }).catch(data => {
                             this.toggleDialog({
@@ -366,7 +372,27 @@
                     integral_lack = parseInt(this.user.integral) < parseInt(product.integral);
                 if (product.is_share === 1) {
                     if (this.has_shared) {
-                        this.state = 1;
+                        if (product.share === 2) {
+                            if (this.has_exchanged) {
+                                this.state = 6;
+                            } else if (stock_lack) {
+                                this.state = 3;
+                            } else if (parseInt(this.user.integral) < parseInt(product.share_integral)) {
+                                this.state = 2;
+                            } else {
+                                this.state = 1;
+                            }
+                        } else if (product.share === 1) {
+                            if (this.has_exchanged && product.is_beyond_limit) {
+                                this.state = 6;
+                            } else if (stock_lack) {
+                                this.state = 3;
+                            } else if (integral_lack) {
+                                this.state = 2;
+                            } else {
+                                this.state = 1;
+                            }
+                        }
                     } else if (product.share === 1) {
                         this.state = 4;
                     } else if (product.share === 2) {
