@@ -373,7 +373,7 @@
                 if (product.is_share === 1) {
                     if (this.has_shared) {
                         if (product.share === 2) {
-                            if (this.has_exchanged) {
+                            if (this.has_exchanged && product.is_beyond_limit) {
                                 this.state = 6;
                             } else if (stock_lack) {
                                 this.state = 3;
