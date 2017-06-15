@@ -166,7 +166,7 @@
         <div class='product-list-content'>
             <v-search :search='searchProduct' v-model='params.sword'></v-search>
             <section class='sort'>
-                <div :class='{active:sort_show}' @click='sort_show=!sort_show'>
+                <div :class='{active:sort_show}' @click='toggleSort'>
                     分类筛选
                 </div>
                 <div class='by-integral' @click='sortByIntegral'>
@@ -184,6 +184,9 @@
                 <ul class='class-one-list'>
                     <li :class='{active:item.id===params.class_one_id}' @click='changeClassTwoList(item)' v-for='item in class_one_list'>
                         {{item.title}}
+                    </li>
+                    <li @click='searchAllSortProductList'>
+                        全部
                     </li>
                 </ul>
                 <ul class='class-two-list'>
@@ -236,7 +239,8 @@
                 busy: false,
                 sort_show: false,
                 class_one_list: [],
-                class_two_list: []
+                class_two_list: [],
+                first_enter: true
             };
         },
         watch: {
@@ -257,9 +261,9 @@
             this.scroll_event = this.getScrollEvent();
         },
         beforeRouteEnter(to, from, next) {
-            console.log(from);
             next(vm => {
                 if (from.name === 'index' || !from.name) {
+                    vm.first_enter = true;
                     vm.$store.dispatch('toggleLoading');
                     vm.getProductList().then(data => {
                         vm.$store.dispatch('toggleLoading');
@@ -417,8 +421,30 @@
                         this.sort_show = false;
                     });
                 }
+            },
+            searchAllSortProductList() {
+                this.initParams();
+                this.sort_type = '';
+                this.sort_show = false;
+                this.params.class_one_id = '';
+                this.params.class_two_id = '';
+                this.class_two_list = [];
+                this.$store.dispatch('toggleLoading');
+                this.getProductList().then((data) => {
+                    this.product_list = data.data.list;
+                    this.$store.dispatch('toggleLoading');
+                }).catch(() => {
+                    this.$store.dispatch('toggleLoading');
+                });
+            },
+            toggleSort() {
+                this.sort_show = !this.sort_show;
+                if (this.first_enter) {
+                    this.params.class_one_id = this.class_one_list[0].id;
+                    this.changeClassTwoList(this.class_one_list[0]);
+                }
+                this.first_enter = false;
             }
-
         }
     };
 </script>
