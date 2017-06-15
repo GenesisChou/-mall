@@ -378,6 +378,8 @@
                                     this.state = 6;
                                 } else if (integral_lack) {
                                     this.state = 2;
+                                } else {
+                                    this.state = 1;
                                 }
                             } else if (stock_lack) {
                                 this.state = 3;
@@ -401,6 +403,8 @@
                         this.state = 4;
                     } else if (product.share === 2) {
                         this.state = 5;
+                    } else {
+                        this.state = 1;
                     }
                 } else if (stock_lack) {
                     this.state = 3;
