@@ -205,14 +205,15 @@
             </section>
             <div v-show='sort_show' class='sort-panel'>
                 <ul class='class-one-list'>
-                    <li :class='{active:item.id===params.class_one_id}' @click='changeClassTwoList(item)' v-for='item in class_one_list'>
-                        {{item.title}}
-                    </li>
                     <li @click='searchAllSortProductList'>
                         全部
                     </li>
+                    <li :class='{active:item.id===params.class_one_id}' @click='changeClassTwoList(item)' v-for='item in class_one_list'>
+                        {{item.title}}
+                    </li>
                 </ul>
                 <ul class='class-two-list'>
+                    <!--<li :class='{active:!params.class_two_id}'>全部</li>-->
                     <li :class='{active:item.id===params.class_two_id}' @click='searchSortProductList(item)' v-for='item in class_two_list'>
                         {{item.title}}
                     </li>
@@ -269,11 +270,10 @@
         },
         watch: {
             sort_show(value) {
-                // utils.toggleTouchMove(value);
+                utils.toggleTouchMove(value);
             }
         },
         activated() {
-            this.router_state = 'enter';
             const position = this.$store.state.position[this.$route.name];
             if (position) {
                 window.scrollTo(0, position);
