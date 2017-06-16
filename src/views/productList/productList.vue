@@ -212,8 +212,8 @@
                         {{item.title}}
                     </li>
                 </ul>
-                <ul class='class-two-list'>
-                    <!--<li :class='{active:!params.class_two_id}'>全部</li>-->
+                <ul class='class-two-list' ref='panel'>
+                    <li :class='{active:!params.class_two_id}' @click='searchSortProductList'>全部</li>
                     <li :class='{active:item.id===params.class_two_id}' @click='searchSortProductList(item)' v-for='item in class_two_list'>
                         {{item.title}}
                     </li>
@@ -270,7 +270,7 @@
         },
         watch: {
             sort_show(value) {
-                utils.toggleTouchMove(value);
+                utils.toggleTouchMove(value, this.$refs.panel);
             }
         },
         activated() {
@@ -428,23 +428,25 @@
                     this.class_two_list = class_one.items;
                 }
             },
-            searchSortProductList(class_two = {}) {
+            searchSortProductList(class_two) {
+                this.initParams();
+                this.sort_type = '';
+                // this.params.class_one_id = class_two.parent_id;
                 if (class_two) {
-                    this.initParams();
-                    this.sort_type = '';
-                    // this.params.class_one_id = class_two.parent_id;
-                    this.params.class_two_id = class_two.id;
-                    this.$store.dispatch('toggleLoading');
-                    this.getProductList().then((data) => {
-                        this.product_list = [];
-                        this.product_list = data.data.list;
-                        this.$store.dispatch('toggleLoading');
-                        this.sort_show = false;
-                    }).catch(() => {
-                        this.$store.dispatch('toggleLoading');
-                        this.sort_show = false;
-                    });
+                    this.params.class_two_id = class_two.id || '';
+                } else {
+                    this.params.class_two_id = '';
                 }
+                this.$store.dispatch('toggleLoading');
+                this.getProductList().then((data) => {
+                    this.product_list = [];
+                    this.product_list = data.data.list;
+                    this.$store.dispatch('toggleLoading');
+                    this.sort_show = false;
+                }).catch(() => {
+                    this.$store.dispatch('toggleLoading');
+                    this.sort_show = false;
+                });
             },
             searchAllSortProductList() {
                 this.initParams();

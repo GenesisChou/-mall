@@ -129,12 +129,20 @@ const utils = {
         e.preventDefault();
         e.stopPropagation();
     },
-    toggleTouchMove(value) {
+    toggleTouchMove(value, element) {
         const utils = this;
-        if (value) {
-            document.addEventListener('touchmove', utils.preventTouchMove, false);
+        if (element) {
+            if (value) {
+                element.addEventListener('touchmove', utils.preventTouchMove, false);
+            } else {
+                element.removeEventListener('touchmove', utils.preventTouchMove, false);
+            }
         } else {
-            document.removeEventListener('touchmove', utils.preventTouchMove, false);
+            if (value) {
+                document.addEventListener('touchmove', utils.preventTouchMove, false);
+            } else {
+                document.removeEventListener('touchmove', utils.preventTouchMove, false);
+            }
         }
     }
 };
