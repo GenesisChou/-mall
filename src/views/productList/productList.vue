@@ -213,7 +213,7 @@
                     </li>
                 </ul>
                 <ul class='class-two-list' ref='panel'>
-                    <li :class='{active:!params.class_two_id}' @click='searchSortProductList'>全部</li>
+                    <li v-show='params.class_one_id!==""' :class='{active:!params.class_two_id}' @click='searchSortProductList'>全部</li>
                     <li :class='{active:item.id===params.class_two_id}' @click='searchSortProductList(item)' v-for='item in class_two_list'>
                         {{item.title}}
                     </li>
@@ -271,6 +271,8 @@
         watch: {
             sort_show(value) {
                 utils.toggleTouchMove(value, this.$refs.panel);
+                const search = document.getElementById('search');
+                search.disabled = value;
             }
         },
         activated() {
@@ -422,7 +424,7 @@
                     }
                 });
             },
-            changeClassTwoList(class_one = {}) {
+            changeClassTwoList(class_one) {
                 if (class_one) {
                     this.params.class_one_id = class_one.id;
                     this.class_two_list = class_one.items;
@@ -431,6 +433,7 @@
             searchSortProductList(class_two) {
                 this.initParams();
                 this.sort_type = '';
+                this.params.sword = '';
                 // this.params.class_one_id = class_two.parent_id;
                 if (class_two) {
                     this.params.class_two_id = class_two.id || '';
@@ -452,6 +455,7 @@
                 this.initParams();
                 this.sort_type = '';
                 this.sort_show = false;
+                this.params.sword = '';
                 this.params.class_one_id = '';
                 this.params.class_two_id = '';
                 this.class_two_list = [];
@@ -465,7 +469,7 @@
             },
             toggleSort() {
                 this.sort_show = !this.sort_show;
-                if (this.first_enter) {
+                if (this.first_enter && this.class_one_list.length > 0) {
                     this.params.class_one_id = this.class_one_list[0].id;
                     this.changeClassTwoList(this.class_one_list[0]);
                 }

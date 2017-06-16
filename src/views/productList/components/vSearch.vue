@@ -55,7 +55,7 @@
         <form class='search-box' action='javascript:return true;'>
             <i class='iconfont icon-search ' @click='search'></i>
             <input type='search' placeholder='请输入关键字进行过滤' :value='value' @input='updateValue' @keyup.enter='search' @blur='toggleClear'
-                @focus='toggleClear'>
+                @focus='toggleClear' id='search'>
             <i class='iconfont icon-close-circle' @click='clear'></i>
         </form>
         <!--<span @click='clear'>取消</span>-->
