@@ -20,10 +20,11 @@
     .sort {
         position: relative;
         display: flex;
-        margin: pxTorem(112) 0 pxTorem(20) 0;
+        margin-top: pxTorem(112);
         border-bottom: 1px solid #d3d4d6;
         background-color: $white;
         color: #babbbe;
+        z-index: 2;
         >div {
             @include flex-center; // flex: 1;
             position: relative;
@@ -94,8 +95,22 @@
         }
     }
 
+    .list {
+        padding-top: pxTorem(20);
+    }
+
     .list li:last-child {
         margin-bottom: pxTorem(20);
+    }
+
+    .bg-cover {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, .5);
+        z-index: 1;
     }
 
     .sort-panel {
@@ -106,13 +121,17 @@
         bottom: 0;
         background-color: $white;
         border-top: 1px solid #f2f3f4;
-        z-index: 1;
+        z-index: 2;
         .class-one-list {
             float: left;
             height: 100%;
             width: pxTorem(220);
             background-color: #f8f8f8;
             border-right: 1px solid #f2f3f4;
+            overflow-y: scroll;
+            &::-webkit-scrollbar {
+                display: none;
+            }
             >li {
                 height: pxTorem(80);
                 line-height: pxTorem(80);
@@ -141,6 +160,10 @@
         .class-two-list {
             overflow: hidden;
             height: 100%;
+            overflow-y: scroll;
+            &::-webkit-scrollbar {
+                display: none;
+            }
             >li {
                 width: pxTorem(140);
                 height: pxTorem(60);
@@ -195,6 +218,7 @@
                     </li>
                 </ul>
             </div>
+            <div v-show='sort_show' class='bg-cover'></div>
             <transition-group tag='ul' class='list' name='slide-fade'>
                 <router-link v-for='(product,$index) in product_list' :to='{name:"product_detail",query:{product_id:product.id,from:"product_list"}}'
                     tag='li' :key='product.id'>
@@ -240,12 +264,12 @@
                 sort_show: false,
                 class_one_list: [],
                 class_two_list: [],
-                first_enter: true
+                first_enter: true,
             };
         },
         watch: {
             sort_show(value) {
-                utils.toggleTouchMove(value);
+                // utils.toggleTouchMove(value);
             }
         },
         activated() {

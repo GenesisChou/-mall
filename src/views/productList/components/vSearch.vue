@@ -6,7 +6,7 @@
         padding: pxTorem(20) pxTorem(40);
         background-color: $gray-light;
         // box-shadow: 0 0 pxTorem(10) rgba(0, 0, 0, .2);
-        z-index: 2;
+        z-index: 3;
         transition: .3s;
         .search-box {
             @include flex-center-v; // width: pxTorem(593);
