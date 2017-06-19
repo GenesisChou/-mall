@@ -126,7 +126,7 @@
         border-bottom: 1px solid #d3d4d6;
         overflow: hidden;
         h5 {
-            padding: pxTorem(10) pxTorem(30) ;
+            padding: pxTorem(10) pxTorem(30);
             line-height: pxTorem(40);
             color: $orange;
             text-align: justify;
@@ -502,16 +502,12 @@
                 }
             }
         },
-        beforeRouteEnter(to, from, next) {
-            next(vm => {
-                if (vm.$store.state.v_alert.show === true) {
-                    vm.$store.dispatch('toggleAlert');
-                }
-            });
-        },
         created() {
             this.order_id = this.$route.query.order_id;
             this.content_show = false;
+            this.updateOrderRead().then(() => {
+                this.$store.dispatch('getUserInfor');
+            });
             this.getOrderDetail().then(data => {
                 this.product_id = data.product_id;
                 this.product_type = data.product_type;
@@ -677,7 +673,28 @@
             },
             shrinkAddress() {
                 this.address_limit_num = 2;
-            }
+            },
+            updateOrderRead() {
+                return new Promise((resolve, reject) => {
+                    this.$http.post(`${APP.HOST}/update_order_read/${this.order_id}`, {
+                        token: APP.TOKEN,
+                        media_id: APP.MEDIA_ID,
+                        user_id: APP.USER_ID,
+                        open_id: APP.OPEN_ID
+                    }).then(response => {
+                        const data = response.data;
+                        if (data.status === APP.SUCCESS) {
+                            if (resolve && typeof resolve === 'function') {
+                                resolve(data);
+                            }
+                        } else {
+                            if (reject && typeof reject === 'function') {
+                                reject(data);
+                            }
+                        }
+                    });
+                });
+            },
         }
     };
 </script>

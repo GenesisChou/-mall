@@ -112,19 +112,18 @@
                 <li v-for='(tab,$index) in tabs' @click='switchTab($index+1)' :class='{active:$index+1==current_tab}'>
                     <div :class='["icon",tab.type,{active:$index+1==current_tab}]'></div>
                     <h6>{{tab.name}}</h6>
-                    <span class='badage' v-if='$index==0&&user.unfinished_order_count>0'>{{user.unfinished_order_count}}</span>
+                    <span class='badage' v-if='$index==0&&order_list["unsolved"].length>0'>{{order_list['unsolved'].length}}</span>
                 </li>
             </ul>
             <transition-group tag='ul' class='list' name='slide-fade'>
-                <router-link v-for='(order,$index) in order_list[current_type]' :to='{name:"order_detail",
-                        query:{order_id:parseInt(order.id)}}' tag='li' :key='order.id'>
-                    <v-order :img='order.product_pic' :id='order.orderid' :integral='order.integral>>0' :name='order.product' :active='true'>
-
+                <li v-for='(order,$index) in order_list[current_type]' @click='toOrderDetail(order)' :key='order.id'>
+                    <v-order :dot='current_type==="unsolved"&&order.is_read===2' :img='order.product_pic' :id='order.orderid' :integral='order.integral>>0'
+                        :name='order.product' :active='true'>
                         <h6 class='v-order-footer'>
                             {{order.tips}}
                         </h6>
                     </v-order>
-                </router-link>
+                </li>
             </transition-group>
         </div>
         <v-support :busy='busy'></v-support>
@@ -267,7 +266,7 @@
                     if (item.type === type) {
                         window.addEventListener('scroll', this.scroll_events[item.type]);
                     } else {
-                        window.removeEventListener('scroll', this.scroll_events[item.type])
+                        window.removeEventListener('scroll', this.scroll_events[item.type]);
                     }
                 });
                 if (this.params[type].total) return;
@@ -283,6 +282,21 @@
                     }
                 }).catch((data) => {
                     this.$store.dispatch('toggleLoading');
+                });
+            },
+            toOrderDetail(order) {
+                if (this.current_type === 'unsolved') {
+                    this.order_list['unsolved'].forEach(item => {
+                        if (item.id === order.id) {
+                            item.is_read = 1;
+                        }
+                    });
+                }
+                this.$router.push({
+                    name: 'order_detail',
+                    query: {
+                        order_id: order.id >> 0
+                    }
                 });
             },
         }

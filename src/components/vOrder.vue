@@ -9,6 +9,7 @@
     }
 
     .v-order-header {
+        position: relative;
         padding-left: pxTorem(30);
         line-height: pxTorem(76);
         font-size: pxTorem(24);
@@ -18,6 +19,16 @@
             font-size: pxTorem(30);
             margin-right: pxTorem(12);
             vertical-align: middle;
+        }
+        .red-dot {
+            position: absolute;
+            top: 50%;
+            right: pxTorem(30);
+            width: pxTorem(8);
+            height: pxTorem(8);
+            background-color: $red;
+            transform: translateY(-50%);
+            border-radius: 50%;
         }
     }
 
@@ -33,7 +44,7 @@
         .pic {
             width: pxTorem(133); // height: pxTorem(133);
             height: pxTorem(133);
-            line-height:pxTorem(133);
+            line-height: pxTorem(133);
             text-align: center;
             img {
                 max-width: pxTorem(133);
@@ -67,6 +78,7 @@
     <div :class='["v-order",{active:active}]'>
         <header class='v-order-header'>
             <i class='iconfont  icon-order'></i> 订单号：{{id}}
+            <div v-if='dot' class='red-dot'></div>
         </header>
         <main :class='["v-order-main",{border:hasBorder}]'>
             <div class='pic'>
@@ -97,6 +109,10 @@
                 default: false
             },
             active: {
+                type: Boolean,
+                default: false
+            },
+            dot: {
                 type: Boolean,
                 default: false
             }
