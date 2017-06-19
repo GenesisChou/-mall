@@ -144,7 +144,10 @@
                 <div class='exchange disable' v-else-if='state===3'>商品已兑换光</div>
                 <div class='exchange ' v-else-if='state===4' @click='share_show=true'>完成分享 立即兑换</div>
                 <template v-else-if='state===5'>
-                    <div class='exchange disable left' @click='exchange'>
+                    <!--<div class='exchange disable left' @click='exchange'>
+                        直接兑换
+                    </div>-->
+                    <div class='exchange disable left'>
                         直接兑换
                     </div>
                     <div class='exchange right' @click='share_show=true'>
