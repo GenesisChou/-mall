@@ -20,7 +20,8 @@
             width: pxTorem(262);
             height: pxTorem(262);
         }
-        .faliure{
+        .faliure,
+        .lack {
             width: pxTorem(306);
             height: pxTorem(265);
         }
@@ -33,7 +34,7 @@
             color: #3d4244;
         }
         .btn {
-            @include active($orange,5%);
+            @include active($orange, 5%);
             width: pxTorem(300);
             height: pxTorem(80);
             margin: 0 auto;
@@ -43,8 +44,9 @@
             background-color: $orange;
             color: $white;
         }
-        .btn.faliure {
-            @include active(#ff9817,5%);
+        .btn.faliure,
+        .btn.lack {
+            @include active(#ff9817, 5%);
             background-color: #ff9817;
         }
 
@@ -78,9 +80,13 @@
             <transition name='enlarge'>
                 <div v-show='show' class='v-dialog-content'>
                     <img v-if='type==="success"' class='pic' :src='dialog.img'>
+                    <img v-else-if='type==="lack"' class='lack' src='./images/lack.png'>
                     <img v-else class='faliure' src='./images/faliure.png'>
                     <h3 class='msg'>{{dialog.msg}}</h3>
-                    <div :class='["btn",{faliure:type==="faliure"}]' @click='func'>{{dialog.btn_text}}</div>
+                    <router-link v-if='type==="lack"' :to='{name:"earn_integral",query:{back_show:true}}' tag='div' class='btn lack'>
+                        {{dialog.btn_text}}
+                    </router-link>
+                    <div v-else :class='["btn",{faliure:type==="faliure"}]' @click='func'>{{dialog.btn_text}}</div>
                     <i class='close iconfont icon-cancel' @click='close'></i>
                 </div>
             </transition>

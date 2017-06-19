@@ -144,10 +144,14 @@
                 <div class='exchange disable' v-else-if='state===3'>商品已兑换光</div>
                 <div class='exchange ' v-else-if='state===4' @click='share_show=true'>完成分享 立即兑换</div>
                 <template v-else-if='state===5'>
-                    <!--<div class='exchange disable left' @click='exchange'>
+                    <div v-if='integral_lack' class='exchange disable left' @click='toggleDialog({
+                                type: "lack",
+                                msg: "积分不足，请先赚取！",
+                                btn_text: "去赚取",
+                    })'>
                         直接兑换
-                    </div>-->
-                    <div class='exchange disable left'>
+                    </div>
+                    <div v-else class='exchange disable left' @click='exchange'>
                         直接兑换
                     </div>
                     <div class='exchange right' @click='share_show=true'>
@@ -189,11 +193,13 @@
                 dialog: {},
                 dialog_show: false,
                 share_show: false,
+                lack_show: false,
                 from: '',
                 back: '',
                 state: '',
                 has_shared: false,
-                has_exchanged: false
+                has_exchanged: false,
+                integral_lack: false
             };
         },
         computed: {
@@ -405,6 +411,9 @@
                     } else if (product.share === 1) {
                         this.state = 4;
                     } else if (product.share === 2) {
+                        if (integral_lack) {
+                            this.integral_lack = true;
+                        }
                         this.state = 5;
                     } else {
                         this.state = 1;
