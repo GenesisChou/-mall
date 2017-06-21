@@ -66,7 +66,7 @@ router.beforeEach((to, from, next) => {
         store.dispatch('toggleLoading');
     }
 
-    store.dispatch('pageView', to.nameo);
+    store.dispatch('pageView', to.name);
     next();
 });
 router.afterEach(route => {});

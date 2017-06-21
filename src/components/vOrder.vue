@@ -24,9 +24,9 @@
             position: absolute;
             top: 50%;
             right: pxTorem(30);
-            width: pxTorem(8);
-            height: pxTorem(8);
-            background-color: $red;
+            width: pxTorem(14);
+            height: pxTorem(14);
+            background-color: #ff5000;
             transform: translateY(-50%);
             border-radius: 50%;
         }
