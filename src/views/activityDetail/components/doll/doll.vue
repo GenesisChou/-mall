@@ -1,10 +1,11 @@
 <style lang='scss' scoped>
 @import '../../../../assets/scss/variable.scss';
 .v-doll {
-    min-height: pxTorem(1250);
-    padding-bottom: pxTorem(84);
+    // min-height: pxTorem(1250);
+    // padding-bottom: pxTorem(84);
     background-image: url('./images/dollBackground.png');
-    background-size: pxTorem(750);
+    background-size: pxTorem(750) pxTorem(98);
+    overflow: hidden;
 }
 
 .header {
@@ -315,7 +316,7 @@
                 </div>
             </div>
         </main>
-        <article class="describe">
+        <!--<article class="describe">
             <v-describe-title text='详细说明' color='palaceblue'></v-describe-title>
             <v-simditor>
                 <section v-html='activityDetail.content'></section>
@@ -325,7 +326,7 @@
                 <section v-html='activityDetail.content_prob'></section>
             </v-simditor>
             <v-describe-title text='奖项列表' color='palaceblue'></v-describe-title>
-        </article>
+        </article>-->
         <footer>
             <v-award-box :awords='activityDetail.items' color='palaceblue'></v-award-box>
         </footer>

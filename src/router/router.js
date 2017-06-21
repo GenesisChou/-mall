@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import store from '../store';
 Vue.use(VueRouter);
 const router = new VueRouter({
+    // mode: 'history',
     routes: [
         {
             path: '/',
@@ -48,6 +49,11 @@ const router = new VueRouter({
             path: '/edit_user',
             name: 'edit_user',
             component: require('views/editUser')
+        },
+        {
+            path: '/my_awards',
+            name: 'my_awards',
+            component: require('views/myAwards')
         },
         {
             path: '*',

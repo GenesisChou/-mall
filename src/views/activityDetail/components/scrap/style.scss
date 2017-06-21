@@ -1,7 +1,6 @@
  @import '../../../../assets/scss/variable.scss';
  .v-scrap {
-     min-height: pxTorem(1250);
-     padding-bottom: pxTorem(84);
+     overflow: hidden;
  }
 
  header {
@@ -28,7 +27,6 @@
      width: pxTorem(750);
      height: pxTorem(514);
      margin: 0 auto;
-     margin-bottom: pxTorem(140);
      background-image: url('./images/scrapPanel.png');
      background-size: 100% 100%;
      background-repeat: no-repeat;

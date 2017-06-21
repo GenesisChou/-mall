@@ -52,9 +52,7 @@
                 </div>
             </div>
         </main>
-        <img class='pit' src='./images/pit.png'>
-        <img class='pit large' src='./images/pit.png'>
-        <article class='describe'>
+        <!--<article class='describe'>
             <v-describe-title text='详细说明' color='red'></v-describe-title>
             <v-simditor>
                 <section v-html='activityDetail.content'></section>
@@ -64,7 +62,7 @@
                 <section v-html='activityDetail.content_prob'></section>
             </v-simditor>
             <v-describe-title text='奖项列表' color='red'></v-describe-title>
-        </article>
+        </article>-->
         <footer>
             <v-award-box :awords='activityDetail.items' color='red'></v-award-box>
         </footer>

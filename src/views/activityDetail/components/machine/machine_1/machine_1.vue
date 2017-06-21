@@ -65,7 +65,7 @@
                 <img @click='start' src='./images/machineButton.png'>
             </div>
         </main>
-        <article class='describe'>
+        <!--<article class='describe'>
             <v-describe-title text='详细说明' color='blue'></v-describe-title>
             <v-simditor>
                 <section v-html='activityDetail.content'></section>
@@ -75,9 +75,9 @@
                 <section v-html='activityDetail.content_prob'></section>
             </v-simditor>
             <v-describe-title text='奖项列表' color='blue'></v-describe-title>
-        </article>
+        </article>-->
         <footer>
-            <v-award-box :awards='activityDetail.items' color='blue'></v-award-box>
+            <v-award-box :awords='activityDetail.items' color='blue'></v-award-box>
         </footer>
     </div>
 </template>

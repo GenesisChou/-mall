@@ -39,7 +39,7 @@
                 </template>
             </h5>
         </main>
-        <article class='describe'>
+        <!--<article class='describe'>
             <v-describe-title text='详细说明' color='orange'></v-describe-title>
             <v-simditor>
                 <section v-html='activityDetail.content'></section>
@@ -49,7 +49,7 @@
                 <section v-html='activityDetail.content_prob'></section>
             </v-simditor>
             <v-describe-title text='奖项列表' color='orange'></v-describe-title>
-        </article>
+        </article>-->
         <footer>
             <v-award-box :awords='activityDetail.items' color='orange'></v-award-box>
         </footer>

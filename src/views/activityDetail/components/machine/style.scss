@@ -1,13 +1,12 @@
  @import '../../../../assets/scss/variable.scss';
  .v-machine {
      position: relative;
-     min-height: pxTorem(1250);
-     padding-bottom: pxTorem(84);
      background-color: #64acff;
      ul,
      li {
          list-style: none;
      }
+     overflow: hidden;
  }
 
  .header {

@@ -1,8 +1,9 @@
   @import '../../../../assets/scss/variable.scss';
     .v-shake {
         position: relative;
-        min-height: pxTorem(1250);
-        padding-bottom: pxTorem(84);
+        // min-height: pxTorem(1250);
+        // padding-bottom: pxTorem(84);
+        overflow: hidden;
         background-color: $white;
     }
 
@@ -34,7 +35,6 @@
         width: pxTorem(750);
         height: pxTorem(822);
         padding-top: pxTorem(84);
-        margin-bottom: pxTorem(30);
         background: url('./images/shakePanel.png') no-repeat;
         background-size: 100% 100%;
         z-index: 1;

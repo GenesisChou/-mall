@@ -1,15 +1,12 @@
 <style lang='scss' scoped>
     @import '../../../../assets/scss/variable.scss';
     .v-treasure {
-        margin-top: pxTorem(-50);
-        min-height: pxTorem(1250);
-        padding-bottom: pxTorem(84);
+        margin-top: pxTorem(-50); // min-height: pxTorem(1250);
+        // padding-bottom: pxTorem(84);
         overflow: hidden;
+        background: url('./images/treasureBackground.png') 0 pxTorem(395) no-repeat;
+        background-size: pxTorem(750) pxTorem(920);
         background-color: #00627f;
-        background-image: url('./images/treasureBackground.jpg');
-        background-size: pxTorem(750) pxTorem(1671);
-        background-repeat: no-repeat;
-        background-position: 0 pxTorem(395);
     }
 
     .header {
@@ -48,8 +45,9 @@
     .container {
         position: relative;
         width: pxTorem(750);
-        height: pxTorem(560);
-        margin-top: pxTorem(80);
+        height: pxTorem(440);
+        margin-top: pxTorem(10);
+        z-index: 3;
     }
 
     .chest {
@@ -63,30 +61,32 @@
         transform-origin: left top;
         animation: chest 5s linear infinite;
         &:nth-child(1) {
-            left: pxTorem(20);
+            left: pxTorem(10);
             top: pxTorem(320);
+            width: pxTorem(75);
+            height: pxTorem(73.5);
             opacity: 0.7;
         }
         &:nth-child(2) {
-            left: pxTorem(80);
+            left: pxTorem(10);
             top: pxTorem(120);
             animation-delay: -1s;
         }
         &:nth-child(3) {
             left: pxTorem(240);
             top: pxTorem(20);
-            width: pxTorem(120);
-            height: pxTorem(117.6);
             opacity: 0.7;
             animation-delay: -3.4s;
         }
         &:nth-child(4) {
-            left: pxTorem(210);
-            top: pxTorem(250);
+            left: pxTorem(180);
+            top: pxTorem(230);
+            width: pxTorem(120);
+            height: pxTorem(117.6);
             animation-delay: -3.8s;
         }
         &:nth-child(5) {
-            left: pxTorem(430);
+            left: pxTorem(455);
             top: pxTorem(70);
             width: pxTorem(120);
             height: pxTorem(117.6);
@@ -94,21 +94,22 @@
             animation-delay: -1.2s;
         }
         &:nth-child(6) {
-            left: pxTorem(375);
-            top: pxTorem(110);
+            left: pxTorem(400);
+            top: pxTorem(130);
             width: pxTorem(150);
             height: pxTorem(147);
             animation-delay: -2.4s;
         }
         &:nth-child(7) {
-            left: pxTorem(560);
+            left: pxTorem(620);
             top: pxTorem(250);
-            width: pxTorem(150);
-            height: pxTorem(147);
+            opacity: 0.7;
+            width: pxTorem(120);
+            height: pxTorem(117.6);
             animation-delay: -4.6s;
         }
         &:nth-child(8) {
-            left: pxTorem(600);
+            left: pxTorem(620);
             top: pxTorem(20);
             width: pxTorem(120);
             height: pxTorem(117.6);
@@ -170,6 +171,7 @@
         position: absolute;
         bottom: pxTorem(75);
         left: 50%;
+        top: 72.5%;
         width: pxTorem(310);
         height: pxTorem(78);
         line-height: pxTorem(65);
@@ -192,7 +194,7 @@
         width: pxTorem(750);
         height: pxTorem(138);
         text-align: center;
-        margin-bottom: pxTorem(55);
+        margin-bottom: pxTorem(100);
         img {
             position: relative;
             width: pxTorem(243);
@@ -288,7 +290,7 @@
                 <div class='line'></div>
             </div>
         </main>
-        <article class='describe'>
+        <!--<article class='describe'>
             <v-describe-title text='详细说明' color='navy'></v-describe-title>
             <v-simditor>
                 <section v-html='activityDetail.content'></section>
@@ -298,7 +300,7 @@
                 <section v-html='activityDetail.content_prob'></section>
             </v-simditor>
             <v-describe-title text='奖项列表' color='navy'></v-describe-title>
-        </article>
+        </article>-->
         <footer>
             <v-award-box :awords='activityDetail.items' color='navy'></v-award-box>
         </footer>

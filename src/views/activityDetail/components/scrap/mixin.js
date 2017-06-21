@@ -1,10 +1,10 @@
     import Lottery from './lottery.js';
-    import vDescribeTitle from '../vDescribeTitle';
+    // import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
     import vAwardBox from '../vAwardBox';
     module.exports = {
         components: {
-            vDescribeTitle,
+            // vDescribeTitle,
             vIntegralBox,
             vAwardBox
         },

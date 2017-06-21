@@ -1,4 +1,5 @@
 <style lang='scss' scoped>
+    @import '../../assets/scss/variable.scss';
     .activity-detail {
         display: flex;
         flex-direction: column;
@@ -10,9 +11,34 @@
     .activity-detail-content {
         flex: 1;
     }
+
+    .ruler,
+    .awards {
+        position: absolute;
+        top: pxTorem(10);
+        height: pxTorem(42);
+        line-height: pxTorem(42);
+        padding: 0 pxTorem(15);
+        background-color: rgba(0, 0, 0, .75);
+        color: $white;
+        border-radius: pxTorem(21);
+        z-index: 3;
+    }
+
+    .ruler {
+        left: pxTorem(10);
+    }
+
+    .awards {
+        right: pxTorem(10);
+    }
 </style>
 <template>
     <div class='activity-detail'>
+        <div class='ruler' @click='ruler_show=true'>规则</div>
+        <router-link tag='div' class='awards' :to='{name:"my_awards"}'>
+            奖品
+        </router-link>
         <div class='activity-detail-content'>
             <keep-alive>
                 <component :is='activity_type' :free-times='free_times>>0' :fresh-free-times='freshFreeTimes' :activity-detail='activity_detail'
@@ -20,6 +46,7 @@
                 </component>
             </keep-alive>
         </div>
+        <v-ruler :show.sync='ruler_show' :activity-detail='activity_detail'></v-ruler>
         <v-dialog :show='dialog_show' :dialog='dialog' :toggle-dialog='toggleDialog'></v-dialog>
         <v-support></v-support>
         <v-share-guide :show.sync='share_show'></v-share-guide>
@@ -30,11 +57,13 @@
     import vDialog from './components/vDialog';
     import weChatShare from 'libs/weChatShare.js';
     import vShareGuide from 'components/vShareGuide';
+    import vRuler from './components/vRuler.vue';
     export default {
         name: 'activityDetail',
         components: {
             vDialog,
             vShareGuide,
+            vRuler,
             quiz: require('./components/quiz'),
             scrap: require('./components/scrap'),
             game: require('./components/game'),
@@ -57,6 +86,7 @@
                 dialog_show: false,
                 dialog: {},
                 share_show: false,
+                ruler_show: false,
                 has_shared: false,
                 has_exchanged: false
             };

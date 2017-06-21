@@ -1,17 +1,19 @@
 <style lang='scss' scoped>
     @import '../style.scss';
     .v-machine {
+        background: url('./images/machineBackground.png') 0 pxTorem(330);
+        background-size: 100% pxTorem(1717);
         background-color: #0469b9;
     }
 
     .background {
         height: pxTorem(1717);
-        top:0;
+        top: 0;
     }
 </style>
 <template>
     <div class='v-machine'>
-        <img class='background' src='./images/machineBackground.png'>
+        <!--<img class='background' src='./images/machineBackground.png'>-->
         <header class='header'>
             <img class='img-responsive' :src='activityDetail.pic_banner_new'>
         </header>
@@ -72,7 +74,7 @@
                 <img @click='start' src='./images/machineButton.png'>
             </div>
         </main>
-        <article class='describe'>
+        <!--<article class='describe'>
             <v-describe-title text='详细说明' color='palaceblue'></v-describe-title>
             <v-simditor>
                 <section v-html='activityDetail.content'></section>
@@ -82,9 +84,9 @@
                 <section v-html='activityDetail.content_prob'></section>
             </v-simditor>
             <v-describe-title text='奖项列表' color='palaceblue'></v-describe-title>
-        </article>
+        </article>-->
         <footer>
-            <v-award-box :awards='activityDetail.items' color='yellow'></v-award-box>
+            <v-award-box :awords='activityDetail.items' color='yellow'></v-award-box>
         </footer>
     </div>
 </template>

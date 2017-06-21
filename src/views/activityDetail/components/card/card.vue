@@ -1,10 +1,9 @@
 <style lang='scss' scoped>
     @import '../../../../assets/scss/variable.scss';
     .v-card {
-        min-height: pxTorem(1250);
-        padding-bottom: pxTorem(84);
         background-image: url('./images/cardBackground.png');
         background-size: pxTorem(750) pxTorem(15);
+        overflow: hidden;
     }
 
     .background-top {
@@ -401,7 +400,7 @@
             </div>
         </main>
         <div v-show='cover_show' class='cover'></div>
-        <article class='describe'>
+        <!--<article class='describe'>
             <v-describe-title text='详细说明' color='brown'></v-describe-title>
             <v-simditor>
                 <section v-html='activityDetail.content'></section>
@@ -411,7 +410,7 @@
                 <section v-html='activityDetail.content_prob'></section>
             </v-simditor>
             <v-describe-title text='奖项列表' color='brown'></v-describe-title>
-        </article>
+        </article>-->
         <footer>
             <v-award-box :awords='activityDetail.items' color='brown'></v-award-box>
         </footer>
