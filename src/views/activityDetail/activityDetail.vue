@@ -14,15 +14,21 @@
 
     .ruler,
     .awards {
+        @include flex-center;
         position: absolute;
         top: pxTorem(10);
         height: pxTorem(42);
-        line-height: pxTorem(42);
         padding: 0 pxTorem(15);
         background-color: rgba(0, 0, 0, .75);
         color: $white;
         border-radius: pxTorem(21);
         z-index: 3;
+        img {
+            width: pxTorem(28);
+            height: pxTorem(28);
+            margin-right:pxTorem(6);
+            transform: translateY(pxTorem(-2));
+        }
     }
 
     .ruler {
@@ -35,9 +41,11 @@
 </style>
 <template>
     <div class='activity-detail'>
-        <div class='ruler' @click='ruler_show=true'>规则</div>
-        <router-link tag='div' class='awards' :to='{name:"my_awards"}'>
-            奖品
+        <div class='ruler' @click='ruler_show=true'>
+            <img src='./images/ruler.png'> 规则
+        </div>
+        <router-link tag='div' class='awards' :to='{name:"my_awards",query:{activity_id:this.activity_id}}'>
+            <img src='./images/awards.png'> 奖品
         </router-link>
         <div class='activity-detail-content'>
             <keep-alive>
@@ -57,7 +65,7 @@
     import vDialog from './components/vDialog';
     import weChatShare from 'libs/weChatShare.js';
     import vShareGuide from 'components/vShareGuide';
-    import vRuler from './components/vRuler.vue';
+    import vRuler from './components/vRuler';
     export default {
         name: 'activityDetail',
         components: {

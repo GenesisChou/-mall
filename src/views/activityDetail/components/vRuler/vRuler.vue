@@ -1,5 +1,5 @@
 <style lang='scss' scoped>
-    @import '../../../assets/scss/variable.scss';
+    @import '../../../../assets/scss/variable.scss';
     .v-ruler {
         .bg-cover {
             position: fixed;
@@ -58,6 +58,9 @@
             top: pxTorem(-26);
             font-size: pxTorem(70);
             color: $orange;
+            &:active{
+                color:darken($orange,5%);
+            }
         }
     }
 </style>
