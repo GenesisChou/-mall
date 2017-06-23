@@ -38,11 +38,6 @@
                     utils.deleteLocalStorage(APP.MEDIA_ID);
                     utils.reloadApp();
                 }
-                // else if (data.status === 9999) {
-                //     console.log(data.info);
-                //     utils.deleteLocalStorage(APP.MEDIA_ID);
-                //     utils.reloadApp();
-                // }
             });
             const page = utils.getParameterByName('page');
             if (page) {

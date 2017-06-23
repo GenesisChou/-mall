@@ -88,9 +88,9 @@
                 }
                 weChatShare({
                     router: this.$route,
-                    title: this.activity_detail.name,
-                    img: this.activity_detail.pic_thumb_new,
-                    desc: this.activity_detail.name_show,
+                    title: this.activity_detail.share_name,
+                    img: this.activity_detail.share_pic_thumb_new,
+                    desc: this.activity_detail.share_desc,
                     link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=activity_detail&activity_id=${this.activity_id}`
                 }).then(() => {
                     this.share_show = false;

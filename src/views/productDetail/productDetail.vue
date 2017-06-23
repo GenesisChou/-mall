@@ -241,9 +241,9 @@
                 }
                 weChatShare({
                     router: this.$route,
-                    title: this.product_detail.name,
-                    img: this.product_detail.pic_thumb_new,
-                    desc: this.product_detail.name_show,
+                    title: this.product_detail.share_name,
+                    img: this.product_detail.share_pic_thumb_new,
+                    desc: this.product_detail.share_name_show,
                     link
                 }).then(() => {
                     this.share_show = false;

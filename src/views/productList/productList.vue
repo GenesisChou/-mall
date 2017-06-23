@@ -288,7 +288,7 @@
         },
         beforeRouteEnter(to, from, next) {
             next(vm => {
-                if (from.name === 'index' || !from.name) {
+                if (from.name === 'index' || (from.name === 'product_detail' && vm.product_list.length === 0)) {
                     vm.first_enter = true;
                     vm.$store.dispatch('toggleLoading');
                     vm.getProductList().then(data => {

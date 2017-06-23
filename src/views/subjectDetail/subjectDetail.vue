@@ -104,9 +104,9 @@
                     this.content_show = true;
                     weChatShare({
                         router: this.$route,
-                        title: data.name,
-                        img: data.pic_thumb_new,
-                        desc: data.name_show,
+                        title: data.share_name,
+                        img: data.share_pic_thumb_new,
+                        desc: data.share_sub_name,
                         link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=subject_detail&subject_id=${value}`
                     });
                 });
