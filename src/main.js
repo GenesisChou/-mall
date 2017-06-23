@@ -25,7 +25,7 @@ if (storage) {
         let link = `${APP.MALL_HOST}/?id=${media_id}`;
         if (page === 'product_detail') {
             const product_id = utils.getParameterByName('product_id'),
-                back = utils.getParameterByName('back');
+                back = utils.getParameterByName('back') || 'index';
             link += `&page=${page}&product_id=${product_id}`;
             if (back) {
                 link += `&back=${back}`;
@@ -52,7 +52,7 @@ function wxLogin(page) {
     const redirect = encodeURIComponent(APP.MALL_HOST);
     let link = `${APP.HOST}/weixin/${media_id}?callback=${redirect}`;
     if (page === 'product_detail') {
-        const back = utils.getParameterByName('back'),
+        const back = utils.getParameterByName('back') || 'index',
             product_id = utils.getParameterByName('product_id');
         link += `&page=product_detail&product_id=${product_id}&back=${back}`;
         if (back === 'subject_detail') {
