@@ -51,36 +51,8 @@ if (storage) {
         }
         location.href = link;
     } else {
-        wxLogin(page);
+        utils.login(media_id, page, subscribed);
     }
-}
-
-//微信登陆
-function wxLogin(page) {
-    const redirect = encodeURIComponent(APP.MALL_HOST);
-    let link = `${APP.HOST}/weixin/${media_id}?callback=${redirect}`;
-    if (subscribed) {
-        link += `&subscribed=${subscribed}`;
-    }
-    if (page === 'product_detail') {
-        const back = utils.getParameterByName('back'),
-            product_id = utils.getParameterByName('product_id');
-        link += `&page=product_detail&product_id=${product_id}`;
-        if (back) {
-            link += `&back=${back}`;
-            if (back === 'subject_detail') {
-                const subject_id = utils.getParameterByName('subject_id');
-                link += `&subject_id=${subject_id}`;
-            }
-        }
-    } else if (page === 'activity_detail') {
-        const activity_id = utils.getParameterByName('activity_id');
-        link += `&page=activity_detail&activity_id=${activity_id}`;
-    } else if (page === 'subject_detail') {
-        const subject_id = utils.getParameterByName('subject_id');
-        link += `&page=subject_detail&subject_id=${subject_id}`;
-    }
-    location.href = link;
 }
 
 function startApp(cache) {
