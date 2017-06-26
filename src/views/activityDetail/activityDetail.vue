@@ -13,6 +13,7 @@
 </style>
 <template>
     <div class='activity-detail'>
+        <v-notice></v-notice>
         <div class='activity-detail-content'>
             <keep-alive>
                 <component :is='activity_type' :free-times='free_times>>0' :fresh-free-times='freshFreeTimes' :activity-detail='activity_detail'
@@ -30,6 +31,7 @@
     import vDialog from './components/vDialog';
     import weChatShare from 'libs/weChatShare.js';
     import vShareGuide from 'components/vShareGuide';
+    import vNotice from 'components/vNotice';
     export default {
         name: 'activityDetail',
         components: {
@@ -86,13 +88,13 @@
                 if (this.activity_detail.is_share === 1 & this.has_shared === false) {
                     this.share_show = true;
                 }
-                const is_share_infor = this.activity_detail.is_share_infor === 1;
+                const is_share_info = this.activity_detail.is_share_info === 1;
                 weChatShare({
                     router: this.$route,
-                    title: is_share_infor ? this.activity_detail.share_name : this.activity_detail.name,
-                    img: is_share_infor ? this.activity_detail.share_pic_thumb_new : this.activity_detail
+                    title: is_share_info ? this.activity_detail.share_name : this.activity_detail.name,
+                    img: is_share_info ? this.activity_detail.share_pic_thumb_new : this.activity_detail
                         .pic_thumb_new,
-                    desc: is_share_infor ? this.activity_detail.share_desc : this.activity_detail.desc,
+                    desc: is_share_info ? this.activity_detail.share_desc : this.activity_detail.desc,
                     link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=activity_detail&activity_id=${this.activity_id}`
                 }).then(() => {
                     this.share_show = false;

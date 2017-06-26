@@ -191,17 +191,8 @@
 </style>
 <template>
     <div v-if='product_detail' class='product-detail'>
+        <v-notice></v-notice>
         <template v-if='!is_recharge'>
-            <router-link v-if='qr_code.title&&qr_code.img' :to='{name:"qr_code",query:{img:qr_code.img}}'  tag='div' class='adv' >
-                <span>
-                    {{qr_code.title}}
-                    <img src='./images/come.png' >
-                </span>
-                <div class='arrows'>
-                    <i class='iconfont icon-arrows-right'></i>
-                    <i class='iconfont icon-arrows-right'></i>
-                </div>
-            </router-link>
             <header class='header '>
                 <img v-show='back' class='back' src='./images/back.png' @click='returnPrev' />
                 <img class='banner' :src='product_detail.pic_banner_new' />
@@ -217,8 +208,8 @@
                 <v-introduction v-if='product_detail.content_use' title='使用说明' :content='product_detail.content_use'></v-introduction>
             </main>
             <footer class='sticky'>
-                <div class='exchange' v-if='state===2' @click='exchange'>立即兑换</div>
-                <template v-else-if='state===1'>
+                <div class='exchange' v-if='state===1' @click='exchange'>立即兑换</div>
+                <template v-else-if='state===2'>
                     <h6>
                         <i class='iconfont icon-warn'></i> 您的积分不足
                     </h6>
@@ -263,13 +254,15 @@
     import recharge from './components/recharge';
     import vDialog from './components/vDialog';
     import vShareGuide from 'components/vShareGuide';
+    import vNotice from 'components/vNotice';
     export default {
         name: 'productDetail',
         components: {
             vIntroduction,
             recharge,
             vDialog,
-            vShareGuide
+            vShareGuide,
+            vNotice
         },
         data() {
             return {
@@ -321,7 +314,6 @@
             this.product_id = this.$route.query.product_id;
             this.from = this.$route.query.from;
             this.back = this.$route.query.back;
-            this.getQrCode();
             this.getProductPromise(this.getProductDetail(), this.isShare()).then(data => {
                 this.has_shared = data[1].is_share;
                 this.has_exchanged = data[1].is_exchange;
@@ -331,13 +323,13 @@
                 if (this.from === 'subject_detail') {
                     link += `&subject_id=${this.$route.query.subject_id}`;
                 }
-                const is_share_infor = this.product_detail.is_share_infor === 1;
+                const is_share_info = this.product_detail.is_share_info === 1;
                 weChatShare({
                     router: this.$route,
-                    title: is_share_infor ? this.product_detail.share_name : this.product_detail.name,
-                    img: is_share_infor ? this.product_detail.share_pic_thumb_new : this.product_detail
+                    title: is_share_info ? this.product_detail.share_name : this.product_detail.name,
+                    img: is_share_info ? this.product_detail.share_pic_thumb_new : this.product_detail
                         .pic_thumb_new,
-                    desc: is_share_infor ? this.product_detail.share_name_show : this.product_detail.name_show,
+                    desc: is_share_info ? this.product_detail.share_name_show : this.product_detail.name_show,
                     link
                 }).then(() => {
                     this.share_show = false;
@@ -444,21 +436,6 @@
                             reject(response.data);
                         }
                     });
-                });
-            },
-            getQrCode() {
-                this.$http.post(`${APP.HOST}/get_qr_code`, {
-                    token: APP.TOKEN,
-                    media_id: APP.MEDIA_ID,
-                    user_id: APP.USER_ID,
-                    open_id: APP.OPEN_ID,
-                    origin: APP.ORIGIN
-                }).then((response) => {
-                    const data = response.data;
-                    if (data.status === APP.SUCCESS) {
-                        this.qr_code.title = data.data.qr_code_tips;
-                        this.qr_code.img = data.data.qr_code_pic;
-                    }
                 });
             },
             //路由跳转

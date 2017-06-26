@@ -23,6 +23,7 @@
 </style>
 <template>
     <div class='index'>
+        <v-notice></v-notice>
         <transition-group tag='div' class='index-content' name='slide-fade'>
             <component v-for='layout in framework' key='layout.id' :is='getComponent(layout.component_type,layout.layout_type)' :layout='layout'
                 :router-link='routerLink'></component>
@@ -35,9 +36,11 @@
 <script>
     import vBackTop from 'components/vBackTop';
     import weChatShare from 'libs/weChatShare.js';
+    import vNotice from 'components/vNotice';
     export default {
         components: {
             vBackTop,
+            vNotice,
             vItemSmall: require('./components/vItemSmall'),
             vItemList: require('./components/vItemList'),
             vItemLarge: require('./components/vItemLarge'),

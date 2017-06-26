@@ -3,7 +3,8 @@ import VueResource from 'vue-resource';
 Vue.use(VueResource);
 Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
 const media_id = utils.getParameterByName('id'),
-    origin = utils.getParameterByName('origin') || 'menu',
+    origin = utils.getParameterByName('origin'),
+    subscribed = utils.getParameterByName('subscribed'),
     storage = utils.getLocalStorage(media_id);
 if (storage) {
     startApp(storage);
@@ -23,7 +24,13 @@ if (storage) {
         //本地测试用
         // startApp(utils.getLocalStorage(media_id));
         //正式部署用 清除url内token,xxx,xxx
-        let link = `${APP.MALL_HOST}/?id=${media_id}&origin=${origin}`;
+        let link = `${APP.MALL_HOST}/?id=${media_id}`;
+        if (origin) {
+            link += `&origin=${origin}`;
+        }
+        if (subscribed) {
+            link += `&subscribed=${subscribed}`;
+        }
         if (page === 'product_detail') {
             const product_id = utils.getParameterByName('product_id'),
                 back = utils.getParameterByName('back');
@@ -52,8 +59,11 @@ if (storage) {
 function wxLogin(page) {
     const redirect = encodeURIComponent(APP.MALL_HOST);
     let link = `${APP.HOST}/weixin/${media_id}?callback=${redirect}`;
+    if (subscribed) {
+        link += `&subscribed=${subscribed}`;
+    }
     if (page === 'product_detail') {
-        const back = utils.getParameterByName('back') || 'index',
+        const back = utils.getParameterByName('back'),
             product_id = utils.getParameterByName('product_id');
         link += `&page=product_detail&product_id=${product_id}`;
         if (back) {
@@ -82,7 +92,7 @@ function startApp(cache) {
     APP.USER_ID = cache.USER_ID;
     APP.MEDIA_ID = cache.MEDIA_ID;
     APP.OPEN_ID = cache.OPEN_ID;
-    APP.ORIGIN = origin;
+    APP.ORIGIN = origin || 'menu';
     fastClick.attach(document.body);
     Vue.use(globalComponents);
     Vue.use(lazyLoad, {
