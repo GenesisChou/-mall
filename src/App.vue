@@ -47,20 +47,19 @@
                         back = utils.getParameterByName('back');
                     query = {
                         product_id,
-                        back,
-                        from: back || 'index'
                     };
+                    if (back) {
+                        query.back = back;
+                    }
                 } else if (page === 'activity_detail') {
                     const activity_id = utils.getParameterByName('activity_id');
                     query = {
                         activity_id,
-                        from: 'index'
                     };
                 } else if (page === 'subject_detail') {
                     const subject_id = utils.getParameterByName('subject_id');
                     query = {
                         subject_id,
-                        from: 'index'
                     };
                 }
                 this.$router.push({

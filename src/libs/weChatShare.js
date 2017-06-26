@@ -48,7 +48,7 @@ module.exports = function (option = {}) {
                 wx.onMenuShareTimeline({
                     title, // 分享标题
                     desc,
-                    link: link + '&origin=timeline', // 分享链接
+                    link: link + '&origin=wechat', // 分享链接
                     imgUrl, // 分享图标
                     success() {
                         if (typeof resolve === 'function') {
@@ -61,7 +61,7 @@ module.exports = function (option = {}) {
                 wx.onMenuShareAppMessage({
                     title, // 分享标题
                     desc,
-                    link: link + '&origin=friend', // 分享链接
+                    link: link + '&origin=wechat', // 分享链接
                     imgUrl, // 分享图标
                     // type: '', // 分享类型,music、video或link，不填默认为link
                     // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空

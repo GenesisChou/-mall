@@ -148,7 +148,6 @@
                         name: 'product_detail',
                         query: {
                             product_id: item.item_id,
-                            from: 'index'
                         }
                     };
                 } else if (item.item_type === 2) {

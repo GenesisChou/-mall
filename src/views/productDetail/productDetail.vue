@@ -312,7 +312,7 @@
         },
         created() {
             this.product_id = this.$route.query.product_id;
-            this.from = this.$route.query.from;
+            this.from = this.$route.query.from || 'index';
             this.back = this.$route.query.back;
             this.getProductPromise(this.getProductDetail(), this.isShare()).then(data => {
                 this.has_shared = data[1].is_share;
