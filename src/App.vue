@@ -47,7 +47,7 @@
                         back = utils.getParameterByName('back');
                     query = {
                         product_id,
-                        back: back || 'index',
+                        back,
                         from: back || 'index'
                     };
                 } else if (page === 'activity_detail') {

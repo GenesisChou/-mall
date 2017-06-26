@@ -3,7 +3,7 @@ import VueResource from 'vue-resource';
 Vue.use(VueResource);
 Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
 const media_id = utils.getParameterByName('id'),
-    origin = utils.getParameterByName('origin'),
+    origin = utils.getParameterByName('origin') || 'menu',
     storage = utils.getLocalStorage(media_id);
 if (storage) {
     startApp(storage);
@@ -26,7 +26,7 @@ if (storage) {
         let link = `${APP.MALL_HOST}/?id=${media_id}&origin=${origin}`;
         if (page === 'product_detail') {
             const product_id = utils.getParameterByName('product_id'),
-                back = utils.getParameterByName('back') || 'index';
+                back = utils.getParameterByName('back');
             link += `&page=${page}&product_id=${product_id}`;
             if (back) {
                 link += `&back=${back}`;
@@ -55,10 +55,13 @@ function wxLogin(page) {
     if (page === 'product_detail') {
         const back = utils.getParameterByName('back') || 'index',
             product_id = utils.getParameterByName('product_id');
-        link += `&page=product_detail&product_id=${product_id}&back=${back}`;
-        if (back === 'subject_detail') {
-            const subject_id = utils.getParameterByName('subject_id');
-            link += `&subject_id=${subject_id}`;
+        link += `&page=product_detail&product_id=${product_id}`;
+        if (back) {
+            link += `&back=${back}`;
+            if (back === 'subject_detail') {
+                const subject_id = utils.getParameterByName('subject_id');
+                link += `&subject_id=${subject_id}`;
+            }
         }
     } else if (page === 'activity_detail') {
         const activity_id = utils.getParameterByName('activity_id');

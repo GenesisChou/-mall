@@ -228,9 +228,10 @@
                     userid: APP.USER_ID,
                     media_id: APP.MEDIA_ID,
                     user_id: APP.USER_ID,
+                    origin: APP.ORIGIN,
                     product_id: this.productDetail.id,
                     companytype: this.flow_infor.companytype,
-                    flows: this.flow_infor.flows
+                    flows: this.flow_infor.flows,
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
                     const data = response.data;

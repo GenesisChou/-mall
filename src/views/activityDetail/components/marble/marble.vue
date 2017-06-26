@@ -23,7 +23,7 @@
         top: pxTorem(60);
         width: pxTorem(750);
         height: pxTorem(1080);
-        background-color:#c2251d;
+        background-color: #c2251d;
         overflow: hidden;
         .content {
             position: absolute;
@@ -534,7 +534,7 @@
                 </template>
             </div>
             <img class='steps' src='./images/marbleSteps.png'>
-            <img :class='["ball",{ready:this.state==="ready"||this.state==="block"},this.shoot_path]'  src='./images/marbleBall.png'>
+            <img :class='["ball",{ready:this.state==="ready"||this.state==="block"},this.shoot_path]' src='./images/marbleBall.png'>
             <div class='pipe'>
                 <img :class='["spring",{active:this.state==="ready"||this.state==="block"}]' src='./images/marbleSpring.png'>
             </div>
@@ -661,7 +661,8 @@
                 this.state = 'block';
                 this.$http.post(`${APP.HOST}/hoodle_activity/${this.id}`, {
                     token: APP.TOKEN,
-                    user_id: APP.USER_ID
+                    user_id: APP.USER_ID,
+                    origin: APP.ORIGIN
                 }).then((response) => {
                     const data = response.data;
                     if (data.status === APP.SUCCESS) {

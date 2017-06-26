@@ -6,6 +6,84 @@
         background-color: #f2f3f4;
     }
 
+    .adv {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: pxTorem(80);
+        padding-left: pxTorem(24);
+        line-height: pxTorem(80);
+        background-color: rgba(0, 0, 0, .7);
+        font-size: pxTorem(32);
+        color: $white;
+        z-index: 1;
+        span {
+            position: relative;
+        }
+        img {
+            position: absolute;
+            right: pxTorem(-70);
+            top: 0;
+            width: pxTorem(63);
+            height: pxTorem(22);
+            animation: drift infinite 1.5s linear;
+        }
+        .arrows {
+            position: absolute;
+            right: pxTorem(20);
+            top: 50%;
+            transform: translateY(-50%);
+            animation: shaking infinite 1.5s linear;
+        }
+        .icon-arrows-right {
+            font-size: bold;
+            font-size: pxTorem(36);
+            &:last-child {
+                margin-left: pxTorem(-30);
+                margin-right: 0;
+            }
+        }
+    }
+
+    @keyframes shaking {
+        0% {
+            right: pxTorem(20);
+        }
+        25% {
+            right: pxTorem(10);
+        }
+        50% {
+
+            right: pxTorem(20);
+        }
+        75% {
+            right: pxTorem(30);
+        }
+        100% {
+            right: pxTorem(20);
+        }
+    }
+
+
+    @keyframes drift {
+        0% {
+            transform: translateY(0%);
+        }
+        25% {
+            transform: translateY(-10%);
+        }
+        50% {
+            transform: translateY(0%);
+        }
+        75% {
+            transform: translateY(10%);
+        }
+        100% {
+            transform: translateY(0%);
+        }
+    }
+
     .back {
         position: absolute;
         left: pxTorem(38);
@@ -101,9 +179,8 @@
             @include active(#ff9817, 5%);
             background-color: #ff9817;
         }
-        .icon-arrows-right,
-        {
-            font-weight: bold; // font-size: .24rem;
+        .icon-arrows-right {
+            font-size: bold;
             font-size: pxTorem(36);
             &:last-child {
                 margin-left: pxTorem(-30);
@@ -115,6 +192,16 @@
 <template>
     <div v-if='product_detail' class='product-detail'>
         <template v-if='!is_recharge'>
+            <router-link v-if='qr_code.title&&qr_code.img' :to='{name:"qr_code",query:{img:qr_code.img}}'  tag='div' class='adv' >
+                <span>
+                    {{qr_code.title}}
+                    <img src='./images/come.png' >
+                </span>
+                <div class='arrows'>
+                    <i class='iconfont icon-arrows-right'></i>
+                    <i class='iconfont icon-arrows-right'></i>
+                </div>
+            </router-link>
             <header class='header '>
                 <img v-show='back' class='back' src='./images/back.png' @click='returnPrev' />
                 <img class='banner' :src='product_detail.pic_banner_new' />
@@ -130,8 +217,8 @@
                 <v-introduction v-if='product_detail.content_use' title='使用说明' :content='product_detail.content_use'></v-introduction>
             </main>
             <footer class='sticky'>
-                <div class='exchange' v-if='state===1' @click='exchange'>立即兑换</div>
-                <template v-else-if='state===2'>
+                <div class='exchange' v-if='state===2' @click='exchange'>立即兑换</div>
+                <template v-else-if='state===1'>
                     <h6>
                         <i class='iconfont icon-warn'></i> 您的积分不足
                     </h6>
@@ -199,7 +286,11 @@
                 state: '',
                 has_shared: false,
                 has_exchanged: false,
-                integral_lack: false
+                integral_lack: false,
+                qr_code: {
+                    title: '',
+                    img: ''
+                }
             };
         },
         computed: {
@@ -230,6 +321,7 @@
             this.product_id = this.$route.query.product_id;
             this.from = this.$route.query.from;
             this.back = this.$route.query.back;
+            this.getQrCode();
             this.getProductPromise(this.getProductDetail(), this.isShare()).then(data => {
                 this.has_shared = data[1].is_share;
                 this.has_exchanged = data[1].is_exchange;
@@ -239,11 +331,13 @@
                 if (this.from === 'subject_detail') {
                     link += `&subject_id=${this.$route.query.subject_id}`;
                 }
+                const is_share_infor = this.product_detail.is_share_infor === 1;
                 weChatShare({
                     router: this.$route,
-                    title: this.product_detail.share_name,
-                    img: this.product_detail.share_pic_thumb_new,
-                    desc: this.product_detail.share_name_show,
+                    title: is_share_infor ? this.product_detail.share_name : this.product_detail.name,
+                    img: is_share_infor ? this.product_detail.share_pic_thumb_new : this.product_detail
+                        .pic_thumb_new,
+                    desc: is_share_infor ? this.product_detail.share_name_show : this.product_detail.name_show,
                     link
                 }).then(() => {
                     this.share_show = false;
@@ -272,7 +366,8 @@
                         token: APP.TOKEN,
                         media_id: APP.MEDIA_ID,
                         user_id: APP.USER_ID,
-                        open_id: APP.OPEN_ID
+                        open_id: APP.OPEN_ID,
+                        origin: APP.ORIGIN
                     }).then((response) => {
                         this.$store.dispatch('toggleLoading');
                         const data = response.data;
@@ -329,7 +424,8 @@
                         token: APP.TOKEN,
                         media_id: APP.MEDIA_ID,
                         user_id: APP.USER_ID,
-                        open_id: APP.OPEN_ID
+                        open_id: APP.OPEN_ID,
+                        origin: APP.ORIGIN
                     }).then((response) => {
                         this.$store.dispatch('toggleLoading');
                         const data = response.data;
@@ -348,6 +444,21 @@
                             reject(response.data);
                         }
                     });
+                });
+            },
+            getQrCode() {
+                this.$http.post(`${APP.HOST}/get_qr_code`, {
+                    token: APP.TOKEN,
+                    media_id: APP.MEDIA_ID,
+                    user_id: APP.USER_ID,
+                    open_id: APP.OPEN_ID,
+                    origin: APP.ORIGIN
+                }).then((response) => {
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS) {
+                        this.qr_code.title = data.data.qr_code_tips;
+                        this.qr_code.img = data.data.qr_code_pic;
+                    }
                 });
             },
             //路由跳转
@@ -433,6 +544,7 @@
                         media_id: APP.MEDIA_ID,
                         user_id: APP.USER_ID,
                         open_id: APP.OPEN_ID,
+                        origin: APP.ORIGIN,
                         type: 1
                     }).then((response) => {
                         const data = response.data;

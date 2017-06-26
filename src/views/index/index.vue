@@ -173,6 +173,7 @@
                     user_id: APP.USER_ID,
                     media_id: APP.MEDIA_ID,
                     open_id: APP.OPEN_ID,
+                    origin: APP.ORIGIN,
                     item_id: item.item_id,
                     item_type: item.item_type,
                     item_title: item.title,
@@ -187,6 +188,7 @@
                     user_id: APP.USER_ID,
                     media_id: APP.MEDIA_ID,
                     open_id: APP.OPEN_ID,
+                    origin: APP.ORIGIN,
                     advertisement_id: item.id
                 });
             }

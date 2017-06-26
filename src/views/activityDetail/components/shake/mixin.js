@@ -116,7 +116,8 @@
                 this.state = 'shaking';
                 this.$http.post(`${APP.HOST}/shake_activity/${this.id}`, {
                     token: APP.TOKEN,
-                    user_id: APP.USER_ID
+                    user_id: APP.USER_ID,
+                    origin: APP.ORIGIN
                 }).then((response) => {
                     const data = response.data;
                     if (data.status === APP.SUCCESS) {

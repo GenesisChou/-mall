@@ -101,7 +101,8 @@
                     question_id: this.activityDetail.questions[this.current_number].id,
                     answer_id: this.answer_id,
                     token: APP.TOKEN,
-                    user_id: APP.USER_ID
+                    user_id: APP.USER_ID,
+                    origin: APP.ORIGIN
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
                     const data = response.data;

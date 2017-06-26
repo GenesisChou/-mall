@@ -50,6 +50,11 @@ const router = new VueRouter({
             component: require('views/editUser')
         },
         {
+            path: '/qr_code',
+            name: 'qr_code',
+            component: require('views/qrCode')
+        },
+        {
             path: '*',
             redirect: '/'
         }

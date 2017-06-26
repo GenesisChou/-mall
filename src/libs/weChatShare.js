@@ -113,7 +113,8 @@ module.exports = function (option = {}) {
             Vue.http.post(`${APP.HOST}/share/${APP.USER_ID}`, {
                 token: APP.TOKEN,
                 userid: APP.USER_ID,
-                media_id: APP.MEDIA_ID
+                media_id: APP.MEDIA_ID,
+                origin: APP.ORIGIN
             }).then((response) => {
                 store.dispatch('getUserInfor');
             });

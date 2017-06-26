@@ -102,11 +102,12 @@
                 this.content_show = false;
                 this.getSubjectDetail().then(data => {
                     this.content_show = true;
+                    const is_share_infor = data.is_share_infor === 1;
                     weChatShare({
                         router: this.$route,
-                        title: data.share_name,
-                        img: data.share_pic_thumb_new,
-                        desc: data.share_sub_name,
+                        title: is_share_infor ? data.share_name : data.name,
+                        img: is_share_infor ? data.share_pic_thumb_new : data.pic_thumb_new,
+                        desc: is_share_infor ? data.share_sub_name : data.sub_name,
                         link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=subject_detail&subject_id=${value}`
                     });
                 });

@@ -324,7 +324,8 @@
                 this.$store.dispatch('toggleLoading');
                 this.$http.post(`${APP.HOST}/game_activity/${this.id}`, {
                     token: APP.TOKEN,
-                    user_id: APP.USER_ID
+                    user_id: APP.USER_ID,
+                    origin: APP.ORIGIN
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
                     const data = response.data;
