@@ -52,6 +52,7 @@
 </style>
 <template>
     <div v-show='content_show' class='subject-detail'>
+        <v-notice></v-notice>
         <div class='subject-detail-content'>
             <img class='banner' :src='subject_detail.pic_banner_new'>
             <main>
@@ -74,10 +75,12 @@
 <script>
     import vListItem from 'components/vListItem';
     import weChatShare from 'libs/weChatShare.js';
+    import vNotice from 'components/vNotice';
     export default {
         name: 'subjectDetail',
         components: {
-            vListItem
+            vListItem,
+            vNotice
         },
         data() {
             return {
@@ -102,11 +105,12 @@
                 this.content_show = false;
                 this.getSubjectDetail().then(data => {
                     this.content_show = true;
+                    const is_share_info = data.is_share_info === 1;
                     weChatShare({
                         router: this.$route,
-                        title: data.name,
-                        img: data.pic_thumb_new,
-                        desc: data.name_show,
+                        title: is_share_info ? data.share_name : data.name,
+                        img: is_share_info ? data.share_pic_thumb_new : data.pic_thumb_new,
+                        desc: is_share_info ? data.share_sub_name : data.sub_name,
                         link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=subject_detail&subject_id=${value}`
                     });
                 });

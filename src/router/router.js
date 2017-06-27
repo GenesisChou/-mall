@@ -56,6 +56,11 @@ const router = new VueRouter({
             component: require('views/myAwards')
         },
         {
+            path: '/qr_code',
+            name: 'qr_code',
+            component: require('views/qrCode')
+        },
+        {
             path: '*',
             redirect: '/'
         }

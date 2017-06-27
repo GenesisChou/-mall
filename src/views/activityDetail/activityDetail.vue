@@ -41,6 +41,7 @@
 </style>
 <template>
     <div class='activity-detail'>
+        <v-notice></v-notice>
         <div class='ruler' @click='ruler_show=true'>
             <img src='./images/ruler.png'> 规则
         </div>
@@ -66,12 +67,14 @@
     import weChatShare from 'libs/weChatShare.js';
     import vShareGuide from 'components/vShareGuide';
     import vRuler from './components/vRuler';
+    import vNotice from 'components/vNotice';
     export default {
         name: 'activityDetail',
         components: {
             vDialog,
             vShareGuide,
             vRuler,
+            vNotice,
             quiz: require('./components/quiz'),
             scrap: require('./components/scrap'),
             game: require('./components/game'),
@@ -124,11 +127,13 @@
                 if (this.activity_detail.is_share === 1 & this.has_shared === false) {
                     this.share_show = true;
                 }
+                const is_share_info = this.activity_detail.is_share_info === 1;
                 weChatShare({
                     router: this.$route,
-                    title: this.activity_detail.name,
-                    img: this.activity_detail.pic_thumb_new,
-                    desc: this.activity_detail.name_show,
+                    title: is_share_info ? this.activity_detail.share_name : this.activity_detail.name,
+                    img: is_share_info ? this.activity_detail.share_pic_thumb_new : this.activity_detail
+                        .pic_thumb_new,
+                    desc: is_share_info ? this.activity_detail.share_desc : this.activity_detail.desc,
                     link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=activity_detail&activity_id=${this.activity_id}`
                 }).then(() => {
                     this.share_show = false;
@@ -157,7 +162,8 @@
                         token: APP.TOKEN,
                         media_id: APP.MEDIA_ID,
                         user_id: APP.USER_ID,
-                        open_id: APP.OPEN_ID
+                        open_id: APP.OPEN_ID,
+                        origin: APP.ORIGIN
                     }).then((response) => {
                         this.$store.dispatch('toggleLoading');
                         const data = response.data;
@@ -226,6 +232,7 @@
                         media_id: APP.MEDIA_ID,
                         user_id: APP.USER_ID,
                         open_id: APP.OPEN_ID,
+                        origin: APP.ORIGIN,
                         type: 2
                     }).then((response) => {
                         const data = response.data;

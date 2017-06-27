@@ -285,19 +285,16 @@
                 this.is_win = '';
             },
             start(num) {
-                // this.toggleDialog({
-                //     type: 'success',
-                //     // img: result.pic_thumb_new,
-                //     style:'twins',
-                //     msg: '获得fuck you',
-                //     btn_text: '查看'
-                // });
-                // return;
+                if (this.user.show_authorize !== 1) {
+                    utils.login(APP.MEDIA_ID, 2, 'activity_detail', this.activity_id, APP.SUBSCRIBED, APP.ORIGIN);
+                    return;
+                }
                 if (this.state !== 'ready') return;
                 this.state = 'block';
                 this.$http.post(`${APP.HOST}/smashing_eggs_activity/${this.id}`, {
                     token: APP.TOKEN,
-                    user_id: APP.USER_ID
+                    user_id: APP.USER_ID,
+                    origin: APP.ORIGIN
                 }).then((response) => {
                     const data = response.data;
                     if (data.status === APP.SUCCESS) {

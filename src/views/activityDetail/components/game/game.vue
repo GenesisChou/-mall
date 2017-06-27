@@ -206,6 +206,9 @@
                 });
                 return color;
             },
+            user() {
+                return this.$store.state.user;
+            },
         },
         watch: {
             state(value) {
@@ -307,6 +310,10 @@
                 });
             },
             startGame() {
+                if (this.user.show_authorize !== 1) {
+                    utils.login(APP.MEDIA_ID, 2, 'activity_detail', this.activity_id, APP.SUBSCRIBED, APP.ORIGIN);
+                    return;
+                }
                 if (this.state !== 'ready') return;
                 if (!this.game) {
                     this.toggleDialog({
@@ -324,7 +331,8 @@
                 this.$store.dispatch('toggleLoading');
                 this.$http.post(`${APP.HOST}/game_activity/${this.id}`, {
                     token: APP.TOKEN,
-                    user_id: APP.USER_ID
+                    user_id: APP.USER_ID,
+                    origin: APP.ORIGIN
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
                     const data = response.data;

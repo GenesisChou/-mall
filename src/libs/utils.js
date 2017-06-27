@@ -1,4 +1,38 @@
 const utils = {
+    login(media_id, type = 1, page, id, subscribed = 0, origin) {
+        const redirect = encodeURIComponent(APP.MALL_HOST);
+        let link = '';
+        if (type === 1) {
+            link += `${APP.HOST}/weixin/${media_id}?callback=${redirect}`;
+        } else if (type === 2) {
+            link += `${APP.HOST}/show_weixin/${media_id}?callback=${redirect}`;
+        }
+        if (origin) {
+            link += `&origin=${origin}`;
+        }
+        if (subscribed) {
+            link += `&subscribed=${subscribed}`;
+        }
+        if (page === 'product_detail') {
+            const back = utils.getParameterByName('back'),
+                product_id = id || utils.getParameterByName('product_id');
+            link += `&page=product_detail&product_id=${product_id}`;
+            if (back) {
+                link += `&back=${back}`;
+                if (back === 'subject_detail') {
+                    const subject_id = utils.getParameterByName('subject_id');
+                    link += `&subject_id=${subject_id}`;
+                }
+            }
+        } else if (page === 'activity_detail') {
+            const activity_id = id || utils.getParameterByName('activity_id');
+            link += `&page=activity_detail&activity_id=${activity_id}`;
+        } else if (page === 'subject_detail') {
+            const subject_id = id || utils.getParameterByName('subject_id');
+            link += `&page=subject_detail&subject_id=${subject_id}`;
+        }
+        location.href = link;
+    },
     isInArray(name, arr) {
         let result = false;
         arr.forEach(item => {

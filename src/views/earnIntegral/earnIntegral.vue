@@ -824,7 +824,8 @@
                     this.$http.post(`${APP.HOST}/checkin/${APP.USER_ID}`, {
                         token: APP.TOKEN,
                         user_id: APP.USER_ID,
-                        media_id: APP.MEDIA_ID
+                        media_id: APP.MEDIA_ID,
+                        origin: APP.ORIGIN
                     }).then((response) => {
                         const data = response.data;
                         this.$store.dispatch('toggleLoading');
@@ -896,7 +897,8 @@
                 this.$http.post(`${APP.HOST}/read_article/${article.id}`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID,
-                    media_id: APP.MEDIA_ID
+                    media_id: APP.MEDIA_ID,
+                    origin: APP.ORIGIN
                 }).then((response) => {
                     const data = response.data;
                     if (data.status === APP.SUCCESS && article.is_read === 2) {

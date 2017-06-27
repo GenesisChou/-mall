@@ -72,7 +72,8 @@ module.exports = {
             user_id: APP.USER_ID,
             page_id,
             media_id: APP.MEDIA_ID,
-            open_id: APP.OPEN_ID
+            open_id: APP.OPEN_ID,
+            origin: APP.ORIGIN || 'menu'
         });
     },
     savePosition(state, callback) {

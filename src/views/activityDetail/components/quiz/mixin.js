@@ -88,7 +88,12 @@
                 this.activity_result = {};
             },
             //提交答案
+
             submitAnswer() {
+                if (this.user.show_authorize !== 1) {
+                    utils.login(APP.MEDIA_ID, 2, 'activity_detail', this.activity_id, APP.SUBSCRIBED, APP.ORIGIN);
+                    return;
+                }
                 if (!this.answer_id) {
                     this.toggleDialog({
                         msg: '请选择答案',
@@ -101,7 +106,8 @@
                     question_id: this.activityDetail.questions[this.current_number].id,
                     answer_id: this.answer_id,
                     token: APP.TOKEN,
-                    user_id: APP.USER_ID
+                    user_id: APP.USER_ID,
+                    origin: APP.ORIGIN
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
                     const data = response.data;

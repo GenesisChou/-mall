@@ -3,12 +3,22 @@ import VueResource from 'vue-resource';
 Vue.use(VueResource);
 Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
 const media_id = utils.getParameterByName('id'),
+    page = utils.getParameterByName('page'),
+    origin = utils.getParameterByName('origin'),
+    subscribed = utils.getParameterByName('subscribed'),
     storage = utils.getLocalStorage(media_id);
 if (storage) {
-    startApp(storage);
+    const now = new Date(),
+        before = new Date(storage.DATE),
+        interval = (now - before) / 1000 / 60 / 60,
+        is_expired = parseInt(interval) >= 1;
+    if (is_expired) {
+        utils.login(media_id, 1, page, null, subscribed, origin);
+    } else {
+        startApp(storage);
+    }
 } else {
-    const token = utils.getParameterByName('token'),
-        page = utils.getParameterByName('page');
+    const token = utils.getParameterByName('token');
     if (token) {
         const media_id = utils.getParameterByName('mediaid');
         //设置缓存
@@ -23,6 +33,12 @@ if (storage) {
         // startApp(utils.getLocalStorage(media_id));
         //正式部署用 清除url内token,xxx,xxx
         let link = `${APP.MALL_HOST}/?id=${media_id}`;
+        if (origin) {
+            link += `&origin=${origin}`;
+        }
+        if (subscribed && subscribed != 0) {
+            link += `&subscribed=${subscribed}`;
+        }
         if (page === 'product_detail') {
             const product_id = utils.getParameterByName('product_id'),
                 back = utils.getParameterByName('back');
@@ -43,30 +59,8 @@ if (storage) {
         }
         location.href = link;
     } else {
-        wxLogin(page);
+        utils.login(media_id, 1, page, null, subscribed, origin);
     }
-}
-
-//微信登陆
-function wxLogin(page) {
-    const redirect = encodeURIComponent(APP.MALL_HOST);
-    let link = `${APP.HOST}/weixin/${media_id}?callback=${redirect}`;
-    if (page === 'product_detail') {
-        const back = utils.getParameterByName('back'),
-            product_id = utils.getParameterByName('product_id');
-        link += `&page=product_detail&product_id=${product_id}&back=${back}`;
-        if (back === 'subject_detail') {
-            const subject_id = utils.getParameterByName('subject_id');
-            link += `&subject_id=${subject_id}`;
-        }
-    } else if (page === 'activity_detail') {
-        const activity_id = utils.getParameterByName('activity_id');
-        link += `&page=activity_detail&activity_id=${activity_id}`;
-    } else if (page === 'subject_detail') {
-        const subject_id = utils.getParameterByName('subject_id');
-        link += `&page=subject_detail&subject_id=${subject_id}`;
-    }
-    location.href = link;
 }
 
 function startApp(cache) {
@@ -78,6 +72,8 @@ function startApp(cache) {
     APP.USER_ID = cache.USER_ID;
     APP.MEDIA_ID = cache.MEDIA_ID;
     APP.OPEN_ID = cache.OPEN_ID;
+    APP.ORIGIN = origin || 'menu';
+    APP.SUBSCRIBED = subscribed || 0;
     fastClick.attach(document.body);
     Vue.use(globalComponents);
     Vue.use(lazyLoad, {

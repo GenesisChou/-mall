@@ -423,11 +423,16 @@
                 this.activity_result = {};
             },
             start() {
+                if (this.user.show_authorize !== 1) {
+                    utils.login(APP.MEDIA_ID, 2, 'activity_detail', this.activity_id, APP.SUBSCRIBED, APP.ORIGIN);
+                    return;
+                }
                 if (this.state !== 'ready') return;
                 this.state = 'start';
                 this.$http.post(`${APP.HOST}/hot_pot_activity/${this.id}`, {
                     token: APP.TOKEN,
-                    user_id: APP.USER_ID
+                    user_id: APP.USER_ID,
+                    origin: APP.ORIGIN
                 }).then((response) => {
                     const data = response.data;
                     if (data.status === APP.SUCCESS) {

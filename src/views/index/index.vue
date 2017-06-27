@@ -23,6 +23,7 @@
 </style>
 <template>
     <div class='index'>
+        <v-notice></v-notice>
         <transition-group tag='div' class='index-content' name='slide-fade'>
             <component v-for='layout in framework' key='layout.id' :is='getComponent(layout.component_type,layout.layout_type)' :layout='layout'
                 :router-link='routerLink'></component>
@@ -35,9 +36,11 @@
 <script>
     import vBackTop from 'components/vBackTop';
     import weChatShare from 'libs/weChatShare.js';
+    import vNotice from 'components/vNotice';
     export default {
         components: {
             vBackTop,
+            vNotice,
             vItemSmall: require('./components/vItemSmall'),
             vItemList: require('./components/vItemList'),
             vItemLarge: require('./components/vItemLarge'),
@@ -58,10 +61,42 @@
         computed: {
             guide_state() {
                 return this.$store.state.index.guide_state;
-            }
+            },
+            user() {
+                return this.$store.state.user;
+            },
         },
         created() {
-            this.getLayOut();
+            this.getLayOut().then(() => {
+                const page = utils.getParameterByName('page');
+                if (page) {
+                    let query = {};
+                    if (page === 'product_detail') {
+                        const product_id = utils.getParameterByName('product_id'),
+                            back = utils.getParameterByName('back');
+                        query = {
+                            product_id,
+                        };
+                        if (back) {
+                            query.back = back;
+                        }
+                    } else if (page === 'activity_detail') {
+                        const activity_id = utils.getParameterByName('activity_id');
+                        query = {
+                            activity_id,
+                        };
+                    } else if (page === 'subject_detail') {
+                        const subject_id = utils.getParameterByName('subject_id');
+                        query = {
+                            subject_id,
+                        };
+                    }
+                    this.$router.push({
+                        name: page,
+                        query
+                    });
+                }
+            });
         },
         activated() {
             if (this.$store.state.current_signature_page !== 'index') {
@@ -85,20 +120,29 @@
         },
         methods: {
             getLayOut() {
-                this.$store.dispatch('toggleLoading');
-                this.$http.post(`${APP.HOST}/index`, {
-                    token: APP.TOKEN,
-                    user_id: APP.USER_ID,
-                    media_id: APP.MEDIA_ID
-                }).then((response) => {
+                return new Promise(resolve => {
                     this.$store.dispatch('toggleLoading');
-                    const data = response.data;
-                    if (data.status === APP.SUCCESS && utils.getTypeOf(data.data) === 'Array' &&
-                        data.data.length) {
-                        utils.syncLoadArray(this.framework, data.data);
-                    }
-                }, () => {
-                    this.$store.dispatch('toggleLoading');
+                    this.$http.post(`${APP.HOST}/index`, {
+                        token: APP.TOKEN,
+                        user_id: APP.USER_ID,
+                        media_id: APP.MEDIA_ID
+                    }).then((response) => {
+                        this.$store.dispatch('toggleLoading');
+                        const data = response.data;
+                        if (data.status === APP.SUCCESS && utils.getTypeOf(data.data) === 'Array' &&
+                            data.data.length) {
+                            utils.syncLoadArray(this.framework, data.data);
+                        }
+
+                        if (typeof resolve === 'function') {
+                            resolve();
+                        }
+                    }, () => {
+                        if (typeof resolve === 'function') {
+                            resolve();
+                        }
+                        this.$store.dispatch('toggleLoading');
+                    });
                 });
             },
             getComponent(component_type, layout_type) {
@@ -132,6 +176,11 @@
                 this.index_view(item, layout);
                 if (layout.component_type === 6) {
                     if (item.is_inner_url === 1) {
+                        if ((item.url === 'my_account' || item.url === 'earn_integral' || item.url === 'order_list') &&
+                            this.user.show_authorize !== 1) {
+                            utils.login(APP.MEDIA_ID, 2, item.url, null, APP.SUBSCRIBED, APP.ORIGIN);
+                            return;
+                        }
                         this.$router.push({
                             name: item.url
                         });
@@ -145,7 +194,6 @@
                         name: 'product_detail',
                         query: {
                             product_id: item.item_id,
-                            from: 'index'
                         }
                     };
                 } else if (item.item_type === 2) {
@@ -173,6 +221,7 @@
                     user_id: APP.USER_ID,
                     media_id: APP.MEDIA_ID,
                     open_id: APP.OPEN_ID,
+                    origin: APP.ORIGIN,
                     item_id: item.item_id,
                     item_type: item.item_type,
                     item_title: item.title,
@@ -187,6 +236,7 @@
                     user_id: APP.USER_ID,
                     media_id: APP.MEDIA_ID,
                     open_id: APP.OPEN_ID,
+                    origin: APP.ORIGIN,
                     advertisement_id: item.id
                 });
             }
