@@ -379,34 +379,39 @@
             },
             //兑换
             exchange() {
-                this.$store.dispatch('toggleConfirm', {
-                    msg: '确认兑换该商品吗?',
-                    callback: () => {
-                        this.order().then(data => {
-                            this.order_detail_id = data.data.id;
-                            this.$store.dispatch('getUserInfor');
-                            this.toggleDialog({
-                                type: 'success',
-                                msg: '获得' + this.product_detail.name,
-                                img: this.product_detail.pic_thumb_new,
-                                btn_text: '查看',
-                                callback: this.toOrderDetail
+                if (this.user.show_authorize !== 1) {
+                    utils.login(APP.MEDIA_ID, 2, 'product_detail', this.product_id, APP.SUBSCRIBED, APP.ORIGIN);
+                } else {
+                    this.$store.dispatch('toggleConfirm', {
+                        msg: '确认兑换该商品吗?',
+                        callback: () => {
+                            this.order().then(data => {
+                                this.order_detail_id = data.data.id;
+                                this.$store.dispatch('getUserInfor');
+                                this.toggleDialog({
+                                    type: 'success',
+                                    msg: '获得' + this.product_detail.name,
+                                    img: this.product_detail.pic_thumb_new,
+                                    btn_text: '查看',
+                                    callback: this.toOrderDetail
+                                });
+                                this.getProductPromise(this.getProductDetail(), this.isShare()).then(
+                                    (
+                                        data) => {
+                                        this.has_shared = data[1].is_share;
+                                        this.has_exchanged = data[1].is_exchange;
+                                        this.changeState(data);
+                                    });
+                            }).catch(data => {
+                                this.toggleDialog({
+                                    type: 'faliure',
+                                    msg: data.info,
+                                    btn_text: '我知道了',
+                                });
                             });
-                            this.getProductPromise(this.getProductDetail(), this.isShare()).then((
-                                data) => {
-                                this.has_shared = data[1].is_share;
-                                this.has_exchanged = data[1].is_exchange;
-                                this.changeState(data);
-                            });
-                        }).catch(data => {
-                            this.toggleDialog({
-                                type: 'faliure',
-                                msg: data.info,
-                                btn_text: '我知道了',
-                            });
-                        });
-                    }
-                });
+                        }
+                    });
+                }
             },
             //生成订单
             order() {

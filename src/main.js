@@ -28,7 +28,7 @@ if (storage) {
         if (origin) {
             link += `&origin=${origin}`;
         }
-        if (subscribed) {
+        if (subscribed && subscribed != 0) {
             link += `&subscribed=${subscribed}`;
         }
         if (page === 'product_detail') {
@@ -51,7 +51,7 @@ if (storage) {
         }
         location.href = link;
     } else {
-        utils.login(media_id, page, subscribed);
+        utils.login(media_id, 1, page, null, subscribed, origin);
     }
 }
 
@@ -65,6 +65,7 @@ function startApp(cache) {
     APP.MEDIA_ID = cache.MEDIA_ID;
     APP.OPEN_ID = cache.OPEN_ID;
     APP.ORIGIN = origin || 'menu';
+    APP.SUBSCRIBED = subscribed || 0;
     fastClick.attach(document.body);
     Vue.use(globalComponents);
     Vue.use(lazyLoad, {

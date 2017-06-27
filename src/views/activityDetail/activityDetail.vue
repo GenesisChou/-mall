@@ -37,6 +37,7 @@
         components: {
             vDialog,
             vShareGuide,
+            vNotice,
             quiz: require('./components/quiz'),
             scrap: require('./components/scrap'),
             game: require('./components/game'),

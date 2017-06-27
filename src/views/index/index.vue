@@ -64,7 +64,36 @@
             }
         },
         created() {
-            this.getLayOut();
+            this.getLayOut().then(() => {
+                const page = utils.getParameterByName('page');
+                if (page) {
+                    let query = {};
+                    if (page === 'product_detail') {
+                        const product_id = utils.getParameterByName('product_id'),
+                            back = utils.getParameterByName('back');
+                        query = {
+                            product_id,
+                        };
+                        if (back) {
+                            query.back = back;
+                        }
+                    } else if (page === 'activity_detail') {
+                        const activity_id = utils.getParameterByName('activity_id');
+                        query = {
+                            activity_id,
+                        };
+                    } else if (page === 'subject_detail') {
+                        const subject_id = utils.getParameterByName('subject_id');
+                        query = {
+                            subject_id,
+                        };
+                    }
+                    this.$router.push({
+                        name: page,
+                        query
+                    });
+                }
+            });
         },
         activated() {
             if (this.$store.state.current_signature_page !== 'index') {
@@ -88,20 +117,29 @@
         },
         methods: {
             getLayOut() {
-                this.$store.dispatch('toggleLoading');
-                this.$http.post(`${APP.HOST}/index`, {
-                    token: APP.TOKEN,
-                    user_id: APP.USER_ID,
-                    media_id: APP.MEDIA_ID
-                }).then((response) => {
+                return new Promise(resolve => {
                     this.$store.dispatch('toggleLoading');
-                    const data = response.data;
-                    if (data.status === APP.SUCCESS && utils.getTypeOf(data.data) === 'Array' &&
-                        data.data.length) {
-                        utils.syncLoadArray(this.framework, data.data);
-                    }
-                }, () => {
-                    this.$store.dispatch('toggleLoading');
+                    this.$http.post(`${APP.HOST}/index`, {
+                        token: APP.TOKEN,
+                        user_id: APP.USER_ID,
+                        media_id: APP.MEDIA_ID
+                    }).then((response) => {
+                        this.$store.dispatch('toggleLoading');
+                        const data = response.data;
+                        if (data.status === APP.SUCCESS && utils.getTypeOf(data.data) === 'Array' &&
+                            data.data.length) {
+                            utils.syncLoadArray(this.framework, data.data);
+                        }
+
+                        if (typeof resolve === 'function') {
+                            resolve();
+                        }
+                    }, () => {
+                        if (typeof resolve === 'function') {
+                            resolve();
+                        }
+                        this.$store.dispatch('toggleLoading');
+                    });
                 });
             },
             getComponent(component_type, layout_type) {
