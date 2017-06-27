@@ -3,14 +3,22 @@ import VueResource from 'vue-resource';
 Vue.use(VueResource);
 Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
 const media_id = utils.getParameterByName('id'),
+    page = utils.getParameterByName('page'),
     origin = utils.getParameterByName('origin'),
     subscribed = utils.getParameterByName('subscribed'),
     storage = utils.getLocalStorage(media_id);
 if (storage) {
-    startApp(storage);
+    const now = new Date(),
+        before = new Date(storage.DATE),
+        interval = (now - before) / 1000 / 60 / 60,
+        is_expired = parseInt(interval) >= 1;
+    if (is_expired) {
+        utils.login(media_id, 1, page, null, subscribed, origin);
+    } else {
+        startApp(storage);
+    }
 } else {
-    const token = utils.getParameterByName('token'),
-        page = utils.getParameterByName('page');
+    const token = utils.getParameterByName('token');
     if (token) {
         const media_id = utils.getParameterByName('mediaid');
         //设置缓存

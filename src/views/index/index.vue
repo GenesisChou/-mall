@@ -61,7 +61,10 @@
         computed: {
             guide_state() {
                 return this.$store.state.index.guide_state;
-            }
+            },
+            user() {
+                return this.$store.state.user;
+            },
         },
         created() {
             this.getLayOut().then(() => {
@@ -173,6 +176,11 @@
                 this.index_view(item, layout);
                 if (layout.component_type === 6) {
                     if (item.is_inner_url === 1) {
+                        if ((item.url === 'my_account' || item.url === 'earn_integral' || item.url === 'order_list') &&
+                            this.user.show_authorize !== 1) {
+                            utils.login(APP.MEDIA_ID, 2, item.url, null, APP.SUBSCRIBED, APP.ORIGIN);
+                            return;
+                        }
                         this.$router.push({
                             name: item.url
                         });

@@ -438,6 +438,10 @@
                 this.group[this.caught_number].childNodes[0].src = this.awards[this.caught_number].pic;
             },
             start() {
+                if (this.user.show_authorize !== 1) {
+                    utils.login(APP.MEDIA_ID, 2, 'activity_detail', this.activity_id, APP.SUBSCRIBED, APP.ORIGIN);
+                    return;
+                }
                 if (this.state !== 'ready') return;
                 this.state = 'start';
                 this.$http.post(`${APP.HOST}/doll_activity/${this.id}`, {

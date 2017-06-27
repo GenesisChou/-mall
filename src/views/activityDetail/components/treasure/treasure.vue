@@ -421,6 +421,10 @@
                 this.activity_result = {};
             },
             start() {
+                if (this.user.show_authorize !== 1) {
+                    utils.login(APP.MEDIA_ID, 2, 'activity_detail', this.activity_id, APP.SUBSCRIBED, APP.ORIGIN);
+                    return;
+                }
                 if (this.state !== 'ready') return;
                 this.state = 'start';
                 this.$http.post(`${APP.HOST}/hot_pot_activity/${this.id}`, {
