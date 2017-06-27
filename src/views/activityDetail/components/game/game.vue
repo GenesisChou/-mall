@@ -206,6 +206,9 @@
                 });
                 return color;
             },
+            user() {
+                return this.$store.state.user;
+            },
         },
         watch: {
             state(value) {
