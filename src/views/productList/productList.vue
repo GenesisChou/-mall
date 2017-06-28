@@ -272,7 +272,9 @@
             sort_show(value) {
                 utils.toggleTouchMove(value, this.$refs.panel);
                 const search = document.getElementById('search');
-                search.disabled = value;
+                if (search) {
+                    search.disabled = value;
+                }
             }
         },
         activated() {
