@@ -28,7 +28,7 @@ module.exports = {
     changeCurrentSignature(context, name) {
         context.commit('changeCurrentSignature', name);
     },
-    getQrCode(context) {
-        context.commit('getQrCode');
+    getQrCode(context, callback) {
+        context.commit('getQrCode', callback);
     },
 };

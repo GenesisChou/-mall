@@ -84,7 +84,7 @@ module.exports = {
     changeCurrentSignature(state, name) {
         state.current_signature_page = name;
     },
-    getQrCode(state) {
+    getQrCode(state, callback) {
         Vue.http.post(`${APP.HOST}/get_qr_code`, {
             token: APP.TOKEN,
             media_id: APP.MEDIA_ID,
@@ -95,8 +95,9 @@ module.exports = {
             const data = response.data;
             if (data.status === APP.SUCCESS) {
                 state.qr_code = data.data;
-                // this.qr_code.title = data.data.qr_code_tips;
-                // this.qr_code.img = data.data.qr_code_pic;
+                if (typeof callback === 'function') {
+                    callback(data.data);
+                }
             }
         });
     },

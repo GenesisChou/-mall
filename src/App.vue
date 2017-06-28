@@ -27,15 +27,25 @@
             vConfirm,
         },
         created() {
-            this.$store.dispatch('getQrCode');
             this.$store.dispatch('getUserInfor', (response) => {
                 const data = response.data;
                 if (data.status === APP.SUCCESS) {
-                    console.log('login success');
-                    this.setGuideState(data.data);
-                    this.loginRecord();
+                    this.$store.dispatch('getQrCode', qr_code => {
+                        if (qr_code.qr_code_pic && qr_code.qr_code_tips) {
+                            if (APP.SUBSCRIBED === 1) {
+                                this.setGuideState(data.data);
+                                if (data.data.first_login === 1) {
+                                    this.loginRecord();
+                                }
+                            }
+                        } else {
+                            this.setGuideState(data.data);
+                            if (data.data.first_login === 1) {
+                                this.loginRecord();
+                            }
+                        }
+                    });
                 } else {
-                    console.log(data.info);
                     utils.deleteLocalStorage(APP.MEDIA_ID);
                     utils.reloadApp();
                 }
