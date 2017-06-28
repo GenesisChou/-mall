@@ -1,4 +1,5 @@
 <style lang='scss' scoped>
+    @import '../../assets/scss/variable.scss';
     .activity-detail {
         display: flex;
         flex-direction: column;
@@ -7,12 +8,20 @@
         overflow: hidden;
     }
 
+    .space {
+        height: pxTorem(80);
+    }
+
     .activity-detail-content {
         flex: 1;
     }
 </style>
 <template>
     <div class='activity-detail'>
+        <template v-if='notice_show'>
+            <v-notice></v-notice>
+            <div class='space'></div>
+        </template>
         <div class='activity-detail-content'>
             <keep-alive>
                 <component :is='activity_type' :free-times='free_times>>0' :fresh-free-times='freshFreeTimes' :activity-detail='activity_detail'
@@ -30,11 +39,13 @@
     import vDialog from './components/vDialog';
     import weChatShare from 'libs/weChatShare.js';
     import vShareGuide from 'components/vShareGuide';
+    import vNotice from 'components/vNotice';
     export default {
         name: 'activityDetail',
         components: {
             vDialog,
             vShareGuide,
+            vNotice,
             quiz: require('./components/quiz'),
             scrap: require('./components/scrap'),
             game: require('./components/game'),
@@ -68,6 +79,11 @@
             },
             is_off() {
                 return this.activity_detail.status === 1;
+            },
+            notice_show() {
+                return !APP.SUBSCRIBED &&
+                    this.$store.state.qr_code.qr_code_tips &&
+                    this.$store.state.qr_code.qr_code_pic;
             }
         },
         beforeRouteEnter(to, from, next) {
@@ -86,11 +102,13 @@
                 if (this.activity_detail.is_share === 1 & this.has_shared === false) {
                     this.share_show = true;
                 }
+                const is_share_info = this.activity_detail.is_share_info === 1;
                 weChatShare({
                     router: this.$route,
-                    title: this.activity_detail.name,
-                    img: this.activity_detail.pic_thumb_new,
-                    desc: this.activity_detail.name_show,
+                    title: is_share_info ? this.activity_detail.share_name : this.activity_detail.name,
+                    img: is_share_info ? this.activity_detail.share_pic_thumb_new : this.activity_detail
+                        .pic_thumb_new,
+                    desc: is_share_info ? this.activity_detail.share_desc : this.activity_detail.desc,
                     link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=activity_detail&activity_id=${this.activity_id}`
                 }).then(() => {
                     this.share_show = false;
@@ -119,7 +137,8 @@
                         token: APP.TOKEN,
                         media_id: APP.MEDIA_ID,
                         user_id: APP.USER_ID,
-                        open_id: APP.OPEN_ID
+                        open_id: APP.OPEN_ID,
+                        origin: APP.ORIGIN
                     }).then((response) => {
                         this.$store.dispatch('toggleLoading');
                         const data = response.data;
@@ -188,6 +207,7 @@
                         media_id: APP.MEDIA_ID,
                         user_id: APP.USER_ID,
                         open_id: APP.OPEN_ID,
+                        origin: APP.ORIGIN,
                         type: 2
                     }).then((response) => {
                         const data = response.data;

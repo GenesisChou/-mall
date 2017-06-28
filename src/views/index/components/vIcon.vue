@@ -179,7 +179,7 @@
     <ul :class='["icon-list",guide_state]'>
         <li :class='{"red-dot":user.unfinished_order_count>0&&item.is_inner_url === 1&&item.url==="order_list"}' v-for='item in layout.items'
             @click='routerLink(item,layout)'>
-            <img class='icon' v-lazy='item.pic_thumb_new'>
+            <img class='icon' :src='item.pic_thumb_new'>
             <p>{{item.title}}</p>
         </li>
         <div v-if='guide_state==="guide-account"' class='guide account'>

@@ -37,7 +37,7 @@
         }
         input {
             flex: 1;
-            height:100%;
+            height: 100%;
             color: #646565;
             background: none;
             border: 0;
@@ -224,6 +224,7 @@
                 this.$http.post(`${APP.HOST}/user_submit/${APP.USER_ID}`, {
                     token: APP.TOKEN,
                     userid: APP.USER_ID,
+                    origin: APP.ORIGIN,
                     province: this.province,
                     city: this.city,
                     country: this.country,
@@ -233,7 +234,7 @@
                     province_id: this.province_id,
                     city_id: this.city_id,
                     country_id: this.country_id,
-                    verification_code: this.verification_code
+                    verification_code: this.verification_code,
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
                     const data = response.data,

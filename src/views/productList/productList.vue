@@ -315,6 +315,7 @@
                 this.params.class_two_id = '';
                 this.product_list = [];
                 this.class_two_list = [];
+                this.params.sword = '';
             }
             window.removeEventListener('scroll', this.scroll_event);
             next();

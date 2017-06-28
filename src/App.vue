@@ -30,49 +30,26 @@
             this.$store.dispatch('getUserInfor', (response) => {
                 const data = response.data;
                 if (data.status === APP.SUCCESS) {
-                    console.log('login success');
-                    this.setGuideState(data.data);
-                    this.loginRecord();
+                    this.$store.dispatch('getQrCode', qr_code => {
+                        if (qr_code.qr_code_pic && qr_code.qr_code_tips) {
+                            if (APP.SUBSCRIBED === 1) {
+                                this.setGuideState(data.data);
+                                if (data.data.first_login === 1) {
+                                    this.loginRecord();
+                                }
+                            }
+                        } else {
+                            this.setGuideState(data.data);
+                            if (data.data.first_login === 1) {
+                                this.loginRecord();
+                            }
+                        }
+                    });
                 } else {
-                    console.log(data.info);
                     utils.deleteLocalStorage(APP.MEDIA_ID);
                     utils.reloadApp();
                 }
-                // else if (data.status === 9999) {
-                //     console.log(data.info);
-                //     utils.deleteLocalStorage(APP.MEDIA_ID);
-                //     utils.reloadApp();
-                // }
             });
-            const page = utils.getParameterByName('page');
-            if (page) {
-                let query = {};
-                if (page === 'product_detail') {
-                    const product_id = utils.getParameterByName('product_id'),
-                        back = utils.getParameterByName('back');
-                    query = {
-                        product_id,
-                        back: back || 'index',
-                        from: back || 'index'
-                    };
-                } else if (page === 'activity_detail') {
-                    const activity_id = utils.getParameterByName('activity_id');
-                    query = {
-                        activity_id,
-                        from: 'index'
-                    };
-                } else if (page === 'subject_detail') {
-                    const subject_id = utils.getParameterByName('subject_id');
-                    query = {
-                        subject_id,
-                        from: 'index'
-                    };
-                }
-                this.$router.push({
-                    name: page,
-                    query
-                });
-            }
         },
         mounted() {
             this.$store.dispatch('getTitle', (response) => {

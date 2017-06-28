@@ -6,6 +6,92 @@
         background-color: #f2f3f4;
     }
 
+    .header {
+        position: relative;
+    }
+
+    .space {
+        height: pxTorem(80);
+    }
+
+    .adv {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: pxTorem(80);
+        padding-left: pxTorem(24);
+        line-height: pxTorem(80);
+        background-color: rgba(0, 0, 0, .7);
+        font-size: pxTorem(32);
+        color: $white;
+        z-index: 1;
+        span {
+            position: relative;
+        }
+        img {
+            position: absolute;
+            right: pxTorem(-70);
+            top: 0;
+            width: pxTorem(63);
+            height: pxTorem(22);
+            animation: drift infinite 1.5s linear;
+        }
+        .arrows {
+            position: absolute;
+            right: pxTorem(20);
+            top: 50%;
+            transform: translateY(-50%);
+            animation: shaking infinite 1.5s linear;
+        }
+        .icon-arrows-right {
+            font-size: bold;
+            font-size: pxTorem(36);
+            &:last-child {
+                margin-left: pxTorem(-30);
+                margin-right: 0;
+            }
+        }
+    }
+
+    @keyframes shaking {
+        0% {
+            right: pxTorem(20);
+        }
+        25% {
+            right: pxTorem(10);
+        }
+        50% {
+
+            right: pxTorem(20);
+        }
+        75% {
+            right: pxTorem(30);
+        }
+        100% {
+            right: pxTorem(20);
+        }
+    }
+
+
+    @keyframes drift {
+        0% {
+            transform: translateY(0%);
+        }
+        25% {
+            transform: translateY(-10%);
+        }
+        50% {
+            transform: translateY(0%);
+        }
+        75% {
+            transform: translateY(10%);
+        }
+        100% {
+            transform: translateY(0%);
+        }
+    }
+
     .back {
         position: absolute;
         left: pxTorem(38);
@@ -101,9 +187,8 @@
             @include active(#ff9817, 5%);
             background-color: #ff9817;
         }
-        .icon-arrows-right,
-        {
-            font-weight: bold; // font-size: .24rem;
+        .icon-arrows-right {
+            font-size: bold;
             font-size: pxTorem(36);
             &:last-child {
                 margin-left: pxTorem(-30);
@@ -114,6 +199,10 @@
 </style>
 <template>
     <div v-if='product_detail' class='product-detail'>
+        <template v-if='notice_show'>
+            <v-notice></v-notice>
+            <div class='space'></div>
+        </template>
         <template v-if='!is_recharge'>
             <header class='header '>
                 <img v-show='back' class='back' src='./images/back.png' @click='returnPrev' />
@@ -176,13 +265,15 @@
     import recharge from './components/recharge';
     import vDialog from './components/vDialog';
     import vShareGuide from 'components/vShareGuide';
+    import vNotice from 'components/vNotice';
     export default {
         name: 'productDetail',
         components: {
             vIntroduction,
             recharge,
             vDialog,
-            vShareGuide
+            vShareGuide,
+            vNotice
         },
         data() {
             return {
@@ -199,7 +290,11 @@
                 state: '',
                 has_shared: false,
                 has_exchanged: false,
-                integral_lack: false
+                integral_lack: false,
+                qr_code: {
+                    title: '',
+                    img: ''
+                }
             };
         },
         computed: {
@@ -219,6 +314,11 @@
                     return this.product_detail.integral >> 0;
                 }
                 return 0;
+            },
+            notice_show() {
+                return !APP.SUBSCRIBED &&
+                    this.$store.state.qr_code.qr_code_tips &&
+                    this.$store.state.qr_code.qr_code_pic;
             }
         },
         beforeRouteLeave(to, from, next) {
@@ -228,7 +328,7 @@
         },
         created() {
             this.product_id = this.$route.query.product_id;
-            this.from = this.$route.query.from;
+            this.from = this.$route.query.from || 'index';
             this.back = this.$route.query.back;
             this.getProductPromise(this.getProductDetail(), this.isShare()).then(data => {
                 this.has_shared = data[1].is_share;
@@ -239,11 +339,13 @@
                 if (this.from === 'subject_detail') {
                     link += `&subject_id=${this.$route.query.subject_id}`;
                 }
+                const is_share_info = this.product_detail.is_share_info === 1;
                 weChatShare({
                     router: this.$route,
-                    title: this.product_detail.name,
-                    img: this.product_detail.pic_thumb_new,
-                    desc: this.product_detail.name_show,
+                    title: is_share_info ? this.product_detail.share_name : this.product_detail.name,
+                    img: is_share_info ? this.product_detail.share_pic_thumb_new : this.product_detail
+                        .pic_thumb_new,
+                    desc: is_share_info ? this.product_detail.share_name_show : this.product_detail.name_show,
                     link
                 }).then(() => {
                     this.share_show = false;
@@ -272,7 +374,8 @@
                         token: APP.TOKEN,
                         media_id: APP.MEDIA_ID,
                         user_id: APP.USER_ID,
-                        open_id: APP.OPEN_ID
+                        open_id: APP.OPEN_ID,
+                        origin: APP.ORIGIN
                     }).then((response) => {
                         this.$store.dispatch('toggleLoading');
                         const data = response.data;
@@ -292,34 +395,39 @@
             },
             //兑换
             exchange() {
-                this.$store.dispatch('toggleConfirm', {
-                    msg: '确认兑换该商品吗?',
-                    callback: () => {
-                        this.order().then(data => {
-                            this.order_detail_id = data.data.id;
-                            this.$store.dispatch('getUserInfor');
-                            this.toggleDialog({
-                                type: 'success',
-                                msg: '获得' + this.product_detail.name,
-                                img: this.product_detail.pic_thumb_new,
-                                btn_text: '查看',
-                                callback: this.toOrderDetail
+                if (this.user.show_authorize !== 1) {
+                    utils.login(APP.MEDIA_ID, 2, 'product_detail', this.product_id, APP.SUBSCRIBED, APP.ORIGIN);
+                } else {
+                    this.$store.dispatch('toggleConfirm', {
+                        msg: '确认兑换该商品吗?',
+                        callback: () => {
+                            this.order().then(data => {
+                                this.order_detail_id = data.data.id;
+                                this.$store.dispatch('getUserInfor');
+                                this.toggleDialog({
+                                    type: 'success',
+                                    msg: '获得' + this.product_detail.name,
+                                    img: this.product_detail.pic_thumb_new,
+                                    btn_text: '查看',
+                                    callback: this.toOrderDetail
+                                });
+                                this.getProductPromise(this.getProductDetail(), this.isShare()).then(
+                                    (
+                                        data) => {
+                                        this.has_shared = data[1].is_share;
+                                        this.has_exchanged = data[1].is_exchange;
+                                        this.changeState(data);
+                                    });
+                            }).catch(data => {
+                                this.toggleDialog({
+                                    type: 'faliure',
+                                    msg: data.info,
+                                    btn_text: '我知道了',
+                                });
                             });
-                            this.getProductPromise(this.getProductDetail(), this.isShare()).then((
-                                data) => {
-                                this.has_shared = data[1].is_share;
-                                this.has_exchanged = data[1].is_exchange;
-                                this.changeState(data);
-                            });
-                        }).catch(data => {
-                            this.toggleDialog({
-                                type: 'faliure',
-                                msg: data.info,
-                                btn_text: '我知道了',
-                            });
-                        });
-                    }
-                });
+                        }
+                    });
+                }
             },
             //生成订单
             order() {
@@ -329,7 +437,8 @@
                         token: APP.TOKEN,
                         media_id: APP.MEDIA_ID,
                         user_id: APP.USER_ID,
-                        open_id: APP.OPEN_ID
+                        open_id: APP.OPEN_ID,
+                        origin: APP.ORIGIN
                     }).then((response) => {
                         this.$store.dispatch('toggleLoading');
                         const data = response.data;
@@ -433,6 +542,7 @@
                         media_id: APP.MEDIA_ID,
                         user_id: APP.USER_ID,
                         open_id: APP.OPEN_ID,
+                        origin: APP.ORIGIN,
                         type: 1
                     }).then((response) => {
                         const data = response.data;

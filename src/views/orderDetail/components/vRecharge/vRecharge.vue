@@ -14,30 +14,30 @@
             }
         }
     }
-    
+
     .container {
-        display:flex;
+        display: flex;
         padding: pxTorem(30) pxTorem(65);
     }
-    
+
     .form-control {
         @include flex-center-v;
-        flex:1;
+        flex: 1;
         width: pxTorem(450);
         height: pxTorem(75);
         border: pxTorem(2) solid #f0c3c2;
         background-color: #fef6f5;
     }
-    
+
     label {
         width: pxTorem(120);
         text-align: right;
         color: #3d4244;
         font-size: pxTorem(32);
     }
-    
+
     input {
-        flex:1;
+        flex: 1;
         height: pxTorem(75);
         background: none;
         border: none;
@@ -46,7 +46,7 @@
         font-size: pxTorem(30);
         text-indent: pxTorem(10);
     }
-    
+
     .submit {
         @include flex-center;
         width: pxTorem(180);
@@ -55,7 +55,7 @@
         color: $white;
         font-size: pxTorem(34);
     }
-    
+
     .script {
         position: absolute;
         right: pxTorem(30);
@@ -124,6 +124,7 @@
                             token: APP.TOKEN,
                             userid: APP.USER_ID,
                             media_id: APP.MEDIA_ID,
+                            origin: APP.ORIGIN,
                             phone: this.phone
                         }).then((response) => {
                             this.$store.dispatch('toggleLoading');
