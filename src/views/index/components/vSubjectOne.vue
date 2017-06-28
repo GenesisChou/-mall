@@ -19,7 +19,7 @@
 </style>
 <template>
     <div class='v-subject'>
-        <img v-for='item in layout.items' v-lazy='item.pic_thumb_new' @click='routerLink(item,layout)'>
+        <img v-for='item in layout.items' :src='item.pic_thumb_new' @click='routerLink(item,layout)'>
     </div>
 </template>
 <script>

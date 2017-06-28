@@ -27,6 +27,7 @@
             vConfirm,
         },
         created() {
+            this.$store.dispatch('getQrCode');
             this.$store.dispatch('getUserInfor', (response) => {
                 const data = response.data;
                 if (data.status === APP.SUCCESS) {

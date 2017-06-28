@@ -13,11 +13,10 @@
 <script>
     export default {
         name: 'qrCode',
-        data() {
-            const img = this.$route.query.img;
-            return {
-                img
-            };
+        computed: {
+            img() {
+                return this.$store.state.qr_code.qr_code_pic;
+            }
         }
     };
 </script>

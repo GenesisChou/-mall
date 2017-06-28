@@ -20,10 +20,17 @@
         z-index: 1;
         background-color: rgba(0, 0, 0, .76);
     }
+
+    .space {
+        height: pxTorem(80);
+    }
 </style>
 <template>
     <div class='index'>
-        <v-notice></v-notice>
+        <template v-if='notice_show'>
+            <v-notice></v-notice>
+            <div class='space'></div>
+        </template>
         <transition-group tag='div' class='index-content' name='slide-fade'>
             <component v-for='layout in framework' key='layout.id' :is='getComponent(layout.component_type,layout.layout_type)' :layout='layout'
                 :router-link='routerLink'></component>
@@ -65,38 +72,42 @@
             user() {
                 return this.$store.state.user;
             },
+            notice_show() {
+                return !APP.SUBSCRIBED &&
+                    this.$store.state.qr_code.qr_code_tips &&
+                    this.$store.state.qr_code.qr_code_pic;
+            }
         },
         created() {
-            this.getLayOut().then(() => {
-                const page = utils.getParameterByName('page');
-                if (page) {
-                    let query = {};
-                    if (page === 'product_detail') {
-                        const product_id = utils.getParameterByName('product_id'),
-                            back = utils.getParameterByName('back');
-                        query = {
-                            product_id,
-                        };
-                        if (back) {
-                            query.back = back;
-                        }
-                    } else if (page === 'activity_detail') {
-                        const activity_id = utils.getParameterByName('activity_id');
-                        query = {
-                            activity_id,
-                        };
-                    } else if (page === 'subject_detail') {
-                        const subject_id = utils.getParameterByName('subject_id');
-                        query = {
-                            subject_id,
-                        };
+            this.getLayOut();
+            const page = utils.getParameterByName('page');
+            if (page) {
+                let query = {};
+                if (page === 'product_detail') {
+                    const product_id = utils.getParameterByName('product_id'),
+                        back = utils.getParameterByName('back');
+                    query = {
+                        product_id,
+                    };
+                    if (back) {
+                        query.back = back;
                     }
-                    this.$router.push({
-                        name: page,
-                        query
-                    });
+                } else if (page === 'activity_detail') {
+                    const activity_id = utils.getParameterByName('activity_id');
+                    query = {
+                        activity_id,
+                    };
+                } else if (page === 'subject_detail') {
+                    const subject_id = utils.getParameterByName('subject_id');
+                    query = {
+                        subject_id,
+                    };
                 }
-            });
+                this.$router.push({
+                    name: page,
+                    query
+                });
+            }
         },
         activated() {
             if (this.$store.state.current_signature_page !== 'index') {
@@ -121,13 +132,13 @@
         methods: {
             getLayOut() {
                 return new Promise(resolve => {
-                    this.$store.dispatch('toggleLoading');
+                    // this.$store.dispatch('toggleLoading');
                     this.$http.post(`${APP.HOST}/index`, {
                         token: APP.TOKEN,
                         user_id: APP.USER_ID,
                         media_id: APP.MEDIA_ID
                     }).then((response) => {
-                        this.$store.dispatch('toggleLoading');
+                        // this.$store.dispatch('toggleLoading');
                         const data = response.data;
                         if (data.status === APP.SUCCESS && utils.getTypeOf(data.data) === 'Array' &&
                             data.data.length) {
@@ -141,7 +152,7 @@
                         if (typeof resolve === 'function') {
                             resolve();
                         }
-                        this.$store.dispatch('toggleLoading');
+                        // this.$store.dispatch('toggleLoading');
                     });
                 });
             },

@@ -27,5 +27,8 @@ module.exports = {
     },
     changeCurrentSignature(context, name) {
         context.commit('changeCurrentSignature', name);
-    }
+    },
+    getQrCode(context) {
+        context.commit('getQrCode');
+    },
 };

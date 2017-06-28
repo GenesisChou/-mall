@@ -1,4 +1,5 @@
 <style lang='scss' scoped>
+    @import '../../assets/scss/variable.scss';
     .activity-detail {
         display: flex;
         flex-direction: column;
@@ -7,13 +8,20 @@
         overflow: hidden;
     }
 
+    .space {
+        height: pxTorem(80);
+    }
+
     .activity-detail-content {
         flex: 1;
     }
 </style>
 <template>
     <div class='activity-detail'>
-        <v-notice></v-notice>
+        <template v-if='notice_show'>
+            <v-notice></v-notice>
+            <div class='space'></div>
+        </template>
         <div class='activity-detail-content'>
             <keep-alive>
                 <component :is='activity_type' :free-times='free_times>>0' :fresh-free-times='freshFreeTimes' :activity-detail='activity_detail'
@@ -71,6 +79,11 @@
             },
             is_off() {
                 return this.activity_detail.status === 1;
+            },
+            notice_show() {
+                return !APP.SUBSCRIBED &&
+                    this.$store.state.qr_code.qr_code_tips &&
+                    this.$store.state.qr_code.qr_code_pic;
             }
         },
         beforeRouteEnter(to, from, next) {

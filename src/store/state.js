@@ -22,5 +22,9 @@ module.exports = {
         show: false
     },
     position: {},
-    current_signature_page: ''
+    current_signature_page: '',
+    qr_code: {
+        qr_code_tips: '',
+        qr_code_pic: '',
+    }
 };
