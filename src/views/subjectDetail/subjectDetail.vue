@@ -106,7 +106,7 @@
                 return this.subject_detail.class_items.length > 1;
             },
             notice_show() {
-                return !APP.SUBSCRIBED &&
+                return APP.ORIGIN !== 'menu' &&
                     this.$store.state.qr_code.qr_code_tips &&
                     this.$store.state.qr_code.qr_code_pic;
             }
