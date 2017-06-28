@@ -3,6 +3,7 @@
     img {
         width: pxTorem(750);
         height: auto;
+        transform: translateY(pxTorem(-120));
     }
 </style>
 <template>
