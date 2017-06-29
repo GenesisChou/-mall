@@ -76,7 +76,7 @@
     }
 </style>
 <template>
-    <div class='game-detail' v-if='game'>
+    <div class='game-detail'>
         <header class='header' ref='container'>
             <template v-if='state==="ready"||state==="block"'>
                 <img class='banner' :src='activityDetail.pic_banner_new'>
