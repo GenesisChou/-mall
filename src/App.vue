@@ -32,7 +32,7 @@
                 if (data.status === APP.SUCCESS) {
                     this.$store.dispatch('getQrCode', qr_code => {
                         if (qr_code.qr_code_pic && qr_code.qr_code_tips) {
-                            if (APP.SUBSCRIBED === 1) {
+                            if (APP.ORIGIN === 'menu') {
                                 this.setGuideState(data.data);
                                 if (data.data.first_login === 1) {
                                     this.loginRecord();
