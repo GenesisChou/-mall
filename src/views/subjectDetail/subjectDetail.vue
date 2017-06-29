@@ -6,6 +6,9 @@
         min-height: 100%;
         padding-bottom: pxTorem(20);
         background-color: #f2f3f4;
+        .space {
+            height: pxTorem(80);
+        }
     }
 
     .subject-detail-content {
@@ -52,7 +55,10 @@
 </style>
 <template>
     <div v-show='content_show' class='subject-detail'>
-        <v-notice></v-notice>
+        <template v-if='notice_show'>
+            <v-notice></v-notice>
+            <div class='space'></div>
+        </template>
         <div class='subject-detail-content'>
             <img class='banner' :src='subject_detail.pic_banner_new'>
             <main>
@@ -98,6 +104,11 @@
             },
             tabs_show() {
                 return this.subject_detail.class_items.length > 1;
+            },
+            notice_show() {
+                return APP.ORIGIN !== 'menu' &&
+                    this.$store.state.qr_code.qr_code_tips &&
+                    this.$store.state.qr_code.qr_code_pic;
             }
         },
         watch: {

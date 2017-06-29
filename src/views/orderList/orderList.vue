@@ -285,7 +285,7 @@
                 });
             },
             toOrderDetail(order) {
-                if (this.current_type === 'unsolved') {
+                if (this.current_type === 'unsolved' && order.is_read === 2) {
                     this.order_list['unsolved'].forEach(item => {
                         if (item.id === order.id) {
                             item.is_read = 1;

@@ -66,11 +66,11 @@
             animation: ready 1.5s linear infinite;
         }
         &.one {
-            animation: one 1.8s ease-in;
+            animation: net-one 1.8s ease-in;
         }
         &.two {
             width: pxTorem(230);
-            animation: two 1.8s ease-in;
+            animation: net-two 1.8s ease-in;
         }
         &.stop {
             .chest {
@@ -101,7 +101,7 @@
         }
     }
 
-    @keyframes one {
+    @keyframes net-one {
         0% {
             transform: rotateX(180deg);
         }
@@ -113,7 +113,7 @@
         }
     }
 
-    @keyframes two {
+    @keyframes net-two {
         0% {
             transform: rotateX(180deg);
         }

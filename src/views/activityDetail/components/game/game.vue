@@ -78,7 +78,7 @@
 <template>
     <div class='game-detail' v-if='game'>
         <header class='header' ref='container'>
-            <template v-if='state=="ready"'>
+            <template v-if='state==="ready"||state==="block"'>
                 <img class='banner' :src='activityDetail.pic_banner_new'>
                 <div class='start' @click='startGame'></div>
                 <div class='cover'></div>
@@ -87,7 +87,7 @@
             </template>
             <canvas id="canvas"></canvas>
         </header>
-        <article v-if='state=="ready"' :class='["describe",color]'>
+        <article v-if='state==="ready"||state==="block"' :class='["describe",color]'>
             <v-describe-title text='详细说明' :color='color'></v-describe-title>
             <v-simditor>
                 <section v-html='activityDetail.content'></section>
@@ -98,7 +98,7 @@
             </v-simditor>
             <v-describe-title text='奖项列表' :color='color'></v-describe-title>
         </article>
-        <footer v-if='state=="ready"'>
+        <footer v-if='state==="ready"||state==="block"'>
             <v-award-box :awords='activityDetail.items' :color='color'></v-award-box>
         </footer>
     </div>

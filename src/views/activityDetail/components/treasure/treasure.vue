@@ -372,6 +372,7 @@
                     } else if (this.random === 5) {
                         time = 650;
                     }
+                    console.log(this.action, time);
                     setTimeout(() => {
                         this.chests[this.random].style.visibility = 'hidden';
                         this.state = 'stop';

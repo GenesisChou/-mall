@@ -298,6 +298,7 @@
                 }).then((response) => {
                     const data = response.data;
                     if (data.status === APP.SUCCESS) {
+                        this.state = 'start';
                         if (data.data.error_code === APP.INTEGRAL_LACK) {
                             this.toggleDialog({
                                 faliure: 'lack',
@@ -307,7 +308,6 @@
                             });
                             return;
                         }
-                        this.state = 'start';
                         this.broken_num = num;
                         this.activity_result = data.data;
                         this.is_win = this.activity_result.is_win;

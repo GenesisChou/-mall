@@ -5,7 +5,7 @@ Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型
 const media_id = utils.getParameterByName('id'),
     page = utils.getParameterByName('page'),
     origin = utils.getParameterByName('origin'),
-    subscribed = utils.getParameterByName('subscribed'),
+    subscribed = parseInt(utils.getParameterByName('subscribed')),
     storage = utils.getLocalStorage(media_id);
 if (storage) {
     const now = new Date(),

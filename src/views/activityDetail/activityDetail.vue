@@ -8,6 +8,10 @@
         overflow: hidden;
     }
 
+    .space {
+        height: pxTorem(80);
+    }
+
     .activity-detail-content {
         flex: 1;
     }
@@ -26,7 +30,7 @@
         img {
             width: pxTorem(28);
             height: pxTorem(28);
-            margin-right:pxTorem(6);
+            margin-right: pxTorem(6);
             transform: translateY(pxTorem(-2));
         }
     }
@@ -41,7 +45,10 @@
 </style>
 <template>
     <div class='activity-detail'>
-        <v-notice></v-notice>
+        <template v-if='notice_show'>
+            <v-notice></v-notice>
+            <div class='space'></div>
+        </template>
         <div class='ruler' @click='ruler_show=true'>
             <img src='./images/ruler.png'> 规则
         </div>
@@ -109,6 +116,11 @@
             },
             is_off() {
                 return this.activity_detail.status === 1;
+            },
+            notice_show() {
+                return APP.ORIGIN !== 'menu' &&
+                    this.$store.state.qr_code.qr_code_tips &&
+                    this.$store.state.qr_code.qr_code_pic;
             }
         },
         beforeRouteEnter(to, from, next) {

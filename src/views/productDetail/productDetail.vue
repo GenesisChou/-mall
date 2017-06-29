@@ -6,6 +6,14 @@
         background-color: #f2f3f4;
     }
 
+    .header {
+        position: relative;
+    }
+
+    .space {
+        height: pxTorem(80);
+    }
+
     .adv {
         position: fixed;
         top: 0;
@@ -191,7 +199,10 @@
 </style>
 <template>
     <div v-if='product_detail' class='product-detail'>
-        <v-notice></v-notice>
+        <template v-if='notice_show'>
+            <v-notice></v-notice>
+            <div class='space'></div>
+        </template>
         <template v-if='!is_recharge'>
             <header class='header '>
                 <img v-show='back' class='back' src='./images/back.png' @click='returnPrev' />
@@ -303,6 +314,11 @@
                     return this.product_detail.integral >> 0;
                 }
                 return 0;
+            },
+            notice_show() {
+                return APP.ORIGIN !== 'menu' &&
+                    this.$store.state.qr_code.qr_code_tips &&
+                    this.$store.state.qr_code.qr_code_pic;
             }
         },
         beforeRouteLeave(to, from, next) {

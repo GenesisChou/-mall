@@ -79,9 +79,9 @@
     }
 </style>
 <template>
-    <router-link v-if='!subscribed&&qr_code.title&&qr_code.img' :to='{name:"qr_code",query:{img:qr_code.img}}' tag='div' class='notice'>
+    <router-link :to='{name:"qr_code"}' tag='div' class='notice'>
         <span>
-            {{qr_code.title}}
+            {{title}}
             <img src='./images/come.png' >
         </span>
         <div class='arrows'>
@@ -93,37 +93,10 @@
 <script>
     export default {
         name: 'vNotice',
-        data() {
-            return {
-                qr_code: {
-                    title: '',
-                    img: ''
-                },
-                subscribed: false
-            };
-        },
-        created() {
-            this.subscribed = parseInt(utils.getParameterByName('subscribed')) === 1;
-            if (!this.subscribed) {
-                this.getQrCode();
+        computed: {
+            title() {
+                return this.$store.state.qr_code.qr_code_tips;
             }
-        },
-        methods: {
-            getQrCode() {
-                this.$http.post(`${APP.HOST}/get_qr_code`, {
-                    token: APP.TOKEN,
-                    media_id: APP.MEDIA_ID,
-                    user_id: APP.USER_ID,
-                    open_id: APP.OPEN_ID,
-                    origin: APP.ORIGIN
-                }).then((response) => {
-                    const data = response.data;
-                    if (data.status === APP.SUCCESS) {
-                        this.qr_code.title = data.data.qr_code_tips;
-                        this.qr_code.img = data.data.qr_code_pic;
-                    }
-                });
-            },
         }
     };
 </script>
