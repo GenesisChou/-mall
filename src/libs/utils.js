@@ -1,5 +1,5 @@
 const utils = {
-    login(media_id, type = 1, page, id, subscribed = 0, origin) {
+    login(media_id, type = 1, page, id, origin) {
         const redirect = encodeURIComponent(APP.MALL_HOST);
         let link = '';
         if (type === 1) {
@@ -9,9 +9,6 @@ const utils = {
         }
         if (origin) {
             link += `&origin=${origin}`;
-        }
-        if (subscribed) {
-            link += `&subscribed=${subscribed}`;
         }
         if (page === 'product_detail') {
             const back = utils.getParameterByName('back'),

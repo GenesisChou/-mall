@@ -5,7 +5,6 @@ Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型
 const media_id = utils.getParameterByName('id'),
     page = utils.getParameterByName('page'),
     origin = utils.getParameterByName('origin'),
-    subscribed = parseInt(utils.getParameterByName('subscribed')),
     storage = utils.getLocalStorage(media_id);
 if (storage) {
     const now = new Date(),
@@ -13,7 +12,7 @@ if (storage) {
         interval = (now - before) / 1000 / 60 / 60,
         is_expired = parseInt(interval) >= 1;
     if (is_expired) {
-        utils.login(media_id, 1, page, null, subscribed, origin);
+        utils.login(media_id, 1, page, null, origin);
     } else {
         startApp(storage);
     }
@@ -36,9 +35,6 @@ if (storage) {
         if (origin) {
             link += `&origin=${origin}`;
         }
-        if (subscribed && subscribed != 0) {
-            link += `&subscribed=${subscribed}`;
-        }
         if (page === 'product_detail') {
             const product_id = utils.getParameterByName('product_id'),
                 back = utils.getParameterByName('back');
@@ -59,7 +55,7 @@ if (storage) {
         }
         location.href = link;
     } else {
-        utils.login(media_id, 1, page, null, subscribed, origin);
+        utils.login(media_id, 1, page, null, origin);
     }
 }
 
@@ -73,7 +69,6 @@ function startApp(cache) {
     APP.MEDIA_ID = cache.MEDIA_ID;
     APP.OPEN_ID = cache.OPEN_ID;
     APP.ORIGIN = origin || 'menu';
-    APP.SUBSCRIBED = subscribed || 0;
     fastClick.attach(document.body);
     Vue.use(globalComponents);
     Vue.use(lazyLoad, {

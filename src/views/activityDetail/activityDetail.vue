@@ -27,6 +27,9 @@
         color: $white;
         border-radius: pxTorem(21);
         z-index: 3;
+        &.down {
+            top: pxTorem(90);
+        }
         img {
             width: pxTorem(28);
             height: pxTorem(28);
@@ -49,12 +52,12 @@
             <v-notice></v-notice>
             <div class='space'></div>
         </template>
-        <div class='ruler' @click='ruler_show=true'>
+        <div :class='["ruler",{down:notice_show}]' @click='ruler_show=true'>
             <img src='./images/ruler.png'> 规则
         </div>
-        <router-link tag='div' class='awards' :to='{name:"my_awards",query:{activity_id:this.activity_id}}'>
+        <div :class='["awards",{down:notice_show}]' @click='toMyAwards'>
             <img src='./images/awards.png'> 奖品
-        </router-link>
+        </div>
         <div class='activity-detail-content'>
             <keep-alive>
                 <component :is='activity_type' :free-times='free_times>>0' :fresh-free-times='freshFreeTimes' :activity-detail='activity_detail'
@@ -110,6 +113,9 @@
             };
         },
         computed: {
+            user() {
+                return this.$store.state.user;
+            },
             notice() {
                 return this.free_times > 0 ? `您还剩余${this.free_times}次免费机会` :
                     `消耗积分${this.activity_detail.integral >> 0}`;
@@ -274,6 +280,18 @@
                     });
                 });
             },
+            toMyAwards() {
+                if (this.user.show_authorize !== 1) {
+                    utils.login(APP.MEDIA_ID, 2, 'activity_detail', this.activity_id, APP.ORIGIN);
+                    return;
+                }
+                this.$router.push({
+                    name: 'my_awards',
+                    query: {
+                        activity_id: this.activity_id >> 0
+                    }
+                });
+            }
         }
     };
 </script>

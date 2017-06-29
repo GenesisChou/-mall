@@ -80,34 +80,6 @@
         },
         created() {
             this.getLayOut();
-            const page = utils.getParameterByName('page');
-            if (page) {
-                let query = {};
-                if (page === 'product_detail') {
-                    const product_id = utils.getParameterByName('product_id'),
-                        back = utils.getParameterByName('back');
-                    query = {
-                        product_id,
-                    };
-                    if (back) {
-                        query.back = back;
-                    }
-                } else if (page === 'activity_detail') {
-                    const activity_id = utils.getParameterByName('activity_id');
-                    query = {
-                        activity_id,
-                    };
-                } else if (page === 'subject_detail') {
-                    const subject_id = utils.getParameterByName('subject_id');
-                    query = {
-                        subject_id,
-                    };
-                }
-                this.$router.push({
-                    name: page,
-                    query
-                });
-            }
         },
         activated() {
             if (this.$store.state.current_signature_page !== 'index') {
@@ -189,7 +161,7 @@
                     if (item.is_inner_url === 1) {
                         if ((item.url === 'my_account' || item.url === 'earn_integral' || item.url === 'order_list') &&
                             this.user.show_authorize !== 1) {
-                            utils.login(APP.MEDIA_ID, 2, item.url, null, APP.SUBSCRIBED, APP.ORIGIN);
+                            utils.login(APP.MEDIA_ID, 2, item.url, null, APP.ORIGIN);
                             return;
                         }
                         this.$router.push({

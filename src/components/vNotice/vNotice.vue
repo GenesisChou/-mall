@@ -11,7 +11,7 @@
         background-color: rgba(0, 0, 0, .7);
         font-size: pxTorem(32);
         color: $white;
-        z-index: 2;
+        z-index: 4;
         span {
             position: relative;
         }

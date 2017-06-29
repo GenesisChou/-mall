@@ -396,7 +396,7 @@
             //兑换
             exchange() {
                 if (this.user.show_authorize !== 1) {
-                    utils.login(APP.MEDIA_ID, 2, 'product_detail', this.product_id, APP.SUBSCRIBED, APP.ORIGIN);
+                    utils.login(APP.MEDIA_ID, 2, 'product_detail', this.product_id, APP.ORIGIN);
                 } else {
                     this.$store.dispatch('toggleConfirm', {
                         msg: '确认兑换该商品吗?',
