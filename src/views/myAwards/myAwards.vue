@@ -9,12 +9,23 @@
         display: flex;
         flex-direction: column;
         min-height: 100%;
-        background-color: #f2f3f4;
-        padding-top: pxTorem(20);
+        background-color: #f2f3f4; // padding-top: pxTorem(20);
     }
 
     .my-awards-content {
         flex: 1;
+    }
+
+    .empty {
+        display: flex;
+        align-items: center;
+        background: $white;
+        flex: 1;
+        img {
+            width: pxTorem(750);
+            height: pxTorem(600);
+            transform: translateY(pxTorem(-80));
+        }
     }
 
     .v-order-footer {
@@ -30,16 +41,21 @@
 </style>
 <template>
     <div class='my-awards'>
-        <transition-group tag='ul' class='my-awards-content' name='slide-fade'>
-            <li v-for='(order,$index) in award_list' @click='toOrderDetail(order)' :key='order.id'>
-                <v-order :dot='order.is_read===2' :img='order.product_pic' :id='order.orderid' :integral='order.integral>>0' :name='order.product'
-                    :active='true'>
-                    <h6 class='v-order-footer'>
-                        {{order.tips}}
-                    </h6>
-                </v-order>
-            </li>
-        </transition-group>
+        <template v-if='loaded===true'>
+            <transition-group v-if='award_list.length>0' tag='ul' class='my-awards-content' name='slide-fade'>
+                <li v-for='(order,$index) in award_list' @click='toOrderDetail(order)' :key='order.id'>
+                    <v-order :dot='order.is_read===2' :img='order.product_pic' :id='order.orderid' :integral='order.integral>>0' :name='order.product'
+                        :active='true'>
+                        <h6 class='v-order-footer'>
+                            {{order.tips}}
+                        </h6>
+                    </v-order>
+                </li>
+            </transition-group>
+            <div v-else class='empty'>
+                <img src='./images/empty.png'>
+            </div>
+        </template>
         <v-support></v-support>
         <v-back-top></v-back-top>
     </div>
@@ -56,15 +72,21 @@
         data() {
             return {
                 activity_id: '',
-                award_list: []
+                loaded: false,
+                award_list: [],
             };
         },
         beforeRouteEnter(to, from, next) {
             //当从订单详情返回至订单列表时绑定滚动事件
             next(vm => {
-                if (from.name === 'activity_detail') {
+                if (from.name !== 'order_detail') {
                     vm.activity_id = vm.$route.query.activity_id;
                     vm.getAwards();
+                } else {
+                    if (vm.award_list.length === 0) {
+                        vm.activity_id = vm.$route.query.activity_id;
+                        vm.getAwards();
+                    }
                 }
             });
         },
@@ -80,31 +102,31 @@
             });
             if (to.name === 'activity_detail') {
                 this.activity_id = '';
-                this.award_list = [];
+                setTimeout(() => {
+                    this.award_list = [];
+                }, 200);
             }
+            this.$store.dispatch('updatePageView');
             next();
         },
         methods: {
             getAwards() {
-                return new Promise(resolve => {
+                this.loaded = false;
+                this.$store.dispatch('toggleLoading');
+                this.$http.post(`${APP.HOST}/user_activity_prize/${this.activity_id}`, {
+                    token: APP.TOKEN,
+                    media_id: APP.MEDIA_ID,
+                    user_id: APP.USER_ID,
+                    open_id: APP.OPEN_ID
+                }).then((response) => {
                     this.$store.dispatch('toggleLoading');
-                    this.$http.post(`${APP.HOST}/user_activity_prize/${this.activity_id}`, {
-                        token: APP.TOKEN,
-                        media_id: APP.MEDIA_ID,
-                        user_id: APP.USER_ID,
-                        open_id: APP.OPEN_ID
-                    }).then((response) => {
-                        this.$store.dispatch('toggleLoading');
-                        const data = response.data;
-                        if (data.status === APP.SUCCESS) {
-                            this.award_list = data.data.list;
-                            if (resolve && typeof resolve === 'function') {
-                                resolve(data.data);
-                            }
-                        }
-                    }, (response) => {
-                        this.$store.dispatch('toggleLoading');
-                    });
+                    this.loaded = true;
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS) {
+                        this.award_list = data.data.list;
+                    }
+                }, (response) => {
+                    this.$store.dispatch('toggleLoading');
                 });
             },
             toOrderDetail(order) {

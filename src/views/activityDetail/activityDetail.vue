@@ -101,6 +101,8 @@
         data() {
             return {
                 activity_id: '',
+                view_id: '',
+                update_view_id: '',
                 activity_detail: {},
                 activity_type: '',
                 free_times: '',
@@ -138,7 +140,7 @@
 
         created() {
             this.activity_id = this.$route.query.activity_id;
-            this.getActivityPromise(this.getActivityDetail(), this.isShare()).then(data => {
+            this.getActivityPromise(this.getActivityDetail('activity_detail_l'), this.isShare()).then(data => {
                 this.activity_type = this.getActivityType(this.activity_detail.type);
                 this.has_shared = data[1].is_share;
                 this.has_exchanged = data[1].is_exchange;
@@ -153,9 +155,9 @@
                         .pic_thumb_new,
                     desc: is_share_info ? this.activity_detail.share_desc : this.activity_detail.desc,
                     link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=activity_detail&activity_id=${this.activity_id}`
-                }).then(() => {
+                }).then(share_point => {
                     this.share_show = false;
-                    return this.shareView();
+                    return this.shareView(share_point);
                 }).then(() => {
                     this.getActivityPromise(this.getActivityDetail(), this.isShare()).then(data => {
                         this.has_shared = data[1].is_share;
@@ -165,6 +167,11 @@
             });
             this.getFreeTimes();
         },
+        beforeRouteLeave(to, from, next) {
+            this.$store.dispatch('updateItemView', this.view_id);
+            this.$store.dispatch('updatePageView');
+            next();
+        },
         methods: {
             getActivityPromise(promiseX, promiseY) {
                 return Promise.all([promiseX, promiseY])
@@ -173,10 +180,10 @@
                     });
             },
             //获取活动详情
-            getActivityDetail() {
+            getActivityDetail(url = 'activity_detail') {
                 return new Promise(resolve => {
                     this.$store.dispatch('toggleLoading');
-                    this.$http.post(`${APP.HOST}/activity_detail_l/${this.activity_id}`, {
+                    this.$http.post(`${APP.HOST}/${url}/${this.activity_id}`, {
                         token: APP.TOKEN,
                         media_id: APP.MEDIA_ID,
                         user_id: APP.USER_ID,
@@ -187,9 +194,10 @@
                         const data = response.data;
                         if (data.status === APP.SUCCESS) {
                             this.activity_detail = data.data;
-                        }
-                        if (resolve && typeof resolve === 'function') {
-                            resolve(data);
+                            this.view_id = data.data.view_id;
+                            if (resolve && typeof resolve === 'function') {
+                                resolve(data);
+                            }
                         }
                     }, (response) => {
                         this.$store.dispatch('toggleLoading');
@@ -243,7 +251,7 @@
                 this.dialog = dialog;
                 this.dialog_show = !this.dialog_show;
             },
-            shareView() {
+            shareView(share_point) {
                 return new Promise(resolve => {
                     this.$http.post(`${APP.HOST}/share_view/${this.activity_id}`, {
                         token: APP.TOKEN,
@@ -251,6 +259,7 @@
                         user_id: APP.USER_ID,
                         open_id: APP.OPEN_ID,
                         origin: APP.ORIGIN,
+                        share_point,
                         type: 2
                     }).then((response) => {
                         const data = response.data;

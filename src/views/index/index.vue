@@ -99,6 +99,7 @@
             this.$store.dispatch('savePosition', position => {
                 position[from.name] = utils.getScrollTop();
             });
+            this.$store.dispatch('updatePageView');
             next();
         },
         methods: {

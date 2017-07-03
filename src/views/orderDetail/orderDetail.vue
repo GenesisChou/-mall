@@ -526,6 +526,10 @@
                 });
             });
         },
+        beforeRouteLeave(to, from, next) {
+            this.$store.dispatch('updatePageView');
+            next();
+        },
         methods: {
             getOrderDetail() {
                 return new Promise(resolve => {

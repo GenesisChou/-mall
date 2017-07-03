@@ -26,5 +26,6 @@ module.exports = {
     qr_code: {
         qr_code_tips: '',
         qr_code_pic: '',
-    }
+    },
+    update_page_id: ''
 };

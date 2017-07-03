@@ -52,10 +52,10 @@ module.exports = function (option = {}) {
                     imgUrl, // 分享图标
                     success() {
                         if (typeof resolve === 'function') {
-                            resolve();
+                            resolve('timeline');
                         }
                         // 用户确认分享后执行的回调函数
-                        share();
+                        share('timeline');
                     },
                 });
                 wx.onMenuShareAppMessage({
@@ -67,9 +67,9 @@ module.exports = function (option = {}) {
                     // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
                     success() {
                         if (typeof resolve === 'function') {
-                            resolve();
+                            resolve('friend');
                         }
-                        share();
+                        share('friend');
                     },
                 });
 
@@ -81,7 +81,10 @@ module.exports = function (option = {}) {
                     imgUrl, // 分享图标
                     success() {
                         // 用户确认分享后执行的回调函数
-                        share();
+                        if (typeof resolve === 'function') {
+                            resolve('qq');
+                        }
+                        share('qq');
                     },
                 });
                 //分享到腾讯微博
@@ -92,7 +95,10 @@ module.exports = function (option = {}) {
                     imgUrl, // 分享图标
                     success() {
                         // 用户确认分享后执行的回调函数
-                        share();
+                        if (typeof resolve === 'function') {
+                            resolve('weibo');
+                        }
+                        share('weibo');
                     },
                 });
                 //分享到qq空间
@@ -102,7 +108,10 @@ module.exports = function (option = {}) {
                     link,
                     imgUrl,
                     success() {
-                        share();
+                        if (typeof resolve === 'function') {
+                            resolve('zone');
+                        }
+                        share('zone');
                     },
                 });
                 // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
@@ -114,7 +123,7 @@ module.exports = function (option = {}) {
                 token: APP.TOKEN,
                 userid: APP.USER_ID,
                 media_id: APP.MEDIA_ID,
-                origin: APP.ORIGIN
+                origin: APP.ORIGIN,
             }).then((response) => {
                 store.dispatch('getUserInfor');
             });

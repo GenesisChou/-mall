@@ -278,6 +278,7 @@
         data() {
             return {
                 product_id: '',
+                view_id: '',
                 product_detail: '',
                 order_detail_id: '', //兑换成功后用于跳转订单详情的订单id
                 is_recharge: false,
@@ -324,13 +325,15 @@
         beforeRouteLeave(to, from, next) {
             this.share_show = false;
             this.dialog_show = false;
+            this.$store.dispatch('updateItemView', this.view_id);
+            this.$store.dispatch('updatePageView');
             next();
         },
         created() {
             this.product_id = this.$route.query.product_id;
             this.from = this.$route.query.from || 'index';
             this.back = this.$route.query.back;
-            this.getProductPromise(this.getProductDetail(), this.isShare()).then(data => {
+            this.getProductPromise(this.getProductDetail('product_detail_l'), this.isShare()).then(data => {
                 this.has_shared = data[1].is_share;
                 this.has_exchanged = data[1].is_exchange;
                 this.changeState(data);
@@ -347,9 +350,9 @@
                         .pic_thumb_new,
                     desc: is_share_info ? this.product_detail.share_name_show : this.product_detail.name_show,
                     link
-                }).then(() => {
+                }).then(share_point => {
                     this.share_show = false;
-                    return this.shareView();
+                    return this.shareView(share_point);
                 }).then(() => {
                     this.getProductPromise(this.getProductDetail(), this.isShare()).then(data => {
                         this.has_shared = data[1].is_share;
@@ -367,10 +370,10 @@
                     });
             },
             //获取商品详情
-            getProductDetail() {
+            getProductDetail(url = 'product_detail') {
                 return new Promise(resolve => {
                     this.$store.dispatch('toggleLoading');
-                    this.$http.post(`${APP.HOST}/product_detail_l/${this.product_id}`, {
+                    this.$http.post(`${APP.HOST}/${url}/${this.product_id}`, {
                         token: APP.TOKEN,
                         media_id: APP.MEDIA_ID,
                         user_id: APP.USER_ID,
@@ -381,6 +384,7 @@
                         const data = response.data;
                         if (data.status === APP.SUCCESS) {
                             this.product_detail = data.data;
+                            this.view_id = data.data.view_id;
                             if (resolve && typeof resolve === 'function') {
                                 resolve(data.data);
                             }
@@ -535,7 +539,7 @@
                     this.state = 1;
                 }
             },
-            shareView() {
+            shareView(share_point) {
                 return new Promise(resolve => {
                     this.$http.post(`${APP.HOST}/share_view/${this.product_id}`, {
                         token: APP.TOKEN,
@@ -543,6 +547,7 @@
                         user_id: APP.USER_ID,
                         open_id: APP.OPEN_ID,
                         origin: APP.ORIGIN,
+                        share_point,
                         type: 1
                     }).then((response) => {
                         const data = response.data;

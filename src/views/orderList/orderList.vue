@@ -198,6 +198,7 @@
                 position[from.name] = utils.getScrollTop();
             });
             window.removeEventListener('scroll', this.scroll_events[this.current_type]);
+            this.$store.dispatch('updatePageView');
             next();
         },
         methods: {

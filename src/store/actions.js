@@ -22,6 +22,15 @@ module.exports = {
     pageView(context, page_id) {
         context.commit('pageView', page_id);
     },
+    currentPageView(context, page_id) {
+        context.commit('currentPageView', page_id);
+    },
+    updateItemView(context, view_id) {
+        context.commit('updateItemView', view_id);
+    },
+    updatePageView(context, view_id) {
+        context.commit('updatePageView', view_id);
+    },
     savePosition(context, callback) {
         context.commit('savePosition', callback);
     },

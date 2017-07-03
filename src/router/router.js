@@ -76,7 +76,7 @@ router.beforeEach((to, from, next) => {
     if (store.state.v_loading.show === true) {
         store.dispatch('toggleLoading');
     }
-
+    store.dispatch('currentPageView', from.name || 'index');
     store.dispatch('pageView', to.name);
     next();
 });

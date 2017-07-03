@@ -74,6 +74,37 @@ module.exports = {
             media_id: APP.MEDIA_ID,
             open_id: APP.OPEN_ID,
             origin: APP.ORIGIN || 'menu'
+        }).then(response => {
+            const data = response.data;
+            if (data.status === APP.SUCCESS) {
+                state.update_page_id = data.data;
+            }
+        });
+    },
+    currentPageView(state, page_id) {
+        Vue.http.post(`${APP.HOST}/current_page_view`, {
+            token: APP.TOKEN,
+            user_id: APP.USER_ID,
+            page_id,
+            media_id: APP.MEDIA_ID,
+            open_id: APP.OPEN_ID,
+            origin: APP.ORIGIN || 'menu'
+        });
+    },
+    updateItemView(state, view_id) {
+        Vue.http.post(`${APP.HOST}/update_item_view/${view_id}`, {
+            token: APP.TOKEN,
+            media_id: APP.MEDIA_ID,
+            user_id: APP.USER_ID,
+            open_id: APP.OPEN_ID,
+        });
+    },
+    updatePageView(state) {
+        Vue.http.post(`${APP.HOST}/update_page_view/${state.update_page_id}`, {
+            token: APP.TOKEN,
+            media_id: APP.MEDIA_ID,
+            user_id: APP.USER_ID,
+            open_id: APP.OPEN_ID,
         });
     },
     savePosition(state, callback) {

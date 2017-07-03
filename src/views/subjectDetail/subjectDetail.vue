@@ -134,6 +134,7 @@
             if (to.name === 'index') {
                 this.current_tab = '全部';
             }
+            this.$store.dispatch('updatePageView');
             next();
         },
         methods: {

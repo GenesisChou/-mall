@@ -318,6 +318,7 @@
                 this.params.sword = '';
             }
             window.removeEventListener('scroll', this.scroll_event);
+            this.$store.dispatch('updatePageView');
             next();
         },
         methods: {

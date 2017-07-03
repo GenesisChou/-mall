@@ -808,13 +808,13 @@
             this.getReadParam();
             this.getArticleList();
             this.getCheckInParams();
-            // this.getSubmitParam();
         },
         deactivated() {
             this.back_show = false;
             this.raiders_show = false;
             this.gift_show = false;
             this.records_show = false;
+            this.$store.dispatch('updatePageView');
         },
         methods: {
             //签到

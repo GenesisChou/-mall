@@ -165,6 +165,10 @@
                 }
             }, 500, 500));
         },
+        beforeRouteLeave(to, from, next) {
+            this.$store.dispatch('updatePageView');
+            next();
+        },
         methods: {
             //——获取积分明细列表
             getIntegralList() {

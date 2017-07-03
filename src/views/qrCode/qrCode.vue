@@ -18,6 +18,9 @@
             img() {
                 return this.$store.state.qr_code.qr_code_pic;
             }
+        },
+        deactivated() {
+            this.$store.dispatch('updatePageView');
         }
     };
 </script>
