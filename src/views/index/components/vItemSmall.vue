@@ -68,6 +68,8 @@
             color: #a9aaae;
         }
         .integral {
+            display: flex;
+            align-items: center;
             height: pxTorem(32);
             padding-left: pxTorem(16);
             padding-right: pxTorem(50);
@@ -75,6 +77,32 @@
             font-size: pxTorem(22);
             overflow: hidden;
             color: $orange;
+            strong {
+                width: pxTorem(65);
+                height: pxTorem(25);
+                line-height: pxTorem(25);
+                text-align: center;
+                font-weight: normal;
+                font-size: pxTorem(18);
+                background: #ff5000;
+                color: $white;
+            }
+            span {
+                height: pxTorem(32);
+                line-height: pxTorem(32);
+                overflow: hidden;
+                margin: 0 pxTorem(5) 0 pxTorem(8);
+                color: #ff5000;
+                font-size: pxTorem(24);
+            }
+            s {
+                height: pxTorem(32);
+                line-height: pxTorem(32);
+                overflow: hidden;
+                font-size: pxTorem(20);
+                color: #a9aaae;
+                transform: translateY(5%);
+            }
         }
         .icon {
             position: absolute;
@@ -98,7 +126,15 @@
             <footer v-if='show_message' class='message'>
                 <h5 v-if='layout.show_title===1'>{{item.title}}</h5>
                 <h6 v-if='layout.show_subtitle===1'>{{item.subtitle}}</h6>
-                <p v-if='layout.show_integral===1' class='integral'>{{item.integral>>0}}积分</p>
+                <p v-if='layout.show_integral===1' class='integral'>
+                    <template v-if='item.show_share_integral===1'>
+                        <strong>分享后</strong><span>{{parseInt(item.share_integral) || 0}}积分</span>
+                        <s>{{parseInt(item.integral)}}积分</s>
+                    </template>
+                    <template v-else>
+                        {{parseInt(item.integral)}}积分
+                    </template>
+                </p>
                 <img v-if='layout.show_integral===1' class='icon' :src='getIcon(item)'>
             </footer>
         </div>

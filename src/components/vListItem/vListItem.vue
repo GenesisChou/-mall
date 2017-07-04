@@ -13,7 +13,7 @@
         height: pxTorem(226);
         border-bottom: 1px solid $gray-light;
         .img {
-            position:relative;
+            position: relative;
             width: pxTorem(185);
             height: pxTorem(185);
             margin-left: pxTorem(10);
@@ -56,8 +56,36 @@
             color: #babbbe;
         }
         .integral {
+            display: flex;
+            align-items: center;
             padding-top: pxTorem(10);
             color: $orange;
+            strong {
+                width: pxTorem(78);
+                height: pxTorem(32);
+                line-height: pxTorem(32);
+                text-align: center;
+                font-weight: normal;
+                font-size: pxTorem(22);
+                background: #ff5000;
+                color: $white;
+            }
+            span {
+                height: pxTorem(32);
+                line-height: pxTorem(32);
+                overflow: hidden;
+                padding: 0 pxTorem(10);
+                color: #ff5000;
+                font-size: pxTorem(32);
+            }
+            s {
+                height: pxTorem(32);
+                line-height: pxTorem(32);
+                overflow: hidden;
+                font-size: pxTorem(22);
+                color: #a9aaae;
+                transform: translateY(5%);
+            }
         }
         &.no-border {
             border-bottom: none;
@@ -77,7 +105,15 @@
             <div class='describe'>
                 <h2 class='text-ellipsis'>{{title}}</h2>
                 <h6 class='text-ellipsis'>{{titleDupty}}</h6>
-                <h3 class='integral'>{{integral}}积分</h3>
+                <h3 class='integral'>
+                    <template v-if='item.show_share_integral===1'>
+                        <strong>分享后</strong><span>{{parseInt(item.share_integral) || 0}}积分</span>
+                        <s>{{parseInt(item.integral)}}积分</s>
+                    </template>
+                    <template v-else>
+                        {{integral}}积分
+                    </template>
+                </h3>
             </div>
         </div>
     </div>
@@ -94,7 +130,8 @@
                 type: Boolean,
                 default: false
             },
-            script: String
+            script: String,
+            item: Object
         },
     };
 </script>

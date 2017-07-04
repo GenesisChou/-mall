@@ -55,7 +55,7 @@ module.exports = function (option = {}) {
                             resolve('timeline');
                         }
                         // 用户确认分享后执行的回调函数
-                        share('timeline');
+                        share();
                     },
                 });
                 wx.onMenuShareAppMessage({
@@ -69,7 +69,7 @@ module.exports = function (option = {}) {
                         if (typeof resolve === 'function') {
                             resolve('friend');
                         }
-                        share('friend');
+                        share();
                     },
                 });
 
@@ -84,7 +84,7 @@ module.exports = function (option = {}) {
                         if (typeof resolve === 'function') {
                             resolve('qq');
                         }
-                        share('qq');
+                        share();
                     },
                 });
                 //分享到腾讯微博
@@ -98,7 +98,7 @@ module.exports = function (option = {}) {
                         if (typeof resolve === 'function') {
                             resolve('weibo');
                         }
-                        share('weibo');
+                        share();
                     },
                 });
                 //分享到qq空间
@@ -111,7 +111,7 @@ module.exports = function (option = {}) {
                         if (typeof resolve === 'function') {
                             resolve('zone');
                         }
-                        share('zone');
+                        share();
                     },
                 });
                 // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。

@@ -224,7 +224,7 @@
                 <router-link v-for='(product,$index) in product_list' :to='{name:"product_detail",query:{product_id:product.id,from:"product_list"}}'
                     tag='li' :key='product.id'>
                     <v-list-item :title='product.name' :title-dupty='product.name_show' :integral='product.integral>>0' :img='product.pic_thumb_new'
-                        :no-border='$index==product_list.length-1'></v-list-item>
+                        :no-border='$index==product_list.length-1' :item='product'></v-list-item>
                 </router-link>
             </transition-group>
         </div>
@@ -290,7 +290,9 @@
         },
         beforeRouteEnter(to, from, next) {
             next(vm => {
-                if (from.name === 'index' || (from.name === 'product_detail' && vm.product_list.length === 0)) {
+                if (from.name === 'index' ||
+                    (from.name === 'product_detail' && vm.product_list.length === 0) ||
+                    !from.name) {
                     vm.first_enter = true;
                     vm.$store.dispatch('toggleLoading');
                     vm.getProductList().then(data => {
