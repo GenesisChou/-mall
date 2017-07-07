@@ -65,6 +65,7 @@
                 </component>
             </keep-alive>
         </div>
+        <v-guide :show.sync='share_show' :has-shared='has_shared' :activity-id='activity_id>>0'></v-guide>
         <v-ruler :show.sync='ruler_show' :activity-detail='activity_detail'></v-ruler>
         <v-dialog :show='dialog_show' :dialog='dialog' :toggle-dialog='toggleDialog'></v-dialog>
         <v-support></v-support>
@@ -78,6 +79,7 @@
     import vShareGuide from 'components/vShareGuide';
     import vRuler from './components/vRuler';
     import vNotice from 'components/vNotice';
+    import vGuide from './components/vGuide';
     export default {
         name: 'activityDetail',
         components: {
@@ -85,6 +87,7 @@
             vShareGuide,
             vRuler,
             vNotice,
+            vGuide,
             quiz: require('./components/quiz'),
             scrap: require('./components/scrap'),
             game: require('./components/game'),
