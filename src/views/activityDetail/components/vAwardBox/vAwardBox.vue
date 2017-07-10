@@ -2,51 +2,63 @@
     @import '../../../../assets/scss/variable.scss';
     .v-award-box {
         position: relative;
-        width: pxTorem(728);
-        height: pxTorem(235);
-        padding: pxTorem(45) pxTorem(20) 0 pxTorem(15);
+        width: pxTorem(722);
         margin: pxTorem(48) auto;
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
+        padding-bottom: pxTorem(10);
+        border-radius: pxTorem(10);
+        border-width: pxTorem(4);
+        border-style: solid;
         ul,
         li {
             list-style: none;
         }
         &.red {
-            background-image: url('./images/redAwardBox.png');
+            background: #ffdddd;
+            border-color: #fe7a6f;
         }
         &.green {
-            background-image: url('./images/greenAwardBox.png');
+            background: #e7f758;
+            border-color: #78cc1e;
         }
         &.aquamarine {
-            background-image: url('./images/aquamarineAwardBox.png');
+            background: #d0eff1;
+            border-color: #2ba7a9;
         }
         &.blue {
-            background-image: url('./images/blueAwardBox.png');
+            background: #87e7ff;
+            border-color: #29cfff;
         }
         &.navy {
-            background-image: url('./images/navyAwardBox.png');
+            background: #89deee;
+            border-color: #399fae;
         }
         &.brown {
-            background-image: url('./images/brownAwardBox.png');
+            background: #cf9500;
+            border-color: #a26a01;
         }
         &.palaceblue {
-            background-image: url('./images/palaceblueAwardBox.png');
+            background: #30c7fe;
+            border-color: #0696f1;
         }
         &.emerald {
-            background-image: url('./images/emeraldAwardBox.png');
+            background: #227668;
+            border-color: #05543d;
         }
         &.army {
-            background-image: url('./images/armyAwardBox.png');
+            background: #34ad54;
+            border-color: #1d7233;
         }
         &.purple {
-            background-image: url('./images/purpleAwardBox.png');
+            background: #ce65ee;
+            border-color: #9901aa;
         }
         &.orange {
-            background-image: url('./images/orangeAwardBox.png');
+            background: #ffbb6a;
+            border-color: #f8951e;
         }
         &.yellow {
-            background-image: url('./images/yellowAwardBox.png');
+            background: #ffd916;
+            border-color: #e8af00;
         }
         .wrapper {
             width: 100%;
@@ -55,18 +67,22 @@
         ul {
             white-space: nowrap; // display:flex;
         }
+        .title {
+            padding-left: pxTorem(26);
+            line-height: pxTorem(47);
+            color: $white;
+        }
         .award {
             display: inline-flex;
             flex-direction: column;
             justify-content: space-between;
-            align-items: center;
-            width: pxTorem(155);
-            height: pxTorem(175);
-            margin: 0 pxTorem(21);
-            padding: pxTorem(10) pxTorem(10) 0 pxTorem(10);
+            align-items: center; // width: pxTorem(155);
+            // height: pxTorem(175);
+            margin: 0 pxTorem(12);
+            padding: pxTorem(5) pxTorem(5) 0 pxTorem(5);
             img {
-                width: pxTorem(125);
-                height: pxTorem(125);
+                width: pxTorem(144);
+                height: pxTorem(144);
             }
             h6 {
                 color: $white;
@@ -114,6 +130,7 @@
 <template>
     <div :class='["v-award-box",color]'>
         <div class='wrapper'>
+            <h6 class='title'>奖品列表</h6>
             <ul ref='scroller'>
                 <li :class='["award",color]' v-for='award in awords'>
                     <img :src='award.pic'>

@@ -9,8 +9,8 @@ const media_id = utils.getParameterByName('id'),
 if (storage) {
     const now = new Date(),
         before = new Date(storage.DATE),
-        interval = (now - before) / 1000 / 60 / 60,
-        is_expired = parseInt(interval) >= 1;
+        interval = (now - before) / 1000 / 60 / 60 / 24,
+        is_expired = parseInt(interval) >= 30;
     if (is_expired) {
         utils.login(media_id, 1, page, null, origin);
     } else {

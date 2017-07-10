@@ -3,7 +3,8 @@
     .v-shake {
         background-color: #FCE284;
     }
-    .integral-message{
+
+    .integral-message {
         background-color: #e34a38;
     }
 
@@ -65,6 +66,10 @@
         </article>-->
         <footer>
             <v-award-box :awords='activityDetail.items' color='red'></v-award-box>
+            <template v-if='activityDetail.recommend_items.length>0'>
+                <v-title color='red'></v-title>
+                <v-recommand :recommands='activityDetail.recommend_items' color='red'></v-recommand>
+            </template>
         </footer>
         <audio ref='audio'>
             <source src="http://xunlei.sc.chinaz.com/files/download/sound1/201410/5018.wav" type="audio/mpeg" />

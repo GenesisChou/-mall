@@ -5,15 +5,13 @@
         padding: pxTorem(20) 0;
         position: relative;
         height: pxTorem(177);
-        background-image: url('./images/ticket.png');
-        background-size: pxTorem(748) pxTorem(167);
-        background-position: 0 pxTorem(10);
-        background-color: $white;
+        background:url('./images/ticket.png') $white no-repeat center center;
+        background-size: pxTorem(750) pxTorem(132);
         border-bottom: 1px solid #d3d4d6;
         span {
             position: absolute;
             top: 50%;
-            left: 40%;
+            left: 43%;
             color: #646565;
             font-size: pxTorem(30);
             transform: translateY(-50%);

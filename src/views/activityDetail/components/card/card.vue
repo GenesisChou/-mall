@@ -413,6 +413,10 @@
         </article>-->
         <footer>
             <v-award-box :awords='activityDetail.items' color='brown'></v-award-box>
+            <template v-if='activityDetail.recommend_items.length>0'>
+                <v-title color='brown'></v-title>
+                <v-recommand :recommands='activityDetail.recommend_items' color='brown'></v-recommand>
+            </template>
         </footer>
     </div>
 </template>
@@ -420,12 +424,16 @@
     import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
     import vAwardBox from '../vAwardBox';
+    import vRecommand from '../vRecommand';
+    import vTitle from '../vTitle';
     export default {
         name: 'card',
         components: {
             vDescribeTitle,
             vIntegralBox,
-            vAwardBox
+            vAwardBox,
+            vRecommand,
+            vTitle
         },
         props: {
             freshFreeTimes: Function,

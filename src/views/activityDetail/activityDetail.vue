@@ -134,41 +134,21 @@
                     this.$store.state.qr_code.qr_code_pic;
             }
         },
+        watch: {
+            $route(value) {
+                this.init();
+                window.scrollTo(0, 0);
+                // window.location.reload();
+            }
+        },
         beforeRouteEnter(to, from, next) {
             const $script = require('scriptjs');
             $script('http://m.goldmiao.com/yngame/air.min.1.0.1.js', () => {
                 next();
             });
         },
-
         created() {
-            this.activity_id = this.$route.query.activity_id;
-            this.getActivityPromise(this.getActivityDetail('activity_detail_l'), this.isShare()).then(data => {
-                this.activity_type = this.getActivityType(this.activity_detail.type);
-                this.has_shared = data[1].is_share;
-                this.has_exchanged = data[1].is_exchange;
-                if (this.activity_detail.is_share === 1 & this.has_shared === false) {
-                    this.share_show = true;
-                }
-                const is_share_info = this.activity_detail.is_share_info === 1;
-                weChatShare({
-                    router: this.$route,
-                    title: is_share_info ? this.activity_detail.share_name : this.activity_detail.name,
-                    img: is_share_info ? this.activity_detail.share_pic_thumb_new : this.activity_detail
-                        .pic_thumb_new,
-                    desc: is_share_info ? this.activity_detail.share_desc : this.activity_detail.desc,
-                    link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=activity_detail&activity_id=${this.activity_id}`
-                }).then(share_point => {
-                    this.share_show = false;
-                    return this.shareView(share_point);
-                }).then(() => {
-                    this.getActivityPromise(this.getActivityDetail(), this.isShare()).then(data => {
-                        this.has_shared = data[1].is_share;
-                        this.has_exchanged = data[1].is_exchange;
-                    });
-                });
-            });
-            this.getFreeTimes();
+            this.init();
         },
         beforeRouteLeave(to, from, next) {
             this.$store.dispatch('updateItemView', this.view_id);
@@ -176,6 +156,35 @@
             next();
         },
         methods: {
+            init() {
+                this.activity_id = this.$route.query.activity_id;
+                this.getActivityPromise(this.getActivityDetail('activity_detail_l'), this.isShare()).then(data => {
+                    this.activity_type = this.getActivityType(this.activity_detail.type);
+                    this.has_shared = data[1].is_share;
+                    this.has_exchanged = data[1].is_exchange;
+                    if (this.activity_detail.is_share === 1 & this.has_shared === false) {
+                        this.share_show = true;
+                    }
+                    const is_share_info = this.activity_detail.is_share_info === 1;
+                    weChatShare({
+                        router: this.$route,
+                        title: is_share_info ? this.activity_detail.share_name : this.activity_detail.name,
+                        img: is_share_info ? this.activity_detail.share_pic_thumb_new : this.activity_detail
+                            .pic_thumb_new,
+                        desc: is_share_info ? this.activity_detail.share_desc : this.activity_detail.desc,
+                        link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=activity_detail&activity_id=${this.activity_id}`
+                    }).then(share_point => {
+                        this.share_show = false;
+                        return this.shareView(share_point);
+                    }).then(() => {
+                        this.getActivityPromise(this.getActivityDetail(), this.isShare()).then(data => {
+                            this.has_shared = data[1].is_share;
+                            this.has_exchanged = data[1].is_exchange;
+                        });
+                    });
+                });
+                this.getFreeTimes();
+            },
             getActivityPromise(promiseX, promiseY) {
                 return Promise.all([promiseX, promiseY])
                     .then(data => {

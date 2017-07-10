@@ -94,25 +94,25 @@
                 other_activity_id: ''
             };
         },
+        watch: {
+            activityId() {
+                this.getSomethingElse();
+            }
+        },
         created() {
-            this.getSomethingElse().then(data => {
-                if (data.data) {
-                    this.other_activity_id = data.data;
-                }
-            });
+            this.getSomethingElse();
         },
         methods: {
             changeState() {
                 this.$emit('update:show', true);
             },
             playSomethingElse() {
-                this.$router.replace({
-                    name: 'activity_detail',
+                this.$router.push({
+                    path: 'activity_detail',
                     query: {
-                        activity_id: this.other_activity_id
-                    }
+                        activity_id: this.other_activity_id,
+                    },
                 });
-                window.location.reload();
             },
             getSomethingElse() {
                 return new Promise(resolve => {
@@ -128,6 +128,7 @@
                         const data = response.data;
                         if (data.status === APP.SUCCESS && typeof resolve === 'function') {
                             resolve(data);
+                            this.other_activity_id = data.data;
                         } else {
                             this.$store.dispatch('toggleAlert', {
                                 msg: data.info
