@@ -10,6 +10,10 @@
         li {
             list-style: none;
         }
+        h6 {
+            height: pxTorem(36);
+            line-height: pxTorem(36);
+        }
         .title {
             padding-left: pxTorem(26);
             line-height: pxTorem(47);
@@ -67,7 +71,6 @@
             &.yellow {
                 background-color: #e8af00;
             }
-            
         }
     }
 </style>
@@ -76,7 +79,7 @@
         <li :class='["recommand",color]' v-for='recommand in recommands' @click='routerLink(recommand)'>
             <img :src='recommand.pic'>
             <h6>
-                {{recommand.name|filter}}
+                {{(recommand.title||recommand.name)|filter}}
             </h6>
         </li>
     </ul>
@@ -92,36 +95,43 @@
         },
         filters: {
             filter(str) {
-                return str.length < 5 ? str : str.substr(0, 5) + '...';
+                if (str) {
+                    return str.length < 5 ? str : str.substr(0, 5) + '...';
+                }
+                return '...';
             }
         },
         methods: {
             routerLink(recommand) {
-                console.log(recommand);
                 if (recommand) {
                     const type = recommand.type,
-                        item_id = recommand.item_id,
-                        routes = [{
-                            name: 'product_detail',
-                            query: {
-                                product_id: item_id
-                            }
-                        }, {
-                            name: 'activity_detail',
-                            query: {
-                                activity_id: item_id
-                            }
-                        }, {
-                            name: 'subject_detail',
-                            query: {
-                                subject_id: item_id
-                            }
-                        }];
-                    if (type - 1 >= 0 && item_id) {
-                        this.$router.push({
-                            name: routes[type - 1].name,
-                            query: routes[type - 1].query
-                        });
+                        link = recommand.url;
+                    if (type >= 1 && type <= 3) {
+                        const item_id = recommand.item_id,
+                            routes = [{
+                                name: 'product_detail',
+                                query: {
+                                    product_id: item_id
+                                }
+                            }, {
+                                name: 'activity_detail',
+                                query: {
+                                    activity_id: item_id
+                                }
+                            }, {
+                                name: 'subject_detail',
+                                query: {
+                                    subject_id: item_id
+                                }
+                            }];
+                        if (item_id) {
+                            this.$router.push({
+                                name: routes[type - 1].name,
+                                query: routes[type - 1].query
+                            });
+                        }
+                    } else if (link && (type === 4 || type === 5)) {
+                        location.href = link;
                     }
                 }
             }
