@@ -151,7 +151,9 @@
             this.init();
         },
         beforeRouteLeave(to, from, next) {
-            this.$store.dispatch('updateItemView', this.view_id);
+            if (this.view_id) {
+                this.$store.dispatch('updateItemView', this.view_id);
+            }
             this.$store.dispatch('updatePageView');
             next();
         },

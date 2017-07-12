@@ -325,7 +325,9 @@
         beforeRouteLeave(to, from, next) {
             this.share_show = false;
             this.dialog_show = false;
-            this.$store.dispatch('updateItemView', this.view_id);
+            if (this.view_id) {
+                this.$store.dispatch('updateItemView', this.view_id);
+            }
             this.$store.dispatch('updatePageView');
             next();
         },
