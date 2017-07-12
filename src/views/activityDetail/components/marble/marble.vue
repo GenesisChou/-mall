@@ -562,20 +562,27 @@
         </article>-->
         <footer>
             <v-award-box :awords='activityDetail.items' color='army'></v-award-box>
+            <template v-if='activityDetail.recommend_items.length>0'>
+                <v-title color='army'></v-title>
+                <v-recommand :recommands='activityDetail.recommend_items' color='army'></v-recommand>
+            </template>
         </footer>
-
     </div>
 </template>
 <script>
     import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
     import vAwardBox from '../vAwardBox';
+    import vRecommand from '../vRecommand';
+    import vTitle from '../vTitle';
     export default {
         name: 'marble',
         components: {
             vDescribeTitle,
             vIntegralBox,
-            vAwardBox
+            vAwardBox,
+            vRecommand,
+            vTitle
         },
         props: {
             activityDetail: Object,

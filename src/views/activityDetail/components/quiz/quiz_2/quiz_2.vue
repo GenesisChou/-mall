@@ -90,6 +90,10 @@
         </article>-->
         <footer>
             <v-award-box :awords='activityDetail.items' color='yellow'></v-award-box>
+            <template v-if='activityDetail.recommend_items.length>0'>
+                <v-title color='yellow'></v-title>
+                <v-recommand :recommands='activityDetail.recommend_items' color='yellow'></v-recommand>
+            </template>
         </footer>
 
     </div>

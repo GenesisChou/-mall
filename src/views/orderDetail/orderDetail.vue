@@ -556,7 +556,8 @@
                 return new Promise(resolve => {
                     this.$http.post(`${APP.HOST}/product_detail/${this.product_id}`, {
                         token: APP.TOKEN,
-                        userid: APP.USER_ID
+                        user_id: APP.USER_ID,
+                        media_id: APP.USER_ID
                     }).then((response) => {
                         const data = response.data;
                         this.product_detail = data.data;

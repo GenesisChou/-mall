@@ -329,6 +329,10 @@
         </article>-->
         <footer>
             <v-award-box :awords='activityDetail.items' color='palaceblue'></v-award-box>
+            <template v-if='activityDetail.recommend_items.length>0'>
+                <v-title color='palaceblue'></v-title>
+                <v-recommand :recommands='activityDetail.recommend_items' color='palaceblue'></v-recommand>
+            </template>
         </footer>
     </div>
 </template>
@@ -336,12 +340,16 @@
     import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox';
     import vAwardBox from '../vAwardBox';
+    import vRecommand from '../vRecommand';
+    import vTitle from '../vTitle';
     export default {
         name: 'doll',
         components: {
             vDescribeTitle,
             vIntegralBox,
-            vAwardBox
+            vAwardBox,
+            vRecommand,
+            vTitle
         },
         props: {
             freshFreeTimes: Function,

@@ -48,6 +48,10 @@
         </article>-->
         <footer>
             <v-award-box :awords='activityDetail.items' color='green'></v-award-box>
+            <template v-if='activityDetail.recommend_items.length>0'>
+                <v-title color='green'></v-title>
+                <v-recommand :recommands='activityDetail.recommend_items' color='green'></v-recommand>
+            </template>
         </footer>
 
     </div>

@@ -3,22 +3,24 @@
     .v-scrap {
         background-color: #4dd3d6;
     }
-    .header{
-        position:relative;
+
+    .header {
+        position: relative;
         overflow: hidden;
     }
-    .arc{
-        position:absolute;
-        bottom:pxTorem(-56);
-        width:pxTorem(750);
-        height:pxTorem(78);
+
+    .arc {
+        position: absolute;
+        bottom: pxTorem(-56);
+        width: pxTorem(750);
+        height: pxTorem(78);
     }
 </style>
 <template>
     <div class='v-scrap'>
         <header class='header'>
             <img class='banner' :src='activityDetail.pic_banner_new'>
-            <img class='arc' src='./images/arc.png' >
+            <img class='arc' src='./images/arc.png'>
         </header>
         <main>
             <div class='integral-message'>
@@ -52,6 +54,10 @@
         </article>-->
         <footer>
             <v-award-box :awords='activityDetail.items' color='aquamarine'></v-award-box>
+            <template v-if='activityDetail.recommend_items.length>0'>
+                <v-title color='aquamarine'></v-title>
+                <v-recommand :recommands='activityDetail.recommend_items' color='aquamarine'></v-recommand>
+            </template>
         </footer>
     </div>
 </template>
