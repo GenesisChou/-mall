@@ -505,9 +505,6 @@
         created() {
             this.order_id = this.$route.query.order_id;
             this.content_show = false;
-            this.updateOrderRead().then(() => {
-                this.$store.dispatch('getUserInfor');
-            });
             this.getOrderDetail().then(data => {
                 this.product_id = data.product_id;
                 this.product_type = data.product_type;
@@ -524,6 +521,11 @@
                 this.getProductDetail().then(() => {
                     this.content_show = true;
                 });
+                if (data.status === 1) {
+                    this.updateOrderRead().then(() => {
+                        this.$store.dispatch('getUserInfor');
+                    });
+                }
             });
         },
         beforeRouteLeave(to, from, next) {
