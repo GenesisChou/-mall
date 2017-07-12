@@ -7,7 +7,7 @@
         }
         img {
             width: pxTorem(750);
-            height: pxTorem(330);
+            height: pxTorem(200);
         }
     }
 </style>

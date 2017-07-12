@@ -102,7 +102,11 @@
 
     .banner {
         width: pxTorem(750);
-        height: pxTorem(330);
+        height: pxTorem(200);
+        img {
+            width: 100%;
+            height: 100%;
+        }
     }
 
     .title {
@@ -206,7 +210,10 @@
         <template v-if='!is_recharge'>
             <header class='header '>
                 <img v-show='back' class='back' src='./images/back.png' @click='returnPrev' />
-                <img class='banner' :src='product_detail.pic_banner_new' />
+                <div class='banner'>
+                    <!--<img :src='product_detail.pic_banner_new' />-->
+                    <v-swiper :slides='[{},{},{},{}]'></v-swiper>
+                </div>
                 <div class='title'>
                     <h1 class='text-ellipsis'>{{product_detail.name}}</h1>
                     <h3><span class='number'>{{integral}}</span>积分
@@ -266,6 +273,7 @@
     import vDialog from './components/vDialog';
     import vShareGuide from 'components/vShareGuide';
     import vNotice from 'components/vNotice';
+    import vSwiper from './components/vSwiper.vue';
     export default {
         name: 'productDetail',
         components: {
@@ -273,7 +281,8 @@
             recharge,
             vDialog,
             vShareGuide,
-            vNotice
+            vNotice,
+            vSwiper
         },
         data() {
             return {
@@ -408,20 +417,7 @@
                             this.order().then(data => {
                                 this.order_detail_id = data.data.id;
                                 this.$store.dispatch('getUserInfor');
-                                this.toggleDialog({
-                                    type: 'success',
-                                    msg: '获得' + this.product_detail.name,
-                                    img: this.product_detail.pic_thumb_new,
-                                    btn_text: '查看',
-                                    callback: this.toOrderDetail
-                                });
-                                this.getProductPromise(this.getProductDetail(), this.isShare()).then(
-                                    (
-                                        data) => {
-                                        this.has_shared = data[1].is_share;
-                                        this.has_exchanged = data[1].is_exchange;
-                                        this.changeState(data);
-                                    });
+                                this.toOrderDetail();
                             }).catch(data => {
                                 this.toggleDialog({
                                     type: 'faliure',

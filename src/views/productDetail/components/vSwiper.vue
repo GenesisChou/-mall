@@ -1,6 +1,6 @@
 <style lang='scss' scoped>
     @import '../../../assets/scss/variable.scss'; // @import './style.scss';
-    .v-adv-slide {
+    .v-swiper {
         width: pxTorem(750);
         height: pxTorem(200);
     }
@@ -11,10 +11,10 @@
     }
 </style>
 <template>
-    <div class='v-adv-slide'>
+    <div class='v-swiper'>
         <swiper :options='swiperOption' ref='mySwiper' id='swiper'>
             <!-- slides -->
-            <swiper-slide v-for='slide in layout.items'>
+            <swiper-slide v-for='slide in slides'>
                 <img class='slide-item' :src="slide.pic_banner_new">
             </swiper-slide>
             <div class='swiper-pagination' slot='pagination'></div>
@@ -29,8 +29,12 @@
     export default {
         name: 'vAdvSlide',
         props: {
-            layout: Object,
-            routerLink: Function,
+            slides: {
+                type: Array,
+                default: function () {
+                    return [];
+                }
+            }
         },
         components: {
             swiper,
@@ -47,8 +51,8 @@
                     pagination: '.swiper-pagination',
                     paginationClickable: true,
                     onTap: (swiper) => {
-                        const index = swiper.realIndex;
-                        this.routerLink(this.layout.items[index], this.layout);
+                        // const index = swiper.realIndex;
+                        // this.routerLink(this.layout.items[index], this.layout);
                     },
                 }
             };
