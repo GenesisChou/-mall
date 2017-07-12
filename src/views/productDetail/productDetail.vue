@@ -386,7 +386,9 @@
                         const data = response.data;
                         if (data.status === APP.SUCCESS) {
                             this.product_detail = data.data;
-                            this.view_id = data.data.view_id;
+                            if (url === 'product_detail_l') {
+                                this.view_id = data.data.view_id;
+                            }
                             if (resolve && typeof resolve === 'function') {
                                 resolve(data.data);
                             }
