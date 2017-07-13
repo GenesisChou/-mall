@@ -303,10 +303,7 @@
         </article>-->
         <footer>
             <v-award-box :awords='activityDetail.items' color='navy'></v-award-box>
-            <template v-if='activityDetail.recommend_items.length>0'>
-                <v-title color='navy'></v-title>
-                <v-recommand :recommands='activityDetail.recommend_items' color='navy'></v-recommand>
-            </template>
+            <v-recommand :recommands='activityDetail.recommend_items' color='navy'></v-recommand>
         </footer>
     </div>
 </template>
@@ -315,7 +312,7 @@
     import vIntegralBox from '../vIntegralBox.vue';
     import vAwardBox from '../vAwardBox';
     import vPeople from './components/people';
-    import vRecommand from '../vRecommand';
+    import vRecommand from 'components/vRecommand';
     import vTitle from '../vTitle';
     export default {
         name: 'treasure',

@@ -211,8 +211,8 @@
             <header class='header '>
                 <img v-show='back' class='back' src='./images/back.png' @click='returnPrev' />
                 <div class='banner'>
-                    <!--<img :src='product_detail.pic_banner_new' />-->
-                    <v-swiper :slides='[{},{},{},{}]'></v-swiper>
+                    <v-swiper v-if='product_detail.pics.length>1' :slides='product_detail.pics'></v-swiper>
+                    <img v-else :src='product_detail.pics[0].url' />
                 </div>
                 <div class='title'>
                     <h1 class='text-ellipsis'>{{product_detail.name}}</h1>
@@ -273,7 +273,7 @@
     import vDialog from './components/vDialog';
     import vShareGuide from 'components/vShareGuide';
     import vNotice from 'components/vNotice';
-    import vSwiper from './components/vSwiper.vue';
+    import vSwiper from 'components/vSwiper.vue';
     export default {
         name: 'productDetail',
         components: {
@@ -334,7 +334,9 @@
         beforeRouteLeave(to, from, next) {
             this.share_show = false;
             this.dialog_show = false;
-            this.$store.dispatch('updateItemView', this.view_id);
+            if (this.view_id) {
+                this.$store.dispatch('updateItemView', this.view_id);
+            }
             this.$store.dispatch('updatePageView');
             next();
         },
@@ -393,7 +395,9 @@
                         const data = response.data;
                         if (data.status === APP.SUCCESS) {
                             this.product_detail = data.data;
-                            this.view_id = data.data.view_id;
+                            if (url === 'product_detail_l') {
+                                this.view_id = data.data.view_id;
+                            }
                             if (resolve && typeof resolve === 'function') {
                                 resolve(data.data);
                             }

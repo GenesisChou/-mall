@@ -2,7 +2,7 @@
     // import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
     import vAwardBox from '../vAwardBox';
-    import vRecommand from '../vRecommand';
+    import vRecommand from 'components/vRecommand';
     import vTitle from '../vTitle';
     module.exports = {
         components: {

@@ -1,5 +1,5 @@
 <style lang='scss' scoped>
-    @import '../../../assets/scss/variable.scss'; // @import './style.scss';
+    @import '../assets/scss/variable.scss'; // @import './style.scss';
     .v-swiper {
         width: pxTorem(750);
         height: pxTorem(200);
@@ -15,7 +15,7 @@
         <swiper :options='swiperOption' ref='mySwiper' id='swiper'>
             <!-- slides -->
             <swiper-slide v-for='slide in slides'>
-                <img class='slide-item' :src="slide.pic_banner_new">
+                <img class='slide-item' :src="slide.url">
             </swiper-slide>
             <div class='swiper-pagination' slot='pagination'></div>
         </swiper>

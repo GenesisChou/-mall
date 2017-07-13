@@ -39,23 +39,9 @@
                 </template>
             </h5>
         </main>
-        <!--<article class='describe'>
-            <v-describe-title text='详细说明' color='orange'></v-describe-title>
-            <v-simditor>
-                <section v-html='activityDetail.content'></section>
-            </v-simditor>
-            <v-describe-title text='概率说明' color='orange'></v-describe-title>
-            <v-simditor>
-                <section v-html='activityDetail.content_prob'></section>
-            </v-simditor>
-            <v-describe-title text='奖项列表' color='orange'></v-describe-title>
-        </article>-->
         <footer>
             <v-award-box :awords='activityDetail.items' color='orange'></v-award-box>
-            <template v-if='activityDetail.recommend_items.length>0'>
-                <v-title color='orange'></v-title>
-                <v-recommand :recommands='activityDetail.recommend_items' color='orange'></v-recommand>
-            </template>
+            <v-recommand :recommands='activityDetail.recommend_items' color='orange'></v-recommand>
         </footer>
     </div>
 </template>

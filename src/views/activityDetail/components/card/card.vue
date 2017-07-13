@@ -400,23 +400,9 @@
             </div>
         </main>
         <div v-show='cover_show' class='cover'></div>
-        <!--<article class='describe'>
-            <v-describe-title text='详细说明' color='brown'></v-describe-title>
-            <v-simditor>
-                <section v-html='activityDetail.content'></section>
-            </v-simditor>
-            <v-describe-title text='概率说明' color='brown'></v-describe-title>
-            <v-simditor>
-                <section v-html='activityDetail.content_prob'></section>
-            </v-simditor>
-            <v-describe-title text='奖项列表' color='brown'></v-describe-title>
-        </article>-->
         <footer>
             <v-award-box :awords='activityDetail.items' color='brown'></v-award-box>
-            <template v-if='activityDetail.recommend_items.length>0'>
-                <v-title color='brown'></v-title>
-                <v-recommand :recommands='activityDetail.recommend_items' color='brown'></v-recommand>
-            </template>
+            <v-recommand :recommands='activityDetail.recommend_items' color='brown'></v-recommand>
         </footer>
     </div>
 </template>
@@ -424,7 +410,7 @@
     import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
     import vAwardBox from '../vAwardBox';
-    import vRecommand from '../vRecommand';
+    import vRecommand from 'components/vRecommand';
     import vTitle from '../vTitle';
     export default {
         name: 'card',

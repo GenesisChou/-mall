@@ -1,5 +1,5 @@
 <style lang='scss' scoped>
-    @import '../../../../assets/scss/variable.scss';
+    @import '../../assets/scss/variable.scss';
     .v-guide {
         position: fixed;
         right: 0;
@@ -75,7 +75,7 @@
 <template>
     <div class='v-guide'>
         <img class='money' src='./images/money.png'>
-        <div v-if='hasShared&&other_activity_id' @click='playSomethingElse' class='monster monster-else'></div>
+        <div v-if='hasShared&&id' @click='playSomethingElse' class='monster monster-else'></div>
         <div v-else @click='changeState' class='monster monster-share'></div>
     </div>
 </template>
@@ -87,16 +87,22 @@
                 default: false
             },
             hasShared: Boolean,
-            activityId: Number
+            id: {
+                type: Number,
+                default: 0
+            }
         },
         data() {
             return {
-                other_activity_id: ''
+                other_id: '',
+                other_type: ''
             };
         },
         watch: {
-            activityId() {
-                this.getSomethingElse();
+            id(value) {
+                if (value) {
+                    this.getSomethingElse();
+                }
             }
         },
         created() {
@@ -107,34 +113,58 @@
                 this.$emit('update:show', true);
             },
             playSomethingElse() {
-                this.$router.push({
-                    path: 'activity_detail',
-                    query: {
-                        activity_id: this.other_activity_id,
-                    },
-                });
+                console.log(this.other_type);
+                if (this.other_type === 1) {
+                    this.$router.push({
+                        path: 'product_detail',
+                        query: {
+                            product_id: this.other_id,
+                        },
+                    });
+                } else if (this.other_type === 2) {
+                    this.$router.push({
+                        path: 'activity_detail',
+                        query: {
+                            activity_id: this.other_id,
+                        },
+                    });
+                } else if (this.other_type === 3) {
+                    this.$router.push({
+                        path: 'subject_detail',
+                        query: {
+                            subject_id: this.other_id,
+                        },
+                    });
+                }
             },
             getSomethingElse() {
-                return new Promise(resolve => {
+                const page = this.$parent.$route.name;
+                let url = '';
+                if (page === 'activity_detail') {
+                    url = 'activity';
+                } else if (page === 'subject_detail') {
+                    url = 'subject';
+                }
+                this.$store.dispatch('toggleLoading');
+                this.$http.post(`${APP.HOST}/other_${url}_id/${this.id}`, {
+                    token: APP.TOKEN,
+                    media_id: APP.MEDIA_ID,
+                    user_id: APP.USER_ID,
+                    open_id: APP.OPEN_ID,
+                    origin: APP.ORIGIN
+                }).then((response) => {
                     this.$store.dispatch('toggleLoading');
-                    this.$http.post(`${APP.HOST}/other_activity_id/${this.activityId}`, {
-                        token: APP.TOKEN,
-                        media_id: APP.MEDIA_ID,
-                        user_id: APP.USER_ID,
-                        open_id: APP.OPEN_ID,
-                        origin: APP.ORIGIN
-                    }).then((response) => {
-                        this.$store.dispatch('toggleLoading');
-                        const data = response.data;
-                        if (data.status === APP.SUCCESS && typeof resolve === 'function') {
-                            resolve(data);
-                            this.other_activity_id = data.data;
-                        } else {
-                            this.$store.dispatch('toggleAlert', {
-                                msg: data.info
-                            });
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS) {
+                        if (data.data) {
+                            this.other_id = data.data.id;
+                            this.other_type = data.data.type;
                         }
-                    });
+                    } else {
+                        this.$store.dispatch('toggleAlert', {
+                            msg: data.info
+                        });
+                    }
                 });
             }
         }

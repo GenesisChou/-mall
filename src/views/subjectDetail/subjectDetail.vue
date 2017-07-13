@@ -17,7 +17,11 @@
 
     .banner {
         width: pxTorem(750);
-        height: pxTorem(330);
+        height: pxTorem(200);
+        img {
+            width: 100%;
+            height: 100%;
+        }
     }
 
     ul,
@@ -52,28 +56,44 @@
             }
         }
     }
+
+    .content {
+        overflow: hidden;
+        padding-bottom: pxTorem(13);
+    }
+
+    .activity {
+        width: pxTorem(750);
+        height: pxTorem(200);
+        margin-top: pxTorem(13);
+    }
 </style>
 <template>
-    <div v-show='content_show' class='subject-detail'>
+    <div class='subject-detail'>
         <template v-if='notice_show'>
             <v-notice></v-notice>
             <div class='space'></div>
         </template>
         <div class='subject-detail-content'>
-            <img class='banner' :src='subject_detail.pic_banner_new'>
-            <main>
-                <ul v-if='tabs_show' class='tabs'>
-                    <li :class='{active:current_tab=="全部"}' @click='switchTab("全部")'>全部</li>
-                    <li v-for='tab in tabs' :class='{active:current_tab==tab.name}' @click='switchTab(tab.name)'>
-                        {{tab.name}}
-                    </li>
-                </ul>
-                <ul v-for='tab in tabs'>
-                    <router-link v-for='(item,$index) in tab.items' :to='getRouter(item)' tag='li' v-show='current_tab=="全部"||current_tab==tab.name'>
-                        <v-list-item :title='item.name' :title-dupty='item.sub_name' :integral='item.integral>>0' :img='item.pic' :script='item.script' :item='item'></v-list-item>
-                    </router-link>
-                </ul>
-            </main>
+            <div class='banner'>
+                <v-swiper v-if='subject_detail.pics.length>1' :slides='subject_detail.pics'></v-swiper>
+                <img v-else :src='subject_detail.pics[0].url' />
+            </div>
+            <ul v-if='tabs_show' class='tabs'>
+                <li :class='{active:current_tab=="全部"}' @click='switchTab("全部")'>全部</li>
+                <li v-for='tab in tabs' :class='{active:current_tab==tab.name}' @click='switchTab(tab.name)'>
+                    {{tab.name}}
+                </li>
+            </ul>
+            <div v-show='current_tab==="全部"||tab.name===current_tab' class='content' v-for='tab in tabs'>
+                <template v-for='(item,$index) in tab.items'>
+                    <img v-if='item.type===2' class='activity' :src='item.pic' @click='routerLink(item)' />
+                    <v-item v-else :item='item' :callback='routerLink'></v-item>
+                </template>
+            </div>
+            <v-guide v-if='subject_id' :show.sync='share_show' :has-shared='has_shared' :id='subject_id>>0'></v-guide>
+            <v-share-guide :show.sync='share_show'></v-share-guide>
+            <v-recommand :recommands='subject_detail.recommend_items' color='gray'></v-recommand>
         </div>
         <v-support></v-support>
     </div>
@@ -82,20 +102,33 @@
     import vListItem from 'components/vListItem';
     import weChatShare from 'libs/weChatShare.js';
     import vNotice from 'components/vNotice';
+    import vSwiper from 'components/vSwiper.vue';
+    import vItem from './components/vItem';
+    import vRecommand from 'components/vRecommand';
+    import vGuide from 'components/vGuide';
+    import vShareGuide from 'components/vShareGuide';
     export default {
         name: 'subjectDetail',
         components: {
             vListItem,
-            vNotice
+            vNotice,
+            vSwiper,
+            vItem,
+            vRecommand,
+            vGuide,
+            vShareGuide
         },
         data() {
             return {
                 subject_id: '',
                 subject_detail: {
-                    class_items: []
+                    class_items: [],
+                    pics: []
                 },
                 current_tab: '全部',
-                content_show: false,
+                // content_show: false,
+                share_show: false,
+                has_shared: false
             };
         },
         computed: {
@@ -113,9 +146,9 @@
         },
         watch: {
             subject_id(value) {
-                this.content_show = false;
+                // this.content_show = false;
                 this.getSubjectDetail().then(data => {
-                    this.content_show = true;
+                    // this.content_show = true;
                     const is_share_info = data.is_share_info === 1;
                     weChatShare({
                         router: this.$route,
@@ -125,6 +158,14 @@
                         link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=subject_detail&subject_id=${value}`
                     });
                 });
+            },
+            $route(value) {
+                if (value.name === 'subject_detail') {
+                    this.subject_id = value.query.subject_id;
+                    window.scrollTo(0, 0);
+                } else {
+                    this.share_show = false;
+                }
             }
         },
         activated() {
@@ -159,25 +200,33 @@
             },
             switchTab(name) {
                 this.current_tab = name;
+                console.log(this.current_tab);
             },
-            getRouter(item) {
+            routerLink(item) {
+                console.log(item);
                 if (item.type === 1) {
-                    return {
+                    this.$router.push({
                         name: 'product_detail',
                         query: {
                             product_id: item.item_id,
                             from: 'subject_detail',
                             subject_id: this.subject_id
                         }
-                    };
-                }
-                if (item.type === 2) {
-                    return {
+                    });
+                } else if (item.type === 2) {
+                    this.$router.push({
                         name: 'activity_detail',
                         query: {
                             activity_id: item.item_id,
                         }
-                    };
+                    });
+                } else if (item.type === 3) {
+                    this.$router.push({
+                        name: 'subject_detail',
+                        query: {
+                            subject_id: item.item_id,
+                        }
+                    });
                 }
             },
         },

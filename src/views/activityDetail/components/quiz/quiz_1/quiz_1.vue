@@ -35,23 +35,9 @@
             </main>
             <div class='submit' @click='submitAnswer'>提交答案</div>
         </template>
-        <!--<article class='describe'>
-            <v-describe-title text='详细说明' color='green'></v-describe-title>
-            <v-simditor>
-                <section v-html='activityDetail.content'></section>
-            </v-simditor>
-            <v-describe-title text='概率说明' color='green'></v-describe-title>
-            <v-simditor>
-                <section v-html='activityDetail.content_prob'></section>
-            </v-simditor>
-            <v-describe-title text='奖项列表' color='green'></v-describe-title>
-        </article>-->
         <footer>
             <v-award-box :awords='activityDetail.items' color='green'></v-award-box>
-            <template v-if='activityDetail.recommend_items.length>0'>
-                <v-title color='green'></v-title>
-                <v-recommand :recommands='activityDetail.recommend_items' color='green'></v-recommand>
-            </template>
+            <v-recommand :recommands='activityDetail.recommend_items' color='green'></v-recommand>
         </footer>
 
     </div>

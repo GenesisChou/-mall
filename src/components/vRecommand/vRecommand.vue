@@ -1,6 +1,81 @@
 <style lang='scss' scoped>
-    @import '../../../../assets/scss/variable.scss';
-    .v-recommand {
+    @import '../../assets/scss/variable.scss';
+    .title {
+        position: relative;
+        h2 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: $white;
+            font-size: pxTorem(34);
+            img {
+                width: pxTorem(34);
+                height: pxTorem(35);
+                margin-right: pxTorem(20);
+            }
+            .red {
+                color: #fe7a6f;
+            }
+            .gray {
+                color: #cdcdcd;
+            }
+        }
+        .line {
+            position: absolute;
+            top: 50%;
+            width: pxTorem(218);
+            height: pxTorem(3);
+            transform: translateY(-50%);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+            &.left {
+                left: pxTorem(27);
+            }
+            &.right {
+                right: pxTorem(27);
+            }
+            &.red {
+                background-color: #fe7a6f;
+            }
+            &.green {
+                background-color: #78cc1e;
+            }
+            &.aquamarine {
+                background-color: #2ba7a9;
+            }
+            &.blue {
+                background-color: #29cfff;
+            }
+            &.navy {
+                background-color: #399fae;
+            }
+            &.brown {
+                background-color: #a26a01;
+            }
+            &.palaceblue {
+                background-color: #1081e1;
+            }
+            &.emerald {
+                background-color: #019a88;
+            }
+            &.army {
+                background-color: #1d7233;
+            }
+            &.purple {
+                background-color: #9901aa;
+            }
+            &.orange {
+                background-color: #e76241;
+            }
+            &.yellow {
+                background-color: #e8af00;
+            }
+            &.gray {
+                background-color: #a9aaae;
+            }
+        }
+    }
+
+    .recommands {
         position: relative;
         width: pxTorem(722);
         margin: pxTorem(48) auto;
@@ -71,18 +146,33 @@
             &.yellow {
                 background-color: #e8af00;
             }
+            &.gray {
+                background-color: #cdcdcd;
+            }
         }
     }
 </style>
 <template>
-    <ul class='v-recommand'>
-        <li :class='["recommand",color]' v-for='recommand in recommands' @click='routerLink(recommand)'>
-            <img :src='recommand.pic'>
-            <h6>
-                {{(recommand.title||recommand.name)|filter}}
-            </h6>
-        </li>
-    </ul>
+    <div v-if='recommands.length>0' class='v-recommand'>
+        <div class='title'>
+            <h2>
+                <img v-if='textColor==="red"' src='./images/recommandRed.png'>
+                <img v-else-if='textColor==="gray"' src='./images/recommandGray.png'>
+                <img v-else src='./images/recommand.png'>
+                <span :class='textColor'>为您推荐</span>
+            </h2>
+            <div :class='["line","left",color]'></div>
+            <div :class='["line","right",color]'></div>
+        </div>
+        <ul class='recommands'>
+            <li :class='["recommand",color]' v-for='recommand in recommands' @click='routerLink(recommand)'>
+                <img :src='recommand.pic'>
+                <h6>
+                    {{(recommand.title||recommand.name)|filter}}
+                </h6>
+            </li>
+        </ul>
+    </div>
 </template>
 <script>
     export default {
@@ -91,7 +181,8 @@
                 default: () => [],
                 type: Array
             },
-            color: String
+            color: String,
+            textColor: String
         },
         filters: {
             filter(str) {

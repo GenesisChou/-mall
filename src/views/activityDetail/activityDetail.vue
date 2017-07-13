@@ -65,7 +65,7 @@
                 </component>
             </keep-alive>
         </div>
-        <v-guide :show.sync='share_show' :has-shared='has_shared' :activity-id='activity_id>>0'></v-guide>
+        <v-guide :show.sync='share_show' :has-shared='has_shared' :id='activity_id>>0'></v-guide>
         <v-ruler :show.sync='ruler_show' :activity-detail='activity_detail'></v-ruler>
         <v-dialog :show='dialog_show' :dialog='dialog' :toggle-dialog='toggleDialog'></v-dialog>
         <v-support></v-support>
@@ -79,7 +79,7 @@
     import vShareGuide from 'components/vShareGuide';
     import vRuler from './components/vRuler';
     import vNotice from 'components/vNotice';
-    import vGuide from './components/vGuide';
+    import vGuide from 'components/vGuide';
     export default {
         name: 'activityDetail',
         components: {
@@ -151,7 +151,9 @@
             this.init();
         },
         beforeRouteLeave(to, from, next) {
-            this.$store.dispatch('updateItemView', this.view_id);
+            if (this.view_id) {
+                this.$store.dispatch('updateItemView', this.view_id);
+            }
             this.$store.dispatch('updatePageView');
             next();
         },
@@ -206,7 +208,9 @@
                         const data = response.data;
                         if (data.status === APP.SUCCESS) {
                             this.activity_detail = data.data;
-                            this.view_id = data.data.view_id;
+                            if (url === 'activity_detail_l') {
+                                this.view_id = data.data.view_id;
+                            }
                             if (resolve && typeof resolve === 'function') {
                                 resolve(data);
                             }

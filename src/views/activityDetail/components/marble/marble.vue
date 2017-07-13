@@ -549,23 +549,9 @@
                 <div class='start' @click='start'>点击弹射</div>
             </div>
         </main>
-        <!--<article class='describe'>
-            <v-describe-title text='详细说明' color='army'></v-describe-title>
-            <v-simditor>
-                <section v-html='activityDetail.content'></section>
-            </v-simditor>
-            <v-describe-title text='概率说明' color='army'></v-describe-title>
-            <v-simditor>
-                <section v-html='activityDetail.content_prob'></section>
-            </v-simditor>
-            <v-describe-title text='奖项列表' color='army'></v-describe-title>
-        </article>-->
         <footer>
             <v-award-box :awords='activityDetail.items' color='army'></v-award-box>
-            <template v-if='activityDetail.recommend_items.length>0'>
-                <v-title color='army'></v-title>
-                <v-recommand :recommands='activityDetail.recommend_items' color='army'></v-recommand>
-            </template>
+            <v-recommand :recommands='activityDetail.recommend_items' color='army'></v-recommand>
         </footer>
     </div>
 </template>
@@ -573,7 +559,7 @@
     import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
     import vAwardBox from '../vAwardBox';
-    import vRecommand from '../vRecommand';
+    import vRecommand from 'components/vRecommand';
     import vTitle from '../vTitle';
     export default {
         name: 'marble',
