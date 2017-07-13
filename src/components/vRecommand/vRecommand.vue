@@ -24,7 +24,8 @@
             position: absolute;
             top: 50%;
             width: pxTorem(218);
-            height: pxTorem(3);
+            // height: pxTorem(3);
+            height:1.5px;
             transform: translateY(-50%);
             box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
             &.left {

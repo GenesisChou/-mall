@@ -67,9 +67,14 @@
         height: pxTorem(200);
         margin-top: pxTorem(13);
     }
+    .subject-recommands{
+        padding-top:pxTorem(40);
+        overflow: hidden;
+        background:$white;
+    }
 </style>
 <template>
-    <div class='subject-detail'>
+    <div v-if='subject_detail' class='subject-detail'>
         <template v-if='notice_show'>
             <v-notice></v-notice>
             <div class='space'></div>
@@ -93,7 +98,9 @@
             </div>
             <v-guide v-if='subject_id' :show.sync='share_show' :has-shared='has_shared' :id='subject_id>>0'></v-guide>
             <v-share-guide :show.sync='share_show'></v-share-guide>
-            <v-recommand :recommands='subject_detail.recommend_items' color='gray'></v-recommand>
+            <div class='subject-recommands'>
+                <v-recommand :recommands='subject_detail.recommend_items' color='gray' text-color='gray'></v-recommand>
+            </div>
         </div>
         <v-support></v-support>
     </div>
@@ -121,10 +128,7 @@
         data() {
             return {
                 subject_id: '',
-                subject_detail: {
-                    class_items: [],
-                    pics: []
-                },
+                subject_detail: '',
                 current_tab: '全部',
                 // content_show: false,
                 share_show: false,
@@ -146,9 +150,8 @@
         },
         watch: {
             subject_id(value) {
-                // this.content_show = false;
-                this.getSubjectDetail().then(data => {
-                    // this.content_show = true;
+                this.getSubjectPromise(this.getSubjectDetail(), this.isShare()).then(data => {
+                    this.has_shared = data[1].is_share;
                     const is_share_info = data.is_share_info === 1;
                     weChatShare({
                         router: this.$route,
@@ -156,6 +159,13 @@
                         img: is_share_info ? data.share_pic_thumb_new : data.pic_thumb_new,
                         desc: is_share_info ? data.share_sub_name : data.sub_name,
                         link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=subject_detail&subject_id=${value}`
+                    }).then(share_point => {
+                        this.share_show = false;
+                        return this.shareView(share_point);
+                    }).then(() => {
+                        this.getSubjectPromise(this.getSubjectDetail(), this.isShare()).then(data => {
+                            this.has_shared = data[1].is_share;
+                        });
                     });
                 });
             },
@@ -163,8 +173,6 @@
                 if (value.name === 'subject_detail') {
                     this.subject_id = value.query.subject_id;
                     window.scrollTo(0, 0);
-                } else {
-                    this.share_show = false;
                 }
             }
         },
@@ -176,9 +184,16 @@
                 this.current_tab = '全部';
             }
             this.$store.dispatch('updatePageView');
+            this.share_show = false;
             next();
         },
         methods: {
+            getSubjectPromise(promiseX, promiseY) {
+                return Promise.all([promiseX, promiseY])
+                    .then(data => {
+                        return data;
+                    });
+            },
             getSubjectDetail() {
                 return new Promise((resolve, reject) => {
                     this.$store.dispatch('toggleLoading');
@@ -195,6 +210,44 @@
                         }
                     }, (response) => {
                         this.$store.dispatch('toggleLoading');
+                    });
+                });
+            },
+            isShare() {
+                return new Promise(resolve => {
+                    this.$http.post(`${APP.HOST}/is_share/${this.subject_id}`, {
+                        token: APP.TOKEN,
+                        media_id: APP.MEDIA_ID,
+                        user_id: APP.USER_ID,
+                        open_id: APP.OPEN_ID,
+                        type: 3
+                    }).then((response) => {
+                        const data = response.data;
+                        if (data.status === APP.SUCCESS) {
+                            if (resolve && typeof resolve === 'function') {
+                                resolve(data.data);
+                            }
+                        }
+                    });
+                });
+            },
+            shareView(share_point) {
+                return new Promise(resolve => {
+                    this.$http.post(`${APP.HOST}/share_view/${this.subject_id}`, {
+                        token: APP.TOKEN,
+                        media_id: APP.MEDIA_ID,
+                        user_id: APP.USER_ID,
+                        open_id: APP.OPEN_ID,
+                        origin: APP.ORIGIN,
+                        share_point,
+                        type: 3
+                    }).then((response) => {
+                        const data = response.data;
+                        if (data.status === APP.SUCCESS) {
+                            if (resolve && typeof resolve === 'function') {
+                                resolve();
+                            }
+                        }
                     });
                 });
             },

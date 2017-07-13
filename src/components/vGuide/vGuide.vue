@@ -75,7 +75,7 @@
 <template>
     <div class='v-guide'>
         <img class='money' src='./images/money.png'>
-        <div v-if='hasShared&&id' @click='playSomethingElse' class='monster monster-else'></div>
+        <div v-if='hasShared&&id&&other_id&&other_type' @click='playSomethingElse' class='monster monster-else'></div>
         <div v-else @click='changeState' class='monster monster-share'></div>
     </div>
 </template>
@@ -113,7 +113,6 @@
                 this.$emit('update:show', true);
             },
             playSomethingElse() {
-                console.log(this.other_type);
                 if (this.other_type === 1) {
                     this.$router.push({
                         path: 'product_detail',

@@ -114,7 +114,6 @@
                 share_show: false,
                 ruler_show: false,
                 has_shared: false,
-                has_exchanged: false
             };
         },
         computed: {
@@ -163,7 +162,6 @@
                 this.getActivityPromise(this.getActivityDetail('activity_detail_l'), this.isShare()).then(data => {
                     this.activity_type = this.getActivityType(this.activity_detail.type);
                     this.has_shared = data[1].is_share;
-                    this.has_exchanged = data[1].is_exchange;
                     if (this.activity_detail.is_share === 1 & this.has_shared === false) {
                         this.share_show = true;
                     }
@@ -181,7 +179,6 @@
                     }).then(() => {
                         this.getActivityPromise(this.getActivityDetail(), this.isShare()).then(data => {
                             this.has_shared = data[1].is_share;
-                            this.has_exchanged = data[1].is_exchange;
                         });
                     });
                 });
