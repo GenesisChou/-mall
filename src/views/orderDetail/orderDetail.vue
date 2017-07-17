@@ -547,6 +547,18 @@
                             if (resolve && typeof resolve === 'function') {
                                 resolve(data.data);
                             }
+                        } else {
+                            this.$store.dispatch('toggleAlert', {
+                                msg: data.info,
+                                callback: () => {
+                                    this.$router.push({
+                                        name: 'order_list',
+                                        query: {
+                                            t: new Date()
+                                        }
+                                    });
+                                }
+                            });
                         }
                     }, (response) => {
                         this.$store.dispatch('toggleLoading');

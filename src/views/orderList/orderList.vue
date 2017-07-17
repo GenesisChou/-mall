@@ -177,10 +177,13 @@
         beforeRouteEnter(to, from, next) {
             //当从订单详情返回至订单列表时绑定滚动事件
             next(vm => {
-                if (from.name !== 'order_detail' || !vm.has_entered) {
+                if (from.name !== 'order_detail' || !vm.has_entered || vm.$route.query.t) {
                     vm.init();
                     vm.switchTab(1);
                     vm.has_entered = true;
+                }
+                if (vm.$store.state.v_alert.show === true) {
+                    vm.$store.dispatch('toggleAlert');
                 }
                 window.addEventListener('scroll', vm.scroll_events[vm.current_type]);
             });

@@ -129,7 +129,21 @@
                             this.$store.dispatch('toggleLoading');
                             const data = response.data;
                             if (data.status === APP.SUCCESS) {
-                                this.getOrderDetail();
+                                if (data.data.status === false) {
+                                    this.$store.dispatch('toggleAlert', {
+                                        msg: data.data.message,
+                                        callback: () => {
+                                            this.$router.push({
+                                                name: 'order_list',
+                                                query: {
+                                                    t: new Date()
+                                                }
+                                            });
+                                        }
+                                    });
+                                } else {
+                                    window.location.reload();
+                                }
                             } else {
                                 this.$store.dispatch('toggleAlert', {
                                     msg: data.info
