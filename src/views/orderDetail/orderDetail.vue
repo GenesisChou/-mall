@@ -236,7 +236,7 @@
                 <!--商品为虚拟物品时 -->
                 <template v-if='is_virtual'>
                     <!--商品为优惠券时 -->
-                    <template v-if='order_detail.status===1'>
+                    <template v-if='order_detail.status===1&&product_type!==8'>
                         <v-address-edit :id='order_detail.id' :order-user.sync='order_user' :state='{show_address:order_detail.is_address===1,
                                                 show_contact:order_detail.is_name===1,
                                                 show_phone:order_detail.is_phone===1}' :show='update_order_show' :toggle-popup='toggleUpdateOrder'
@@ -521,7 +521,7 @@
                 this.getProductDetail().then(() => {
                     this.content_show = true;
                 });
-                if (data.status === 1) {
+                if (data.status === 1 || data.status === 2) {
                     this.updateOrderRead().then(() => {
                         this.$store.dispatch('getUserInfor');
                     });
