@@ -96,7 +96,7 @@
     <div class='v-list-item'>
         <div :class='["container",{"no-border":noBorder}]'>
             <div class='img'>
-                <img v-lazy='img'>
+                <img :src='img'>
                 <span v-if='script'>
                     {{script}}
                 </span>
