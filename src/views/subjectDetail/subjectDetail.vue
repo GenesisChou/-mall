@@ -67,10 +67,11 @@
         height: pxTorem(200);
         margin-top: pxTorem(13);
     }
-    .subject-recommands{
-        padding-top:pxTorem(40);
+
+    .subject-recommands {
+        padding-top: pxTorem(40);
         overflow: hidden;
-        background:$white;
+        background: $white;
     }
 </style>
 <template>
@@ -98,7 +99,7 @@
             </div>
             <v-guide v-if='subject_id' :show.sync='share_show' :has-shared='has_shared' :id='subject_id>>0'></v-guide>
             <v-share-guide :show.sync='share_show'></v-share-guide>
-            <div class='subject-recommands'>
+            <div v-if='subject_detail.recommend_items.length>0' class='subject-recommands'>
                 <v-recommand :recommands='subject_detail.recommend_items' color='gray' text-color='gray'></v-recommand>
             </div>
         </div>

@@ -6,7 +6,7 @@
         h1 {
             color: #322f2a;
             font-weight: 500;
-            font-size: pxTorem(40);
+            font-size: pxTorem(32);
         }
         h6{
             color:#b1b1b5;

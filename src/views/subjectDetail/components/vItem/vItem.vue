@@ -101,22 +101,24 @@
 <template>
     <div class='v-item' @click='callback(item)'>
         <header class='head'>
-            <span v-if='item.show_script===1&&item.script'>
+            <span v-if='item.script'>
                     {{item.script}}
                 </span>
-            <img v-if='item.show_script===1&&item.script' class='red-arrows' src="./images/redArrows.png">
+            <img v-if='item.script' class='red-arrows' src="./images/redArrows.png">
             <img class='img' v-lazy='item.pic'>
         </header>
         <footer class='message'>
             <h4>{{item.name}}</h4>
             <h6>{{item.sub_name}}</h6>
             <p class='integral'>
-                <template v-if='item.show_share_integral===1'>
-                    <strong>分享后</strong><span>{{parseInt(item.share_integral) || 0}}积分</span>
-                    <s>{{parseInt(item.integral)}}积分</s>
-                </template>
-                <template v-else>
-                    {{parseInt(item.integral)}}积分
+                <template v-if='item.type!==3'>
+                    <template v-if='item.show_share_integral===1'>
+                        <strong>分享后</strong><span>{{parseInt(item.share_integral) || 0}}积分</span>
+                        <s>{{parseInt(item.integral)}}积分</s>
+                    </template>
+                    <template v-else>
+                        {{parseInt(item.integral)}}积分
+                    </template>
                 </template>
             </p>
         </footer>
