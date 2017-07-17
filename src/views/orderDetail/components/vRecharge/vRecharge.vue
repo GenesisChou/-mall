@@ -17,13 +17,12 @@
 
     .container {
         display: flex;
-        padding: pxTorem(30) pxTorem(65);
+        justify-content: center;
+        padding: pxTorem(30) 0;
     }
 
     .form-control {
         @include flex-center-v;
-        flex: 1;
-        width: pxTorem(450);
         height: pxTorem(75);
         border: pxTorem(2) solid #f0c3c2;
         background-color: #fef6f5;
@@ -37,7 +36,7 @@
     }
 
     input {
-        flex: 1;
+        width: pxTorem(370);
         height: pxTorem(75);
         background: none;
         border: none;
