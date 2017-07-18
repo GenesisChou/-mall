@@ -133,7 +133,7 @@
                                     this.$store.dispatch('toggleAlert', {
                                         msg: data.data.message,
                                         callback: () => {
-                                            this.$router.push({
+                                            this.$router.replace({
                                                 name: 'order_list',
                                                 query: {
                                                     t: new Date()
