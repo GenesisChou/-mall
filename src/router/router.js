@@ -4,8 +4,7 @@ import store from '../store';
 Vue.use(VueRouter);
 const router = new VueRouter({
     // mode: 'history',
-    routes: [
-        {
+    routes: [{
             path: '/',
             name: 'index',
             component: require('views/index')
@@ -76,7 +75,9 @@ router.beforeEach((to, from, next) => {
     if (store.state.v_loading.show === true) {
         store.dispatch('toggleLoading');
     }
-    store.dispatch('currentPageView', from.name || 'index');
+    if (from && from.name) {
+        store.dispatch('currentPageView', from.name);
+    }
     store.dispatch('pageView', to.name);
     next();
 });
