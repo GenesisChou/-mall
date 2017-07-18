@@ -52,6 +52,9 @@ if (storage) {
         } else if (page === 'subject_detail') {
             const subject_id = utils.getParameterByName('subject_id');
             link += `&page=${page}&subject_id=${subject_id}`;
+        } else if (page === 'order_detail') {
+            const order_id = utils.getParameterByName('order_id');
+            link += `&page=${page}&order_id=${order_id}`;
         }
         location.href = link;
     } else {
