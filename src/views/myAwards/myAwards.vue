@@ -44,7 +44,7 @@
         <template v-if='loaded===true'>
             <transition-group v-if='award_list.length>0' tag='ul' class='my-awards-content' name='slide-fade'>
                 <li v-for='(order,$index) in award_list' @click='toOrderDetail(order)' :key='order.id'>
-                    <v-order :dot='order.is_read===2' :img='order.product_pic' :id='order.orderid' :integral='order.integral>>0' :name='order.product'
+                    <v-order :dot='order.is_read===2&&(order.status===1||order.stauts===2)' :img='order.product_pic' :id='order.orderid' :integral='order.integral>>0' :name='order.product'
                         :active='true'>
                         <h6 class='v-order-footer'>
                             {{order.tips}}
