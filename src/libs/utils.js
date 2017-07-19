@@ -27,6 +27,9 @@ const utils = {
         } else if (page === 'subject_detail') {
             const subject_id = id || utils.getParameterByName('subject_id');
             link += `&page=subject_detail&subject_id=${subject_id}`;
+        } else if (page === 'order_detail') {
+            const order_id = id || utils.getParameterByName('order_id');
+            link += `&page=order_detail&order_id=${order_id}`;
         }
         location.href = link;
     },
