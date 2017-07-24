@@ -27,8 +27,11 @@
         .close {
             position: absolute;
             left: 50%;
-            bottom: pxTorem(-150);
-            padding: pxTorem(40);
+            bottom: pxTorem(-120);
+            width:pxTorem(100);
+            height:pxTorem(100);
+            text-align: center;
+            line-height: pxTorem(100);
             transform: translateX(-50%);
             .icon-error {
                 font-weight: bold;
@@ -91,7 +94,6 @@
 </style>
 <template>
     <div class='v-surprise'>
-
         <div v-if='surprise_show===true' class='v-modal'>
             <div class='bg-cover'></div>
             <div class='content'>
