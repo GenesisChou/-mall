@@ -200,6 +200,14 @@
             }
         }
     }
+
+    .product-recommends {
+        margin-top: pxTorem(20);
+        padding-top: pxTorem(40);
+        overflow: hidden;
+        background: $white;
+        border-bottom: 1px solid #d3d4d6;
+    }
 </style>
 <template>
     <div v-if='product_detail' class='product-detail'>
@@ -224,6 +232,9 @@
             <main class='main'>
                 <v-introduction v-if='product_detail.content' title='详细说明' :content='product_detail.content'></v-introduction>
                 <v-introduction v-if='product_detail.content_use' title='使用说明' :content='product_detail.content_use'></v-introduction>
+                <div v-if='product_detail.recommend_items&&product_detail.recommend_items.length>0' class='product-recommends'>
+                    <v-recommend :recommends='product_detail.recommend_items' color='gray' text-color='gray'></v-recommend>
+                </div>
             </main>
             <footer class='sticky'>
                 <div class='exchange' v-if='state===1' @click='exchange'>立即兑换</div>
@@ -237,7 +248,14 @@
                         <i class='iconfont icon-arrows-right'></i>
                     </router-link>
                 </template>
-                <div class='exchange disable' v-else-if='state===3'>商品已兑换光</div>
+                <div class='exchange disable' v-else-if='state===3'>
+                    <div v-if='product_detail.recommend_items&&product_detail.recommend_items.length>0' @click='toRecommend'>
+                        商品已兑换光，查看其它优惠
+                    </div>
+                    <div v-else>
+                        商品已兑换光
+                    </div>
+                </div>
                 <div class='exchange ' v-else-if='state===4' @click='share_show=true'>完成分享 立即兑换</div>
                 <template v-else-if='state===5'>
                     <div v-if='integral_lack' class='exchange disable left' @click='toggleDialog({
@@ -257,7 +275,12 @@
                     </div>
                 </template>
                 <div class='exchange disable' v-else-if='state===6'>
-                    该商品已兑换
+                    <div v-if='product_detail.recommend_items&&product_detail.recommend_items.length>0' @click='toRecommend'>
+                        该商品已兑换，查看其它优惠
+                    </div>
+                    <div v-else>
+                        该商品已兑换
+                    </div>
                 </div>
             </footer>
         </template>
@@ -274,6 +297,7 @@
     import vShareGuide from 'components/vShareGuide';
     import vNotice from 'components/vNotice';
     import vSwiper from 'components/vSwiper.vue';
+    import vRecommend from 'components/vRecommend';
     export default {
         name: 'productDetail',
         components: {
@@ -282,7 +306,8 @@
             vDialog,
             vShareGuide,
             vNotice,
-            vSwiper
+            vSwiper,
+            vRecommend
         },
         data() {
             return {
@@ -331,6 +356,12 @@
                     this.$store.state.qr_code.qr_code_pic;
             }
         },
+        watch: {
+            $route(value) {
+                this.init();
+                window.scrollTo(0, 0);
+            }
+        },
         beforeRouteLeave(to, from, next) {
             this.share_show = false;
             this.dialog_show = false;
@@ -341,39 +372,43 @@
             next();
         },
         created() {
-            this.product_id = this.$route.query.product_id;
-            this.from = this.$route.query.from || 'index';
-            this.back = this.$route.query.back;
-            this.getProductPromise(this.getProductDetail('product_detail_l'), this.isShare()).then(data => {
-                this.has_shared = data[1].is_share;
-                this.has_exchanged = data[1].is_exchange;
-                this.changeState(data);
-                let link =
-                    `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=product_detail&product_id=${this.product_id}&back=${this.from}`;
-                if (this.from === 'subject_detail') {
-                    link += `&subject_id=${this.$route.query.subject_id}`;
-                }
-                const is_share_info = this.product_detail.is_share_info === 1;
-                weChatShare({
-                    router: this.$route,
-                    title: is_share_info ? this.product_detail.share_name : this.product_detail.name,
-                    img: is_share_info ? this.product_detail.share_pic_thumb_new : this.product_detail
-                        .pic_thumb_new,
-                    desc: is_share_info ? this.product_detail.share_name_show : this.product_detail.name_show,
-                    link
-                }).then(share_point => {
-                    this.share_show = false;
-                    return this.shareView(share_point);
-                }).then(() => {
-                    this.getProductPromise(this.getProductDetail(), this.isShare()).then(data => {
-                        this.has_shared = data[1].is_share;
-                        this.has_exchanged = data[1].is_exchange;
-                        this.changeState(data);
-                    });
-                });
-            });
+            this.init();
         },
         methods: {
+            init() {
+                this.product_id = this.$route.query.product_id;
+                this.from = this.$route.query.from || 'index';
+                this.back = this.$route.query.back;
+                this.getProductPromise(this.getProductDetail('product_detail_l'), this.isShare()).then(data => {
+                    this.has_shared = data[1].is_share;
+                    this.has_exchanged = data[1].is_exchange;
+                    this.changeState(data);
+                    let link =
+                        `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=product_detail&product_id=${this.product_id}&back=${this.from}`;
+                    if (this.from === 'subject_detail') {
+                        link += `&subject_id=${this.$route.query.subject_id}`;
+                    }
+                    const is_share_info = this.product_detail.is_share_info === 1;
+                    weChatShare({
+                        router: this.$route,
+                        title: is_share_info ? this.product_detail.share_name : this.product_detail.name,
+                        img: is_share_info ? this.product_detail.share_pic_thumb_new : this.product_detail
+                            .pic_thumb_new,
+                        desc: is_share_info ? this.product_detail.share_name_show : this.product_detail
+                            .name_show,
+                        link
+                    }).then(share_point => {
+                        this.share_show = false;
+                        return this.shareView(share_point);
+                    }).then(() => {
+                        this.getProductPromise(this.getProductDetail(), this.isShare()).then(data => {
+                            this.has_shared = data[1].is_share;
+                            this.has_exchanged = data[1].is_exchange;
+                            this.changeState(data);
+                        });
+                    });
+                });
+            },
             getProductPromise(promiseX, promiseY) {
                 return Promise.all([promiseX, promiseY])
                     .then(data => {
@@ -577,6 +612,42 @@
                     });
                 });
             },
+            toRecommend() {
+                const recommends = this.product_detail.recommend_items,
+                    num = Math.floor(Math.random() * recommends.length),
+                    recommend = recommends[num];
+                if (recommend) {
+                    const type = recommend.type,
+                        link = recommend.url;
+                    if (type >= 1 && type <= 3) {
+                        const item_id = recommend.item_id,
+                            routes = [{
+                                name: 'product_detail',
+                                query: {
+                                    product_id: item_id
+                                }
+                            }, {
+                                name: 'activity_detail',
+                                query: {
+                                    activity_id: item_id
+                                }
+                            }, {
+                                name: 'subject_detail',
+                                query: {
+                                    subject_id: item_id
+                                }
+                            }];
+                        if (item_id) {
+                            this.$router.push({
+                                name: routes[type - 1].name,
+                                query: routes[type - 1].query
+                            });
+                        }
+                    } else if (link && (type === 4 || type === 5)) {
+                        location.href = link;
+                    }
+                }
+            }
         }
     };
 </script>

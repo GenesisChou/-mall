@@ -178,6 +178,14 @@ const utils = {
                 document.removeEventListener('touchmove', utils.preventTouchMove, false);
             }
         }
+    },
+    isIos() {
+        const u = navigator.userAgent;
+        return !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    },
+    isAndroid() {
+        const u = navigator.userAgent;
+        return u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
     }
 };
 typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = utils : window.utils = utils;

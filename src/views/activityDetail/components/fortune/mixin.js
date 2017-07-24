@@ -1,15 +1,13 @@
  import vDescribeTitle from '../vDescribeTitle';
  import vIntegralBox from '../vIntegralBox.vue';
  import vAwardBox from '../vAwardBox';
- import vRecommand from 'components/vRecommand';
- import vTitle from '../vTitle';
+ import vRecommend from 'components/vRecommend';
  module.exports = {
      components: {
          vDescribeTitle,
          vIntegralBox,
          vAwardBox,
-         vRecommand,
-         vTitle
+         vRecommend,
      },
      props: {
          freshFreeTimes: Function,

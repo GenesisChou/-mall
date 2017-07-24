@@ -76,7 +76,7 @@
         }
     }
 
-    .recommands {
+    .recommends {
         position: relative;
         width: pxTorem(722);
         margin: pxTorem(48) auto;
@@ -95,7 +95,7 @@
             line-height: pxTorem(47);
             color: $white;
         }
-        .recommand {
+        .recommend {
             display: inline-flex;
             flex-direction: column;
             justify-content: space-between;
@@ -154,22 +154,22 @@
     }
 </style>
 <template>
-    <div v-if='recommands.length>0' class='v-recommand'>
+    <div v-if='recommends.length>0' class='v-recommend'>
         <div class='title'>
             <h2>
-                <img v-if='textColor==="red"' src='./images/recommandRed.png'>
-                <img v-else-if='textColor==="gray"' src='./images/recommandGray.png'>
-                <img v-else src='./images/recommand.png'>
+                <img v-if='textColor==="red"' src='./images/recommendRed.png'>
+                <img v-else-if='textColor==="gray"' src='./images/recommendGray.png'>
+                <img v-else src='./images/recommend.png'>
                 <span :class='textColor'>为您推荐</span>
             </h2>
             <div :class='["line","left",color]'></div>
             <div :class='["line","right",color]'></div>
         </div>
-        <ul class='recommands'>
-            <li :class='["recommand",color]' v-for='recommand in recommands' @click='routerLink(recommand)'>
-                <img :src='recommand.pic'>
+        <ul class='recommends'>
+            <li :class='["recommend",color]' v-for='recommend in recommends' @click='routerLink(recommend)'>
+                <img :src='recommend.pic'>
                 <h6>
-                    {{(recommand.title||recommand.name)|filter}}
+                    {{(recommend.title||recommend.name)|filter}}
                 </h6>
             </li>
         </ul>
@@ -178,7 +178,7 @@
 <script>
     export default {
         props: {
-            recommands: {
+            recommends: {
                 default: () => [],
                 type: Array
             },
@@ -194,12 +194,12 @@
             }
         },
         methods: {
-            routerLink(recommand) {
-                if (recommand) {
-                    const type = recommand.type,
-                        link = recommand.url;
+            routerLink(recommend) {
+                if (recommend) {
+                    const type = recommend.type,
+                        link = recommend.url;
                     if (type >= 1 && type <= 3) {
-                        const item_id = recommand.item_id,
+                        const item_id = recommend.item_id,
                             routes = [{
                                 name: 'product_detail',
                                 query: {

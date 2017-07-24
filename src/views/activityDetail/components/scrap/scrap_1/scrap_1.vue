@@ -43,7 +43,7 @@
         </main>
         <footer>
             <v-award-box :awords='activityDetail.items' color='aquamarine'></v-award-box>
-            <v-recommand :recommands='activityDetail.recommend_items' color='aquamarine'></v-recommand>
+            <v-recommend :recommends='activityDetail.recommend_items' color='aquamarine'></v-recommend>
         </footer>
     </div>
 </template>

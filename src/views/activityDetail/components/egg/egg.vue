@@ -142,7 +142,7 @@
         </main>
         <footer>
             <v-award-box :awords='activityDetail.items' color='red'></v-award-box>
-            <v-recommand :recommands='activityDetail.recommend_items' color='red'></v-recommand>
+            <v-recommend :recommends='activityDetail.recommend_items' color='red'></v-recommend>
         </footer>
     </div>
 </template>
@@ -150,16 +150,14 @@
     import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
     import vAwardBox from '../vAwardBox';
-    import vRecommand from 'components/vRecommand';
-    import vTitle from '../vTitle';
+    import vRecommend from 'components/vRecommend';
     export default {
         name: 'egg',
         components: {
             vDescribeTitle,
             vIntegralBox,
             vAwardBox,
-            vRecommand,
-            vTitle
+            vRecommend,
         },
         props: {
             freshFreeTimes: Function,

@@ -48,6 +48,7 @@
         components: {
             vBackTop,
             vNotice,
+            vSurprise: require('./components/vSurprise'),
             vItemSmall: require('./components/vItemSmall'),
             vItemList: require('./components/vItemList'),
             vItemLarge: require('./components/vItemLarge'),
@@ -141,6 +142,8 @@
                     return 'vSpace';
                 } else if (component_type === 6) {
                     return 'vIcon';
+                } else if (component_type === 7) {
+                    return 'vSurprise';
                 }
                 return components[component_type - 1][layout_type - 1];
             },
@@ -155,9 +158,9 @@
                 }
                 let link = '';
                 if (item.is_local_ads === 1) {
-                    this.adv_view(item);
+                    this.advView(item);
                 }
-                this.index_view(item, layout);
+                this.indexView(item, layout);
                 if (layout.component_type === 6) {
                     if (item.is_inner_url === 1) {
                         if ((item.url === 'my_account' || item.url === 'earn_integral' || item.url === 'order_list') &&
@@ -199,7 +202,7 @@
                 }
                 this.$router.push(link);
             },
-            index_view(item, layout) {
+            indexView(item, layout) {
                 this.$http.post(`${APP.HOST}/index_view`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID,
@@ -214,7 +217,7 @@
                     index_item_id: item.id
                 });
             },
-            adv_view(item) {
+            advView(item) {
                 this.$http.post(`${APP.HOST}/local_ads_view`, {
                     token: APP.TOKEN,
                     user_id: APP.USER_ID,

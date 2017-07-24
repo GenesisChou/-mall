@@ -402,7 +402,7 @@
         <div v-show='cover_show' class='cover'></div>
         <footer>
             <v-award-box :awords='activityDetail.items' color='brown'></v-award-box>
-            <v-recommand :recommands='activityDetail.recommend_items' color='brown'></v-recommand>
+            <v-recommend :recommends='activityDetail.recommend_items' color='brown'></v-recommend>
         </footer>
     </div>
 </template>
@@ -410,16 +410,14 @@
     import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
     import vAwardBox from '../vAwardBox';
-    import vRecommand from 'components/vRecommand';
-    import vTitle from '../vTitle';
+    import vRecommend from 'components/vRecommend';
     export default {
         name: 'card',
         components: {
             vDescribeTitle,
             vIntegralBox,
             vAwardBox,
-            vRecommand,
-            vTitle
+            vRecommend,
         },
         props: {
             freshFreeTimes: Function,

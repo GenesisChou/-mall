@@ -226,6 +226,14 @@
             font-weight: bold;
         }
     }
+
+    .order-recommends {
+        margin-top: pxTorem(20);
+        padding-top: pxTorem(40);
+        overflow: hidden;
+        background: $white;
+        border-bottom: 1px solid #d3d4d6;
+    }
 </style>
 <template>
     <div v-show='content_show' class='order-detail '>
@@ -281,6 +289,9 @@
                     <v-introduction v-if='product_detail.content_use' title='使用说明' :content='product_detail.content_use'></v-introduction>
                     <!-- 重要声明 -->
                     <v-announcement></v-announcement>
+                    <div v-if='order_detail.recommend_items&&order_detail.recommend_items.length>0' class='order-recommends'>
+                        <v-recommend :recommends='order_detail.recommend_items' color='gray' text-color='gray'></v-recommend>
+                    </div>
                     <div v-if='product_type==5&&order_detail.status!==1' class='sticky'>
                         <div class='exchange' @click='useTicket(product_detail.url)'> 前往使用 </div>
                     </div>
@@ -391,6 +402,9 @@
                         <v-introduction v-if='product_detail.content_use' title='领取说明' :content='product_detail.content_use'></v-introduction>
                         <!-- 重要声明 -->
                         <v-announcement></v-announcement>
+                        <div v-if='order_detail.recommend_items&&order_detail.recommend_items.length>0' class='order-recommends'>
+                            <v-recommend :recommends='order_detail.recommend_items' color='gray' text-color='gray'></v-recommend>
+                        </div>
                     </template>
                 </template>
             </v-order>
@@ -400,6 +414,7 @@
 </template>
 <script>
     import vOrder from 'components/vOrder.vue';
+    import vRecommend from 'components/vRecommend';
     export default {
         name: 'orderDetail',
         components: {
@@ -410,7 +425,8 @@
             vAnnouncement: require('./components/vAnnouncement'),
             vTicket: require('./components/vTicket'),
             vRecharge: require('./components/vRecharge'),
-            vAddressSelect: require('./components/vAddressSelect')
+            vAddressSelect: require('./components/vAddressSelect'),
+            vRecommend
         },
         data() {
             return {

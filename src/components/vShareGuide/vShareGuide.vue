@@ -18,8 +18,8 @@
             z-index: 6
         }
         .share {
-            width: pxTorem(694);
-            height: pxTorem(264);
+            width: pxTorem(750);
+            height: pxTorem(315);
         }
         .msg {
             li {
@@ -37,7 +37,7 @@
             }
 
             position:absolute;
-            top: pxTorem(-360);
+            top: pxTorem(-330);
             left: 50%;
             transform: translateX(-50%);
             color: $white;
@@ -48,41 +48,35 @@
         }
         .arrows {
             position: absolute;
-            top: pxTorem(-465);
-            right: pxTorem(20);
-            width: pxTorem(100);
-            height: pxTorem(100);
+            top: pxTorem(-420);
+            right: pxTorem(70);
+            width: pxTorem(75);
+            height: pxTorem(75);
             color: $white;
         }
         .btn {
             @include flex-center;
             position: absolute;
-            top: pxTorem(530);
-            left: 50%;
-            transform: translateX(-50%);
-            width: pxTorem(326);
-            height: pxTorem(90);
-            font-size: pxTorem(30);
-            color: $white;
-            background-color: #000;
-            border: 1px solid $white;
-            border-radius: pxTorem(30);
-            &:active {
-                background-color: #222;
-            }
+            top: pxTorem(490);
+            left: 30%;
+            width: pxTorem(173);
+            height: pxTorem(63);
+            background: url('./images/button.png');
+            background-size: 100% 100%;
         }
-        .dot {
+        .dot-left {
             position: absolute;
-            left: pxTorem(230);
-            width: pxTorem(108);
-            height: pxTorem(203);
-            &.top {
-                top: pxTorem(-220);
-            }
-            &.bottom {
-                bottom: pxTorem(-220);
-                transform: rotateX(180deg);
-            }
+            left: pxTorem(240);
+            top: pxTorem(-160);
+            width: pxTorem(80);
+            height: pxTorem(119);
+        }
+        .dot-right {
+            position: absolute;
+            left: pxTorem(240);
+            bottom: pxTorem(-120);
+            width: pxTorem(47);
+            height: pxTorem(106);
         }
     }
 </style>
@@ -95,11 +89,11 @@
                 <li>1、点击右上角的 </li>
                 <li>2、选择“ <i class='iconfont icon-share-time'></i> ”即可</li>
             </ul>
-            <img class='dot top' src='./images/dot.png'>
-            <img class='dot bottom' src='./images/dot.png'>
+            <img class='dot-left' src='./images/arrowsLeft.png'>
+            <img class='dot-right ' src='./images/arrowsRight.png'>
             <img class='arrows' src='./images/arrows.png'>
             <img class='share' src='./images/share.png'>
-            <div class='btn' @click='close'>完成分享 立即参加</div>
+            <div class='btn' @click='close'></div>
         </div>
     </div>
 </template>
@@ -119,11 +113,6 @@
             return {
                 touchMoveEvent
             };
-        },
-        watch: {
-            // show(v) {
-            //     utils.toggleTouchMove(v);
-            // }
         },
         methods: {
             close() {

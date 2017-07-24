@@ -303,7 +303,7 @@
         </article>-->
         <footer>
             <v-award-box :awords='activityDetail.items' color='navy'></v-award-box>
-            <v-recommand :recommands='activityDetail.recommend_items' color='navy'></v-recommand>
+            <v-recommend :recommends='activityDetail.recommend_items' color='navy'></v-recommend>
         </footer>
     </div>
 </template>
@@ -312,8 +312,7 @@
     import vIntegralBox from '../vIntegralBox.vue';
     import vAwardBox from '../vAwardBox';
     import vPeople from './components/people';
-    import vRecommand from 'components/vRecommand';
-    import vTitle from '../vTitle';
+    import vRecommend from 'components/vRecommend';
     export default {
         name: 'treasure',
         components: {
@@ -321,8 +320,7 @@
             vIntegralBox,
             vAwardBox,
             vPeople,
-            vRecommand,
-            vTitle
+            vRecommend,
         },
         props: {
             freshFreeTimes: Function,

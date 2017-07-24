@@ -28,7 +28,7 @@
         </main>
         <footer>
             <v-award-box :awords='activityDetail.items' color='red'></v-award-box>
-            <v-recommand :recommands='activityDetail.recommend_items' color='red' text-color='red'></v-recommand>
+            <v-recommend :recommends='activityDetail.recommend_items' color='red' text-color='red'></v-recommend>
         </footer>
         <audio ref='audio'>
             <source src="http://xunlei.sc.chinaz.com/files/download/sound1/201410/5018.wav" type="audio/mpeg" />

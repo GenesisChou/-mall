@@ -68,7 +68,7 @@
         margin-top: pxTorem(13);
     }
 
-    .subject-recommands {
+    .subject-recommends {
         padding-top: pxTorem(40);
         overflow: hidden;
         background: $white;
@@ -99,9 +99,10 @@
             </div>
             <v-guide v-if='subject_id' :show.sync='share_show' :has-shared='has_shared' :id='subject_id>>0'></v-guide>
             <v-share-guide :show.sync='share_show'></v-share-guide>
-            <div v-if='subject_detail.recommend_items.length>0' class='subject-recommands'>
-                <v-recommand :recommands='subject_detail.recommend_items' color='gray' text-color='gray'></v-recommand>
+            <div v-if='subject_detail.recommend_items.length>0' class='subject-recommends'>
+                <v-recommend :recommends='subject_detail.recommend_items' color='gray' text-color='gray'></v-recommend>
             </div>
+            
         </div>
         <v-support></v-support>
     </div>
@@ -112,7 +113,7 @@
     import vNotice from 'components/vNotice';
     import vSwiper from 'components/vSwiper.vue';
     import vItem from './components/vItem';
-    import vRecommand from 'components/vRecommand';
+    import vRecommend from 'components/vRecommend';
     import vGuide from 'components/vGuide';
     import vShareGuide from 'components/vShareGuide';
     export default {
@@ -122,7 +123,7 @@
             vNotice,
             vSwiper,
             vItem,
-            vRecommand,
+            vRecommend,
             vGuide,
             vShareGuide
         },

@@ -551,7 +551,7 @@
         </main>
         <footer>
             <v-award-box :awords='activityDetail.items' color='army'></v-award-box>
-            <v-recommand :recommands='activityDetail.recommend_items' color='army'></v-recommand>
+            <v-recommend :recommends='activityDetail.recommend_items' color='army'></v-recommend>
         </footer>
     </div>
 </template>
@@ -559,16 +559,14 @@
     import vDescribeTitle from '../vDescribeTitle';
     import vIntegralBox from '../vIntegralBox.vue';
     import vAwardBox from '../vAwardBox';
-    import vRecommand from 'components/vRecommand';
-    import vTitle from '../vTitle';
+    import vRecommend from 'components/vRecommend';
     export default {
         name: 'marble',
         components: {
             vDescribeTitle,
             vIntegralBox,
             vAwardBox,
-            vRecommand,
-            vTitle
+            vRecommend,
         },
         props: {
             activityDetail: Object,
