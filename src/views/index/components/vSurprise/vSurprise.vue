@@ -1,43 +1,44 @@
 <style lang='scss' scoped>
     @import '../../../../assets/scss/variable.scss';
-    .v-modal {
-        .bg-cover {
-            position: fixed;
-            left: 0;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, .7);
-            z-index: 5;
+    .bg-cover {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, .7);
+        z-index: 5;
+    }
+
+    .content {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        width: pxTorem(630);
+        height: pxTorem(850);
+        background: $white;
+        margin-left: pxTorem(-630/2);
+        margin-top: pxTorem(-850/2);
+        z-index: 6;
+        img {
+            width: 100%;
+            height: 100%;
         }
-        .content {
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            width: pxTorem(630);
-            height: pxTorem(850);
-            background: $white;
-            transform: translate(-50%, -50%);
-            z-index: 6;
-            img {
-                width: 100%;
-                height: 100%;
-            }
-        }
-        .close {
-            position: absolute;
-            left: 50%;
-            bottom: pxTorem(-120);
-            width:pxTorem(100);
-            height:pxTorem(100);
-            text-align: center;
-            line-height: pxTorem(100);
-            transform: translateX(-50%);
-            .icon-error {
-                font-weight: bold;
-                color: $white;
-                font-size: pxTorem(40);
-            }
+    }
+
+    .close {
+        position: absolute;
+        left: 50%;
+        bottom: pxTorem(-120);
+        width: pxTorem(100);
+        height: pxTorem(100);
+        text-align: center;
+        line-height: pxTorem(100);
+        margin-left: pxTorem(-50);
+        .icon-error {
+            font-weight: bold;
+            color: $white;
+            font-size: pxTorem(40);
         }
     }
 
@@ -94,16 +95,16 @@
 </style>
 <template>
     <div class='v-surprise'>
-        <div v-if='surprise_show===true' class='v-modal'>
-            <div class='bg-cover'></div>
-            <div class='content'>
+        <div v-if='surprise_show===true' class='bg-cover'></div>
+        <transition name='enlarge'>
+            <div v-if='surprise_show===true' class='content'>
                 <img :src='pic' @click='toSomeWhere'>
                 <div class='close' @click='close'>
                     <i class='iconfont icon-error'></i>
                 </div>
             </div>
-        </div>
-        <div v-else @click='surprise_show=true' class='surprise'>
+        </transition>
+        <div v-show='surprise_show===false' @click='surprise_show=true' class='surprise'>
             <img class='hand' src='./images/hand.png'>
             <div class='text'></div>
         </div>
@@ -125,7 +126,7 @@
         created() {
             if (this.layout && this.layout.items && this.layout.items.length > 0) {
                 this.pic = this.layout.items[0].pic_init_new;
-                this.showFloatingLayer(this.layout.items[0].id);
+                this.surprise_show = (this.layout.is_show === 1);
             }
         },
         watch: {
@@ -137,27 +138,12 @@
         },
         methods: {
             toSomeWhere() {
-                this.close();
+                this.surprise_show = false;
                 this.routerLink(this.layout.items[0], this.layout);
             },
             close() {
                 this.surprise_show = false;
             },
-            showFloatingLayer(index_item_id) {
-                this.$http.post(`${APP.HOST}/show_floating_layer`, {
-                    token: APP.TOKEN,
-                    user_id: APP.USER_ID,
-                    media_id: APP.MEDIA_ID,
-                    open_id: APP.OPEN_ID,
-                    origin: APP.ORIGIN,
-                    index_item_id
-                }).then(response => {
-                    const data = response.data;
-                    if (data.status === APP.SUCCESS) {
-                        this.surprise_show = data.data.is_show;
-                    }
-                });
-            }
         }
     };
 </script>

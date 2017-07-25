@@ -232,7 +232,7 @@
         padding-top: pxTorem(40);
         overflow: hidden;
         background: $white;
-        border-bottom: 1px solid #d3d4d6;
+        // border-bottom: 1px solid #d3d4d6;
     }
 </style>
 <template>
@@ -289,9 +289,9 @@
                     <v-introduction v-if='product_detail.content_use' title='使用说明' :content='product_detail.content_use'></v-introduction>
                     <!-- 重要声明 -->
                     <v-announcement></v-announcement>
-                    <div v-if='order_detail.recommend_items&&order_detail.recommend_items.length>0' class='order-recommends'>
+                    <!-- <div v-if='order_detail.recommend_items&&order_detail.recommend_items.length>0' class='order-recommends'>
                         <v-recommend :recommends='order_detail.recommend_items' color='gray' text-color='gray'></v-recommend>
-                    </div>
+                    </div> -->
                     <div v-if='product_type==5&&order_detail.status!==1' class='sticky'>
                         <div class='exchange' @click='useTicket(product_detail.url)'> 前往使用 </div>
                     </div>
@@ -402,12 +402,15 @@
                         <v-introduction v-if='product_detail.content_use' title='领取说明' :content='product_detail.content_use'></v-introduction>
                         <!-- 重要声明 -->
                         <v-announcement></v-announcement>
-                        <div v-if='order_detail.recommend_items&&order_detail.recommend_items.length>0' class='order-recommends'>
+                        <!-- <div v-if='order_detail.recommend_items&&order_detail.recommend_items.length>0' class='order-recommends'>
                             <v-recommend :recommends='order_detail.recommend_items' color='gray' text-color='gray'></v-recommend>
-                        </div>
+                        </div> -->
                     </template>
                 </template>
             </v-order>
+        </div>
+        <div v-if='order_detail.recommend_items&&order_detail.recommend_items.length>0' class='order-recommends'>
+            <v-recommend :recommends='order_detail.recommend_items' color='gray' text-color='gray'></v-recommend>
         </div>
         <v-support></v-support>
     </div>

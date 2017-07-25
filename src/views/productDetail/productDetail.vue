@@ -533,6 +533,8 @@
                             if (this.has_exchanged) {
                                 if (product.is_beyond_limit) {
                                     this.state = 6;
+                                } else if (stock_lack) {
+                                    this.state = 3;
                                 } else if (integral_lack) {
                                     this.state = 2;
                                 } else {
