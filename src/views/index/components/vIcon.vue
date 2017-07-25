@@ -43,7 +43,7 @@
                 right: 25%;
                 top: 15%;
                 width: 8px;
-                height:8px;
+                height: 8px;
                 border-radius: 50%;
                 background-color: #ff0000;
             }
@@ -90,30 +90,46 @@
         }
 
         .square-cover {
+            position: relative;
             width: pxTorem(187.5);
-            height: pxTorem(190); // background-color: $white;
-        }
-        .btn {
-            @include flex-center;
-            position: absolute;
-            width: pxTorem(186);
-            height: pxTorem(64);
-            font-size: pxTorem(30);
-            color: $white;
-            background-color: #000;
-            border: 1px solid $white;
-            border-radius: pxTorem(30);
-            &:active {
-                background-color: #222;
+            height: pxTorem(190);
+            &:after {
+                content: '';
+                position: absolute;
+                right: pxTorem(-20);
+                top: pxTorem(-25);
+                width: pxTorem(23);
+                height: pxTorem(29);
+                background: url('./images/border.png');
+                background-size: 100% 100%;
+                transform: rotateY(180deg);
             }
+            &:before {
+                content: '';
+                position: absolute;
+                right: pxTorem(-20);
+                bottom: pxTorem(-25);
+                width: pxTorem(23);
+                height: pxTorem(29);
+                background: url('./images/border.png');
+                background-size: 100% 100%;
+                transform: rotate(180deg);
+            }
+        }
+        .button {
+            position: absolute;
+            width: pxTorem(173);
+            height: pxTorem(63);
+            background: url('./images/button.png');
+            background-size: 100% 100%;
         }
     }
 
     .guide.account {
         h1 {
-            left: pxTorem(260);
-            top: pxTorem(-250);
-            line-height:pxTorem(48);
+            left: pxTorem(220);
+            top: pxTorem(-170);
+            line-height: pxTorem(48);
             font-weight: 500;
         }
         span {
@@ -121,32 +137,31 @@
             top: pxTorem(-320);
             font-weight: 500;
         }
-        .btn {
-            left: pxTorem(313);
-            top: pxTorem(358);
+        .button {
+            left: pxTorem(120);
+            top: pxTorem(370);
         }
-        .dotted-1 {
+        .arrows-left {
             position: absolute;
-            left: pxTorem(60);
-            top: pxTorem(-200);
-            width: pxTorem(189);
-            height: pxTorem(196);
+            left: pxTorem(110);
+            top: pxTorem(-130);
+            width: pxTorem(80);
+            height: pxTorem(119);
         }
-        .dotted-2 {
+        .arrows-right {
             position: absolute;
-            left: pxTorem(210);
-            top: pxTorem(90);
-            width: pxTorem(200);
-            height: pxTorem(250);
-            transform: rotateY(180deg);
+            left: pxTorem(70);
+            top: pxTorem(220);
+            width: pxTorem(122);
+            height: pxTorem(124);
         }
     }
 
     .guide.integral {
         h1 {
-            left: pxTorem(150);
-            top: pxTorem(-260);
-            line-height:pxTorem(48);
+            left: pxTorem(30);
+            top: pxTorem(-186);
+            line-height: pxTorem(48);
             font-weight: 500;
         }
         span {
@@ -154,24 +169,52 @@
             top: pxTorem(-320);
             font-weight: 500;
         }
-        .btn {
-            left: pxTorem(290);
+        .button {
+            left: pxTorem(320);
             top: pxTorem(358);
         }
-        .dotted-1 {
+        .arrows-right-small {
             position: absolute;
             left: pxTorem(240);
-            top: pxTorem(-160);
-            width: pxTorem(86);
-            height: pxTorem(163);
+            top: pxTorem(-92);
+            width: pxTorem(70);
+            height: pxTorem(82);
         }
-        .dotted-2 {
+        .arrows-right {
             position: absolute;
             left: pxTorem(300);
-            top: pxTorem(190);
-            width: pxTorem(86);
-            height: pxTorem(163);
-            transform: rotateY(180deg);
+            top: pxTorem(220);
+            width: pxTorem(96);
+            height: pxTorem(117);
+        }
+        .square-cover {
+            left: 25%;
+        }
+        .space {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            &:after {
+                content: '';
+                position: absolute;
+                left: pxTorem(-20);
+                top: pxTorem(-25);
+                width: pxTorem(23);
+                height: pxTorem(29);
+                background: url('./images/border.png');
+                background-size: 100% 100%;
+            }
+            &:before {
+                content: '';
+                position: absolute;
+                left: pxTorem(-20);
+                bottom: pxTorem(-25);
+                width: pxTorem(23);
+                height: pxTorem(29);
+                background: url('./images/border.png');
+                background-size: 100% 100%;
+                transform: rotateX(180deg);
+            }
         }
     }
 </style>
@@ -187,20 +230,22 @@
             <h1>
                 在这里查看您的个人信息<br>和积分获得消耗情况
             </h1>
-            <img class='dotted-1' src='./images/dotted_1.png'>
-            <img class='dotted-2' src='./images/dotted_1.png'>
+            <img class='arrows-left' src='./images/arrowsLeft.png'>
+            <img class='arrows-right' src='./images/arrowsRightLarge.png'>
             <span @click='jump()'>跳过</span>
-            <div class='btn' @click='jump("guide-integral")'>朕知道了</div>
+            <div class='button' @click='jump("guide-integral")'></div>
         </div>
         <div v-if='guide_state==="guide-integral"' class='guide integral'>
-            <div class='square-cover'></div>
+            <div class='square-cover'>
+                <div class='space'></div>
+            </div>
             <h1>
                 在这里赚取积分，用来兑换<br>心仪商品、参与新颖活动
             </h1>
-            <img class='dotted-1' src='./images/dotted_2.png'>
-            <img class='dotted-2' src='./images/dotted_2.png'>
+            <img class='arrows-right-small' src='./images/arrowsRightSmall.png'>
+            <img class='arrows-right' src='./images/arrowsRight.png'>
             <span @click='jump()'>跳过</span>
-            <div class='btn' @click='jump()'>朕知道了</div>
+            <div class='button' @click='jump()'></div>
         </div>
 
     </ul>
