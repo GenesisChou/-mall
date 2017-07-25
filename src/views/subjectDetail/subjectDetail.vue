@@ -91,18 +91,20 @@
                     {{tab.name}}
                 </li>
             </ul>
-            <div v-show='current_tab==="全部"||tab.name===current_tab' class='content' v-for='tab in tabs'>
-                <template v-for='(item,$index) in tab.items'>
-                    <img v-if='item.type===2' class='activity' :src='item.pic' @click='routerLink(item)' />
-                    <v-item v-else :item='item' :callback='routerLink'></v-item>
-                </template>
-            </div>
+            <main class='content'>
+                <div v-show='current_tab==="全部"||tab.name===current_tab' v-for='tab in tabs'>
+                    <template v-for='(item,$index) in tab.items'>
+                        <img v-if='item.type===2' class='activity' :src='item.pic' @click='routerLink(item)' />
+                        <v-item v-else :item='item' :callback='routerLink'></v-item>
+                    </template>
+                </div>
+            </main>
             <v-guide v-if='subject_id' :show.sync='share_show' :has-shared='has_shared' :id='subject_id>>0'></v-guide>
             <v-share-guide :show.sync='share_show'></v-share-guide>
             <div v-if='subject_detail.recommend_items.length>0' class='subject-recommends'>
                 <v-recommend :recommends='subject_detail.recommend_items' color='gray' text-color='gray'></v-recommend>
             </div>
-            
+
         </div>
         <v-support></v-support>
     </div>
