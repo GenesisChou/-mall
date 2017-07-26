@@ -13,12 +13,11 @@
     .content {
         position: fixed;
         left: 50%;
-        top: 50%;
+        top: pxTorem(53);
         width: pxTorem(630);
         height: pxTorem(850);
         background: $white;
         margin-left: pxTorem(-630/2);
-        margin-top: pxTorem(-850/2);
         z-index: 6;
         img {
             width: 100%;
@@ -29,7 +28,7 @@
     .close {
         position: absolute;
         left: 50%;
-        bottom: pxTorem(-120);
+        bottom: pxTorem(-150);
         width: pxTorem(100);
         height: pxTorem(100);
         text-align: center;
@@ -38,7 +37,7 @@
         .icon-error {
             font-weight: bold;
             color: $white;
-            font-size: pxTorem(40);
+            font-size: pxTorem(60);
         }
     }
 
