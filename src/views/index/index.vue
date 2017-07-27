@@ -144,7 +144,10 @@
                     return 'vIcon';
                 } else if (component_type === 7) {
                     return 'vSurprise';
+                } else if (component_type === 8) {
+                    return null;
                 }
+
                 return components[component_type - 1][layout_type - 1];
             },
             routerLink(item, layout) {

@@ -60,6 +60,12 @@ const router = new VueRouter({
             component: require('views/qrCode')
         },
         {
+
+            path: '/user',
+            name: 'user',
+            component: require('views/user')
+        },
+        {
             path: '*',
             redirect: '/'
         }
