@@ -103,7 +103,7 @@
                 </div>
             </div>
         </transition>
-        <div v-show='surprise_show===false' @click='surprise_show=true' class='surprise'>
+        <div v-show='surprise_show===false' @click='toSomeWhere' class='surprise'>
             <img class='hand' src='./images/hand.png'>
             <div class='text'></div>
         </div>
