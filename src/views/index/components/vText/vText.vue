@@ -2,6 +2,7 @@
     @import '../../../../assets/scss/variable.scss';
     .v-text {
         display: flex;
+        margin-bottom: pxTorem(13);
         >div {
             flex: 1;
             display: flex;
@@ -10,6 +11,9 @@
             height: pxTorem(82);
             color: #666666;
             background: $white;
+            &:nth-child(1){
+                border-right: 1px solid #f2f3f4;
+            }
         }
         .integral {
             font-size: pxTorem(30);

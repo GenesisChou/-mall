@@ -1,5 +1,5 @@
 <style lang='scss' scoped>
-    @import '../../../../../assets/scss/variable.scss';
+    @import '../../../assets/scss/variable.scss';
     .v-slide {
         width: pxTorem(750);
         height: pxTorem(200);

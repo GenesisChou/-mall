@@ -72,8 +72,17 @@
         }
     }
 
+    .finish {
+        position: absolute;
+        right: pxTorem(-20);
+        top: pxTorem(-20);
+        width: pxTorem(136);
+        height: pxTorem(110);
+    }
+
     .notice {
-        border-top: 1px solid #fbfbfb;
+        position: relative;
+        border-top: 2px dotted #e0e0e0;
         h4 {
             line-height: pxTorem(80);
             text-align: center;
@@ -87,8 +96,9 @@
                 width: pxTorem(102);
                 height: pxTorem(102);
             }
-            .message {
+            .summary {
                 flex: 1;
+                padding-left: pxTorem(20);
                 h6 {
                     color: #a9aaae;
                 }
@@ -102,8 +112,23 @@
                 font-size: pxTorem(24);
                 border-radius: pxTorem(10);
                 color: $white;
-                background: #ff5f17;
-                border: 1px solid #ff5f17;
+                background: #00a1e0;
+            }
+        }
+        .circle {
+            position: absolute;
+            z-index:1;
+            top: pxTorem(-30);
+            width: pxTorem(60);
+            height: pxTorem(60);
+            border-radius: 50%;
+            background: $white;
+            box-shadow: 0 0 pxTorem(20) rgba(0, 0, 0, .1);
+            &.circle-left {
+                left: pxTorem(-30);
+            }
+            &.circle-right {
+                right: pxTorem(-30);
             }
         }
     }
@@ -111,13 +136,13 @@
 <template>
     <div class='wish-wall'>
         <template v-if='wish_wall'>
-            <v-slide :items='wish_wall.banner_pk[0].items'></v-slide>
+            <v-slide :items='slides'></v-slide>
             <router-link :to='{path:"/wish_wall/publish"}' tag='div' class='publish'>
                 发布我的心愿 <i class='iconfont icon-arrows-right'></i>
             </router-link>
             <v-pk v-if='pk_detail' :pk='pk_detail'></v-pk>
             <main class='rank'>
-                <h4 class='title'>
+                <h4 v-if='wish_wall.pass_rank.length>0' class='title'>
                     <img class='award' src='./images/rank.png'>
                     <strong>热门心愿排行</strong>
                     <router-link :to='{path:"/wish_wall/publish"}' tag='div' class='right'>
@@ -125,25 +150,29 @@
                         <i class='iconfont icon-arrows-right'></i>
                     </router-link>
                 </h4>
-                <v-wish v-for='wish in wish_wall.finish_rank' :wish='wish'></v-wish>
-                <h4 class='title'>
+                <v-wish v-for='wish in wish_wall.pass_rank' :wish='wish'></v-wish>
+
+                <h4 v-if='wish_wall.finish_rank.length>0' class='title'>
                     <img class='success' src='./images/success.png'>
-                    <strong>热门心愿排行</strong>
+                    <strong>已实现心愿</strong>
                     <router-link :to='{path:"/wish_wall/all"}' tag='div' class='right'>
                         查看更多
                         <i class='iconfont icon-arrows-right'></i>
                     </router-link>
                 </h4>
-                <v-wish v-for='wish in wish_wall.pass_rank' :wish='wish'>
+                <v-wish v-for='wish in wish_wall.finish_rank' :wish='wish' :type=2>
+                    <img class='finish' src='../../images/finish.png'>
                     <div class='notice'>
-                        <h4>{{wish.reply_characters}}</h4>
+                        <!-- <div class='circle circle-left'></div> -->
+                        <!-- <div class='circle circle-right'></div> -->
+                        <h4><strong>{{wish.reply_characters}}</strong></h4>
                         <div v-if='wish.is_reply_product===1' class='content'>
                             <img :src='wish.product_pic_thumb'>
-                            <div class='message'>
-                                <h5>{{wish.product_name}}</h5>
+                            <div class='summary'>
+                                <h5><strong>{{wish.product_name}}</strong></h5>
                                 <h6>{{wish.product_name_show}}</h6>
                             </div>
-                            <div class='button'>去兑换</div>
+                            <router-link :to='{name:"product_detail",query:{product_id:wish.product_id}}' class='button' tag='div'>去兑换</router-link>
                         </div>
                     </div>
                 </v-wish>
@@ -156,7 +185,7 @@
     import vMenu from 'components/vMenu';
     import vPk from './components/vPk';
     import vWish from '../../components/vWish';
-    import vSlide from './components/vSlide.vue';
+    import vSlide from '../../components/vSlide.vue';
     export default {
         name: 'wishWall',
         components: {
@@ -168,7 +197,8 @@
         data() {
             return {
                 wish_wall: '',
-                pk_detail: ''
+                pk_detail: '',
+                slides: [],
             };
         },
         computed: {
@@ -178,8 +208,14 @@
         },
         created() {
             this.getWishWall().then(() => {
-                const pk_id = this.wish_wall.banner_pk[1].id;
-                this.getPkInfor(pk_id);
+                this.wish_wall.banner_pk.forEach(data => {
+                    if (data.type === 1) {
+                        this.slides = data.items;
+                    } else if (data.type === 2) {
+                        const pk_id = data.id;
+                        this.getPkInfor(pk_id);
+                    }
+                });
             });
         },
         methods: {
@@ -215,7 +251,7 @@
                         this.pk_detail = data.data;
                     }
                 });
-            }
+            },
         }
     };
 </script>

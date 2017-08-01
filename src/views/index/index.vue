@@ -170,7 +170,8 @@
                 this.indexView(item, layout);
                 if (layout.component_type === 6) {
                     if (item.is_inner_url === 1) {
-                        if ((item.url === 'my_account' || item.url === 'earn_integral' || item.url === 'order_list') &&
+                        if ((item.url === 'my_account' || item.url === 'earn_integral' || item.url === 'order_list' ||
+                                item.url === 'wish_wall') &&
                             this.user.show_authorize !== 1) {
                             utils.login(APP.MEDIA_ID, 2, item.url, null, APP.ORIGIN);
                             return;

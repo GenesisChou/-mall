@@ -95,10 +95,10 @@
 </style>
 <template>
     <div class='all'>
-        <div class='slide'></div>
+        <v-slide :items='slides'></v-slide>
         <div class='search'>
             <form class='form-control' action='javascript:return true;'>
-                <i class='iconfont icon-search '></i>
+                <i class='iconfont icon-search' @click='search'></i>
                 <input v-model='sword' type='search' placeholder='请输入关键字' @keyup.enter='search'>
                 <i class='iconfont icon-close-circle'></i>
             </form>
@@ -117,11 +117,13 @@
 <script>
     import vMenu from 'components/vMenu';
     import vWish from '../../components/vWish';
+    import vSlide from '../../components/vSlide.vue';
     export default {
         name: 'all',
         components: {
             vMenu,
-            vWish
+            vWish,
+            vSlide
         },
         computed: {
             user() {
@@ -132,11 +134,13 @@
             return {
                 sword: '',
                 status: '',
-                wish_list: []
+                wish_list: [],
+                slides: []
             };
         },
         created() {
             this.getWishList();
+            this.getSlides();
         },
         methods: {
             getWishList() {
@@ -159,6 +163,19 @@
                             }
                         }
                     });
+                });
+            },
+            getSlides() {
+                this.$http.post(`${APP.HOST}/wish_wall_banner`, {
+                    token: APP.TOKEN,
+                    media_id: APP.MEDIA_ID,
+                    user_id: APP.USER_ID,
+                    open_id: APP.OPEN_ID,
+                }).then((response) => {
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS) {
+                        this.slides = data.data.items;
+                    }
                 });
             },
             search() {
