@@ -59,7 +59,7 @@
             <v-cell icon='edit-user' :callback='getRouter("edit_user")'>修改资料</v-cell>
         </v-group>
         <v-group>
-            <v-cell icon='wish-wall' :callback='getRouter("wish_wall")'>我的心愿</v-cell>
+            <v-cell icon='wish-wall' :callback='getRouter("wish_wall/mine")'>我的心愿</v-cell>
         </v-group>
         <v-menu></v-menu>
     </div>
@@ -88,7 +88,7 @@
             },
             routerLink(route = 'index') {
                 this.$router.push({
-                    name: route,
+                    path: route,
                 });
             }
         }

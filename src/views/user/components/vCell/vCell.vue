@@ -19,19 +19,19 @@
             background-image: url('./images/check.png');
         }
         &.earn-integral {
-            background-image: url('./images/check.png');
+            background-image: url('./images/earnIntegral.png');
         }
         &.records {
-            background-image: url('./images/check.png');
+            background-image: url('./images/records.png');
         }
         &.integral-list {
-            background-image: url('./images/check.png');
+            background-image: url('./images/integralList.png');
         }
         &.edit-user {
-            background-image: url('./images/check.png');
+            background-image: url('./images/editUser.png');
         }
         &.wish-wall {
-            background-image: url('./images/check.png');
+            background-image: url('./images/wishWall.png');
         }
     }
 

@@ -159,33 +159,36 @@
         methods: {
             init() {
                 this.activity_id = this.$route.query.activity_id;
-                this.getActivityPromise(this.getActivityDetail('activity_detail_l'), this.isShare()).then(data => {
-                    this.activity_type = this.getActivityType(this.activity_detail.type);
-                    this.has_shared = data[1].is_share;
-                    if (this.activity_detail.is_share === 1 & this.has_shared === false) {
-                        this.share_show = true;
-                    }
-                    const is_share_info = this.activity_detail.is_share_info === 1;
-                    weChatShare({
-                        router: this.$route,
-                        title: is_share_info ? this.activity_detail.share_name : this.activity_detail.name,
-                        img: is_share_info ? this.activity_detail.share_pic_thumb_new : this.activity_detail
-                            .pic_thumb_new,
-                        desc: is_share_info ? this.activity_detail.share_desc : this.activity_detail.desc,
-                        link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=activity_detail&activity_id=${this.activity_id}`
-                    }).then(share_point => {
-                        this.share_show = false;
-                        return this.shareView(share_point);
-                    }).then(() => {
-                        this.getActivityPromise(this.getActivityDetail(), this.isShare()).then(data => {
-                            this.has_shared = data[1].is_share;
+                this.getActivityPromise(this.getActivityDetail('activity_detail_l'), this.isShare(), this.getRemainingTimes())
+                    .then(data => {
+                        this.activity_type = this.getActivityType(this.activity_detail.type);
+                        this.has_shared = data[1].is_share;
+                        const remainingTimes = data[2].data,
+                            is_share_info = this.activity_detail.is_share_info === 1;
+                        if (this.activity_detail.is_share === 1 & this.has_shared === false & remainingTimes < 1) {
+                            this.share_show = true;
+                        }
+                        weChatShare({
+                            router: this.$route,
+                            title: is_share_info ? this.activity_detail.share_name : this.activity_detail.name,
+                            img: is_share_info ? this.activity_detail.share_pic_thumb_new : this.activity_detail
+                                .pic_thumb_new,
+                            desc: is_share_info ? this.activity_detail.share_desc : this.activity_detail.desc,
+                            link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=activity_detail&activity_id=${this.activity_id}`
+                        }).then(share_point => {
+                            this.share_show = false;
+                            return this.shareView(share_point);
+                        }).then(() => {
+                            this.getActivityPromise(this.getActivityDetail(), this.isShare(), this.getRemainingTimes())
+                                .then(data => {
+                                    this.has_shared = data[1].is_share;
+                                });
                         });
                     });
-                });
                 this.getFreeTimes();
             },
-            getActivityPromise(promiseX, promiseY) {
-                return Promise.all([promiseX, promiseY])
+            getActivityPromise(promiseX, promiseY, promiseZ) {
+                return Promise.all([promiseX, promiseY, promiseZ])
                     .then(data => {
                         return data;
                     });
@@ -214,6 +217,22 @@
                         }
                     }, (response) => {
                         this.$store.dispatch('toggleLoading');
+                    });
+                });
+            },
+            getRemainingTimes() {
+                return new Promise(resolve => {
+                    this.$http.post(`${APP.HOST}/get_no_share_times`, {
+                        token: APP.TOKEN,
+                        user_id: APP.USER_ID,
+                        activity_id: this.activity_id
+                    }).then((response) => {
+                        const data = response.data;
+                        if (data.status === APP.SUCCESS) {
+                            if (typeof resolve === 'function') {
+                                resolve(data);
+                            }
+                        }
                     });
                 });
             },

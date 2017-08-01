@@ -66,6 +66,31 @@ const router = new VueRouter({
             component: require('views/user')
         },
         {
+            path: '/wish_wall',
+            name: 'wish_wall',
+            component: require('views/wishWall'),
+            children: [{
+                path: '/',
+                name: 'main',
+                component: require('views/wishWall/children/main')
+            }, {
+                path: 'mine',
+                name: 'mine',
+                component: require('views/wishWall/children/mine')
+            }, {
+                path: 'all',
+                name: 'all',
+                component: require('views/wishWall/children/all')
+            }, {
+                path: 'publish',
+                name: 'publish',
+                component: require('views/wishWall/children/publish')
+            }, {
+                path: 'detail',
+                name: 'detail',
+                component: require('views/wishWall/children/detail')
+            }]
+        }, {
             path: '*',
             redirect: '/'
         }

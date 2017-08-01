@@ -35,6 +35,7 @@
             <component v-for='layout in framework' key='layout.id' :is='getComponent(layout.component_type,layout.layout_type)' :layout='layout'
                 :router-link='routerLink'></component>
         </transition-group>
+        <v-menu></v-menu>
         <v-support></v-support>
         <div v-if='guide_state' class='cover'></div>
         <v-back-top></v-back-top>
@@ -44,10 +45,12 @@
     import vBackTop from 'components/vBackTop';
     import weChatShare from 'libs/weChatShare.js';
     import vNotice from 'components/vNotice';
+    import vMenu from 'components/vMenu';
     export default {
         components: {
             vBackTop,
             vNotice,
+            vMenu,
             vSurprise: require('./components/vSurprise'),
             vItemSmall: require('./components/vItemSmall'),
             vItemList: require('./components/vItemList'),
@@ -58,7 +61,8 @@
             vAdvSlide: require('./components/vAdvSlide'),
             vTitle: require('./components/vTitle'),
             vIcon: require('./components/vIcon'),
-            vSpace: require('./components/vSpace')
+            vSpace: require('./components/vSpace'),
+            vText: require('./components/vText'),
         },
         data() {
             return {
@@ -145,7 +149,7 @@
                 } else if (component_type === 7) {
                     return 'vSurprise';
                 } else if (component_type === 8) {
-                    return null;
+                    return 'vText';
                 }
 
                 return components[component_type - 1][layout_type - 1];

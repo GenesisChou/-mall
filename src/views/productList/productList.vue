@@ -290,9 +290,7 @@
         },
         beforeRouteEnter(to, from, next) {
             next(vm => {
-                if (from.name === 'index' ||
-                    (from.name === 'product_detail' && vm.product_list.length === 0) ||
-                    !from.name) {
+                if (vm.product_list.length === 0) {
                     vm.first_enter = true;
                     vm.$store.dispatch('toggleLoading');
                     vm.getProductList().then(data => {
@@ -310,15 +308,15 @@
             this.$store.dispatch('savePosition', position => {
                 position[from.name] = utils.getScrollTop();
             });
-            if (to.name === 'index') {
-                this.initParams();
-                this.sort_type = '';
-                this.params.class_one_id = '';
-                this.params.class_two_id = '';
-                this.product_list = [];
-                this.class_two_list = [];
-                this.params.sword = '';
-            }
+            // if (to.name === 'index') {
+            //     this.initParams();
+            //     this.sort_type = '';
+            //     this.params.class_one_id = '';
+            //     this.params.class_two_id = '';
+            //     this.product_list = [];
+            //     this.class_two_list = [];
+            //     this.params.sword = '';
+            // }
             window.removeEventListener('scroll', this.scroll_event);
             this.$store.dispatch('updatePageView');
             next();

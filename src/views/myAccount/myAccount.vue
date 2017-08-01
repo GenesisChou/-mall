@@ -4,54 +4,19 @@
         min-height: 100%;
         background-color: #f2f3f4;
     }
-
-    .header {
-        @include flex-center;
-        flex-direction: column;
-        width: 100%;
-        height: pxTorem(400);
-        background-color: $white;
-        background-image: url('./images/myAccountBackground.png');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        color: $white;
-        text-align: center;
-        .avater {
-            background-color: #f4f4f4;
-            border-radius: 50%;
-            width: pxTorem(134);
-            height: pxTorem(134);
-            margin-bottom: pxTorem(10);
-            overflow: hidden;
-            border: pxTorem(6) solid #f4f4f4;
-        }
-        .edit-user {
-            @include flex-center;
-            width: pxTorem(217);
-            height: pxTorem(66);
-            margin-top: pxTorem(20);
-            color: $white;
-            background-color: rgba(255, 255, 255, .35);
-            border-radius: pxTorem(33);
-            border: 1px solid $white;
-            &:active {
-                opacity: 0.9;
-            }
-        }
-    }
-
     .block-text {
+        margin-top: pxTorem(14);
         line-height: pxTorem(88);
         text-align: center;
         background-color: $white;
         color: $orange;
-        border-bottom: 1px solid #d4d4d6;
+        border-bottom: 1px solid #f2f3f4;
         font-size: pxTorem(34);
     }
 
     .record-list {
         position: absolute;
-        top: pxTorem(508);
+        top: pxTorem(185);
         left: 0;
         right: 0;
         bottom: pxTorem(110);
@@ -93,7 +58,7 @@
 </style>
 <template>
     <div class='my-account '>
-        <header class='header'>
+        <!-- <header class='header'>
             <div class='avater'>
                 <img class='img-responsive' :src='user.headimg'>
             </div>
@@ -103,7 +68,8 @@
                 <template v-if='user.is_submit==1'>修改资料</template>
                 <template v-else>完善资料赚积分</template>
             </router-link>
-        </header>
+        </header> -->
+        <v-text></v-text>
         <h4 class='block-text'>
             积分明细
         </h4>
@@ -122,8 +88,12 @@
     </div>
 </template>
 <script>
+    import vText from '../index/components/vText';
     export default {
         name: 'myAccount',
+        components: {
+            vText
+        },
         data() {
             return {
                 // modal: false,
