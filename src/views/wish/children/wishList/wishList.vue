@@ -61,7 +61,10 @@
     }
 
     .tab-content {
-        padding: pxTorem(26) pxTorem(24) 0 pxTorem(24);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: pxTorem(26);
         overflow: hidden;
         background: $white;
     }

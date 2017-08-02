@@ -196,7 +196,7 @@
                         this.$store.dispatch('toggleLoading');
                         const data = response.data;
                         if (data.status === APP.SUCCESS) {
-                            this.wish_list = data.data.list;
+                            this.wish_list = data.data;
                             if (typeof resolve === 'function') {
                                 resolve();
                             }

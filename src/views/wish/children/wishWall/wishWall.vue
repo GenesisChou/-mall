@@ -41,20 +41,43 @@
 
     .rank {
         flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         margin-top: pxTorem(30);
-        padding: 0 pxTorem(23);
         background: $white;
         overflow: hidden;
-        .title {
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: row-reverse;
+            width: 100%;
             height: pxTorem(86);
-            line-height: pxTorem(86);
-            .award {
+            padding: 0 pxTorem(23);
+            font-size: pxTorem(28);
+            color: #a9aaae;
+            .icon-arrows-right {
+                color: #a9aaae;
+                font-size: pxTorem(30);
+                font-weight: bold;
+            }
+        }
+        .title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: pxTorem(86);
+            padding: 0 pxTorem(23);
+            font-size: pxTorem(28);
+            .icon-award {
                 width: pxTorem(26);
                 height: pxTorem(32);
                 margin-right: pxTorem(18);
                 transform: translateY(-5%);
             }
-            .success {
+            .icon-success {
                 width: pxTorem(32);
                 height: pxTorem(32);
                 margin-right: pxTorem(18);
@@ -64,7 +87,6 @@
                 flex: 1;
             }
             .right {
-                float: right;
                 display: flex;
                 align-items: center;
                 height: 100%;
@@ -124,7 +146,8 @@
                 }
             }
             .button {
-                @include active(#00a1e0,5%);
+                @include active(#00a1e0,
+                5%);
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -163,26 +186,34 @@
                     发布我的心愿 <i class='iconfont icon-arrows-right'></i>
                 </router-link>
                 <v-pk v-if='pk_detail' :pk='pk_detail'></v-pk>
-                <main class='rank'>
-                    <h4 v-if='wish_wall.pass_rank.length>0' class='title'>
-                        <img class='award' src='./images/rank.png'>
+                <div class='rank'>
+                    <header v-if='wish_wall.pass_rank.length>0' class='title'>
+                        <img class='icon icon-award' src='./images/rank.png'>
                         <strong>热门心愿排行</strong>
                         <router-link :to='{name:"publish_wish"}' tag='div' class='right'>
                             发布我的心愿
                             <i class='iconfont icon-arrows-right'></i>
                         </router-link>
-                    </h4>
+                    </header>
                     <v-wish v-for='(wish,$index) in wish_wall.pass_rank' :wish='wish' :callback='getWishWall'>
                         <div v-if='$index<3' class='award'>{{$index+1}}</div>
                     </v-wish>
-                    <h4 v-if='wish_wall.finish_rank.length>0' class='title'>
-                        <img class='success' src='./images/success.png'>
-                        <strong>已实现心愿</strong>
+                    <footer class='footer'>
                         <router-link :to='{name:"wish_list"}' tag='div' class='right'>
                             查看更多
                             <i class='iconfont icon-arrows-right'></i>
                         </router-link>
-                    </h4>
+                    </footer>
+                </div>
+                <div class='rank'>
+                    <header v-if='wish_wall.finish_rank.length>0' class='title'>
+                        <img class='icon icon-success' src='./images/success.png'>
+                        <strong>已实现心愿</strong>
+                        <router-link :to='{name:"publish_wish"}' tag='div' class='right'>
+                            发布我的心愿
+                            <i class='iconfont icon-arrows-right'></i>
+                        </router-link>
+                    </header>
                     <v-wish v-for='wish in wish_wall.finish_rank' :wish='wish' :callback='getWishWall' :type=2>
                         <img class='finish' src='../../images/finish.png'>
                         <div class='notice'>
@@ -199,7 +230,13 @@
                             </div>
                         </div>
                     </v-wish>
-                </main>
+                    <footer class='footer'>
+                        <router-link :to='{name:"wish_list"}' tag='div' class='right'>
+                            查看更多
+                            <i class='iconfont icon-arrows-right'></i>
+                        </router-link>
+                    </footer>
+                </div>
             </template>
         </div>
         <v-support></v-support>
