@@ -288,22 +288,16 @@
             window.addEventListener('scroll', this.scroll_event);
         },
         created() {
+            this.first_enter = true;
+            this.$store.dispatch('toggleLoading');
+            this.getProductList().then(data => {
+                this.$store.dispatch('toggleLoading');
+                this.product_list = data.data.list;
+            }).catch(() => {
+                this.$store.dispatch('toggleLoading');
+            });
             this.getProductClassList();
             this.scroll_event = this.getScrollEvent();
-        },
-        beforeRouteEnter(to, from, next) {
-            next(vm => {
-                if (vm.product_list.length === 0) {
-                    vm.first_enter = true;
-                    vm.$store.dispatch('toggleLoading');
-                    vm.getProductList().then(data => {
-                        vm.$store.dispatch('toggleLoading');
-                        vm.product_list = data.data.list;
-                    }).catch(() => {
-                        vm.$store.dispatch('toggleLoading');
-                    });
-                }
-            });
         },
         beforeRouteLeave(to, from, next) {
             this.sort_show = false;

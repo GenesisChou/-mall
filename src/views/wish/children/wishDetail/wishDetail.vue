@@ -95,12 +95,12 @@
                     margin-right: pxTorem(26);
                 }
                 &.support {
-                    @include active(#ff5f17,5%);
+                    @include active(#ff5f17, 5%);
                     background: #ff5f17;
                     color: $white;
                 }
                 &.invite {
-                    @include active($white,3%);
+                    @include active($white, 3%);
                     border: 1px solid #ff5f17;
                     color: #ff5f17;
                 }
@@ -180,50 +180,52 @@
 </style>
 <template>
     <div class='wish-detail'>
-        <div v-if='wish_detail' class='wish-detail-content'>
-            <div class='summary'>
-                <div class='avater'>
-                    <img :src='wish_detail.headimg'>
-                </div>
-                <div class='message'>
-                    <strong>{{wish_detail.nickname}} <span class='date'>7月26日</span></strong>
-                    <p>{{wish_detail.desc}}</p>
-                </div>
-                <img v-if='wish_detail.status===4' class='finish' src='../../images/finish.png'>
-            </div>
-            <div class='operation'>
-                <h1>已经有<span class='number'>{{wish_detail.score}}</span>支持</h1>
-                <div class='button-group'>
-                    <div v-if='wish_detail.status===4' class='button  disable'>支持</div>
-                    <div v-else-if='wish_detail.is_support===2' class='button support' @click='support'>支持</div>
-                    <div v-else class='button  disable'>已支持</div>
-                    <div class='button invite' @click='share_show=true'>邀请好友支持</div>
-                </div>
-            </div>
-            <div v-if='wish_detail.status===4' class='notice'>
-                <h4>{{wish_detail.reply_characters}}</h4>
-                <div v-if='wish_detail.is_reply_product===1' class='content'>
-                    <img :src='wish_detail.product_pic_thumb'>
-                    <div class='message'>
-                        <h5>{{wish_detail.product_name}}</h5>
-                        <h6>{{wish_detail.product_name_show}}</h6>
+        <div class='wish-detail-content'>
+            <template v-if='wish_detail'>
+                <div class='summary'>
+                    <div class='avater'>
+                        <img :src='wish_detail.headimg'>
                     </div>
-                    <router-link :to='{name:"product_detail",query:{product_id:wish_detail.product_id}}' class='button' tag='div'>去兑换</router-link>
+                    <div class='message'>
+                        <strong>{{wish_detail.nickname}} <span class='date'>{{wish_detail.create_time|date_format}}</span></strong>
+                        <p>{{wish_detail.desc}}</p>
+                    </div>
+                    <img v-if='wish_detail.status===4' class='finish' src='../../images/finish.png'>
                 </div>
-            </div>
-            <div v-if='wish_detail.support_friends.length>0' class='supporters'>
-                <h4 class='title'>最近支持他的好友</h4>
-                <ul>
-                    <li v-for='support in wish_detail.support_friends' class='support'>
-                        <img class='avater' :src='support.headimg'>
+                <div class='operation'>
+                    <h1>已经有<span class='number'>{{wish_detail.score}}</span>支持</h1>
+                    <div class='button-group'>
+                        <div v-if='wish_detail.status===4' class='button  disable'>支持</div>
+                        <div v-else-if='wish_detail.is_support===2' class='button support' @click='support'>支持</div>
+                        <div v-else class='button  disable'>已支持</div>
+                        <div class='button invite' @click='share_show=true'>邀请好友支持</div>
+                    </div>
+                </div>
+                <div v-if='wish_detail.status===4' class='notice'>
+                    <h4>{{wish_detail.reply_characters}}</h4>
+                    <div v-if='wish_detail.is_reply_product===1' class='content'>
+                        <img :src='wish_detail.product_pic_thumb'>
                         <div class='message'>
-                            <h2>{{support.nickname}}</h2>
-                            <h6>{{support.create_time}}</h6>
+                            <h5>{{wish_detail.product_name}}</h5>
+                            <h6>{{wish_detail.product_name_show}}</h6>
                         </div>
-                        <img class='success' src='./images/success.png'>
-                    </li>
-                </ul>
-            </div>
+                        <router-link :to='{name:"product_detail",query:{product_id:wish_detail.product_id}}' class='button' tag='div'>去兑换</router-link>
+                    </div>
+                </div>
+                <div v-if='wish_detail.support_friends.length>0' class='supporters'>
+                    <h4 class='title'>最近支持他的好友</h4>
+                    <ul>
+                        <li v-for='support in wish_detail.support_friends' class='support'>
+                            <img class='avater' :src='support.headimg'>
+                            <div class='message'>
+                                <h2>{{support.nickname}}</h2>
+                                <h6>{{support.create_time}}</h6>
+                            </div>
+                            <img class='success' src='./images/success.png'>
+                        </li>
+                    </ul>
+                </div>
+            </template>
         </div>
         <v-support></v-support>
         <v-share-guide :show.sync='share_show'></v-share-guide>
@@ -245,6 +247,12 @@
                 wish_detail: '',
                 share_show: false
             };
+        },
+        filters: {
+            date_format(value) {
+                const date = new Date(value.replace(' ', 'T'));
+                return `${date.getMonth()+1}月${date.getDate()}日`;
+            }
         },
         computed: {
             user() {

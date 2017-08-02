@@ -136,8 +136,8 @@
         },
         filters: {
             date_format(value) {
-                const date = new Date(value);
-                return `${date.getMonth()}月${date.getDate()}日`;
+                const date = new Date(value.replace(' ', 'T'));
+                return `${date.getMonth()+1}月${date.getDate()}日`;
             }
         },
         methods: {

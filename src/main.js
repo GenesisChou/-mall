@@ -59,7 +59,6 @@ if (storage) {
             const wish_id = utils.getParameterByName('wish_id');
             link += `&page=${page}&wish_id=${wish_id}`;
         }
-
         location.href = link;
     } else {
         utils.login(media_id, 1, page, null, origin);

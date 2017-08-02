@@ -9,6 +9,8 @@
 
     .my-wish-content {
         flex: 1;
+        display: flex;
+        flex-direction: column;
     }
 
     .slide {
@@ -33,7 +35,7 @@
             color: #bababa;
             text-align: center;
             list-style: none;
-            background:$white;
+            background: $white;
             &.active {
                 color: #ff5000;
             }
@@ -104,6 +106,19 @@
             }
         }
     }
+
+    .empty {
+        flex: 1;
+        background: $white;
+        text-align: center;
+        img {
+            width: pxTorem(750);
+            height: pxTorem(600);
+        }
+        h2 {
+            color: #707e89;
+        }
+    }
 </style>
 <template>
     <div class='my-wish'>
@@ -113,22 +128,28 @@
                 <li :class='{active:status==3}' @click='changeStatus(3)'>可支持心愿</li>
                 <li :class='{active:status==4}' @click='changeStatus(4)'>已支持心愿</li>
             </ul>
-            <div class='tab-content'>
-                <div v-for='wish in wish_list' class='wish' @click='toWishDetail(wish)'>
-                    <div class='message'>
-                        <strong>{{user.nickname}} </strong><span class='date'>{{wish.create_time|date_format}}</span>
-                        <p>{{wish.desc}}</p>
-                    </div>
-                    <div class='right'>
-                        <h5>
-                            已经有
-                        </h5>
-                        <h5>
-                            <span class='number'>{{wish.score}}</span>人支持
-                        </h5>
+            <template v-if='wish_list'>
+                <div v-if='wish_list.length>0' class='tab-content'>
+                    <div v-for='wish in wish_list' class='wish' @click='toWishDetail(wish)'>
+                        <div class='message'>
+                            <strong>{{user.nickname}} </strong><span class='date'>{{wish.create_time|date_format}}</span>
+                            <p>{{wish.desc}}</p>
+                        </div>
+                        <div class='right'>
+                            <h5>
+                                已经有
+                            </h5>
+                            <h5>
+                                <span class='number'>{{wish.score}}</span>人支持
+                            </h5>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div v-else class='empty'>
+                    <img src='./images/empty.png'>
+                    <h2>您暂时还没有<template v-if='status===4'>已</template><template v-if='status===3'>可</template>支持心愿哦！</h2>
+                </div>
+            </template>
         </div>
         <v-support></v-support>
         <v-back-top></v-back-top>
@@ -147,7 +168,7 @@
         },
         data() {
             return {
-                wish_list: [],
+                wish_list: '',
                 status: 3,
                 slides: []
             };
@@ -159,8 +180,8 @@
         },
         filters: {
             date_format(value) {
-                const date = new Date(value);
-                return `${date.getMonth()}月${date.getDate()}日`;
+                const date = new Date(value.replace(' ', 'T'));
+                return `${date.getMonth()+1}月${date.getDate()}日`;
             }
         },
         beforeRouteLeave(to, from, next) {
@@ -227,6 +248,7 @@
             },
             changeStatus($index) {
                 this.status = $index;
+                this.wish_list = [];
                 this.getMyWishes();
             }
         }

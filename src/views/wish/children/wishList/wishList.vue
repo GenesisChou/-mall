@@ -178,15 +178,15 @@
             <div class='search'>
                 <form class='form-control' action='javascript:return true;'>
                     <i class='iconfont icon-search' @click='search'></i>
-                    <input v-model='sword' type='search' placeholder='请输入关键字' @keyup.enter='search' @blur='toggleClear' @focus='toggleClear'
+                    <input v-model='params.sword' type='search' placeholder='请输入关键字' @keyup.enter='search' @blur='toggleClear' @focus='toggleClear'
                         id='search'>
-                    <i class='iconfont icon-close-circle' @click='sword=""'></i>
+                    <i class='iconfont icon-close-circle' @click='params.sword=""'></i>
                 </form>
             </div>
             <ul class='tabs'>
-                <li :class='{active:status==""}' @click='changeStatus("")'>全部</li>
-                <li :class='{active:status==3}' @click='changeStatus(3)'>可支持心愿</li>
-                <li :class='{active:status==4}' @click='changeStatus(4)'>已支持心愿</li>
+                <li :class='{active:params.status==""}' @click='changeStatus("")'>全部</li>
+                <li :class='{active:params.status==3}' @click='changeStatus(3)'>可支持心愿</li>
+                <li :class='{active:params.status==4}' @click='changeStatus(4)'>已支持心愿</li>
             </ul>
             <div class='tab-content'>
                 <v-wish v-for='wish in wish_list' :wish='wish' :callback='supportCallback' :type='wish.status===4?2:1'>
@@ -207,7 +207,7 @@
                 </v-wish>
             </div>
         </div>
-        <v-support></v-support>
+        <v-support :busy='busy'></v-support>
         <v-back-top></v-back-top>
     </div>
 </template>
@@ -229,20 +229,22 @@
         },
         data() {
             return {
-                sword: '',
-                status: '',
                 wish_list: [],
                 slides: [],
-                router_state: ''
+                router_state: '',
+                params: {
+                    sword: '',
+                    status: '',
+                    total: '',
+                    p: 1,
+                    r: APP.PERPAGE,
+                    token: APP.TOKEN,
+                    user_id: APP.USER_ID,
+                    media_id: APP.MEDIA_ID,
+                },
+                scroll_event: '',
+                busy: false,
             };
-        },
-        beforeRouteLeave(to, from, next) {
-            this.router_state = 'leave';
-            this.$store.dispatch('savePosition', position => {
-                position[from.name] = utils.getScrollTop();
-            });
-            this.$store.dispatch('updatePageView');
-            next();
         },
         activated() {
             this.router_state = 'enter';
@@ -250,31 +252,61 @@
             if (position) {
                 window.scrollTo(0, position);
             }
+            window.addEventListener('scroll', this.scroll_event);
         },
         created() {
-            this.getWishList();
+            this.$store.dispatch('toggleLoading');
+            this.getWishList().then(data => {
+                this.wish_list = data.data.list;
+                this.$store.dispatch('toggleLoading');
+            }).catch(() => {
+                this.$store.dispatch('toggleLoading');
+            });
             this.getSlides();
+            this.scroll_event = this.getScrollEvent();
+        },
+        beforeRouteLeave(to, from, next) {
+            this.router_state = 'leave';
+            this.$store.dispatch('savePosition', position => {
+                position[from.name] = utils.getScrollTop();
+            });
+            window.removeEventListener('scroll', this.scroll_event);
+            this.$store.dispatch('updatePageView');
+            next();
         },
         methods: {
+            getScrollEvent() {
+                let scroll = true;
+                return utils.debounce(() => {
+                    this.busy = this.params.total > this.params.p;
+                    if (scroll && this.busy && utils.touchBottom()) {
+                        scroll = false;
+                        this.params.p++;
+                        this.getWishList().then(data => {
+                            this.wish_list = this.wish_list.concat(data.data.list);
+                            scroll = true;
+                        });
+                    }
+                }, 500, 500);
+            },
             getWishList() {
-                return new Promise(resolve => {
-                    this.$store.dispatch('toggleLoading');
-                    this.$http.post(`${APP.HOST}/wishes_list`, {
-                        token: APP.TOKEN,
-                        media_id: APP.MEDIA_ID,
-                        user_id: APP.USER_ID,
-                        open_id: APP.OPEN_ID,
-                        status: this.status,
-                        sword: this.sword
-                    }).then((response) => {
-                        this.$store.dispatch('toggleLoading');
+                return new Promise((resolve, reject) => {
+                    this.$http.post(`${APP.HOST}/wishes_list`, this.params).then((response) => {
                         const data = response.data;
                         if (data.status === APP.SUCCESS) {
-                            this.wish_list = data.data.list;
-                            if (typeof resolve === 'function') {
-                                resolve();
+                            const total = data.data.total;
+                            this.params.total = total;
+                            if (total > data.data.p) {
+                                this.busy = true;
                             }
+                            if (typeof resolve === 'function') {
+                                resolve(data);
+                            }
+                        } else {
+                            reject();
                         }
+                    }, () => {
+                        reject();
                     });
                 });
             },
@@ -292,11 +324,25 @@
                 });
             },
             search() {
-                this.getWishList();
+                this.params.p = 1;
+                this.$store.dispatch('toggleLoading');
+                this.getWishList().then(data => {
+                    this.wish_list = data.data.list;
+                    this.$store.dispatch('toggleLoading');
+                }).catch(() => {
+                    this.$store.dispatch('toggleLoading');
+                });
             },
             changeStatus($index) {
-                this.status = $index;
-                this.getWishList();
+                this.params.p = 1;
+                this.params.status = $index;
+                this.$store.dispatch('toggleLoading');
+                this.getWishList().then(data => {
+                    this.wish_list = data.data.list;
+                    this.$store.dispatch('toggleLoading');
+                }).catch(() => {
+                    this.$store.dispatch('toggleLoading');
+                });
             },
             supportCallback(wish) {
                 for (let i = 0; i < this.wish_list.length; i++) {

@@ -137,7 +137,7 @@
                     </li>
                 </ul>
                 <div class='operation'>
-                    <button v-if='true' class='btn btn-orange' @click='publish'>确认</button>
+                    <button v-if='name&&type&&desc' class='btn btn-orange' @click='publish'>确认</button>
                     <button v-else class='btn btn-gray' disabled='disabled'>确认</button>
                 </div>
             </div>
@@ -148,7 +148,7 @@
             <img src="./images/success.png">
             <h1>提交成功</h1>
             <h4>您的心愿，将会进入我们的审核阶段，审核完成 后您可在福利心愿墙内查看，请及时关注，并邀 请您的好友支持哦！ </h4>
-            <div class='btn btn-orange' @click='init'>确认</div>
+            <div class='btn btn-orange' @click='leave'>确认</div>
         </div>
     </div>
 </template>
@@ -201,12 +201,18 @@
             this.$store.dispatch('updatePageView');
             next();
         },
+        activated() {
+            this.init();
+        },
         methods: {
             init() {
                 this.name = '';
                 this.type = '';
                 this.desc = '';
                 this.publish_status = false;
+            },
+            leave() {
+                this.$router.go(-1);
             },
             publish() {
                 this.$store.dispatch('toggleLoading');
