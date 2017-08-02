@@ -1,0 +1,290 @@
+<style lang='scss' scoped>
+    @import '../../../../assets/scss/variable.scss';
+    .wish-list {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        background-color: #f2f3f4;
+    }
+
+    .wish-list-content {
+        flex: 1;
+    }
+
+    .slide {
+        height: pxTorem(200);
+    }
+
+    .search {
+        padding: pxTorem(30) pxTorem(32);
+        background: #f2f3f4;
+        .form-control {
+            @include flex-center-v; // width: pxTorem(593);
+            height: pxTorem(72);
+            border-radius: pxTorem(20);
+            background-color: $white;
+        }
+        .iconfont {
+            width: pxTorem(60);
+            text-align: center;
+            font-size: pxTorem(36);
+            color: #bababa;
+        }
+        .icon-close-circle {
+            display: none;
+            &.active {
+                display: block;
+            }
+        }
+        input {
+            flex: 1;
+            height: 100%;
+            width: pxTorem(610);
+            border: 0;
+            font-size: pxTorem(28);
+            color: $orange;
+            text-shadow: 0 0 0 #bababa;
+            -webkit-text-fill-color: transparent;
+        }
+         ::-webkit-input-placeholder {
+            color: #bababa;
+        }
+        input[type=search]::-webkit-search-cancel-button {
+            display: none;
+        }
+        span {
+            font-size: pxTorem(32);
+        }
+        &.top {
+            position: absolute;
+        }
+    }
+
+    .tab-content {
+        padding: pxTorem(26) pxTorem(24) 0 pxTorem(24);
+        overflow: hidden;
+        background: $white;
+    }
+
+    .tabs {
+        display: flex;
+        border-bottom: 1px solid #d3d4d6;
+        li {
+            position: relative;
+            flex: 1;
+            height: pxTorem(80);
+            line-height: pxTorem(80);
+            font-size: pxTorem(30);
+            color: #bababa;
+            text-align: center;
+            list-style: none;
+            background: $white;
+            &.active {
+                color: #ff5000;
+            }
+        }
+        li:nth-child(2),
+        li:nth-child(3) {
+            &:before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 50%;
+                width: 1px;
+                height: pxTorem(48);
+                margin-top: pxTorem(-24);
+                background: #f2f3f4;
+            }
+        }
+    }
+
+    .achived {
+        position: absolute;
+        right: pxTorem(6);
+        top: pxTorem(66);
+        width: pxTorem(180);
+        height: pxTorem(105);
+    }
+
+    .finish {
+        position: absolute;
+        right: pxTorem(-20);
+        top: pxTorem(-20);
+        width: pxTorem(136);
+        height: pxTorem(110);
+    }
+
+    .notice {
+        position: relative;
+        border-top: 2px dotted #e0e0e0;
+        h4 {
+            line-height: pxTorem(80);
+            text-align: center;
+        }
+        .content {
+            display: flex;
+            align-items: center;
+            height: pxTorem(140);
+            padding: 0 pxTorem(12);
+            img {
+                width: pxTorem(102);
+                height: pxTorem(102);
+            }
+            .summary {
+                flex: 1;
+                padding-left: pxTorem(20);
+                h6 {
+                    color: #a9aaae;
+                }
+            }
+            .button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: pxTorem(155);
+                height: pxTorem(50);
+                font-size: pxTorem(24);
+                border-radius: pxTorem(10);
+                color: $white;
+                background: #00a1e0;
+            }
+        }
+        .circle {
+            position: absolute;
+            z-index: 1;
+            top: pxTorem(-30);
+            width: pxTorem(60);
+            height: pxTorem(60);
+            border-radius: 50%;
+            background: $white;
+            box-shadow: 0 0 pxTorem(20) rgba(0, 0, 0, .1);
+            &.circle-left {
+                left: pxTorem(-30);
+            }
+            &.circle-right {
+                right: pxTorem(-30);
+            }
+        }
+    }
+</style>
+<template>
+    <div class='wish-list'>
+        <div class='all-wish-content'>
+            <v-slide :items='slides'></v-slide>
+            <div class='search'>
+                <form class='form-control' action='javascript:return true;'>
+                    <i class='iconfont icon-search' @click='search'></i>
+                    <input v-model='sword' type='search' placeholder='请输入关键字' @keyup.enter='search'>
+                    <i class='iconfont icon-close-circle'></i>
+                </form>
+            </div>
+            <ul class='tabs'>
+                <li :class='{active:status==""}' @click='changeStatus("")'>全部</li>
+                <li :class='{active:status==3}' @click='changeStatus(3)'>可支持心愿</li>
+                <li :class='{active:status==4}' @click='changeStatus(4)'>已支持心愿</li>
+            </ul>
+            <div class='tab-content'>
+                <v-wish v-for='wish in wish_list' :wish='wish' :callback='supportCallback' :type='wish.status===4?2:1'>
+                    <template v-if='wish.status===4'>
+                        <img class='finish' src='../../images/finish.png'>
+                        <div class='notice'>
+                            <!-- <div class='circle circle-left'></div> -->
+                            <!-- <div class='circle circle-right'></div> -->
+                            <h4><strong>{{wish.reply_characters}}</strong></h4>
+                            <div v-if='wish.is_reply_product===1' class='content'>
+                                <img :src='wish.product_pic_thumb'>
+                                <div class='summary'>
+                                    <h5><strong>{{wish.product_name}}</strong></h5>
+                                    <h6>{{wish.product_name_show}}</h6>
+                                </div>
+                                <router-link :to='{name:"product_detail",query:{product_id:wish.product_id}}' class='button' tag='div'>去兑换</router-link>
+                            </div>
+                        </div>
+                    </template>
+                </v-wish>
+            </div>
+        </div>
+        <v-support></v-support>
+    </div>
+</template>
+<script>
+    import vWish from '../../components/vWish';
+    import vSlide from '../../components/vSlide.vue';
+    export default {
+        name: 'all',
+        components: {
+            vWish,
+            vSlide
+        },
+        computed: {
+            user() {
+                return this.$store.state.user;
+            }
+        },
+        data() {
+            return {
+                sword: '',
+                status: '',
+                wish_list: [],
+                slides: []
+            };
+        },
+        created() {
+            this.getWishList();
+            this.getSlides();
+        },
+        methods: {
+            getWishList() {
+                return new Promise(resolve => {
+                    this.$store.dispatch('toggleLoading');
+                    this.$http.post(`${APP.HOST}/wishes_list`, {
+                        token: APP.TOKEN,
+                        media_id: APP.MEDIA_ID,
+                        user_id: APP.USER_ID,
+                        open_id: APP.OPEN_ID,
+                        status: this.status,
+                        sword: this.sword
+                    }).then((response) => {
+                        this.$store.dispatch('toggleLoading');
+                        const data = response.data;
+                        if (data.status === APP.SUCCESS) {
+                            this.wish_list = data.data.list;
+                            if (typeof resolve === 'function') {
+                                resolve();
+                            }
+                        }
+                    });
+                });
+            },
+            getSlides() {
+                this.$http.post(`${APP.HOST}/wish_wall_banner`, {
+                    token: APP.TOKEN,
+                    media_id: APP.MEDIA_ID,
+                    user_id: APP.USER_ID,
+                    open_id: APP.OPEN_ID,
+                }).then((response) => {
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS) {
+                        this.slides = data.data.items;
+                    }
+                });
+            },
+            search() {
+                this.getWishList();
+            },
+            changeStatus($index) {
+                this.status = $index;
+                this.getWishList();
+            },
+            supportCallback(wish) {
+                for (let i = 0; i < this.wish_list.length; i++) {
+                    if (this.wish_list[i].id === wish.id) {
+                        this.wish_list[i].is_support = 1;
+                        this.wish_list[i].score++;
+                        return;
+                    }
+                }
+            }
+        }
+    };
+</script>

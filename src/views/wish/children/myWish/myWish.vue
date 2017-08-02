@@ -4,51 +4,6 @@
         height: pxTorem(200);
     }
 
-    .search {
-        padding: pxTorem(30) pxTorem(32);
-        background: #f2f3f4;
-        .form-control {
-            @include flex-center-v; // width: pxTorem(593);
-            height: pxTorem(72);
-            border-radius: pxTorem(20);
-            background-color: $white;
-        }
-        .iconfont {
-            width: pxTorem(60);
-            text-align: center;
-            font-size: pxTorem(36);
-            color: #bababa;
-        }
-        .icon-close-circle {
-            display: none;
-            &.active {
-                display: block;
-            }
-        }
-        input {
-            flex: 1;
-            height: 100%;
-            width: pxTorem(610);
-            border: 0;
-            font-size: pxTorem(28);
-            color: $orange;
-            text-shadow: 0 0 0 #bababa;
-            -webkit-text-fill-color: transparent;
-        }
-         ::-webkit-input-placeholder {
-            color: #bababa;
-        }
-        input[type=search]::-webkit-search-cancel-button {
-            display: none;
-        }
-        span {
-            font-size: pxTorem(32);
-        }
-        &.top {
-            position: absolute;
-        }
-    }
-
     .tab-content {
         padding: pxTorem(26) pxTorem(24) pxTorem(100) pxTorem(24);
         background: $white;
@@ -70,8 +25,7 @@
                 color: #ff5000;
             }
         }
-        li:nth-child(2),
-        li:nth-child(3) {
+        li:nth-child(2) {
             &:before {
                 content: '';
                 position: absolute;
@@ -85,31 +39,81 @@
         }
     }
 
-    .achived {
-        position: absolute;
-        right: pxTorem(6);
-        top: pxTorem(66);
-        width: pxTorem(180);
-        height: pxTorem(105);
+    .wish {
+        @include active($white,2%);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: pxTorem(703);
+        height: pxTorem(215); // padding: pxTorem(27) 0;
+        margin-bottom: pxTorem(23);
+        background: $white;
+        border-radius: pxTorem(20);
+        box-shadow: 0 0 pxTorem(20) rgba(0, 0, 0, .1);
+    }
+
+
+
+    .message {
+        flex: 1;
+        height: 100%;
+        padding-top: pxTorem(56);
+        margin-left: pxTorem(60);
+        overflow: hidden;
+        strong {
+            font-size: pxTorem(31);
+            margin-right: pxTorem(10);
+        }
+        .date {
+            font-size: pxTorem(22);
+            font-weight: normal; // width: 100%;
+        }
+        p {
+            max-height: pxTorem(72);
+            padding-right: pxTorem(10);
+            overflow: hidden;
+            font-size: pxTorem(22);
+            color: #a9aaae;
+        }
+    }
+
+    .right {
+        width: pxTorem(235);
+        h5 {
+            text-align: center;
+        }
+        .number {
+            font-size: pxTorem(45);
+            color: #ff5f17;
+            margin-right: pxTorem(12);
+            &.blue {
+                color: #00a1e0;
+            }
+        }
     }
 </style>
 <template>
-    <div class='all'>
+    <div class='mine'>
         <v-slide :items='slides'></v-slide>
-        <div class='search'>
-            <form class='form-control' action='javascript:return true;'>
-                <i class='iconfont icon-search' @click='search'></i>
-                <input v-model='sword' type='search' placeholder='请输入关键字' @keyup.enter='search'>
-                <i class='iconfont icon-close-circle'></i>
-            </form>
-        </div>
         <ul class='tabs'>
-            <li :class='{active:status==""}' @click='changeStatus("")'>全部</li>
             <li :class='{active:status==3}' @click='changeStatus(3)'>可支持心愿</li>
             <li :class='{active:status==4}' @click='changeStatus(4)'>已支持心愿</li>
         </ul>
         <div class='tab-content'>
-            <v-wish v-for='wish in wish_list' :wish='wish'></v-wish>
+            <div v-for='wish in wish_list' class='wish' @click='toWishDetail(wish)'>
+                <div class='message'>
+                    <strong>{{user.nickname}} </strong><span class='date'>{{wish.create_time|date_format}}</span>
+                    <p>{{wish.desc}}</p>
+                </div>
+                <div class='right'>
+                    <h5>
+                        已经有
+                    </h5>
+                    <h5>
+                        <span class='number'>{{wish.score}}</span>人支持
+                    </h5>
+                </div>
+            </div>
         </div>
         <v-menu></v-menu>
     </div>
@@ -119,40 +123,44 @@
     import vWish from '../../components/vWish';
     import vSlide from '../../components/vSlide.vue';
     export default {
-        name: 'all',
+        name: 'myWish',
         components: {
             vMenu,
             vWish,
             vSlide
+        },
+        data() {
+            return {
+                wish_list: [],
+                status: 3,
+                slides: []
+            };
         },
         computed: {
             user() {
                 return this.$store.state.user;
             }
         },
-        data() {
-            return {
-                sword: '',
-                status: '',
-                wish_list: [],
-                slides: []
-            };
+        filters: {
+            date_format(value) {
+                const date = new Date(value);
+                return `${date.getMonth()}月${date.getDate()}日`;
+            }
         },
         created() {
-            this.getWishList();
+            this.getMyWishes();
             this.getSlides();
         },
         methods: {
-            getWishList() {
+            getMyWishes() {
                 return new Promise(resolve => {
                     this.$store.dispatch('toggleLoading');
-                    this.$http.post(`${APP.HOST}/wishes_list`, {
+                    this.$http.post(`${APP.HOST}/my_wishes`, {
                         token: APP.TOKEN,
                         media_id: APP.MEDIA_ID,
                         user_id: APP.USER_ID,
                         open_id: APP.OPEN_ID,
                         status: this.status,
-                        sword: this.sword
                     }).then((response) => {
                         this.$store.dispatch('toggleLoading');
                         const data = response.data;
@@ -178,12 +186,17 @@
                     }
                 });
             },
-            search() {
-                this.getWishList();
+            toWishDetail(wish) {
+                this.$router.push({
+                    name: 'wish_detail',
+                    query: {
+                        wish_id: wish.id
+                    }
+                });
             },
             changeStatus($index) {
                 this.status = $index;
-                this.getWishList();
+                this.getMyWishes();
             }
         }
     };

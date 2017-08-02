@@ -2,7 +2,7 @@
     @import '../../../../../../assets/scss/variable.scss';
     .v-pk {
         position: relative;
-        margin: pxTorem(30) 0;
+        margin-top: pxTorem(30);
         &:after {
             clear: both;
             content: '';
@@ -94,6 +94,10 @@
             background: #ff5f17;
             border-radius: pxTorem(18);
             font-size: pxTorem(24);
+            &.disable {
+                background-color: #b5b5b5;
+                color: $white;
+            }
         }
         strong {
             font-size: pxTorem(32);
@@ -131,7 +135,8 @@
                     <span>{{mate[0].sub_title}}</span>
                 </div>
                 <div class='operation'>
-                    <div class='button'>支持</div>
+                    <div v-if='mate[0].is_support===2' class='button' @click='supportPk(mate[0].id,0)'>支持</div>
+                    <div v-else class='button disable'>已支持</div>
                     <strong class='votes'>{{mate[0].score}}<span>票</span></strong>
                 </div>
             </div>
@@ -143,7 +148,8 @@
                     <span>{{mate[1].sub_title}}</span>
                 </div>
                 <div class='operation'>
-                    <div class='button'>支持</div>
+                    <div v-if='mate[1].is_support===2' class='button' @click='supportPk(mate[1].id,1)'>支持</div>
+                    <div v-else class='button disable'>已支持</div>
                     <strong class='votes'>{{mate[1].score}}<span>票</span></strong>
                 </div>
             </div>
@@ -160,13 +166,30 @@
         props: {
             pk: Object
         },
-        data() {
-            return {
-                mate: []
-            };
+        computed: {
+            mate() {
+                return this.pk.items;
+            }
         },
-        created() {
-            this.mate = this.pk.items;
+        methods: {
+            supportPk(id, $index) {
+                this.$http.post(`${APP.HOST}/pk_support/${id}`, {
+                    token: APP.TOKEN,
+                    media_id: APP.MEDIA_ID,
+                    user_id: APP.USER_ID,
+                    open_id: APP.OPEN_ID,
+                    pk_id: this.pk.id
+                }).then((response) => {
+                    const data = response.data;
+                    if (data.status === APP.SUCCESS) {
+                        this.$parent.getPkInfor(this.pk.id);
+                    } else {
+                        this.$store.dispatch('toggleAlert', {
+                            msg: data.info
+                        });
+                    }
+                });
+            },
         }
     };
 </script>

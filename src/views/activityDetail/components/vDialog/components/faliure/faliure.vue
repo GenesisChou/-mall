@@ -108,7 +108,7 @@
                 <img src='./images/faliureLack.png'></img>
                 <footer>
                     <div class='operation left' @click='close'>知道了</div>
-                    <router-link :to='{path:"earn_integral"}' class='operation right' tag='div'>
+                    <router-link :to='{name:"earn_integral"}' class='operation right' tag='div'>
                         去赚积分
                     </router-link>
                 </footer>

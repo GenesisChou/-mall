@@ -77,7 +77,7 @@
                 let link = '';
                 if (item.type === 1) {
                     link = {
-                        path: '/wish_wall/publish'
+                        name: 'publish_wish'
                     };
                 } else if (item.type === 2) {
                     link = {

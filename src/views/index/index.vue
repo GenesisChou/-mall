@@ -110,13 +110,11 @@
         methods: {
             getLayOut() {
                 return new Promise(resolve => {
-                    // this.$store.dispatch('toggleLoading');
                     this.$http.post(`${APP.HOST}/index`, {
                         token: APP.TOKEN,
                         user_id: APP.USER_ID,
                         media_id: APP.MEDIA_ID
                     }).then((response) => {
-                        // this.$store.dispatch('toggleLoading');
                         const data = response.data;
                         if (data.status === APP.SUCCESS && utils.getTypeOf(data.data) === 'Array' &&
                             data.data.length) {
@@ -170,7 +168,7 @@
                 this.indexView(item, layout);
                 if (layout.component_type === 6) {
                     if (item.is_inner_url === 1) {
-                        if ((item.url === 'my_account' || item.url === 'earn_integral' || item.url === 'order_list' ||
+                        if ((item.url === 'integral_details' || item.url === 'earn_integral' || item.url === 'order_list' ||
                                 item.url === 'wish_wall') &&
                             this.user.show_authorize !== 1) {
                             utils.login(APP.MEDIA_ID, 2, item.url, null, APP.ORIGIN);

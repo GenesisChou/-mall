@@ -228,6 +228,7 @@
                 </router-link>
             </transition-group>
         </div>
+        <v-menu></v-menu>
         <v-support :busy='busy'></v-support>
         <v-back-top></v-back-top>
     </div>
@@ -236,12 +237,14 @@
     import vSearch from './components/vSearch.vue';
     import vBackTop from 'components/vBackTop';
     import vListItem from 'components/vListItem';
+    import vMenu from 'components/vMenu';
     export default {
         name: 'productList',
         components: {
             vSearch,
             vBackTop,
-            vListItem
+            vListItem,
+            vMenu
         },
         data() {
             return {

@@ -1,6 +1,6 @@
 <style lang='scss' scoped>
     @import '../../assets/scss/variable.scss';
-    .my-account {
+    .integral-details {
         min-height: 100%;
         background-color: #f2f3f4;
     }
@@ -57,7 +57,7 @@
     }
 </style>
 <template>
-    <div class='my-account '>
+    <div class='integral-details'>
         <!-- <header class='header'>
             <div class='avater'>
                 <img class='img-responsive' :src='user.headimg'>
@@ -90,7 +90,7 @@
 <script>
     import vText from '../index/components/vText';
     export default {
-        name: 'myAccount',
+        name: 'integralDetails',
         components: {
             vText
         },

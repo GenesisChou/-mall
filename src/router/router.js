@@ -22,9 +22,9 @@ const router = new VueRouter({
             name: 'activity_detail',
             component: require('views/activityDetail')
         }, {
-            path: '/my_account',
-            name: 'my_account',
-            component: require('views/myAccount')
+            path: '/integral_details',
+            name: 'integral_details',
+            component: require('views/integralDetails')
 
         }, {
             path: '/order_list',
@@ -66,29 +66,29 @@ const router = new VueRouter({
             component: require('views/user')
         },
         {
-            path: '/wish_wall',
-            name: 'wish_wall',
-            component: require('views/wishWall'),
+            path: '/wish',
+            name: 'wish',
+            component: require('views/wish'),
             children: [{
-                path: '/',
-                name: 'main',
-                component: require('views/wishWall/children/main')
+                path: 'wish_wall',
+                name: 'wish_wall',
+                component: require('views/wish/children/wishWall')
             }, {
-                path: 'mine',
-                name: 'mine',
-                component: require('views/wishWall/children/mine')
+                path: 'my_wish',
+                name: 'my_wish',
+                component: require('views/wish/children/myWish')
             }, {
-                path: 'all',
-                name: 'all',
-                component: require('views/wishWall/children/all')
+                path: 'wish_list',
+                name: 'wish_list',
+                component: require('views/wish/children/wishList')
             }, {
-                path: 'publish',
-                name: 'publish',
-                component: require('views/wishWall/children/publish')
+                path: 'publish_wish',
+                name: 'publish_wish',
+                component: require('views/wish/children/publishWish')
             }, {
-                path: 'detail',
-                name: 'detail',
-                component: require('views/wishWall/children/detail')
+                path: 'wish_detail',
+                name: 'wish_detail',
+                component: require('views/wish/children/wishDetail')
             }]
         }, {
             path: '*',

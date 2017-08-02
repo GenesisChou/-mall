@@ -115,21 +115,21 @@
             playSomethingElse() {
                 if (this.other_type === 1) {
                     this.$router.push({
-                        path: 'product_detail',
+                        name: 'product_detail',
                         query: {
                             product_id: this.other_id,
                         },
                     });
                 } else if (this.other_type === 2) {
                     this.$router.push({
-                        path: 'activity_detail',
+                        name: 'activity_detail',
                         query: {
                             activity_id: this.other_id,
                         },
                     });
                 } else if (this.other_type === 3) {
                     this.$router.push({
-                        path: 'subject_detail',
+                        name: 'subject_detail',
                         query: {
                             subject_id: this.other_id,
                         },

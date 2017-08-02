@@ -60,7 +60,7 @@
     }
 
     .right {
-        width:pxTorem(324);
+        width: pxTorem(324);
         margin-right: pxTorem(20);
         h5 {
             text-align: center;
@@ -113,7 +113,7 @@
                 <div v-if='type===1' class='button-group'>
                     <div class='button' v-if='wish.is_support===2' @click='support'>支持Ta心愿</div>
                     <div class='button' v-else>已支持</div>
-                    <router-link :to='{path:"/wish_wall/detail",query:{wish_id:wish.id}}' tag='div' class='button'>
+                    <router-link :to='{name:"wish_detail",query:{wish_id:wish.id}}' tag='div' class='button'>
                         邀请好友支持
                     </router-link>
                 </div>
@@ -130,7 +130,8 @@
             type: {
                 type: Number,
                 default: 1
-            }
+            },
+            callback: Function
         },
         filters: {
             date_format(value) {
@@ -149,7 +150,11 @@
                 }).then((response) => {
                     this.$store.dispatch('toggleLoading');
                     const data = response.data;
-                    if (data.status !== APP.SUCCESS) {
+                    if (data.status === APP.SUCCESS) {
+                        if (this.callback && typeof this.callback === 'function') {
+                            this.callback(this.wish);
+                        }
+                    } else {
                         this.$store.dispatch('toggleAlert', {
                             msg: data.info
                         });

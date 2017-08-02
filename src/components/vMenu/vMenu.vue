@@ -65,46 +65,23 @@
 </style>
 <template>
     <div class='v-menu'>
-        <router-link :to='{path:"/"}' tag='div'>
+        <router-link :to='{name:"index"}' tag='div'>
             <div class='icon'>
-                <div :class='["home",{active:path==="/"}]'></div>
+                <div :class='["home",{active:$route.name==="index"}]'></div>
             </div>
             <span>首页</span>
         </router-link>
-        <router-link :to='{path:"/product_list"}' tag='div'>
+        <router-link :to='{name:"product_list"}' tag='div'>
             <div class='icon'>
-                <div class='flower'></div>
+                <div :class='["flower",{active:$route.name==="product_list"}]'></div>
             </div>
             <span>福利</span>
         </router-link>
-        <router-link :to='{path:"/user"}' tag='div'>
+        <router-link :to='{name:"user"}' tag='div'>
             <div class='icon'>
-                <div :class='["user",{active:matchRouter}]'></div>
+                <div :class='["user",{active:$route.name==="user"}]'></div>
             </div>
             <span>我的</span>
         </router-link>
     </div>
 </template>
-<script>
-    export default {
-        name: 'menu',
-        data() {
-            return {
-                path: ''
-            };
-        },
-        watch: {
-            $route(value) {
-                this.path = value.path;
-            }
-        },
-        computed: {
-            matchRouter() {
-                return this.path === '/user' || (/^\/wish_wall/).test(this.path);
-            }
-        },
-        mounted() {
-            this.path = this.$route.path;
-        }
-    };
-</script>
