@@ -159,15 +159,11 @@
         methods: {
             init() {
                 this.activity_id = this.$route.query.activity_id;
-                this.getActivityPromise(this.getActivityDetail('activity_detail_l'), this.isShare(), this.getRemainingTimes())
+                this.getActivityPromise(this.getActivityDetail('activity_detail_l'), this.isShare())
                     .then(data => {
                         this.activity_type = this.getActivityType(this.activity_detail.type);
                         this.has_shared = data[1].is_share;
-                        const remainingTimes = data[2].data,
-                            is_share_info = this.activity_detail.is_share_info === 1;
-                        if (this.activity_detail.is_share === 1 & this.has_shared === false & remainingTimes < 1) {
-                            this.share_show = true;
-                        }
+                        const is_share_info = this.activity_detail.is_share_info === 1;
                         weChatShare({
                             router: this.$route,
                             title: is_share_info ? this.activity_detail.share_name : this.activity_detail.name,
@@ -179,7 +175,7 @@
                             this.share_show = false;
                             return this.shareView(share_point);
                         }).then(() => {
-                            this.getActivityPromise(this.getActivityDetail(), this.isShare(), this.getRemainingTimes())
+                            this.getActivityPromise(this.getActivityDetail(), this.isShare())
                                 .then(data => {
                                     this.has_shared = data[1].is_share;
                                 });
@@ -187,8 +183,8 @@
                     });
                 this.getFreeTimes();
             },
-            getActivityPromise(promiseX, promiseY, promiseZ) {
-                return Promise.all([promiseX, promiseY, promiseZ])
+            getActivityPromise(promiseX, promiseY) {
+                return Promise.all([promiseX, promiseY])
                     .then(data => {
                         return data;
                     });
@@ -220,22 +216,22 @@
                     });
                 });
             },
-            getRemainingTimes() {
-                return new Promise(resolve => {
-                    this.$http.post(`${APP.HOST}/get_no_share_times`, {
-                        token: APP.TOKEN,
-                        user_id: APP.USER_ID,
-                        activity_id: this.activity_id
-                    }).then((response) => {
-                        const data = response.data;
-                        if (data.status === APP.SUCCESS) {
-                            if (typeof resolve === 'function') {
-                                resolve(data);
-                            }
-                        }
-                    });
-                });
-            },
+            // getRemainingTimes() {
+            //     return new Promise(resolve => {
+            //         this.$http.post(`${APP.HOST}/get_no_share_times`, {
+            //             token: APP.TOKEN,
+            //             user_id: APP.USER_ID,
+            //             activity_id: this.activity_id
+            //         }).then((response) => {
+            //             const data = response.data;
+            //             if (data.status === APP.SUCCESS) {
+            //                 if (typeof resolve === 'function') {
+            //                     resolve(data);
+            //                 }
+            //             }
+            //         });
+            //     });
+            // },
             //获取免费活动次数
             getFreeTimes() {
                 this.$http.post(`${APP.HOST}/get_free_times/${APP.USER_ID}`, {

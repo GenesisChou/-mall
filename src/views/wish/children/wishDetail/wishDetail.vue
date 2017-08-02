@@ -249,6 +249,10 @@
                 return this.$store.state.user;
             }
         },
+        beforeRouteLeave(to, from, next) {
+            this.$store.dispatch('updatePageView');
+            next();
+        },
         created() {
             this.wish_id = this.$route.query.wish_id;
             this.getWishDetail().then(() => {

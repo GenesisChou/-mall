@@ -93,7 +93,7 @@
         width: pxTorem(70);
         height: pxTorem(81);
         font-size: pxTorem(27);
-        color:#ffed77;
+        color: #ffed77;
         line-height: pxTorem(90);
         text-align: center;
         background: url('./images/award.png') no-repeat;
@@ -225,6 +225,21 @@
         computed: {
             user() {
                 return this.$store.state.user;
+            }
+        },
+        beforeRouteLeave(to, from, next) {
+            this.router_state = 'leave';
+            this.$store.dispatch('savePosition', position => {
+                position[from.name] = utils.getScrollTop();
+            });
+            this.$store.dispatch('updatePageView');
+            next();
+        },
+        activated() {
+            this.router_state = 'enter';
+            const position = this.$store.state.position[this.$route.name];
+            if (position) {
+                window.scrollTo(0, position);
             }
         },
         created() {

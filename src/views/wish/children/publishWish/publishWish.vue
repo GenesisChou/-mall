@@ -197,6 +197,10 @@
                 return '';
             }
         },
+        beforeRouteLeave(to, from, next) {
+            this.$store.dispatch('updatePageView');
+            next();
+        },
         methods: {
             init() {
                 this.name = '';

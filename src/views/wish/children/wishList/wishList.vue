@@ -205,14 +205,17 @@
             </div>
         </div>
         <v-support></v-support>
+        <v-back-top></v-back-top>
     </div>
 </template>
 <script>
+    import vBackTop from 'components/vBackTop';
     import vWish from '../../components/vWish';
     import vSlide from '../../components/vSlide.vue';
     export default {
         name: 'all',
         components: {
+            vBackTop,
             vWish,
             vSlide
         },
@@ -226,8 +229,24 @@
                 sword: '',
                 status: '',
                 wish_list: [],
-                slides: []
+                slides: [],
+                router_state: ''
             };
+        },
+        beforeRouteLeave(to, from, next) {
+            this.router_state = 'leave';
+            this.$store.dispatch('savePosition', position => {
+                position[from.name] = utils.getScrollTop();
+            });
+            this.$store.dispatch('updatePageView');
+            next();
+        },
+        activated() {
+            this.router_state = 'enter';
+            const position = this.$store.state.position[this.$route.name];
+            if (position) {
+                window.scrollTo(0, position);
+            }
         },
         created() {
             this.getWishList();

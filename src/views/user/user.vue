@@ -53,7 +53,7 @@
         </v-group>
         <v-group>
             <v-cell icon='records' :callback='getRouter("order_list")'>兑换记录</v-cell>
-            <v-cell icon='integral-list' :callback='getRouter("my_account")'>积分明细</v-cell>
+            <v-cell icon='integral-list' :callback='getRouter("integral_details")'>积分明细</v-cell>
         </v-group>
         <v-group>
             <v-cell icon='edit-user' :callback='getRouter("edit_user")'>修改资料</v-cell>
@@ -79,6 +79,10 @@
             user() {
                 return this.$store.state.user;
             }
+        },
+        beforeRouteLeave(to, from, next) {
+            this.$store.dispatch('updatePageView');
+            next();
         },
         methods: {
             getRouter(route) {

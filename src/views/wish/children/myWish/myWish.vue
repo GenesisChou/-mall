@@ -1,11 +1,23 @@
 <style lang='scss' scoped>
     @import '../../../../assets/scss/variable.scss';
+    .my-wish {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        background-color: #f2f3f4;
+    }
+
+    .my-wish-content {
+        flex: 1;
+    }
+
     .slide {
         height: pxTorem(200);
     }
 
     .tab-content {
-        padding: pxTorem(26) pxTorem(24) pxTorem(100) pxTorem(24);
+        padding: pxTorem(26) pxTorem(24) 0 pxTorem(24);
+        overflow: hidden;
         background: $white;
     }
 
@@ -21,6 +33,7 @@
             color: #bababa;
             text-align: center;
             list-style: none;
+            background:$white;
             &.active {
                 color: #ff5000;
             }
@@ -40,7 +53,7 @@
     }
 
     .wish {
-        @include active($white,2%);
+        @include active($white, 2%);
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -93,41 +106,44 @@
     }
 </style>
 <template>
-    <div class='mine'>
-        <v-slide :items='slides'></v-slide>
-        <ul class='tabs'>
-            <li :class='{active:status==3}' @click='changeStatus(3)'>可支持心愿</li>
-            <li :class='{active:status==4}' @click='changeStatus(4)'>已支持心愿</li>
-        </ul>
-        <div class='tab-content'>
-            <div v-for='wish in wish_list' class='wish' @click='toWishDetail(wish)'>
-                <div class='message'>
-                    <strong>{{user.nickname}} </strong><span class='date'>{{wish.create_time|date_format}}</span>
-                    <p>{{wish.desc}}</p>
-                </div>
-                <div class='right'>
-                    <h5>
-                        已经有
-                    </h5>
-                    <h5>
-                        <span class='number'>{{wish.score}}</span>人支持
-                    </h5>
+    <div class='my-wish'>
+        <div class='my-wish-content'>
+            <v-slide :items='slides'></v-slide>
+            <ul class='tabs'>
+                <li :class='{active:status==3}' @click='changeStatus(3)'>可支持心愿</li>
+                <li :class='{active:status==4}' @click='changeStatus(4)'>已支持心愿</li>
+            </ul>
+            <div class='tab-content'>
+                <div v-for='wish in wish_list' class='wish' @click='toWishDetail(wish)'>
+                    <div class='message'>
+                        <strong>{{user.nickname}} </strong><span class='date'>{{wish.create_time|date_format}}</span>
+                        <p>{{wish.desc}}</p>
+                    </div>
+                    <div class='right'>
+                        <h5>
+                            已经有
+                        </h5>
+                        <h5>
+                            <span class='number'>{{wish.score}}</span>人支持
+                        </h5>
+                    </div>
                 </div>
             </div>
         </div>
-        <v-menu></v-menu>
+        <v-support></v-support>
+        <v-back-top></v-back-top>
     </div>
 </template>
 <script>
-    import vMenu from 'components/vMenu';
+    import vBackTop from 'components/vBackTop';
     import vWish from '../../components/vWish';
     import vSlide from '../../components/vSlide.vue';
     export default {
         name: 'myWish',
         components: {
-            vMenu,
             vWish,
-            vSlide
+            vSlide,
+            vBackTop
         },
         data() {
             return {
@@ -145,6 +161,21 @@
             date_format(value) {
                 const date = new Date(value);
                 return `${date.getMonth()}月${date.getDate()}日`;
+            }
+        },
+        beforeRouteLeave(to, from, next) {
+            this.router_state = 'leave';
+            this.$store.dispatch('savePosition', position => {
+                position[from.name] = utils.getScrollTop();
+            });
+            this.$store.dispatch('updatePageView');
+            next();
+        },
+        activated() {
+            this.router_state = 'enter';
+            const position = this.$store.state.position[this.$route.name];
+            if (position) {
+                window.scrollTo(0, position);
             }
         },
         created() {
