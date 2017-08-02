@@ -135,8 +135,9 @@
                     <span>{{mate[0].sub_title}}</span>
                 </div>
                 <div class='operation'>
-                    <div v-if='mate[0].is_support===2' class='button' @click='supportPk(mate[0].id,0)'>支持</div>
-                    <div v-else class='button disable'>已支持</div>
+                    <div v-if='mate[1].is_support===1' class='button disable'>支持</div>
+                    <div v-else-if='mate[0].is_support===1' class='button disable'>已支持</div>
+                    <div v-else class='button' @click='supportPk(mate[0].id,0)'>支持</div>
                     <strong class='votes'>{{mate[0].score}}<span>票</span></strong>
                 </div>
             </div>
@@ -148,8 +149,9 @@
                     <span>{{mate[1].sub_title}}</span>
                 </div>
                 <div class='operation'>
-                    <div v-if='mate[1].is_support===2' class='button' @click='supportPk(mate[1].id,1)'>支持</div>
-                    <div v-else class='button disable'>已支持</div>
+                    <div v-if='mate[0].is_support===1' class='button disable'>支持</div>
+                    <div v-else-if='mate[1].is_support===1' class='button disable'>已支持</div>
+                    <div v-else class='button' @click='supportPk(mate[1].id,1)'>支持</div>
                     <strong class='votes'>{{mate[1].score}}<span>票</span></strong>
                 </div>
             </div>
@@ -166,29 +168,38 @@
         props: {
             pk: Object
         },
+        data() {
+            return {
+                state: 'ready'
+            };
+        },
         computed: {
             mate() {
                 return this.pk.items;
-            }
+            },
         },
         methods: {
             supportPk(id, $index) {
-                this.$http.post(`${APP.HOST}/pk_support/${id}`, {
-                    token: APP.TOKEN,
-                    media_id: APP.MEDIA_ID,
-                    user_id: APP.USER_ID,
-                    open_id: APP.OPEN_ID,
-                    pk_id: this.pk.id
-                }).then((response) => {
-                    const data = response.data;
-                    if (data.status === APP.SUCCESS) {
-                        this.$parent.getPkInfor(this.pk.id);
-                    } else {
-                        this.$store.dispatch('toggleAlert', {
-                            msg: data.info
-                        });
-                    }
-                });
+                if (this.mate[0].is_support === 2 && this.mate[1].is_support === 2 && this.state === 'ready') {
+                    this.state = 'block';
+                    this.$http.post(`${APP.HOST}/pk_support/${id}`, {
+                        token: APP.TOKEN,
+                        media_id: APP.MEDIA_ID,
+                        user_id: APP.USER_ID,
+                        open_id: APP.OPEN_ID,
+                        pk_id: this.pk.id
+                    }).then((response) => {
+                        const data = response.data;
+                        this.state = 'ready';
+                        if (data.status === APP.SUCCESS) {
+                            this.$parent.getPkInfor(this.pk.id);
+                        } else {
+                            this.$store.dispatch('toggleAlert', {
+                                msg: data.info
+                            });
+                        }
+                    });
+                }
             },
         }
     };

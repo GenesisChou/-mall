@@ -74,6 +74,7 @@
             }
         }
         .button {
+            @include active($white,3%);
             display: flex;
             justify-content: center;
             align-items: center;

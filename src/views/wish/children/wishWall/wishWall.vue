@@ -124,6 +124,7 @@
                 }
             }
             .button {
+                @include active(#00a1e0,5%);
                 display: flex;
                 justify-content: center;
                 align-items: center;

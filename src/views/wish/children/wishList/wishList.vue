@@ -138,6 +138,7 @@
                 }
             }
             .button {
+                @include active(#00a1e0, 5%);
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -169,13 +170,14 @@
 </style>
 <template>
     <div class='wish-list'>
-        <div class='all-wish-content'>
+        <div class='wish-list-content'>
             <v-slide :items='slides'></v-slide>
             <div class='search'>
                 <form class='form-control' action='javascript:return true;'>
                     <i class='iconfont icon-search' @click='search'></i>
-                    <input v-model='sword' type='search' placeholder='请输入关键字' @keyup.enter='search'>
-                    <i class='iconfont icon-close-circle'></i>
+                    <input v-model='sword' type='search' placeholder='请输入关键字' @keyup.enter='search' @blur='toggleClear' @focus='toggleClear'
+                        id='search'>
+                    <i class='iconfont icon-close-circle' @click='sword=""'></i>
                 </form>
             </div>
             <ul class='tabs'>
@@ -188,8 +190,6 @@
                     <template v-if='wish.status===4'>
                         <img class='finish' src='../../images/finish.png'>
                         <div class='notice'>
-                            <!-- <div class='circle circle-left'></div> -->
-                            <!-- <div class='circle circle-right'></div> -->
                             <h4><strong>{{wish.reply_characters}}</strong></h4>
                             <div v-if='wish.is_reply_product===1' class='content'>
                                 <img :src='wish.product_pic_thumb'>
@@ -303,7 +303,10 @@
                         return;
                     }
                 }
-            }
+            },
+            toggleClear(state) {
+                event.target.parentElement.querySelector('.icon-close-circle').classList.toggle('active');
+            },
         }
     };
 </script>

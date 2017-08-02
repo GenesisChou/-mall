@@ -15,6 +15,20 @@
             flex-direction: column;
             align-items: center;
             height: pxTorem(100);
+            &.active {
+                .home {
+                    background-image: url('./images/homeActive.png');
+                }
+                .flower {
+                    background-image: url('./images/flowerActive.png');
+                }
+                .user {
+                    background-image: url('./images/userActive.png');
+                }
+                span{
+                    color:#ff5f17;
+                }
+            }
         }
     }
 
@@ -31,9 +45,6 @@
         margin: 0 auto;
         background-image: url('./images/home.png');
         background-size: 100% 100%;
-        &.active {
-            background-image: url('./images/homeActive.png');
-        }
     }
 
     .flower {
@@ -42,9 +53,6 @@
         margin: 0 auto;
         background-image: url('./images/flower.png');
         background-size: 100% 100%;
-        &.active {
-            background-image: url('./images/flowerActive.png');
-        }
     }
 
     .user {
@@ -53,9 +61,6 @@
         margin: 0 auto;
         background-image: url('./images/user.png');
         background-size: 100% 100%;
-        &.active {
-            background-image: url('./images/userActive.png');
-        }
     }
 
     span {
@@ -65,21 +70,21 @@
 </style>
 <template>
     <div class='v-menu'>
-        <router-link :to='{name:"index"}' tag='div'>
+        <router-link :to='{name:"index"}' tag='div' :class='{active:$route.name==="index"}'>
             <div class='icon'>
-                <div :class='["home",{active:$route.name==="index"}]'></div>
+                <div class='home'></div>
             </div>
             <span>首页</span>
         </router-link>
-        <router-link :to='{name:"product_list"}' tag='div'>
+        <router-link :to='{name:"product_list"}' tag='div' :class='{active:$route.name==="product_list"}'>
             <div class='icon'>
-                <div :class='["flower",{active:$route.name==="product_list"}]'></div>
+                <div class='flower'></div>
             </div>
             <span>福利</span>
         </router-link>
-        <router-link :to='{name:"user"}' tag='div'>
+        <router-link :to='{name:"user"}' tag='div' :class='{active:$route.name==="user"}'>
             <div class='icon'>
-                <div :class='["user",{active:$route.name==="user"}]'></div>
+                <div class='user'></div>
             </div>
             <span>我的</span>
         </router-link>

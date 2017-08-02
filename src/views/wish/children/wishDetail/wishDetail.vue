@@ -95,10 +95,12 @@
                     margin-right: pxTorem(26);
                 }
                 &.support {
+                    @include active(#ff5f17,5%);
                     background: #ff5f17;
                     color: $white;
                 }
                 &.invite {
+                    @include active($white,3%);
                     border: 1px solid #ff5f17;
                     color: #ff5f17;
                 }
