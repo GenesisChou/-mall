@@ -82,8 +82,10 @@
         </template>
         <div class='subject-detail-content'>
             <div class='banner'>
-                <v-swiper v-if='subject_detail.pics.length>1' :slides='subject_detail.pics'></v-swiper>
-                <img v-else :src='subject_detail.pics[0].url' />
+                <template v-if='subject_detail.pics.length>0'>
+                    <v-swiper v-if='subject_detail.pics.length>1' :slides='subject_detail.pics'></v-swiper>
+                    <img v-else :src='subject_detail.pics[0].url' />
+                </template>
             </div>
             <ul v-if='tabs_show' class='tabs'>
                 <li :class='{active:current_tab=="全部"}' @click='switchTab("全部")'>全部</li>

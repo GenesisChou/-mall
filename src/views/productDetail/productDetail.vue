@@ -219,8 +219,10 @@
             <header class='header '>
                 <img v-show='back' class='back' src='./images/back.png' @click='returnPrev' />
                 <div class='banner'>
-                    <v-swiper v-if='product_detail.pics.length>1' :slides='product_detail.pics'></v-swiper>
-                    <img v-else :src='product_detail.pics[0].url' />
+                    <template v-if='product_detail.pics.length>0'>
+                        <v-swiper v-if='product_detail.pics.length>1' :slides='product_detail.pics'></v-swiper>
+                        <img v-else :src='product_detail.pics[0].url' />
+                    </template>
                 </div>
                 <div class='title'>
                     <h1 class='text-ellipsis'>{{product_detail.name}}</h1>
