@@ -55,7 +55,11 @@ if (storage) {
         } else if (page === 'order_detail') {
             const order_id = utils.getParameterByName('order_id');
             link += `&page=${page}&order_id=${order_id}`;
+        } else if (page === 'wish_detail') {
+            const wish_id = utils.getParameterByName('wish_id');
+            link += `&page=${page}&wish_id=${wish_id}`;
         }
+
         location.href = link;
     } else {
         utils.login(media_id, 1, page, null, origin);

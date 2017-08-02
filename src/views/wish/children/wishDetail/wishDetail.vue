@@ -228,6 +228,7 @@
     </div>
 </template>
 <script>
+    import weChatShare from 'libs/weChatShare.js';
     import vWish from '../../components/vWish';
     import vShareGuide from 'components/vShareGuide';
     export default {
@@ -250,22 +251,37 @@
         },
         created() {
             this.wish_id = this.$route.query.wish_id;
-            this.getWishDetail();
+            this.getWishDetail().then(() => {
+                const link =
+                    `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=wish_detail&wish_id=${this.wish_id}`;
+                weChatShare({
+                    router: this.$route,
+                    title: this.wish_detail.name,
+                    img: this.wish_detail.headimg,
+                    desc: this.wish_detail.desc,
+                    link
+                });
+            });
         },
         methods: {
             getWishDetail() {
-                this.$store.dispatch('toggleLoading');
-                this.$http.post(`${APP.HOST}/wish_detail/${this.wish_id}`, {
-                    token: APP.TOKEN,
-                    media_id: APP.MEDIA_ID,
-                    user_id: APP.USER_ID,
-                    open_id: APP.OPEN_ID,
-                }).then((response) => {
+                return new Promise(resolve => {
                     this.$store.dispatch('toggleLoading');
-                    const data = response.data;
-                    if (data.status === APP.SUCCESS) {
-                        this.wish_detail = data.data;
-                    };
+                    this.$http.post(`${APP.HOST}/wish_detail/${this.wish_id}`, {
+                        token: APP.TOKEN,
+                        media_id: APP.MEDIA_ID,
+                        user_id: APP.USER_ID,
+                        open_id: APP.OPEN_ID,
+                    }).then((response) => {
+                        this.$store.dispatch('toggleLoading');
+                        const data = response.data;
+                        if (data.status === APP.SUCCESS) {
+                            this.wish_detail = data.data;
+                            if (typeof resolve === 'function') {
+                                resolve();
+                            }
+                        };
+                    });
                 });
             },
             support() {

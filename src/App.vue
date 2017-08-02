@@ -77,7 +77,13 @@
                     query = {
                         order_id,
                     };
+                } else if (page === 'wish_detail') {
+                    const wish_id = utils.getParameterByName('wish_id');
+                    query = {
+                        wish_id,
+                    };
                 }
+
                 this.$router.push({
                     name: page,
                     query

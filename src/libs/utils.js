@@ -30,6 +30,9 @@ const utils = {
         } else if (page === 'order_detail') {
             const order_id = id || utils.getParameterByName('order_id');
             link += `&page=order_detail&order_id=${order_id}`;
+        } else if (page === 'wish_detail') {
+            const wish_id = id || utils.getParameterByName('wish_id');
+            link += `&page=wish_detail&wish_id=${wish_id}`;
         }
         location.href = link;
     },
