@@ -13,10 +13,9 @@
     .content {
         position: fixed;
         left: 50%;
-        top: pxTorem(53);
+        top: pxTorem(120);
         width: pxTorem(630);
         height: pxTorem(850);
-        background: $white;
         margin-left: pxTorem(-630/2);
         z-index: 6;
         img {
@@ -47,7 +46,7 @@
         bottom: pxTorem(200);
         width: pxTorem(434/3);
         height: pxTorem(500/3);
-        z-index:1;
+        z-index: 1;
         .hand {
             position: relative;
             top: 20%;
