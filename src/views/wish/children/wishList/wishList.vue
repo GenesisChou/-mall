@@ -186,7 +186,7 @@
             <ul class='tabs'>
                 <li :class='{active:params.status==""}' @click='changeStatus("")'>全部</li>
                 <li :class='{active:params.status==3}' @click='changeStatus(3)'>可支持心愿</li>
-                <li :class='{active:params.status==4}' @click='changeStatus(4)'>已支持心愿</li>
+                <li :class='{active:params.status==4}' @click='changeStatus(4)'>已实现心愿</li>
             </ul>
             <div class='tab-content'>
                 <v-wish v-for='wish in wish_list' :wish='wish' :callback='supportCallback' :type='wish.status===4?2:1'>

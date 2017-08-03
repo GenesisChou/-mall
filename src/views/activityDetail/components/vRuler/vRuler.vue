@@ -69,7 +69,7 @@
         <div v-show='show' class='bg-cover' ref='cover'></div>
         <transition name='enlarge'>
             <div v-show='show' class='content'>
-                <h1 class='title'>活动说明</h1>
+                <h1 class='title'>活动规则</h1>
                 <i class='close iconfont icon-cancel' @click='close'></i>
                 <div class='rulers'>
                     <v-simditor>

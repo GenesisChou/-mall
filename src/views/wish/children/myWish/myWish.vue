@@ -127,7 +127,7 @@
             <v-slide :items='banners'></v-slide>
             <ul class='tabs'>
                 <li :class='{active:status==3}' @click='changeStatus(3)'>可支持心愿</li>
-                <li :class='{active:status==4}' @click='changeStatus(4)'>已支持心愿</li>
+                <li :class='{active:status==4}' @click='changeStatus(4)'>已实现心愿</li>
             </ul>
             <template v-if='wish_list'>
                 <div v-if='wish_list.length>0' class='tab-content'>
