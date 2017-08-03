@@ -45,9 +45,10 @@
         }
         .date {
             float: left;
-            font-size: pxTorem(22);
+            font-size: pxTorem(21);
             font-weight: normal; // width: 100%;
             line-height: pxTorem(40);
+            color: rgba(0, 0, 0, .48);
         }
         p {
             width: pxTorem(200);
@@ -74,7 +75,7 @@
             }
         }
         .button {
-            @include active($white,3%);
+            @include active($white, 3%);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -136,8 +137,12 @@
         },
         filters: {
             date_format(value) {
-                const date = new Date(value.replace(' ', 'T'));
-                return `${date.getMonth()+1}月${date.getDate()}日`;
+                const temp = value.split(' ')[0].split('-');
+                let month = temp[1],
+                    day = temp[2];
+                month = temp[1] >= 10 ? temp[1] : Math.floor(temp[1]);
+                day = temp[2] >= 10 ? temp[2] : Math.floor(temp[2]);
+                return `${month}月${day}日`;
             }
         },
         methods: {

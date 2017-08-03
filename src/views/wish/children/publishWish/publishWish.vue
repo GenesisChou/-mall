@@ -67,9 +67,13 @@
 
 
     .select {
-        display: flex;
-        align-items: center;
-        height: 100%;
+        // display: flex;
+        // align-items: center;
+        // height: 100%;
+        line-height: pxTorem(95);
+        span{
+            font-size: pxTorem(28);
+        }
         .icon-arrows-down {
             margin-left: pxTorem(20);
             font-size: pxTorem(36);

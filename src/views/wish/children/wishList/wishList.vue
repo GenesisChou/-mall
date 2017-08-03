@@ -174,7 +174,7 @@
 <template>
     <div class='wish-list'>
         <div class='wish-list-content'>
-            <v-slide :items='slides'></v-slide>
+            <v-slide :items='banners'></v-slide>
             <div class='search'>
                 <form class='form-control' action='javascript:return true;'>
                     <i class='iconfont icon-search' @click='search'></i>
@@ -225,12 +225,14 @@
         computed: {
             user() {
                 return this.$store.state.user;
+            },
+            banners() {
+                return this.$store.state.wish.banners;
             }
         },
         data() {
             return {
                 wish_list: [],
-                slides: [],
                 router_state: '',
                 params: {
                     sword: '',
@@ -308,19 +310,6 @@
                     }, () => {
                         reject();
                     });
-                });
-            },
-            getSlides() {
-                this.$http.post(`${APP.HOST}/wish_wall_banner`, {
-                    token: APP.TOKEN,
-                    media_id: APP.MEDIA_ID,
-                    user_id: APP.USER_ID,
-                    open_id: APP.OPEN_ID,
-                }).then((response) => {
-                    const data = response.data;
-                    if (data.status === APP.SUCCESS) {
-                        this.slides = data.data.items;
-                    }
                 });
             },
             search() {

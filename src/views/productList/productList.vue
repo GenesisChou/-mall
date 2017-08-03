@@ -187,7 +187,7 @@
 <template>
     <div class='product-list'>
         <div class='product-list-content'>
-            <v-search :search='searchProduct' v-model='params.sword'></v-search>
+            <v-search :search='searchProduct' v-model='params.sword' :toggle-menu='toggleMenu'></v-search>
             <section class='sort'>
                 <div :class='{active:sort_show}' @click='toggleSort'>
                     分类筛选
@@ -228,7 +228,7 @@
                 </router-link>
             </transition-group>
         </div>
-        <v-menu></v-menu>
+        <v-menu v-if='menu_show'></v-menu>
         <v-support :busy='busy'></v-support>
         <v-back-top></v-back-top>
     </div>
@@ -253,7 +253,6 @@
                     sword: '',
                     p: 1,
                     r: APP.PERPAGE,
-                    // total: 0,
                     token: APP.TOKEN,
                     userid: APP.USER_ID,
                     media_id: APP.MEDIA_ID,
@@ -269,6 +268,7 @@
                 class_one_list: [],
                 class_two_list: [],
                 first_enter: true,
+                menu_show: true
             };
         },
         watch: {
@@ -475,6 +475,9 @@
                     this.changeClassTwoList(this.class_one_list[0]);
                 }
                 this.first_enter = false;
+            },
+            toggleMenu() {
+                this.menu_show = !this.menu_show;
             }
         }
     };

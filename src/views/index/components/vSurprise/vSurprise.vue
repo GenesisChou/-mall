@@ -13,12 +13,12 @@
     .content {
         position: fixed;
         left: 50%;
-        top: 50%;
+        top: 0;
         width: pxTorem(630);
         height: pxTorem(850);
         background: $white;
         margin-left: pxTorem(-630/2);
-        margin-top: pxTorem(-850/2);
+        margin-top: pxTorem(100);
         z-index: 6;
         img {
             width: 100%;
@@ -45,11 +45,11 @@
     .surprise {
         position: fixed;
         right: pxTorem(40);
-        bottom: pxTorem(200);
+        bottom: pxTorem(220);
         width: pxTorem(434/3);
         height: pxTorem(500/3);
         .hand {
-            position: relative;
+            position: absolute;
             top: 20%;
             width: pxTorem(297/3);
             height: pxTorem(323/3);
@@ -58,8 +58,8 @@
             animation: hand 2s infinite linear;
         }
         .text {
-            display: inline-block;
-            position: relative;
+            position: absolute;
+            bottom:0;
             width: pxTorem(434/3);
             height: pxTorem(169/3);
             background-image: url('./images/pink.png');
@@ -96,14 +96,12 @@
 <template>
     <div class='v-surprise'>
         <div v-if='surprise_show===true' class='bg-cover'></div>
-        <transition name='enlarge'>
-            <div v-if='surprise_show===true' class='content'>
-                <img :src='pic' @click='toSomeWhere'>
-                <div class='close' @click='close'>
-                    <i class='iconfont icon-error'></i>
-                </div>
+        <div v-if='surprise_show===true' class='content'>
+            <img :src='pic' @click='toSomeWhere'>
+            <div class='close' @click='close'>
+                <i class='iconfont icon-error'></i>
             </div>
-        </transition>
+        </div>
         <div v-show='surprise_show===false' @click='toSomeWhere' class='surprise'>
             <img class='hand' src='./images/hand.png'>
             <div class='text'></div>

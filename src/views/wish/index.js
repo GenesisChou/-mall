@@ -1,1 +1,1 @@
-module.exports = require('./wishWall.vue');
+module.exports = require('./wish.vue');

@@ -4,8 +4,7 @@
         position: fixed;
         width: pxTorem(750);
         padding: pxTorem(20) pxTorem(40);
-        background-color: $gray-light;
-        // box-shadow: 0 0 pxTorem(10) rgba(0, 0, 0, .2);
+        background-color: $gray-light; // box-shadow: 0 0 pxTorem(10) rgba(0, 0, 0, .2);
         z-index: 3;
         transition: .3s;
         .search-box {
@@ -66,7 +65,8 @@
         name: 'search',
         props: {
             search: Function,
-            value: String
+            value: String,
+            toggleMenu: Function
         },
         data() {
             return {
@@ -95,6 +95,9 @@
                 this.$emit('input', '');
             },
             toggleClear(state) {
+                if (this.toggleMenu && typeof this.toggleMenu === 'function') {
+                    this.toggleMenu();
+                }
                 event.target.parentElement.querySelector('.icon-close-circle').classList.toggle('active');
             },
         },

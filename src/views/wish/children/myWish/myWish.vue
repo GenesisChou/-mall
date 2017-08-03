@@ -82,6 +82,7 @@
         .date {
             font-size: pxTorem(22);
             font-weight: normal; // width: 100%;
+            color: rgba(0, 0, 0, .48);
         }
         p {
             max-height: pxTorem(72);
@@ -123,7 +124,7 @@
 <template>
     <div class='my-wish'>
         <div class='my-wish-content'>
-            <v-slide :items='slides'></v-slide>
+            <v-slide :items='banners'></v-slide>
             <ul class='tabs'>
                 <li :class='{active:status==3}' @click='changeStatus(3)'>可支持心愿</li>
                 <li :class='{active:status==4}' @click='changeStatus(4)'>已支持心愿</li>
@@ -147,10 +148,13 @@
                 </div>
                 <div v-else class='empty'>
                     <img src='./images/empty.png'>
-                    <h2>您暂时还没有<template v-if='status===4'>已</template><template v-if='status===3'>可</template>支持心愿哦！</h2>
+                    <h2>您暂时还没有
+                        <template v-if='status===4'>已</template>
+                        <template v-if='status===3'>可</template>支持心愿哦！</h2>
                 </div>
             </template>
         </div>
+        {{name}}
         <v-support></v-support>
         <v-back-top></v-back-top>
     </div>
@@ -161,6 +165,9 @@
     import vSlide from '../../components/vSlide.vue';
     export default {
         name: 'myWish',
+        props: {
+            name: String
+        },
         components: {
             vWish,
             vSlide,
@@ -170,18 +177,24 @@
             return {
                 wish_list: '',
                 status: 3,
-                slides: []
             };
         },
         computed: {
             user() {
                 return this.$store.state.user;
+            },
+            banners() {
+                return this.$store.state.wish.banners;
             }
         },
         filters: {
             date_format(value) {
-                const date = new Date(value.replace(' ', 'T'));
-                return `${date.getMonth()+1}月${date.getDate()}日`;
+                const temp = value.split(' ')[0].split('-');
+                let month = temp[1],
+                    day = temp[2];
+                month = temp[1] >= 10 ? temp[1] : Math.floor(temp[1]);
+                day = temp[2] >= 10 ? temp[2] : Math.floor(temp[2]);
+                return `${month}月${day}日`;
             }
         },
         beforeRouteLeave(to, from, next) {
@@ -201,7 +214,6 @@
         },
         created() {
             this.getMyWishes();
-            this.getSlides();
         },
         methods: {
             getMyWishes() {
@@ -225,19 +237,6 @@
                     });
                 });
             },
-            getSlides() {
-                this.$http.post(`${APP.HOST}/wish_wall_banner`, {
-                    token: APP.TOKEN,
-                    media_id: APP.MEDIA_ID,
-                    user_id: APP.USER_ID,
-                    open_id: APP.OPEN_ID,
-                }).then((response) => {
-                    const data = response.data;
-                    if (data.status === APP.SUCCESS) {
-                        this.slides = data.data.items;
-                    }
-                });
-            },
             toWishDetail(wish) {
                 this.$router.push({
                     name: 'wish_detail',
@@ -248,7 +247,7 @@
             },
             changeStatus($index) {
                 this.status = $index;
-                this.wish_list = [];
+                this.wish_list = '';
                 this.getMyWishes();
             }
         }

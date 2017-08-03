@@ -186,8 +186,8 @@
                     发布我的心愿 <i class='iconfont icon-arrows-right'></i>
                 </router-link>
                 <v-pk v-if='pk_detail' :pk='pk_detail'></v-pk>
-                <div class='rank'>
-                    <header v-if='wish_wall.pass_rank.length>0' class='title'>
+                <div v-if='wish_wall.pass_rank.length>0' class='rank'>
+                    <header class='title'>
                         <img class='icon icon-award' src='./images/rank.png'>
                         <strong>热门心愿排行</strong>
                         <router-link :to='{name:"publish_wish"}' tag='div' class='right'>
@@ -205,8 +205,8 @@
                         </router-link>
                     </footer>
                 </div>
-                <div class='rank'>
-                    <header v-if='wish_wall.finish_rank.length>0' class='title'>
+                <div v-if='wish_wall.finish_rank.length>0' class='rank'>
+                    <header class='title'>
                         <img class='icon icon-success' src='./images/success.png'>
                         <strong>已实现心愿</strong>
                         <router-link :to='{name:"publish_wish"}' tag='div' class='right'>
@@ -217,8 +217,6 @@
                     <v-wish v-for='wish in wish_wall.finish_rank' :wish='wish' :callback='getWishWall' :type=2>
                         <img class='finish' src='../../images/finish.png'>
                         <div class='notice'>
-                            <!-- <div class='circle circle-left'></div> -->
-                            <!-- <div class='circle circle-right'></div> -->
                             <h4><strong>{{wish.reply_characters}}</strong></h4>
                             <div v-if='wish.is_reply_product===1' class='content'>
                                 <img :src='wish.product_pic_thumb'>

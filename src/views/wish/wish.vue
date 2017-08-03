@@ -9,6 +9,9 @@
             $route() {
                 window.scrollTo(0, 0);
             }
-        }
+        },
+        created() {
+            this.$store.dispatch('getWishBanners');
+        },
     };
 </script>
