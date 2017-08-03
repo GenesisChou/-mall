@@ -668,7 +668,7 @@
                     <p> 完成单个任务可获得<span>{{read_param.integral}}</span>积分 </p>
                     <p> 每日最多可得<span>{{read_param.day_limit}}</span>积分,今日已获得<span>{{read_param.today}}</span>积分 </p>
                 </li>
-                <template v-if='article_list'>
+                <template v-if='article_list&&article_list.length>0'>
                     <li v-for='article in article_list' :key='article.id'>
                         <div class='article' @click='readArticle(article)'>
                             <h4 class='title'>{{article.title}}</h4>
