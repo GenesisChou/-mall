@@ -148,9 +148,8 @@
                 </div>
                 <div v-else class='empty'>
                     <img src='./images/empty.png'>
-                    <h2>您暂时还没有
-                        <template v-if='status===4'>已</template>
-                        <template v-if='status===3'>可</template>支持心愿哦！</h2>
+                    <h2 v-if='status===4'>您暂时还没有已实现的心愿哦！</h2>
+                    <h2 v-if='status===3'>您暂时还没有可支持的心愿哦！</h2>
                 </div>
             </template>
         </div>

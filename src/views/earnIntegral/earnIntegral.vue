@@ -668,7 +668,7 @@
                     <p> 完成单个任务可获得<span>{{read_param.integral}}</span>积分 </p>
                     <p> 每日最多可得<span>{{read_param.day_limit}}</span>积分,今日已获得<span>{{read_param.today}}</span>积分 </p>
                 </li>
-                <template v-if='article_list.length'>
+                <template v-if='article_list'>
                     <li v-for='article in article_list' :key='article.id'>
                         <div class='article' @click='readArticle(article)'>
                             <h4 class='title'>{{article.title}}</h4>
@@ -770,7 +770,7 @@
                     today: 0
                 },
                 gift: {},
-                article_list: [],
+                article_list: '',
                 back_show: false,
                 raiders_show: false,
                 gift_show: false,
@@ -802,11 +802,18 @@
             next();
         },
         activated() {
+            if (this.$route.query.position === 'article' && this.article_list) {
+                window.scrollTo(0, utils.getScrollHeight());
+            }
             this.back_show = this.$route.query.back_show || false;
         },
         created() {
             this.getReadParam();
-            this.getArticleList();
+            this.getArticleList().then(() => {
+                if (this.$route.query.position === 'article') {
+                    window.scrollTo(0, utils.getScrollHeight());
+                }
+            });
             this.getCheckInParams();
         },
         deactivated() {

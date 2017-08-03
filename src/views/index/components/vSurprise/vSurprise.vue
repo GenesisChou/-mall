@@ -61,10 +61,10 @@
             bottom: 0;
             width: pxTorem(434/3);
             height: pxTorem(169/3);
-            background-image: url('./images/pink.png');
+            background-image: url('./images/blue.png');
             background-size: 100% 100%;
             z-index: 1;
-            animation: bg 2s infinite linear;
+            // animation: bg 2s infinite linear;
         }
     }
 

@@ -137,7 +137,6 @@
             $route(value) {
                 this.init();
                 window.scrollTo(0, 0);
-                // window.location.reload();
             }
         },
         beforeRouteEnter(to, from, next) {

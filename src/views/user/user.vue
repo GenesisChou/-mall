@@ -49,7 +49,7 @@
         </header>
         <v-group>
             <v-cell icon='check' :callback='getRouter("earn_integral")'>每日签到</v-cell>
-            <v-cell icon='earn-integral' :callback='getRouter("earn_integral")'>做任务 赚积分</v-cell>
+            <v-cell icon='earn-integral' :callback='getRouter("earn_integral","article")'>做任务 赚积分</v-cell>
         </v-group>
         <v-group>
             <v-cell icon='records' :callback='getRouter("order_list")'>兑换记录</v-cell>
@@ -85,15 +85,24 @@
             next();
         },
         methods: {
-            getRouter(route) {
+            getRouter(route, position) {
                 return () => {
-                    this.routerLink(route);
+                    this.routerLink(route, position);
                 };
             },
-            routerLink(route = 'index') {
-                this.$router.push({
-                    name: route,
-                });
+            routerLink(route = 'index', position) {
+                if (position) {
+                    this.$router.push({
+                        name: route,
+                        query: {
+                            position
+                        }
+                    });
+                } else {
+                    this.$router.push({
+                        name: route,
+                    });
+                }
             }
         }
     };
