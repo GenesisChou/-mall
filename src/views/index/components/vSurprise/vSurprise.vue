@@ -13,12 +13,11 @@
     .content {
         position: fixed;
         left: 50%;
-        top: 0;
+        top: pxTorem(120);
         width: pxTorem(630);
         height: pxTorem(850);
         background: $white;
         margin-left: pxTorem(-630/2);
-        margin-top: pxTorem(100);
         z-index: 6;
         img {
             width: 100%;
@@ -29,7 +28,7 @@
     .close {
         position: absolute;
         left: 50%;
-        bottom: pxTorem(-120);
+        bottom: pxTorem(-150);
         width: pxTorem(100);
         height: pxTorem(100);
         text-align: center;
@@ -38,17 +37,17 @@
         .icon-error {
             font-weight: bold;
             color: $white;
-            font-size: pxTorem(40);
+            font-size: pxTorem(60);
         }
     }
 
     .surprise {
         position: fixed;
         right: pxTorem(40);
-        bottom: pxTorem(220);
+        bottom: pxTorem(260);
         width: pxTorem(434/3);
         height: pxTorem(500/3);
-        z-index:3;
+        z-index: 1;
         .hand {
             position: absolute;
             top: 20%;
@@ -60,7 +59,7 @@
         }
         .text {
             position: absolute;
-            bottom:0;
+            bottom: 0;
             width: pxTorem(434/3);
             height: pxTorem(169/3);
             background-image: url('./images/pink.png');
@@ -97,12 +96,14 @@
 <template>
     <div class='v-surprise'>
         <div v-if='surprise_show===true' class='bg-cover'></div>
-        <div v-if='surprise_show===true' class='content'>
-            <img :src='pic' @click='toSomeWhere'>
-            <div class='close' @click='close'>
-                <i class='iconfont icon-error'></i>
+        <transition name='enlarge'>
+            <div v-if='surprise_show===true' class='content'>
+                <img :src='pic' @click='toSomeWhere'>
+                <div class='close' @click='close'>
+                    <i class='iconfont icon-error'></i>
+                </div>
             </div>
-        </div>
+        </transition>
         <div v-show='surprise_show===false' @click='toSomeWhere' class='surprise'>
             <img class='hand' src='./images/hand.png'>
             <div class='text'></div>

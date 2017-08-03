@@ -3,7 +3,7 @@
     .v-back-top {
         position: fixed;
         right: pxTorem(50);
-        bottom: pxTorem(50);
+        bottom: pxTorem(117);
         width: pxTorem(94);
         height: pxTorem(94);
     }
