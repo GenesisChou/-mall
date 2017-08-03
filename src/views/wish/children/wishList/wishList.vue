@@ -264,7 +264,7 @@
             }).catch(() => {
                 this.$store.dispatch('toggleLoading');
             });
-            this.getSlides();
+            // this.getSlides();
             this.scroll_event = this.getScrollEvent();
         },
         beforeRouteLeave(to, from, next) {
