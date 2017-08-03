@@ -112,11 +112,10 @@
     .vs {
         position: absolute;
         left: 50%;
-        top: 50%;
-        width: pxTorem(90);
-        height: pxTorem(90);
-        margin-left: pxTorem(-45);
-        margin-top: pxTorem(-45);
+        top: -12%;
+        width: pxTorem(118);
+        height: pxTorem(118);
+        transform: translateX(-50%);
         border-radius: 50%;
         box-shadow: 0 0 pxTorem(5) rgba(0, 0, 0, .1);
         background: $white url('./images/vs.png') no-repeat center center;
