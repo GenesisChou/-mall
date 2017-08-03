@@ -16,7 +16,6 @@
         top: pxTorem(120);
         width: pxTorem(630);
         height: pxTorem(850);
-        background: $white;
         margin-left: pxTorem(-630/2);
         z-index: 6;
         img {
