@@ -194,7 +194,7 @@
 <template>
     <div class='wish-wall'>
         <template v-if='wish_wall'>
-            <template v-if='avaliable===false'>
+            <template v-if='avaliable'>
                 <div class='wish-wall-content'>
                     <template v-for='component in wish_wall.banner_pk'>
                         <v-slide v-if='component.type===1' :items='component.items'></v-slide>
@@ -203,7 +203,7 @@
                             发布我的心愿 <i class='iconfont icon-arrows-right'></i>
                         </router-link>
                     </template>
-                    <div v-if='wish_wall.pass_rank.length>0' class='rank'>
+                    <div v-if='wish_wall.pass_rank&&wish_wall.pass_rank.length>0' class='rank'>
                         <header class='title'>
                             <img class='icon icon-award' src='./images/rank.png'>
                             <strong>热门心愿排行</strong>
@@ -222,7 +222,7 @@
                             </router-link>
                         </footer>
                     </div>
-                    <div v-if='wish_wall.finish_rank.length>0' class='rank'>
+                    <div v-if='wish_wall.finish_rank&&wish_wall.finish_rank.length>0' class='rank'>
                         <header class='title'>
                             <img class='icon icon-success' src='./images/success.png'>
                             <strong>已实现心愿</strong>
@@ -276,7 +276,7 @@
         data() {
             return {
                 pk_detail: '',
-                avaliable: false
+                avaliable: true
             };
         },
         computed: {
@@ -319,13 +319,13 @@
                             });
                         }
                     } else {
-                        this.avaliable = true;
+                        this.avaliable = false;
                     }
                 }).catch(() => {
                     this.$store.dispatch('toggleLoading');
                 });
             } else if (this.wish_wall.is_show === 2) {
-                this.avaliable = true;
+                this.avaliable = false;
             }
         },
         methods: {

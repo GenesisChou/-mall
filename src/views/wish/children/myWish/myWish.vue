@@ -126,15 +126,15 @@
 </style>
 <template>
     <div class='my-wish'>
-        <template v-if='wish_list'>
-            <template v-if='avaliable===false'>
+        <template v-if='wish_wall'>
+            <template v-if='avaliable'>
                 <div class='my-wish-content'>
                     <v-slide :items='banners'></v-slide>
                     <ul class='tabs'>
                         <li :class='{active:status==3}' @click='changeStatus(3)'>可支持心愿</li>
                         <li :class='{active:status==4}' @click='changeStatus(4)'>已实现心愿</li>
                     </ul>
-                    <div v-if='wish_list.length>0' class='tab-content'>
+                    <div v-if='wish_list&&wish_list.length>0' class='tab-content'>
                         <div v-for='wish in wish_list' class='wish' @click='toWishDetail(wish)'>
                             <div class='message'>
                                 <strong>{{user.nickname}} </strong><span class='date'>{{wish.create_time|date_format}}</span>
@@ -185,7 +185,7 @@
             return {
                 wish_list: '',
                 status: 3,
-                avaliable: false
+                avaliable: true
             };
         },
         computed: {
@@ -231,11 +231,11 @@
                     if (wish_wall.is_show === 1) {
                         this.getMyWishes();
                     } else {
-                        this.avaliable = true;
+                        this.avaliable = false;
                     }
                 });
             } else if (this.wish_wall.is_show === 2) {
-                this.avaliable = true;
+                this.avaliable = false;
             }
         },
         methods: {
