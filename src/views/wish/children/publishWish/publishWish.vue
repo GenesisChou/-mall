@@ -71,7 +71,8 @@
         // align-items: center;
         // height: 100%;
         line-height: pxTorem(95);
-        span{
+        span {
+            color: #646565;
             font-size: pxTorem(28);
         }
         .icon-arrows-down {
@@ -159,7 +160,7 @@
 <script>
     import vListChoose from './components/vListChoose.vue';
     export default {
-        name: 'publish',
+        name: 'publishWish',
         components: {
             vListChoose
         },
@@ -205,7 +206,7 @@
             this.$store.dispatch('updatePageView');
             next();
         },
-        activated() {
+        created() {
             this.init();
         },
         methods: {
@@ -217,6 +218,12 @@
             },
             leave() {
                 this.$router.go(-1);
+                // this.$router.replace({
+                //     name: 'wish_wall',
+                //     query: {
+                //         t: new Date()
+                //     }
+                // });
             },
             publish() {
                 this.$store.dispatch('toggleLoading');

@@ -25,6 +25,7 @@
             li {
                 list-style: none;
                 font-size: pxTorem(36);
+                line-height: pxTorem(66);
             }
             li:first-child {
                 position: relative;
@@ -37,7 +38,7 @@
             }
 
             position:absolute;
-            top: pxTorem(-330);
+            top: pxTorem(-350);
             left: 50%;
             transform: translateX(-50%);
             color: $white;
@@ -49,7 +50,7 @@
         .arrows {
             position: absolute;
             top: pxTorem(-420);
-            right: pxTorem(70);
+            right: pxTorem(50);
             width: pxTorem(75);
             height: pxTorem(75);
             color: $white;
@@ -67,7 +68,7 @@
         .dot-left {
             position: absolute;
             left: pxTorem(240);
-            top: pxTorem(-160);
+            top: pxTorem(-140);
             width: pxTorem(80);
             height: pxTorem(119);
         }
@@ -88,6 +89,7 @@
             <ul class='msg'>
                 <li>1、点击右上角的 </li>
                 <li>2、选择“ <i class='iconfont icon-share-time'></i> ”即可</li>
+                <li>3、请分享后继续参与</li>
             </ul>
             <img class='dot-left' src='./images/arrowsLeft.png'>
             <img class='dot-right ' src='./images/arrowsRight.png'>

@@ -1,5 +1,5 @@
 <template>
-    <keep-alive exclude='wishDetail'>
+    <keep-alive exclude='wishDetail,publishWish'>
         <router-view></router-view>
     </keep-alive>
 </template>

@@ -112,6 +112,9 @@
         flex: 1;
         background: $white;
         text-align: center;
+        &.type-2 {
+            padding-top: pxTorem(160);
+        }
         img {
             width: pxTorem(750);
             height: pxTorem(600);
@@ -123,39 +126,45 @@
 </style>
 <template>
     <div class='my-wish'>
-        <div class='my-wish-content'>
-            <v-slide :items='banners'></v-slide>
-            <ul class='tabs'>
-                <li :class='{active:status==3}' @click='changeStatus(3)'>可支持心愿</li>
-                <li :class='{active:status==4}' @click='changeStatus(4)'>已实现心愿</li>
-            </ul>
-            <template v-if='wish_list'>
-                <div v-if='wish_list.length>0' class='tab-content'>
-                    <div v-for='wish in wish_list' class='wish' @click='toWishDetail(wish)'>
-                        <div class='message'>
-                            <strong>{{user.nickname}} </strong><span class='date'>{{wish.create_time|date_format}}</span>
-                            <p>{{wish.desc}}</p>
-                        </div>
-                        <div class='right'>
-                            <h5>
-                                已经有
-                            </h5>
-                            <h5>
-                                <span class='number'>{{wish.score}}</span>人支持
-                            </h5>
+        <template v-if='wish_list'>
+            <template v-if='avaliable===false'>
+                <div class='my-wish-content'>
+                    <v-slide :items='banners'></v-slide>
+                    <ul class='tabs'>
+                        <li :class='{active:status==3}' @click='changeStatus(3)'>可支持心愿</li>
+                        <li :class='{active:status==4}' @click='changeStatus(4)'>已实现心愿</li>
+                    </ul>
+                    <div v-if='wish_list.length>0' class='tab-content'>
+                        <div v-for='wish in wish_list' class='wish' @click='toWishDetail(wish)'>
+                            <div class='message'>
+                                <strong>{{user.nickname}} </strong><span class='date'>{{wish.create_time|date_format}}</span>
+                                <p>{{wish.desc}}</p>
+                            </div>
+                            <div class='right'>
+                                <h5>
+                                    已经有
+                                </h5>
+                                <h5>
+                                    <span class='number'>{{wish.score}}</span>人支持
+                                </h5>
+                            </div>
                         </div>
                     </div>
+                    <div v-else class='empty'>
+                        <img src='../../images/empty.png'>
+                        <h2 v-if='status===4'>您暂时还没有已实现的心愿哦！</h2>
+                        <h2 v-if='status===3'>您暂时还没有可支持的心愿哦！</h2>
+                    </div>
                 </div>
-                <div v-else class='empty'>
-                    <img src='./images/empty.png'>
-                    <h2 v-if='status===4'>您暂时还没有已实现的心愿哦！</h2>
-                    <h2 v-if='status===3'>您暂时还没有可支持的心愿哦！</h2>
-                </div>
+                {{name}}
+                <v-support></v-support>
+                <v-back-top></v-back-top>
             </template>
-        </div>
-        {{name}}
-        <v-support></v-support>
-        <v-back-top></v-back-top>
+            <div v-else class='empty type-2'>
+                <img src='../../images/empty.png'>
+                <h2>该功能暂未开通，敬请期待~</h2>
+            </div>
+        </template>
     </div>
 </template>
 <script>
@@ -176,6 +185,7 @@
             return {
                 wish_list: '',
                 status: 3,
+                avaliable: false
             };
         },
         computed: {
@@ -184,6 +194,9 @@
             },
             banners() {
                 return this.$store.state.wish.banners;
+            },
+            wish_wall() {
+                return this.$store.state.wish.wish_wall;
             }
         },
         filters: {
@@ -212,7 +225,18 @@
             }
         },
         created() {
-            this.getMyWishes();
+            if (!this.wish_wall) {
+                this.$store.dispatch('getWishWall').then(data => {
+                    const wish_wall = data.data;
+                    if (wish_wall.is_show === 1) {
+                        this.getMyWishes();
+                    } else {
+                        this.avaliable = true;
+                    }
+                });
+            } else if (this.wish_wall.is_show === 2) {
+                this.avaliable = true;
+            }
         },
         methods: {
             getMyWishes() {

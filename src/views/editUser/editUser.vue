@@ -32,7 +32,7 @@
         }
         label {
             width: pxTorem(150);
-            font-size: pxTorem(32);
+            font-size: pxTorem(28);
             color: #646565;
         }
         input {

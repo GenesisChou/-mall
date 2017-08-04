@@ -176,68 +176,90 @@
             }
         }
     }
+
+    .empty {
+        flex: 1;
+        padding-top: pxTorem(160);
+        background: $white;
+        text-align: center;
+        img {
+            width: pxTorem(750);
+            height: pxTorem(600);
+        }
+        h2 {
+            color: #707e89;
+        }
+    }
 </style>
 <template>
     <div class='wish-wall'>
-        <div class='wish-wall-content'>
-            <template v-if='wish_wall'>
-                <v-slide :items='slides'></v-slide>
-                <router-link :to='{name:"publish_wish"}' tag='div' class='publish'>
-                    发布我的心愿 <i class='iconfont icon-arrows-right'></i>
-                </router-link>
-                <v-pk v-if='pk_detail' :pk='pk_detail'></v-pk>
-                <div v-if='wish_wall.pass_rank.length>0' class='rank'>
-                    <header class='title'>
-                        <img class='icon icon-award' src='./images/rank.png'>
-                        <strong>热门心愿排行</strong>
-                        <router-link :to='{name:"publish_wish"}' tag='div' class='right'>
-                            发布我的心愿
-                            <i class='iconfont icon-arrows-right'></i>
+        <template v-if='wish_wall'>
+            <template v-if='avaliable===false'>
+                <div class='wish-wall-content'>
+                    <template v-for='component in wish_wall.banner_pk'>
+                        <v-slide v-if='component.type===1' :items='component.items'></v-slide>
+                        <v-pk v-else-if='component.type===2&&pk_detail' :pk='pk_detail'></v-pk>
+                        <router-link v-else-if='component.type===3' :to='{name:"publish_wish"}' tag='div' class='publish'>
+                            发布我的心愿 <i class='iconfont icon-arrows-right'></i>
                         </router-link>
-                    </header>
-                    <v-wish v-for='(wish,$index) in wish_wall.pass_rank' :wish='wish' :callback='getWishWall'>
-                        <div v-if='$index<3' class='award'>{{$index+1}}</div>
-                    </v-wish>
-                    <footer class='footer'>
-                        <router-link :to='{name:"wish_list"}' tag='div' class='right'>
-                            查看更多
-                            <i class='iconfont icon-arrows-right'></i>
-                        </router-link>
-                    </footer>
-                </div>
-                <div v-if='wish_wall.finish_rank.length>0' class='rank'>
-                    <header class='title'>
-                        <img class='icon icon-success' src='./images/success.png'>
-                        <strong>已实现心愿</strong>
-                        <router-link :to='{name:"publish_wish"}' tag='div' class='right'>
-                            发布我的心愿
-                            <i class='iconfont icon-arrows-right'></i>
-                        </router-link>
-                    </header>
-                    <v-wish v-for='wish in wish_wall.finish_rank' :wish='wish' :callback='getWishWall' :type=2>
-                        <img class='finish' src='../../images/finish.png'>
-                        <div class='notice'>
-                            <h4><strong>{{wish.reply_characters}}</strong></h4>
-                            <div v-if='wish.is_reply_product===1' class='content'>
-                                <img :src='wish.product_pic_thumb'>
-                                <div class='summary'>
-                                    <h5><strong>{{wish.product_name}}</strong></h5>
-                                    <h6>{{wish.product_name_show}}</h6>
+                    </template>
+                    <div v-if='wish_wall.pass_rank.length>0' class='rank'>
+                        <header class='title'>
+                            <img class='icon icon-award' src='./images/rank.png'>
+                            <strong>热门心愿排行</strong>
+                            <router-link :to='{name:"publish_wish"}' tag='div' class='right'>
+                                发布我的心愿
+                                <i class='iconfont icon-arrows-right'></i>
+                            </router-link>
+                        </header>
+                        <v-wish v-for='(wish,$index) in wish_wall.pass_rank' :wish='wish' :callback='getWishWall'>
+                            <div v-if='$index<3' class='award'>{{$index+1}}</div>
+                        </v-wish>
+                        <footer class='footer'>
+                            <router-link :to='{name:"wish_list"}' tag='div' class='right'>
+                                查看更多
+                                <i class='iconfont icon-arrows-right'></i>
+                            </router-link>
+                        </footer>
+                    </div>
+                    <div v-if='wish_wall.finish_rank.length>0' class='rank'>
+                        <header class='title'>
+                            <img class='icon icon-success' src='./images/success.png'>
+                            <strong>已实现心愿</strong>
+                            <router-link :to='{name:"publish_wish"}' tag='div' class='right'>
+                                发布我的心愿
+                                <i class='iconfont icon-arrows-right'></i>
+                            </router-link>
+                        </header>
+                        <v-wish v-for='wish in wish_wall.finish_rank' :wish='wish' :callback='getWishWall' :type=2>
+                            <img class='finish' src='../../images/finish.png'>
+                            <div class='notice'>
+                                <h4><strong>{{wish.reply_characters}}</strong></h4>
+                                <div v-if='wish.is_reply_product===1' class='content'>
+                                    <img :src='wish.product_pic_thumb'>
+                                    <div class='summary'>
+                                        <h5><strong>{{wish.product_name}}</strong></h5>
+                                        <h6>{{wish.product_name_show}}</h6>
+                                    </div>
+                                    <router-link :to='{name:"product_detail",query:{product_id:wish.product_id}}' class='button' tag='div'>去兑换</router-link>
                                 </div>
-                                <router-link :to='{name:"product_detail",query:{product_id:wish.product_id}}' class='button' tag='div'>去兑换</router-link>
                             </div>
-                        </div>
-                    </v-wish>
-                    <footer class='footer'>
-                        <router-link :to='{name:"wish_list"}' tag='div' class='right'>
-                            查看更多
-                            <i class='iconfont icon-arrows-right'></i>
-                        </router-link>
-                    </footer>
+                        </v-wish>
+                        <footer class='footer'>
+                            <router-link :to='{name:"wish_list"}' tag='div' class='right'>
+                                查看更多
+                                <i class='iconfont icon-arrows-right'></i>
+                            </router-link>
+                        </footer>
+                    </div>
                 </div>
+                <v-support></v-support>
             </template>
-        </div>
-        <v-support></v-support>
+            <div v-else class='empty'>
+                <img src='../../images/empty.png'>
+                <h2>该功能暂未开通，敬请期待~</h2>
+            </div>
+        </template>
     </div>
 </template>
 <script>
@@ -253,15 +275,17 @@
         },
         data() {
             return {
-                wish_wall: '',
                 pk_detail: '',
-                slides: [],
+                avaliable: false
             };
         },
         computed: {
             user() {
                 return this.$store.state.user;
-            }
+            },
+            wish_wall() {
+                return this.$store.state.wish.wish_wall;
+            },
         },
         beforeRouteLeave(to, from, next) {
             this.router_state = 'leave';
@@ -279,49 +303,51 @@
             }
         },
         created() {
-            this.getWishWall().then(() => {
-                this.wish_wall.banner_pk.forEach(data => {
-                    if (data.type === 1) {
-                        this.slides = data.items;
-                    } else if (data.type === 2) {
-                        const pk_id = data.items[0].item_id;
-                        this.getPkInfor(pk_id);
+            if (!this.wish_wall) {
+                this.$store.dispatch('toggleLoading');
+                this.$store.dispatch('getWishWall').then(data => {
+                    this.$store.dispatch('toggleLoading');
+                    const wish_wall = data.data,
+                        banner_pk = wish_wall.banner_pk;
+                    if (wish_wall.is_show === 1) {
+                        if (utils.getTypeOf(banner_pk) === 'Array') {
+                            banner_pk.forEach(data => {
+                                if (data.type === 2) {
+                                    const pk_id = data.items[0].item_id;
+                                    this.getPkInfor(pk_id);
+                                }
+                            });
+                        }
+                    } else {
+                        this.avaliable = true;
                     }
+                }).catch(() => {
+                    this.$store.dispatch('toggleLoading');
                 });
-            });
+            } else if (this.wish_wall.is_show === 2) {
+                this.avaliable = true;
+            }
         },
         methods: {
             getWishWall() {
+                this.$store.dispatch('getWishWall');
+            },
+            getPkInfor(pk_id) {
                 return new Promise(resolve => {
-                    this.$store.dispatch('toggleLoading');
-                    this.$http.post(`${APP.HOST}/wishes_wall`, {
+                    this.$http.post(`${APP.HOST}/pk_detail/${pk_id}`, {
                         token: APP.TOKEN,
                         media_id: APP.MEDIA_ID,
                         user_id: APP.USER_ID,
                         open_id: APP.OPEN_ID
                     }).then((response) => {
-                        this.$store.dispatch('toggleLoading');
                         const data = response.data;
                         if (data.status === APP.SUCCESS) {
-                            this.wish_wall = data.data;
+                            this.pk_detail = data.data;
                             if (typeof resolve === 'function') {
                                 resolve();
                             }
                         }
                     });
-                });
-            },
-            getPkInfor(pk_id) {
-                this.$http.post(`${APP.HOST}/pk_detail/${pk_id}`, {
-                    token: APP.TOKEN,
-                    media_id: APP.MEDIA_ID,
-                    user_id: APP.USER_ID,
-                    open_id: APP.OPEN_ID
-                }).then((response) => {
-                    const data = response.data;
-                    if (data.status === APP.SUCCESS) {
-                        this.pk_detail = data.data;
-                    }
                 });
             },
         }

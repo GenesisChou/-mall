@@ -19,7 +19,7 @@
             height: pxTorem(116);
             margin: 0 pxTorem(44);
             overflow: hidden;
-            border: pxTorem(6) solid #e58054;
+            border: pxTorem(4) solid #e58054;
         }
         .message {
             flex: 1;
@@ -58,9 +58,9 @@
         <v-group>
             <v-cell icon='edit-user' :callback='getRouter("edit_user")'>修改资料</v-cell>
         </v-group>
-        <!-- <v-group>
+        <v-group>
             <v-cell icon='wish-wall' :callback='getRouter("my_wish")'>我的心愿</v-cell>
-        </v-group> -->
+        </v-group>
         <v-menu></v-menu>
     </div>
 </template>

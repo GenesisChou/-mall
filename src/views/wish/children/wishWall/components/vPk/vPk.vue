@@ -17,6 +17,12 @@
         height: pxTorem(154);
         background: $white;
         box-shadow: 0 0 pxTorem(5) rgba(0, 0, 0, .1);
+        &.winner {
+            opacity: .5;
+            .win {
+                display: block;
+            }
+        }
     }
 
     .left {
@@ -121,42 +127,60 @@
         background: $white url('./images/vs.png') no-repeat center center;
         background-size: pxTorem(44) pxTorem(66);
     }
+
+    .win {
+        display: none;
+        position: absolute;
+        width: pxTorem(137);
+        height: pxTorem(83);
+        &.win-right {
+            top: 0;
+            right: pxTorem(10);
+        }
+        &.win-left {
+            top: pxTorem(10);
+            left: pxTorem(10);
+            transform: rotate(-33deg);
+        }
+    }
 </style>
 <template>
     <div v-if='mate.length>1' class='v-pk'>
-        <div class='participant left'>
+        <div :class='["participant","left",{winner:pk.status===3&&left.score>right.score}]'>
+            <img class='win win-left' src='./images/win.png'>
             <div class='icon'>
-                <img :src='mate[0].pic'>
+                <img :src='left.pic'>
             </div>
             <div class='detail'>
                 <div class='message'>
-                    <p>{{mate[0].title}}</p>
-                    <span>{{mate[0].sub_title}}</span>
+                    <p>{{left.title}}</p>
+                    <span>{{left.sub_title}}</span>
                 </div>
                 <div class='operation'>
-                    <div v-if='mate[1].is_support===1' class='button disable'>支持</div>
-                    <div v-else-if='mate[0].is_support===1' class='button disable'>已支持</div>
-                    <div v-else class='button' @click='supportPk(mate[0].id,0)'>支持</div>
-                    <strong class='votes'>{{mate[0].score}}<span>票</span></strong>
+                    <div v-if='left.state===1' class='button' @click='supportPk(left.id,0)'>支持</div>
+                    <div v-else-if='left.state===2' class='button disable'>支持</div>
+                    <div v-else-if='left.state===3' class='button disable'>已支持</div>
+                    <strong class='votes'>{{left.score}}<span>票</span></strong>
                 </div>
             </div>
         </div>
-        <div class='participant right'>
+        <div :class='["participant","right",{winner:pk.status===3&&left.score<right.score}]'>
             <div class='detail'>
                 <div class='message'>
-                    <p>{{mate[1].title}}</p>
-                    <span>{{mate[1].sub_title}}</span>
+                    <p>{{right.title}}</p>
+                    <span>{{right.sub_title}}</span>
                 </div>
                 <div class='operation'>
-                    <div v-if='mate[0].is_support===1' class='button disable'>支持</div>
-                    <div v-else-if='mate[1].is_support===1' class='button disable'>已支持</div>
-                    <div v-else class='button' @click='supportPk(mate[1].id,1)'>支持</div>
-                    <strong class='votes'>{{mate[1].score}}<span>票</span></strong>
+                    <div v-if='right.state===1' class='button' @click='supportPk(right.id,1)'>支持</div>
+                    <div v-else-if='right.state===2' class='button disable'>支持</div>
+                    <div v-else-if='right.state===3' class='button disable'>已支持</div>
+                    <strong class='votes'>{{right.score}}<span>票</span></strong>
                 </div>
             </div>
             <div class='icon'>
-                <img :src='mate[1].pic'>
+                <img :src='right.pic'>
             </div>
+            <img class='win win-right' src='./images/win.png'>
         </div>
         <div class='vs'></div>
     </div>
@@ -176,6 +200,15 @@
             mate() {
                 return this.pk.items;
             },
+            left() {
+                return this.mate[0];
+            },
+            right() {
+                return this.mate[1];
+            }
+        },
+        created() {
+            this.init();
         },
         methods: {
             supportPk(id, $index) {
@@ -191,7 +224,9 @@
                         const data = response.data;
                         this.state = 'ready';
                         if (data.status === APP.SUCCESS) {
-                            this.$parent.getPkInfor(this.pk.id);
+                            this.$parent.getPkInfor(this.pk.id).then(() => {
+                                this.init();
+                            });
                         } else {
                             this.$store.dispatch('toggleAlert', {
                                 msg: data.info
@@ -200,6 +235,24 @@
                     });
                 }
             },
+            init() {
+                /*
+                    state
+                    1 支持 orange
+                    2 支持 gray
+                    3 已支持 gray
+                 */
+                this.left.state = 2;
+                this.right.state = 2;
+                if (this.left.is_support === 1) {
+                    this.left.state = 3;
+                } else if (this.right.is_support === 1) {
+                    this.right.state = 3;
+                } else if (this.pk.status === 2) {
+                    this.left.state = 1;
+                    this.right.state = 1;
+                }
+            }
         }
     };
 </script>
