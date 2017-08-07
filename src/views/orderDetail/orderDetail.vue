@@ -231,8 +231,80 @@
         margin-top: pxTorem(20);
         padding-top: pxTorem(40);
         overflow: hidden;
+        background: $white; // border-bottom: 1px solid #d3d4d6;
+    }
+
+    .dialog-content {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        width: pxTorem(630);
+        height: pxTorem(700);
         background: $white;
-        // border-bottom: 1px solid #d3d4d6;
+        border-radius: pxTorem(10);
+        transform: translate(-50%, -50%);
+        z-index: 6;
+        .close {
+            width: pxTorem(80);
+            height: pxTorem(74);
+            position: absolute;
+            right: pxTorem(-30);
+            top: pxTorem(-30);
+            background: url('./images/close.png');
+            background-size: 100% 100%;
+        }
+        .title {
+            width: 100%;
+            height: pxTorem(108);
+            line-height: pxTorem(108);
+            overflow: hidden;
+            color: #252525;
+            text-align: center;
+        }
+        .pic {
+            width: pxTorem(358);
+            height: pxTorem(358);
+            margin: 0 auto;
+            padding: pxTorem(20);
+            background: #f1f1f1;
+            border-radius: pxTorem(10);
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: pxTorem(10);
+            }
+        }
+        .desc {
+            width: 100%;
+            height: pxTorem(95);
+            line-height: pxTorem(95);
+            overflow: hidden;
+            color: #ff5000;
+            text-align: center;
+        }
+        .button {
+            @include active(#ff5000,
+            3%);
+            margin: 0 auto;
+            width: pxTorem(564);
+            height: pxTorem(90);
+            line-height: pxTorem(90);
+            text-align: center;
+            font-size: pxTorem(37);
+            background: #ff5000;
+            color: $white;
+            border-radius: pxTorem(10);
+        }
+    }
+
+    .bg-cover {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, .7);
+        z-index: 5;
     }
 </style>
 <template>
@@ -412,6 +484,21 @@
         <div v-if='order_detail.recommend_items&&order_detail.recommend_items.length>0' class='order-recommends'>
             <v-recommend :recommends='order_detail.recommend_items' color='gray' text-color='gray'></v-recommend>
         </div>
+        <div class='dialog'>
+            <transition name='enlarge'>
+                <div v-if='dialog_show' class='dialog-content'>
+                    <div class='close' @click='dialog_show=false'></div>
+                    <h1 class='title'>任务完成</h1>
+                    <h2>恭喜你获得以下奖励</h2>
+                    <div class='pic'>
+                        <img :src='order_detail.product_pic'>
+                    </div>
+                    <h4 class='desc'>获得{{order_detail.product}}</h4>
+                    <router-link tag='div' class='button' :to='{name:"index"}' replace>继续做任务</router-link>
+                </div>
+            </transition>
+            <div v-if='dialog_show' class='bg-cover'></div>
+        </div>
         <v-support></v-support>
     </div>
 </template>
@@ -456,7 +543,9 @@
                     country_id: '',
                     address: ''
                 },
-                address_limit_num: 2
+                address_limit_num: 2,
+                in_mission: false,
+                dialog_show: false
             };
         },
         computed: {
@@ -546,6 +635,10 @@
                     });
                 }
             });
+            this.in_mission = this.$route.query.mission;
+            if (this.in_mission) {
+                this.dialog_show = true;
+            }
         },
         beforeRouteLeave(to, from, next) {
             this.$store.dispatch('updatePageView');

@@ -62,12 +62,12 @@
         }
         &.guide-account {
             li:nth-child(1) {
-                z-index: 2;
+                z-index: 3;
             }
         }
         &.guide-integral {
             li:nth-child(2) {
-                z-index: 2;
+                z-index: 3;
             }
         }
     }

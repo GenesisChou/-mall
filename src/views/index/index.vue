@@ -17,7 +17,7 @@
         right: 0;
         top: 0;
         bottom: 0;
-        z-index: 1;
+        z-index: 2;
         background-color: rgba(0, 0, 0, .76);
     }
 
@@ -31,6 +31,7 @@
             <v-notice></v-notice>
             <div class='space'></div>
         </template>
+        <!-- <v-mission></v-mission> -->
         <transition-group tag='div' class='index-content' name='slide-fade'>
             <component v-for='layout in framework' key='layout.id' :is='getComponent(layout.component_type,layout.layout_type)' :layout='layout'
                 :router-link='routerLink'></component>
@@ -63,6 +64,7 @@
             vIcon: require('./components/vIcon'),
             vSpace: require('./components/vSpace'),
             vText: require('./components/vText'),
+            vMission: require('./components/vMission'),
         },
         data() {
             return {
@@ -148,6 +150,8 @@
                     return 'vSurprise';
                 } else if (component_type === 8) {
                     return 'vText';
+                } else if (component_type === 9) {
+                    return 'vMission';
                 }
 
                 return components[component_type - 1][layout_type - 1];
@@ -168,7 +172,8 @@
                 this.indexView(item, layout);
                 if (layout.component_type === 6) {
                     if (item.is_inner_url === 1) {
-                        if ((item.url === 'integral_details' || item.url === 'earn_integral' || item.url === 'order_list' ||
+                        if ((item.url === 'integral_details' || item.url === 'earn_integral' || item.url ===
+                                'order_list' ||
                                 item.url === 'wish_wall') &&
                             this.user.show_authorize !== 1) {
                             utils.login(APP.MEDIA_ID, 2, item.url, null, APP.ORIGIN);

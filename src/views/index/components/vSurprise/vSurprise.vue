@@ -42,54 +42,13 @@
 
     .surprise {
         position: fixed;
-        right: pxTorem(40);
+        right: pxTorem(30);
         bottom: pxTorem(260);
-        width: pxTorem(434/3);
-        height: pxTorem(500/3);
+        width: pxTorem(300/2);
+        height: pxTorem(280/2);
+        background: url('./images/guide.gif');
+        background-size: 100% 100%;
         z-index: 2;
-        .hand {
-            position: absolute;
-            top: 20%;
-            width: pxTorem(297/3);
-            height: pxTorem(323/3);
-            margin-left: pxTorem(20);
-            z-index: 0;
-            animation: hand 2s infinite linear;
-        }
-        .text {
-            position: absolute;
-            bottom: 0;
-            width: pxTorem(434/3);
-            height: pxTorem(169/3);
-            background-image: url('./images/blue.png');
-            background-size: 100% 100%;
-            z-index: 1;
-            // animation: bg 2s infinite linear;
-        }
-    }
-
-    @keyframes bg {
-        0% {
-            background-image: url('./images/pink.png');
-        }
-        50% {
-            background-image: url('./images/blue.png');
-        }
-        100% {
-            background-image: url('./images/pink.png');
-        }
-    }
-
-    @keyframes hand {
-        0% {
-            top: 20%;
-        }
-        50% {
-            top: 5%;
-        }
-        100% {
-            top: 20%;
-        }
     }
 </style>
 <template>
@@ -103,10 +62,7 @@
                 </div>
             </div>
         </transition>
-        <div v-show='surprise_show===false' @click='toSomeWhere' class='surprise'>
-            <img class='hand' src='./images/hand.png'>
-            <div class='text'></div>
-        </div>
+        <div v-show='surprise_show===false' @click='toSomeWhere' class='surprise'></div>
     </div>
 </template>
 <script>

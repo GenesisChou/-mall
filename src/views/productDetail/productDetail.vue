@@ -502,12 +502,22 @@
             },
             //路由跳转
             toOrderDetail() {
-                this.$router.push({
-                    name: 'order_detail',
-                    query: {
-                        order_id: this.order_detail_id
-                    }
-                });
+                if (this.$route.query.mission) {
+                    this.$router.replace({
+                        name: 'order_detail',
+                        query: {
+                            order_id: this.order_detail_id,
+                            mission: this.$route.query.mission
+                        }
+                    });
+                } else {
+                    this.$router.push({
+                        name: 'order_detail',
+                        query: {
+                            order_id: this.order_detail_id
+                        }
+                    });
+                }
             },
             toggleDialog(dialog) {
                 this.dialog = dialog;
