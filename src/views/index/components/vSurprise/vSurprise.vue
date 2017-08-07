@@ -46,7 +46,7 @@
         bottom: pxTorem(260);
         width: pxTorem(434/3);
         height: pxTorem(500/3);
-        z-index: 1;
+        z-index: 2;
         .hand {
             position: absolute;
             top: 20%;
