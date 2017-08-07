@@ -133,8 +133,8 @@
             font-weight: 500;
         }
         span {
-            right: pxTorem(10);
-            top: pxTorem(-320);
+            right: pxTorem(20);
+            top: pxTorem(-280);
             font-weight: 500;
         }
         .button {
@@ -165,8 +165,8 @@
             font-weight: 500;
         }
         span {
-            right: pxTorem(10);
-            top: pxTorem(-320);
+            right: pxTorem(20);
+            top: pxTorem(-280);
             font-weight: 500;
         }
         .button {

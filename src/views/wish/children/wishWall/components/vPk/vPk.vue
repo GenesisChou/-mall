@@ -79,6 +79,7 @@
             overflow: hidden;
         }
         span {
+            display: block;
             width: pxTorem(140);
             height: pxTorem(36);
             color: #a9aaae;
