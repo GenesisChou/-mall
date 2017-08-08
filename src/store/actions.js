@@ -1,3 +1,4 @@
+import Vue from 'vue';
 module.exports = {
     // 全局
     // 显示/关闭 弹窗
@@ -38,6 +39,22 @@ module.exports = {
         context.commit('changeCurrentSignature', name);
     },
     getQrCode(context, callback) {
-        context.commit('getQrCode', callback);
+        return new Promise(resolve => {
+            Vue.http.post(`${APP.HOST}/get_qr_code`, {
+                token: APP.TOKEN,
+                media_id: APP.MEDIA_ID,
+                user_id: APP.USER_ID,
+                open_id: APP.OPEN_ID,
+                origin: APP.ORIGIN
+            }).then((response) => {
+                const data = response.data;
+                if (data.status === APP.SUCCESS) {
+                    context.commit('getQrCode', data.data);
+                }
+                if (typeof resolve === 'function') {
+                    resolve(data.data);
+                }
+            });
+        });
     },
 };

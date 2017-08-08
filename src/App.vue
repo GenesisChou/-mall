@@ -8,7 +8,7 @@
 <template>
     <div id='app'>
         <keep-alive exclude='myAccount,activityDetail,productDetail,orderDetail,editUser'>
-            <router-view></router-view>
+            <router-view v-if='user'></router-view>
         </keep-alive>
         <v-alert></v-alert>
         <v-confirm> </v-confirm>
@@ -26,25 +26,18 @@
             vAlert,
             vConfirm,
         },
+        computed: {
+            user() {
+                return this.$store.state.user;
+            }
+        },
         created() {
             this.$store.dispatch('getUserInfor', (response) => {
                 const data = response.data;
                 if (data.status === APP.SUCCESS) {
-                    this.$store.dispatch('getQrCode', qr_code => {
-                        if (qr_code.qr_code_pic && qr_code.qr_code_tips) {
-                            if (APP.ORIGIN === 'menu') {
-                                this.setGuideState(data.data);
-                                if (data.data.first_login === 1) {
-                                    this.loginRecord();
-                                }
-                            }
-                        } else {
-                            this.setGuideState(data.data);
-                            if (data.data.first_login === 1) {
-                                this.loginRecord();
-                            }
-                        }
-                    });
+                    if (data.data.first_login === 1) {
+                        this.loginRecord();
+                    }
                 } else {
                     utils.deleteLocalStorage(APP.MEDIA_ID);
                     utils.reloadApp();
@@ -83,7 +76,6 @@
                         wish_id,
                     };
                 }
-
                 this.$router.push({
                     name: page,
                     query
@@ -99,9 +91,6 @@
             loginRecord() {
                 const redirect = encodeURIComponent(APP.MALL_HOST);
                 this.$http.get(`${APP.HOST}/weixin/${APP.MEDIA_ID}?callback=${redirect}&token=${APP.TOKEN}`);
-            },
-            setGuideState(user) {
-                this.$store.dispatch('updateGuideState', (user.first_login === 1 ? 'guide-account' : ''));
             }
         }
     };

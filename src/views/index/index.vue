@@ -31,7 +31,6 @@
             <v-notice></v-notice>
             <div class='space'></div>
         </template>
-        <!-- <v-mission></v-mission> -->
         <transition-group tag='div' class='index-content' name='slide-fade'>
             <component v-for='layout in framework' key='layout.id' :is='getComponent(layout.component_type,layout.layout_type)' :layout='layout'
                 :router-link='routerLink'></component>
@@ -86,7 +85,29 @@
             }
         },
         created() {
-            this.getLayOut();
+            this.getLayOut().then(components => {
+                let surprise_show = false;
+                if (utils.getTypeOf(components) === 'Array') {
+                    components.forEach(component => {
+                        if (component.component_type === 7 && component.is_show === 1) {
+                            surprise_show = true;
+                        }
+                    });
+                }
+                setTimeout(() => {
+                    this.$store.dispatch('toggleSurprise', surprise_show);
+                }, 1500);
+                this.$store.dispatch('getQrCode').then(qr_code => {
+                    if (surprise_show) return;
+                    const first_login = (this.user.first_login === 1),
+                        has_qr_code = qr_code.qr_code_pic && qr_code.qr_code_tips;
+                    if ((has_qr_code && APP.ORIGIN !== 'menu') || !has_qr_code) {
+                        if (first_login) {
+                            this.$store.dispatch('updateGuideState', 'guide-account');
+                        }
+                    }
+                });
+            });
         },
         activated() {
             if (this.$store.state.current_signature_page !== 'index') {
@@ -121,16 +142,10 @@
                         if (data.status === APP.SUCCESS && utils.getTypeOf(data.data) === 'Array' &&
                             data.data.length) {
                             utils.syncLoadArray(this.framework, data.data);
+                            if (typeof resolve === 'function') {
+                                resolve(data.data);
+                            }
                         }
-
-                        if (typeof resolve === 'function') {
-                            resolve();
-                        }
-                    }, () => {
-                        if (typeof resolve === 'function') {
-                            resolve();
-                        }
-                        // this.$store.dispatch('toggleLoading');
                     });
                 });
             },

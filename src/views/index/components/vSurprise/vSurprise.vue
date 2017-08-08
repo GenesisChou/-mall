@@ -74,30 +74,39 @@
         },
         data() {
             return {
-                pic: '',
-                surprise_show: false
+                pic: ''
             };
+        },
+        computed: {
+            surprise_show() {
+                return this.$store.state.index.surprise_show || false;
+            },
+            user() {
+                return this.$store.state.user;
+            }
         },
         created() {
             if (this.layout && this.layout.items && this.layout.items.length > 0) {
                 this.pic = this.layout.items[0].pic_init_new;
-                this.surprise_show = (this.layout.is_show === 1);
             }
         },
         watch: {
             $route(value) {
                 if (value.name !== 'index') {
-                    this.surprise_show = false;
+                    this.$store.dispatch('toggleSurprise', false);
                 }
             }
         },
         methods: {
             toSomeWhere() {
-                this.surprise_show = false;
+                this.$store.dispatch('toggleSurprise', false);
                 this.routerLink(this.layout.items[0], this.layout);
             },
             close() {
-                this.surprise_show = false;
+                if (this.user.first_login === 1) {
+                    this.$store.dispatch('updateGuideState', 'guide-account');
+                }
+                this.$store.dispatch('toggleSurprise', false);
             },
         }
     };
