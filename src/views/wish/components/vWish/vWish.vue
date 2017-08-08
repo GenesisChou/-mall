@@ -34,29 +34,37 @@
     .message {
         width: pxTorem(200);
         height: 100%;
-        padding-top: pxTorem(56);
-        overflow: hidden;
-        strong {
-            float: left;
-            position: relative;
-            font-size: pxTorem(31);
-            line-height: pxTorem(40);
-            margin-right: pxTorem(10);
-        }
-        .date {
-            float: left;
-            font-size: pxTorem(21);
-            font-weight: normal; // width: 100%;
-            line-height: pxTorem(40);
-            color: rgba(0, 0, 0, .48);
+        padding-top: pxTorem(96);
+        .title {
+            left: pxTorem(160);
+            top: pxTorem(56);
+            position: absolute;
+            strong {
+                float: left;
+                position: relative;
+                font-size: pxTorem(31);
+                line-height: pxTorem(40);
+                margin-right: pxTorem(10);
+                max-width: pxTorem(160);
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+            .date {
+                float: left;
+                font-size: pxTorem(21);
+                font-weight: normal; // width: 100%;
+                line-height: pxTorem(40);
+                color: rgba(0, 0, 0, .48);
+            }
         }
         p {
             width: pxTorem(200);
-            max-height: pxTorem(72);
+            height: pxTorem(72);
             padding-right: pxTorem(10);
-            overflow: hidden;
             font-size: pxTorem(22);
             color: #a9aaae;
+            overflow: hidden;
         }
     }
 
@@ -102,8 +110,10 @@
                 <img :src='wish.headimg'>
             </div>
             <div class='message'>
-                <strong>{{wish.nickname}} </strong><span class='date'>{{wish.create_time|date_format}}</span>
-                <p>{{wish.desc}}</p>
+                <div class='title'>
+                    <strong>{{wish.nickname}} </strong><span class='date'>{{wish.create_time|date_format}}</span>
+                </div>
+                <p>{{wish.name}}{{wish.type|getType}}{{wish.desc}}</p>
             </div>
             <div class='right'>
                 <h5>
@@ -143,7 +153,11 @@
                 month = temp[1] >= 10 ? temp[1] : Math.floor(temp[1]);
                 day = temp[2] >= 10 ? temp[2] : Math.floor(temp[2]);
                 return `${month}月${day}日`;
-            }
+            },
+            getType(value) {
+                const types = ['满减券', '代金券', '礼品券', '折扣券', '体验券'];
+                return types[value - 1];
+            },
         },
         methods: {
             support() {
