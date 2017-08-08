@@ -32,7 +32,7 @@
         }
         label {
             width: pxTorem(240);
-            font-size: pxTorem(32);
+            font-size: pxTorem(28);
             // background:red;
             color: #646565;
         }
