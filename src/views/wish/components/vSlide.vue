@@ -11,14 +11,15 @@
     }
 </style>
 <template>
-    <div class='v-slide'>
-        <swiper :options='swiperOption' ref='mySwiper' id='swiper'>
+    <div v-if='items.length>0' class='v-slide'>
+        <swiper v-if='items.length>1' :options='swiperOption' ref='mySwiper' id='swiper'>
             <!-- slides -->
             <swiper-slide v-for='slide in items'>
                 <img class='slide-item' :src="slide.pic_banner_new">
             </swiper-slide>
             <div class='swiper-pagination' slot='pagination'></div>
         </swiper>
+        <img class='slide-item' v-else :src='items[0].pic_banner_new' @click='routerLink(items[0])'>
     </div>
 </template>
 <script>
@@ -54,10 +55,12 @@
         },
         watch: {
             router_state(value) {
-                if (value === 'leave') {
-                    this.swiper.stopAutoplay();
-                } else if (value === 'enter') {
-                    this.swiper.startAutoplay();
+                if (this.items.length > 1) {
+                    if (value === 'leave') {
+                        this.swiper.stopAutoplay();
+                    } else if (value === 'enter') {
+                        this.swiper.startAutoplay();
+                    }
                 }
             }
         },
@@ -70,7 +73,9 @@
             }
         },
         mounted() {
-            this.swiper.slideTo(1, 0);
+            if (this.items.length > 1) {
+                this.swiper.slideTo(1, 0);
+            }
         },
         methods: {
             routerLink(item) {

@@ -33,11 +33,13 @@
         label {
             width: pxTorem(240);
             font-size: pxTorem(32);
+            // background:red;
             color: #646565;
         }
         input {
             flex: 1;
             height: 100%;
+            padding:0;
             color: #646565;
             background: none;
             border: 0;
@@ -45,6 +47,7 @@
         }
         textarea {
             flex: 1;
+            padding:0;
             font-size: pxTorem(28);
             border: 0;
             color: #646565;
@@ -67,16 +70,13 @@
 
 
     .select {
-        // display: flex;
-        // align-items: center;
-        // height: 100%;
         line-height: pxTorem(95);
         span {
             color: #646565;
             font-size: pxTorem(28);
         }
         .icon-arrows-down {
-            margin-left: pxTorem(20);
+            margin-left: pxTorem(6);
             font-size: pxTorem(36);
             font-size: pxTorem(24);
             font-weight: bold;

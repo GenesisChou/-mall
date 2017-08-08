@@ -46,6 +46,7 @@
         textarea {
             flex: 1;
             font-size: pxTorem(28);
+            padding:0;
             border: 0;
             color: #646565;
             text-align: justify;

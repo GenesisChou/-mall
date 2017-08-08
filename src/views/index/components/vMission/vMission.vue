@@ -65,11 +65,22 @@
         left: 50%;
         top: 50%;
         width: pxTorem(630);
-        height: pxTorem(700);
         background: $white;
         border-radius: pxTorem(10);
         transform: translate(-50%, -50%);
         z-index: 6;
+        .tag {
+            position: absolute;
+            left: 0;
+            top: 0;
+            text-align: center;
+            width: pxTorem(45);
+            height: pxTorem(63);
+            font-size: pxTorem(32);
+            background: url('./images/tag.png');
+            background-size: 100% 100%;
+            color: $white;
+        }
         .close {
             width: pxTorem(80);
             height: pxTorem(74);
@@ -80,12 +91,15 @@
             background-size: 100% 100%;
         }
         .title {
-            width: 100%;
-            height: pxTorem(108);
-            line-height: pxTorem(108);
-            overflow: hidden;
             color: #252525;
-            text-align: center;
+        }
+        .notice {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: pxTorem(126);
+            font-size: pxTorem(28);
         }
         .pic {
             width: pxTorem(358);
@@ -100,10 +114,44 @@
                 border-radius: pxTorem(10);
             }
         }
+        .pics {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+            li {
+                width: pxTorem(178);
+                height: pxTorem(228);
+                margin:0 pxTorem(6);
+                list-style: none;
+                div {
+                    width: pxTorem(178);
+                    height: pxTorem(178);
+                    background: #f1f1f1;
+                    padding: pxTorem(10);
+                    border-radius: pxTorem(10);
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        border-radius: pxTorem(10);
+                    }
+                }
+                span {
+                    display: block;
+                    width: pxTorem(178);
+                    height: pxTorem(50);
+                    padding-top: pxTorem(10);
+                    overflow: hidden;
+                    font-size: pxTorem(24);
+                    color: #ff5000;
+                    text-align: center;
+                }
+            }
+        }
         .desc {
-            width: 100%;
-            height: pxTorem(95);
-            line-height: pxTorem(95);
+            height: pxTorem(67);
+            line-height: pxTorem(67);
             overflow: hidden;
             color: #ff5000;
             text-align: center;
@@ -111,9 +159,9 @@
         .button {
             @include active(#ff5000,
             3%);
-            margin: 0 auto;
             width: pxTorem(564);
             height: pxTorem(90);
+            margin: 0 auto pxTorem(46) auto;
             line-height: pxTorem(90);
             text-align: center;
             font-size: pxTorem(37);
@@ -150,12 +198,38 @@
             <transition name='enlarge'>
                 <div v-if='dialog_show' class='dialog-content'>
                     <div class='close' @click='dialog_show=false'></div>
-                    <h1 class='title'>{{current_mission.name}}</h1>
-                    <div class='pic'>
-                        <img :src='current_mission.pic'>
-                    </div>
-                    <h4 class='desc'>{{current_mission.desc}}</h4>
-                    <div class='button' @click='startMission(current_mission)'>做任务>></div>
+                    <template v-if='state==="success"'>
+                        <div class='notice'>
+                            <h1 class='title'>任务完成</h1>
+                            恭喜你获得以下奖励
+                        </div>
+                        <ul v-if='awards.length>1' class='pics'>
+                            <li v-for='(i,$index) in 6'>
+                                <template v-if='awards[$index]'>
+                                    <div>
+                                        <img :src='awards[$index].pic_thumb_new'>
+                                    </div>
+                                    <span>{{awards[$index].name}}</span>
+                                </template>
+                            </li>
+                        </ul>
+                        <div v-else class='pic'>
+                            <img :src='awards[0].pic_thumb_new'>
+                        </div>
+                        <h4 v-if='awards.length===1' class='desc'>{{awards[0].name}}</h4>
+                        <div class='button' @click='continueMission'>继续做任务 >></div>
+                    </template>
+                    <template v-else>
+                        <div class='tag'>{{current_mission.step}}</div>
+                        <div class='notice'>
+                            <h1 class='title'>{{current_mission.name}}</h1>
+                        </div>
+                        <div class='pic'>
+                            <img :src='current_mission.pic'>
+                        </div>
+                        <h4 class='desc'>{{current_mission.desc}}</h4>
+                        <div class='button' @click='startMission(current_mission)'>做任务>></div>
+                    </template>
                 </div>
             </transition>
             <div v-if='dialog_show' class='bg-cover'></div>
@@ -169,7 +243,9 @@
             return {
                 missions: [{}, {}, {}],
                 dialog_show: false,
-                step: ''
+                step: '',
+                state: '',
+                awards: []
             };
         },
         created() {
@@ -178,6 +254,13 @@
         computed: {
             current_mission() {
                 return this.missions[this.step - 1];
+            }
+        },
+        watch: {
+            $route(value) {
+                if (value.name === 'index') {
+                    this.getMissions();
+                }
             }
         },
         methods: {
@@ -196,7 +279,9 @@
             startMission(mission) {
                 if (mission) {
                     if (mission.type === 1) {
-                        this.completeMission(mission.id, mission.type, '', mission.status, mission.step).then(() => {
+                        this.completeMission(mission.id, mission.type, '', mission.status, mission.step).then(data => {
+                            this.state = 'success';
+                            this.awards = data.items;
                             this.getMissions();
                         });
                     } else if (mission.type === 2) {
@@ -205,11 +290,15 @@
                             name: 'product_detail',
                             query: {
                                 product_id: mission.product_id,
-                                mission: true
+                                mission: this.current_mission
                             }
                         });
                     }
                 }
+            },
+            continueMission() {
+                this.step++;
+                this.state = '';
             },
             completeMission(id, type, product_id = '', status, step) {
                 return new Promise(resolve => {
@@ -226,7 +315,7 @@
                     }).then((response) => {
                         const data = response.data;
                         if (data.status === APP.SUCCESS && typeof resolve === 'function') {
-                            resolve(data);
+                            resolve(data.data);
                         }
                     });
                 });

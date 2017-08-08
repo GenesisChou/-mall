@@ -174,7 +174,7 @@
 <template>
     <div class='wish-list'>
         <div class='wish-list-content'>
-            <v-slide :items='banners'></v-slide>
+            <v-slide v-if='banners' :items='banners'></v-slide>
             <div class='search'>
                 <form class='form-control' action='javascript:return true;'>
                     <i class='iconfont icon-search' @click='search'></i>

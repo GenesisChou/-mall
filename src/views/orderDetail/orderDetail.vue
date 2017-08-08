@@ -239,7 +239,6 @@
         left: 50%;
         top: 50%;
         width: pxTorem(630);
-        height: pxTorem(700);
         background: $white;
         border-radius: pxTorem(10);
         transform: translate(-50%, -50%);
@@ -254,12 +253,15 @@
             background-size: 100% 100%;
         }
         .title {
-            width: 100%;
-            height: pxTorem(108);
-            line-height: pxTorem(108);
-            overflow: hidden;
             color: #252525;
-            text-align: center;
+        }
+        .notice {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: pxTorem(126);
+            font-size: pxTorem(28);
         }
         .pic {
             width: pxTorem(358);
@@ -274,10 +276,44 @@
                 border-radius: pxTorem(10);
             }
         }
+        .pics {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+            li {
+                width: pxTorem(178);
+                height: pxTorem(228);
+                margin:0 pxTorem(6);
+                list-style: none;
+                div {
+                    width: pxTorem(178);
+                    height: pxTorem(178);
+                    background: #f1f1f1;
+                    padding: pxTorem(10);
+                    border-radius: pxTorem(10);
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        border-radius: pxTorem(10);
+                    }
+                }
+                span {
+                    display: block;
+                    width: pxTorem(178);
+                    height: pxTorem(50);
+                    padding-top: pxTorem(10);
+                    overflow: hidden;
+                    font-size: pxTorem(24);
+                    color: #ff5000;
+                    text-align: center;
+                }
+            }
+        }
         .desc {
-            width: 100%;
-            height: pxTorem(95);
-            line-height: pxTorem(95);
+            height: pxTorem(67);
+            line-height: pxTorem(67);
             overflow: hidden;
             color: #ff5000;
             text-align: center;
@@ -285,9 +321,9 @@
         .button {
             @include active(#ff5000,
             3%);
-            margin: 0 auto;
             width: pxTorem(564);
             height: pxTorem(90);
+            margin: 0 auto pxTorem(46) auto;
             line-height: pxTorem(90);
             text-align: center;
             font-size: pxTorem(37);
@@ -484,17 +520,29 @@
         <div v-if='order_detail.recommend_items&&order_detail.recommend_items.length>0' class='order-recommends'>
             <v-recommend :recommends='order_detail.recommend_items' color='gray' text-color='gray'></v-recommend>
         </div>
-        <div class='dialog'>
+        <div v-if='mission' class='dialog'>
             <transition name='enlarge'>
                 <div v-if='dialog_show' class='dialog-content'>
                     <div class='close' @click='dialog_show=false'></div>
-                    <h1 class='title'>任务完成</h1>
-                    <h2>恭喜你获得以下奖励</h2>
-                    <div class='pic'>
-                        <img :src='order_detail.product_pic'>
+                    <div class='notice'>
+                        <h1 class='title'>任务完成</h1>
+                        恭喜你获得以下奖励
                     </div>
-                    <h4 class='desc'>获得{{order_detail.product}}</h4>
-                    <router-link tag='div' class='button' :to='{name:"index"}' replace>继续做任务</router-link>
+                    <ul v-if='mission.items.length>1' class='pics'>
+                        <li v-for='(i,$index) in 6'>
+                            <template v-if='mission.items[$index]'>
+                                <div>
+                                    <img :src='mission.items[$index].pic_thumb_new'>
+                                </div>
+                                <span>{{mission.items[$index].name}}</span>
+                            </template>
+                        </li>
+                    </ul>
+                    <div v-else class='pic'>
+                        <img :src='mission.items[0].pic_thumb_new'>
+                    </div>
+                    <h4 v-if='mission.items.length===1' class='desc'>获得{{mission.items[0].name}}</h4>
+                    <router-link tag='div' class='button' :to='{name:"index"}' replace>继续完成任务</router-link>
                 </div>
             </transition>
             <div v-if='dialog_show' class='bg-cover'></div>
@@ -544,7 +592,9 @@
                     address: ''
                 },
                 address_limit_num: 2,
-                in_mission: false,
+                mission: {
+                    items: []
+                },
                 dialog_show: false
             };
         },
@@ -635,8 +685,8 @@
                     });
                 }
             });
-            this.in_mission = this.$route.query.mission;
-            if (this.in_mission) {
+            if (this.$route.query.mission) {
+                this.mission = JSON.parse(this.$route.query.mission);
                 this.dialog_show = true;
             }
         },

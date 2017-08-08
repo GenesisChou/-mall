@@ -131,6 +131,10 @@
             top: pxTorem(-170);
             line-height: pxTorem(48);
             font-weight: 500;
+            img {
+                width: pxTorem(284);
+                height: pxTorem(82);
+            }
         }
         span {
             right: pxTorem(20);
@@ -163,6 +167,10 @@
             top: pxTorem(-186);
             line-height: pxTorem(48);
             font-weight: 500;
+            img {
+                width: pxTorem(434);
+                height: pxTorem(89);
+            }
         }
         span {
             right: pxTorem(20);
@@ -228,7 +236,7 @@
         <div v-if='guide_state==="guide-account"' class='guide account'>
             <div class='square-cover'></div>
             <h1>
-                在这里查看您的个人信息<br>和积分获得消耗情况
+                <img src='./images/guideAccount.png'>
             </h1>
             <img class='arrows-left' src='./images/arrowsLeft.png'>
             <img class='arrows-right' src='./images/arrowsRightLarge.png'>
@@ -240,7 +248,7 @@
                 <div class='space'></div>
             </div>
             <h1>
-                在这里赚取积分，用来兑换<br>心仪商品、参与新颖活动
+                <img src='./images/guideIntegral.png'>
             </h1>
             <img class='arrows-right-small' src='./images/arrowsRightSmall.png'>
             <img class='arrows-right' src='./images/arrowsRight.png'>

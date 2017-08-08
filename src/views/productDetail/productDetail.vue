@@ -375,6 +375,7 @@
         },
         created() {
             this.init();
+            console.log(this.$route.query.mission);
         },
         methods: {
             init() {
@@ -455,17 +456,33 @@
                     this.$store.dispatch('toggleConfirm', {
                         msg: '确认兑换该商品吗?',
                         callback: () => {
-                            this.order().then(data => {
-                                this.order_detail_id = data.data.id;
-                                this.$store.dispatch('getUserInfor');
-                                this.toOrderDetail();
-                            }).catch(data => {
-                                this.toggleDialog({
-                                    type: 'faliure',
-                                    msg: data.info,
-                                    btn_text: '我知道了',
+                            if (this.$route.query.mission) {
+                                const mission = this.$route.query.mission;
+                                this.completeMission(mission.id, mission.type, mission.product_id, mission.status,
+                                    mission.step).then(data => {
+                                    const order_id = data.order_id;
+                                    mission.items = data.items || [];
+                                    this.$router.push({
+                                        name: 'order_detail',
+                                        query: {
+                                            order_id,
+                                            mission: JSON.stringify(mission)
+                                        }
+                                    });
                                 });
-                            });
+                            } else {
+                                this.order().then(data => {
+                                    this.order_detail_id = data.data.id;
+                                    this.$store.dispatch('getUserInfor');
+                                    this.toOrderDetail();
+                                }).catch(data => {
+                                    this.toggleDialog({
+                                        type: 'faliure',
+                                        msg: data.info,
+                                        btn_text: '我知道了',
+                                    });
+                                });
+                            }
                         }
                     });
                 }
@@ -502,22 +519,12 @@
             },
             //路由跳转
             toOrderDetail() {
-                if (this.$route.query.mission) {
-                    this.$router.replace({
-                        name: 'order_detail',
-                        query: {
-                            order_id: this.order_detail_id,
-                            mission: this.$route.query.mission
-                        }
-                    });
-                } else {
-                    this.$router.push({
-                        name: 'order_detail',
-                        query: {
-                            order_id: this.order_detail_id
-                        }
-                    });
-                }
+                this.$router.push({
+                    name: 'order_detail',
+                    query: {
+                        order_id: this.order_detail_id
+                    }
+                });
             },
             toggleDialog(dialog) {
                 this.dialog = dialog;
@@ -661,7 +668,33 @@
                         location.href = link;
                     }
                 }
-            }
+            },
+            completeMission(id, type, product_id = '', status, step) {
+                return new Promise(resolve => {
+                    this.$http.post(`${APP.HOST}/fulfil_newbie_task`, {
+                        token: APP.TOKEN,
+                        user_id: APP.USER_ID,
+                        media_id: APP.MEDIA_ID,
+                        origin: APP.ORIGIN,
+                        id,
+                        type,
+                        product_id,
+                        status,
+                        step
+                    }).then((response) => {
+                        const data = response.data;
+                        if (data.status === APP.SUCCESS && typeof resolve === 'function') {
+                            resolve(data.data);
+                        } else {
+                            this.toggleDialog({
+                                type: 'faliure',
+                                msg: data.info,
+                                btn_text: '我知道了',
+                            });
+                        }
+                    });
+                });
+            },
         }
     };
 </script>
