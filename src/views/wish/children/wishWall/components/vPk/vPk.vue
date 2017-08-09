@@ -74,16 +74,18 @@
     .message {
         p {
             width: pxTorem(140);
-            height: pxTorem(38);
             font-weight: bold;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             overflow: hidden;
         }
         span {
             display: block;
             width: pxTorem(140);
-            height: pxTorem(36);
             color: #a9aaae;
             font-size: pxTorem(20);
+            text-overflow: ellipsis;
+            white-space: nowrap;
             overflow: hidden;
         }
     }

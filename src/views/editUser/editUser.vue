@@ -38,7 +38,7 @@
         input {
             flex: 1;
             height: 100%;
-            padding:0;
+            padding: 0;
             color: #646565;
             background: none;
             border: 0;
@@ -46,8 +46,8 @@
         }
         textarea {
             flex: 1;
+            padding: 0;
             font-size: pxTorem(28);
-            padding:0;
             border: 0;
             color: #646565;
             text-align: justify;
