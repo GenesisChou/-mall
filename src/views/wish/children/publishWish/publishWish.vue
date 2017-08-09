@@ -144,7 +144,7 @@
                     </li>
                 </ul>
                 <div class='operation'>
-                    <button v-if='name&&type&&desc' class='btn btn-orange' @click='publish'>确认</button>
+                    <button v-if='name&&type' class='btn btn-orange' @click='publish'>确认</button>
                     <button v-else class='btn btn-gray' disabled='disabled'>确认</button>
                 </div>
             </div>
