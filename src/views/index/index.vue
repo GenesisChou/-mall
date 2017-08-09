@@ -103,7 +103,7 @@
                         has_qr_code = qr_code.qr_code_pic && qr_code.qr_code_tips;
                     if ((has_qr_code && APP.ORIGIN !== 'menu') || !has_qr_code) {
                         if (first_login) {
-                            this.$store.dispatch('updateGuideState', 'guide-account');
+                            this.$store.dispatch('updateGuideState', 'guide-wish');
                         }
                     }
                 });

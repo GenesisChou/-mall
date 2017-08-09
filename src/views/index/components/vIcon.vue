@@ -60,7 +60,7 @@
             height: pxTorem(95);
             margin-bottom: pxTorem(15);
         }
-        &.guide-account {
+        &.guide-wish {
             li:nth-child(1) {
                 z-index: 3;
             }
@@ -125,15 +125,15 @@
         }
     }
 
-    .guide.account {
+    .guide.wish {
         h1 {
             left: pxTorem(220);
             top: pxTorem(-170);
             line-height: pxTorem(48);
             font-weight: 500;
             img {
-                width: pxTorem(284);
-                height: pxTorem(82);
+                width: pxTorem(351);
+                height: pxTorem(86);
             }
         }
         span {
@@ -233,10 +233,10 @@
             <img class='icon' :src='item.pic_thumb_new'>
             <p>{{item.title}}</p>
         </li>
-        <div v-if='guide_state==="guide-account"' class='guide account'>
+        <div v-if='guide_state==="guide-wish"' class='guide wish'>
             <div class='square-cover'></div>
             <h1>
-                <img src='./images/guideAccount.png'>
+                <img src='./images/guideWish.png'>
             </h1>
             <img class='arrows-left' src='./images/arrowsLeft.png'>
             <img class='arrows-right' src='./images/arrowsRightLarge.png'>
