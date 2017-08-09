@@ -5,6 +5,7 @@
         height:100%;
         display: flex;
         align-items: center;
+        padding-left:pxTorem(4);
         .form-control {
             flex: 1;
             position: relative;
@@ -24,6 +25,7 @@
         input {
             height:100%;
             width: pxTorem(150);
+            padding:0;
             color: #646565;
             background: none;
             border: 0;
