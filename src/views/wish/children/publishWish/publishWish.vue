@@ -48,6 +48,7 @@
         textarea {
             flex: 1;
             padding:0;
+            margin:0;
             font-size: pxTorem(28);
             border: 0;
             color: #646565;
@@ -70,6 +71,7 @@
 
 
     .select {
+        padding-left:pxTorem(3);
         line-height: pxTorem(95);
         span {
             color: #646565;
@@ -138,7 +140,7 @@
                     </li>
                     <li>
                         <label for='detail'>心愿描述</label>
-                        <textarea id='detail' placeholder="例如：满200减20优惠券，可以叠加" v-model='desc'> </textarea>
+                        <textarea id='detail' placeholder="例如:满200减20优惠券,可以叠加" v-model='desc'> </textarea>
                     </li>
                 </ul>
                 <div class='operation'>
@@ -171,7 +173,8 @@
                 desc: '',
                 publish_status: false,
                 dialog_show: false,
-                options: [{
+                options: [
+                    {
                         type: 1,
                         name: '满减券'
                     },

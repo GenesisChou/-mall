@@ -63,8 +63,7 @@
             height: pxTorem(169/3);
             background-image: url('./images/blue.png');
             background-size: 100% 100%;
-            z-index: 1;
-            // animation: bg 2s infinite linear;
+            z-index: 1; // animation: bg 2s infinite linear;
         }
     }
 
@@ -119,13 +118,19 @@
         data() {
             return {
                 pic: '',
-                surprise_show: false
             };
         },
         created() {
             if (this.layout && this.layout.items && this.layout.items.length > 0) {
                 this.pic = this.layout.items[0].pic_init_new;
-                this.surprise_show = (this.layout.is_show === 1);
+            }
+        },
+        computed: {
+            user() {
+                return this.$store.state.user;
+            },
+            surprise_show() {
+                return this.$store.state.index.surprise_show;
             }
         },
         watch: {
@@ -137,11 +142,17 @@
         },
         methods: {
             toSomeWhere() {
-                this.surprise_show = false;
+                this.$store.dispatch('toggleSurprise', false);
+                if (this.user.first_login === 1) {
+                    this.$store.dispatch('updateGuideState', 'guide-wish');
+                }
                 this.routerLink(this.layout.items[0], this.layout);
             },
             close() {
-                this.surprise_show = false;
+                this.$store.dispatch('toggleSurprise', false);
+                if (this.user.first_login === 1) {
+                    this.$store.dispatch('updateGuideState', 'guide-wish');
+                }
             },
         }
     };
