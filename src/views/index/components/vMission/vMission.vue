@@ -320,7 +320,7 @@
                             name: 'product_detail',
                             query: {
                                 product_id: mission.product_id,
-                                mission: this.current_mission
+                                mission: JSON.stringify(mission)
                             }
                         });
                     }

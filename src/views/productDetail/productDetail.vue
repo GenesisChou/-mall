@@ -375,7 +375,6 @@
         },
         created() {
             this.init();
-            console.log(this.$route.query.mission);
         },
         methods: {
             init() {
@@ -457,9 +456,8 @@
                         msg: '确认兑换该商品吗?',
                         callback: () => {
                             if (this.$route.query.mission) {
-                                const mission = this.$route.query.mission;
-                                this.completeMission(mission.id, mission.type, mission.product_id, mission.status,
-                                    mission.step).then(data => {
+                                const mission = JSON.parse(this.$route.query.mission);
+                                this.completeMission(mission.id, mission.type, mission.product_id, mission.status, mission.step).then(data => {
                                     const order_id = data.order_id;
                                     mission.items = data.items || [];
                                     this.$router.push({
