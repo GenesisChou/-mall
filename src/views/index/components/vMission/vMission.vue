@@ -36,6 +36,19 @@
             color: #b2aca4;
             background: #f7dfc2;
             font-size: pxTorem(20);
+            &.border {
+                position: relative;
+                &:after {
+                    content: '';
+                    position: absolute;
+                    right: 0;
+                    top: 50%;
+                    width: 1px;
+                    height: pxTorem(80);
+                    margin-top: pxTorem(-40);
+                    background: #b2aca4;
+                }
+            }
             h1 {
                 font-size: pxTorem(38);
             }
@@ -123,7 +136,7 @@
             li {
                 width: pxTorem(178);
                 height: pxTorem(228);
-                margin:0 pxTorem(6);
+                margin: 0 pxTorem(6);
                 list-style: none;
                 div {
                     width: pxTorem(178);
@@ -168,6 +181,14 @@
             background: #ff5000;
             color: $white;
             border-radius: pxTorem(10);
+            .icon-arrows-right {
+                font-weight: bold;
+                font-size: pxTorem(36);
+                &:last-child {
+                    margin-left: pxTorem(-30);
+                    margin-right: 0;
+                }
+            }
         }
     }
 
@@ -188,7 +209,8 @@
                 <img src='./images/mission.png'>
             </div>
             <ul class='missions'>
-                <li :class='[{active:mission.status===1},{finish:mission.status===3}]' v-for='(mission,$index) in missions' @click='showDialog(mission)'>
+                <li :class='[{active:mission.status===1},{finish:mission.status===3},{border:$index===1&&step===1&&mission.status===2}]'
+                    v-for='(mission,$index) in missions' @click='showDialog(mission)'>
                     <h1>0{{$index+1}}</h1>
                     {{mission.name}}
                 </li>
@@ -217,7 +239,11 @@
                             <img :src='awards[0].pic_thumb_new'>
                         </div>
                         <h4 v-if='awards.length===1' class='desc'>{{awards[0].name}}</h4>
-                        <div class='button' @click='continueMission'>继续做任务 >></div>
+                        <div v-if='step===3' class='button' @click='closeDialog'>我知道了</div>
+                        <div v-else class='button' @click='continueMission'>继续做任务
+                            <i class='iconfont icon-arrows-right'></i>
+                            <i class='iconfont icon-arrows-right'></i>
+                        </div>
                     </template>
                     <template v-else>
                         <div class='tag'>{{current_mission.step}}</div>
@@ -228,7 +254,11 @@
                             <img :src='current_mission.pic'>
                         </div>
                         <h4 class='desc'>{{current_mission.desc}}</h4>
-                        <div class='button' @click='startMission(current_mission)'>做任务>></div>
+                        <div v-if='step===3&&current_mission.type!==2' class='button' @click='startMission(current_mission)'>点击领取</div>
+                        <div v-else class='button' @click='startMission(current_mission)'>做任务
+                            <i class='iconfont icon-arrows-right'></i>
+                            <i class='iconfont icon-arrows-right'></i>
+                        </div>
                     </template>
                 </div>
             </transition>
@@ -243,7 +273,7 @@
             return {
                 missions: [{}, {}, {}],
                 dialog_show: false,
-                step: '',
+                step: 1,
                 state: '',
                 awards: []
             };
@@ -331,7 +361,11 @@
                     this.dialog_show = true;
                     this.step = mission.step;
                 }
-            }
+            },
+            closeDialog() {
+                this.dialog_show = false;
+                this.state = '';
+            },
         }
     };
 </script>
