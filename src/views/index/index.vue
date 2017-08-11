@@ -97,16 +97,15 @@
                 setTimeout(() => {
                     this.$store.dispatch('toggleSurprise', surprise_show);
                 }, 1500);
-                this.$store.dispatch('getQrCode').then(qr_code => {
-                    if (surprise_show) return;
-                    const first_login = (this.user.first_login === 1),
-                        has_qr_code = qr_code.qr_code_pic && qr_code.qr_code_tips;
-                    if ((has_qr_code && APP.ORIGIN !== 'menu') || !has_qr_code) {
-                        if (first_login) {
-                            this.$store.dispatch('updateGuideState', 'guide-wish');
-                        }
+                if (surprise_show) return;
+                const qr_code = this.$store.state.qr_code,
+                    first_login = (this.user.first_login === 1),
+                    has_qr_code = qr_code.qr_code_pic && qr_code.qr_code_tips;
+                if ((has_qr_code && APP.ORIGIN !== 'menu') || !has_qr_code) {
+                    if (first_login) {
+                        this.$store.dispatch('updateGuideState', 'guide-wish');
                     }
-                });
+                }
             });
         },
         activated() {

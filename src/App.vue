@@ -8,7 +8,7 @@
 <template>
     <div id='app'>
         <keep-alive exclude='myAccount,activityDetail,productDetail,orderDetail,editUser'>
-            <router-view v-if='user'></router-view>
+            <router-view v-if='user&&qr_code'></router-view>
         </keep-alive>
         <v-alert></v-alert>
         <v-confirm> </v-confirm>
@@ -29,6 +29,9 @@
         computed: {
             user() {
                 return this.$store.state.user;
+            },
+            qr_code() {
+                return this.$store.state.qr_code;
             }
         },
         created() {
@@ -43,6 +46,7 @@
                     utils.reloadApp();
                 }
             });
+            this.$store.dispatch('getQrCode');
             const page = utils.getParameterByName('page');
             if (page) {
                 let query = {};
