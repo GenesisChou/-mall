@@ -23,9 +23,6 @@ module.exports = {
     },
     position: {},
     current_signature_page: '',
-    qr_code: {
-        qr_code_tips: '',
-        qr_code_pic: '',
-    },
+    qr_code: '',
     update_page_id: ''
 };
