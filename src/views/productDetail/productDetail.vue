@@ -458,6 +458,7 @@
                             if (this.$route.query.mission) {
                                 const mission = JSON.parse(this.$route.query.mission);
                                 this.completeMission(mission.id, mission.type, mission.product_id, mission.status, mission.step).then(data => {
+                                    this.$store.dispatch('getUserInfor');
                                     const order_id = data.order_id;
                                     mission.items = data.items || [];
                                     this.$router.push({
@@ -681,8 +682,17 @@
                         step
                     }).then((response) => {
                         const data = response.data;
+                        console.log(data.data.order_id);
                         if (data.status === APP.SUCCESS && typeof resolve === 'function') {
-                            resolve(data.data);
+                            if (data.data.order_id) {
+                                resolve(data.data);
+                            } else {
+                                this.toggleDialog({
+                                    type: 'faliure',
+                                    msg: '该商品已过期，暂时无法兑换',
+                                    btn_text: '我知道了'
+                                });
+                            }
                         } else {
                             this.toggleDialog({
                                 type: 'faliure',
