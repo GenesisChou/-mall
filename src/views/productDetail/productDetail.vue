@@ -457,7 +457,8 @@
                         callback: () => {
                             if (this.$route.query.mission) {
                                 const mission = JSON.parse(this.$route.query.mission);
-                                this.completeMission(mission.id, mission.type, mission.product_id, mission.status, mission.step).then(data => {
+                                this.completeMission(mission.id, mission.type, mission.product_id, mission.status,
+                                    mission.step).then(data => {
                                     this.$store.dispatch('getUserInfor');
                                     const order_id = data.order_id;
                                     mission.items = data.items || [];
@@ -682,14 +683,22 @@
                         step
                     }).then((response) => {
                         const data = response.data;
-                        console.log(data.data.order_id);
-                        if (data.status === APP.SUCCESS && typeof resolve === 'function') {
-                            if (data.data.order_id) {
-                                resolve(data.data);
+                        if (data.status === APP.SUCCESS) {
+                            const temp = data.data;
+                            if (temp.error_code === 0) {
+                                if (typeof resolve === 'function') {
+                                    resolve(data.data);
+                                }
+                            } else if (temp.error_code === 40001) {
+                                this.toggleDialog({
+                                    type: 'faliure',
+                                    msg: temp.message,
+                                    btn_text: '我知道了'
+                                });
                             } else {
                                 this.toggleDialog({
                                     type: 'faliure',
-                                    msg: '该商品已过期，暂时无法兑换',
+                                    msg: temp,
                                     btn_text: '我知道了'
                                 });
                             }
