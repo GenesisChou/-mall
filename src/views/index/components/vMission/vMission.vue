@@ -203,7 +203,7 @@
     }
 </style>
 <template>
-    <div class='v-mission'>
+    <div v-show='!finished' class='v-mission'>
         <div class='content'>
             <div class='thumb'>
                 <img src='./images/mission.png'>
@@ -284,6 +284,11 @@
         computed: {
             current_mission() {
                 return this.missions[this.step - 1];
+            },
+            finished() {
+                return this.missions[0].status === 3 &&
+                    this.missions[1].status === 3 &&
+                    this.missions[2].status === 3;
             }
         },
         watch: {
