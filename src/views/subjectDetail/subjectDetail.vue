@@ -158,12 +158,12 @@
             subject_id(value) {
                 this.getSubjectPromise(this.getSubjectDetail(), this.isShare()).then(data => {
                     this.has_shared = data[1].is_share;
-                    const is_share_info = data.is_share_info === 1;
+                    const is_share_info = data[0].is_share_info === 1;
                     weChatShare({
                         router: this.$route,
-                        title: is_share_info ? data.share_name : data.name,
-                        img: is_share_info ? data.share_pic_thumb_new : data.pic_thumb_new,
-                        desc: is_share_info ? data.share_sub_name : data.sub_name,
+                        title: is_share_info ? data[0].share_name : data[0].name,
+                        img: is_share_info ? data[0].share_pic_thumb_new : data[0].pic_thumb_new,
+                        desc: is_share_info ? data[0].share_sub_name : data[0].sub_name,
                         link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=subject_detail&subject_id=${value}`
                     }).then(share_point => {
                         this.share_show = false;
