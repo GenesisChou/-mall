@@ -64,6 +64,7 @@
             vSpace: require('./components/vSpace'),
             vText: require('./components/vText'),
             vMission: require('./components/vMission'),
+            vChunk: require('./components/vChunk.vue'),
         },
         data() {
             return {
@@ -166,6 +167,8 @@
                     return 'vText';
                 } else if (component_type === 9) {
                     return 'vMission';
+                } else if (component_type === 10) {
+                    return 'vChunk';
                 }
 
                 return components[component_type - 1][layout_type - 1];
