@@ -59,11 +59,9 @@
             <img src='./images/awards.png'> 奖品
         </div>
         <div class='activity-detail-content'>
-            <keep-alive>
-                <component :is='activity_type' :free-times='free_times>>0' :fresh-free-times='freshFreeTimes' :activity-detail='activity_detail'
-                    :id='activity_id>>0' :notice='notice' :to-order-detail='toOrderDetail' :toggleDialog='toggleDialog' :is-off='is_off'>
-                </component>
-            </keep-alive>
+            <component :is='activity_type' :free-times='free_times>>0' :fresh-free-times='freshFreeTimes' :activity-detail='activity_detail'
+                :id='activity_id>>0' :notice='notice' :to-order-detail='toOrderDetail' :toggleDialog='toggleDialog' :is-off='is_off'>
+            </component>
         </div>
         <v-guide :show.sync='share_show' :has-shared='has_shared' :id='activity_id>>0'></v-guide>
         <v-ruler :show.sync='ruler_show' :activity-detail='activity_detail'></v-ruler>
@@ -246,7 +244,6 @@
             },
             //刷新免费次数 刷新用户信息
             freshFreeTimes() {
-                this.$store.dispatch('getUserInfor');
                 this.getFreeTimes();
             },
             //中奖后的路由跳转

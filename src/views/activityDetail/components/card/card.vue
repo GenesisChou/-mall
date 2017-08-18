@@ -472,7 +472,12 @@
             is_win(value) {
                 if (this.state === 'ready') return;
                 const result = this.activity_result;
-                this.freshFreeTimes();
+                if (this.freeTimes === 0) {
+                    const integral = parseInt(this.user.integral) - parseInt(this.activityDetail.integral);
+                    this.$store.dispatch('updateIntegral', integral);
+                } else {
+                    this.freshFreeTimes();
+                }
                 if (value) {
                     this.dialog = {
                         type: 'success',
@@ -482,6 +487,7 @@
                         btn_text: '查看',
                         callback: this.toOrderDetail(result.id),
                         callback_close: () => {
+                            clearInterval(this.timer);
                             this.init();
                         },
                     };
@@ -500,6 +506,7 @@
                         this.big_card_state = 'rotate';
                         setTimeout(() => {
                             this.big_show = false;
+                            this.$store.dispatch('getUserInfor');
                             this.toggleDialog(this.dialog);
                         }, 1000);
                     }, 50);

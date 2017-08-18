@@ -213,13 +213,18 @@
         watch: {
             state(value) {
                 if (value === 'start') {
-                    this.freshFreeTimes();
-                    // this.$parent.game_start = true;
+                    if (this.freeTimes === 0) {
+                        const integral = parseInt(this.user.integral) - parseInt(this.activityDetail.integral);
+                        this.$store.dispatch('updateIntegral', integral);
+                    } else {
+                        this.freshFreeTimes();
+                    }
                     AIR.Game.startGame('#canvas', false, false, this.game, 1, true);
                     AIR.Game.gameOver((score) => {
                         this.dialog.score = score;
                         this.state = 'stop';
                         AIR.Game.stopGame();
+                        this.$store.dispatch('getUserInfor');
                         this.toggleDialog(this.dialog);
                     });
                 }

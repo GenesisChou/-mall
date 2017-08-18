@@ -38,7 +38,12 @@
         watch: {
             is_right(value) {
                 if (this.state !== 'start') return;
-                this.freshFreeTimes();
+                if (this.freeTimes === 0) {
+                    const integral = parseInt(this.user.integral) - parseInt(this.activityDetail.integral);
+                    this.$store.dispatch('updateIntegral', integral);
+                } else {
+                    this.freshFreeTimes();
+                }
                 const result = this.activity_result;
                 if (value) {
                     this.is_win = result.is_win;
@@ -56,6 +61,7 @@
                 if (this.state !== 'start') return;
                 const result = this.activity_result;
                 if (value) {
+                    this.$store.dispatch('getUserInfor');
                     this.toggleDialog({
                         close_btn: true,
                         msg: '获得' + result.name,

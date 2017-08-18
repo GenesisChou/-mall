@@ -372,7 +372,12 @@
                     }, 1000);
                 } else if (value === 'caught') {
                     const result = this.activity_result;
-                    this.freshFreeTimes();
+                    if (this.freeTimes === 0) {
+                        const integral = parseInt(this.user.integral) - parseInt(this.activityDetail.integral);
+                        this.$store.dispatch('updateIntegral', integral);
+                    } else {
+                        this.freshFreeTimes();
+                    }
                     if (this.is_win) {
                         this.alert = {
                             type: 'success',
@@ -390,6 +395,7 @@
                         this.group[caught_number].childNodes[0].src = this.activity_result.pic_thumb_new;
                         this.beingCaught(caught_number, random_type, () => {
                             setTimeout(() => {
+                                this.$store.dispatch('getUserInfor');
                                 this.toggleDialog(this.alert);
                             }, 500);
                         });

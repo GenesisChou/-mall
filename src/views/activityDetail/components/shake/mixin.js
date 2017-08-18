@@ -41,12 +41,18 @@
                 const result = this.activity_result;
                 this.sound();
                 this.shake();
-                this.freshFreeTimes();
+                if (this.freeTimes === 0) {
+                    const integral = parseInt(this.user.integral) - parseInt(this.activityDetail.integral);
+                    this.$store.dispatch('updateIntegral', integral);
+                } else {
+                    this.freshFreeTimes();
+                }
                 setTimeout(() => {
                     this.$store.dispatch('toggleLoading');
                     setTimeout(() => {
                         this.$store.dispatch('toggleLoading');
                         if (value) {
+                            this.$store.dispatch('getUserInfor');
                             this.toggleDialog({
                                 msg: '获得' + result.name,
                                 type: 'success',

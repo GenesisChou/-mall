@@ -14,6 +14,11 @@ module.exports = {
     getUserInfor(context, callback) {
         context.commit('getUserInfor', callback);
     },
+    updateIntegral(context, integral) {
+        if (typeof integral === 'number' && integral >= 0) {
+            context.commit('updateIntegral', integral);
+        }
+    },
     getTitle(context, callback) {
         context.commit('getTitle', callback);
     },

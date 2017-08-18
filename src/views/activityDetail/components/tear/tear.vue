@@ -332,7 +332,12 @@
                 if (value === 'start') {
                     const result = this.activity_result,
                         is_win = result.is_win;
-                    this.freshFreeTimes();
+                    if (this.freeTimes === 0) {
+                        const integral = parseInt(this.user.integral) - parseInt(this.activityDetail.integral);
+                        this.$store.dispatch('updateIntegral', integral);
+                    } else {
+                        this.freshFreeTimes();
+                    }
                     if (is_win) {
                         this.alert = {
                             type: 'success',
@@ -355,6 +360,7 @@
                         };
                     }
                     setTimeout(() => {
+                        this.$store.dispatch('getUserInfor');
                         this.toggleDialog(this.alert);
                     }, 2000);
                 }

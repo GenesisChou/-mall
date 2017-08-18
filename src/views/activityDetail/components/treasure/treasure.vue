@@ -353,7 +353,7 @@
                 if (value === 'stop') {
                     // this.$store.dispatch('toggleLoading');
                     setTimeout(() => {
-                        // this.$store.dispatch('toggleLoading');
+                        this.$store.dispatch('getUserInfor');
                         this.toggleDialog(this.alert);
                     }, 1900);
                 } else if (value === 'fishing') {
@@ -375,7 +375,6 @@
                     } else if (this.random === 5) {
                         time = 650;
                     }
-                    console.log(this.action, time);
                     setTimeout(() => {
                         this.chests[this.random].style.visibility = 'hidden';
                         this.state = 'stop';
@@ -385,7 +384,12 @@
             is_win(value) {
                 if (this.state === 'ready') return;
                 const result = this.activity_result;
-                this.freshFreeTimes();
+                if (this.freeTimes === 0) {
+                    const integral = parseInt(this.user.integral) - parseInt(this.activityDetail.integral);
+                    this.$store.dispatch('updateIntegral', integral);
+                } else {
+                    this.freshFreeTimes();
+                }
                 if (value) {
                     this.alert = {
                         type: 'success',

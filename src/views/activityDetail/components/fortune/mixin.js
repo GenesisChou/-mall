@@ -66,8 +66,12 @@
                      speed_interval = Math.abs(speed_max - speed_min) / speed_buffer; //速度提升间隔
                  let time = 0,
                      interval = 500;
-
-                 this.freshFreeTimes();
+                 if (this.freeTimes === 0) {
+                     const integral = parseInt(this.user.integral) - parseInt(this.activityDetail.integral);
+                     this.$store.dispatch('updateIntegral', integral);
+                 } else {
+                     this.freshFreeTimes();
+                 }
                  if (result.is_win) {
                      this.alert = {
                          type: 'success',
@@ -111,6 +115,7 @@
                      setTimeout(step, interval);
                  }
              } else if (value === 'stop') {
+                 this.$store.dispatch('getUserInfor');
                  this.toggleDialog(this.alert);
              }
          }

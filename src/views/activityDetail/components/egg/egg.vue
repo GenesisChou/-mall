@@ -235,9 +235,15 @@
             is_win(value) {
                 if (this.state !== 'start') return;
                 const result = this.activity_result;
-                this.freshFreeTimes();
+                if (this.freeTimes === 0) {
+                    const integral = parseInt(this.user.integral) - parseInt(this.activityDetail.integral);
+                    this.$store.dispatch('updateIntegral', integral);
+                } else {
+                    this.freshFreeTimes();
+                }
                 setTimeout(() => {
                     if (value) {
+                        this.$store.dispatch('getUserInfor');
                         this.toggleDialog({
                             type: 'success',
                             img: result.pic_thumb_new,

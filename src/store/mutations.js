@@ -34,6 +34,9 @@ module.exports = {
             }
         });
     },
+    updateIntegral(state, integral) {
+        state.user.integral = integral;
+    },
     getTitle(state, callback) {
         Vue.http.post(`${APP.HOST}/imall_title`, {
             token: APP.TOKEN,

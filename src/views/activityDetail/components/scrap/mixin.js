@@ -44,6 +44,7 @@
                     this.$store.dispatch('toggleLoading');
                     setTimeout(() => {
                         this.$store.dispatch('toggleLoading');
+                        this.$store.dispatch('getUserInfor');
                         this.toggleDialog(this.alert);
                     }, 1000);
                 }
@@ -51,7 +52,12 @@
             is_win(value) {
                 if (this.state === 'ready') return;
                 const result = this.activity_result;
-                this.freshFreeTimes();
+                if (this.freeTimes === 0) {
+                    const integral = parseInt(this.user.integral) - parseInt(this.activityDetail.integral);
+                    this.$store.dispatch('updateIntegral', integral);
+                } else {
+                    this.freshFreeTimes();
+                }
                 if (value) {
                     this.alert = {
                         type: 'success',
