@@ -4,13 +4,32 @@ import store from '../store';
 module.exports = function (option = {}) {
     return new Promise(resolve => {
         let url = location.href.split('#')[0];
-        if (option.router && option.router.name !== 'index') {
-            url += '#' + option.router.fullPath;
-        }
+        // if (utils.isAndroid()) {
+        //     if (option.router && option.router.name !== 'index') {
+        //         url += '#' + option.router.fullPath;
+        //     }
+        // }
         store.dispatch('changeCurrentSignature', option.router.name);
-        getSignature(url).then((data) => {
-            init(data.data);
-        });
+        // if (utils.isAndroid()) {
+        //     getSignature(url).then(() => {
+        //         init();
+        //     });
+        // } else if (utils.isIos()) {
+        // if (APP.SIGNATURE) {
+        //     init();
+        // } else {
+        //     getSignature(url).then(() => {
+        //         init();
+        //     });
+        // }
+        // }
+        if (APP.SIGNATURE) {
+            init();
+        } else {
+            getSignature(url).then(() => {
+                init();
+            });
+        }
 
         function init(data) {
             const title = option.title || APP.TITLE,
@@ -18,9 +37,9 @@ module.exports = function (option = {}) {
                 desc = option.desc || '',
                 imgUrl = option.img || APP.LOGO,
                 appId = APP.APPID,
-                timestamp = data.timestamp,
-                nonceStr = data.noncestr,
-                signature = data.signature;
+                timestamp = APP.TIMESTAMP,
+                nonceStr = APP.NONCESTR,
+                signature = APP.SIGNATURE;
             wx.config({
                 // debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
                 appId, // 必填，公众号的唯一标识
@@ -140,6 +159,10 @@ module.exports = function (option = {}) {
                     const data = response.data;
                     if (data.status === APP.SUCCESS) {
                         if (resolve) {
+                            const temp = data.data;
+                            APP.TIMESTAMP = temp.timestamp;
+                            APP.NONCESTR = temp.noncestr;
+                            APP.SIGNATURE = temp.signature;
                             resolve(data);
                         }
                     }
