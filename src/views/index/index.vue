@@ -151,27 +151,24 @@
             },
             getComponent(component_type, layout_type) {
                 const components = [
-                    ['vItemLarge', 'vItemSmall', 'vItemList'],
-                    ['vSubjectOne', 'vSubjectTwo'],
-                    ['vAdvSlide', 'vAdvList'],
-                ];
-                if (component_type === 4) {
-                    return 'vTitle';
-                } else if (component_type === 5) {
-                    return 'vSpace';
-                } else if (component_type === 6) {
-                    return 'vIcon';
-                } else if (component_type === 7) {
-                    return 'vSurprise';
-                } else if (component_type === 8) {
-                    return 'vText';
-                } else if (component_type === 9) {
-                    return 'vMission';
-                } else if (component_type === 10) {
-                    return 'vChunk';
+                        ['vItemLarge', 'vItemSmall', 'vItemList'],
+                        ['vSubjectOne', 'vSubjectTwo'],
+                        ['vAdvSlide', 'vAdvList'],
+                        ['vTitle'],
+                        ['vSpace'],
+                        ['vIcon'],
+                        ['vSurprise'],
+                        ['vText'],
+                        ['vMission'],
+                        ['vChunk'],
+                    ],
+                    temp = component_type >= 4 ? 0 : layout_type - 1;
+                try {
+                    return components[component_type - 1][temp];
+                } catch (err) {
+                    console.log(err);
+                    return null;
                 }
-
-                return components[component_type - 1][layout_type - 1];
             },
             routerLink(item, layout) {
                 if (!item) {

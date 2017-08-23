@@ -2,14 +2,14 @@
     @import '../../../assets/scss/variable.scss';
     .v-title {
         padding: pxTorem(10) pxTorem(49);
-        background-color:$white;
+        background-color: $white;
         h1 {
             color: #322f2a;
             font-weight: 500;
             font-size: pxTorem(32);
         }
-        h6{
-            color:#b1b1b5;
+        h6 {
+            color: #b1b1b5;
         }
         &.left {
             text-align: left;
@@ -24,7 +24,7 @@
 </style>
 <template>
     <ul class='v-title-list'>
-        <li v-for='item in layout.items' :class='["v-title",style]'>
+        <li v-for='item in layout.items' :class='["v-title",style]' @click='routerLink(item,layout)'>
             <h1>{{item.title}}</h1>
             <h6 v-if='layout.show_subtitle===1'>{{item.subtitle}}</h6>
         </li>
@@ -34,7 +34,8 @@
     export default {
         name: 'vTitle',
         props: {
-            layout: Object
+            layout: Object,
+            routerLink: Function
         },
         computed: {
             style() {
