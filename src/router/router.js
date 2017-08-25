@@ -91,6 +91,27 @@ const router = new VueRouter({
                 component: require('views/wish/children/wishDetail')
             }]
         }, {
+            path: '/games',
+            component: require('views/games'),
+            children: [{
+                    path: 'ship',
+                    component: require('views/games/children/ship'),
+                    children: [{
+                            path: '',
+                            component: require('views/games/children/ship/children/start')
+                        }, {
+                            path: 'rulers',
+                            component: require('views/games/children/ship/children/rulers')
+                        },
+                        //  {
+                        //     path: 'main',
+                        //     component: require('views/games/ship/children/main')
+                        // }
+                    ]
+                }
+
+            ]
+        }, {
             path: '*',
             redirect: '/'
         }
