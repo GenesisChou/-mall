@@ -116,7 +116,7 @@
                         <strong>分享后</strong><span>{{parseInt(item.share_integral) || 0}}积分</span>
                         <s>{{parseInt(item.integral)}}积分</s>
                     </template>
-                    <template v-else>
+                    <template v-else-if='item.type!==4'>
                         {{parseInt(item.integral)}}积分
                     </template>
                 </template>

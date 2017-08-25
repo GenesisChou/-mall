@@ -259,10 +259,8 @@
             },
             switchTab(name) {
                 this.current_tab = name;
-                console.log(this.current_tab);
             },
             routerLink(item) {
-                console.log(item);
                 if (item.type === 1) {
                     this.$router.push({
                         name: 'product_detail',
@@ -286,6 +284,8 @@
                             subject_id: item.item_id,
                         }
                     });
+                } else if (item.type === 4) {
+                    location.href = item.url;
                 }
             },
         },
