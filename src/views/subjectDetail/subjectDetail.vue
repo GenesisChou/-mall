@@ -101,7 +101,7 @@
                     </template>
                 </div>
             </main>
-            <v-guide v-if='subject_id' :show.sync='share_show' :has-shared='has_shared' :id='subject_id>>0'></v-guide>
+            <v-guide v-if='subject_detail.is_share_info===1' :show.sync='share_show' :has-shared='has_shared' :id='subject_id>>0'></v-guide>
             <v-share-guide :show.sync='share_show'></v-share-guide>
             <div v-if='subject_detail.recommend_items.length>0' class='subject-recommends'>
                 <v-recommend :recommends='subject_detail.recommend_items' color='gray' text-color='gray'></v-recommend>

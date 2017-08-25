@@ -63,7 +63,7 @@
                 :id='activity_id>>0' :notice='notice' :to-order-detail='toOrderDetail' :toggleDialog='toggleDialog' :is-off='is_off'>
             </component>
         </div>
-        <v-guide :show.sync='share_show' :has-shared='has_shared' :id='activity_id>>0'></v-guide>
+        <v-guide v-if='activity_detail.is_share===1' :show.sync='share_show' :has-shared='has_shared' :id='activity_id>>0'></v-guide>
         <v-ruler :show.sync='ruler_show' :activity-detail='activity_detail'></v-ruler>
         <v-dialog :show='dialog_show' :dialog='dialog' :toggle-dialog='toggleDialog'></v-dialog>
         <v-support></v-support>
