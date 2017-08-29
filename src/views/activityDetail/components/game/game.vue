@@ -285,7 +285,6 @@
             this.init();
         },
         deactivated() {
-            //游戏开始后
             if (this.state === 'start') {
                 AIR.Game.stopGame();
                 console.log('game stopped');
