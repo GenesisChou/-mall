@@ -8,6 +8,7 @@
         display: flex;
         background: $white;
         box-shadow: 0 0 1px rgba(0, 0, 0, .2);
+        z-index: 1;
         >div {
             @include active($white, 3%);
             flex: 1;
@@ -25,8 +26,8 @@
                 .user {
                     background-image: url('./images/userActive.png');
                 }
-                span{
-                    color:#ff5f17;
+                span {
+                    color: #ff5f17;
                 }
             }
         }
