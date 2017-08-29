@@ -17,7 +17,7 @@
   .cloud-2 {
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: pxTorem(90);
     width: pxTorem(750);
     height: pxTorem(219);
   }
@@ -25,7 +25,7 @@
   .content {
     position: absolute;
     left: 0;
-    top: pxTorem(160);
+    top: pxTorem(130);
     width: pxTorem(691);
     height: pxTorem(914);
     background: url('./images/content.png') no-repeat center center/100% 100%;
@@ -51,6 +51,13 @@
       height: pxTorem(142);
     }
   }
+
+  .sand {
+    position: absolute;
+    bottom: 0;
+    width: pxTorem(750);
+    height: pxTorem(143);
+  }
 </style>
 
 <template>
@@ -62,6 +69,7 @@
       <img class='boy' src='./images/boy.png'>
       <img class='back' src='./images/back.png' @click='back'>
     </div>
+    <img class='sand' src='./images/sand.png'>
   </div>
 </template>
 <script>

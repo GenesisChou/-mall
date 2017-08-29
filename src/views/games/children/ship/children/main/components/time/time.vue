@@ -1,5 +1,5 @@
 <style lang='scss' scoped>
-    @import '../../../../../../scss/variable.scss';
+    @import '../../../../../../../../assets/scss/variable.scss';
     .time {
         position: absolute;
         left: pxTorem(100);
@@ -43,29 +43,22 @@
     <div class='time'>
         <div class='progress' :style='progress'></div>
         <div class='clock'>
-            <span>{{time}}S</span>
+            <span>{{leftTime}}S</span>
         </div>
     </div>
 </template>
 <script>
     export default {
-        data() {
-            return {
-                full_time: ''
-            }
+        props: {
+            time: Number,
+            leftTime: Number
         },
         computed: {
-            time() {
-                return this.$store.state.ship.time;
-            },
             progress() {
                 return {
-                    width: `${(1-this.time/this.full_time)*100}%`
+                    width: `${(1-this.leftTime/this.time)*100}%`
                 }
             },
-        },
-        created() {
-            this.full_time = this.$store.state.ship.time;
         },
     }
 </script>

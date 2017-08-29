@@ -1,5 +1,5 @@
 <style lang='scss' scoped>
-    @import '../../../../../../scss/variable.scss';
+    @import '../../../../../../../../assets/scss/variable.scss';
     .character {
         position: absolute;
         left: 50%;
@@ -21,11 +21,10 @@
         }
         .wave {
             position: absolute;
-            left: 50%;
-            top: -8%;
-            width: pxTorem(557);
-            height: pxTorem(470);
-            margin-left: pxTorem(-557/2);
+            left: -56%;
+            top: -64%;
+            width: pxTorem(627);
+            height: pxTorem(694);
         }
     }
 </style>

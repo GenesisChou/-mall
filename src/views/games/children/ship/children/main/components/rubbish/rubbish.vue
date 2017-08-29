@@ -1,5 +1,5 @@
 <style lang='scss' scoped>
-    @import '../../../../../../scss/variable.scss';
+  @import '../../../../../../../../assets/scss/variable.scss';
     .rubbish-1 {
         width: pxTorem(103);
         height: pxTorem(116);

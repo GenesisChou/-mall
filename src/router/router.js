@@ -103,10 +103,10 @@ const router = new VueRouter({
                             path: 'rulers',
                             component: require('views/games/children/ship/children/rulers')
                         },
-                        //  {
-                        //     path: 'main',
-                        //     component: require('views/games/ship/children/main')
-                        // }
+                        {
+                            path: 'main',
+                            component: require('views/games/children/ship/children/main')
+                        }
                     ]
                 }
 

@@ -1,5 +1,5 @@
 <style lang='scss' scoped>
-    @import '../../../../../scss/variable.scss';
+    @import '../../../../../../../assets/scss/variable.scss';
     .score {
         display: flex;
         align-items: center;
@@ -12,20 +12,13 @@
         font-size: pxTorem(44);
         font-weight: bold;
         background: #fdf298;
-        color:#211d22;
+        color: #211d22;
         border: pxTorem(6) solid #211d22;
         border-radius: pxTorem(10);
     }
 </style>
 <template>
-    <div class='score'>{{score}}分</div>
+    <div class='score'>
+        <slot></slot>
+    </div>
 </template>
-<script>
-    export default {
-        computed: {
-            score() {
-                return this.$store.state.ship.score;
-            }
-        }
-    }
-</script>

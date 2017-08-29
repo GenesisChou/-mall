@@ -1,5 +1,5 @@
 <style lang='scss' scoped>
-  @import '../../../../scss/variable.scss';
+  @import '../../../../../../assets/scss/variable.scss';
   .main {
     width: 100%;
     height: 100%;
@@ -12,9 +12,11 @@
 <template>
   <div class='main'>
     <h1>{{status}}</h1>
-    <rubbish v-for='item in rubbish' :rubbish='item' :clear-rubbish='clearRubbish' :key='item.key'></rubbish>
-    <v-time></v-time>
-    <score></score>
+    <!-- <rubbish v-for='item in rubbish' :rubbish='item' :clear-rubbish='clearRubbish' :key='item.key'></rubbish> -->
+    <v-time :time='time' :left-time='left_time'></v-time>
+    <score>
+      {{score}}分
+    </score>
     <character></character>
   </div>
 </template>
@@ -32,117 +34,41 @@
     },
     data() {
       return {
-        full_time: 50,
+        time: 50,
+        left_time: 0,
         rubbish: [],
-        adding: true,
-        rubbish_add_interval: '',
-        speed_interval: '',
+        status: 'ready',
+        speed: 0,
+        score: 0
       }
     },
-    computed: {
-      status() {
-        return this.$store.state.ship.status;
-      },
-      time() {
-        return this.$store.state.ship.time;
-      }
-    },
-    watch: {
-      status(value) {
-        if (value === 'start') {
-          this.recordingTime();
-          this.addingRubbish();
-        } else if (value === 'stop') {
-          this.stopAddingRubbish();
-        } else if (value === 'ready') {
-
-        }
-      },
-      time(value) {
-        this.rubbishAddSpeedUp();
-        this.speedUp();
-      }
-    },
-    beforeRouteLeave(to, from, next) {
-      this.$store.dispatch('ship/updateStatus', 'stop');
-      this.init();
-      next();
-    },
+    computed: {},
+    watch: {},
+    beforeRouteLeave(to, from, next) {},
     created() {
-      this.init();
-      this.$store.dispatch('ship/updateStatus', 'start');
+      this.status = 'start';
+      this.left_time = this.time;
+      let timer = setInterval(() => {
+        this.left_time--;
+        if (this.left_time === 0) {
+          clearInterval(timer);
+          this.stop();
+        }
+      }, 1000);
+      this.speedUp();
     },
     methods: {
-      init() {
-        this.$store.dispatch('ship/updateTime', this.full_time);
-        this.$store.dispatch('ship/setSpeed', {
-          min: 2,
-          max: 20,
-        });
-        this.$store.dispatch('ship/setRubbishAddSpeed', {
-          min: 200,
-          max: 1200
-        });
-        this.rubbish_add_interval = this.getRubbishAddInterval();
-        this.speed_interval = this.getSpeedInterval();
+      stop() {
+        this.status = 'stop';
       },
-      recordingTime() {
-        let time = this.full_time,
-          timer = setInterval(() => {
-            if (time <= 0) {
-              clearInterval(timer);
-              this.$store.dispatch('ship/updateStatus', 'stop');
-            } else {
-              this.$store.dispatch('ship/updateTime', --time);
-            }
-          }, 1000);
-      },
-      addingRubbish(key = 0) {
-        if (this.adding !== true) return;
-        setTimeout(() => {
-          this.rubbish.push({
-            key,
-            show: true
-          });
-          key++;
-          this.addingRubbish(key);
-        }, this.$store.state.ship.rubbish_add_speed.current)
-      },
-      stopAddingRubbish() {
-        this.adding = false;
-      },
-      clearRubbish(key) {
-        this.rubbish.forEach((element, $index) => {
-          if (element.key === key) {
-            this.rubbish.splice($index, 1)
-          }
-          return;
-        });
-      },
-      getSpeedInterval() {
-        const speed = this.$store.state.ship.speed,
-          min = speed.min,
-          max = speed.max;;
-        if (this.full_time > 0) {
-          return (max - min) / this.full_time;
-        }
-        return 0;
-      },
-      getRubbishAddInterval() {
-        const speed = this.$store.state.ship.rubbish_add_speed,
-          min = speed.min,
-          max = speed.max;
-        if (this.full_time > 0) {
-          return (max - min) / this.full_time;
-        }
-        return 0;
-      },
-      speedUp() {
-        this.$store.dispatch('ship/updateSpeed', this.$store.state.ship.speed.current + this.speed_interval);
-      },
-      rubbishAddSpeedUp() {
-        this.$store.dispatch('ship/updateRubbishAddSpeed', this.$store.state.ship.rubbish_add_speed.current - this.rubbish_add_interval);
-      }
+      speedUp() {},
+      rubbishAddSpeedUp() {},
+      recordingTime() {},
+      addingRubbish(key = 0) {},
+      stopAddingRubbish() {},
+      clearRubbish(key) {},
+      getSpeedInterval() {},
+      getRubbishAddInterval() {},
     }
   }
 </script>
