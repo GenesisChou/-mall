@@ -21,29 +21,6 @@
             width: pxTorem(750);
             height: pxTorem(315);
         }
-        .msg {
-            li {
-                list-style: none;
-                font-size: pxTorem(36);
-                line-height: pxTorem(66);
-            }
-            li:first-child {
-                position: relative;
-                &:after {
-                    content: '“...”';
-                    position: absolute;
-                    right: pxTorem(-40);
-                    top: 0;
-                }
-            }
-
-            position:absolute;
-            top: pxTorem(-350);
-            left: 50%;
-            transform: translateX(-50%);
-            color: $white;
-            z-index:1;
-        }
         .icon-share-time {
             font-size: pxTorem(45);
         }
@@ -86,11 +63,7 @@
         <div v-show='show' class='bg-cover'>
         </div>
         <div v-show='show' class='content'>
-            <ul class='msg'>
-                <li>1、点击右上角的 </li>
-                <li>2、选择“ <i class='iconfont icon-share-time'></i> ”即可</li>
-                <li>3、请分享后继续参与</li>
-            </ul>
+            <slot></slot>
             <img class='dot-left' src='./images/arrowsLeft.png'>
             <img class='dot-right ' src='./images/arrowsRight.png'>
             <img class='arrows' src='./images/arrows.png'>
