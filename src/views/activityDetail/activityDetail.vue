@@ -45,6 +45,29 @@
     .awards {
         right: pxTorem(10);
     }
+
+    .share-notice {
+        li {
+            list-style: none;
+            font-size: pxTorem(36);
+            line-height: pxTorem(66);
+        }
+        li:first-child {
+            position: relative;
+            &:after {
+                content: '“...”';
+                position: absolute;
+                right: pxTorem(-40);
+                top: 0;
+            }
+        }
+        position:absolute;
+        top: pxTorem(-350);
+        left: 50%;
+        transform: translateX(-50%);
+        color: $white;
+        z-index:1;
+    }
 </style>
 <template>
     <div class='activity-detail'>
@@ -67,7 +90,13 @@
         <v-ruler :show.sync='ruler_show' :activity-detail='activity_detail'></v-ruler>
         <v-dialog :show='dialog_show' :dialog='dialog' :toggle-dialog='toggleDialog'></v-dialog>
         <v-support></v-support>
-        <v-share-guide :show.sync='share_show'></v-share-guide>
+        <v-share-guide :show.sync='share_show'>
+            <ul class='share-notice'>
+                <li>1、点击右上角的 </li>
+                <li>2、选择“ <i class='iconfont icon-share-time'></i> ”即可</li>
+                <li>3、请分享后继续参与</li>
+            </ul>
+        </v-share-guide>
     </div>
 </template>
 <script>

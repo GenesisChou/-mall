@@ -59,7 +59,7 @@ const path = require('path'),
         },
         resolve: {
             alias: {
-                vue: 'vue/dist/vue.js',
+                vue: 'vue/dist/vue.min.js',
                 components: path.resolve(__dirname, './src/components'),
                 libs: path.resolve(__dirname, './src/libs'),
                 views: path.resolve(__dirname, './src/views'),

@@ -1,1 +1,3 @@
-module.exports = require('./games.vue');
+module.exports = {
+    template: `<router-view></router-view>`
+}
