@@ -4,25 +4,6 @@ import store from '../store';
 module.exports = function (option = {}) {
     return new Promise(resolve => {
         let url = location.href.split('#')[0];
-        // if (utils.isAndroid()) {
-        //     if (option.router && option.router.name !== 'index') {
-        //         url += '#' + option.router.fullPath;
-        //     }
-        // }
-        store.dispatch('changeCurrentSignature', option.router.name);
-        // if (utils.isAndroid()) {
-        //     getSignature(url).then(() => {
-        //         init();
-        //     });
-        // } else if (utils.isIos()) {
-        // if (APP.SIGNATURE) {
-        //     init();
-        // } else {
-        //     getSignature(url).then(() => {
-        //         init();
-        //     });
-        // }
-        // }
         if (APP.SIGNATURE) {
             init();
         } else {
@@ -67,7 +48,7 @@ module.exports = function (option = {}) {
                 wx.onMenuShareTimeline({
                     title, // 分享标题
                     desc,
-                    link: link + '&origin=wechat', // 分享链接
+                    link, // 分享链接
                     imgUrl, // 分享图标
                     success() {
                         if (typeof resolve === 'function') {
@@ -80,7 +61,7 @@ module.exports = function (option = {}) {
                 wx.onMenuShareAppMessage({
                     title, // 分享标题
                     desc,
-                    link: link + '&origin=wechat', // 分享链接
+                    link, // 分享链接
                     imgUrl, // 分享图标
                     // type: '', // 分享类型,music、video或link，不填默认为link
                     // dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空

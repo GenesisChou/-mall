@@ -32,9 +32,9 @@
         span {
             position: absolute;
             left: 50%;
-            bottom: 5%;
+            bottom: 14%;
             color: $white;
-            font-size: pxTorem(14);
+            font-size: pxTorem(12);
             transform: translateX(-50%);
         }
     }

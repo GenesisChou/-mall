@@ -191,12 +191,11 @@
                         this.has_shared = data[1].is_share;
                         const is_share_info = this.activity_detail.is_share_info === 1;
                         weChatShare({
-                            router: this.$route,
                             title: is_share_info ? this.activity_detail.share_name : this.activity_detail.name,
                             img: is_share_info ? this.activity_detail.share_pic_thumb_new : this.activity_detail
                                 .pic_thumb_new,
                             desc: is_share_info ? this.activity_detail.share_desc : this.activity_detail.desc,
-                            link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=activity_detail&activity_id=${this.activity_id}`
+                            link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&origin=wechat&page=activity_detail&activity_id=${this.activity_id}`
                         }).then(share_point => {
                             this.share_show = false;
                             return this.shareView(share_point);

@@ -61,6 +61,7 @@
         <v-group>
             <v-cell icon='wish-wall' :callback='getRouter("my_wish")'>我的心愿</v-cell>
         </v-group>
+        <!-- <router-link :to='{name:"games",params:{id:6}}'>games</router-link> -->
         <v-menu></v-menu>
     </div>
 </template>

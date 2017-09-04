@@ -75,7 +75,7 @@
                     <img class='img-responsive' :src='user.headimg'>
                 </div>
                 <h1>剿灭劣V类 争做西湖环保卫士</h1>
-                <h3>恭喜您获得一次抽奖机会</h3>
+                <h3>{{message}}</h3>
                 <h1>恭喜你完成挑战，成为西湖环保<br>卫士！小小奖励，以示敬意~</h1>
                 <div class='open' @click='lottery'></div>
             </div>
@@ -89,7 +89,10 @@
         },
         data() {
             return {
-                content_show: false
+                content_show: false,
+                message: '',
+                type: '',
+                avaliable: false
             }
         },
         computed: {
@@ -104,14 +107,68 @@
                 }, 0);
             }
         },
+        created() {
+            this.getLotteryInfor().then(data => {
+                const temp = data.data;
+                this.message = temp.message;
+                this.avaliable = temp.is_draw === 1;
+                this.type = temp.draw_type;
+            });
+        },
         methods: {
             close() {
                 this.$emit('update:show', false);
             },
+            getLotteryInfor() {
+                return new Promise(resolve => {
+                    const game_id = parseInt(this.$route.params.id);
+                    this.$http.post(`${APP.HOST}/is_game_draw/${game_id}`, {
+                        token: APP.TOKEN,
+                        media_id: APP.MEDIA_ID,
+                        user_id: APP.USER_ID,
+                        open_id: APP.OPEN_ID,
+                        origin: APP.ORIGIN,
+                    }).then((response) => {
+                        const data = response.data;
+                        if (data.status === APP.SUCCESS && typeof resolve === 'function') {
+                            resolve(data);
+                        }
+                    });
+                });
+            },
             lottery() {
-                this.$router.push({
-                    path: '/games/evprotection/lottery'
+                this.getResult().then(data => {
+                    const temp = data.data;
+                    this.$router.push({
+                        path: `/games/${this.$route.params.id}/evprotection/lottery`,
+                        query: {
+                            type: temp.is_win || 2,
+                            money: temp.cash || 0
+                        }
+                    })
                 })
+            },
+            getResult() {
+                return new Promise(resolve => {
+                    this.$store.dispatch('toggleLoading');
+                    const game_id = parseInt(this.$route.params.id);
+                    this.$http.post(`${APP.HOST}/game_tool_draw/${game_id}`, {
+                        token: APP.TOKEN,
+                        media_id: APP.MEDIA_ID,
+                        user_id: APP.USER_ID,
+                        open_id: APP.OPEN_ID,
+                        origin: APP.ORIGIN,
+                        url: APP.HOST
+                    }).then((response) => {
+                        this.$store.dispatch('toggleLoading');
+                        const data = response.data;
+                        if (data.status === APP.SUCCESS && typeof resolve === 'function') {
+                            resolve(data);
+                        }
+                    }, (response) => {
+                        this.$store.dispatch('toggleLoading');
+                    });
+                });
             }
         }
     }

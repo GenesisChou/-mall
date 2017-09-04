@@ -45,7 +45,7 @@
   <div class='start'>
     <img class='kite' src='./images/kite.png'>
     <img class='title' src='./images/title.png'>
-    <router-link class='button-start' tag='div' :to='{path:"/games/evprotection/main",}'></router-link>
-    <router-link class='button-rulers' tag='div' :to='{path:"/games/evprotection/rulers",}'></router-link>
+    <router-link class='button-start' tag='div' :to='{path:$route.path+"/main",}'></router-link>
+    <router-link class='button-rulers' tag='div' :to='{path:$route.path+"/rulers",}'></router-link>
   </div>
 </template>

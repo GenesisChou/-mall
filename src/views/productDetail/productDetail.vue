@@ -415,13 +415,12 @@
                     this.has_exchanged = data[1].is_exchange;
                     this.changeState(data);
                     let link =
-                        `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=product_detail&product_id=${this.product_id}&back=${this.from}`;
+                        `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&origin=wechat&page=product_detail&product_id=${this.product_id}&back=${this.from}`;
                     if (this.from === 'subject_detail') {
                         link += `&subject_id=${this.$route.query.subject_id}`;
                     }
                     const is_share_info = this.product_detail.is_share_info === 1;
                     weChatShare({
-                        router: this.$route,
                         title: is_share_info ? this.product_detail.share_name : this.product_detail.name,
                         img: is_share_info ? this.product_detail.share_pic_thumb_new : this.product_detail
                             .pic_thumb_new,

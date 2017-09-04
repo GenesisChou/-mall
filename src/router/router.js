@@ -91,7 +91,8 @@ const router = new VueRouter({
                 component: require('views/wish/children/wishDetail')
             }]
         }, {
-            path: '/games',
+            path: '/games/:id',
+            name: 'games',
             component: require('views/games'),
             children: [{
                     path: 'evprotection',

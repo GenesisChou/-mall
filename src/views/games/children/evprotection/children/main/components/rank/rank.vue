@@ -147,32 +147,32 @@
                         <li>
                             <div class='top'>
                                 <div class='avater'>
-                                    <img class='img-responsive' :src='user.headimg'>
+                                    <img class='img-responsive' :src='rankList.self.headimg'>
                                 </div>
                             </div>
                             <h2 class='bottom'>
-                                <slot name='name'></slot>
+                                {{rankList.self.nickname}}
                             </h2>
                         </li>
                         <li>
                             <h1 class='top'>得分</h1>
-                            <h1 class='bottom'><strong><slot name='score'></slot></strong></h1>
+                            <h1 class='bottom'><strong>{{rankList.self.game_score}}</strong></h1>
                         </li>
                         <li>
                             <h1 class='top'>排名</h1>
-                            <h1 class='bottom'><strong><slot name='rank'></slot></strong></h1>
+                            <h1 class='bottom'><strong>{{rankList.self.rank}}</strong></h1>
                         </li>
                     </ul>
                 </header>
                 <ul class='list'>
-                    <li v-for='(item,$index) in rank'>
+                    <li v-for='(item,$index) in rankList.rank'>
                         <div :class='[{active:$index<3},"ranking"]'>
                             <img src='./images/award.png'>
                             <span>{{$index+1}}</span>
                         </div>
-                        <img class='avater'>
-                        <div class='name'>{{item.name}}</div>
-                        <span class='score'>{{item.score}}分</span>
+                        <img class='avater' :src='item.headimg'>
+                        <div class='name'>{{item.nickname}}</div>
+                        <span class='score'>{{item.game_score}}分</span>
                     </li>
                 </ul>
                 <footer>
@@ -189,37 +189,12 @@
                 default: false,
                 type: Boolean,
             },
-            callback:Function
+            callback: Function,
+            rankList: Object
         },
         data() {
             return {
                 content_show: false,
-                rank: [{
-                        name: '玩具鱼',
-                        score: 688
-                    },
-                    {
-                        name: '玩具鱼',
-                        score: 688
-                    },
-                    {
-                        name: '玩具鱼',
-                        score: 688
-                    },
-                    {
-                        name: '玩具鱼',
-                        score: 688
-                    },
-                    {
-                        name: '玩具鱼',
-                        score: 688
-                    },
-                ]
-            }
-        },
-        computed: {
-            user() {
-                return this.$store.state.user;
             }
         },
         watch: {
