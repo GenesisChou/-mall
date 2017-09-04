@@ -43,7 +43,7 @@
 <template>
   <div class='main'>
     <h1>
-      <button @click='rank_show=true'>rank</button>
+      <!-- <button @click='rank_show=true'>rank</button> -->
       <!-- <button @click='stop'>stop</button> -->
       <!-- <button @click='start'>start</button> -->
     </h1>
@@ -53,10 +53,7 @@
       {{score}}分
     </score>
     <character :status='status' :left-time='left_time'></character>
-    <rank :show.sync='rank_show' :callback='restart'>
-      <span slot='name'>{{user.nickname}}</span>
-      <span slot='score'>{{score}}</span>
-      <span slot='rank'>{{250}}</span>
+    <rank :show.sync='rank_show' :callback='restart' :rank-list='rank_list'>
       <div slot='operation' class='operation'>
         <img src='./images/repeat.png' @click='restart'>
         <img src='./images/share.png' @click='share_show=true'>
@@ -90,6 +87,7 @@
     },
     data() {
       return {
+        game_id: '',
         time: 50,
         left_time: 0,
         rubbish: [],
@@ -100,7 +98,11 @@
         rank_show: false,
         redpacket_show: false,
         share_show: false,
-        first_enter: true
+        first_enter: true,
+        rank_list: {
+          self: {},
+          rank: []
+        }
       }
     },
     computed: {
@@ -111,7 +113,7 @@
     beforeRouteLeave(to, from, next) {
       this.stop();
       this.rubbish = [];
-      if (to.path === '/games/evprotection') {
+      if (to.path === `/games/${this.game_id}/evprotection`) {
         this.init();
         this.rank_show = false;
         this.redpacket_show = false;
@@ -121,6 +123,7 @@
       next();
     },
     activated() {
+      this.game_id = parseInt(this.$route.params.id);
       if (this.first_enter === true) {
         this.init();
         this.start();
@@ -148,9 +151,12 @@
             if (this.left_time === 0) {
               clearInterval(timer_1);
               this.stop();
-              setTimeout(() => {
-                this.rank_show = true;
-              }, 1000);
+              this.submit().then(data => {
+                this.rank_list = data.data;
+                setTimeout(() => {
+                  this.rank_show = true;
+                }, 1000);
+              });
             } else if (this.status === 'stop') {
               clearInterval(timer_1);
             }
@@ -177,7 +183,7 @@
         function getTime() {
           const time = {
               max: 1000,
-              min: 300
+              min: 350
             },
             end_time = 15,
             interval = (time.max - time.min) / (_this.time - end_time);
@@ -226,6 +232,29 @@
         setTimeout(() => {
           this.start();
         }, 1500);
+      },
+      submit() {
+        return new Promise(resolve => {
+          this.$store.dispatch('toggleLoading');
+          this.$http.post(`${APP.HOST}/game_score_rank/${this.game_id}`, {
+            token: APP.TOKEN,
+            media_id: APP.MEDIA_ID,
+            user_id: APP.USER_ID,
+            open_id: APP.OPEN_ID,
+            origin: APP.ORIGIN,
+            nickname: this.user.nickname,
+            headimg: this.user.headimg,
+            game_score: this.score
+          }).then((response) => {
+            this.$store.dispatch('toggleLoading');
+            const data = response.data;
+            if (data.status === APP.SUCCESS && typeof resolve === 'function') {
+              resolve(data);
+            }
+          }, (response) => {
+            this.$store.dispatch('toggleLoading');
+          });
+        });
       }
     }
   }

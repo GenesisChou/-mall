@@ -301,9 +301,8 @@
             this.wish_id = this.$route.query.wish_id;
             this.getWishDetail().then(() => {
                 const link =
-                    `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=wish_detail&wish_id=${this.wish_id}`;
+                    `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&origin=wechat&page=wish_detail&wish_id=${this.wish_id}`;
                 weChatShare({
-                    router: this.$route,
                     title: this.wish_detail.name,
                     img: this.wish_detail.headimg,
                     desc: this.wish_detail.desc,
