@@ -5,8 +5,7 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: #74beff url('./images/fish.png') repeat-y 50% 0;
-    background-size: pxTorem(543) pxTorem(940);
+    background: #74beff url('./images/fish.png') repeat-y center 0/auto pxTorem(1200);
     animation: move 8s infinite linear;
   }
 
@@ -35,7 +34,7 @@
       background-position-y: 0;
     }
     to {
-      background-position-y: 304%;
+      background-position-y: pxTorem(1200);
     }
   }
 </style>
@@ -94,7 +93,6 @@
         status: 'ready',
         speed: 1,
         score: 0,
-        style: {},
         rank_show: false,
         redpacket_show: false,
         share_show: false,
@@ -151,12 +149,12 @@
             if (this.left_time === 0) {
               clearInterval(timer_1);
               this.stop();
-              this.submit().then(data => {
-                this.rank_list = data.data;
-                setTimeout(() => {
+              setTimeout(() => {
+                this.submit().then(data => {
+                  this.rank_list = data.data;
                   this.rank_show = true;
-                }, 1000);
-              });
+                });
+              }, 1500);
             } else if (this.status === 'stop') {
               clearInterval(timer_1);
             }

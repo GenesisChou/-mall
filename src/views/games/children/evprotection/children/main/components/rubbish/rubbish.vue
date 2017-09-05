@@ -143,7 +143,7 @@
                     max: 10,
                 },
                 duration = {
-                    min: 2,
+                    min: 1.3,
                     max: 5
                 };
             const interval = (duration.max - duration.min) / (speed.max - speed.min),

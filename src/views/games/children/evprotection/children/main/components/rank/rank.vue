@@ -36,8 +36,10 @@
     }
 
     .header {
-        background: #fbe5bd;
+        display: flex;
+        align-items: center;
         height: pxTorem(220);
+        background: #fbe5bd;
         color: #1b1b1b;
         .avater {
             width: pxTorem(120);
@@ -48,21 +50,14 @@
             border: 1px solid $white;
             background: $white;
         }
-        ul {
-            display: flex;
-        }
         li {
             list-style: none;
-            .top {
-                display: flex;
-                align-items: center;
-                height: pxTorem(154);
+            span {
+                padding-left: pxTorem(40);
+                font-size: pxTorem(42);
             }
-            .bottom {
+            h2 {
                 line-height: pxTorem(48);
-            }
-            h1 {
-                font-size: pxTorem(40);
             }
         }
         li:nth-child(1),
@@ -142,28 +137,19 @@
         <transition name='enlarge'>
             <div v-if='content_show' class='content'>
                 <div class='close' @click='close'><img src='./images/close.png'></div>
-                <header class='header'>
-                    <ul>
-                        <li>
-                            <div class='top'>
-                                <div class='avater'>
-                                    <img class='img-responsive' :src='rankList.self.headimg'>
-                                </div>
-                            </div>
-                            <h2 class='bottom'>
-                                {{rankList.self.nickname}}
-                            </h2>
-                        </li>
-                        <li>
-                            <h1 class='top'>得分</h1>
-                            <h1 class='bottom'><strong>{{rankList.self.game_score}}</strong></h1>
-                        </li>
-                        <li>
-                            <h1 class='top'>排名</h1>
-                            <h1 class='bottom'><strong>{{rankList.self.rank}}</strong></h1>
-                        </li>
-                    </ul>
-                </header>
+                <ul class='header'>
+                    <li>
+                        <div class='avater'>
+                            <img class='img-responsive' :src='rankList.self.headimg'>
+                        </div>
+                        <h2>
+                            {{rankList.self.nickname}}
+                        </h2>
+                    </li>
+                    <li>
+                        本次得分<span>{{rankList.self.game_score}}</span>
+                    </li>
+                </ul>
                 <ul class='list'>
                     <li v-for='(item,$index) in rankList.rank'>
                         <div :class='[{active:$index<3},"ranking"]'>
