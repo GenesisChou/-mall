@@ -52,22 +52,20 @@
         }
         li {
             list-style: none;
-            span {
+            strong {
                 padding-left: pxTorem(40);
                 font-size: pxTorem(42);
             }
             h2 {
-                line-height: pxTorem(48);
+                padding-bottom: pxTorem(12);
             }
         }
-        li:nth-child(1),
-        li:nth-child(3) {
+        li:nth-child(1) {
             text-align: center;
-            padding: 0 pxTorem(40);
+            padding: 0 pxTorem(80) 0 pxTorem(60);
         }
         li:nth-child(2) {
             flex: 1;
-            padding-left: pxTorem(60);
         }
     }
 
@@ -142,12 +140,14 @@
                         <div class='avater'>
                             <img class='img-responsive' :src='rankList.self.headimg'>
                         </div>
+                    </li>
+                    <li>
                         <h2>
                             {{rankList.self.nickname}}
                         </h2>
-                    </li>
-                    <li>
-                        本次得分<span>{{rankList.self.game_score}}</span>
+                        <h3>
+                            本次得分<strong>{{rankList.self.game_score}}</strong>
+                        </h3>
                     </li>
                 </ul>
                 <ul class='list'>

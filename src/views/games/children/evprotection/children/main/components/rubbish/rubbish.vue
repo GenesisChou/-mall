@@ -143,7 +143,7 @@
                     max: 10,
                 },
                 duration = {
-                    min: 1.3,
+                    min: 2,
                     max: 5
                 };
             const interval = (duration.max - duration.min) / (speed.max - speed.min),
@@ -157,7 +157,7 @@
                 transform: `rotate(${-30 + Math.random() * 60}deg)`
             }
             this.type = Math.floor(1 + Math.random() * 3);
-            const list = [4, 5, 3]
+            const list = [5, 4, 3]
             this.score = list[this.type - 1];
             //自动销毁未被点击的垃圾
             setTimeout(() => {

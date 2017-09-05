@@ -52,6 +52,10 @@
 
     h3 {
         padding: pxTorem(10) 0 pxTorem(50) 0;
+        &.gray {
+            color: #4d4d4d;
+            padding-top: pxTorem(80);
+        }
     }
 
     .open {
@@ -62,6 +66,12 @@
         height: pxTorem(220);
         margin-left: pxTorem(-110);
         border-radius: 50%;
+        &.open-1 {
+            background: url('./images/yellowButton.png') no-repeat center center/100% 100%;
+        }
+        &.open-2 {
+            background: url('./images/grayButton.png') no-repeat center center/100% 100%;
+        }
     }
 </style>
 <template>
@@ -75,9 +85,11 @@
                     <img class='img-responsive' :src='user.headimg'>
                 </div>
                 <h1>剿灭劣V类 争做西湖环保卫士</h1>
-                <h3>{{message}}</h3>
-                <h1>恭喜你完成挑战，成为西湖环保<br>卫士！小小奖励，以示敬意~</h1>
-                <div class='open' @click='lottery'></div>
+                <h3 v-if='avaliable'>{{notice}}</h3>
+                <h3 class='gray' v-else>暂无抽奖机会</h3>
+                <h1 v-if='avaliable'>恭喜你完成挑战，成为西湖环保<br>卫士！小小奖励，以示敬意~</h1>
+                <div v-if='avaliable' class='open open-1' @click='lottery'></div>
+                <div v-else class='open open-2'></div>
             </div>
         </transition>
     </div>
@@ -90,14 +102,20 @@
         data() {
             return {
                 content_show: false,
-                message: '',
-                type: '',
-                avaliable: false
             }
         },
         computed: {
             user() {
                 return this.$store.state.user;
+            },
+            notice() {
+                return this.$store.state.games.lottery_infor.notice;
+            },
+            type() {
+                return this.$store.state.games.lottery_infor.type;
+            },
+            avaliable() {
+                return this.$store.state.games.lottery_infor.avaliable || false;
             }
         },
         watch: {
@@ -108,37 +126,19 @@
             }
         },
         created() {
-            this.getLotteryInfor().then(data => {
-                const temp = data.data;
-                this.message = temp.message;
-                this.avaliable = temp.is_draw === 1;
-                this.type = temp.draw_type;
-            });
+            this.getLotteryInfor();
         },
         methods: {
             close() {
                 this.$emit('update:show', false);
             },
             getLotteryInfor() {
-                return new Promise(resolve => {
-                    const game_id = parseInt(this.$route.params.id);
-                    this.$http.post(`${APP.HOST}/is_game_draw/${game_id}`, {
-                        token: APP.TOKEN,
-                        media_id: APP.MEDIA_ID,
-                        user_id: APP.USER_ID,
-                        open_id: APP.OPEN_ID,
-                        origin: APP.ORIGIN,
-                    }).then((response) => {
-                        const data = response.data;
-                        if (data.status === APP.SUCCESS && typeof resolve === 'function') {
-                            resolve(data);
-                        }
-                    });
-                });
+                this.$store.dispatch('getLotteryInfor', this.$route.params.id);
             },
             lottery() {
                 this.getResult().then(data => {
                     const temp = data.data;
+                    this.getLotteryInfor();
                     this.$router.push({
                         path: `/games/${this.$route.params.id}/evprotection/lottery`,
                         query: {

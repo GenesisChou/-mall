@@ -38,8 +38,8 @@
     }
     .boy {
       position: absolute;
-      right: -9%;
-      bottom: -4%;
+      right: -8%;
+      bottom: -6%;
       width: pxTorem(184);
       height: pxTorem(477);
     }

@@ -5,6 +5,7 @@ import mutations from './mutations';
 import actions from './actions';
 import index from './modules/index';
 import wish from './modules/wish';
+import games from './modules/games';
 Vue.use(Vuex);
 const store = new Vuex.Store({
     state,
@@ -12,7 +13,8 @@ const store = new Vuex.Store({
     actions,
     modules: {
         index,
-        wish
+        wish,
+        games
     }
 });
 module.exports = store;

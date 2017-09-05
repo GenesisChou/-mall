@@ -10,6 +10,10 @@
   }
 
   .operation {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    padding-bottom: .15rem;
     text-align: center;
     img {
       width: pxTorem(219);
@@ -17,6 +21,9 @@
       &:last-child {
         margin-top: pxTorem(10);
       }
+    }
+    .space {
+      height:pxTorem(40);
     }
   }
 
@@ -41,11 +48,11 @@
 
 <template>
   <div class='main'>
-    <h1>
-      <!-- <button @click='rank_show=true'>rank</button> -->
-      <!-- <button @click='stop'>stop</button> -->
-      <!-- <button @click='start'>start</button> -->
-    </h1>
+    <!-- <h1>
+      <button @click='rank_show=true'>rank</button>
+      <button @click='stop'>stop</button>
+      <button @click='start'>start</button>
+    </h1> -->
     <rubbish v-for='item in rubbish' :rubbish='item' :clear-rubbish='clearRubbish' :speed='speed' :key='item.key'></rubbish>
     <v-time :time='time' :left-time='left_time'></v-time>
     <score>
@@ -57,12 +64,13 @@
         <img src='./images/repeat.png' @click='restart'>
         <img src='./images/share.png' @click='share_show=true'>
         <br>
-        <img src='./images/redpacket.png' @click='redpacket_show=true'>
+        <img v-if='lottery_avaliable' src='./images/redpacket.png' @click='redpacket_show=true'>
+        <div v-else class='space'></div>
       </div>
     </rank>
     <redpacket :show.sync='redpacket_show'></redpacket>
     <v-share-guide :show.sync='share_show'>
-      <img class='share-notice' src='./images/shareNotice.png'>
+      <img class='share-notice' src='../images/shareNotice.png'>
     </v-share-guide>
   </div>
 </template>
@@ -106,6 +114,9 @@
     computed: {
       user() {
         return this.$store.state.user;
+      },
+      lottery_avaliable() {
+        return this.$store.state.games.lottery_infor.lottery_show;
       }
     },
     beforeRouteLeave(to, from, next) {

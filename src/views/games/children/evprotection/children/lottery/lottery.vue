@@ -62,6 +62,10 @@
         align-items: center;
         position: absolute;
         left: 50%;
+        width: pxTorem(353);
+        height: pxTorem(120);
+        line-height: pxTorem(50);
+        text-align: center;
         bottom: pxTorem(230);
         transform: translateX(-50%);
         color: $white;
@@ -71,20 +75,17 @@
         box-shadow: 0 pxTorem(5) 0 rgba(0, 0, 0, .2);
     }
 
-    .button-1 {
-        width: pxTorem(220);
-        height: pxTorem(95);
-    }
-
-    .button-2 {
-        width: pxTorem(353);
-        height: pxTorem(120);
-        line-height: pxTorem(50);
-        text-align: center;
-    }
-
     .failed {
         color: #d95940;
+    }
+
+    .share-notice {
+        position: absolute;
+        top: pxTorem(-310);
+        left: 50%;
+        transform: translateX(-50%);
+        width: pxTorem(617);
+        height: pxTorem(108);
     }
 </style>
 
@@ -104,17 +105,21 @@
         <h1 v-if='type===1' class='notice'>
             红包已发放<br>查看服务通知即可领取
         </h1>
-        <div v-if='type===1' class='button button-1'>
-            前往领取
-        </div>
-        <div v-else class='button button-2'>
+        <div class='button' @click='share_show=true'>
             分享后有机会<br>获得额外抽奖机会
         </div>
+        <v-share-guide :show.sync='share_show'>
+            <img class='share-notice' src='../images/shareNotice.png'>
+        </v-share-guide>
     </div>
 </template>
 <script>
+    import vShareGuide from 'components/vShareGuide'
     export default {
         name: 'lottery',
+        components: {
+            vShareGuide
+        },
         computed: {
             user() {
                 return this.$store.state.user;
@@ -123,7 +128,8 @@
         data() {
             return {
                 type: '',
-                money: ''
+                money: '',
+                share_show: false
             }
         },
         created() {

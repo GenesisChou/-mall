@@ -29,6 +29,9 @@
     width: pxTorem(236);
     height: pxTorem(112);
     background: url('./images/start.png') no-repeat 100% 100%/100% 100%;
+    &.gray {
+      background: url('./images/grayStart.png') no-repeat 100% 100%/100% 100%;
+    }
   }
 
   .button-rulers {
@@ -45,7 +48,42 @@
   <div class='start'>
     <img class='kite' src='./images/kite.png'>
     <img class='title' src='./images/title.png'>
-    <router-link class='button-start' tag='div' :to='{path:$route.path+"/main",}'></router-link>
+    <router-link v-if='avaliable' class='button-start' tag='div' :to='{path:$route.path+"/main",}'></router-link>
+    <div v-else class='button-start gray' @click='showNotice'></div>
     <router-link class='button-rulers' tag='div' :to='{path:$route.path+"/rulers",}'></router-link>
+    <v-notice :show.sync='notice_show'>
+      {{notice}}
+    </v-notice>
   </div>
 </template>
+<script>
+  import vNotice from './components/vNotice.vue';
+  export default {
+    components: {
+      vNotice
+    },
+    computed: {
+      avaliable() {
+        return this.$parent.play_avaliable;
+      },
+      notice() {
+        return this.$parent.notice;
+      }
+    },
+    data() {
+      return {
+        notice_show: false
+      }
+    },
+    methods: {
+      showNotice() {
+        if (this.notice_show === false) {
+          this.notice_show = true;
+          setTimeout(() => {
+            this.notice_show = false;
+          }, 2000);
+        }
+      }
+    }
+  }
+</script>

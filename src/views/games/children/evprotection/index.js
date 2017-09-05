@@ -7,7 +7,9 @@ module.exports = {
     `,
     data() {
         return {
-            game_id: ''
+            game_id: '',
+            play_avaliable: false,
+            notice: ''
         }
     },
     watch: {
@@ -24,13 +26,16 @@ module.exports = {
             utils.setLocalStorage(APP.MEDIA_ID, cache);
             this.getGamesInfor().then(data => {
                 const game = data.data;
+                this.play_avaliable = (game.is_play === 1);
+                this.notice = game.message;
                 weChatShare({
                     title: game.title,
                     img: game.pic_thumb_new,
                     desc: game.sub_title,
                     link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&origin=wechat&page=games&game_id=${this.game_id}`
                 }).then(share_point => {
-                    return this.shareView(share_point);
+                    this.$store.dispatch('getLotteryInfor', this.game_id);
+                    this.shareView(share_point);
                 })
             });
         } else {
