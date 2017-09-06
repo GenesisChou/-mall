@@ -47,7 +47,7 @@ module.exports = {
     },
     methods: {
         authorize() {
-            location.href = `${APP.HOST}/justtong_base_auth/${APP.USER_ID}?callback=${location.href+'?authorize=1'}`;
+            location.href = `${APP.HOST}/justtong_base_auth/${APP.USER_ID}?callback=${location.href+'?authorize=1&origin=wechat'}`;
         },
         getGamesInfor() {
             return new Promise(resolve => {

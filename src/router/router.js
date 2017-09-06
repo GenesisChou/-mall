@@ -135,7 +135,9 @@ router.beforeEach((to, from, next) => {
     if (from && from.name) {
         store.dispatch('currentPageView', from.name);
     }
-    store.dispatch('pageView', to.name);
+    if (to.name) {
+        store.dispatch('pageView', to.name);
+    }
     next();
 });
 router.afterEach(route => {});
