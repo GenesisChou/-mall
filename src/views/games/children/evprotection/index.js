@@ -2,14 +2,15 @@ import weChatShare from 'libs/weChatShare.js';
 module.exports = {
     template: `
     <keep-alive exclude="lottery">
-         <router-view></router-view>
+         <router-view v-if='show'></router-view>
     </keep-alive> 
     `,
     data() {
         return {
             game_id: '',
             play_avaliable: false,
-            notice: ''
+            notice: '',
+            show: false
         }
     },
     watch: {
@@ -26,8 +27,10 @@ module.exports = {
             utils.setLocalStorage(APP.MEDIA_ID, cache);
             this.getGamesInfor().then(data => {
                 const game = data.data;
+                utils.changeTitle(game.title);
                 this.play_avaliable = (game.is_play === 1);
                 this.notice = game.message;
+                this.show = true;
                 weChatShare({
                     title: game.title,
                     img: game.pic_thumb_new,

@@ -84,6 +84,7 @@
                     this.$router.push({
                         path: `/games/${game_id}`
                     })
+                    return;
                 }
                 this.$router.push({
                     name: page,

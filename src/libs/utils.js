@@ -190,6 +190,20 @@ const utils = {
     isAndroid() {
         const u = navigator.userAgent;
         return u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+    },
+    changeTitle(title) {
+        var utils = this;
+        document.title = title
+        // 如果是 iOS 设备，则使用如下 hack 的写法实现页面标题的更新
+        if (utils.isIos()) {
+            const hackIframe = document.createElement('iframe')
+            hackIframe.style.display = 'none'
+            hackIframe.src = '/robots.txt?r=' + Math.random()
+            document.body.appendChild(hackIframe)
+            setTimeout(_ => {
+                document.body.removeChild(hackIframe)
+            }, 300)
+        }
     }
 };
 typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = utils : window.utils = utils;
