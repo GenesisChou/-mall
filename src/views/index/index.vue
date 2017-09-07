@@ -110,12 +110,9 @@
             });
         },
         activated() {
-            if (this.$store.state.current_signature_page !== 'index') {
-                weChatShare({
-                    router: this.$route,
-                    link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}`
-                });
-            }
+            weChatShare({
+                link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&origin=wechat`
+            });
             this.router_state = 'enter';
             const position = this.$store.state.position[this.$route.name];
             if (position) {

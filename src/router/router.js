@@ -91,6 +91,32 @@ const router = new VueRouter({
                 component: require('views/wish/children/wishDetail')
             }]
         }, {
+            path: '/games/:id',
+            name: 'games',
+            component: require('views/games'),
+            children: [{
+                    path: 'evprotection',
+                    component: require('views/games/children/evprotection'),
+                    children: [{
+                            path: '',
+                            component: require('views/games/children/evprotection/children/start')
+                        }, {
+                            path: 'rulers',
+                            component: require('views/games/children/evprotection/children/rulers')
+                        },
+                        {
+                            path: 'main',
+                            component: require('views/games/children/evprotection/children/main')
+                        },
+                        {
+                            path: 'lottery',
+                            component: require('views/games/children/evprotection/children/lottery')
+                        }
+                    ]
+                }
+
+            ]
+        }, {
             path: '*',
             redirect: '/'
         }
@@ -109,7 +135,9 @@ router.beforeEach((to, from, next) => {
     if (from && from.name) {
         store.dispatch('currentPageView', from.name);
     }
-    store.dispatch('pageView', to.name);
+    if (to.name) {
+        store.dispatch('pageView', to.name);
+    }
     next();
 });
 router.afterEach(route => {});

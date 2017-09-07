@@ -1,12 +1,6 @@
 const utils = {
     login(media_id, type = 1, page, id, origin) {
-        const redirect = encodeURIComponent(APP.MALL_HOST);
-        let link = '';
-        if (type === 1) {
-            link += `${APP.HOST}/weixin/${media_id}?callback=${redirect}`;
-        } else if (type === 2) {
-            link += `${APP.HOST}/show_weixin/${media_id}?callback=${redirect}`;
-        }
+        let link = APP.MALL_HOST;
         if (origin) {
             link += `&origin=${origin}`;
         }
@@ -33,8 +27,15 @@ const utils = {
         } else if (page === 'wish_detail') {
             const wish_id = id || utils.getParameterByName('wish_id');
             link += `&page=wish_detail&wish_id=${wish_id}`;
+        } else if (page === 'games') {
+            const game_id = id || utils.getParameterByName('game_id');
+            link += `&page=games&game_id=${game_id}`;
         }
-        location.href = link;
+        if (type === 1) {
+            location.href = `${APP.HOST}/weixin/${media_id}?callback=${link}`;
+        } else if (type === 2) {
+            location.href = `${APP.HOST}/show_weixin/${media_id}?callback=${link}`;
+        }
     },
     isInArray(name, arr) {
         let result = false;
@@ -189,6 +190,20 @@ const utils = {
     isAndroid() {
         const u = navigator.userAgent;
         return u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+    },
+    changeTitle(title) {
+        var utils = this;
+        document.title = title
+        // 如果是 iOS 设备，则使用如下 hack 的写法实现页面标题的更新
+        if (utils.isIos()) {
+            const hackIframe = document.createElement('iframe')
+            hackIframe.style.display = 'none'
+            hackIframe.src = '/robots.txt?r=' + Math.random()
+            document.body.appendChild(hackIframe)
+            setTimeout(_ => {
+                document.body.removeChild(hackIframe)
+            }, 300)
+        }
     }
 };
 typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = utils : window.utils = utils;

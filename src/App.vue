@@ -7,7 +7,7 @@
 </style>
 <template>
     <div id='app'>
-        <keep-alive exclude='myAccount,activityDetail,productDetail,orderDetail,editUser'>
+        <keep-alive exclude='myAccount,activityDetail,productDetail,orderDetail,editUser,games'>
             <router-view v-if='user&&qr_code'></router-view>
         </keep-alive>
         <v-alert></v-alert>
@@ -79,6 +79,12 @@
                     query = {
                         wish_id,
                     };
+                } else if (page === 'games') {
+                    const game_id = utils.getParameterByName('game_id');
+                    this.$router.push({
+                        path: `/games/${game_id}`
+                    })
+                    return;
                 }
                 this.$router.push({
                     name: page,

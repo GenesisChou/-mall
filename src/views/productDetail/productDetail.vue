@@ -208,6 +208,29 @@
         background: $white;
         border-bottom: 1px solid #d3d4d6;
     }
+
+    .share-notice {
+        li {
+            list-style: none;
+            font-size: pxTorem(36);
+            line-height: pxTorem(66);
+        }
+        li:first-child {
+            position: relative;
+            &:after {
+                content: '“...”';
+                position: absolute;
+                right: pxTorem(-40);
+                top: 0;
+            }
+        }
+        position:absolute;
+        top: pxTorem(-350);
+        left: 50%;
+        transform: translateX(-50%);
+        color: $white;
+        z-index:1;
+    }
 </style>
 <template>
     <div v-if='product_detail' class='product-detail'>
@@ -288,7 +311,13 @@
         </template>
         <recharge v-else :product-detail='product_detail'></recharge>
         <v-dialog :show='dialog_show' :dialog='dialog' :toggle-dialog='toggleDialog'></v-dialog>
-        <v-share-guide :show.sync='share_show'></v-share-guide>
+        <v-share-guide :show.sync='share_show'>
+            <ul class='share-notice'>
+                <li>1、点击右上角的 </li>
+                <li>2、选择“ <i class='iconfont icon-share-time'></i> ”即可</li>
+                <li>3、请分享后继续参与</li>
+            </ul>
+        </v-share-guide>
     </div>
 </template>
 <script>
@@ -386,13 +415,12 @@
                     this.has_exchanged = data[1].is_exchange;
                     this.changeState(data);
                     let link =
-                        `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=product_detail&product_id=${this.product_id}&back=${this.from}`;
+                        `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&origin=wechat&page=product_detail&product_id=${this.product_id}&back=${this.from}`;
                     if (this.from === 'subject_detail') {
                         link += `&subject_id=${this.$route.query.subject_id}`;
                     }
                     const is_share_info = this.product_detail.is_share_info === 1;
                     weChatShare({
-                        router: this.$route,
                         title: is_share_info ? this.product_detail.share_name : this.product_detail.name,
                         img: is_share_info ? this.product_detail.share_pic_thumb_new : this.product_detail
                             .pic_thumb_new,

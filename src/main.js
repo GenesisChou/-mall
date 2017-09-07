@@ -58,10 +58,17 @@ if (storage) {
         } else if (page === 'wish_detail') {
             const wish_id = utils.getParameterByName('wish_id');
             link += `&page=${page}&wish_id=${wish_id}`;
+        } else if (page === 'games') {
+            const game_id = utils.getParameterByName('game_id');
+            link += `&page=${page}&game_id=${game_id}`;
         }
         location.href = link;
     } else {
-        utils.login(media_id, 1, page, null, origin);
+        if (page === 'games') {
+            utils.login(media_id, 2, page, null, origin);
+        } else {
+            utils.login(media_id, 1, page, null, origin);
+        }
     }
 }
 

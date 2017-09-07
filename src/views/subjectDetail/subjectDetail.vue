@@ -73,6 +73,29 @@
         overflow: hidden;
         background: $white;
     }
+
+    .share-notice {
+        li {
+            list-style: none;
+            font-size: pxTorem(36);
+            line-height: pxTorem(66);
+        }
+        li:first-child {
+            position: relative;
+            &:after {
+                content: '“...”';
+                position: absolute;
+                right: pxTorem(-40);
+                top: 0;
+            }
+        }
+        position:absolute;
+        top: pxTorem(-350);
+        left: 50%;
+        transform: translateX(-50%);
+        color: $white;
+        z-index:1;
+    }
 </style>
 <template>
     <div v-if='subject_detail' class='subject-detail'>
@@ -101,8 +124,14 @@
                     </template>
                 </div>
             </main>
-            <v-guide v-if='subject_id' :show.sync='share_show' :has-shared='has_shared' :id='subject_id>>0'></v-guide>
-            <v-share-guide :show.sync='share_show'></v-share-guide>
+            <v-guide v-if='subject_detail.is_share_info===1' :show.sync='share_show' :has-shared='has_shared' :id='subject_id>>0'></v-guide>
+            <v-share-guide :show.sync='share_show'>
+                <ul class='share-notice'>
+                    <li>1、点击右上角的 </li>
+                    <li>2、选择“ <i class='iconfont icon-share-time'></i> ”即可</li>
+                    <li>3、请分享后继续参与</li>
+                </ul>
+            </v-share-guide>
             <div v-if='subject_detail.recommend_items.length>0' class='subject-recommends'>
                 <v-recommend :recommends='subject_detail.recommend_items' color='gray' text-color='gray'></v-recommend>
             </div>
@@ -160,11 +189,10 @@
                     this.has_shared = data[1].is_share;
                     const is_share_info = data[0].is_share_info === 1;
                     weChatShare({
-                        router: this.$route,
                         title: is_share_info ? data[0].share_name : data[0].name,
                         img: is_share_info ? data[0].share_pic_thumb_new : data[0].pic_thumb_new,
                         desc: is_share_info ? data[0].share_sub_name : data[0].sub_name,
-                        link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=subject_detail&subject_id=${value}`
+                        link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&origin=wechat&page=subject_detail&subject_id=${value}`
                     }).then(share_point => {
                         this.share_show = false;
                         return this.shareView(share_point);

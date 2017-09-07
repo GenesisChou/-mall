@@ -55,7 +55,7 @@
         .date {
             font-size: pxTorem(24);
             font-weight: normal;
-            color:rgba(0,0,0,.48);
+            color: rgba(0, 0, 0, .48);
         }
         p {
             width: 100%;
@@ -178,6 +178,29 @@
             margin-left: pxTorem(30);
         }
     }
+
+    .share-notice {
+        li {
+            list-style: none;
+            font-size: pxTorem(36);
+            line-height: pxTorem(66);
+        }
+        li:first-child {
+            position: relative;
+            &:after {
+                content: '“...”';
+                position: absolute;
+                right: pxTorem(-40);
+                top: 0;
+            }
+        }
+        position:absolute;
+        top: pxTorem(-350);
+        left: 50%;
+        transform: translateX(-50%);
+        color: $white;
+        z-index:1;
+    }
 </style>
 <template>
     <div class='wish-detail'>
@@ -229,7 +252,13 @@
             </template>
         </div>
         <v-support></v-support>
-        <v-share-guide :show.sync='share_show'></v-share-guide>
+        <v-share-guide :show.sync='share_show'>
+            <ul class='share-notice'>
+                <li>1、点击右上角的 </li>
+                <li>2、选择“ <i class='iconfont icon-share-time'></i> ”即可</li>
+                <li>3、请分享后继续参与</li>
+            </ul>
+        </v-share-guide>
     </div>
 </template>
 <script>
@@ -272,9 +301,8 @@
             this.wish_id = this.$route.query.wish_id;
             this.getWishDetail().then(() => {
                 const link =
-                    `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&page=wish_detail&wish_id=${this.wish_id}`;
+                    `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&origin=wechat&page=wish_detail&wish_id=${this.wish_id}`;
                 weChatShare({
-                    router: this.$route,
                     title: this.wish_detail.name,
                     img: this.wish_detail.headimg,
                     desc: this.wish_detail.desc,
