@@ -107,9 +107,9 @@
 </style>
 
 <template>
-    <div :ref='rubbish' :class='["rubbish-"+type,"rubbish"]' :style='style' @click='clear'>
+    <div :ref='rubbish' :class='["rubbish-"+type,"rubbish"]' :style='style'>
         <span :class='["score",{active:score_show}]'>+{{score}}</span>
-        <div v-if='show' class='container' :style='angle'>
+        <div v-if='show' class='container' :style='angle' @click='clear'>
             <img class='wave' src='./images/wave.png'>
             <div class='content'></div>
         </div>
@@ -130,6 +130,7 @@
                 style: {},
                 angle: {},
                 show: true,
+                clicked: false,
                 score_show: false
             }
         },
@@ -169,12 +170,15 @@
         },
         methods: {
             clear() {
-                this.score_show = true;
-                this.show = false;
-                this.rubbish.click(this.rubbish.key, this.score);
-                setTimeout(() => {
-                    this.clearRubbish(this.rubbish.key);
-                }, 1000);
+                if (this.clicked === false) {
+                    this.clicked = true;
+                    this.score_show = true;
+                    this.show = false;
+                    this.rubbish.click(this.rubbish.key, this.score);
+                    setTimeout(() => {
+                        this.clearRubbish(this.rubbish.key);
+                    }, 1000);
+                }
             }
         }
     }

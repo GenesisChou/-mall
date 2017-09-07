@@ -53,7 +53,7 @@
       <button @click='stop'>stop</button>
       <button @click='start'>start</button>
     </h1> -->
-    <rubbish v-for='item in rubbish' :rubbish='item' :clear-rubbish='clearRubbish' :speed='speed' :key='item.key' :status='status'></rubbish>
+    <rubbish v-for='item in rubbish' :rubbish.sync='item' :clear-rubbish='clearRubbish' :speed='speed' :key='item.key' :status='status'></rubbish>
     <v-time :time='time' :left-time='left_time'></v-time>
     <score>
       {{score}}分
