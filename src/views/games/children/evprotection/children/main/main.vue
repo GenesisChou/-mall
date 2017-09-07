@@ -23,7 +23,7 @@
       }
     }
     .space {
-      height:pxTorem(40);
+      height: pxTorem(40);
     }
   }
 
@@ -53,7 +53,7 @@
       <button @click='stop'>stop</button>
       <button @click='start'>start</button>
     </h1> -->
-    <rubbish v-for='item in rubbish' :rubbish='item' :clear-rubbish='clearRubbish' :speed='speed' :key='item.key'></rubbish>
+    <rubbish v-for='item in rubbish' :rubbish='item' :clear-rubbish='clearRubbish' :speed='speed' :key='item.key' :status='status'></rubbish>
     <v-time :time='time' :left-time='left_time'></v-time>
     <score>
       {{score}}分
@@ -155,8 +155,6 @@
         let key = 0,
           speedUp = this.speedUp(),
           timer_1 = setInterval(() => {
-            this.left_time--;
-            speedUp();
             if (this.left_time === 0) {
               clearInterval(timer_1);
               this.stop();
@@ -168,6 +166,9 @@
               }, 1500);
             } else if (this.status === 'stop') {
               clearInterval(timer_1);
+            } else {
+              this.left_time--;
+              speedUp();
             }
           }, 1000),
           timer_3 = setInterval(() => {
@@ -184,9 +185,11 @@
         const _this = this;
         if (this.status === 'stop') return;
         setTimeout(() => {
-          this.addRubbish(key);
-          key++;
-          this.addingRubbish(key, getTime());
+          if (this.status !== 'stop') {
+            this.addRubbish(key);
+            key++;
+            this.addingRubbish(key, getTime());
+          }
         }, time);
 
         function getTime() {

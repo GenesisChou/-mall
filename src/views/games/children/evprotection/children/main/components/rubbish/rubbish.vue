@@ -121,6 +121,7 @@
             rubbish: Object,
             clearRubbish: Function,
             speed: Number,
+            status: String
         },
         data() {
             return {
@@ -161,7 +162,7 @@
             this.score = list[this.type - 1];
             //自动销毁未被点击的垃圾
             setTimeout(() => {
-                if (this.show === true) {
+                if (this.show === true && this.status === 'start') {
                     this.clearRubbish(this.rubbish.key);
                 }
             }, Math.ceil(result) * 1000);
