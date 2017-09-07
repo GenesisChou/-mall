@@ -81,8 +81,8 @@
                     };
                 } else if (page === 'games') {
                     const game_id = utils.getParameterByName('game_id');
-                    this.$router.push({
-                        path: `/games/${game_id}`
+                    this.$router.replace({
+                        path: `/games/${game_id}/evprotection`
                     })
                     return;
                 }

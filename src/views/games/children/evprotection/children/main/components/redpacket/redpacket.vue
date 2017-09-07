@@ -86,7 +86,7 @@
                 </div>
                 <h1>剿灭劣V类 争做西湖环保卫士</h1>
                 <h3 v-if='avaliable'>{{notice}}</h3>
-                <h3 class='gray' v-else>暂无抽奖机会</h3>
+                <h3 class='gray' v-else>今日抽奖机会已经用完喽！</h3>
                 <h1 v-if='avaliable'>恭喜你完成挑战，成为西湖环保<br>卫士！小小奖励，以示敬意~</h1>
                 <div v-if='avaliable' class='open open-1' @click='lottery'></div>
                 <div v-else class='open open-2'></div>
