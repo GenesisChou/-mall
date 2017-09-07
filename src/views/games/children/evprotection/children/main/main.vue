@@ -95,7 +95,7 @@
     data() {
       return {
         game_id: '',
-        time: 50,
+        time: 60,
         left_time: 0,
         rubbish: [],
         status: 'ready',
