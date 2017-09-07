@@ -8,16 +8,16 @@
 
   .title {
     position: absolute;
-    left: 5%;
+    left: 3%;
     top: pxTorem(145);
-    width: pxTorem(635);
-    height: pxTorem(226);
+    width: pxTorem(706);
+    height: pxTorem(219);
   }
 
   .kite {
     position: absolute;
     right: 0;
-    top: 0;
+    top: pxTorem(25);
     width: pxTorem(402);
     height: pxTorem(783);
   }
