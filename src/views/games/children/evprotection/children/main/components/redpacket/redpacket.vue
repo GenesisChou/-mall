@@ -21,12 +21,14 @@
         background: url('./images/redpacket.png') 100% 100%/100% 100%;
         color: #e6dba4;
         text-align: center;
+        transform-origin: center center;
+        transform: scale(1.04);
         z-index: 6;
     }
 
     .close {
         position: absolute;
-        left: 0;
+        right: 0;
         top: 0;
         padding: pxTorem(32);
         .icon-error {

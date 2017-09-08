@@ -37,8 +37,9 @@ module.exports = {
                     desc: game.sub_title,
                     link: `${APP.MALL_HOST}?id=${APP.MEDIA_ID}&origin=wechat&page=games&game_id=${this.game_id}`
                 }).then(share_point => {
+                    return this.shareView(share_point);
+                }).then(() => {
                     this.$store.dispatch('getLotteryInfor', this.game_id);
-                    this.shareView(share_point);
                 })
             });
         } else {

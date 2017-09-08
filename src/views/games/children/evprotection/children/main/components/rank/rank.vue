@@ -21,6 +21,8 @@
         background: #fff5e3;
         border: pxTorem(10) solid #c68e4f;
         border-radius: pxTorem(10);
+        transform-origin: center center;
+        transform: scale(.95);
         z-index: 6;
     }
 

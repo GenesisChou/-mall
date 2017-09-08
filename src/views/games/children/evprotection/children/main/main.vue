@@ -132,6 +132,7 @@
       next();
     },
     activated() {
+      this.rank_show=true;
       this.game_id = parseInt(this.$route.params.id);
       if (this.first_enter === true) {
         this.init();
