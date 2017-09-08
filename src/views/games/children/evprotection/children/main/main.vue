@@ -48,11 +48,6 @@
 
 <template>
   <div class='main'>
-    <!-- <h1>
-      <button @click='rank_show=true'>rank</button>
-      <button @click='stop'>stop</button>
-      <button @click='start'>start</button>
-    </h1> -->
     <rubbish v-for='item in rubbish' :rubbish.sync='item' :clear-rubbish='clearRubbish' :speed='speed' :key='item.key' :status='status'></rubbish>
     <v-time :time='time' :left-time='left_time'></v-time>
     <score>
@@ -69,6 +64,7 @@
       </div>
     </rank>
     <redpacket :show.sync='redpacket_show'></redpacket>
+    <guide :show.sync='guide_show' :callback='closeGuide'> </guide>
     <v-share-guide :show.sync='share_show'>
       <img class='share-notice' src='../images/shareNotice.png'>
     </v-share-guide>
@@ -80,6 +76,7 @@
   import character from './components/character'
   import rubbish from './components/rubbish'
   import rank from './components/rank'
+  import guide from './components/guide'
   import redpacket from './components/redpacket'
   import vShareGuide from 'components/vShareGuide'
   export default {
@@ -89,6 +86,7 @@
       character,
       rubbish,
       rank,
+      guide,
       redpacket,
       vShareGuide
     },
@@ -104,11 +102,13 @@
         rank_show: false,
         redpacket_show: false,
         share_show: false,
-        first_enter: true,
+        init: true,
         rank_list: {
           self: {},
           rank: []
-        }
+        },
+        first_enter: true,
+        guide_show: false
       }
     },
     computed: {
@@ -123,24 +123,29 @@
       this.stop();
       this.rubbish = [];
       if (to.path === `/games/${this.game_id}/evprotection`) {
-        this.init();
+        this.reset();
         this.rank_show = false;
         this.redpacket_show = false;
         this.share_show = false;
-        this.first_enter = true;
+        this.init = true;
       }
       next();
     },
-    activated() {
+    created() {
       this.game_id = parseInt(this.$route.params.id);
       if (this.first_enter === true) {
-        this.init();
+        this.guide_show = true;
+      }
+    },
+    activated() {
+      if (this.init === true && this.first_enter === false) {
+        this.reset();
         this.start();
-        this.first_enter = false;
+        this.init = false;
       }
     },
     methods: {
-      init() {
+      reset() {
         this.score = 0;
         this.speed = 1;
         this.rubbish = [];
@@ -240,7 +245,7 @@
       restart() {
         this.stop();
         this.rank_show = false;
-        this.init();
+        this.reset();
         setTimeout(() => {
           this.start();
         }, 1500);
@@ -267,6 +272,13 @@
             this.$store.dispatch('toggleLoading');
           });
         });
+      },
+      closeGuide() {
+        this.first_enter = false;
+        this.guide_show = false;
+        this.reset();
+        this.start();
+        this.init = false;
       }
     }
   }
