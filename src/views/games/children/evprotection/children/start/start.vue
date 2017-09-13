@@ -42,12 +42,21 @@
     height: pxTorem(119);
     background: url('./images/rulers.png') no-repeat 100% 100%/100% 100%;
   }
+
+  .signature {
+    position: absolute;
+    text-align: right;
+    right: pxTorem(30);
+    top: pxTorem(380);
+    color: #fff596;
+  }
 </style>
 
 <template>
   <div class='start'>
     <img class='kite' src='./images/kite.png'>
     <img class='title' src='./images/title.png'>
+    <p class='signature'>西湖区科学技术协会<br>西湖区五水共治工作领导小组办公室</p>
     <router-link v-if='avaliable' class='button-start' tag='div' :to='{path:$route.path+"/main",}'></router-link>
     <div v-else class='button-start gray' @click='showNotice'></div>
     <router-link class='button-rulers' tag='div' :to='{path:$route.path+"/rulers",}'></router-link>

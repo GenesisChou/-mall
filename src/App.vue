@@ -94,7 +94,7 @@
         },
         mounted() {
             this.$store.dispatch('getTitle', (response) => {
-                document.title = response.data.data.imall_title;
+                utils.changeTitle(response.data.data.imall_title);
             });
         },
         methods: {
