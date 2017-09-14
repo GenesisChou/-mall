@@ -36,6 +36,10 @@
     height: pxTorem(108);
   }
 
+  .audio {
+    display: none;
+  }
+
   @keyframes move {
     from {
       background-position-y: 0;
@@ -48,6 +52,7 @@
 
 <template>
   <div class='main'>
+    <iframe class='audio' frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=2&id=758330&auto=1&height=32"></iframe>
     <rubbish v-for='item in rubbish' :rubbish.sync='item' :clear-rubbish='clearRubbish' :speed='speed' :key='item.key' :status='status'></rubbish>
     <v-time :time='time' :left-time='left_time'></v-time>
     <score>
