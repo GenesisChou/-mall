@@ -9,7 +9,7 @@
   .title {
     position: absolute;
     left: 3%;
-    top: pxTorem(120);
+    top: pxTorem(80);
     width: pxTorem(706);
     height: pxTorem(219);
   }
@@ -47,7 +47,7 @@
     position: absolute;
     text-align: right;
     right: pxTorem(30);
-    top: pxTorem(365);
+    top: pxTorem(325);
     color: #fff596;
   }
 </style>
