@@ -52,9 +52,7 @@
 
 <template>
   <div class='main'>
-    <video ref='audio' loop='loop' name="media">
-      <source src="http://other.web.rr01.sycdn.kuwo.cn/resource/n1/71/16/2501779746.mp3" type="audio/mpeg">
-    </video>
+    <audio class='audio' ref='audio' src="http://other.web.rr01.sycdn.kuwo.cn/resource/n1/71/16/2501779746.mp3" autoplay preload loop ></audio>
     <rubbish v-for='item in rubbish' :rubbish.sync='item' :clear-rubbish='clearRubbish' :speed='speed' :key='item.key' :status='status'></rubbish>
     <v-time :time='time' :left-time='left_time'></v-time>
     <score>
