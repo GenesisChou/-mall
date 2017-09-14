@@ -143,12 +143,10 @@
         this.guide_show = true;
       }
     },
-    mounted() {
+    activated() {
       wx.ready(() => {
         this.$refs.audio.play();
       })
-    },
-    activated() {
       if (this.init === true && this.first_enter === false) {
         this.reset();
         this.start();
