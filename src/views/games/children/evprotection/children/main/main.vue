@@ -52,7 +52,9 @@
 
 <template>
   <div class='main'>
-    <iframe class='audio' frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=2&id=758330&auto=1&height=32"></iframe>
+    <video ref='audio' loop='loop' name="media">
+      <source src="http://other.web.rr01.sycdn.kuwo.cn/resource/n1/71/16/2501779746.mp3" type="audio/mpeg">
+    </video>
     <rubbish v-for='item in rubbish' :rubbish.sync='item' :clear-rubbish='clearRubbish' :speed='speed' :key='item.key' :status='status'></rubbish>
     <v-time :time='time' :left-time='left_time'></v-time>
     <score>
@@ -84,6 +86,7 @@
   import guide from './components/guide'
   import redpacket from './components/redpacket'
   import vShareGuide from 'components/vShareGuide'
+  import wx from 'weixin-js-sdk';
   export default {
     components: {
       vTime,
@@ -141,6 +144,11 @@
       if (this.first_enter === true) {
         this.guide_show = true;
       }
+    },
+    mounted() {
+      wx.ready(() => {
+        this.$refs.audio.play();
+      })
     },
     activated() {
       if (this.init === true && this.first_enter === false) {
