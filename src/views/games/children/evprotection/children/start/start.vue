@@ -46,9 +46,10 @@
   .signature {
     position: absolute;
     text-align: right;
+    font-weight: bold;
     right: pxTorem(30);
     top: pxTorem(325);
-    color: #fff596;
+    color: #f1bb00;
   }
 </style>
 

@@ -18,8 +18,8 @@
     }
 
     .rubbish-1 {
-        width: pxTorem(103);
-        height: pxTorem(116);
+        width: pxTorem(101);
+        height: pxTorem(106);
         .content {
             background: url('./images/rubbish1.png') no-repeat center center/100% 100%;
         }
