@@ -30,6 +30,8 @@ const utils = {
         } else if (page === 'games') {
             const game_id = id || utils.getParameterByName('game_id');
             link += `&page=games&game_id=${game_id}`;
+        } else if (page === 'earn_integral') {
+            link += `&page=earn_integral`;
         }
         if (type === 1) {
             location.href = `${APP.HOST}/weixin/${media_id}?callback=${link}`;

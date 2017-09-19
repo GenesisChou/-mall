@@ -63,6 +63,8 @@ if (storage) {
             const game_id = utils.getParameterByName('game_id');
             Cookies.set('game_id', game_id);
             link += `&page=${page}&game_id=${game_id}`;
+        } else if (page === 'earn_integral') {
+            link += `&page=${page}`;
         }
         location.href = link;
     } else {

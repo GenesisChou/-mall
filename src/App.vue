@@ -85,6 +85,10 @@
                         path: `/games/${game_id}/evprotection`
                     })
                     return;
+                } else if (page === 'earn_integral') {
+                    query = {
+                        back_show: true
+                    }
                 }
                 this.$router.push({
                     name: page,
