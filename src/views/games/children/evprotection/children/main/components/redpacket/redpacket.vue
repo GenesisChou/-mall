@@ -153,7 +153,7 @@
                             }
                         })
                     }, () => {
-                        this.clicked = true;
+                        this.clicked = false;
                     })
                 }
             },
