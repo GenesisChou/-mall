@@ -66,11 +66,7 @@ if (storage) {
         }
         location.href = link;
     } else {
-        if (page === 'games') {
-            utils.login(media_id, 2, page, null, origin);
-        } else {
-            utils.login(media_id, 1, page, null, origin);
-        }
+        utils.login(media_id, 1, page, null, origin);
     }
 }
 
