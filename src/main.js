@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueResource from 'vue-resource';
+import Cookies from 'js-cookie';
 Vue.use(VueResource);
 Vue.http.options.emulateJSON = true; //设置vue-resource post请求参数类型为formdata
 const media_id = utils.getParameterByName('id'),
@@ -60,6 +61,7 @@ if (storage) {
             link += `&page=${page}&wish_id=${wish_id}`;
         } else if (page === 'games') {
             const game_id = utils.getParameterByName('game_id');
+            Cookies.set('game_id', game_id);
             link += `&page=${page}&game_id=${game_id}`;
         }
         location.href = link;

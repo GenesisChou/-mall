@@ -46,6 +46,7 @@
     import weChatShare from 'libs/weChatShare.js';
     import vNotice from 'components/vNotice';
     import vMenu from 'components/vMenu';
+    import Cookies from 'js-cookie';
     export default {
         components: {
             vBackTop,
@@ -86,28 +87,36 @@
             }
         },
         created() {
-            this.getLayOut().then(components => {
-                let surprise_show = false;
-                if (utils.getTypeOf(components) === 'Array') {
-                    components.forEach(component => {
-                        if (component.component_type === 7 && component.is_show === 1) {
-                            surprise_show = true;
-                        }
-                    });
-                }
-                setTimeout(() => {
-                    this.$store.dispatch('toggleSurprise', surprise_show);
-                }, 1500);
-                if (surprise_show) return;
-                const qr_code = this.$store.state.qr_code,
-                    first_login = (this.user.first_login === 1),
-                    has_qr_code = qr_code.qr_code_pic && qr_code.qr_code_tips;
-                if ((has_qr_code && APP.ORIGIN !== 'menu') || !has_qr_code) {
-                    if (first_login) {
-                        this.$store.dispatch('updateGuideState', 'guide-wish');
+            const game_id = Cookies.get('game_id');
+            if (APP.MEDIA_ID === `994063a9aa492b8858f31e2011fe0705` && game_id) {
+                Cookies.remove('game_id');
+                this.$router.replace({
+                    path: `/games/${game_id}/evprotection`
+                })
+            } else {
+                this.getLayOut().then(components => {
+                    let surprise_show = false;
+                    if (utils.getTypeOf(components) === 'Array') {
+                        components.forEach(component => {
+                            if (component.component_type === 7 && component.is_show === 1) {
+                                surprise_show = true;
+                            }
+                        });
                     }
-                }
-            });
+                    setTimeout(() => {
+                        this.$store.dispatch('toggleSurprise', surprise_show);
+                    }, 1500);
+                    if (surprise_show) return;
+                    const qr_code = this.$store.state.qr_code,
+                        first_login = (this.user.first_login === 1),
+                        has_qr_code = qr_code.qr_code_pic && qr_code.qr_code_tips;
+                    if ((has_qr_code && APP.ORIGIN !== 'menu') || !has_qr_code) {
+                        if (first_login) {
+                            this.$store.dispatch('updateGuideState', 'guide-wish');
+                        }
+                    }
+                });
+            }
         },
         activated() {
             weChatShare({

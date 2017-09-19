@@ -104,6 +104,7 @@
         data() {
             return {
                 content_show: false,
+                clicked: false
             }
         },
         computed: {
@@ -138,20 +139,26 @@
                 this.$store.dispatch('getLotteryInfor', this.$route.params.id);
             },
             lottery() {
-                this.getResult().then(data => {
-                    const temp = data.data;
-                    this.getLotteryInfor();
-                    this.$router.push({
-                        path: `/games/${this.$route.params.id}/evprotection/lottery`,
-                        query: {
-                            type: temp.is_win || 2,
-                            money: temp.cash || 0
-                        }
+                if (this.clicked === false) {
+                    this.clicked = true;
+                    this.getResult().then(data => {
+                        const temp = data.data;
+                        this.getLotteryInfor();
+                        this.clicked = false;
+                        this.$router.push({
+                            path: `/games/${this.$route.params.id}/evprotection/lottery`,
+                            query: {
+                                type: temp.is_win || 2,
+                                money: temp.cash || 0
+                            }
+                        })
+                    }, () => {
+                        this.clicked = true;
                     })
-                })
+                }
             },
             getResult() {
-                return new Promise(resolve => {
+                return new Promise((resolve, reject) => {
                     this.$store.dispatch('toggleLoading');
                     const game_id = parseInt(this.$route.params.id);
                     this.$http.post(`${APP.HOST}/game_tool_draw/${game_id}`, {
@@ -166,8 +173,11 @@
                         const data = response.data;
                         if (data.status === APP.SUCCESS && typeof resolve === 'function') {
                             resolve(data);
+                        } else {
+                            reject();
                         }
                     }, (response) => {
+                        reject();
                         this.$store.dispatch('toggleLoading');
                     });
                 });
