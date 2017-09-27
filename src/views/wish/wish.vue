@@ -11,6 +11,7 @@
             }
         },
         created() {
+            console.log("fuck");
             this.$store.dispatch('getWishBanners');
         },
     };

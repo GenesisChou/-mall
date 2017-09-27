@@ -7,7 +7,7 @@ const media_id = utils.getParameterByName('id'),
     page = utils.getParameterByName('page'),
     origin = utils.getParameterByName('origin'),
     storage = utils.getLocalStorage(media_id);
-if (storage) {
+if (storage) { 
     const now = new Date(),
         before = new Date(storage.DATE),
         interval = (now - before) / 1000 / 60 / 60 / 24,
