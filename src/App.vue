@@ -35,6 +35,7 @@
             }
         },
         created() {
+            
             this.$store.dispatch('getUserInfor', (response) => {
                 const data = response.data;
                 if (data.status === APP.SUCCESS) {

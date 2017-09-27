@@ -116,7 +116,7 @@ if (process.env.NODE_ENV === 'production') {
             },
             minify: { //压缩HTML文件
                 removeComments: true, //移除HTML中的注释
-                // collapseWhitespace: true //删除空白符与换行符
+                collapseWhitespace: true //删除空白符与换行符
             }
         })
     ]);
