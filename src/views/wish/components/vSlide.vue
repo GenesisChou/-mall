@@ -7,7 +7,7 @@
 
     .slide-item {
         width: pxTorem(750);
-        height: pxTorem(199);
+        height: pxTorem(200);
     }
 </style>
 <template>
