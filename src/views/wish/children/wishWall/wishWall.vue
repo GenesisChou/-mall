@@ -197,8 +197,10 @@
             <template v-if='avaliable'>
                 <div class='wish-wall-content'>
                     <template v-for='component in wish_wall.banner_pk'>
+
                         <v-slide v-if='component.type===1' :items='component.items'></v-slide>
-                        <v-pk v-else-if='component.type===2&&pk_detail' :pk='pk_detail'></v-pk>
+                        <!-- <v-pk v-else-if='component.type===2&&pk_detail' :pk='pk_detail'></v-pk> -->
+                        <v-pk v-else-if='component.type===2&&component' :component='component' ></v-pk>
                         <router-link v-else-if='component.type===3' :to='{name:"publish_wish"}' tag='div' class='publish'>
                             发布我的心愿 <i class='iconfont icon-arrows-right'></i>
                         </router-link>
@@ -310,14 +312,14 @@
                     const wish_wall = data.data,
                         banner_pk = wish_wall.banner_pk;
                     if (wish_wall.is_show === 1) {
-                        if (utils.getTypeOf(banner_pk) === 'Array') {
-                            banner_pk.forEach(data => {
-                                if (data.type === 2) {
-                                    const pk_id = data.items[0].item_id;
-                                    this.getPkInfor(pk_id);
-                                }
-                            });
-                        }
+                        // if (utils.getTypeOf(banner_pk) === 'Array') {
+                        //     banner_pk.forEach(data => {
+                        //         if (data.type === 2) {
+                        //             const pk_id = data.items[0].item_id;
+                        //             this.getPkInfor(pk_id);
+                        //         }
+                        //     });
+                        // }
                     } else {
                         this.avaliable = false;
                     }
@@ -331,24 +333,6 @@
         methods: {
             getWishWall() {
                 this.$store.dispatch('getWishWall');
-            },
-            getPkInfor(pk_id) {
-                return new Promise(resolve => {
-                    this.$http.post(`${APP.HOST}/pk_detail/${pk_id}`, {
-                        token: APP.TOKEN,
-                        media_id: APP.MEDIA_ID,
-                        user_id: APP.USER_ID,
-                        open_id: APP.OPEN_ID
-                    }).then((response) => {
-                        const data = response.data;
-                        if (data.status === APP.SUCCESS) {
-                            this.pk_detail = data.data;
-                            if (typeof resolve === 'function') {
-                                resolve();
-                            }
-                        }
-                    });
-                });
             },
         }
     };

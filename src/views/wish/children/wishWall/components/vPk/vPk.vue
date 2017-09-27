@@ -192,28 +192,46 @@
     export default {
         name: 'vPk',
         props: {
-            pk: Object
+            pk: Object,
+            component: Object
         },
         data() {
             return {
-                state: 'ready'
+                state: 'ready',
+                id: '',
+                mate: '',
+                left: '',
+                right: ''
             };
         },
-        computed: {
-            mate() {
-                return this.pk.items;
-            },
-            left() {
-                return this.mate[0];
-            },
-            right() {
-                return this.mate[1];
-            }
-        },
         created() {
-            this.init();
+            this.id = this.component.items[0].item_id;
+            this.getPkInfor(this.id).then(data => {
+                this.pk = data.data;
+                this.mate = this.pk.items;
+                this.left = this.mate[0];
+                this.right = this.mate[1];
+                this.init();
+            });
         },
         methods: {
+            getPkInfor(pk_id) {
+                return new Promise(resolve => {
+                    this.$http.post(`${APP.HOST}/pk_detail/${pk_id}`, {
+                        token: APP.TOKEN,
+                        media_id: APP.MEDIA_ID,
+                        user_id: APP.USER_ID,
+                        open_id: APP.OPEN_ID
+                    }).then((response) => {
+                        const data = response.data;
+                        if (data.status === APP.SUCCESS) {
+                            if (typeof resolve === 'function') {
+                                resolve(data);
+                            }
+                        }
+                    });
+                });
+            },
             supportPk(id, $index) {
                 if (this.mate[0].is_support === 2 && this.mate[1].is_support === 2 && this.state === 'ready') {
                     this.state = 'block';
@@ -227,7 +245,11 @@
                         const data = response.data;
                         this.state = 'ready';
                         if (data.status === APP.SUCCESS) {
-                            this.$parent.getPkInfor(this.pk.id).then(() => {
+                            this.getPkInfor(this.id).then(data => {
+                                this.pk = data.data;
+                                this.mate = this.pk.items;
+                                this.left = this.mate[0];
+                                this.right = this.mate[1];
                                 this.init();
                             });
                         } else {
